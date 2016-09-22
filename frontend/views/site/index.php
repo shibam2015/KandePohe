@@ -566,7 +566,7 @@ if (!Yii::$app->user->isGuest) {
     z-index: 1200 !important;
   }
 </style>
-
+ 
 <?php
   $this->registerJs('
     $("body").on("submit","#form-signup",function(e){
