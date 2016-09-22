@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\MasterDiet */
 
 $this->title = $model->iDietID;
-$this->params['breadcrumbs'][] = ['label' => 'Master Diets', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Diets', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

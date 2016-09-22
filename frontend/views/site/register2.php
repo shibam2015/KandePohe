@@ -39,18 +39,22 @@ use yii\helpers\ArrayHelper;
             <div class="col-lg-8 col-md-12 col-sm-12">
               <div class="white-section mrg-tp-20 mrg-bt-10">
                 <h3>Educational & Occupational</h3>
-                <!--<span class="error">Oops! Please ensure all fields are valid</span>
-                <p><span class="text-danger">*</span> marked fields are mandatory</p>-->
+                <!-- <span class="error" id="top-error" style="display:none;">Oops! Please ensure all fields are valid</span> -->
+                
+                <!-- <p><span class="text-danger">*</span> marked fields are mandatory</p> -->
                 <p><span class="text-danger">*</span> marked fields are mandatory</p>
                 <?php 
                     $form = ActiveForm::begin([
                           'id' => 'form-register2',
                           //'action' => ['/site/register'],
-                          //'enableAjaxValidation' => true,
                           //'enableClientValidation'=> true,
+                          //'enableAjaxValidation'=> false,
+                         // 'validateOnSubmit' => false,
+                          'validateOnChange' => false,
                           
                         ]); 
                   ?>
+                  <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
                   <div class="box">
                     <div class="small-col">
                       <div class="required1"><span class="text-danger">*</span></div>
@@ -64,7 +68,7 @@ use yii\helpers\ArrayHelper;
                                                        'prompt' => 'Education Level'
                                                       ]
 
-                                                    )->label(false);?>
+                                                    )->label(false)->error(false);?>
                       </div>
                     </div>
                     <div class="small-col tp ">
@@ -83,7 +87,7 @@ use yii\helpers\ArrayHelper;
                                                        'prompt' => 'Education Field'
                                                       ]
 
-                                                    )->label(false);?>
+                                                    )->label(false)->error(false);?>
                       </div>
                     </div>
                     <div class="small-col tp ">
@@ -102,7 +106,7 @@ use yii\helpers\ArrayHelper;
                                                        'prompt' => 'Working with'
                                                       ]
 
-                                                    )->label(false);?>
+                                                    )->label(false)->error(false);?>
                       </div>
                     </div>
                     <div class="small-col tp ">
@@ -121,7 +125,7 @@ use yii\helpers\ArrayHelper;
                                                        'prompt' => 'Working As'
                                                       ]
 
-                                                    )->label(false);?>
+                                                    )->label(false)->error(false);?>
                       </div>
                     </div>
                     <div class="small-col tp ">
@@ -140,7 +144,7 @@ use yii\helpers\ArrayHelper;
                                                        'prompt' => 'Annual Income'
                                                       ]
 
-                                                    )->label(false);?>
+                                                    )->label(false)->error(false);?>
                       </div>
                     </div>
                     <div class="small-col tp ">
@@ -186,3 +190,44 @@ use yii\helpers\ArrayHelper;
     <p>© 2016 Kande Pohe.com. All Rights Reserved.</p>
   </div>
 </footer>-->
+
+<?php
+  $this->registerJs('
+    $("#form-register2").on("submit",function(e){
+      var ieducationlevelid = $("#user-ieducationlevelid").val();
+      var ieducationfieldid = $("#user-ieducationfieldid").val();
+      var iworkingwithid = $("#user-iworkingwithid").val();
+      var iworkingasid = $("#user-iworkingasid").val();
+      var iannualincomeid = $("#user-iannualincomeid").val();
+
+      $(".error-field").removeClass("error-field");
+      $("#top-error").hide();
+      var error_flag = true;
+      if(ieducationlevelid == ""){
+        $("#user-ieducationlevelid").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+      if(ieducationfieldid == ""){
+        $("#user-ieducationfieldid").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+      if(iworkingwithid == ""){
+        $("#user-iworkingwithid").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+      if(iworkingasid == ""){
+        $("#user-iworkingasid").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+      if(iannualincomeid == ""){
+        $("#user-iannualincomeid").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+
+      if(!error_flag){
+        // $("#top-error").show();
+        return false;
+      }
+    });
+  ');
+  ?>

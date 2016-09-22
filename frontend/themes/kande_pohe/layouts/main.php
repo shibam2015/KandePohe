@@ -15,9 +15,9 @@ use frontend\components\CommonHelper;
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
-<head>
+  <!DOCTYPE html>
+  <html lang="<?= Yii::$app->language ?>">
+  <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
@@ -41,33 +41,41 @@ AppAsset::register($this);
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600' rel='stylesheet' type='text/css'>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-            <![endif]-->
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
     <!-- Custom styles for this template -->
 
-</head>
-<body>
-<?php $this->beginBody() ?>
-    <?= $content ?>
-<!--Footer-->
-    <?= $this->render('_footer'); ?>
+  </head>
+  <body>
+  <?php $this->beginBody() ?>
+  <!--<div class="">
+    <? /*= $this->render('/layouts/parts/_headerafterlogin');*/ ?>
+
+    <main>
+      <section>
+        <div class="container">
+          --><? /*= Alert::widget() */ ?>
+  <?= $content ?>
+  <!--Footer-->
+  <?= $this->render('_footer'); ?>
 
 
-<!-- Modal Forgot Password -->
-<div class="modal fade" id="fpswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo" ></p>
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <button type="button" class="close" 
-                   data-dismiss="modal"> <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span> </button>
-        <h2 class="text-center">Forgot Password ?</h2>
-      </div>
-      <!-- Modal Body -->
-      <div class="modal-body">
-        <!--<form>-->
+  <!-- Modal Forgot Password -->
+  <div class="modal fade" id="fpswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo"></p>
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close"
+                  data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+          </button>
+          <h2 class="text-center">Forgot Password ?</h2>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <!--<form>-->
 
           <?php
           use   frontend\models\PasswordResetRequestForm;
@@ -91,16 +99,16 @@ AppAsset::register($this);
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
               <div class="form-cont">
-                  <?= $form->field($forgot, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email',['class'=>'input__field input__field--akira form-control'])?>
+                <?= $form->field($forgot, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control']) ?>
               </div>
-                <?= Html::submitButton('REQUEST RESET LINK', ['class' => 'btn btn-primary mrg-tp-10 col-xs-12', 'name' => 'reset-password-request']) ?>
+              <?= Html::submitButton('REQUEST RESET LINK', ['class' => 'btn btn-primary mrg-tp-10 col-xs-12', 'name' => 'reset-password-request']) ?>
             </div>
           </div>
+        </div>
       </div>
-    </div>
       <?php ActiveForm::end(); ?>
       <?php
-        $this->registerJs('
+      $this->registerJs('
           $("form#forget-password").on("beforeSubmit",function(e){
             var form = $(this);
             if (form.find(".has-error").length) {
@@ -125,112 +133,123 @@ AppAsset::register($this);
         ');
       ?>
       <!--</form>-->
-      </div>
-      <!-- Modal Footer -->
-      <div class="modal-footer"></div>
     </div>
+    <!-- Modal Footer -->
+    <div class="modal-footer"></div>
   </div>
-</div>
-<!-- Modal Reset Password Link -->
-<div class="modal fade" id="reset-pswd-link" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo" ></p>
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <button type="button" class="close" 
-                   data-dismiss="modal"> <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span> </button>
-        <h2 class="text-center">Reset Password Link</h2>
-      </div>
-      <!-- Modal Body -->
-      <div class="modal-body">
-        <form>
-          <div class="row">
-            <div class="col-sm-10 col-sm-offset-1 text-center">
-              <h4 class="mrg-bt-30 text-dark" id="forgot-password-id"></h4>
-              <h4 class="mrg-bt-30"><span class="text-success"><strong>&#10003;</strong></span> Please check email for Reset Password Link</h4>
+  </div>
+  </div>
+  <!-- Modal Reset Password Link -->
+  <div class="modal fade" id="reset-pswd-link" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo"></p>
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close"
+                  data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+          </button>
+          <h2 class="text-center">Reset Password Link</h2>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form>
+            <div class="row">
+              <div class="col-sm-10 col-sm-offset-1 text-center">
+                <h4 class="mrg-bt-30 text-dark" id="forgot-password-id"></h4>
+                <h4 class="mrg-bt-30"><span class="text-success"><strong>&#10003;</strong></span> Please check email for
+                  Reset Password Link</h4>
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-              <button type="button" class="btn btn-primary mrg-tp-10 col-xs-12" data-toggle="modal" data-target="#login">BACK TO LOGIN</button>
+            <div class="row">
+              <div class="col-sm-10 col-sm-offset-1">
+                <button type="button" class="btn btn-primary mrg-tp-10 col-xs-12" data-toggle="modal"
+                        data-target="#login">BACK TO LOGIN
+                </button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer"></div>
       </div>
-      <!-- Modal Footer -->
-      <div class="modal-footer"></div>
     </div>
+
   </div>
-   
-</div>
-<!-- Modal Reset Password -->
-<div class="modal fade" id="reset-pswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo" ></p>
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <button type="button" class="close" 
-                   data-dismiss="modal"> <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span> </button>
-        <h2 class="text-center">Reset Password </h2>
-      </div>
-      <!-- Modal Body -->
-      <div class="modal-body">
-        <form>
-          <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-              <div class="form-cont"> <span class="input input--akira">
+  <!-- Modal Reset Password -->
+  <div class="modal fade" id="reset-pswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo"></p>
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close"
+                  data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+          </button>
+          <h2 class="text-center">Reset Password </h2>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form>
+            <div class="row">
+              <div class="col-sm-10 col-sm-offset-1">
+                <div class="form-cont"> <span class="input input--akira">
                 <input class="input__field input__field--akira" type="text" id="reset_pswd" />
                 <label class="input__label input__label--akira" for="reset_pswd"> <span class="input__label-content input__label-content--akira">New Password</span> </label>
                 </span> </div>
-              <div class="form-cont"> <span class="input input--akira">
+                <div class="form-cont"> <span class="input input--akira">
                 <input class="input__field input__field--akira" type="text" id="Reset Password" />
                 <label class="input__label input__label--akira" for="Reset Password"> <span class="input__label-content input__label-content--akira">Confirm Password</span> </label>
                 </span> </div>
-              <button type="button" class="btn btn-primary mrg-tp-10 col-xs-12" data-toggle="modal" data-target="#reset-pswd-success">Reset Password</button>
+                <button type="button" class="btn btn-primary mrg-tp-10 col-xs-12" data-toggle="modal"
+                        data-target="#reset-pswd-success">Reset Password
+                </button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer"></div>
       </div>
-      <!-- Modal Footer -->
-      <div class="modal-footer"></div>
     </div>
   </div>
-</div>
-<!-- Modal Reset Password Success -->
-<div class="modal fade" id="reset-pswd-success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo" ></p>
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <button type="button" class="close" 
-                   data-dismiss="modal"> <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span> </button>
-        <h2 class="text-center">Password Reset</h2>
-      </div>
-      <!-- Modal Body -->
-      <div class="modal-body">
-        <form>
-          <div class="row">
-            <div class="col-sm-10 col-sm-offset-1 text-center">
-              <h4 class="mrg-bt-30 text-dark">nidhi.prabhu@gmail.com</h4>
-              <h4 class="mrg-bt-30"><span class="text-success"><strong>&#10003;</strong></span> Password has been reset successfully</h4>
+  <!-- Modal Reset Password Success -->
+  <div class="modal fade" id="reset-pswd-success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo"></p>
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close"
+                  data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+          </button>
+          <h2 class="text-center">Password Reset</h2>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form>
+            <div class="row">
+              <div class="col-sm-10 col-sm-offset-1 text-center">
+                <h4 class="mrg-bt-30 text-dark">nidhi.prabhu@gmail.com</h4>
+                <h4 class="mrg-bt-30"><span class="text-success"><strong>&#10003;</strong></span> Password has been
+                  reset successfully</h4>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer"></div>
       </div>
-      <!-- Modal Footer -->
-      <div class="modal-footer"></div>
     </div>
+
   </div>
-   
-</div>
-<!-- Bootstrap core JavaScript
-    ================================================== -->
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
-<!-- Modernizr -->
-<?php $this->endBody() ?>
-</body>
-</html>
+  <!-- Bootstrap core JavaScript
+      ================================================== -->
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
+  <!-- Modernizr -->
+  <?php $this->endBody() ?>
+  </body>
+  </html>
 <?php $this->endPage() ?>

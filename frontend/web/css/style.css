@@ -760,6 +760,22 @@ input[type=checkbox]:checked + label:before {
 	margin-bottom: 20px;
 	text-align: center;
 }
+
+.error-summary {
+	background: url(../images/error.png) 0 0 no-repeat;
+	color: #ae1414;
+	font-size: 13px;
+	font-weight: 600;
+	padding: 0px 10px 3px 25px;
+	display: inline-block;
+	margin-bottom: 3px;
+	text-align: left;
+}
+
+.error-summary ul {
+	text-align: left;
+}
+
 .success {
 	background: url(../images/error.png) 0 0 no-repeat;
 	color: #18ae01;
@@ -1659,7 +1675,7 @@ main h3 {
 	border-bottom: #f3f1f1 2px solid;
 }
 .error-field {
-	border: #ae1414 1px solid;
+	border: #ae1414 1px solid !important;
 }
 body.modal-open {
 	overflow: inherit;

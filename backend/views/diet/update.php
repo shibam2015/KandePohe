@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\MasterDiet */
 
-$this->title = 'Update Diet: ' . $model->vName;
+$this->title = 'Update Diet: ' . $model->iDietID;
 $this->params['breadcrumbs'][] = ['label' => 'Diets', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->iDietID, 'url' => ['view', 'id' => $model->iDietID]];
 $this->params['breadcrumbs'][] = 'Update';
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = 'Update';
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+           
             <div class="box-body">
 				<div class="master-diet-update">
 

@@ -74,7 +74,7 @@ $ADMIN_NAME = ucwords(strtolower(Yii::$app->user->identity->vFirstName. ' ' .Yii
                         ], 'visible' => !Yii::$app->user->isGuest
                     ],
                     [
-                        'label' => 'Site Manage',
+                        'label' => 'Site Manage One',
                         'icon' => 'fa fa-cog',
                         'url' => '#',
                         'items' => [
@@ -88,9 +88,34 @@ $ADMIN_NAME = ucwords(strtolower(Yii::$app->user->identity->vFirstName. ' ' .Yii
                             ['label' => 'Height', 'icon' => 'fa  fa-ellipsis-v', 'url' => ['/height'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'Taluka', 'icon' => 'fa fa-map-signs', 'url' => ['/taluka'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'Father-Mother Status', 'icon' => 'fa fa-venus-double', 'url' => ['/fm-status'], 'visible' => !Yii::$app->user->isGuest],
-                            
+                            ['label' => 'Education Name', 'icon' => 'fa fa-venus-double', 'url' => ['/education-field'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Education Level', 'icon' => 'fa fa-venus-double', 'url' => ['/education-level'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Religion', 'icon' => 'fa  fa-university', 'url' => ['/religion'], 'visible' => !Yii::$app->user->isGuest],
+
                         ], 'visible' => !Yii::$app->user->isGuest
                     ],
+                    [
+                        'label' => 'Site Manage Two',
+                        'icon' => 'fa fa-cog',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Blood Group', 'icon' => 'fa  fa-medkit', 'url' => ['/blood-group'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Body Type', 'icon' => 'fa fa-yelp', 'url' => ['/body-type'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Charan', 'icon' => 'fa  fa-star', 'url' => ['/charan'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Cultural Background', 'icon' => 'fa  fa-star', 'url' => ['/cultural-background'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Family Affluence Level', 'icon' => 'fa  fa-star', 'url' => ['/family-affluence-level'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Family Wealth Details', 'icon' => 'fa  fa-star', 'url' => ['/family-wealth-details'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Favourite Cousines', 'icon' => 'fa  fa-star', 'url' => ['/favourite-cousines'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Favourite Music', 'icon' => 'fa  fa-star', 'url' => ['/favourite-music'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Favourite Reads', 'icon' => 'fa  fa-star', 'url' => ['/favourite-reads'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Gan', 'icon' => 'fa  fa-star', 'url' => ['/gan'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Hobbies', 'icon' => 'fa  fa-star', 'url' => ['/hobbies'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Interests', 'icon' => 'fa  fa-star', 'url' => ['/interests'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Interest Statuses', 'icon' => 'fa  fa-star', 'url' => ['/interest-statuses'], 'visible' => !Yii::$app->user->isGuest],
+
+                        ], 'visible' => !Yii::$app->user->isGuest
+                    ],
+
                     /*['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
                         'label' => 'Same tools',

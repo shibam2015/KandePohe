@@ -1,19 +1,24 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
 use common\models\LoginForm;
 use yii\captcha\Captcha;
-
+use yii\bootstrap\Alert;   // For Alert Notification
+use yii\web\View;
+use kartik\editable\Editable;
 /*$religion_data = CommonHelper::getReligion();
 $community_data = CommonHelper::getCommunity();*/
 
 // var_dump($id = Yii::$app->user->identity->id);
 $id = 0;
+$PROFILE_COMPLETENESS = 0;
 if (!Yii::$app->user->isGuest) {
 #$id = base64_decode($id);
     $id = Yii::$app->user->identity->id;
+    $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
 }
 
 $HOME_URL = Yii::getAlias('@web')."/";
@@ -58,8 +63,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                       <div class="col-sm-12">
                         <div class="im-pc">
                           <div class="image">
-                            <div class="placeholder text-center"> 
-                            <?= Html::img(CommonHelper::getFrontUpload(Yii::$app->user->identity->propic), ['class' => 'img-responsive','alt' => 'placeholder','height' => 200,'width' => 200]); ?>
+                            <div class="placeholder text-center">
+                                <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->user->identity->propic, 200), ['class' => 'img-responsive', 'width' => '200', 'height' => '200', 'alt' => 'Profile Pic']); ?>
                             
                               <div class="add-photo" data-toggle="modal" data-target="#photo"> <span class="file-input btn-file"> <i class="fa fa-plus-circle"></i> Add a photo </span> </div>
                             </div>
@@ -113,7 +118,11 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                         </div>
                         <div class="inset">
                           <div class="percentage">
-                            <div class="numbers"><span>-</span><span>0% Complete</span><span>1% Complete</span><span>2% Complete</span><span>3% Complete</span><span>4% Complete</span><span>5% Complete</span><span>6% Complete</span><span>7% Complete</span><span>8% Complete</span><span>9% Complete</span><span>10% Complete</span><span>11%</span><span>12% Complete</span><span>13% Complete</span><span>14% Complete</span><span>15% Complete</span><span>16% Complete</span><span>17% Complete</span><span>18% Complete</span><span>19% Complete</span><span>20% Complete</span><span>21% Complete</span><span>22% Complete</span><span>23% Complete</span><span>24% Complete</span><span>25% Complete</span><span>26% Complete</span><span>27% Complete</span><span>28% Complete</span><span>29% Complete</span><span>30% Complete</span><span>31% Complete</span><span>32% Complete</span><span>33% Complete</span><span>34% Complete</span><span>35%</span><span>36% Complete</span><span>37% Complete</span><span>38% Complete</span><span>39% Complete</span><span>40% Complete</span><span>41% Complete</span><span>42% Complete</span><span>43% Complete</span><span>44% Complete</span><span>45% Complete</span><span>46% Complete</span><span>47% Complete</span><span>48%</span><span>49% Complete</span><span>50% Complete</span><span>51% Complete</span><span>52% Complete</span><span>53% Complete</span><span>54% Complete</span><span>55% Complete</span><span>56% Complete</span><span>57% Complete</span><span>58% Complete</span><span>59% Complete</span><span>60% Complete</span><span>61% Complete</span><span>62% Complete</span><span>63% Complete</span><span>64% Complete</span><span>65% Complete</span><span>66% Complete</span><span>67% Complete</span><span>68% Complete</span><span>69% Complete</span><span>70% Complete</span><span>71%</span><span>72% Complete</span><span>73% Complete</span><span>74% Complete</span><span>75% Complete</span><span>76% Complete</span><span>77% Complete</span><span>78% Complete</span><span>79% Complete</span><span>80% Complete</span><span>81% Complete</span><span>82% Complete</span><span>83% Complete</span><span>84% Complete</span><span>85% Complete</span><span>86% Complete</span><span>87% Complete</span><span>88% Complete</span><span>89% Complete</span><span>90% Complete</span><span>91% Complete</span><span>92% Complete</span><span>93% Complete</span><span>94% Complete</span><span>95% Complete</span><span>96% Complete</span><span>97% Complete</span><span>98% Complete</span><span>99% Complete</span><span>100% Complete</span></div>
+                            <div class="numbers"><span>-</span><span>0% Complete</span>
+                                <?php for($i=1;$i<=100; $i++){?>
+                                    <span><?=$i?>% Complete</span>
+                                <?php } ?>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -141,21 +150,21 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                     </div>
                   </div>
                   <div class="divider"></div>
-                  <div class="panel no-border panel-default panel-friends">
-                    <div class="panel-heading">
-                      <h3 class="heading-xs"> Photos <span class="text-danger">(38)</span></h3>
-                    </div>
-                    <div class="panel-body text-center">
-                      <ul class="friends">
-                        <li> <a href="#"> <img src="images/pic6.jpg" title="" class="img-responsive tip" data-original-title="Jhoanath matew"> </a> </li>
-                        <li> <a href="#"> <img src="images/pic7.jpg" title="" class="img-responsive tip" data-original-title="Jhoanath matew"> </a> </li>
-                        <li> <a href="#"> <img src="images/pic8.jpg" title="" class="img-responsive tip" data-original-title="Jhoanath matew"> </a> </li>
-                        <li> <a href="#"> <img src="images/pic6.jpg" title="" class="img-responsive tip" data-original-title="Jhoanath matew"> </a> </li>
-                        <li> <a href="#"> <img src="images/pic7.jpg" title="" class="img-responsive tip" data-original-title="Jhoanath matew"> </a> </li>
-                        <li> <a href="#"> <img src="images/pic8.jpg" title="" class="img-responsive tip" data-original-title="Jhoanath matew"> </a> </li>
-                      </ul>
-                      <span class="pull-right"><a href="#" data-toggle="modal" data-target="#photo">View all photos</a></span> </div>
-                  </div>
+                    <!--<div class="panel no-border panel-default panel-friends">
+                      <div class="panel-heading">
+                        <h3 class="heading-xs"> Photos <span class="text-danger">(38)</span></h3>
+                      </div>
+                      <div class="panel-body text-center">
+                        <ul class="friends">
+                          <li> <a href="#"> <img src="images/pic6.jpg" title="" class="img-responsive tip" data-original-title="Jhoanath matew"> </a> </li>
+                          <li> <a href="#"> <img src="images/pic7.jpg" title="" class="img-responsive tip" data-original-title="Jhoanath matew"> </a> </li>
+                          <li> <a href="#"> <img src="images/pic8.jpg" title="" class="img-responsive tip" data-original-title="Jhoanath matew"> </a> </li>
+                          <li> <a href="#"> <img src="images/pic6.jpg" title="" class="img-responsive tip" data-original-title="Jhoanath matew"> </a> </li>
+                          <li> <a href="#"> <img src="images/pic7.jpg" title="" class="img-responsive tip" data-original-title="Jhoanath matew"> </a> </li>
+                          <li> <a href="#"> <img src="images/pic8.jpg" title="" class="img-responsive tip" data-original-title="Jhoanath matew"> </a> </li>
+                        </ul>
+                        <span class="pull-right"><a href="#" data-toggle="modal" data-target="#photo">View all photos</a></span> </div>
+                    </div>-->
                 </div>
               </div>
               <div class="col-sm-8">
@@ -169,14 +178,14 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                   <div role="tabpanel" class="tab-pane active" id="tab1">
                     <div class="profile-edit pull-right">
                       <ul class="list-inline major-control">
-                        <li role="presentation"><a href="#"><i class="fa fa-pencil"></i> Edit</a></li>
+                        <li role="presentation"><a href="javascript:void(0)" class="edit_btn" attr-name="my_info"><i class="fa fa-pencil" ></i> Edit</a></li>
                       </ul>
                     </div>
                     <div class="inner-block">
                       <div class="fb-profile-text padd-xs padd-tp-0">
                         <h1><span class="heading-icons icon9"></span> My Information</h1>
                       </div>
-                      <p><?= $model->tYourSelf;?></p>
+                      <p class="dis_my_info"><?= $model->tYourSelf;?></p>
                     </div>
                     <div class="divider"></div>
                     <div class="inner-block">
@@ -263,8 +272,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                         <dd><?= $model->annualIncome->vAnnualIncome;?></dd>
                       </dl>
                       </div>
-                    </div>
-                  <div class="divider"></div>
+                      <div class="divider"></div>
                     <div class="inner-block">
                       <div class="profile-edit pull-right">
                         <ul class="list-inline major-control">
@@ -336,6 +344,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                         <dd><?= $model->vAreaName?></dd>
                       </dl>
                     </div>
+                </div>
+                  
                   
                   <div role="tabpanel" class="tab-pane" id="tab2">Tab 2</div>
                   <div role="tabpanel" class="tab-pane" id="tab3">Tab 3</div>
@@ -416,7 +426,10 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 <!-- Modal Photo -->
 <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo" ></p>
+    <p class="text-center mrg-bt-10">
+      <!--<img src="images/logo.png" width="157" height="61" alt="logo" >-->
+      <?= Html::img('@web/images/logo1.png', ['class' => '', 'width' => '157', 'height' => '61', 'alt' => 'Logo']); ?>
+    </p>
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
@@ -449,7 +462,9 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 </div>
 <!-- Bootstrap core JavaScript
     ================================================== -->
-<script src="<?=$HOME_URL?>js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+  var PRO_COMP = <?=$PROFILE_COMPLETENESS?>;
+</script>
 <script src="<?=$HOME_URL?>js/selectFx.js"></script>
 <!--<script src="<?/*=$HOME_URL*/?>js/jquery.js" type="text/javascript"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -459,3 +474,16 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 <script src="<?/*=$HOME_URL*/?>js/selectFx.js"></script>
 <script src="<?/*=$HOME_URL*/?>js/modernizr.js"></script>-->
 <!-- Modernizr -->
+<?php 
+$this->registerJs('
+  $(".edit_btn").click(function(e){
+      $.ajax({
+        url : "'.Url::to(['user/edit-myinfo']).'",
+        type:"GET",
+        data:{},
+        success:function(res){
+          $(".dis_my_info").html(res);
+        }
+      });
+  });
+  ');

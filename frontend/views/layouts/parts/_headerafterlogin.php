@@ -30,7 +30,8 @@ use common\components\CommonHelper;
                           </ul>
                         </li>
                         <li class="dropdown last"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
-                            <?= Html::img(CommonHelper::getFrontUpload(Yii::$app->user->identity->propic), ['width' => '30','height' => '30','alt' => 'logo']); ?> <?= Yii::$app->user->identity->First_Name; ?>
+                            <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->user->identity->propic, 30), ['width' => '30', 'height' => '30', 'alt' => 'logo']); ?>
+                            <?= Yii::$app->user->identity->First_Name; ?>
                             <span class="caret"></span></a>
                           <ul class="dropdown-menu">
                             <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', ['logout'], ['data-method' => 'post']) ?></li>

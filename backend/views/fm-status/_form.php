@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'vName')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'eStatus')->dropDownList([ 'Yes' => 'Yes', 'No' => 'No', ], ['prompt' => 'Select Status']) ?>
+    <?= $form->field($model, 'eStatus')->dropDownList([ 'Yes' => 'Yes', 'No' => 'No', ]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

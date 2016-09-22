@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\otherlibraries\Compressimage;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -593,13 +594,25 @@ class SiteController extends Controller
             $target_dir = Yii::getAlias('@frontend') .'/web/uploads/';
             $target_file = $target_dir . basename($_FILES["fileInput"]["name"]);
             if ($_FILES['fileInput']['name'] !='') {
-                $model->propic = $_FILES['fileInput']['name'];
-                if (move_uploaded_file($_FILES["fileInput"]["tmp_name"], $target_file)) {
-                    $model->eStatusPhotoModify = date('Y-m-d');
+                // Start
+                #$PHOTO_NAME = $generalfuncobj->photoUpload($iUserId,$_FILES['vPhotoCard'],$PATH,$URL,$VISITING_CARD_SIZE_ARRAY,'');
+                $CM_HELPER = new CommonHelper();
+                $PATH = $CM_HELPER->getUserUploadFolder(1) . "/" . $id . "/";
+                $URL = $CM_HELPER->getUserUploadFolder(2) . "/" . $id . "/";
+                $USER_SIZE_ARRAY = $CM_HELPER->getUserResizeRatio();
+                $OLD_PHOTO = $model->propic;
+                $PHOTO_ARRAY = CommonHelper::photoUpload($id, $_FILES['fileInput'], $PATH, $URL, $USER_SIZE_ARRAY, $OLD_PHOTO);
+                #echo "<pre>"; print_r($PHOTO_ARRAY);
+                #exit;
+                // END
+                $model->propic = $PHOTO_ARRAY['PHOTO'];//$_FILES['fileInput']['name'];
+                $model->eStatusPhotoModify = 'Pending';
+                /*if (move_uploaded_file($_FILES["fileInput"]["tmp_name"], $target_file)) {
+
                     echo "The file ". basename( $_FILES["fileInput"]["name"]). " has been uploaded.";
                 } else {
                     echo "Sorry, there was an error uploading your file.";
-                }
+                }*/
                 //var_dump(fileInput);
                 if ($model->save()) {
                 }

@@ -1,19 +1,22 @@
   <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use frontend\components\CommonHelper;
+  #use frontend\components\CommonHelper;
 use yii\helpers\ArrayHelper;
 use common\models\LoginForm;
 use yii\captcha\Captcha;
-
+  use common\components\CommonHelper;
 /*$religion_data = CommonHelper::getReligion();
 $community_data = CommonHelper::getCommunity();*/
 
 // var_dump($id = Yii::$app->user->identity->id);
 $id = 0;
+$PROFILE_COMPLETENESS = 0;
+
 if (!Yii::$app->user->isGuest) {
 #$id = base64_decode($id);
     $id = Yii::$app->user->identity->id;
+    $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
 }
 
 $HOME_URL = Yii::getAlias('@web')."/";
@@ -21,7 +24,8 @@ $HOME_URL_SITE = Yii::getAlias('@web')."/site/";
 $UPLOAD_DIR = Yii::getAlias('@frontend') .'/web/uploads/';
 $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 
-#$PROFILE_COMPLETENESS = $model-
+#echo $this->context->profileCompleteness(2);
+
 ?>
 
 <link rel="stylesheet" type="text/css" href="<?=$HOME_URL?>css/radical-progress.css" />
@@ -44,8 +48,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                 <div class="panel-body">
                   <div class="profile-header-container">
                     <div class="profile-header-img">
-                      <img class="img-circle" src="<?=($model->propic!='') ? $model->propic : $HOME_PAGE_URL.'images/placeholder.jpg';?>" />
-
+                      <!--<img class="img-circle" src="<? /*=$model->propic*/ ?>" />-->
+                      <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->user->identity->propic, 200), ['width' => '200', 'height' => '200', 'alt' => 'Profile Photo', 'class' => 'img-circle']); ?>
                       <!-- badge -->
                       <div class="rank-label-container img-circle">
                         <div class="dropdown">
@@ -70,7 +74,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                 </div>
                 <div class="panel-body">
                   <ul class="reset mrg-lt-15 list-item">
-                    <li> <a href="<?=$HOME_URL_SITE?>basic-details" title="Edit Profile">Edit Profile</a> </li>
+                    <li> <a href="<?=$HOME_URL?>user/my-profile" title="Edit Profile">Edit Profile</a> </li>
                     <li><a href="#" title="Manage Photos">Manage Photos</a> </li>
                     <li><a href="#" title="Edit Preference"> Edit Preference</a></li>
                     <li><a href="#" title="Privacy Options"> Privacy Options </a> </li>
@@ -263,7 +267,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                 <div class="fb-profile-text">
                   <h1 class="user-name"><?= $model->First_Name.' '.$model->Last_Name; ?><span class="sub-text">(<?= ($model->Registration_Number !='') ? $model->Registration_Number : '-'; ?>)</span></h1>
                   <h5 class="user-line mrg-tp-20">Add more details to get better visibility</h5>
-                  <div class="ad-title mrg-tp-10"><a href="<?=$HOME_URL_SITE?>basic-details">Complete your Profile Now!</a></div>
+                  <div class="ad-title mrg-tp-10"><a href="<?=$HOME_URL?>user/my-profile">Complete your Profile Now!</a></div>
                 </div>
                 <div class="clearfix"></div>
               </div>
@@ -546,7 +550,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 <!-- Bootstrap core JavaScript
     ================================================== -->
 <script type="text/javascript">
-    var PRO_COMP = '80';
+    var PRO_COMP = <?=$PROFILE_COMPLETENESS?>;
 </script>
 <script src="<?=$HOME_URL?>js/jquery.js" type="text/javascript"></script>
 <script src="<?=$HOME_URL?>js/selectFx.js"></script>

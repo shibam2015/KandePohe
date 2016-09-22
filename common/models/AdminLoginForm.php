@@ -31,6 +31,15 @@ class AdminLoginForm extends Model
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'vEmail' => 'Enail Id',
+            'vPassword' => 'Password',
+        ];
+    }
+
+
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
