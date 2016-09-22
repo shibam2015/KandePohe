@@ -10,9 +10,13 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 use yii\bootstrap\ActiveForm;
-use frontend\components\CommonHelper;
+#use frontend\components\CommonHelper;
+use common\components\CommonHelper;
 
 AppAsset::register($this);
+
+#$LOGO = CommonHelper::getLogo();
+
 ?>
 <?php $this->beginPage() ?>
   <!DOCTYPE html>
@@ -64,7 +68,8 @@ AppAsset::register($this);
   <!-- Modal Forgot Password -->
   <div class="modal fade" id="fpswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo"></p>
+        <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+        </p>
       <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header">
@@ -143,7 +148,8 @@ AppAsset::register($this);
   <div class="modal fade" id="reset-pswd-link" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
        aria-hidden="true">
     <div class="modal-dialog">
-      <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo"></p>
+        <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+        </p>
       <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header">
@@ -180,7 +186,8 @@ AppAsset::register($this);
   <!-- Modal Reset Password -->
   <div class="modal fade" id="reset-pswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo"></p>
+        <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+        </p>
       <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header">
@@ -218,7 +225,8 @@ AppAsset::register($this);
   <div class="modal fade" id="reset-pswd-success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
        aria-hidden="true">
     <div class="modal-dialog">
-      <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo"></p>
+        <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+        </p>
       <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header">
@@ -245,6 +253,50 @@ AppAsset::register($this);
     </div>
 
   </div>
+
+
+  <!-- NOTIFICATION MODEL START -->
+  <div class="modal fade" id="notification-model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+      <div class="modal-dialog">
+
+          <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+          </p>
+          <div class="modal-content">
+              <!-- Modal Header -->
+              <div class="modal-header">
+                  <button type="button" class="close"
+                          data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
+                          class="sr-only">Close</span>
+                  </button>
+                  <h2 class="text-center" id="notification_header"> Information</h2>
+              </div>
+              <!-- Modal Body -->
+              <div class="modal-body">
+                  <form>
+                      <div class="row">
+                          <div class="col-sm-12 text-center">
+                              <h4 class="mrg-bt-30 text-dark" id="forgot-password-id"></h4>
+                              <h4 class="mrg-bt-30" id="notification_msg">
+                              </h4>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-sm-10 col-sm-offset-1">
+                              <button type="button" class="btn btn-primary mrg-tp-10 col-xs-12" data-dismiss="modal">
+                                  Close
+                              </button>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <!-- Modal Footer -->
+              <div class="modal-footer"></div>
+          </div>
+      </div>
+
+  </div>
+  <!-- NOTIFICATION MODEL END -->
   <!-- Bootstrap core JavaScript
       ================================================== -->
   <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->

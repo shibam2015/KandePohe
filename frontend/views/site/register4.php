@@ -352,17 +352,18 @@ use yii\helpers\ArrayHelper;
                       <div class="radio dl radio_step4" id="IVA">
                         <!--<dt></dt>
                         <dd>-->
+
                         <?= $form->field($model, 'vFamilyAffluenceLevel')->RadioList(
-                            ['Affluent'=>'Affluent','Upper Middle Class'=>'Upper Middle Class','Middle Class'=>'Middle Class','Lower Middle Class'=>'Lower Middle Class'],
-                            [
-                                'item' => function($index, $label, $name, $checked, $value) {
-                                  $checked = ($checked) ? 'checked' : '';
-                                  $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                                  $return .= '<label for="'.$value.'">' . ucwords($label) . '</label>';
-                                  return $return;
-                                }
+                            ArrayHelper::map(CommonHelper::getFamilyAffulenceLevel(), 'ID', 'Name'),
+                            ['item' => function ($index, $label, $name, $checked, $value) {
+                                $checked = ($checked) ? 'checked' : '';
+                                $return = '<input type="radio" id="vFamilyAffluenceLevel_' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
+                                $return .= '<label for="vFamilyAffluenceLevel_' . $value . '">' . ucwords($label) . '</label>';
+                                return $return;
+                            }
                             ]
-                        )->label(false);?>
+
+                        )->label(false)->error(false); ?>
                         <!--</dd>-->
                       </div>
                     </div>
@@ -395,6 +396,7 @@ use yii\helpers\ArrayHelper;
                                 }
                             ]
                         )->label(false);?>
+
                         <!--</dd>-->
                       </div>
                     </div>
@@ -414,19 +416,20 @@ use yii\helpers\ArrayHelper;
                     <div class="form-cont">
                       <div class="checkbox mrg-lt-30">
                         <?php global $ABC ; $ABC= $model->vFamilyProperty; ?>
+
                         <?= $form->field($model, 'vFamilyProperty')->checkboxList(
-                            ['Ownership Flat'=>'Ownership Flat','Own Car'=>'Own Car'],
-                            [
-                                'item' => function($index, $label, $name, $checked, $value) {
-                                  global $ABC ;
-                                  //if (in_array($value, explode(",",$model->vFamilyProperty))) { $checked='checked="checked"'; }else{$checked='';}
-                                  $checked = (in_array($value, explode(",",$ABC))) ? 'checked' : '';
-                                  $return = '<input type="checkbox" id="vFamilyProperty'.$label.'" name="' . $name . '" value="' . $value . '"' . $checked . '>';
-                                  $return .= '<label for="vFamilyProperty'.$label.'" class="control-label toccl">'.$label.'</label>';
-                                  return $return;
-                                }
+                            ArrayHelper::map(CommonHelper::getFamilyPropertyDetail(), 'ID', 'Name'),
+                            ['item' => function ($index, $label, $name, $checked, $value) {
+                                global $ABC;
+                                //if (in_array($value, explode(",",$model->vFamilyProperty))) { $checked='checked="checked"'; }else{$checked='';}
+                                $checked = (in_array($value, explode(",", $ABC))) ? 'checked' : '';
+                                $return = '<input type="checkbox" id="vFamilyProperty' . $label . '" name="' . $name . '" value="' . $value . '"' . $checked . '>';
+                                $return .= '<label for="vFamilyProperty' . $label . '" class="control-label toccl">' . $label . '</label>';
+                                return $return;
+                            }
                             ]
-                        )->label(false);?>
+
+                        )->label(false)->error(false); ?>
                       </div>
                     </div>
                     <!--<div class="form-cont">

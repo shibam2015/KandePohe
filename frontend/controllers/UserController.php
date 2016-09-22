@@ -56,8 +56,8 @@ class UserController extends Controller
 
     public static function profileCompleteness($x)
     {
-#        $model = new Wightege();
-        #print_R($model->findModel(2));
+        #$id = Yii::$app->user->identity->id;
+        #$USER = User::findOne($id);
         $PERCENTAGE = 0;
         $STEP_ARRAY = explode(",", $x);
         foreach ($STEP_ARRAY as $k => $v) {
@@ -65,8 +65,11 @@ class UserController extends Controller
                 if ($model = Wightege::findOne($v)) {
                     $PERCENTAGE += $model->vWightegePercent;
                 }
+                #if($USER->ePhoneVerifiedStatus =='Yes'){ $PERCENTAGE += $model->vWightegePercent;}
+                #if($USER->eEmailVerifiedStatus =='Yes'){ $PERCENTAGE += $model->vWightegePercent;}
             }
         }
+
         if ($PERCENTAGE <= 50) $PERCENTAGE -= 1;
         if ($PERCENTAGE != 0) $PERCENTAGE += 5;
 
@@ -108,8 +111,10 @@ class UserController extends Controller
 
     	$id = Yii::$app->user->identity->id;
         $model = User::find()->joinWith([countryName, stateName, cityName, height, maritalStatusName, talukaName, districtName, gotraName, subCommunityName, communityName, religionName, educationLevelName, communityName, workingWithName, workingAsName, dietName, fatherStatus])->where(['id' => $id])->one();
+        $USER_PHOTO_MODEL = new  UserPhotos();
+        $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
 		return $this->render('my-profile',
-            ['model' => $model]
+            ['model' => $model, 'photo_model' => $USER_PHOTOS_LIST]
         );
     }
 
@@ -118,22 +123,11 @@ class UserController extends Controller
         if (!Yii::$app->user->isGuest) {
             #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
-            #$id = base64_decode($id);
             if($model = User::findOne($id)){
-                #if($model->eFirstVerificationMailStatus == 'YES' ){
                     $model->scenario = User::SCENARIO_REGISTER6;
-                #$target_dir = Yii::getAlias('@web').'/uploads/';
-                #$target_dir_default = Yii::getAlias('@web').'/images/';
-                /*if($model->propic !='')
-                    $model->propic = \common\components\CommonHelper::getPhotos('USER',$id,$model->propic,200);
-                else
-                    $model->propic = CommonHelper::getUserDefaultPhoto();*/
                     return $this->render('dashboard',[
                         'model' => $model
                     ]);
-                /*}else{
-                    return $this->redirect(Yii::getAlias('@web'));
-                }*/
 
             }else{
                 return $this->redirect(Yii::getAlias('@web'));
@@ -141,8 +135,6 @@ class UserController extends Controller
         }else{
             return $this->redirect(Yii::getAlias('@web'));
         }
-
-        #return $this->render('dashboard');
     }
 
     public function actionPhotos()
@@ -152,7 +144,7 @@ class UserController extends Controller
             $id = Yii::$app->user->identity->id;
             #$id = base64_decode($id);
             $USER_PHOTO_MODEL = new UserPhotos();
-            $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUderId($id);
+            $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
             return $this->render('photos', [
                 'model' => $USER_PHOTOS_LIST
             ]);
@@ -165,6 +157,8 @@ class UserController extends Controller
     public function actionPhotoupload($id)
     {
         $id = base64_decode($id);
+        $STATUS = "SUCCESS";
+        $MESSAGE = 'Photo Upload Successfully.';
         if ($model = User::findOne($id)) {
             $model->scenario = User::SCENARIO_REGISTER6;
             $FILE_COUNT = count($_FILES);
@@ -183,38 +177,157 @@ class UserController extends Controller
                         $PG->Is_Profile_Photo = 'NO';
                         $PG->dtCreated = CommonHelper::getTime();
                         $PG->dtModified = CommonHelper::getTime();
-                        $PG->save();
+                        $ACTION_FLAG = $PG->save();
+                        if (!$ACTION_FLAG) {
+                            $STATUS = "ERROR";
+                            $MESSAGE = 'Photo Not Uploaded. Please Try Again !';
+                        }
                     }
                 }
-
                 //$this->redirect(['user/photos']);
             }
-            $PG = new UserPhotos();
-            $USER_PHOTOS_LIST = $PG->findByUderId($id);
-            #echo "<pre>"; print_r($USER_PHOTOS_LIST);exit;
             $OUTPUT_HTML = '';
-            foreach ($USER_PHOTOS_LIST as $K => $V) {
-                $IMG = CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140);
-                $OUTPUT_HTML .= '<div class="col-md-3 col-sm-3 col-xs-6">
-                                                                <a class="selected" href="#">';
-
-                $OUTPUT_HTML .= '<img src="' . $IMG . '" height="140" class="img-responsive" alt="Full view" style="height:140px;">';
-                $OUTPUT_HTML .= '</a>
-
-                                                                <a href="#" class="pull-left"> Profile pic</a>
-
-                                                                <a href="#" class="pull-right"> <i aria-hidden="true"
-                                                                                                   class="fa fa-trash-o"></i>
-                                                                </a>
-
-                                                            </div>';
-            }
+            $OUTPUT_HTML_ONE = '';
+            $OUTPUT_HTML .= $this->getPhotoListOutput();
+            $OUTPUT_HTML_ONE .= $this->getPhotoListOutputOne();
+            $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'OUTPUT' => $OUTPUT_HTML, 'OUTPUT_ONE' => $OUTPUT_HTML_ONE);
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return $return;
 
         } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
     }
 
+    /**
+     * @return Action
+     */
+    public function getPhotoListOutput()
+    {
+        $PG = new UserPhotos();
+        $id = Yii::$app->user->identity->id;
+        $USER_PHOTOS_LIST = $PG->findByUserId($id);
+        $OUTPUT_HTML = '';
+        foreach ($USER_PHOTOS_LIST as $K => $V) {
+            $SELECTED = '';
+            if ($V['Is_Profile_Photo'] == 'YES') {
+                $SELECTED = "selected";
+            }
+            $IMG = CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140);
+            $OUTPUT_HTML .= '<div class="col-md-3 col-sm-3 col-xs-6">
+                                                                <a class="selected" href="#">';
+
+            $OUTPUT_HTML .= '<img src="' . $IMG . '" height="140" class="img-responsive ' . $SELECTED . '" alt="Full view" style="height:140px;">';
+            $OUTPUT_HTML .= '</a>
+
+                                                                <a href="javascript:void(0)" class="pull-left  profile_set" data-id="' . $V['iPhoto_ID'] . '" data-target="#photodelete" data-toggle="modal"> Profile pic</a>
+
+                                                                <a href="javascript:void(0)" class="pull-right profile_delete" data-id="' . $V['iPhoto_ID'] . '" data-target="#photodelete" data-toggle="modal"> <i aria-hidden="true"
+                                                                                                   class="fa fa-trash-o"></i>
+                                                                </a>
+
+                                                            </div>';
+
+        }
+        return $OUTPUT_HTML;
+    }
+
+    public function getPhotoListOutputOne()
+    {
+        $PG = new UserPhotos();
+        $id = Yii::$app->user->identity->id;
+        $USER_PHOTOS_LIST = $PG->findByUserId($id);
+        $OUTPUT_HTML = '';
+        foreach ($USER_PHOTOS_LIST as $K => $V) {
+            $SELECTED = '';
+            if ($V['Is_Profile_Photo'] == 'YES') {
+                $SELECTED = "selected";
+            }
+            $IMG = CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140);
+            $OUTPUT_HTML .= '<div class="col-md-3 col-sm-3 col-xs-6">
+                                 <a href="javascript:void(0)" class="pull-left profile_set" data-id="' . $V['iPhoto_ID'] . '"
+                                       data-target="#photodelete" data-toggle="modal">';
+            $OUTPUT_HTML .= '<img src="' . $IMG . '" height="140" class="img-responsive ' . $SELECTED . '" alt="Full view" style="height:140px;">';
+            $OUTPUT_HTML .= '</a></div>';
+
+        }
+        return $OUTPUT_HTML;
+    }
+
+    /**
+     * @return string
+     */
+    public function actionPhotoOperation()
+    {
+        $PG = new UserPhotos();
+        $CM_HELPER = new CommonHelper();
+        $id = Yii::$app->user->identity->id;
+        $P_ID = Yii::$app->request->post('P_ID');
+        $P_TYPE = Yii::$app->request->post('P_TYPE');
+        $OUTPUT_HTML = '';
+        $OUTPUT_HTML_ONE = '';
+        $PROFILE_PHOTO = '';
+        $PROFILE_PHOTO_ONE = '';
+        if ($P_ID != '' && $P_TYPE == 'PHOTO_DELETE' && $P_TYPE != '') {
+            $USER_PHOTOS_LIST = $PG->findByPhotoId($id, $P_ID);
+            if (count($USER_PHOTOS_LIST) != 0) {
+
+                $IS_PROFILE = $USER_PHOTOS_LIST->Is_Profile_Photo;
+                $PHOTO = $USER_PHOTOS_LIST->File_Name;
+                $PATH = $CM_HELPER->getUserUploadFolder(1) . "/" . $id . "/";
+                $USER_SIZE_ARRAY = $CM_HELPER->getUserResizeRatio();
+                $CM_HELPER->photoDeleteFromFolder($PATH, $USER_SIZE_ARRAY, $PHOTO);
+                $ACTION_FLAG = $USER_PHOTOS_LIST->delete();
+                if ($IS_PROFILE == 'YES') {
+                    $PROFILE_PHOTO = CommonHelper::getPhotos('USER', $id, $PHOTO, '200');
+                    $PROFILE_PHOTO_ONE = CommonHelper::getPhotos('USER', $id, $PHOTO, '30');
+                }
+                if ($ACTION_FLAG) {
+                    $STATUS = 'SUCCESS';
+                    $MESSAGE = 'Photo Deleted Successfully.';
+                } else {
+                    $STATUS = 'ERROR';
+                    $MESSAGE = 'Photo Not Deleted. Please Try Again !';
+
+                }
+            }
+            #$OUTPUT_HTML .= $this->getPhotoListOutput();
+        } else {
+            $PG->updateIsProfilePhoto($id);
+            $USER_PHOTOS_LIST = $PG->findByPhotoId($id, $P_ID);
+            if (count($USER_PHOTOS_LIST) != 0) {
+                $USER_MODEL = User::findOne($id);
+                #echo "<pre>";print_R($USER_MODEL);
+                $PHOTO = $USER_PHOTOS_LIST->File_Name;
+                $USER_MODEL->propic = $PHOTO;
+                $USER_MODEL->eStatusPhotoModify = 'Pending';
+                $USER_MODEL->completed_step = $USER_MODEL->setCompletedStep('7');
+                $USER_MODEL->save();
+                $ACTION_FLAG = $USER_MODEL->save();
+                $USER_PHOTOS_LIST->Is_Profile_Photo = 'YES';
+                $USER_PHOTOS_LIST->eStatus = 'Pending';
+                $USER_PHOTOS_LIST->save();
+                if ($ACTION_FLAG) {
+                    $STATUS = 'SUCCESS';
+                    $MESSAGE = 'Photo Set AS Profile Photo.';
+                    $PROFILE_PHOTO .= CommonHelper::getPhotos('USER', $id, $PHOTO, '200');
+                    $PROFILE_PHOTO_ONE = CommonHelper::getPhotos('USER', $id, $PHOTO, '30');
+                } else {
+                    $STATUS = 'ERROR';
+                    $MESSAGE = 'Photo Not Set As Profile Photo. Please Try Again !';
+                }
+            }
+
+        }
+
+        $OUTPUT_HTML .= $this->getPhotoListOutput();
+        $OUTPUT_HTML_ONE .= $this->getPhotoListOutputOne();
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'OUTPUT' => $OUTPUT_HTML, 'OUTPUT_ONE' => $OUTPUT_HTML_ONE, 'PROFILE_PHOTO' => $PROFILE_PHOTO, 'PROFILE_PHOTO_ONE' => $PROFILE_PHOTO_ONE);
+        #Yii::$app->response->format = Response::FORMAT_JSON;
+        return json_encode($return);
+        exit;
+
+    }
 
     public function actionEditMyinfo(){
         $id = Yii::$app->user->identity->id;
@@ -234,5 +347,6 @@ class UserController extends Controller
             ]);
         }
     }
+
 }
 

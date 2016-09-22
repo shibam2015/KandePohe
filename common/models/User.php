@@ -141,6 +141,30 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         #return static::findOne(['email' => $email]);
     }
 
+    public static function wightegeCheck($type)
+    {
+        $iUserId = Yii::$app->user->identity->id;
+        $USER = User::findOne($iUserId);
+
+        $completed_step = $USER->completed_step;
+        if ($type == 8) {
+            if ($USER->ePhoneVerifiedStatus == 'Yes') {
+                return 1;
+            }
+        }
+        if ($type == 9) {
+            if ($USER->eEmailVerifiedStatus == 'Yes') {
+                return 1;
+            }
+        }
+        $STEP_ARRAY = explode(",", $completed_step);
+        if (in_array($type, $STEP_ARRAY)) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     /**
      * @inheritdoc
      */
@@ -172,7 +196,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             [['First_Name', 'Last_Name'], 'string', 'max' => 100],
             [['email_pin'], 'string', 'max' => 4, 'min' => 4],
             // [['username'], 'unique'],
-            // [['email'], 'unique'],
+            [['email'], 'unique'],
             //[['captcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'secret' => '6Lc2xSgTAAAAAC37FZoNHA6KreseSCE5TrORJIbp'],
            // [['captcha'],'required'],
            // [['captcha'],'captcha'],
@@ -385,52 +409,62 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     {
         return $this->hasOne(Religion::className(), ['iReligion_ID' => 'iReligion_ID']);
     }
+
     public function getCommunityName()
     {
         return $this->hasOne(MasterCommunity::className(), ['iCommunity_ID' => 'iCommunity_ID']);
     }
+
     public function getSubCommunityName()
     {
         return $this->hasOne(MasterCommunitySub::className(), ['iSubCommunity_ID' => 'iSubCommunity_ID']);
     }
+
     public function getDistrictName()
     {
         return $this->hasOne(MasterDistrict::className(), ['iDistrictID' => 'iDistrictID']);
     }
+
     public function getGotraName()
     {
         return $this->hasOne(MasterGotra::className(), ['iGotraID' => 'iGotraID']);
     }
+
     public function getMaritalStatusName()
     {
         return $this->hasOne(MasterMaritalStatus::className(), ['iMaritalStatusID' => 'iMaritalStatusID']);
     }
+
     public function getTalukaName()
     {
         return $this->hasOne(MasterTaluka::className(), ['iTalukaID' => 'iTalukaID']);
     }
 
-
     public function getCountryName()
     {
         return $this->hasOne(Countries::className(), ['iCountryId' => 'iCountryId']);
     }
+
     public function getStateName()
     {
         return $this->hasOne(States::className(), ['iStateId' => 'iStateId']);
     }
+
     public function getCityName()
     {
         return $this->hasOne(Cities ::className(), ['iCityId' => 'iCityId']);
     }
+
     public function getCountryNameCA()
     {
         return $this->hasOne(Countries::className(), ['iCountryId' => 'iCountryCAId']);
     }
+
     public function getStateNameCA()
     {
         return $this->hasOne(States::className(), ['iStateId' => 'iStateCAId']);
     }
+
     public function getCityNameCA()
     {
         return $this->hasOne(Cities ::className(), ['iCityId' => 'iCityCAId']);
@@ -451,55 +485,65 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         #return $this->hasOne(Nati::className(), ['iTalukaID' => 'iTalukaCAID']);
     }
 
-
     public function getEducationLevelName()
     {
         return $this->hasOne(EducationLevel ::className(), ['iEducationLevelID' => 'iEducationLevelID']);
     }
+
     public function getEducationFieldName()
     {
         return $this->hasOne(EducationField ::className(), ['iEducationFieldID' => 'iEducationFieldID']);
     }
+
     public function getWorkingWithName()
     {
         return $this->hasOne(WorkingWith ::className(), ['iWorkingWithID' => 'iWorkingWithID']);
     }
+
     public function getWorkingAsName()
     {
         return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iWorkingAsID']);
     }
+
     public function getAnnualIncome()
     {
         return $this->hasOne(AnnualIncome ::className(), ['iAnnualIncomeID' => 'iAnnualIncomeID']);
     }
+
     public function getHeight()
     {
         return $this->hasOne(MasterHeight ::className(), ['iHeightID' => 'iHeightID']);
     }
+
     public function getDietName()
     {
         return $this->hasOne(MasterDiet ::className(), ['iDietID' => 'vDiet']);
     }
+
     public function getFatherStatus()
     {
         $ABC = $this->hasOne(MasterFmStatus ::className(), ['iFMStatusID' => 'iFatherStatusID']);
 
         return $ABC;
     }
+
     public function getFatherStatusId()
     {
         return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iFatherStatusID']);
     }
+
     public function getMotherStatus()
     {
         $ABC = $this->hasOne(MasterFmStatus ::className(), ['iFMStatusID' => 'iMotherStatusID']);
 
         return $ABC;
     }
+
     public function getMotherStatusId()
     {
         return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iMotherStatusID']);
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -507,6 +551,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     {
         return $this->hasOne(Cities::className(), ['iCityId' => 'iCityId']);
     }
+
     function getUserInfo(){
         /*$query = new Query;
         $query	->select([
@@ -529,7 +574,6 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     }
 
-
     public function generateUniqueRandomNumber($length = 9) {
         $PREFIX = CommonHelper::generatePrefix();
         $RANDOM_USER_NUMBER = $PREFIX.CommonHelper::generateNumericUniqueToken($length);
@@ -541,9 +585,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     }
 
     public function setCompletedStep($step) {
-        
         $returnVal = $this->completed_step;
-
         if($returnVal==""){
             $returnVal = $step;
         }

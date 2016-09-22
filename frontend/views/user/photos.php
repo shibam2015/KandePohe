@@ -106,15 +106,28 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                     if (count($model) > 0) {
                                                         foreach ($model as $K => $V) {
                                                             ?>
+                                                            <?php $SELECTED = '';
+                                                            if ($V['Is_Profile_Photo'] == 'YES') {
+                                                                $SELECTED = "selected";
+                                                            } ?>
                                                             <div class="col-md-3 col-sm-3 col-xs-6">
-                                                                <a class="selected" href="#">
-                                                                    <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive', 'height' => '140', 'alt' => 'Photo' . $K, 'style' => "height:140px;"]); ?>
+                                                                <a <?php if ($V['Is_Profile_Photo'] == 'YES'){ ?>class="selected"<?php } ?>
+                                                                   href="#">
+                                                                    <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive ' . $SELECTED, 'height' => '140', 'alt' => 'Photo' . $K, 'style' => "height:140px;"]); ?>
                                                                 </a>
 
-                                                                <a href="#" class="pull-left"> Profile pic</a>
+                                                                <a href="javascript:void(0)"
+                                                                   class="pull-left profile_set"
+                                                                   data-id="<?= $V['iPhoto_ID'] ?>"
+                                                                   data-target="#photodelete" data-toggle="modal">
+                                                                    Profile pic
+                                                                </a>
 
-                                                                <a href="#" class="pull-right"> <i aria-hidden="true"
-                                                                                                   class="fa fa-trash-o"></i>
+                                                                <a href="javascript:void(0)"
+                                                                   class="pull-right profile_delete"
+                                                                   data-id="<?= $V['iPhoto_ID'] ?>"
+                                                                   data-target="#photodelete" data-toggle="modal">
+                                                                    <i aria-hidden="true" class="fa fa-trash-o"></i>
                                                                 </a>
 
                                                             </div>
@@ -126,10 +139,10 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                             <p> No Photos Available</p>
                                                         </div>
                                                     <?php } ?>
-                                                    <!--<div class="col-md-3 col-sm-3 col-xs-6">
+                                                    <!-- <div class="col-md-3 col-sm-3 col-xs-6">
 
                                                         <a class="selected" href="#">
-                                                            <? /*= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); */ ?>
+                                                            <?= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); ?>
                                                         </a>
 
                                                         <a href="#" class="pull-left"> Profile pic </a>
@@ -137,119 +150,13 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                         <a href="#" class="pull-right"> <i aria-hidden="true"
                                                                                            class="fa fa-trash-o"></i>
                                                         </a>
-
-                                                    </div>
-
-                                                    <div class="col-md-3 col-sm-3 col-xs-6">
-
-                                                        <a class="selected" href="#">
-                                                            <? /*= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); */ ?>
-                                                        </a>
-
-                                                        <a href="#" class="pull-left"> Profile pic </a>
-
-                                                        <a href="#" class="pull-right"> <i aria-hidden="true"
-                                                                                           class="fa fa-trash-o"></i>
-                                                        </a>
-
-                                                    </div>
-
-                                                    <div class="col-md-3 col-sm-3 col-xs-6">
-
-                                                        <a class="selected" href="#">
-                                                            <? /*= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); */ ?>
-                                                        </a>
-
-                                                        <a href="#" class="pull-left"> Profile pic </a>
-
-                                                        <a href="#" class="pull-right"> <i aria-hidden="true"
-                                                                                           class="fa fa-trash-o"></i>
-                                                        </a>
-
-                                                    </div>
-
-                                                    <div class="col-md-3 col-sm-3 col-xs-6">
-
-                                                        <a class="selected" href="#">
-                                                            <? /*= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); */ ?>
-                                                        </a>
-
-                                                        <a href="#" class="pull-left"> Profile pic </a>
-
-                                                        <a href="#" class="pull-right"> <i aria-hidden="true"
-                                                                                           class="fa fa-trash-o"></i>
-                                                        </a>
-
-                                                    </div>
-
-                                                    <div class="col-md-3 col-sm-3 col-xs-6">
-
-                                                        <a class="selected" href="#">
-                                                            <? /*= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); */ ?>
-                                                        </a>
-
-                                                        <a href="#" class="pull-left"> Profile pic </a>
-
-                                                        <a href="#" class="pull-right"> <i aria-hidden="true"
-                                                                                           class="fa fa-trash-o"></i>
-                                                        </a>
-
-                                                    </div>
-
-                                                    <div class="col-md-3 col-sm-3 col-xs-6">
-
-                                                        <a class="selected" href="#">
-                                                            <? /*= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); */ ?>
-                                                        </a>
-
-                                                        <a href="#" class="pull-left"> Profile pic </a>
-
-                                                        <a href="#" class="pull-right"> <i aria-hidden="true"
-                                                                                           class="fa fa-trash-o"></i>
-                                                        </a>
-
-                                                    </div>
-
-                                                    <div class="col-md-3 col-sm-3 col-xs-6">
-
-                                                        <a class="selected" href="#">
-                                                            <? /*= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); */ ?>
-                                                        </a>
-
-                                                        <a href="#" class="pull-left"> Profile pic </a>
-
-                                                        <a href="#" class="pull-right"> <i aria-hidden="true"
-                                                                                           class="fa fa-trash-o"></i>
-                                                        </a>
-
-                                                    </div>
-
-                                                    <div class="col-md-3 col-sm-3 col-xs-6">
-
-                                                        <a class="selected" href="#">
-                                                            <? /*= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); */ ?>
-                                                        </a>
-
-                                                        <a href="#" class="pull-left"> Profile pic </a>
-
-                                                        <a href="#" class="pull-right"> <i aria-hidden="true"
-                                                                                           class="fa fa-trash-o"></i>
-                                                        </a>
-
-                                                    </div>
--->
+                                                    </div> -->
                                                 </div>
-
                                             </div>
-
                                             <div class="privacy-promo">
-
                                                 <div class="row">
-
                                                     <div class="col-sm-12">
-
                                                         <div class="phone-privacy mrg-tp-30">
-
                                                             Photo Privacy
                                                             <button type="button"
                                                                     class="btn btn-default btn-xs dropdown-toggle"
@@ -257,40 +164,24 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                     aria-expanded="false"><span
                                                                     class="glyphicon glyphicon-globe"></span> <span
                                                                     class="caret"></span>
-
                                                             </button>
-
                                                             <ul class="dropdown-menu">
-
                                                                 <li><a href="#"><span
                                                                             class="glyphicon glyphicon-globe"></span>
                                                                         <strong>Public</strong><br> <span
                                                                             class="sub-title">Anyone</span></a></li>
-
                                                                 <li><a href="#"><span
                                                                             class="glyphicon glyphicon-certificate"></span>
                                                                         <strong>Members</strong><br> <span
                                                                             class="sub-title">Only Premium Members</span></a>
                                                                 </li>
-
-
                                                             </ul>
-
                                                         </div>
-
-
                                                     </div>
-
                                                 </div>
-
-
                                                 </div>
-
                                             </div>
-
                                         <div class="col-sm-1"></div>
-
-
                                         <div class="col-sm-5">
 
                                             <?php
@@ -425,115 +316,67 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                 </div>
 
                                             </div>
-
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-
             </section>
-
         </div>
-
     </main>
 </div>
-
-
 <!-- Modal Photo -->
-
 <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
     <div class="modal-dialog">
-
-        <p class="text-center mrg-bt-10"><img src="<?= $HOME_PAGE_URL ?>images/logo.png" width="157" height="61"
+        <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61"
                                               alt="logo"></p>
-
         <div class="modal-content">
-
             <!-- Modal Header -->
-
             <div class="modal-header">
-
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
                         class="sr-only">Close</span></button>
-
                 <h2 class="text-center">My Photo Gallery</h2>
-
                 <div class="profile-control photo-btn">
-
-                    <button class="btn active" type="button"> Upload Video or Photo</button>
-
-                    <button class="btn " type="button"> Choose from Photos</button>
-
+                    <button class="btn " type="button"> Upload Video or Photo</button>
+                    <button class="btn active" type="button"> Choose from Photos</button>
                     <button class="btn" type="button"> Albums</button>
-
                 </div>
-
             </div>
-
             <!-- Modal Body -->
-
             <div class="modal-body photo-gallery">
-
                 <div class="choose-photo">
+                    <div class="row" id="profile_list_popup">
+                        <?php
+                        if (count($model) > 0) {
+                            foreach ($model as $K => $V) {
+                                ?>
+                                <div class="col-md-3 col-sm-3 col-xs-6">
+                                    <?php $SELECTED = '';
+                                    if ($V['Is_Profile_Photo'] == 'YES') {
+                                        $SELECTED = "selected";
+                                    } ?>
+                                    <a href="javascript:void(0)" class="pull-left profile_set"
+                                       data-id="<?= $V['iPhoto_ID'] ?>"
+                                       data-target="#photodelete" data-toggle="modal">
+                                        <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive ' . $SELECTED, 'height' => '140', 'alt' => 'Photo' . $K, 'style' => "height:140px;"]); ?>
+                                    </a>
+                                </div>
+                                <!-- <div class="col-md-3 col-sm-3 col-xs-6">
+                                    <a href="javascript:void(0)" class="pull-left profile_set" data-id="<?= $V['iPhoto_ID'] ?>"
+                                       data-target="#photodelete" data-toggle="modal">
+                                        Profile pic
+                                    </a>
+                                </div>
+-->
+                            <?php }
+                        } else {
+                            ?>
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                <p> No Photos Available</p>
+                            </div>
+                        <?php } ?>
 
-                    <div class="row">
-
-                        <div class="col-md-3 col-sm-3 col-xs-6"><a href="#" class="selected"><img width="200"
-                                                                                                  height="200"
-                                                                                                  class="img-responsive"
-                                                                                                  alt="placeholder"
-                                                                                                  src="<?= $HOME_PAGE_URL ?>images/placeholder.jpg"></a>
-                        </div>
-
-                        <div class="col-md-3 col-sm-3 col-xs-6"><a href="#"><img width="200" height="200"
-                                                                                 class="img-responsive"
-                                                                                 alt="placeholder"
-                                                                                 src="<?= $HOME_PAGE_URL ?>images/placeholder.jpg"></a>
-                        </div>
-
-                        <div class="col-md-3 col-sm-3 col-xs-6"><a href="#"><img width="200" height="200"
-                                                                                 class="img-responsive"
-                                                                                 alt="placeholder"
-                                                                                 src="<?= $HOME_PAGE_URL ?>images/placeholder.jpg"></a>
-                        </div>
-
-                        <div class="col-md-3 col-sm-3 col-xs-6"><a href="#"><img width="200" height="200"
-                                                                                 class="img-responsive"
-                                                                                 alt="placeholder"
-                                                                                 src="<?= $HOME_PAGE_URL ?>images/placeholder.jpg"></a>
-                        </div>
-
-                        <div class="col-md-3 col-sm-3 col-xs-6"><a href="#"><img width="200" height="200"
-                                                                                 class="img-responsive"
-                                                                                 alt="placeholder"
-                                                                                 src="<?= $HOME_PAGE_URL ?>images/placeholder.jpg"></a>
-                        </div>
-
-                        <div class="col-md-3 col-sm-3 col-xs-6"><a href="#"><img width="200" height="200"
-                                                                                 class="img-responsive"
-                                                                                 alt="placeholder"
-                                                                                 src="<?= $HOME_PAGE_URL ?>images/placeholder.jpg"></a>
-                        </div>
-
-                        <div class="col-md-3 col-sm-3 col-xs-6"><a href="#"><img width="200" height="200"
-                                                                                 class="img-responsive"
-                                                                                 alt="placeholder"
-                                                                                 src="<?= $HOME_PAGE_URL ?>images/placeholder.jpg"></a>
-                        </div>
-
-                        <div class="col-md-3 col-sm-3 col-xs-6"><a href="#"><img width="200" height="200"
-                                                                                 class="img-responsive"
-                                                                                 alt="placeholder"
-                                                                                 src="<?= $HOME_PAGE_URL ?>images/placeholder.jpg"></a>
-                        </div>
 
                     </div>
 
@@ -547,6 +390,36 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 
     </div>
 
+</div>
+<div class="modal fade" id="photodelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <p class="text-center mrg-bt-10">
+            <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
+                        class="sr-only">Close</span></button>
+                <h2 class="text-center" id="model_heading"></h2>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body photo-gallery">
+                <div class="choose-photo">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <a href="javascript:void(0)"
+                               class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right yes"> Yes </a>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 ">
+                            <a href="javascript:void(0)" class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left"
+                               data-dismiss="modal"> No </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Footer -->
+    </div>
 </div>
 
 <script language="javascript" type="text/javascript">
@@ -601,12 +474,17 @@ $this->registerJs('
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == 1) {
-                                //$(".profile_photo").attr("src", DataObject.PHOTO);
+                            if (DataObject.STATUS == "SUCCESS") {
+                                $("#photo_list").html(DataObject.OUTPUT);
+                                $("#profile_list_popup").html(DataObject.OUTPUT_ONE);
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
                             } else {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
                             }
+                            profile_photo();                    
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Request Failed");
                         }
                     });
                 }
@@ -614,6 +492,67 @@ $this->registerJs('
                 alert("This browser does not support HTML5 FileReader.");
             }
         });
+        var P_ID = "";
+        var P_TYPE = "";
+        function profile_photo(){
+        $(".profile_delete").click(function(){
+                P_ID = $(this).data("id");
+                P_TYPE = "PHOTO_DELETE";
+                $("#model_heading").html("Are you sure want to delete this photo ?");
+        })
+        $(".profile_set").click(function(){
+                P_ID = $(this).data("id");
+                P_TYPE = "PHOTO_PROFILE_SET";
+                $("#model_heading").html("Are you sure want to set this photo as profile photo?");
+        })
+        }
+        profile_photo();
+        
+        $(".yes").click(function(){
+        Pace.restart();
+        var formDataPhoto = new FormData();
+        formDataPhoto.append( "P_ID", P_ID);
+        formDataPhoto.append( "P_TYPE", P_TYPE);    
+                $.ajax({
+                        url: "photo-operation",
+                        type: "POST",
+                        data: formDataPhoto,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (data, textStatus, jqXHR) {
+                            var DataObject = JSON.parse(data);
+                            if (DataObject.STATUS == "SUCCESS") {
+                                if(P_TYPE=="PHOTO_PROFILE_SET"){
+                                    $("#photo_list").html(DataObject.OUTPUT);
+                                    $("#profile_list_popup").html(DataObject.OUTPUT_ONE);
+                                    $(".mainpropic").attr("src", DataObject.PROFILE_PHOTO);
+                                    $(".profile_photo_one").attr("src", DataObject.PROFILE_PHOTO_ONE);
+                                    notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                }else{
+                                    $("#photo_list").html(DataObject.OUTPUT);
+                                    $("#profile_list_popup").html(DataObject.OUTPUT_ONE);
+                                    if(DataObject.PROFILE_PHOTO != ""){
+                                        $(".mainpropic").attr("src", DataObject.PROFILE_PHOTO);
+                                    }
+                                    if(DataObject.PROFILE_PHOTO_ONE != ""){
+                                        $(".profile_photo_one").attr("src", DataObject.PROFILE_PHOTO_ONE);
+                                    }
+                                    notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                }
+                            } else {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            }
+                                                                
+                        profile_photo();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Request Failed");
+                        }
+                    });
+        })
+        
     });
+    
    ');
 ?>

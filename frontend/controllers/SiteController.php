@@ -640,7 +640,7 @@ class SiteController extends Controller
                     if($PIN !=''){
                         if($model->pin_email_vaerification == $PIN){
                             $model->eEmailVerifiedStatus = 'Yes';
-                            $model->completed_step = $model->setCompletedStep('8');
+                            $model->completed_step = $model->setCompletedStep('9');
                             $model->save($model);
                             $this->redirect(['user/dashboard','id'=>base64_encode($id)]);
                         }else{

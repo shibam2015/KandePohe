@@ -12,7 +12,7 @@ use Yii;
  * @property string $created_on
  * @property string $modified_on
  */
-class SkinTone extends \common\models\base\baseCharan
+class SkinTone extends \common\models\base\baseSkinTone
 {
 
     const SCENARIO_ADD = 'ADD';

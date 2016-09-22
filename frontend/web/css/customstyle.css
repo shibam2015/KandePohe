@@ -1,0 +1,21 @@
+/* FOr Pop up Success Message */
+.text-success {
+    color: #11d814;
+}
+
+/* FOr Pop up Error Message */
+.text-error {
+    color: #f50505;
+}
+
+img.selected {
+    border: 1px solid #ea0b44;
+}
+
+.mainpropic {
+    min-height: 200px;
+}
+
+.profile-edit .minor-control a.active .badge {
+    background: #43a44c;
+}

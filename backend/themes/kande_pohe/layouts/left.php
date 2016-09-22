@@ -131,6 +131,15 @@ $ADMIN_NAME = ucwords(strtolower(Yii::$app->user->identity->vFirstName. ' ' .Yii
 
                         ], 'visible' => !Yii::$app->user->isGuest
                     ],
+                    [
+                        'label' => 'CMS',
+                        'icon' => 'fa fa-folder',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Email Template', 'icon' => 'fa fa-envelope', 'url' => ['/email-format'], 'visible' => !Yii::$app->user->isGuest],
+
+                        ], 'visible' => !Yii::$app->user->isGuest
+                    ],
 
                     /*['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [

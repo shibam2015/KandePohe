@@ -73,18 +73,20 @@ use yii\helpers\ArrayHelper;
                           <dt>Skin Tone: </dt>
                           <dd>
                             <?= $form->field($model, 'vSkinTone')->RadioList(
-                                ['Very Fair'=>'Very Fair','Fair'=>'Fair','Wheatish'=>'Wheatish','Dark'=>'Dark'],
-                                [
-                                    'item' => function($index, $label, $name, $checked, $value) {
-                                      $checked = ($checked) ? 'checked' : '';
-                                      $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                                      $return .= '<label for="'.$value.'">' . ucwords($label) . '</label>';
-                                      return $return;
-                                    }
-
+                                ArrayHelper::map(CommonHelper::getSkinTone(), 'ID', 'Name'),
+                                ['item' => function ($index, $label, $name, $checked, $value) {
+                                    $checked = ($checked) ? 'checked' : '';
+                                    $return = '<input type="radio" id="vSkinTone_' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
+                                    $return .= '<label for="vSkinTone_' . $value . '">' . ucwords($label) . '</label>';
+                                    return $return;
+                                }
                                 ]
-                            )->label(false);?>
+
+                            )->label(false)->error(false); ?>
+
                           </dd>
+
+
                         </div>
                       </div>
                     </div>
@@ -101,18 +103,18 @@ use yii\helpers\ArrayHelper;
                         <div class="radio dl" id="IVA">
                           <dt>Body Type: </dt>
                           <dd>
-                            <?= $form->field($model, 'vBodyType')->RadioList(
-                                ['Slim'=>'Slim','Athletic'=>'Athletic','Average'=>'Average','Heavy'=>'Heavy'],
-                                [
-                                    'item' => function($index, $label, $name, $checked, $value) {
-                                      $checked = ($checked) ? 'checked' : '';
-                                      $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                                      $return .= '<label for="'.$value.'">' . ucwords($label) . '</label>';
-                                      return $return;
-                                    }
 
+                              <?= $form->field($model, 'vBodyType')->RadioList(
+                                  ArrayHelper::map(CommonHelper::getBodyType(), 'ID', 'Name'),
+                                  ['item' => function ($index, $label, $name, $checked, $value) {
+                                      $checked = ($checked) ? 'checked' : '';
+                                      $return = '<input type="radio" id="vBodyType_' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
+                                      $return .= '<label for="vBodyType_' . $value . '">' . ucwords($label) . '</label>';
+                                      return $return;
+                                  }
                                 ]
-                            )->label(false);?>
+
+                              )->label(false)->error(false); ?>
                           </dd>
                         </div>
                       </div>

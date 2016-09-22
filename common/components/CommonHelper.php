@@ -6,6 +6,7 @@ namespace common\components;
 
 use common\models\otherlibraries\Compressimage;
 use common\models\otherlibraries\Getextension;
+use common\models\User;
 use Yii;
 
 class CommonHelper {
@@ -175,13 +176,29 @@ class CommonHelper {
 
     }
 
+    public static function photoDeleteFromFolder($PATH, $SIZE_ARRAY, $OLD_PHOTO)
+    {
+        $DEL_IMG = $SIZE_ARRAY;
+        $path = $PATH;
+        if ($OLD_PHOTO != '') {
+            foreach ($DEL_IMG as $k => $V) {
+                if ($k == 0)
+                    $vImage_hid = $OLD_PHOTO;
+                else
+                    $vImage_hid = $V . '_' . $OLD_PHOTO;
+                unlink($path . $vImage_hid);
+            }
+        }
+        return true;
+    }
+
     public static function getUserResizeRatio()
     {//For User photo resize
-        $USER_SIZE_ARRAY = array('', 30, 140, 200, 350, 500, 900);
+        $USER_SIZE_ARRAY = array('', 30, 75, 140, 200, 350, 500, 900);
         return $USER_SIZE_ARRAY;
     }
 
-    public static function getPhotos($TYPE = 'USER', $ID, $PHOTO, $SIZE)
+    public static function getPhotos($TYPE = 'USER', $ID, $PHOTO, $SIZE = '') // GET USER PHOTO (Profile)
     {
         /*echo "<br>".$TYPE;
         echo "<br>".$ID;
@@ -189,7 +206,13 @@ class CommonHelper {
         echo "<br>".$SIZE;exit;*/
         if ($TYPE == 'USER') {
             $U_PATH = $ID . "/";
-            $PHOTO_WITH_SIZE = $SIZE . "_" . $PHOTO;
+
+            if ($SIZE != '') {
+                $PHOTO_WITH_SIZE = $SIZE . "_" . $PHOTO;
+            } else {
+                $PHOTO_WITH_SIZE = $PHOTO;
+            }
+
             $MAIN_URL = CommonHelper::getUserUploadFolder(2);
             $PATH = CommonHelper::getUserUploadFolder(1) . $U_PATH;
             $URL = $MAIN_URL . $U_PATH;
@@ -213,6 +236,18 @@ class CommonHelper {
     {
         $MAIN_URL = CommonHelper::getUserUploadFolder(2);
         return $MAIN_URL . 'no-user-img.jpg';
+    }
+
+    /**
+     * For get Logo Name
+     */
+    public static function getLogo($TYPE = 1)
+    {
+        $LOGO_DIR = Yii::getAlias('@web') . '/images/';
+        if ($TYPE = 1)
+            $img = $LOGO_DIR . 'logo.png';
+
+        return $img;
     }
 
     public function getReligion()
@@ -239,6 +274,30 @@ class CommonHelper {
     public function getEducationLevel()
     {
         return \common\models\EducationLevel::find()->all();
+    }
+
+    public function getSkinTone()
+    {
+        $skintone = \common\models\SkinTone::find()->all();
+        return $skintone;
+    }
+
+    public function getBodyType()
+    {
+        $bodytype = \common\models\BodyType::find()->all();
+        return $bodytype;
+    }
+
+    public function getFamilyAffulenceLevel()
+    {
+        $bodytype = \common\models\FamilyAffluenceLevel::find()->all();
+        return $bodytype;
+    }
+
+    public function getFamilyPropertyDetail()
+    {
+        $bodytype = \common\models\PropertyDetails::find()->all();
+        return $bodytype;
     }
 
     public function getWorkingAS()
@@ -361,5 +420,7 @@ class CommonHelper {
         #echo $img;exit;
         return $img;
     }
+
+
 }
 ?>

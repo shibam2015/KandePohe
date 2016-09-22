@@ -18,7 +18,8 @@ class AppAsset extends AssetBundle
 		'css/cs-select.css',
 		'css/cs-skin-border.css',
 		'css/style-responsive.css',
-        'plugings/loader/pace.min.css'
+        'plugings/loader/pace.min.css',
+        'css/customstyle.css'
     ];
     public $js = [
 		// 'js/jquery.js',

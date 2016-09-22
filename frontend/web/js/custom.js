@@ -208,6 +208,20 @@ $(document).ready(function(){
     }
 
 });
+/* NOTIFICATION POPUP START */
+function notificationPopup(type, msg) {
+    $(".modal").modal("hide");
+    if (type == 'SUCCESS') {
+        var msg = '<span class="text-success"><strong>&#10003;</strong></span> ' + msg;
+        $('#notification_msg').html(msg);
+    } else if (type == 'ERROR') {
+        var msg = '<span class="text-error"><strong>&#215;</strong></span> ' + msg;
+        $('#notification_msg').html(msg);
+    } else {
+    }
+    $("#notification-model").modal("show");
+}
+/* NOTIFICATION POPUP END */
 
 
 
