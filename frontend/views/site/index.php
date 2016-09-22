@@ -473,7 +473,7 @@ if (!Yii::$app->user->isGuest) {
               </div>
               <div class="col-sm-10 col-sm-offset-1">
                 
-                <?= Html::submitButton('Sign up free', ['class' => 'btn btn-primary mrg-tp-10', 'name' => 'signup-button']) ?>
+                <?= Html::submitButton('Sign up free', ['class' => 'btn btn-primary mrg-tp-10', 'name' => 'signup-button', 'id' => 'btnSignup']) ?>
               </div>
             </div>
             <?php ActiveForm::end(); ?>
@@ -566,3 +566,22 @@ if (!Yii::$app->user->isGuest) {
     z-index: 1200 !important;
   }
 </style>
+
+<?php
+  $this->registerJs('
+    $("body").on("submit","#form-signup",function(e){
+      var form = $(this);
+      if(form.find(".has-error").length) {
+            return false;
+      }
+      if(!$("#btnSignup").is(":disabled")){
+        $("#btnSignup").attr("disabled",true).html("Please Wait...");   
+        return true;
+      }
+      else {
+        return false;
+      }
+      return true;
+    });
+  ');
+?>

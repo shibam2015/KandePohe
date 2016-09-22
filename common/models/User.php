@@ -90,7 +90,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             [['First_Name', 'Last_Name'], 'string', 'max' => 100],
             [['email_pin'], 'string', 'max' => 4, 'min' => 4],
             // [['username'], 'unique'],
-            // [['email'], 'unique'],
+            [['email'], 'unique'],
             //[['captcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'secret' => '6Lc2xSgTAAAAAC37FZoNHA6KreseSCE5TrORJIbp'],
            // [['captcha'],'required'],
            // [['captcha'],'captcha'],
