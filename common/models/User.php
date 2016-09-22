@@ -62,6 +62,88 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     /**
      * @inheritdoc
      */
+    public static function findIdentity($id)
+    {
+        return static::findOne(['id' => $id, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+    }
+
+    /**
+     * Finds user by username
+     *
+     * @param string $username
+     * @return static|null
+     */
+    public static function findByUsername($username)
+    {
+        return static::findOne(['username' => $username, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]]);
+    }
+
+    public static function findByEmail($email)
+    {
+
+        return static::findOne(['email' => $email]);
+    }
+
+    public static function checkEmailVerify($email)
+    {
+        return static::findOne(['email' => $email, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]]);
+    }
+
+    /**
+     * Finds user by password reset token
+     *
+     * @param string $token password reset token
+     * @return static|null
+     */
+    public static function findByPasswordResetToken($token)
+    {
+        if (!static::isPasswordResetTokenValid($token)) {
+            return null;
+        }
+
+        return static::findOne([
+            'password_reset_token' => $token,
+            'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE],
+        ]);
+    }
+
+    /**
+     * Finds out if password reset token is valid
+     *
+     * @param string $token password reset token
+     * @return boolean
+     */
+    public static function isPasswordResetTokenValid($token)
+    {
+        if (empty($token)) {
+            return false;
+        }
+
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
+        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
+        return $timestamp + $expire >= time();
+    }
+
+    /**
+     * FOR GET STATUS NAME
+     */
+    public static function findByApprove($id)
+    {
+        #echo "========= ".$email;exit;
+        #return static::findOne(['email' => $email]);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
@@ -90,7 +172,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             [['First_Name', 'Last_Name'], 'string', 'max' => 100],
             [['email_pin'], 'string', 'max' => 4, 'min' => 4],
             // [['username'], 'unique'],
-            [['email'], 'unique'],
+            // [['email'], 'unique'],
             //[['captcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'secret' => '6Lc2xSgTAAAAAC37FZoNHA6KreseSCE5TrORJIbp'],
            // [['captcha'],'required'],
            // [['captcha'],'captcha'],
@@ -100,7 +182,6 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             [['password_reset_token'], 'unique'],
         ];
     }
-
 
     public function scenarios()
     {
@@ -120,7 +201,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             self::SCENARIO_FP => ['email','password_hash','password_reset_token'],
             self::SCENARIO_SFP => ['email','password_reset_token']
         ];
-        
+
     }
 
     public function checkDobYear($attribute,$params)
@@ -136,11 +217,10 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         }
         else {
             if($years < 21)
-            $this->addError('DOB', 'Your age should be grater than 21 Years');   
+                $this->addError('DOB', 'Your age should be grater than 21 Years');
         }
-        
-    }
 
+    }
 
     /**
      * @inheritdoc
@@ -227,78 +307,6 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
         ];
     }
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentity($id)
-    {
-        return static::findOne(['id' => $id, 'status' => [self::STATUS_ACTIVE,self::STATUS_APPROVE]]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
-    }
-
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        return static::findOne(['username' => $username, 'status' => [self::STATUS_ACTIVE,self::STATUS_APPROVE]]);
-    }
-
-    public static function findByEmail($email)
-    {
-
-        return static::findOne(['email' => $email]);
-    }
-
-    public static function checkEmailVerify($email)
-    {
-        return static::findOne(['email' => $email,'status' => [self::STATUS_ACTIVE,self::STATUS_APPROVE]]);
-    }
-
-    /**
-     * Finds user by password reset token
-     *
-     * @param string $token password reset token
-     * @return static|null
-     */
-    public static function findByPasswordResetToken($token)
-    {
-        if (!static::isPasswordResetTokenValid($token)) {
-            return null;
-        }
-
-        return static::findOne([
-            'password_reset_token' => $token,
-            'status' => [self::STATUS_ACTIVE,self::STATUS_APPROVE],
-        ]);
-    }
-
-    /**
-     * Finds out if password reset token is valid
-     *
-     * @param string $token password reset token
-     * @return boolean
-     */
-    public static function isPasswordResetTokenValid($token)
-    {
-        if (empty($token)) {
-            return false;
-        }
-
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
-        return $timestamp + $expire >= time();
-    }
 
     /**
      * @inheritdoc
@@ -311,17 +319,17 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     /**
      * @inheritdoc
      */
-    public function getAuthKey()
+    public function validateAuthKey($authKey)
     {
-        return $this->auth_key;
+        return $this->getAuthKey() === $authKey;
     }
 
     /**
      * @inheritdoc
      */
-    public function validateAuthKey($authKey)
+    public function getAuthKey()
     {
-        return $this->getAuthKey() === $authKey;
+        return $this->auth_key;
     }
 
     /**
@@ -368,17 +376,11 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
     public function getFullName(){
         return $this->First_Name.' '.$this->Last_Name;
     }
-    /**
-        FOR GET STATUS NAME
-     */
-    public static function findByApprove($id)
-    {
-        #echo "========= ".$email;exit;
-        #return static::findOne(['email' => $email]);
-    }
+
     public function getReligionName()
     {
         return $this->hasOne(Religion::className(), ['iReligion_ID' => 'iReligion_ID']);

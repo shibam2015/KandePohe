@@ -113,6 +113,22 @@ $ADMIN_NAME = ucwords(strtolower(Yii::$app->user->identity->vFirstName. ' ' .Yii
                             ['label' => 'Interests', 'icon' => 'fa  fa-star', 'url' => ['/interests'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'Interest Statuses', 'icon' => 'fa  fa-star', 'url' => ['/interest-statuses'], 'visible' => !Yii::$app->user->isGuest],
 
+                            ['label' => 'Mother Tongue', 'icon' => 'fa fa-hourglass-1', 'url' => ['/mother-tongue'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Nadi', 'icon' => 'fa fa-hourglass-1', 'url' => ['/nadi'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Nakshtra', 'icon' => 'fa fa-hourglass-1', 'url' => ['/nakshtra'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Membership Type', 'icon' => 'fa fa-hourglass-1', 'url' => ['/membership-type'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Preferred Dress Style', 'icon' => 'fa fa-hourglass-1', 'url' => ['/preferred-dress-style'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Preferred Movies', 'icon' => 'fa fa-hourglass-1', 'url' => ['/preferred-movies'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Property Details', 'icon' => 'fa fa-hourglass-1', 'url' => ['/property-details'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Raashi', 'icon' => 'fa fa-hourglass-1', 'url' => ['/raashi'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Residency Status', 'icon' => 'fa fa-hourglass-1', 'url' => ['/residency-status'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Skin Tone', 'icon' => 'fa fa-hourglass-1', 'url' => ['/skin-tone'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Sports Fitness Activities', 'icon' => 'fa fa-hourglass-1', 'url' => ['/sports-fitn-activities'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Tags', 'icon' => 'fa fa-hourglass-1', 'url' => ['/tags'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'Working With', 'icon' => 'fa fa-hourglass-1', 'url' => ['/working-with'], 'visible' => !Yii::$app->user->isGuest],
+
+
+
                         ], 'visible' => !Yii::$app->user->isGuest
                     ],
 

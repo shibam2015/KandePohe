@@ -9,7 +9,7 @@ use yii\captcha\Captcha;
 /*$religion_data = CommonHelper::getReligion();
 $community_data = CommonHelper::getCommunity();*/
 
- // var_dump($id = Yii::$app->user->identity->id);
+// var_dump($id = Yii::$app->user->identity->id);
 $id = 0;
 if (!Yii::$app->user->isGuest) {
 #$id = base64_decode($id);
@@ -40,11 +40,13 @@ if (!Yii::$app->user->isGuest) {
 
               <ul class="list-inline">
                 <?php if($id){ ?>
-                <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', ['site/logout'], ['data-method' => 'post']) ?></li>
+                    <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', ['site/logout'], ['data-method' => 'post']) ?></li>
+                    <li><a href="user/my-profile" title="Profile">Profile</a></li>
                 <?php } else { ?>
-                <li><a href="#" title="Login" data-toggle="modal" data-target="#login">Login</a></li>
-                <li><a href="#" title="Sign up Free" data-toggle="modal" data-target="#myModalNorm" id="suf">Sign up Free</a></li>
-              <?php } ?>
+                    <li><a href="#" title="Login" data-toggle="modal" data-target="#login">Login</a></li>
+                    <li><a href="#" title="Sign up Free" data-toggle="modal" data-target="#myModalNorm" id="suf">Sign up
+                            Free</a></li>
+                <?php } ?>
               </ul>
             </div>
           </div>
@@ -350,9 +352,9 @@ if (!Yii::$app->user->isGuest) {
         $form = ActiveForm::begin([
             'id' => 'form-signup',
             //'action' => 'javascript:void(0)',
-          'action' => ['/site/register'],
-          'enableAjaxValidation' => true,
-          'enableClientValidation' => true
+            'action' => ['/site/register'],
+            'enableAjaxValidation' => true,
+            'enableClientValidation' => true
 
         ]);
         ?>
@@ -386,7 +388,7 @@ if (!Yii::$app->user->isGuest) {
             </div>
             <div class="form-cont">
               <div class="radio" id="IVA">
-               
+
                 <?= $form->field($model, 'Gender')->RadioList(
                     ['MALE'=>'MALE','FEMALE'=>'FEMALE'],
                     [
@@ -401,7 +403,7 @@ if (!Yii::$app->user->isGuest) {
               </div>
             </div>
             <?php
-              $this->registerJs('
+            $this->registerJs('
                 $(".genderV").on("change",function(e){
                   var genderVal = $(this).val();
                   if(genderVal == "FEMALE") {
@@ -416,7 +418,7 @@ if (!Yii::$app->user->isGuest) {
               ');
             ?>
             <div class="form-cont">
-              
+
               <?= $form->field($model, 'DOB', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Date Of Birth</span> </label></span>{error}'])->input('text')
                   ->widget(\yii\jui\DatePicker::classname(),
                       [
@@ -454,40 +456,40 @@ if (!Yii::$app->user->isGuest) {
                   <div style="color:red;" id="cerror"></div>
                 </div>
               </div> -->
-            
-            <div class="row">
-              <div class="checkbox col-sm-12" id="cjkbox">
 
-               <?= $form->field($model, 'toc')->checkboxList(
-                    ['YES'],
-                    [
-                        'item' => function($index, $label, $name, $checked, $value) {
+                <div class="row">
+                    <div class="checkbox col-sm-12" id="cjkbox">
 
-                          $return = '<input type="checkbox" id="toc" name="' . $name . '" value="YES" >';
-                          $return .= '<label for="toc" class="control-label toccl">By clicking ‘Sign Up Free’ you agree to our <a href="#" title="Terms">Terms</a></label>';
-                          return $return;
-                        }
-                    ]
-                )->label(false);?>
+                        <?= $form->field($model, 'toc')->checkboxList(
+                            ['YES'],
+                            [
+                                'item' => function ($index, $label, $name, $checked, $value) {
 
+                                    $return = '<input type="checkbox" id="toc" name="' . $name . '" value="YES" >';
+                                    $return .= '<label for="toc" class="control-label toccl">By clicking ‘Sign Up Free’ you agree to our <a href="#" title="Terms">Terms</a></label>';
+                                    return $return;
+                                }
+                            ]
+                        )->label(false); ?>
+
+                    </div>
+                    <div class="col-sm-10 col-sm-offset-1">
+
+                        <?= Html::submitButton('Sign up free', ['class' => 'btn btn-primary mrg-tp-10', 'name' => 'signup-button', 'id' => 'btnSignup']) ?>
+                    </div>
               </div>
-              <div class="col-sm-10 col-sm-offset-1">
-                
-                <?= Html::submitButton('Sign up free', ['class' => 'btn btn-primary mrg-tp-10', 'name' => 'signup-button', 'id' => 'btnSignup']) ?>
+                <?php ActiveForm::end(); ?>
+
+                <div>
               </div>
             </div>
-            <?php ActiveForm::end(); ?>
-
-            <div>
           </div>
         </div>
+
       </div>
+
     </div>
-
   </div>
-
-</div>
-</div>
 </div>
 
 <!-- Modal Login -->
@@ -497,48 +499,53 @@ if (!Yii::$app->user->isGuest) {
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
-        <button type="button" class="close" 
-                   data-dismiss="modal"> <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span> </button>
+          <button type="button" class="close"
+                  data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+          </button>
         <h2 class="text-center">Log into your account</h2>
       </div>
       <!-- Modal Body -->
       <div class="modal-body">
           <?php
-            $login = new LoginForm();
+          $login = new LoginForm();
           ?>
-            <?php $form = ActiveForm::begin([
-                    'id' => 'login-form',
-                    'action' => 'site/login',
-                    'enableAjaxValidation' => true,
-                    'enableClientValidation'=> true,
-                  ]);
-            ?>
+          <?php $form = ActiveForm::begin([
+              'id' => 'login-form',
+              'action' => 'site/login',
+              'enableAjaxValidation' => true,
+              'enableClientValidation' => true,
+          ]);
+          ?>
           <div class="row">
-            <div class="col-sm-10 col-sm-offset-1 text-center"> <!--<span class="error">Email or Password used is incorrect</span> --></div>
+              <div class="col-sm-10 col-sm-offset-1 text-center">
+                  <!--<span class="error">Email or Password used is incorrect</span> --></div>
           </div>
           <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-              <div class="form-cont"> <?= $form->field($login, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email',['class'=>'input__field input__field--akira form-control'])?> </div>
-              <div class="form-cont"> 
+              <div class="col-sm-10 col-sm-offset-1">
+                  <div
+                      class="form-cont"> <?= $form->field($login, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control']) ?> </div>
+                  <div class="form-cont">
               <?= $form->field($login, 'password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Password</span> </label></span>{error}'])->input('password',['class'=>'input__field input__field--akira form-control'])?>
-              </div>
-              <div class="checkbox">
-                <input id="Remember" type="checkbox" name="Remember" value="yes">
-                
-                <label for="Remember" class="control-label">Remember me</label>
-                <a href="#" class="pull-right mrg-tp-10" title="Forgot password" data-toggle="modal" data-target="#fpswd">Forgot password?</a> </div>
-              <!-- <a href="dash-board.html" class="">Login</a> -->
-              <?= Html::submitButton('Login', ['class' => 'btn btn-primary mrg-tp-10 col-xs-12', 'name' => 'login-button']) ?>
-              <div class="bar-devider"> <span>OR</span> </div>
-              <a class="btn btn-block btn-social btn-facebook"> <i class="fa fa-facebook"></i> Sign in with Facebook </a>
-              <!--<a class="btn btn-block btn-social btn-google-plus"> <i class="fa fa-google-plus"></i> Sign in with Google </a>-->
             </div>
+                  <div class="checkbox">
+                      <input id="Remember" type="checkbox" name="Remember" value="yes">
+
+                      <label for="Remember" class="control-label">Remember me</label>
+                      <a href="#" class="pull-right mrg-tp-10" title="Forgot password" data-toggle="modal"
+                         data-target="#fpswd">Forgot password?</a></div>
+                  <!-- <a href="dash-board.html" class="">Login</a> -->
+                  <?= Html::submitButton('Login', ['class' => 'btn btn-primary mrg-tp-10 col-xs-12', 'name' => 'login-button']) ?>
+                  <div class="bar-devider"><span>OR</span></div>
+                  <a class="btn btn-block btn-social btn-facebook"> <i class="fa fa-facebook"></i> Sign in with Facebook
+                  </a>
+                  <!--<a class="btn btn-block btn-social btn-google-plus"> <i class="fa fa-google-plus"></i> Sign in with Google </a>-->
+          </div>
           </div>
           <?php ActiveForm::end(); ?>
       </div>
     </div>
-  
-    <!-- Modal Footer -->
+
+      <!-- Modal Footer -->
   </div>
 </div>
 
@@ -566,9 +573,9 @@ if (!Yii::$app->user->isGuest) {
     z-index: 1200 !important;
   }
 </style>
- 
+
 <?php
-  $this->registerJs('
+$this->registerJs('
     $("body").on("submit","#form-signup",function(e){
       var form = $(this);
       if(form.find(".has-error").length) {

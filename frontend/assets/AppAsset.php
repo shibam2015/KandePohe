@@ -18,6 +18,7 @@ class AppAsset extends AssetBundle
 		'css/cs-select.css',
 		'css/cs-skin-border.css',
 		'css/style-responsive.css',
+        'plugings/loader/pace.min.css'
     ];
     public $js = [
 		// 'js/jquery.js',
@@ -27,5 +28,7 @@ class AppAsset extends AssetBundle
 		// 'js/selectFx.js',
 		'js/jquery.nice-select.min.js',
 		'js/modernizr.js',
+        'js/modernizr.js',
+        'plugings/loader/pace.min.js'
     ];
 }

@@ -55,7 +55,6 @@ class UserPhotos extends \common\models\base\baseUserPhotos
 
     public function findByUderId($iUser_ID)
     {
-
         return static::findAll(['iUser_ID' => $iUser_ID]);
     }
 }

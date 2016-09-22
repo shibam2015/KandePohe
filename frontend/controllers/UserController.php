@@ -165,20 +165,10 @@ class UserController extends Controller
     public function actionPhotoupload($id)
     {
         $id = base64_decode($id);
-
         if ($model = User::findOne($id)) {
-            #print_r($_REQUEST);print_r($_FILES);
-            #echo " COUNT : ".count($_FILES);exit;
-
             $model->scenario = User::SCENARIO_REGISTER6;
-            $target_dir = Yii::getAlias('@frontend') . '/web/uploads/';
-            $target_file = $target_dir . basename($_FILES["fileInput"]["name"]);
             $FILE_COUNT = count($_FILES);
             if ($FILE_COUNT != 0) {
-
-                #$USER_PHOTOs_LIST = $PG->findByUderId($id);
-                #$USER_PHOTOs_LIST = UserPhotos::findByUderId($id);
-                #echo "<pre>"; print_r($USER_PHOTOs_LIST);exit;
                 for ($CTR = 0; $CTR <= $FILE_COUNT; $CTR++) {
                     $PG = new UserPhotos();
                     if ($_FILES['fileInput_' . $CTR]['name'] != '') {
@@ -195,12 +185,30 @@ class UserController extends Controller
                         $PG->dtModified = CommonHelper::getTime();
                         $PG->save();
                     }
-
-
                 }
-                $this->redirect(['user/photos']);
-            }
 
+                //$this->redirect(['user/photos']);
+            }
+            $PG = new UserPhotos();
+            $USER_PHOTOS_LIST = $PG->findByUderId($id);
+            #echo "<pre>"; print_r($USER_PHOTOS_LIST);exit;
+            $OUTPUT_HTML = '';
+            foreach ($USER_PHOTOS_LIST as $K => $V) {
+                $IMG = CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140);
+                $OUTPUT_HTML .= '<div class="col-md-3 col-sm-3 col-xs-6">
+                                                                <a class="selected" href="#">';
+
+                $OUTPUT_HTML .= '<img src="' . $IMG . '" height="140" class="img-responsive" alt="Full view" style="height:140px;">';
+                $OUTPUT_HTML .= '</a>
+
+                                                                <a href="#" class="pull-left"> Profile pic</a>
+
+                                                                <a href="#" class="pull-right"> <i aria-hidden="true"
+                                                                                                   class="fa fa-trash-o"></i>
+                                                                </a>
+
+                                                            </div>';
+            }
 
         } else {
             return $this->redirect(Yii::getAlias('@web'));

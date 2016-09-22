@@ -116,7 +116,10 @@ $( document ).ready(function() {
 
     $('head style[type="text/css"]');
     window.randomize = function() {
-        $('.radial-progress').attr('data-progress', PRO_COMP);
+        if ($(".radial-progress").length) {
+            $('.radial-progress').attr('data-progress', PRO_COMP);
+        }
+
         //$('.radial-progress').attr('data-progress', Math.floor(Math.random() * 100));
     }
     setTimeout(window.randomize, 200);

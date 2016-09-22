@@ -75,7 +75,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                 <div class="panel-body">
                   <ul class="reset mrg-lt-15 list-item">
                     <li> <a href="<?=$HOME_URL?>user/my-profile" title="Edit Profile">Edit Profile</a> </li>
-                    <li><a href="#" title="Manage Photos">Manage Photos</a> </li>
+                      <li><a href="<?= $HOME_URL ?>user/photos" title="Manage Photos">Manage Photos</a></li>
                     <li><a href="#" title="Edit Preference"> Edit Preference</a></li>
                     <li><a href="#" title="Privacy Options"> Privacy Options </a> </li>
                   </ul>

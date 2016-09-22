@@ -268,7 +268,7 @@ class SiteController extends Controller
                 if ($model1->login()) {
                     $this->redirect(['site/basic-details']);
                 } else {
-                    $this->goHome();
+
                 }
 
             }
@@ -290,7 +290,6 @@ class SiteController extends Controller
                             </h4>
                             </div>
                           </div>';
-            $this->goHome();
             //$return = array('status' => 200, 'message' => 'error', 'OUTPUT' => $OUTPUT);
         }
 

@@ -17,12 +17,9 @@ $UPLOAD_DIR = Yii::getAlias('@frontend') . '/web/uploads/';
 $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 #echo "<pre>"; print_r($model);
 ?>
-<?php
-echo $this->render('/layouts/parts/_headerregister.php');
-?>
+
 <div class="">
     <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
-
     <main>
 
         <div class="main-section">
@@ -37,42 +34,21 @@ echo $this->render('/layouts/parts/_headerregister.php');
 
                             <div class="white-section">
 
-                                <h3>Add Profile Photo <a href="<?= $HOME_URL_SITE ?>verification"
-                                                         class="pull-right"><span class="link_small">( I will do this later )</span></a>
-
-                                </h3>
-
-
+                                <h3>Add Profile Photo </h3>
                                 <div class="two-column">
-
                                     <div class="row">
-
                                         <div class="col-sm-6 bord">
-
                                             <div class="row">
-
                                                 <div class="col-sm-12">
-
                                                     <p class="mrg-bt-10"><i class="fa fa-lock text-danger"></i> 100%
                                                         Privacy Settings</p>
-
                                                 </div>
-
                                             </div>
-
                                             <div class="row">
-
                                                 <div class="col-sm-5">
-
                                                     <div class="image">
-
-
                                                         <div class="placeholder text-center">
-
-                                                            <!--<img src="<? /*=($model->propic!='') ? $model->propic : $HOME_PAGE_URL.'images/placeholder.jpg';*/ ?>" width="200" height="200" alt="placeholder" class="img-responsive mainpropic">-->
-
                                                             <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->user->identity->propic, 200), ['class' => 'img-responsive mainpropic', 'width' => '200', 'height' => '200', 'alt' => 'Profile Pic']); ?>
-
                                                             <div class="add-photo" data-toggle="modal"
                                                                  data-target="#photo"><span class="file-input btn-file"> <i
                                                                         class="fa fa-plus-circle"></i> Add a photo </span>
@@ -113,34 +89,43 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                                         <!--<div class="bar-devider"> <span>OR</span> </div>-->
 
                                                         <!--<a class="btn btn-block btn-social btn-facebook"> <i class="fa fa-facebook"></i> Sign in with Facebook </a>-->
+                                                        <div>
+
+                                                        </div>
                                                     </div>
 
                                                 </div>
 
-                                            </div>
+                                                </div>
 
                                             <div class="choose-photo">
 
-                                                <div class="row">
+                                                <div class="row" id="photo_list">
 
                                                     <?php
-                                                    foreach ($model as $K => $V) {
+                                                    if (count($model) > 0) {
+                                                        foreach ($model as $K => $V) {
+                                                            ?>
+                                                            <div class="col-md-3 col-sm-3 col-xs-6">
+                                                                <a class="selected" href="#">
+                                                                    <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive', 'height' => '140', 'alt' => 'Photo' . $K, 'style' => "height:140px;"]); ?>
+                                                                </a>
+
+                                                                <a href="#" class="pull-left"> Profile pic</a>
+
+                                                                <a href="#" class="pull-right"> <i aria-hidden="true"
+                                                                                                   class="fa fa-trash-o"></i>
+                                                                </a>
+
+                                                            </div>
+
+                                                        <?php }
+                                                    } else {
                                                         ?>
-                                                        <div class="col-md-3 col-sm-3 col-xs-6">
-                                                            <a class="selected" href="#">
-                                                                <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive', 'height' => '140', 'alt' => 'Photo' . $K, 'style' => "height:140px;"]); ?>
-                                                            </a>
-
-                                                            <a href="#" class="pull-left"> Profile pic</a>
-
-                                                            <a href="#" class="pull-right"> <i aria-hidden="true"
-                                                                                               class="fa fa-trash-o"></i>
-                                                            </a>
-
+                                                        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                                            <p> No Photos Available</p>
                                                         </div>
-
-                                                    <?php }
-                                                    ?>
+                                                    <?php } ?>
                                                     <!--<div class="col-md-3 col-sm-3 col-xs-6">
 
                                                         <a class="selected" href="#">
@@ -299,9 +284,9 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                                 </div>
 
 
-                                            </div>
+                                                </div>
 
-                                        </div>
+                                            </div>
 
                                         <div class="col-sm-1"></div>
 
@@ -437,6 +422,8 @@ echo $this->render('/layouts/parts/_headerregister.php');
 
                                                 </div>
 
+                                                </div>
+
                                             </div>
 
                                         </div>
@@ -450,8 +437,6 @@ echo $this->render('/layouts/parts/_headerregister.php');
                         </div>
 
                     </div>
-
-                </div>
 
             </section>
 
@@ -554,9 +539,9 @@ echo $this->render('/layouts/parts/_headerregister.php');
 
                 </div>
 
-            </div>
+                </div>
 
-        </div>
+            </div>
 
         <!-- Modal Footer -->
 
@@ -564,156 +549,71 @@ echo $this->render('/layouts/parts/_headerregister.php');
 
 </div>
 
-<!-- Bootstrap core JavaScript
-
-    ================================================== -->
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
 <script language="javascript" type="text/javascript">
+    var userid = "<?=base64_encode(Yii::$app->user->identity->id)?>";
+</script>
 
-    $(function () {
 
+<?php
+$this->registerJs('
+  $(function () {
         $(".fileupload").change(function () {
-
+        Pace.restart();
+        var tflag= 1;
             if (typeof (FileReader) != "undefined") {
-
-                /*var dvPreview = $("#dvPreview");
-
-                 dvPreview.html("");*/
-
-                $('.mainpropic').attr("src", 'images/placeholder.jpg');
-
-                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
-
-                //console.log($(this)[0].files.length);
-
+                //var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg)$/;
                 $($(this)[0].files).each(function () {
-
                     var file = $(this);
-
                     if (regex.test(file[0].name.toLowerCase())) {
-
                         var reader = new FileReader();
-
                         reader.onload = function (e) {
-
-                            //$('.mainpropic').attr("src", e.target.result);
-
-                            /*var img = $("<img />");
-
-                             img.attr("style", "height:100px;width: 100px");
-
-                             img.attr("src", e.target.result);
-
-                             dvPreview.append(img);*/
-
+                            //$(".mainpropic").attr("src", e.target.result);
                         }
-
                         reader.readAsDataURL(file[0]);
-
                     } else {
-
+                        tflag= 0;
                         alert(file[0].name + " is not a valid image file.");
-
-                        $('.mainpropic').attr("src", 'images/placeholder.jpg');
-
                         return false;
-
                     }
-
                 });
-
-                if ($(this)[0].files.length == 0) {
-
-                    //alert("1");
-
-                    $.ajax({
-
-                        url: 'site/photoupload',
-
-                        type: 'POST',
-
-                        data: form.serialize(),
-
-                        //contentType: "application/json; charset=utf-8",
-
-                        dataType: "json",
-
-                        success: function (response) {
-                        },
-                        error: function (e) {
-                        }
-                    });
-                } else {
+                var file_len = $(this)[0].files.length;
+                if (file_len != 0 && tflag == 1) {
+                    
                     var file = $(this);
-                    var formObj = $('#propicform');
-                    //var formData = new FormData('#propicform');
-                    //var formData = new FormData($('form')[0]);
-                    //var formData = new FormData($("#propicform"));
+                    var formObj = $("#propicform");
                     var formData = new FormData($("#propicform"));
-
                     //formData.append( "fileInput", $("#file_browse")[0].files[0]);
-                    //alert($(this)[0].files.length);
-                    var file_len = $(this)[0].files.length;
+                    
                     if (file_len != 0) {
                         $.each($(this)[0].files, function (i, file) {
-                            formData.append('fileInput_' + i, file);
+                            formData.append("fileInput_" + i, file);
                         });
                     }
-//            formData.append("PHOTOS",arr);
-
-                    var uid = '<?=base64_encode(Yii::$app->user->identity->id)?>';
-
+                    var uid = userid;
                     $.ajax({
-                        url: 'photoupload?id=' + uid + '&FILE=' + file,
-                        type: 'POST',
+                        url: "photoupload?id=" + uid + "&FILE=" + file,
+                        type: "POST",
                         data: formData,
                         mimeType: "multipart/form-data",
                         contentType: false,
                         cache: false,
                         processData: false,
-
                         success: function (data, textStatus, jqXHR) {
-
                             var DataObject = JSON.parse(data);
-
-//                    console.log(DataObject);
                             if (DataObject.STATUS == 1) {
-                                //showNotification(DataObject.STATUS,DataObject.NOTIFICATION_MSG);
-                                $("#vPhotoCard").val("");
-                                $('.profile_photo').attr("src", DataObject.PHOTO);
-                                // $('.username').html($('#vFirstName').val()+ ' '+$('#vLastName').val());
-
+                                //$(".profile_photo").attr("src", DataObject.PHOTO);
                             } else {
-                                $("#vPhotoCard").val("");
-                                // showNotification(DataObject.STATUS,DataObject.NOTIFICATION_MSG);
-
                             }
-
                         },
-
                         error: function (jqXHR, textStatus, errorThrown) {
-
-
-
-                            //showNotification(0,"Request failed : " + textStatus );
-
-
                         }
-
                     });
-
                 }
-
             } else {
-
                 alert("This browser does not support HTML5 FileReader.");
-
             }
-
         });
-
     });
-
-</script>
+   ');
+?>
