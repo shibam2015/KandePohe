@@ -111,10 +111,17 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                     <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive', 'height' => '140', 'alt' => 'Photo' . $K, 'style' => "height:140px;"]); ?>
                                                                 </a>
 
-                                                                <a href="#" class="pull-left"> Profile pic</a>
+                                                                <a href="javascript:void(0)"
+                                                                   class="pull-left profile_set"
+                                                                   data-id="<?= $V['iPhoto_ID'] ?>"
+                                                                   data-target="#photodelete" data-toggle="modal">
+                                                                    Profile pic</a>
 
-                                                                <a href="#" class="pull-right"> <i aria-hidden="true"
-                                                                                                   class="fa fa-trash-o"></i>
+                                                                <a href="javascript:void(0)"
+                                                                   class="pull-right profile_delete"
+                                                                   data-id="<?= $V['iPhoto_ID'] ?>"
+                                                                   data-target="#photodelete" data-toggle="modal">
+                                                                    <i aria-hidden="true" class="fa fa-trash-o"></i>
                                                                 </a>
 
                                                             </div>
@@ -449,43 +456,25 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 <!-- Modal Photo -->
 
 <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
     <div class="modal-dialog">
-
         <p class="text-center mrg-bt-10"><img src="<?= $HOME_PAGE_URL ?>images/logo.png" width="157" height="61"
                                               alt="logo"></p>
-
         <div class="modal-content">
-
             <!-- Modal Header -->
-
             <div class="modal-header">
-
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
                         class="sr-only">Close</span></button>
-
                 <h2 class="text-center">My Photo Gallery</h2>
-
                 <div class="profile-control photo-btn">
-
                     <button class="btn active" type="button"> Upload Video or Photo</button>
-
                     <button class="btn " type="button"> Choose from Photos</button>
-
                     <button class="btn" type="button"> Albums</button>
-
                 </div>
-
             </div>
-
             <!-- Modal Body -->
-
             <div class="modal-body photo-gallery">
-
                 <div class="choose-photo">
-
                     <div class="row">
-
                         <div class="col-md-3 col-sm-3 col-xs-6"><a href="#" class="selected"><img width="200"
                                                                                                   height="200"
                                                                                                   class="img-responsive"
@@ -548,6 +537,36 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
     </div>
 
 </div>
+<div class="modal fade" id="photodelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <p class="text-center mrg-bt-10">
+            <img src="<?= $HOME_PAGE_URL ?>images/logo.png" width="157" height="61" alt="logo"></p>
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
+                        class="sr-only">Close</span></button>
+                <h2 class="text-center" id="model_heading"></h2>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body photo-gallery">
+                <div class="choose-photo">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <a href="javascript:void(0)"
+                               class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right yes"> Yes </a>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 ">
+                            <a href="javascript:void(0)" class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left"
+                               data-dismiss="modal"> No </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Footer -->
+    </div>
+</div>
 
 <script language="javascript" type="text/javascript">
     var userid = "<?=base64_encode(Yii::$app->user->identity->id)?>";
@@ -600,13 +619,11 @@ $this->registerJs('
                         cache: false,
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
-                            var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == 1) {
-                                //$(".profile_photo").attr("src", DataObject.PHOTO);
-                            } else {
-                            }
+                            
+                            
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Request Failed");
                         }
                     });
                 }
@@ -614,6 +631,45 @@ $this->registerJs('
                 alert("This browser does not support HTML5 FileReader.");
             }
         });
+        var P_ID = "";
+        var P_TYPE = "";
+        $(".profile_delete").click(function(){
+                P_ID = $(this).data("id");
+                P_TYPE = "PHOTO_DELETE";
+                $("#model_heading").html("Are you sure want to delete this photo ?");
+        })
+        $(".profile_set").click(function(){
+                P_ID = $(this).data("id");
+                P_TYPE = "PHOTO_PROFILE_SET";
+                $("#model_heading").html("Are you sure want to set this photo as profile photo?");
+        })
+        $(".yes").click(function(){
+        var formDataPhoto = new FormData();
+        formDataPhoto.append( "P_ID", P_ID);
+        formDataPhoto.append( "P_TYPE", P_TYPE);
+                $.ajax({
+                        url: "photo-operation",
+                        type: "POST",
+                        data: formDataPhoto,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (data, textStatus, jqXHR) {
+                            var DataObject = JSON.parse(data);
+                            //console.log(DataObject);
+                            if (DataObject.STATUS == 200) {
+                                $("#photo_list").html(DataObject.OUTPUT);
+                            } else {
+                                alert("Something went wrong");        
+                            }
+                            
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Request Failed");
+                        }
+                    });
+        })
+        
     });
    ');
 ?>

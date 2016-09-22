@@ -44,17 +44,22 @@ class UserPhotos extends \common\models\base\baseUserPhotos
     public function attributeLabels()
     {
         return [
-            'iPhoto_ID' => 'I Photo  ID',
-            'iUser_ID' => 'I User  ID',
+            'iPhoto_ID' => 'Photo  ID',
+            'iUser_ID' => 'User  ID',
             'File_Name' => 'File  Name',
             'Is_Profile_Photo' => 'Is  Profile  Photo',
-            'dtCreated' => 'Dt Created',
-            'dtModified' => 'Dt Modified',
+            'dtCreated' => 'Created',
+            'dtModified' => 'Modified',
         ];
     }
 
-    public function findByUderId($iUser_ID)
+    public function findByUserId($iUser_ID)
     {
         return static::findAll(['iUser_ID' => $iUser_ID]);
+    }
+
+    public function findByPhotoId($iUser_ID, $P_ID)
+    {
+        return static::findOne(['iUser_ID' => $iUser_ID, 'iPhoto_ID' => $P_ID]);
     }
 }

@@ -152,7 +152,7 @@ class UserController extends Controller
             $id = Yii::$app->user->identity->id;
             #$id = base64_decode($id);
             $USER_PHOTO_MODEL = new UserPhotos();
-            $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUderId($id);
+            $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
             return $this->render('photos', [
                 'model' => $USER_PHOTOS_LIST
             ]);
@@ -189,32 +189,76 @@ class UserController extends Controller
 
                 //$this->redirect(['user/photos']);
             }
-            $PG = new UserPhotos();
-            $USER_PHOTOS_LIST = $PG->findByUderId($id);
-            #echo "<pre>"; print_r($USER_PHOTOS_LIST);exit;
-            $OUTPUT_HTML = '';
-            foreach ($USER_PHOTOS_LIST as $K => $V) {
-                $IMG = CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140);
-                $OUTPUT_HTML .= '<div class="col-md-3 col-sm-3 col-xs-6">
-                                                                <a class="selected" href="#">';
-
-                $OUTPUT_HTML .= '<img src="' . $IMG . '" height="140" class="img-responsive" alt="Full view" style="height:140px;">';
-                $OUTPUT_HTML .= '</a>
-
-                                                                <a href="#" class="pull-left"> Profile pic</a>
-
-                                                                <a href="#" class="pull-right"> <i aria-hidden="true"
-                                                                                                   class="fa fa-trash-o"></i>
-                                                                </a>
-
-                                                            </div>';
-            }
+            $OUTPUT_HTML = $this->getPhotoListOutput();
+            $return = array('STATUS' => 200, 'message' => 'Photo List', 'OUTPUT' => $OUTPUT_HTML);
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return $return;
 
         } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
     }
 
+    /**
+     * @return Action
+     */
+    public function getPhotoListOutput()
+    {
+        $PG = new UserPhotos();
+        $id = Yii::$app->user->identity->id;
+        $USER_PHOTOS_LIST = $PG->findByUserId($id);
+        $OUTPUT_HTML = '';
+        foreach ($USER_PHOTOS_LIST as $K => $V) {
+            $IMG = CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140);
+            $OUTPUT_HTML .= '<div class="col-md-3 col-sm-3 col-xs-6">
+                                                                <a class="selected" href="#">';
+
+            $OUTPUT_HTML .= '<img src="' . $IMG . '" height="140" class="img-responsive" alt="Full view" style="height:140px;">';
+            $OUTPUT_HTML .= '</a>
+
+                                                                <a href="javascript:void(0)" class="pull-left profile_set" data-id="' . $V['iPhoto_ID'] . '"> Profile pic</a>
+
+                                                                <a href="javascript:void(0)" class="pull-right profile_delete" data-id="' . $V['iPhoto_ID'] . '"> <i aria-hidden="true"
+                                                                                                   class="fa fa-trash-o"></i>
+                                                                </a>
+
+                                                            </div>';
+
+        }
+        return $OUTPUT_HTML;
+    }
+
+    /**
+     * @return string
+     */
+    public function actionPhotoOperation()
+    {
+        ob_start();
+        ob_get_clean();
+        $PG = new UserPhotos();
+        $CM_HELPER = new CommonHelper();
+        $id = Yii::$app->user->identity->id;
+        $P_ID = Yii::$app->request->post('P_ID');
+        $P_TYPE = Yii::$app->request->post('P_TYPE');
+        if ($P_ID != '' && $P_TYPE == 'PHOTO_DELETE' && $P_TYPE != '') {
+            $USER_PHOTOS_LIST = $PG->findByPhotoId($id, $P_ID);
+            if (count($USER_PHOTOS_LIST) != 0) {
+                $PATH = $CM_HELPER->getUserUploadFolder(1) . "/" . $id . "/";
+                $USER_SIZE_ARRAY = $CM_HELPER->getUserResizeRatio();
+                $CM_HELPER->photoDeleteFromFolder($PATH, $USER_SIZE_ARRAY, $USER_PHOTOS_LIST->File_Name);
+                $USER_PHOTOS_LIST->delete();
+
+            }
+        } else {
+
+        }
+        $OUTPUT_HTML = $this->getPhotoListOutput();
+        $return = array('STATUS' => 200, 'message' => 'Photo List', 'OUTPUT' => $OUTPUT_HTML);
+        #echo "<pre>"; print_r($return);
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return $return;
+
+    }
 
     public function actionEditMyinfo(){
         $id = Yii::$app->user->identity->id;
@@ -234,5 +278,7 @@ class UserController extends Controller
             ]);
         }
     }
+
+
 }
 

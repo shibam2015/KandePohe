@@ -175,6 +175,21 @@ class CommonHelper {
 
     }
 
+    public static function photoDeleteFromFolder($PATH, $SIZE_ARRAY, $OLD_PHOTO)
+    {
+        $DEL_IMG = $SIZE_ARRAY;
+        $path = $PATH;
+        if ($OLD_PHOTO != '') {
+            foreach ($DEL_IMG as $k => $V) {
+                if ($k == 0)
+                    $vImage_hid = $OLD_PHOTO;
+                else
+                    $vImage_hid = $V . '_' . $OLD_PHOTO;
+                unlink($path . $vImage_hid);
+            }
+        }
+    }
+
     public static function getUserResizeRatio()
     {//For User photo resize
         $USER_SIZE_ARRAY = array('', 30, 140, 200, 350, 500, 900);
