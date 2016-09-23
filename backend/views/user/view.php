@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\components\CommonHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
@@ -11,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 //echo Yii::$app->urlManagerFrontend->baseUrl;
 if($model->propic !='') {
-    $PROPIC = "../../../frontend/web/uploads/" . $model->propic;
+    $PROPIC = "../../../frontend/web/uploads/users/" . $model->id . "/140_" . $model->propic;
 }else{
     $PROPIC = "../../../frontend/web/images/placeholder.jpg";
 }
@@ -24,8 +25,9 @@ if($model->propic !='') {
 <!--<h1><?/*= Html::encode($this->title) */?></h1>-->
 <div class="box box-primary">
     <div class="box-body box-profile">
-        <img class="profile-user-img img-responsive img-circle" src="<?=$PROPIC?>" alt="User profile picture">
-
+        <img class="profile-user-img img-responsive img-circle" src="<?= $PROPIC ?>" alt="User profile picture">
+        <!-- <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $model->propic, 200), ['class' => 'profile-user-img img-responsive img-circle', 'width' => '200', 'height' => '200', 'alt' => 'User profile picture']); ?>
+        -->
         <h3 class="profile-username text-center"><?php echo $this->title = ucwords($model->First_Name." ".$model->Last_Name); ?></h3>
 
         <p class="text-muted text-center">User</p>
