@@ -162,7 +162,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus'], 'string'],
             [['DOB', 'Time_of_Birth','cnb','iSubCommunity_ID','vAreaName','iGotraID'], 'safe'],
             [['DOB'],'checkDobYear'],
-            [['noc'],'integer','integerOnly'=>true,'min' => 0],
+            [['noc','nob','nos'],'integer','integerOnly'=>true,'min' => 0],
             [['auth_key'], 'string', 'max' => 32],
             [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['Registration_Number', 'Birth_Place'], 'string', 'max' => 250],
