@@ -592,7 +592,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         else {
             $arrStep = explode(',', $returnVal);
             if(!in_array($step, $arrStep)){
-                $returnVal = $returnVal.$step;
+                $returnVal = $returnVal.','.$step;
             }
         }
         return $returnVal;
