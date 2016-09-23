@@ -181,12 +181,12 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public function rules()
     {
         return [
-            [['auth_key', 'password_hash', 'email', 'created_at', 'updated_at', 'Registration_Number', 'Mobile', 'First_Name', 'Last_Name', 'DOB', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'county_code', 'iDistrictID', 'iGotraID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId','Profile_created_for','repeat_password','Gender','toc','iHeightID','vSkinTone','vBodyType','vSmoke','vDrink','vDiet','iFatherStatusID','iMotherStatusID','nob','nos','iCountryCAId','iStateCAId','iDistrictCAID','iTalukaCAID','iCityCAId','vParentsResiding'], 'required'],
+            [['auth_key', 'password_hash', 'email', 'created_at', 'updated_at', 'Registration_Number', 'Mobile', 'First_Name', 'Last_Name', 'DOB', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'county_code', 'iDistrictID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId','Profile_created_for','repeat_password','Gender','toc','iHeightID','vSkinTone','vBodyType','vSmoke','vDrink','vDiet','iFatherStatusID','iMotherStatusID','nob','nos','iCountryCAId','iStateCAId','iDistrictCAID','iTalukaCAID','iCityCAId','vParentsResiding'], 'required'],
             [['status', 'created_at', 'updated_at', 'Age', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID'], 'integer'],
             [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus'], 'string'],
-            [['DOB', 'Time_of_Birth','cnb','iSubCommunity_ID','vAreaName'], 'safe'],
+            [['DOB', 'Time_of_Birth','cnb','iSubCommunity_ID','vAreaName','iGotraID'], 'safe'],
             [['DOB'],'checkDobYear'],
-            [['noc'],'integer','integerOnly'=>true,'min' => 0],
+            [['noc','nob','nos'],'integer','integerOnly'=>true,'min' => 0],
             [['auth_key'], 'string', 'max' => 32],
             [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['Registration_Number', 'Birth_Place'], 'string', 'max' => 250],
@@ -196,7 +196,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             [['First_Name', 'Last_Name'], 'string', 'max' => 100],
             [['email_pin'], 'string', 'max' => 4, 'min' => 4],
             // [['username'], 'unique'],
-            [['email'], 'unique'],
+             [['email'], 'unique'],
             //[['captcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'secret' => '6Lc2xSgTAAAAAC37FZoNHA6KreseSCE5TrORJIbp'],
            // [['captcha'],'required'],
            // [['captcha'],'captcha'],
@@ -409,62 +409,52 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     {
         return $this->hasOne(Religion::className(), ['iReligion_ID' => 'iReligion_ID']);
     }
-
     public function getCommunityName()
     {
         return $this->hasOne(MasterCommunity::className(), ['iCommunity_ID' => 'iCommunity_ID']);
     }
-
     public function getSubCommunityName()
     {
         return $this->hasOne(MasterCommunitySub::className(), ['iSubCommunity_ID' => 'iSubCommunity_ID']);
     }
-
     public function getDistrictName()
     {
         return $this->hasOne(MasterDistrict::className(), ['iDistrictID' => 'iDistrictID']);
     }
-
     public function getGotraName()
     {
         return $this->hasOne(MasterGotra::className(), ['iGotraID' => 'iGotraID']);
     }
-
     public function getMaritalStatusName()
     {
         return $this->hasOne(MasterMaritalStatus::className(), ['iMaritalStatusID' => 'iMaritalStatusID']);
     }
-
     public function getTalukaName()
     {
         return $this->hasOne(MasterTaluka::className(), ['iTalukaID' => 'iTalukaID']);
     }
 
+
     public function getCountryName()
     {
         return $this->hasOne(Countries::className(), ['iCountryId' => 'iCountryId']);
     }
-
     public function getStateName()
     {
         return $this->hasOne(States::className(), ['iStateId' => 'iStateId']);
     }
-
     public function getCityName()
     {
         return $this->hasOne(Cities ::className(), ['iCityId' => 'iCityId']);
     }
-
     public function getCountryNameCA()
     {
         return $this->hasOne(Countries::className(), ['iCountryId' => 'iCountryCAId']);
     }
-
     public function getStateNameCA()
     {
         return $this->hasOne(States::className(), ['iStateId' => 'iStateCAId']);
     }
-
     public function getCityNameCA()
     {
         return $this->hasOne(Cities ::className(), ['iCityId' => 'iCityCAId']);
@@ -485,65 +475,55 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         #return $this->hasOne(Nati::className(), ['iTalukaID' => 'iTalukaCAID']);
     }
 
+
     public function getEducationLevelName()
     {
         return $this->hasOne(EducationLevel ::className(), ['iEducationLevelID' => 'iEducationLevelID']);
     }
-
     public function getEducationFieldName()
     {
         return $this->hasOne(EducationField ::className(), ['iEducationFieldID' => 'iEducationFieldID']);
     }
-
     public function getWorkingWithName()
     {
         return $this->hasOne(WorkingWith ::className(), ['iWorkingWithID' => 'iWorkingWithID']);
     }
-
     public function getWorkingAsName()
     {
         return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iWorkingAsID']);
     }
-
     public function getAnnualIncome()
     {
         return $this->hasOne(AnnualIncome ::className(), ['iAnnualIncomeID' => 'iAnnualIncomeID']);
     }
-
     public function getHeight()
     {
         return $this->hasOne(MasterHeight ::className(), ['iHeightID' => 'iHeightID']);
     }
-
     public function getDietName()
     {
         return $this->hasOne(MasterDiet ::className(), ['iDietID' => 'vDiet']);
     }
-
     public function getFatherStatus()
     {
         $ABC = $this->hasOne(MasterFmStatus ::className(), ['iFMStatusID' => 'iFatherStatusID']);
 
         return $ABC;
     }
-
     public function getFatherStatusId()
     {
         return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iFatherStatusID']);
     }
-
     public function getMotherStatus()
     {
         $ABC = $this->hasOne(MasterFmStatus ::className(), ['iFMStatusID' => 'iMotherStatusID']);
 
         return $ABC;
     }
-
     public function getMotherStatusId()
     {
         return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iMotherStatusID']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -551,7 +531,6 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     {
         return $this->hasOne(Cities::className(), ['iCityId' => 'iCityId']);
     }
-
     function getUserInfo(){
         /*$query = new Query;
         $query	->select([

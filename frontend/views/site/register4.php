@@ -43,9 +43,11 @@ use yii\helpers\ArrayHelper;
                 <p><span class="text-danger">*</span> marked fields are mandatory</p>
                 <?php
                 $form = ActiveForm::begin([
-                    'id' => 'form-register1',
+                    'id' => 'form-register4',
+                    'validateOnChange' => false,
                 ]);
                 ?>
+                <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
                 <div class="box">
                   <div class="small-col">
                     <div class="required1"><span class="text-danger">*</span></div>
@@ -58,7 +60,7 @@ use yii\helpers\ArrayHelper;
                               'prompt' => 'Father Status'
                           ]
 
-                      )->label(false);?>
+                      )->label(false)->error(false);?>
                     </div>
                   </div>
                   <div class="small-col tp ">
@@ -76,7 +78,7 @@ use yii\helpers\ArrayHelper;
                           ['class' => 'cs-select cs-skin-border',
                               'prompt' => 'Father Working AS'
                           ]
-                      )->label(false);?>
+                      )->label(false)->error(false);?>
                     </div>
                   </div>
                   <div class="small-col tp ">
@@ -94,7 +96,7 @@ use yii\helpers\ArrayHelper;
                           ['class' => 'cs-select cs-skin-border',
                               'prompt' => 'Mother Status'
                           ]
-                      )->label(false);?>
+                      )->label(false)->error(false);?>
                     </div>
                   </div>
                   <div class="small-col tp ">
@@ -112,7 +114,7 @@ use yii\helpers\ArrayHelper;
                           ['class' => 'cs-select cs-skin-border',
                               'prompt' => 'Mother Working AS'
                           ]
-                      )->label(false);?>
+                      )->label(false)->error(false);?>
                     </div>
                   </div>
                   <div class="small-col tp ">
@@ -126,7 +128,7 @@ use yii\helpers\ArrayHelper;
                   </div>
                   <div class="mid-col">
                     <div class="form-cont">
-                      <?= $form->field($model, 'nob', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">No of Brothers</span> </label></span>{error}'])->input('number',['class'=>'input__field input__field--akira form-control'])?>
+                      <?= $form->field($model, 'nob', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">No of Brothers</span> </label></span>'])->input('number',['class'=>'input__field input__field--akira form-control'])?>
                     </div>
                   </div>
                   <div class="small-col tp ">
@@ -140,7 +142,7 @@ use yii\helpers\ArrayHelper;
                   </div>
                   <div class="mid-col">
                     <div class="form-cont">
-                      <?= $form->field($model, 'nos', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">No of Sisters</span> </label></span>{error}'])->input('number',['class'=>'input__field input__field--akira form-control'])?>
+                      <?= $form->field($model, 'nos', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">No of Sisters</span> </label></span>'])->input('number',['class'=>'input__field input__field--akira form-control'])?>
                     </div>
                   </div>
                   <div class="small-col tp ">
@@ -176,7 +178,7 @@ use yii\helpers\ArrayHelper;
                                 });'
                           ]
 
-                      )->label(false);?>
+                      )->label(false)->error(false);?>
                     </div>
                   </div>
                   <div class="small-col tp ">
@@ -207,7 +209,7 @@ use yii\helpers\ArrayHelper;
                                 });'
                           ]
 
-                      )->label(false);?>
+                      )->label(false)->error(false);?>
                     </div>
                   </div>
                   <div class="small-col tp ">
@@ -235,7 +237,7 @@ use yii\helpers\ArrayHelper;
                               'prompt' => 'City'
                           ]
 
-                      )->label(false);?>
+                      )->label(false)->error(false);?>
                     </div>
                   </div>
                   <div class="small-col tp ">
@@ -253,7 +255,7 @@ use yii\helpers\ArrayHelper;
                           ['class' => 'cs-select cs-skin-border',
                               'prompt' => 'District'
                           ]
-                      )->label(false);?>
+                      )->label(false)->error(false);?>
                     </div>
                   </div>
                   <div class="small-col tp ">
@@ -271,7 +273,7 @@ use yii\helpers\ArrayHelper;
                           ['class' => 'cs-select cs-skin-border',
                               'prompt' => 'Taluka'
                           ]
-                      )->label(false);?>
+                      )->label(false)->error(false);?>
                     </div>
                   </div>
                   <div class="small-col tp ">
@@ -330,7 +332,7 @@ use yii\helpers\ArrayHelper;
                                   return $return;
                                 }
                             ]
-                        )->label(false);?>
+                        )->label(false)->error(false);?>
                         <!--</dd>-->
                       </div>
                     </div>
@@ -362,8 +364,7 @@ use yii\helpers\ArrayHelper;
                                 return $return;
                             }
                             ]
-
-                        )->label(false)->error(false); ?>
+                        )->label(false)->error(false);?>
                         <!--</dd>-->
                       </div>
                     </div>
@@ -395,8 +396,7 @@ use yii\helpers\ArrayHelper;
                                   return $return;
                                 }
                             ]
-                        )->label(false);?>
-
+                        )->label(false)->error(false);?>
                         <!--</dd>-->
                       </div>
                     </div>
@@ -539,3 +539,75 @@ $this->registerJs('
       });
     }
 ', View::POS_END);
+?>
+<?php
+  $this->registerJs('
+    $("#form-register4").on("submit",function(e){
+      var ifatherstatusid = $("#user-ifatherstatusid").val();
+      var imotherstatusid = $("#user-imotherstatusid").val();
+      var icountrycaid = $("#user-icountrycaid").val();
+      var iCityCAId = $("#iCityCAId").val();
+      var iStateCAId = $("#iStateCAId").val();
+      var idistrictcaid = $("#user-idistrictcaid").val();
+      var italukacaid = $("#user-italukacaid").val();
+      var nob = $("#user-nob").val();
+      var nos = $("#user-nos").val();
+      var vParentsResiding = $(\'input:radio[name="User[vParentsResiding]"]:checked\').val()
+
+      $(".error-field").removeClass("error-field");
+      var error_flag = true;
+      if(ifatherstatusid == ""){
+        $("#user-ifatherstatusid").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+      if(imotherstatusid == ""){
+        $("#user-imotherstatusid").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+
+      if(iStateCAId == ""){
+        $("#iStateCAId").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+
+      if(icountrycaid == ""){
+        $("#user-icountrycaid").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+
+      if(iCityCAId == ""){
+        $("#iCityCAId").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+
+      if(idistrictcaid == ""){
+        $("#user-idistrictcaid").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+
+      if(italukacaid == ""){
+        $("#user-italukacaid").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+
+      if(nob == ""){
+        $("#user-nob").addClass("error-field");
+        error_flag = false;
+      }
+
+      if(nos == ""){
+        $("#user-nos").addClass("error-field");
+        error_flag = false;
+      }
+
+      if(vParentsResiding == "" || typeof vParentsResiding === "undefined"){
+        $(\'input:radio[name="User[vParentsResiding]"]\').closest(".mid-col").addClass("error-field");
+        error_flag = false;
+      }
+
+      if(!error_flag){
+        return false;
+      }
+    });
+  ', View::POS_END);
+  ?>

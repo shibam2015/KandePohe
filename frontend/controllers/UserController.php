@@ -109,11 +109,11 @@ class UserController extends Controller
         Yii::$app->session->setFlash('success', 'bla bla 2');
         Yii::$app->session->setFlash('error', 'bla bla 3');*/
 
-    	$id = Yii::$app->user->identity->id;
+        $id = Yii::$app->user->identity->id;
         $model = User::find()->joinWith([countryName, stateName, cityName, height, maritalStatusName, talukaName, districtName, gotraName, subCommunityName, communityName, religionName, educationLevelName, communityName, workingWithName, workingAsName, dietName, fatherStatus])->where(['id' => $id])->one();
         $USER_PHOTO_MODEL = new  UserPhotos();
         $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
-		return $this->render('my-profile',
+        return $this->render('my-profile',
             ['model' => $model, 'photo_model' => $USER_PHOTOS_LIST]
         );
     }
@@ -124,10 +124,10 @@ class UserController extends Controller
             #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
             if($model = User::findOne($id)){
-                    $model->scenario = User::SCENARIO_REGISTER6;
-                    return $this->render('dashboard',[
-                        'model' => $model
-                    ]);
+                $model->scenario = User::SCENARIO_REGISTER6;
+                return $this->render('dashboard',[
+                    'model' => $model
+                ]);
 
             }else{
                 return $this->redirect(Yii::getAlias('@web'));
