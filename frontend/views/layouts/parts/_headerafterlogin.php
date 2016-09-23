@@ -34,7 +34,7 @@ use common\components\CommonHelper;
                             <?= Yii::$app->user->identity->First_Name; ?>
                             <span class="caret"></span></a>
                           <ul class="dropdown-menu">
-                            <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', ['logout'], ['data-method' => 'post']) ?></li>
+                            <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', ['site/logout'], ['data-method' => 'post']) ?></li>
 
                             <li><a href="#">Setting</a></li>
                             <li role="separator" class="divider"></li>
