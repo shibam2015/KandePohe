@@ -42,8 +42,10 @@ use yii\helpers\ArrayHelper;
                 <?php
                 $form = ActiveForm::begin([
                     'id' => 'form-register3',
+                     'validateOnChange' => false,
                 ]);
                 ?>
+                <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
                   <div class="box">
                     <div class="small-col">
                       <div class="required1"><span class="text-danger">*</span></div>
@@ -55,7 +57,7 @@ use yii\helpers\ArrayHelper;
                             ['class' => 'cs-select cs-skin-border',
                                 'prompt' => 'Height'
                             ]
-                        )->label(false); ?>
+                        )->label(false)->error(false); ?>
                       </div>
                     </div>
                     <div class="small-col tp ">
@@ -83,7 +85,7 @@ use yii\helpers\ArrayHelper;
                                     }
 
                                 ]
-                            )->label(false);?>
+                            )->label(false)->error(false);?>
                           </dd>
                         </div>
                       </div>
@@ -112,7 +114,7 @@ use yii\helpers\ArrayHelper;
                                     }
 
                                 ]
-                            )->label(false);?>
+                            )->label(false)->error(false);?>
                           </dd>
                         </div>
                       </div>
@@ -141,7 +143,7 @@ use yii\helpers\ArrayHelper;
                                     }
 
                                 ]
-                            )->label(false);?>
+                            )->label(false)->error(false);?>
                           </dd>
                         </div>
                       </div>
@@ -170,7 +172,7 @@ use yii\helpers\ArrayHelper;
                                     }
 
                                 ]
-                            )->label(false);?>
+                            )->label(false)->error(false);?>
                           </dd>
                         </div>
                       </div>
@@ -199,7 +201,7 @@ use yii\helpers\ArrayHelper;
                                     }
 
                                 ]
-                            )->label(false);?>
+                            )->label(false)->error(false);?>
                           </dd>
                         </div>
                       </div>
@@ -221,7 +223,7 @@ use yii\helpers\ArrayHelper;
                                 'prompt' => 'Diet'
                             ]
 
-                        )->label(false);?>
+                        )->label(false)->error(false);?>
                       </div>
                     </div>
                     <div class="small-col tp ">
@@ -247,9 +249,54 @@ use yii\helpers\ArrayHelper;
     </div>
   </div>
 </main>
-<!--<footer>
-  <div class="legal">
-    <p>© 2016 Kande Pohe.com. All Rights Reserved.</p>
-  </div>
-</footer>
--->
+<?php
+  $this->registerJs('
+    $("#form-register3").on("submit",function(e){
+      var iheightid = $("#user-iheightid").val();
+      var vdiet = $("#user-vdiet").val();
+      var vSkinTone = $(\'input:radio[name="User[vSkinTone]"]:checked\').val()
+      var vBodyType = $(\'input:radio[name="User[vBodyType]"]:checked\').val()
+      var vSmoke = $(\'input:radio[name="User[vSmoke]"]:checked\').val()
+      var vDrink = $(\'input:radio[name="User[vDrink]"]:checked\').val()
+      
+
+      $(".error-field").removeClass("error-field");
+      $("#top-error").hide();
+      var error_flag = true;
+      if(iheightid == ""){
+        $("#user-iheightid").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+      if(vdiet == ""){
+        $("#user-vdiet").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+
+      if(vSkinTone == "" || typeof vSkinTone === "undefined"){
+        $(\'input:radio[name="User[vSkinTone]"]\').closest(".mid-col").addClass("error-field");
+        error_flag = false;
+      }
+
+      if(vBodyType == "" || typeof vBodyType === "undefined"){
+        $(\'input:radio[name="User[vBodyType]"]\').closest(".mid-col").addClass("error-field");
+        error_flag = false;
+      }
+
+      if(vSmoke == "" || typeof vSmoke === "undefined"){
+        $(\'input:radio[name="User[vSmoke]"]\').closest(".mid-col").addClass("error-field");
+        error_flag = false;
+      }
+      
+      if(vDrink == "" || typeof vDrink === "undefined"){
+        $(\'input:radio[name="User[vDrink]"]\').closest(".mid-col").addClass("error-field");
+        error_flag = false;
+      }
+      
+
+      if(!error_flag){
+        // $("#top-error").show();
+        return false;
+      }
+    });
+  ');
+  ?>
