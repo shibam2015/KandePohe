@@ -332,6 +332,7 @@ use yii\helpers\ArrayHelper;
       var iStateId = $("#iStateId").val();
       var iCityId = $("#iCityId").val();
       var italukaid = $("#user-italukaid").val();
+      var idistrictid = $("#user-idistrictid").val();
 
       $(".error-field").removeClass("error-field");
       $("#top-error").hide();
@@ -362,6 +363,10 @@ use yii\helpers\ArrayHelper;
       }
       if(italukaid == ""){
         $("#user-italukaid").parent().children(".nice-select").addClass("error-field");
+        error_flag = false;
+      }
+      if(idistrictid == ""){
+        $("#user-idistrictid").parent().children(".nice-select").addClass("error-field");
         error_flag = false;
       }
 
