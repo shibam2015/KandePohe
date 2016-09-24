@@ -6,7 +6,6 @@ use common\components\CommonHelper;
 use common\components\MailHelper;
 use yii\helpers\ArrayHelper;
 
-
 $HOME_URL = Yii::getAlias('@web') . "/";
 $HOME_URL_SITE = Yii::getAlias('@web') . "/site/";
 

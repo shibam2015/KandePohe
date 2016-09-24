@@ -77,7 +77,8 @@ class MailHelper
         #echo " <br> TMESSAGE <br>".$MAIL_MESSAGE;
         $response = Yii::$app->mailer->compose()
             ->setTo($TO_EMAIL)
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name])
+            #->setFrom('kandepohetest@gmail.com')
+            ->setFrom(['kandepohetest@gmail.com' => Yii::$app->name])
             #->setFrom('no-replay@vcodertechnolab.com')
             ->setSubject($MAIL_SUBJECT)
             ->setHtmlBody($MAIL_MESSAGE)
