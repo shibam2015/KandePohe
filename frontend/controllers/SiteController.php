@@ -15,6 +15,7 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 #use frontend\components\CommonHelper;
 use common\components\CommonHelper;
+use common\components\MailHelper;
 use common\models\User;
 use common\models\PartenersReligion;
 use yii\widgets\ActiveForm;
@@ -185,11 +186,8 @@ class SiteController extends Controller
     }
 
     public function actionRegister() {
-        //$model = new Registration();
         $model = new User;
         $model->scenario = User::SCENARIO_REGISTER;
-        // AJAX Validation
-        #echo "virkant";exit;
         //if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
 
@@ -198,10 +196,7 @@ class SiteController extends Controller
             Yii::$app->end();
         }
 
-
         if ($model->load(Yii::$app->request->post()) ) {
-            #echo " <br> 2 ";
-
             //get verify response data
             $password = $model->password_hash;
             $email = $model->email;
@@ -217,7 +212,6 @@ class SiteController extends Controller
             var_dump($model->errors);
             die();*/
             if($model->save()){
-
                 $OUTPUT ='';
                 #$OUTPUT ='';
                 $EMAIL_ID = $model->email;
@@ -241,25 +235,9 @@ class SiteController extends Controller
                 #$activation_link1 = $activation_link1."?id=".base64_encode($model->id);
                 #$OUTPUT .= $activation_link1;
                 //$return = array('status' => 200,'message' => 'success','OUTPUT'=>$OUTPUT);
-                $to      = $model->email;
 
-                $subject = 'Please verify your Account On Kande-pohe.com';
-                $message = "";
-                #$message .= 'hi '."\r\n";
-                $message .= "Dear ".$model->First_Name.",
-                        You've entered ".$to." as the email address for your Kande-pohe.com Account. To start using Shaadi profile, confirm your email by clicking the button below.
-                        Verify Your Account from below URL.
-                        Alternatively, copy and paste the below URL in a new browser window instead and hit Enter.
-                        ";
-                $message .= $activation_link;
-                // $headers = 'From: no-replay@vcodertechnolab.com' . "\r\n" .'Reply-To: webmaster@example.com' . "\r\n" .'X-Mailer: PHP/' . phpversion();
-                #mail($to, $subject, $message, $headers);
-                $res = Yii::$app->mailer->compose()
-                    ->setTo($email)
-                    ->setFrom('no-replay@vcodertechnolab.com')
-                    ->setSubject($subject)
-                    ->setTextBody($message)
-                    ->send();
+                $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "ACTIVATION_LINK" => $activation_link);
+                MailHelper::SendMail('VERIFY_ACCOUNT', $MAIL_DATA);
 
                 $model1 = new LoginForm();
                 $model1->password = $password;
@@ -542,23 +520,9 @@ class SiteController extends Controller
                     $model->pin_email_vaerification = $PIN;
                     $model->completed_step = $model->setCompletedStep('7');
                     if($model->save($model)){
-                        $to      = $model->email;
-                        $subject = 'Email Verification PIN';
-                        $message = "";
-                        #$message .= 'hi '."\r\n";
-                        $message .= "Dear ".$model->First_Name.",
-                        You've entered ".$to." as the email address for your Kande-pohe.com Account. To start using Shaadi profile,
-                        Here is 4 digit PIN : ".$PIN.". Please enter this on site for further proceed.
-                        ";
-                        // $headers = 'From: no-replay@vcodertechnolab.com' . "\r\n" .'Reply-To: webmaster@example.com' . "\r\n" .'X-Mailer: PHP/' . phpversion();
-                        #echo $message;exit;
-                        #mail($to, $subject, $message, $headers);
-                        $res = Yii::$app->mailer->compose()
-                            ->setTo($to)
-                            ->setFrom('no-replay@vcodertechnolab.com')
-                            ->setSubject($subject)
-                            ->setTextBody($message)
-                            ->send();
+                        $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
+                        MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
+
                         $this->redirect(['site/verification']);
                     }
                 }
@@ -687,18 +651,10 @@ class SiteController extends Controller
                     $PIN = (rand(1000,9999));
                     $model->pin_email_vaerification = $PIN;
                     if($model->save($model)){
-                        $to      = $model->email;
-                        $subject = 'Email Verification PIN';
-                        $message = "";
-                        #$message .= 'hi '."\r\n";
-                        $message .= "Dear ".$model->First_Name.",
-                        You've entered ".$to." as the email address for your Kande-pohe.com Account. To start using Shaadi profile,
-                        Here is 4 digit PIN : ".$PIN.". Please enter this on site for further proceed.
-                        ";
-                        $headers = 'From: no-replay@vcodertechnolab.com' . "\r\n" .'Reply-To: webmaster@example.com' . "\r\n" .'X-Mailer: PHP/' . phpversion();
-                        #echo $message;exit;
-                        mail($to, $subject, $message, $headers);
-                        #$model->email_verification_msg = ' Please Check Your Mail for new PIN.';
+                        $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
+                        MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
+
+
                         $this->redirect(['site/verification','msg'=>'New PIN has been sent on your Email.']);
 
                     }

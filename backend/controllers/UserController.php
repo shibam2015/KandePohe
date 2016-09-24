@@ -8,7 +8,7 @@ use common\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use common\components\MailHelper;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -198,44 +198,23 @@ class UserController extends Controller
     public function actionInownwords($id)
     {
         $model = $this->findModel($id);
-        #$model = new User();
         if ($model->load(Yii::$app->request->post())) {
-            #echo "<pre>";print_r(Yii::$app->request->post());
-            #echo " IF ";exit;
             $USER_ARRAY = Yii::$app->request->post();
             $commentInOwnWordsAdmin = $USER_ARRAY['User']['commentInOwnWordsAdmin'];
             $ACTION_TYPE = $USER_ARRAY['submit'];
-            #$EMAIL = 'vikas.maheshwari1991.vm@gmail.com';//$model->email ;
-            $EMAIL = $model->email ;
-            $subject = 'Regarding In Own Word Content On Kande-pohe.com';
-            $message = "";
-
             if($ACTION_TYPE == 'APPROVE'){
-
                 $model->eStatusInOwnWord = 'Approve';
-
-                $message .= "Dear ".$model->First_Name.",
-                              We are Approve Your Content of a About YourSelf, Now it is visible to others site users.
-                        ";
-                $message .= "\n ".$commentInOwnWordsAdmin;
+                if ($model->save()) {
+                    $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "COMMENT" => $commentInOwnWordsAdmin);
+                    MailHelper::SendMail('IN_OWN_WORDS_APPROVE', $MAIL_DATA);
+                }
             }else{
                 $model->eStatusInOwnWord = 'Disapprove';
-                $message .= "Dear ".$model->First_Name.",
-                              We are not Approve Your about your self content because of Something Wrong in your content so it is not showing to other site User.
-                        ";
-                $message .= "\n ".$commentInOwnWordsAdmin;
+                if ($model->save()) {
+                    $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "COMMENT" => $commentInOwnWordsAdmin);
+                    MailHelper::SendMail('IN_OWN_WORDS_DISAPPROVE', $MAIL_DATA);
+                }
             }
-            if($model->save()){
-                $res = Yii::$app->mailer->compose()
-                    ->setTo($EMAIL)
-                    #->setFrom('no-replay@vcodertechnolab.com')
-                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . '.com'])
-                    ->setSubject($subject)
-                    ->setTextBody($message)
-                    ->send();
-
-            }
-
         }
         return $this->render('inownwords', [
             'model' => $this->findModel($id),
@@ -254,42 +233,22 @@ class UserController extends Controller
     public function actionProfilepic($id)
     {
         $model = $this->findModel($id);
-        #$model = new User();
         if ($model->load(Yii::$app->request->post())) {
-            #echo "<pre>";print_r(Yii::$app->request->post());
-            #echo " IF ";exit;
             $USER_ARRAY = Yii::$app->request->post();
             $commentInOwnWordsAdmin = $USER_ARRAY['User']['commentInOwnWordsAdmin'];
             $ACTION_TYPE = $USER_ARRAY['submit'];
-            #$EMAIL = 'vikas.maheshwari1991.vm@gmail.com';//$model->email ;
-            $EMAIL = $model->email ;
-            $subject = 'Regarding Your Profile Photo On Kande-pohe.com';
-            $message = "";
-
             if($ACTION_TYPE == 'APPROVE'){
-
-                $model->eStatusPhotoModify = 'Approve';
-
-                $message .= "Dear ".$model->First_Name.",
-                              We are Approve Your profile Photo, Now it is visible to others site users.
-                        ";
-                $message .= "\n ".$commentInOwnWordsAdmin;
+                $model->eStatusInOwnWord = 'Approve';
+                if ($model->save()) {
+                    $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "COMMENT" => $commentInOwnWordsAdmin);
+                    MailHelper::SendMail('PROFILE_PHOTO_APPROVE', $MAIL_DATA);
+                }
             }else{
-                $model->eStatusPhotoModify = 'Disapprove';
-                $message .= "Dear ".$model->First_Name.",
-                              We are not Approve Your Profile Photo because of Something Wrong in your Profile Photo so it is not showing to other site User,Please Select Another Profile Photo.
-                        ";
-                $message .= "\n ".$commentInOwnWordsAdmin;
-            }
-            if($model->save()){
-                $res = Yii::$app->mailer->compose()
-                    ->setTo($EMAIL)
-                    #->setFrom('no-replay@vcodertechnolab.com')
-                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . '.com'])
-                    ->setSubject($subject)
-                    ->setTextBody($message)
-                    ->send();
-
+                $model->eStatusInOwnWord = 'Disapprove';
+                if ($model->save()) {
+                    $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "COMMENT" => $commentInOwnWordsAdmin);
+                    MailHelper::SendMail('PROFILE_PHOTO_DISAPPROVE', $MAIL_DATA);
+                }
             }
 
         }
@@ -297,19 +256,4 @@ class UserController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
-    function userInfo()
-    {
-
-        $model = new User();
-        $ABC = $model->getUserInfo();
-
-
-        #$customers = User::findBySql($sql, [':status' => User::STATUS_INACTIVE])->all();
-
-    exit;
-    }
-    public function helloWorld(){
-        echo "hello world";
-    }
-
 }
