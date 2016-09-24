@@ -85,6 +85,7 @@ class MailHelper
         #exit;
         return $response;
 
+
     }
 
     public static function mailFormat($BODY_CONTENT, $TITLE)
