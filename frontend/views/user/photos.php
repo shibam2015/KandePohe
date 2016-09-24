@@ -1,12 +1,13 @@
 <?php
 
 use yii\helpers\Html;
-
 use yii\bootstrap\ActiveForm;
-
 use common\components\CommonHelper;
-
+use common\components\MailHelper;
 use yii\helpers\ArrayHelper;
+
+MailHelper::SendMail('EMAIL_VERIFICATION_PIN');
+exit;
 
 
 $HOME_URL = Yii::getAlias('@web') . "/";

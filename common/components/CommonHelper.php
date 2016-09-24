@@ -15,6 +15,10 @@ class CommonHelper {
 
     }*/
 
+    public static function siteName()
+    {
+        return 'Kande Pohe';
+    }
     public static function generatePrefix()
     {
         return 'KP';
@@ -250,6 +254,109 @@ class CommonHelper {
         return $img;
     }
 
+    /**
+     *    Date Time Formate Get
+     *
+     **/
+    public static function DateTime($text, $format = '', $time = '')
+    {
+        if ($text == "" || $text == "0000-00-00 00:00:00" || $text == "0000-00-00")
+            return "---";
+        switch ($format) {
+            //us formate
+            case "1":
+                return date('M j, Y', strtotime($text));
+                break;
+
+            case "2":
+                return date('M j, y  [G:i] ', strtotime($text));
+                break;
+
+            case "3":
+                return date("M j, Y", $text);
+                break;
+
+            case "4":
+                return date('Y,n,j,G,', $text) . intval(date('i', $text)) . ',' . intval(date('s', $text));
+                break;
+
+            case "5":
+                return date('l, F j, Y', strtotime($text));
+                break;
+
+            case "6":
+                return date('g:i:s', $text);
+                break;
+
+            case "7":
+                return date('F j, Y  h:i A', strtotime($text));
+                break;
+
+            case "8":
+                return date('Y-m-d', strtotime($text));
+                break;
+            case "9":
+                return date('F j, Y', strtotime($text));
+                break;
+            case "10":
+                return date('d/m/Y', strtotime($text));
+                break;
+            case "11":
+                return date('m/d/y', strtotime($text));
+                break;
+            case "12":
+                return date('H:i', strtotime($text));
+                break;
+            case "13":
+                return date('F j, Y (H:i:s)', strtotime($text));
+                break;
+            case "14":
+                return date('j M Y', strtotime($text));
+                break;
+            case "15":
+                return date('D', strtotime($text));
+                break;
+            case "16":
+                return date('d', strtotime($text));
+                break;
+            case "17":
+                return date('M Y', strtotime($text));
+                break;
+            case "18":
+                return date('h:i A', strtotime($text));
+                break;
+            case "19":
+                return date('M j, Y', strtotime($text));
+                break;
+            case "20":
+                return date('l,F d', strtotime($text));
+                break;
+            case "21":
+                return date('m/d/y, l', strtotime($text));
+                break;
+            //Use below(22-23-24) date time format in whole site
+            //For Time - 01:00 AM
+            case "22":
+                return date('h:i A', strtotime($text));
+                break;
+            //For date 10 Mar 2016
+            case "23":
+                return date('j M Y', strtotime($text));
+                break;
+            //For Date and Time  28 Mar 2016 01:00 AM
+            case "24":
+                return date('j M Y', strtotime($text)) . ' ' . date('h:i A', strtotime($time));
+                break;
+            //For DateTime type
+            case "25":
+                return date('j M Y  h:i A', strtotime($text));
+                break;
+            default :
+                return date('M j, Y', strtotime($text));
+                break;
+        }
+    }
+
     public function getReligion()
     {
         $religion = \common\models\Religion::find()->all();
@@ -420,7 +527,6 @@ class CommonHelper {
         #echo $img;exit;
         return $img;
     }
-
 
 }
 ?>
