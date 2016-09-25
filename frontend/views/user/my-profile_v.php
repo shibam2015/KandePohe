@@ -10,6 +10,7 @@ use yii\bootstrap\Alert;   // For Alert Notification
 use yii\web\View;
 use kartik\editable\Editable;
 use yii\widgets\Pjax;
+
 /*$religion_data = CommonHelper::getReligion();
 $community_data = CommonHelper::getCommunity();*/
 
@@ -22,10 +23,10 @@ if (!Yii::$app->user->isGuest) {
     $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
 }
 
-$HOME_URL = Yii::getAlias('@web')."/";
-$HOME_URL_SITE = Yii::getAlias('@web')."/site/";
-$UPLOAD_DIR = Yii::getAlias('@frontend') .'/web/uploads/';
-$IMG_DIR = Yii::getAlias('@frontend') .'/web/';
+$HOME_URL = Yii::getAlias('@web') . "/";
+$HOME_URL_SITE = Yii::getAlias('@web') . "/site/";
+$UPLOAD_DIR = Yii::getAlias('@frontend') . '/web/uploads/';
+$IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 
 ?>
 
@@ -233,9 +234,6 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                    data-toggle="tab"> Contact Details</a></li>
                                     </ul>
                                     <!-- Tab panes -->
-                                    <?php Pjax::begin(['id' => 'refresh_index']); ?>
-                                    <?= Html::a("Refresh", ['user/my-profile'], ['class' => 'btn btn-lg btn-primary hidden']) ?>
-                                    <?php Pjax::end(); ?>
                                     <div class="tab-content my-profile">
                                         <div role="tabpanel" class="tab-pane active" id="tab1">
                                             <div class="profile-edit pull-right">
@@ -249,23 +247,17 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 <div class="fb-profile-text padd-xs padd-tp-0">
                                                     <h1><span class="heading-icons icon9"></span> My Information</h1>
                                                 </div>
-                                                <?php Pjax::begin(['id' => 'my_index', 'enablePushState' => false]); ?>
                                                 <p class="dis_my_info"><?= $model->tYourSelf; ?></p>
-                                                <?php Pjax::end(); ?>
                                             </div>
                                             <div class="divider"></div>
                                             <div class="inner-block">
                                                 <div class="profile-edit pull-right">
                                                     <ul class="list-inline major-control">
-                                                        <li role="presentation">
-                                                            <a href="javascript:void(0)" class="edit_personal_btn"
-                                                               attr-name="my_info"><i class="fa fa-pencil"></i> Edit</a>
-                                                        </li>
+                                                        <li role="presentation"><a href="#"><i class="fa fa-pencil"></i>
+                                                                Edit</a></li>
                                                     </ul>
                                                 </div>
                                                 <h3><span class="heading-icons icon2"></span> Personal information</h3>
-                                                <?php Pjax::begin(['id' => 'my_index1', 'enablePushState' => false]); ?>
-                                                <div class="div_personal_info">
                                                 <dl class="dl-horizontal">
                                                     <dt>Name</dt>
                                                     <dd><?= $model->FullName; ?>
@@ -287,23 +279,15 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     <dd><?= $model->maritalStatusName->vName; ?></dd>
                                                 </dl>
                                             </div>
-                                                <?php Pjax::end(); ?>
-
-                                            </div>
                                             <div class="divider"></div>
                                             <div class="inner-block">
                                                 <div class="profile-edit pull-right">
                                                     <ul class="list-inline major-control">
-                                                        <li role="presentation"><a href="javascript:void(0)"
-                                                                                   class="edit_basic_information"
-                                                                                   attr-name="my_info"><i
-                                                                    class="fa fa-pencil"></i> Edit</a>
-                                                        </li>
+                                                        <li role="presentation"><a href="#"><i class="fa fa-pencil"></i>
+                                                                Edit</a></li>
                                                     </ul>
                                                 </div>
                                                 <h3><span class="heading-icons icon2"></span> Basic information</h3>
-                                                <?php Pjax::begin(['id' => 'my_index2', 'enablePushState' => false]); ?>
-                                                <div class="div_basic_info">
                                                 <dl class="dl-horizontal">
                                                     <dt>Religion</dt>
                                                     <dd><?= $model->religionName->vName; ?>
@@ -331,22 +315,16 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     <dd><?= $model->vAreaName ?></dd>
                                                 </dl>
                                             </div>
-                                                <?php Pjax::end(); ?>
-                                            </div>
                                             <div class="divider"></div>
                                             <div class="inner-block">
                                                 <div class="profile-edit pull-right">
                                                     <ul class="list-inline major-control">
-                                                        <li role="presentation">
-                                                            <a href="javascript:void(0)" class="edit_education"
-                                                               attr-name="my_info"><i class="fa fa-pencil"></i> Edit</a>
-                                                        </li>
+                                                        <li role="presentation"><a href="#"><i class="fa fa-pencil"></i>
+                                                                Edit</a></li>
                                                     </ul>
                                                 </div>
                                                 <h3><span class="heading-icons icon2"></span> Educational & Occupational
                                                 </h3>
-                                                <?php Pjax::begin(['id' => 'my_index3', 'enablePushState' => false]); ?>
-                                                <div class="div_education">
                                                 <dl class="dl-horizontal">
                                                     <dt>Education Level</dt>
                                                     <dd><?= $model->educationLevelName->vEducationLevelName; ?>
@@ -364,22 +342,16 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     <dd><?= $model->annualIncome->vAnnualIncome; ?></dd>
                                                 </dl>
                                             </div>
-                                                <?php Pjax::end(); ?>
-                                            </div>
                                             <div class="divider"></div>
                                             <div class="inner-block">
                                                 <div class="profile-edit pull-right">
                                                     <ul class="list-inline major-control">
-                                                        <li role="presentation">
-                                                            <a href="javascript:void(0)" class="edit_lifestyle"
-                                                               attr-name="my_info"><i class="fa fa-pencil"></i> Edit</a>
-                                                        </li>
+                                                        <li role="presentation"><a href="#"><i class="fa fa-pencil"></i>
+                                                                Edit</a></li>
                                                     </ul>
                                                 </div>
                                                 <h3><span class="heading-icons icon2"></span> Lifestyle & Appearance
                                                 </h3>
-                                                <?php Pjax::begin(['id' => 'my_index4', 'enablePushState' => false]); ?>
-                                                <div class="div_lifestyle">
                                                 <dl class="dl-horizontal">
                                                     <dt>Height</dt>
                                                     <dd><?= $model->height->vName ?>
@@ -399,21 +371,15 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     <dd><?= $model->dietName->vName; ?></dd>
                                                 </dl>
                                             </div>
-                                                <?php Pjax::end(); ?>
-                                            </div>
                                             <div class="divider"></div>
                                             <div class="inner-block">
                                                 <div class="profile-edit pull-right">
                                                     <ul class="list-inline major-control">
-                                                        <li role="presentation">
-                                                            <a href="javascript:void(0)" class="edit_family"
-                                                               attr-name="my_info"><i class="fa fa-pencil"></i> Edit</a>
-                                                        </li>
+                                                        <li role="presentation"><a href="#"><i class="fa fa-pencil"></i>
+                                                                Edit</a></li>
                                                     </ul>
                                                 </div>
                                                 <h3><span class="heading-icons icon2"></span> Family</h3>
-                                                <?php Pjax::begin(['id' => 'my_index5', 'enablePushState' => false]); ?>
-                                                <div class="div_family">
                                                 <dl class="dl-horizontal">
                                                     <dt>Father Status</dt>
                                                     <dd><?= $model->fatherStatus->vName ?>
@@ -455,8 +421,6 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     <dd><?= $model->vAreaName ?></dd>
                                                 </dl>
                                             </div>
-                                                <?php Pjax::end(); ?>
-                                            </div>
                                         </div>
 
 
@@ -489,57 +453,57 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li class="active"><span
                                 class="imgarea"><?= Html::img('@web/images/profile2.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="online"></span> </li>
+            </span> <span class="online"></span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile3.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile1.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile2.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile3.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                     </ul>
                 </div>
                 <div class="panel-footer">
@@ -550,13 +514,14 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                placeholder="Type your message here..."/>
                         <span class="input-group-btn dropup">
           <button class="btn btn-default btn-sm" id="btn-chat"><i class="fa fa-pencil-square-o"></i></button>
-          <button class="btn btn-default btn-sm" id="btn-chat" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-cog"></i> </button>
+          <button class="btn btn-default btn-sm" id="btn-chat" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false"> <i class="fa fa-cog"></i> </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
             <li><a href="#">Action</a></li>
             <li><a href="#">Another action</a></li>
             <li><a href="#">Something else here</a></li>
           </ul>
-          </span> </div>
+          </span></div>
                 </div>
             </div>
         </div>
@@ -668,7 +633,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 $this->registerJs('
   $(".edit_btn").click(function(e){
       $.ajax({
-        url : "'.Url::to(['user/edit-myinfo']).'",
+        url : "' . Url::to(['user/edit-myinfo']) . '",
         type:"GET",
         data:{},
         success:function(res){
@@ -676,86 +641,6 @@ $this->registerJs('
         }
       });
   });
-  
-    $(".edit_personal_btn").click(function(e){
-    $.ajax({
-        url : "' . Url::to(['user/edit-personal-info']) . '",
-        type:"GET",
-        data:{},
-        success:function(res){
-          $(".div_personal_info").html(res);
- 
- 
- 
-        }
-      });
-  });
-  $(".edit_basic_information").click(function(e){
- 
- 
- 
- 
-    $.ajax({
-        url : "' . Url::to(['user/edit-basic-info']) . '",
-        type:"GET",
-        data:{},
-        success:function(res){
-          $(".div_basic_info").html(res);
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-        }
-      });
-  });
-  $(".edit_education").click(function(e){
-    $.ajax({
-        url : "' . Url::to(['user/edit-education']) . '",
-        type:"GET",
-        data:{},
-        success:function(res){
-          $(".div_education").html(res);
-        }
-      });
-  });
-  $(".edit_lifestyle").click(function(e){
-    $.ajax({
-        url : "' . Url::to(['user/edit-lifestyle']) . '",
-        type:"GET",
-        data:{},
-        success:function(res){
-          $(".div_lifestyle").html(res);
-        }
-      });
-  });
-  $(".edit_family").click(function(e){
-    $.ajax({
-        url : "' . Url::to(['user/edit-family']) . '",
-        type:"GET",
-        data:{},
-        success:function(res){
-          $(".div_family").html(res);
-        }
- 
-      });
- 
- 
- 
- 
-  });
- 
-
   
         var P_ID = "";
         var P_TYPE = "";
@@ -816,7 +701,5 @@ $this->registerJs('
                         }
                     });
         })
-        
-        
   ');
 

@@ -20,7 +20,8 @@ class Compressimage extends \yii\db\ActiveRecord
         }
 
         list($width, $height) = getimagesize($uploadedfile);
-        $newheight = ($height / $width) * $newwidth;
+        #$newheight = ($height / $width) * $newwidth;
+        $newheight = $newwidth;
         $tmp = imagecreatetruecolor($newwidth, $newheight);
         imagecopyresampled($tmp, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
         $filename = $path . $newwidth . '_' . $actual_image_name;

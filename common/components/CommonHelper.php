@@ -8,7 +8,6 @@ use common\models\otherlibraries\Compressimage;
 use common\models\otherlibraries\Getextension;
 use common\models\User;
 use Yii;
-
 class CommonHelper {
 
     /*function __construct(argument) {
@@ -118,12 +117,14 @@ class CommonHelper {
                 $compressImage = new Compressimage();
                 #include 'includes/compressImage.php';
 
+
                 $widthArray = $SIZE_ARRAY;// array(200,100,50);
                 foreach ($widthArray as $newwidth) {
                     $filename = $compressImage->compressImage($ext, $uploadedfile, $path, $actual_image_name, $newwidth);
                     #unlink($path.$newwidth.'_1469352590');
                     #echo "<img src='".$filename."' class='img'> <br/>";
                     #  echo "<b>Width:</b> ".$newwidth."px  <br/><b>File Name:</br> ".$filename."<br/><br/>";
+
                 }
                 #echo " <br> UP FILE => ".$uploadedfile;
                 #echo " <br> PATh NAME=> ".$path.$actual_image_name;

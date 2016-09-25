@@ -331,21 +331,153 @@ class UserController extends Controller
 
     public function actionEditMyinfo(){
         $id = Yii::$app->user->identity->id;
-        $model = User::findOne($id);
         if(Yii::$app->request->post()){
             User::updateAll(['tYourSelf' => Yii::$app->request->post('User')['tYourSelf']], ['id' => $id]);
+            $model = User::findOne($id);
+
             return $this->renderAjax('_myinfo',[
                 'model' => $model,
-                'form'  => false,
-
+                'show' => false,
             ]);
         }
         else{
+            $model = User::findOne($id);
+
             return $this->renderAjax('_myinfo',[
                 'model' => $model,
-                'form'  => true,
+                'show' => true,
             ]);
         }
+    }
+
+    public function actionEditPersonalInfo()
+    {
+        $show = true;
+        $id = Yii::$app->user->identity->id;
+        if (Yii::$app->request->post()) {
+            $updateArray = array(
+                'First_Name' => Yii::$app->request->post('User')['First_Name'],
+                'Last_Name' => Yii::$app->request->post('User')['Last_Name'],
+                'iHeightID' => Yii::$app->request->post('User')['iHeightID'],
+                'iMaritalStatusID' => Yii::$app->request->post('User')['iMaritalStatusID'],
+            );
+            User::updateAll($updateArray, ['id' => $id]);
+            $show = false;
+        }
+        $model = User::findOne($id);
+        return $this->renderAjax('_personalinfo', [
+            'model' => $model,
+            'show' => $show,
+        ]);
+    }
+
+    public function actionEditBasicInfo()
+    {
+        $show = true;
+        $id = Yii::$app->user->identity->id;
+        if (Yii::$app->request->post()) {
+            $updateArray = array(
+                'iReligion_ID' => Yii::$app->request->post('User')['iReligion_ID'],
+                'iCommunity_ID' => Yii::$app->request->post('User')['iCommunity_ID'],
+                'iSubCommunity_ID' => Yii::$app->request->post('User')['iSubCommunity_ID'],
+                'iGotraID' => Yii::$app->request->post('User')['iGotraID'],
+                'iCountryId' => Yii::$app->request->post('User')['iCountryId'],
+                'iStateId' => Yii::$app->request->post('User')['iStateId'],
+                'iCityId' => Yii::$app->request->post('User')['iCityId'],
+                'iDistrictID' => Yii::$app->request->post('User')['iDistrictID'],
+                'iTalukaID' => Yii::$app->request->post('User')['iTalukaID'],
+                'vAreaName' => Yii::$app->request->post('User')['vAreaName'],
+            );
+            User::updateAll($updateArray, ['id' => $id]);
+            $show = false;
+        }
+        $model = User::findOne($id);
+        return $this->renderAjax('_basicinfo', [
+            'model' => $model,
+            'show' => $show,
+        ]);
+    }
+
+    public function actionEditEducation()
+    {
+        $show = true;
+        $id = Yii::$app->user->identity->id;
+        if (Yii::$app->request->post()) {
+            $updateArray = array(
+                'iEducationLevelID' => Yii::$app->request->post('User')['iEducationLevelID'],
+                'iEducationFieldID' => Yii::$app->request->post('User')['iEducationFieldID'],
+                'iWorkingWithID' => Yii::$app->request->post('User')['iWorkingWithID'],
+                'iWorkingAsID' => Yii::$app->request->post('User')['iWorkingAsID'],
+                'iAnnualIncomeID' => Yii::$app->request->post('User')['iAnnualIncomeID'],
+            );
+            User::updateAll($updateArray, ['id' => $id]);
+            $show = false;
+        }
+        $model = User::findOne($id);
+        return $this->renderAjax('_education', [
+            'model' => $model,
+            'show' => $show,
+        ]);
+    }
+
+    public function actionEditLifestyle()
+    {
+        $show = true;
+        $id = Yii::$app->user->identity->id;
+        if (Yii::$app->request->post()) {
+            $updateArray = array(
+                'iHeightID' => Yii::$app->request->post('User')['iHeightID'],
+                'vSkinTone' => Yii::$app->request->post('User')['vSkinTone'],
+                'vBodyType' => Yii::$app->request->post('User')['vBodyType'],
+                'vSmoke' => Yii::$app->request->post('User')['vSmoke'],
+                'vDrink' => Yii::$app->request->post('User')['vDrink'],
+                'vSpectaclesLens' => Yii::$app->request->post('User')['vSpectaclesLens'],
+                'vDiet' => Yii::$app->request->post('User')['vDiet'],
+            );
+            User::updateAll($updateArray, ['id' => $id]);
+            $show = false;
+        }
+        $model = User::findOne($id);
+        return $this->renderAjax('_lifestyle', [
+            'model' => $model,
+            'show' => $show,
+        ]);
+    }
+
+    public function actionEditFamily()
+    {
+        $show = true;
+        $id = Yii::$app->user->identity->id;
+        if (Yii::$app->request->post()) {
+            $updateArray = array(
+                'iFatherStatusID' => Yii::$app->request->post('User')['iFatherStatusID'],
+                'iFatherWorkingAsID' => Yii::$app->request->post('User')['iFatherWorkingAsID'],
+                'iMotherStatusID' => Yii::$app->request->post('User')['iMotherStatusID'],
+                'iMotherWorkingAsID' => Yii::$app->request->post('User')['iMotherWorkingAsID'],
+                'nob' => Yii::$app->request->post('User')['nob'],
+                'nos' => Yii::$app->request->post('User')['nos'],
+                'iCountryCAId' => Yii::$app->request->post('User')['iCountryCAId'],
+                'iStateCAId' => Yii::$app->request->post('User')['iStateCAId'],
+                'iCityCAId' => Yii::$app->request->post('User')['iCityCAId'],
+                'iDistrictCAID' => Yii::$app->request->post('User')['iDistrictCAID'],
+                'iTalukaCAID' => Yii::$app->request->post('User')['iTalukaCAID'],
+                'vAreaNameCA' => Yii::$app->request->post('User')['vAreaNameCA'],
+                'vNativePlaceCA' => Yii::$app->request->post('User')['vNativePlaceCA'],
+                'vParentsResiding' => Yii::$app->request->post('User')['vParentsResiding'],
+                'vFamilyAffluenceLevel' => Yii::$app->request->post('User')['vFamilyAffluenceLevel'],
+                'vFamilyType' => Yii::$app->request->post('User')['vFamilyType'],
+                'vFamilyProperty' => Yii::$app->request->post('User')['vFamilyProperty'],
+                'vDetailRelative' => Yii::$app->request->post('User')['vDetailRelative'],
+            );
+            User::updateAll($updateArray, ['id' => $id]);
+            $show = false;
+        }
+        $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_REGISTER4;
+        return $this->renderAjax('_family', [
+            'model' => $model,
+            'show' => $show,
+        ]);
     }
 
 }
