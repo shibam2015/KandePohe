@@ -30,6 +30,8 @@ class AppAsset extends AssetBundle
 		'js/jquery.nice-select.min.js',
 		'js/modernizr.js',
         'js/modernizr.js',
-        'plugings/loader/pace.min.js'
+        'plugings/loader/pace.min.js',
+        'js/cover/jquery-ui.min.js', //Cover Photo
+        'js/cover/jquery.wallform.js' //Cover Photo
     ];
 }

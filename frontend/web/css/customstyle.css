@@ -19,3 +19,88 @@ img.selected {
 .profile-edit .minor-control a.active .badge {
     background: #43a44c;
 }
+
+/* COVER PHOTO START */
+#timelineBackground {
+    max-height: 240px !important;
+
+}
+
+.cover-pic {
+    /*height: 315px;*/
+    max-height: 240px !important;
+    position: relative;
+
+    overflow: hidden;
+    background-color: #ffffff
+}
+
+.bgImagecover {
+    width: 100%;
+}
+
+.headerimage {
+    cursor: s-resize;
+    position: relative;
+
+    overflow: hidden;
+    background-color: #ffffff;
+    width: 100% !important;
+}
+
+.wallbutton:hover {
+    text-decoration: none;
+}
+
+.blackButton {
+    background-color: #666666;
+    border-color: #333333;
+}
+
+.bgSave, .bgSaveRP {
+    clear: both;
+    float: right;
+    position: absolute;
+    /*margin-top: 267px;*/
+    /*margin-left: 760px;*/
+    z-index: 4000;
+    right: 10px;
+    top: 10px;
+}
+
+.bgCancel {
+    clear: both;
+    float: right;
+    position: absolute;
+    /*margin-top: 267px;*/
+    /*margin-left: 760px;*/
+    z-index: 4000;
+    right: 10px;
+    top: 50px;
+}
+
+.wallbutton {
+    font-weight: bold;
+    padding: 7px 9px;
+    background-color: #ff517d;
+    color: #fff !important;
+    font-size: 12px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    /*border-width: 1px;*/
+    border-style: solid;
+    border-color: #fff;
+    white-space: nowrap;
+
+    display: -moz-inline-stack;
+
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+
+}
+
+/* COVER PHOTO END*/
+

@@ -480,6 +480,84 @@ class UserController extends Controller
         ]);
     }
 
+    public function actionCoverupload()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $session_uid = $id;
+        $ACTION = Yii::$app->request->post('ACTION');
+        #$path = 'http://localhost/KandePohe//frontend/web/uploads/users/2/cover/14748796851.jpg';
+        $COVER_PHOTO = CommonHelper::getCoverPhotos('USER', $id, $model->cover_photo, '');
+        $bgSave = '';
+        if ($ACTION == 'REPOSITION') {
+            $bgSave .= '<div id="uX' . $session_uid . '" class="bgSaveRP wallbutton blackButton"> Save </div>';
+        } else {
+            $bgSave .= '<div id="uX' . $session_uid . '" class="bgSave wallbutton blackButton"> Save </div>';
+        }
+        $bgSave .= '<div id="uX' . $session_uid . '" class="bgCancel wallbutton blackButton">Cancel</div>';
+        $ABC = $bgSave . '<img src="' . $COVER_PHOTO . '"  id="timelineBGload" class="headerimage ui-corner-all" style="top:' . $model->cover_background_position . '"/>';
+        $RES = array("ABC" => $ABC);
+        echo json_encode($RES);
+        exit;
+    }
+
+    public function actionCoverphotoback()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $session_uid = $id;
+        $ACTION = Yii::$app->request->post('ACTION');
+        $COVER_PHOTO = CommonHelper::getCoverPhotos('USER', $id, $model->cover_photo, '');
+        $bgSave = '';
+        $ABC = '';
+        if ($ACTION == 'CANCEL') {
+            $ABC = $bgSave . '<img src="' . $COVER_PHOTO . '"  id="timelineBGload" class="bgImagecover" style="margin-top:' . $model->cover_background_position . '"/>';
+        } else {
+
+        }
+
+        $RES = array("ABC" => $ABC);
+        echo json_encode($RES);
+        exit;
+    }
+
+    public function actionSavecoverphoto($position = '')
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $STATUS = "SUCCESS";
+        $MESSAGE = 'Cover Photo Upload Successfully.';
+        $position = $P_ID = Yii::$app->request->post('position');
+        if ($position != '') {
+            $CM_HELPER = new CommonHelper();
+            $PATH = $CM_HELPER->getUserUploadFolder(1) . "/" . $id . "/cover/";
+            $URL = $CM_HELPER->getUserUploadFolder(2) . "/" . $id . "/cover/";
+            #$USER_SIZE_ARRAY = $CM_HELPER->getUserResizeRatio();
+            $OLD_PHOTO = $model->cover_photo;
+            $FILE_COUNT = count($_FILES);
+            if ($FILE_COUNT != 0) {
+                $PHOTO_ARRAY = $CM_HELPER->coverPhotoUpload($id, $_FILES['cover_photo'], $PATH, $URL, '', $OLD_PHOTO);
+                $model->cover_photo = $PHOTO_ARRAY['PHOTO'];
+            } else {
+                //$PHOTO_ARRAY = $CM_HELPER->coverPhotoUpload($id, $_FILES['cover_photo'], $PATH, $URL, '', $OLD_PHOTO);
+            }
+
+            $model->cover_background_position = $position;
+            $ACTION_FLAG = $model->save();
+            if (!$ACTION_FLAG) {
+                $STATUS = "ERROR";
+                $MESSAGE = 'Photo Not Uploaded. Please Try Again !';
+            }
+        }
+        $OUTPUT_HTML = '';
+        $OUTPUT_HTML_ONE = '';
+        $OUTPUT_HTML .= $this->getPhotoListOutput();
+        $OUTPUT_HTML_ONE .= $this->getPhotoListOutputOne();
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'OUTPUT' => $OUTPUT_HTML, 'OUTPUT_ONE' => $OUTPUT_HTML_ONE);
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return $return;
+    }
+
 }
 
 

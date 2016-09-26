@@ -181,22 +181,6 @@ class CommonHelper {
 
     }
 
-    public static function photoDeleteFromFolder($PATH, $SIZE_ARRAY, $OLD_PHOTO)
-    {
-        $DEL_IMG = $SIZE_ARRAY;
-        $path = $PATH;
-        if ($OLD_PHOTO != '') {
-            foreach ($DEL_IMG as $k => $V) {
-                if ($k == 0)
-                    $vImage_hid = $OLD_PHOTO;
-                else
-                    $vImage_hid = $V . '_' . $OLD_PHOTO;
-                unlink($path . $vImage_hid);
-            }
-        }
-        return true;
-    }
-
     public static function getUserResizeRatio()
     {//For User photo resize
         $USER_SIZE_ARRAY = array('', 30, 75, 140, 200, 350, 500, 900);
@@ -356,6 +340,106 @@ class CommonHelper {
                 return date('M j, Y', strtotime($text));
                 break;
         }
+    }
+
+    public static function getCoverPhotos($TYPE = 'USER', $ID, $PHOTO, $SIZE = '') // GET USER PHOTO (Profile)
+    {
+        if ($TYPE == 'USER') {
+            $U_PATH = $ID . "/cover/";
+
+            if ($SIZE != '') {
+                $PHOTO_WITH_SIZE = $SIZE . "_" . $PHOTO;
+            } else {
+                $PHOTO_WITH_SIZE = $PHOTO;
+            }
+            $MAIN_URL = CommonHelper::getUserUploadFolder(2);
+            $PATH = CommonHelper::getUserUploadFolder(1) . $U_PATH;
+            $URL = $MAIN_URL . $U_PATH;
+            $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $MAIN_URL . 'no-user-img.jpg';
+            #$PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : 'http://placehold.it/350x150';
+            return $PHOTO_USER;
+        }
+    }
+
+    public static function coverPhotoUpload($iUserId, $FILES, $PATH, $URL, $SIZE_ARRAY = '', $OLD_PHOTO = '')
+    {
+        global $Obj_User1, $tconfig, $inc_class_path, $txt;
+        $USER_PHOTO_FOLDER = $PATH;
+        if (!is_dir($USER_PHOTO_FOLDER)) {
+            mkdir($USER_PHOTO_FOLDER, 0777);
+
+        }
+        $path = $PATH;//$tconfig["tsite_upload_images_member_path"].$iUserId."/";exit;
+        $URL = $URL;//$tconfig["tsite_upload_images_member_url"].$iUserId."/";
+        $PHOTO = '';
+
+        $actual_image_name = "";
+        $valid_formats = array("jpg", "png", "gif", "bmp", "jpeg", "PNG", "JPG", "JPEG", "GIF", "BMP");
+        $Getextension = new Getextension();
+        $imagename = $FILES['name'];
+        $size = $FILES['size'];
+        if (strlen($imagename)) {
+            $ext = strtolower($Getextension->getExtension($imagename));
+            if (in_array($ext, $valid_formats)) {
+                /*if($size<(1024*1024))
+                {*/
+                $actual_image_name = rand(1, 2000) . time() . substr(str_replace(" ", "_", $txt), 5) . "." . $ext;
+                $uploadedfile = $FILES['tmp_name'];
+
+                if (move_uploaded_file($uploadedfile, $path . $actual_image_name)) {
+                    $PHOTO = $actual_image_name;
+                    $UPDATE_FLAG = 1;
+                    if ($UPDATE_FLAG) {
+                        CommonHelper::photoDeleteFromFolder($PATH, array(), $OLD_PHOTO);
+                        $STATUS = 1;
+                        $NOTIFICATION_TYPE = 'Success';
+                        $NOTIFICATION_MSG = 'Upload Successfully';
+                        #$PHOTO = $URL."100_".$actual_image_name;
+                    } else {
+                        $STATUS = 0;
+                        $NOTIFICATION_TYPE = 'Failed';
+                        $NOTIFICATION_MSG = 'Something went wrong. Please try again !';
+                    }
+                } else {
+                    $STATUS = 0;
+                    $NOTIFICATION_TYPE = 'Failed';
+                    $NOTIFICATION_MSG = 'Fail upload folder with read access.';
+                }
+
+            } else {
+                $STATUS = 0;
+                $NOTIFICATION_TYPE = 'Failed';
+                $NOTIFICATION_MSG = 'Invalid file format..';
+            }
+
+        }
+
+        $RES_ARRAY = array("STATUS" => $STATUS, "NOTIFICATION_TYPE" => $NOTIFICATION_TYPE, "NOTIFICATION_MSG" => $NOTIFICATION_MSG, "PHOTO" => $PHOTO);
+        #print_r($RES_ARRAY);exit;
+        return $RES_ARRAY;
+
+    }
+
+    public static function photoDeleteFromFolder($PATH, $SIZE_ARRAY, $OLD_PHOTO)
+    {
+        $DEL_IMG = $SIZE_ARRAY;
+        $path = $PATH;
+        if ($OLD_PHOTO != '') {
+            if (count($SIZE_ARRAY) != 0) {
+                foreach ($DEL_IMG as $k => $V) {
+                    if ($k == 0)
+                        $vImage_hid = $OLD_PHOTO;
+                    else
+                        $vImage_hid = $V . '_' . $OLD_PHOTO;
+                    unlink($path . $vImage_hid);
+                }
+            } else {
+                $vImage_hid = $OLD_PHOTO;
+                unlink($path . $vImage_hid);
+            }
+
+        }
+        return true;
     }
 
     public function getReligion()
@@ -528,7 +612,6 @@ class CommonHelper {
         #echo $img;exit;
         return $img;
     }
-
 }
 ?>
 
