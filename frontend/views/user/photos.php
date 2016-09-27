@@ -45,7 +45,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                 <div class="col-sm-5">
                                                     <div class="image">
                                                         <div class="placeholder text-center">
-                                                            <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->user->identity->propic, 200), ['class' => 'img-responsive mainpropic', 'width' => '200', 'height' => '200', 'alt' => 'Profile Pic']); ?>
+                                                            <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->user->identity->propic, 200), ['class' => 'img-responsive mainpropic', 'width' => '200', 'alt' => 'Profile Photo']); ?>
                                                             <div class="add-photo" data-toggle="modal"
                                                                  data-target="#photo"><span class="file-input btn-file"> <i
                                                                         class="fa fa-plus-circle"></i> Add a photo </span>
@@ -110,7 +110,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                             <div class="col-md-3 col-sm-3 col-xs-6">
                                                                 <a <?php if ($V['Is_Profile_Photo'] == 'YES'){ ?>class="selected"<?php } ?>
                                                                    href="#">
-                                                                    <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive ' . $SELECTED, 'height' => '140', 'alt' => 'Photo' . $K, 'style' => "height:140px;"]); ?>
+                                                                    <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive ' . $SELECTED, 'width' => '140', 'alt' => 'Photo' . $K]); ?>
                                                                 </a>
 
                                                                 <a href="javascript:void(0)"
@@ -356,7 +356,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                     <a href="javascript:void(0)" class="pull-left profile_set"
                                        data-id="<?= $V['iPhoto_ID'] ?>"
                                        data-target="#photodelete" data-toggle="modal">
-                                        <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive ' . $SELECTED, 'height' => '140', 'alt' => 'Photo' . $K, 'style' => "height:140px;"]); ?>
+                                        <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive ' . $SELECTED, 'height' => '140', 'alt' => 'Photo' . $K]); ?>
                                     </a>
                                 </div>
                                 <!-- <div class="col-md-3 col-sm-3 col-xs-6">

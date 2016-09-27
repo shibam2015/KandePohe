@@ -57,7 +57,7 @@ img.selected {
     border-color: #333333;
 }
 
-.bgSave, .bgSaveRP {
+.bgSave, .bgSaveRP, .bgSaveFP {
     clear: both;
     float: right;
     position: absolute;
@@ -102,5 +102,8 @@ img.selected {
 
 }
 
+.radio_step4 {
+    width: 100%;
+}
 /* COVER PHOTO END*/
 

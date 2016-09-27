@@ -1,11 +1,11 @@
-  <?php
+<?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-  #use frontend\components\CommonHelper;
+#use frontend\components\CommonHelper;
 use yii\helpers\ArrayHelper;
 use common\models\LoginForm;
 use yii\captcha\Captcha;
-  use common\components\CommonHelper;
+use common\components\CommonHelper;
 /*$religion_data = CommonHelper::getReligion();
 $community_data = CommonHelper::getCommunity();*/
 
@@ -15,8 +15,8 @@ $PROFILE_COMPLETENESS = 0;
 
 if (!Yii::$app->user->isGuest) {
 #$id = base64_decode($id);
-    $id = Yii::$app->user->identity->id;
-    $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
+  $id = Yii::$app->user->identity->id;
+  $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
 }
 
 $HOME_URL = Yii::getAlias('@web')."/";
@@ -37,7 +37,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 <link href="css/style-responsive.css" rel="stylesheet"> -->
 <!--<div class="wrapper">-->
 <div class="">
-  <?= $this->render('/layouts/parts/_headerafterlogin');?> 
+  <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
   <main>
     <section>
       <div class="container">
@@ -75,10 +75,17 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                 <div class="panel-body">
                   <ul class="reset mrg-lt-15 list-item">
                     <li> <a href="<?=$HOME_URL?>user/my-profile" title="Edit Profile">Edit Profile</a> </li>
-                      <li><a href="<?= $HOME_URL ?>user/photos" title="Manage Photos">Manage Photos</a></li>
+                    <li><a href="<?= $HOME_URL ?>user/photos" title="Manage Photos">Manage Photos</a></li>
                     <li><a href="#" title="Edit Preference"> Edit Preference</a></li>
-                    <li><a href="#" title="Privacy Options"> Privacy Options </a> </li>
+                    <li><a href="javascript:void(0)" title="Privacy Options" data-target="#privacyoption"
+                           data-toggle="modal"> Privacy Options </a></li>
                   </ul>
+                  <!-- <a href="javascript:void(0)"
+                     class="pull-left profile_set"
+                     data-id="<?= $V['iPhoto_ID'] ?>"
+                     data-target="#photodelete" data-toggle="modal">
+                    Profile pic
+                  </a>-->
                 </div>
               </div>
               <div class="divider no-mrg"></div>
@@ -92,11 +99,39 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                 <div class="panel-body no-padd text-center">
                   <div class="profile-edit">
                     <ul class="list-inline minor-control">
-                      <li><a href="#"><i class="fa fa-facebook"></i> <span class="badge"><i class="fa fa-check"></i></span></a></li>
-                      <li><a href="#"><i class="fa fa-mobile"></i> <span class="badge"><i class="fa fa-check"></i></span></a></li>
-                      <li><a href="#"><i class="fa fa-envelope-o"></i> <span class="badge"><i class="fa fa-check"></i></span></a></li>
-                      <li><a href="#"><i class="fa fa-user"></i> <span class="badge"><i class="fa fa-check"></i></span></a></li>
+                      <?php
+                      $USER_FACEBOOK = \common\models\User::wightegeCheck(11);
+                      $USER_PHONE = \common\models\User::wightegeCheck(8);
+                      $USER_EMAIL = \common\models\User::wightegeCheck(9);
+                      $USER_APPROVED = \common\models\User::wightegeCheck(10);
+                      ?>
+
+                      <li><a href="javascript:void(0)"
+                             <?php if ($USER_FACEBOOK){ ?>class="active"<?php } ?>><i
+                              class="fa fa-facebook"></i> <span
+                              class="badge"><i
+                                class="fa fa-check"></i></span></a>
+                      </li>
+                      <li><a href="javascript:void(0)"
+                             <?php if ($USER_PHONE){ ?>class="active"<?php } ?>><i
+                              class="fa fa-mobile"></i> <span
+                              class="badge"><i
+                                class="fa fa-check"></i></span></a>
+                      </li>
+                      <li><a href="javascript:void(0)"
+                             <?php if ($USER_EMAIL){ ?>class="active"<?php } ?>><i
+                              class="fa fa-envelope-o"></i> <span
+                              class="badge"><i
+                                class="fa fa-check"></i></span></a>
+                      </li>
+                      <li><a href="javascript:void(0)"
+                             <?php if ($USER_APPROVED){ ?>class="active"<?php } ?>><i
+                              class="fa fa-user"></i> <span
+                              class="badge"><i
+                                class="fa fa-check"></i></span></a>
+                      </li>
                     </ul>
+
                   </div>
                 </div>
               </div>
@@ -259,7 +294,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                         <span>0% Complete</span>
                         <?php for($i=1;$i<=100; $i++){?>
                           <span><?=$i?>% Complete</span>
-                      <?php } ?>
+                        <?php } ?>
                       </div>
                     </div>
                   </div>
@@ -448,11 +483,11 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
       </div>
     </section>
   </main>
-<!--  <footer>
-    <div class="legal">
-      <p>© 2016 Kande Pohe.com. All Rights Reserved.</p>
-    </div>
-  </footer>-->
+  <!--  <footer>
+      <div class="legal">
+        <p>© 2016 Kande Pohe.com. All Rights Reserved.</p>
+      </div>
+    </footer>-->
 </div>
 <div class="chatwe">
   <div class="panel panel-primary">
@@ -547,18 +582,99 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
     <!-- Modal Footer -->
   </div>
 </div>
-<!-- Bootstrap core JavaScript
-    ================================================== -->
+<div class="modal fade" id="privacyoption" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <p class="text-center mrg-bt-10">
+      <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
+              class="sr-only">Close</span></button>
+        <h2 class="text-center" id="model_heading">Set Privacy Options For Your Profile</h2>
+      </div>
+      <!-- Modal Body -->
+
+
+      <div class="modal-body photo-gallery">
+        <div class="choose-photo">
+          <?php $form = ActiveForm::begin(); ?>
+          <div class="form-cont">
+            <div class="radio dl" id="IVA">
+              <dt></dt>
+              <dd>
+
+                <?= $form->field($model, 'user_privacy_option')->RadioList(
+                    ['0' => 'Visible to all', '1' => 'Visible only to members whom I had contacted / responded'],
+                    [
+                        'item' => function ($index, $label, $name, $checked, $value) {
+                          $checked = ($checked) ? 'checked' : '';
+                          $return = '<input type="radio" id="user_privacy_option_' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
+                          $return .= '<label for="user_privacy_option_' . $value . '">' . ucwords($label) . '</label>';
+                          return $return;
+                        }
+
+                    ]
+                )->label(false); ?>
+
+
+              </dd>
+
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+              <a href="javascript:void(0)"
+                 class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right " id="privacysetting"> Save </a>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6 ">
+              <a href="javascript:void(0)" class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left"
+                 data-dismiss="modal"> Back </a>
+            </div>
+          </div>
+          <?php ActiveForm::end(); ?>
+
+
+        </div>
+      </div>
+    </div>
+    <!-- Modal Footer -->
+  </div>
+</div>
+<?php
+$this->registerJs("
+          $('body').on('click','#privacysetting',function ()
+                    {
+                        var formData = new FormData();
+                        var ps_value = $('input[name=\"User[user_privacy_option]\"]:checked').val();
+                        formData.append( 'ACTION', 'Save');
+                        formData.append( 'user_privacy_option', ps_value);
+                        $.ajax({
+                            type: 'POST',
+                            url: 'saveprivacy-setting',
+                            data: formData,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            beforeSend: function(){ },
+                            success: function(data)
+                            {
+                              var DataObject = JSON.parse(data);
+                              $('#photo_list').html(DataObject.OUTPUT);
+                              notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            },
+                            error:function(){
+                            notificationPopup('ERROR', 'Something went wrong. Please try again !');
+  }
+                            });
+            });
+     ");
+?>
+
 <script type="text/javascript">
-    var PRO_COMP = <?=$PROFILE_COMPLETENESS?>;
+  var PRO_COMP = <?=$PROFILE_COMPLETENESS?>;
 </script>
 <script src="<?=$HOME_URL?>js/jquery.js" type="text/javascript"></script>
 <script src="<?=$HOME_URL?>js/selectFx.js"></script>
-<!--<script src="<?/*=$HOME_URL*/?>js/jquery.js" type="text/javascript"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="<?/*=$HOME_URL*/?>js/bootstrap.min.js"></script>
-<script src="<?/*=$HOME_URL*/?>js/custom.js"></script>
-<script src="<?/*=$HOME_URL*/?>js/classie.js"></script>
-<script src="<?/*=$HOME_URL*/?>js/selectFx.js"></script>
-<script src="<?/*=$HOME_URL*/?>js/modernizr.js"></script>-->
-<!-- Modernizr -->

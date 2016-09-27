@@ -52,7 +52,9 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             <button class="btn edit dropdown-toggle" type="button"
                                                     data-toggle="dropdown"><i class="fa fa-pencil"></i></button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                <li><a href="#">Choose from My Photos</a></li>
+                                                <li><a href="javascript:void(0)" data-toggle="modal"
+                                                       data-target="#photo" id="choosecoverphoto">Choose from My
+                                                        Photos</a></li>
                                                 <li>
                                                     <a href="javascript:void(0)" id="coverphotoupload">Upload Photo</a>
                                                 </li>
@@ -108,9 +110,12 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                         <div class="profile-edit">
                                                             <div class="pull-left">
                                                                 <ul class="list-inline major-control">
-                                                                    <li><a href="#" data-target="#hideProfile"
-                                                                           data-toggle="modal"><i
-                                                                                class="fa fa-eye-slash"></i> Hide
+                                                                    <li id="hideshow_a"><a href="javascript:void(0)"
+                                                                                           data-target="#hideProfile"
+                                                                                           data-toggle="modal"
+                                                                                           class="hideshowmenu"
+                                                                                           data-name="<?= $model->hide_profile ?>">
+                                                                            <i class="fa <?= ($model->hide_profile == 'Yes') ? 'fa-eye' : 'fa-eye-slash'; ?>"></i> <?= ($model->hide_profile == 'Yes') ? 'Show' : 'Hide'; ?>
                                                                             Profile</a></li>
                                                                     <li><a href="#" data-target="#deleteProfile"
                                                                            data-toggle="modal"><i
@@ -614,7 +619,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                     if ($V['Is_Profile_Photo'] == 'YES') {
                                         $SELECTED = "selected";
                                     } ?>
-                                    <a href="javascript:void(0)" class="pull-left profile_set"
+                                    <a href="javascript:void(0)" class="pull-left profile_set cover_profile_set"
                                        data-id="<?= $V['iPhoto_ID'] ?>"
                                        data-target="#photodelete" data-toggle="modal">
                                         <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive ' . $SELECTED, 'height' => '140', 'alt' => 'Photo' . $K, 'style' => "height:140px;"]); ?>
@@ -669,6 +674,75 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                         <div class="col-md-6 col-sm-6 col-xs-6">
                             <a href="javascript:void(0)"
                                class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right yes"> Yes </a>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 ">
+                            <a href="javascript:void(0)"
+                               class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left"
+                               data-dismiss="modal"> No </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Footer -->
+    </div>
+</div>
+<div class="modal fade" id="photocovermodel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <p class="text-center mrg-bt-10">
+            <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                    <span
+                        class="sr-only">Close</span></button>
+                <h2 class="text-center" id="model_heading_cover"></h2>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body photo-gallery">
+                <div class="choose-photo">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <a href="javascript:void(0)"
+                               class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right yescover"> Yes </a>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 ">
+                            <a href="javascript:void(0)"
+                               class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left"
+                               data-dismiss="modal"> No </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Footer -->
+    </div>
+</div>
+
+<div class="modal fade" id="hideProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <p class="text-center mrg-bt-10">
+            <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                    <span
+                        class="sr-only">Close</span></button>
+                <h2 class="text-center" id="model_heading_hideshow">
+                    If You Want To Hide Your Profile!
+                </h2>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body photo-gallery">
+                <div class="choose-photo">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <a href="javascript:void(0)"
+                               class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right hideshow"> Yes </a>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-6 ">
                             <a href="javascript:void(0)"
@@ -1064,4 +1138,134 @@ $this->registerJs('
     $('#coverphotoupload').click(function(){
         $('#bgphotoimgcover').trigger('click');
     });
+    $('#choosecoverphoto').click(function(){
+        $('.cover_profile_set').attr('data-target','#photocovermodel'); 
+        $('.cover_profile_set').removeClass('profile_set'); 
+    });
+    $('.add-photo').click(function(){
+        $('.cover_profile_set').addClass('profile_set');
+        $('.cover_profile_set').attr('data-target','#photodelete'); 
+         
+    });
+    var PP_ID ='';
+    $('.cover_profile_set').click(function(){
+                        var targetd  = $(this).data('target');
+                        if(targetd == '#photocovermodel'){
+                            PP_ID = $(this).data('id');
+                                $('#model_heading_cover').html('Are you sure want to set this photo as cover photo?');
+                        }
+    })
+    
+    $('.yescover').click(function(){
+            Pace.restart();
+            var formDataPhoto = new FormData();
+            formDataPhoto.append( 'ACTION', 'GET_PHOTO_FROM_PHOTOS');
+            formDataPhoto.append( 'P_ID', PP_ID);    
+                $.ajax({
+                        url: 'get-cover-photo-from-photo',
+                        type: 'POST',
+                        data: formDataPhoto,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (data, textStatus, jqXHR) {
+                            var DataObject = JSON.parse(data);
+                            if (DataObject.STATUS == 'SUCCESS') {
+                                $('#timelineBackground').html(DataObject.ABC);
+                                $('.modal').modal('hide');
+                            } else {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            }
+                                                                
+                        profile_photo();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            notificationPopup('ERROR', 'Request Failed');
+                        }
+                });
+        })            
+    
+        $('body').on('click','.bgSaveFP',function ()
+        {
+            var id = $(this).attr('id');
+            var p = $('#timelineBGload').attr('style');
+            var Y =p.split('top:');
+            var Z=Y[1].split(';');
+            var dataString ='position='+Z[0];
+            var position = Z[0];
+
+            var formData = new FormData();
+            formData.append( 'position', position);
+            formData.append( 'P_ID', PP_ID);
+            $.ajax({
+                type: 'POST',
+                url: 'save-cover-photo-from-photo',
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function(){       Pace.restart(); },
+                success: function(data)
+                {
+                    var DataObject = JSON.parse(data);
+                    if (DataObject.STATUS == 'SUCCESS') {
+                         $('.bgImagecover').fadeOut('slow');
+                         $('.bgSaveFP').remove();
+                         $('.bgCancel').remove();
+                         $('#timelineShade').fadeIn('slow');
+                         $('#timelineBGload').removeClass('headerimage');
+                         $('#timelineBGload').removeClass('ui-corner-all');
+                         $('#timelineBGload').addClass('bgImagecover');
+                         $('#timelineBGload').css({'margin-top':position});
+                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                         return false;
+                    } else {
+                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                    }
+                    profile_photo();
+                }
+            });
+            return false;
+        });
 "); ?>
+
+<?php
+$this->registerJs("
+          $('body').on('click','.hideshow',function ()
+                    {
+                        var formData = new FormData();
+                        $.ajax({
+                            type: 'POST',
+                            url: 'hide-profile',
+                            data: formData,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            beforeSend: function(){ },
+                            success: function(data)
+                            {
+                              var DataObject = JSON.parse(data);
+                              $('#hideshow_a').html(DataObject.OUTPUT);
+                              notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                              hideshowfun();
+                            },
+                            error:function(){
+                            notificationPopup('ERROR', 'Something went wrong. Please try again !');
+  }
+                            });
+            });
+
+           function hideshowfun(){
+            $('.hideshowmenu').click(function() {
+                 var name = $(this).data('name');
+                 $('#model_heading_hideshow').html('');
+                  if(name=='Yes'){
+                    $('#model_heading_hideshow').html('If You Want To Show Your Profile!');
+                  }else{
+                    $('#model_heading_hideshow').html('If You Want To Hide Your Profile!');
+                  }
+            })
+           }
+           hideshowfun();
+     ");
+?>

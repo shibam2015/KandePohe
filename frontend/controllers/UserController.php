@@ -103,7 +103,8 @@ class UserController extends Controller
         );
     }
 
-    public function actionMyProfile(){
+    public function actionMyProfile()
+    {
         #Yii::$app->session->setFlash('error', 'This is the message');
         /*Yii::$app->session->setFlash('warning', 'bla bla bla bla 1');
         Yii::$app->session->setFlash('success', 'bla bla 2');
@@ -119,21 +120,22 @@ class UserController extends Controller
         );
     }
 
-    public function actionDashboard() {
+    public function actionDashboard()
+    {
         //$id = base64_decode(getUserUploadFolder$id);
         if (!Yii::$app->user->isGuest) {
             #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
-            if($model = User::findOne($id)){
+            if ($model = User::findOne($id)) {
                 $model->scenario = User::SCENARIO_REGISTER6;
-                return $this->render('dashboard',[
+                return $this->render('dashboard', [
                     'model' => $model
                 ]);
 
-            }else{
+            } else {
                 return $this->redirect(Yii::getAlias('@web'));
             }
-        }else{
+        } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
     }
@@ -330,21 +332,21 @@ class UserController extends Controller
 
     }
 
-    public function actionEditMyinfo(){
+    public function actionEditMyinfo()
+    {
         $id = Yii::$app->user->identity->id;
-        if(Yii::$app->request->post()){
+        if (Yii::$app->request->post()) {
             User::updateAll(['tYourSelf' => Yii::$app->request->post('User')['tYourSelf']], ['id' => $id]);
             $model = User::findOne($id);
 
-            return $this->renderAjax('_myinfo',[
+            return $this->renderAjax('_myinfo', [
                 'model' => $model,
                 'show' => false,
             ]);
-        }
-        else{
+        } else {
             $model = User::findOne($id);
 
-            return $this->renderAjax('_myinfo',[
+            return $this->renderAjax('_myinfo', [
                 'model' => $model,
                 'show' => true,
             ]);
@@ -571,7 +573,123 @@ class UserController extends Controller
         return $return;
     }
 
+    public function actionSaveprivacySetting()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $user_privacy_option = $P_ID = Yii::$app->request->post('user_privacy_option');
+        $model->user_privacy_option = $user_privacy_option;
+        $ACTION_FLAG = $model->save();
+        $STATUS = "SUCCESS";
+        $MESSAGE = 'Privacy Setting Save Successfully.';
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE);
+        #$Yii::$app->response->format = Response::FORMAT_JSON;
+        #return $return;
+        return json_encode($return);
+        exit;
+    }
+
+    public function actionGetCoverPhotoFromPhoto($position = '')
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $STATUS = "SUCCESS";
+        $MESSAGE = '';//'Cover Photo Upload Successfully.';
+        $ACTION = Yii::$app->request->post('ACTION');
+        $P_ID = Yii::$app->request->post('P_ID');
+        $ABC = '';
+        if ($ACTION == 'GET_PHOTO_FROM_PHOTOS') {
+            $session_uid = $id;
+            $PG = new UserPhotos();
+            $USER_PHOTOS_LIST = $PG->findByPhotoId($id, $P_ID);
+            if (count($USER_PHOTOS_LIST) != 0) {
+                $CM_HELPER = new CommonHelper();
+                $PHOTO = $USER_PHOTOS_LIST->File_Name;
+                $PATH = $CM_HELPER->getUserUploadFolder(1) . "/" . $id . "/";
+                $URL = $CM_HELPER->getUserUploadFolder(2) . "/" . $id . "/";
+                $COVER_PHOTO_1 = $PHOTO;
+                $USER_SIZE_ARRAY = $CM_HELPER->getUserResizeRatio();
+                //copy($PATH.$COVER_PHOTO_1, $PATH.'cover/'.$COVER_PHOTO_1);
+                $COVER_PHOTO = CommonHelper::getPhotos('USER', $id, $COVER_PHOTO_1, '');
+                $bgSave = '';
+                $bgSave .= '<div id="uX' . $session_uid . '" class="bgSaveFP wallbutton blackButton">&nbsp; Save &nbsp;</div>';
+                $bgSave .= '<div id="uX' . $session_uid . '" class="bgCancel wallbutton blackButton">Cancel</div>';
+                $ABC = $bgSave . '<img src="' . $COVER_PHOTO . '"  id="timelineBGload" class="headerimage ui-corner-all" style="top:2px;"/>';
+            }
+            $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, "ABC" => $ABC);
+            //Yii::$app->response->format = Response::FORMAT_JSON;
+            return json_encode($return);
+        }
+    }
+
+    public function actionSaveCoverPhotoFromPhoto($position = '')
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+
+        $position = Yii::$app->request->post('position');
+        $P_ID = Yii::$app->request->post('P_ID');
+        if ($position != '') {
+            $PG = new UserPhotos();
+            $USER_PHOTOS_LIST = $PG->findByPhotoId($id, $P_ID);
+            if (count($USER_PHOTOS_LIST) != 0) {
+                $CM_HELPER = new CommonHelper();
+                $PHOTO = $USER_PHOTOS_LIST->File_Name;
+                $PATH = $CM_HELPER->getUserUploadFolder(1) . "/" . $id . "/";
+                $URL = $CM_HELPER->getUserUploadFolder(2) . "/" . $id . "/";
+                $USER_SIZE_ARRAY = $CM_HELPER->getUserResizeRatio();
+                copy($PATH . $PHOTO, $PATH . 'cover/' . $PHOTO);
+                CommonHelper::photoDeleteFromFolder($PATH . 'cover/', array(), $model->cover_photo);
+                $model->cover_photo = $PHOTO;
+                $model->cover_background_position = $position;
+                $ACTION_FLAG = $model->save();
+                if (!$ACTION_FLAG) {
+                    $STATUS = "ERROR";
+                    $MESSAGE = 'Cover Photo Not Set. Please Try Again !';
+                } else {
+                    $STATUS = "SUCCESS";
+                    $MESSAGE = 'Cover Photo Set Successfully.';
+                }
+            }
+            $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE);
+            //Yii::$app->response->format = Response::FORMAT_JSON;
+            return json_encode($return);
+        }
+    }
+
+    public function actionHideProfile()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $HS = '';
+        $OUTPUT = '';
+        $STATUS = "SUCCESS";
+
+        if ($model->hide_profile == 'Yes') {
+            $HS = 'No';
+            $OUTPUT .= '<a href="javascript:void(0)" data-target="#hideProfile"
+                                data-toggle="modal" class="hideshowmenu" data-name="No">
+                                <i class="fa fa-eye-slash"></i> Hide Profile</a>';
+            $MESSAGE = 'Your Profile Show Successfully.';
+        } else {
+            $HS = 'Yes';
+            $OUTPUT .= '<a href="javascript:void(0)" data-target="#hideProfile"
+                                data-toggle="modal" class="hideshowmenu" data-name="Yes">
+                                <i class="fa fa-eye"></i> Show Profile</a>';
+            $MESSAGE = 'Your Profile Hide Successfully.';
+        }
+        $model->hide_profile = $HS;
+        $ACTION_FLAG = $model->save();
+        if (!$ACTION_FLAG) {
+            $STATUS = 'ERROR';
+        }
+
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'OUTPUT' => $OUTPUT);
+        #$Yii::$app->response->format = Response::FORMAT_JSON;
+        #return $return;
+        return json_encode($return);
+        exit;
+    }
+
+
 }
-
-
-
