@@ -1,9 +1,8 @@
-<?php
+<?php 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
-
 ?>
     <style>
         input[type="radio"], input[type="checkbox"] {
@@ -30,7 +29,7 @@ if ($show) {
                 'error' => '',
                 'hint' => '',
             ]
-        ]
+            ]
     ]);
     ?>
     <?= $form->field($model, 'iFatherStatusID')->dropDownList(
@@ -80,7 +79,6 @@ if ($show) {
             'onchange' => '
                                 $.post( "' . Yii::$app->urlManager->createUrl('ajax/getcity?id=') . '"+$(this).val(), function( data ) {
                                   $( "select#iCityCAId" ).html( data );
-                                  $("select#iCityCAId").niceSelect("update");
                                 });'
         ]
 
@@ -182,14 +180,14 @@ if ($show) {
               <span
                   class="input__label-content input__label-content--akira">You can enter your relative surnames etc...</span> </label>
           </span>
-            </div>
+        </div>
         </div>
 
     </div>
     <div class="row">
         <div class="">
             <?= Html::submitButton('save', ['class' => 'btn btn-primary pull-right', 'name' => 'register5', 'style' => 'padding:5px;font-size:14px;']) ?>
-
+                        
         </div>
     </div>
     <?php ActiveForm::end();
@@ -212,15 +210,15 @@ if ($show) {
             <dt>No of Sisters</dt>
             <dd><?= $model->nos; ?></dd>
             <dt>Country</dt>
-            <dd><?= $model->countryName->vCountryName; ?></dd>
+            <dd><?= $model->countryNameCA->vCountryName; ?></dd>
             <dt>State</dt>
-            <dd><?= $model->stateName->vStateName; ?></dd>
+            <dd><?= $model->stateNameCA->vStateName; ?></dd>
             <dt>City</dt>
-            <dd><?= $model->cityName->vCityName; ?></dd>
+            <dd><?= $model->cityNameCA->vCityName; ?></dd>
             <dt>Distict</dt>
-            <dd><?= $model->districtName->vName; ?></dd>
+            <dd><?= $model->districtNameCA->vName; ?></dd>
             <dt>Taluks</dt>
-            <dd><?= $model->talukaName->vName; ?></dd>
+            <dd><?= $model->talukaNameCA->vName; ?></dd>
             <dt>Area Name</dt>
             <dd><?= $model->vAreaName ?></dd>
             <dt>Native Place</dt>

@@ -55,25 +55,22 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 <li><a href="#">Choose from My Photos</a></li>
                                                 <li>
                                                     <a href="javascript:void(0)" id="coverphotoupload">Upload Photo</a>
-
                                                 </li>
 
-                                                <li><a href="javascript:void(0)"
-                                                       id="coverphotoreposition">Reposition</a></li>
-                                                <li><a href="#">Delete Photo</a></li>
+                                                <li>
+                                                    <a href="javascript:void(0)" <?= ($model->cover_background_position != '') ? 'id="coverphotoreposition"' : 'id="coverphotoreposition1"'; ?> >Reposition</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)" <?= ($model->cover_background_position != '') ? 'id="coverphotodelete"' : 'id="coverphotodelete1"'; ?>>Delete
+                                                        Photo</a></li>
                                             </ul>
                                         </div>
                                         <div id="timelineBackground">
-                                            <?php if ($model->cover_photo == '') { ?>
-                                                <!--           <?= Html::img('@web/images/profile-bg.jpg', ['class' => 'img-responsive', 'alt' => 'Profile image example']); ?> -->
-                                            <?php } else { ?>
-                                                <img
-                                                    src="<?php echo $HOME_URL . "uploads/users/2/cover/" . $model->cover_photo; ?>"
-                                                    class="bgImagecover"
-                                                    style="margin-top: <?php echo $model->cover_background_position; ?>;">
-                                            <?php } ?>
+                                            <img src="<?php echo $COVER_PHOTO; ?>" class="bgImagecover"
+                                                 style="margin-top: <?= $model->cover_background_position ?>;">
+                                            <!-- $model->cover_background_position -->
                                         </div>
-                                        <div style="background:url(images/timeline_shade.png);" id="timelineShade">
+                                        <div id="timelineShade" style="display: none">
                                             <form id="bgimageform" method="post" enctype="multipart/form-data">
                                                 <div class="uploadFile timelineUploadBG">
                                                     <input type="file" name="photoimg" id="bgphotoimgcover"
@@ -455,15 +452,15 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     <dt>No of Sisters</dt>
                                                     <dd><?= $model->nos; ?></dd>
                                                     <dt>Country</dt>
-                                                    <dd><?= $model->countryName->vCountryName; ?></dd>
+                                                    <dd><?= $model->countryNameCA->vCountryName; ?></dd>
                                                     <dt>State</dt>
-                                                    <dd><?= $model->stateName->vStateName; ?></dd>
+                                                    <dd><?= $model->stateNameCA->vStateName; ?></dd>
                                                     <dt>City</dt>
-                                                    <dd><?= $model->cityName->vCityName; ?></dd>
+                                                    <dd><?= $model->cityNameCA->vCityName; ?></dd>
                                                     <dt>Distict</dt>
-                                                    <dd><?= $model->districtName->vName; ?></dd>
+                                                    <dd><?= $model->districtNameCA->vName; ?></dd>
                                                     <dt>Taluks</dt>
-                                                    <dd><?= $model->talukaName->vName; ?></dd>
+                                                    <dd><?= $model->talukaNameCA->vName; ?></dd>
                                                     <dt>Area Name</dt>
                                                     <dd><?= $model->vAreaName ?></dd>
                                                     <dt>Native Place</dt>
@@ -823,8 +820,6 @@ $this->registerJs('
 <?php $this->registerJs("
     $(document).ready(function()
     {
-    
-        //$('body').on('change','#bgphotoimgcover', function()
         $('#bgphotoimgcover').change(function () {
         Pace.restart();
         var tflag= 1;
@@ -839,10 +834,10 @@ $this->registerJs('
                                     url: 'coverupload',
                                     data: '',
                                     mimeType: 'multipart/form-data',
-                                            contentType: false,
-                                            cache: false,
-                                            processData: false,
-                                    beforeSend: function(){ },
+                                    contentType: false,
+                                    cache: false,
+                                    processData: false,
+                                    beforeSend: function(){       Pace.restart(); },
                                     success: function(html)
                                     {
                                             var DATAV = JSON.parse(html);
@@ -856,7 +851,7 @@ $this->registerJs('
                                      error:function(){
                                          notificationPopup('ERROR', 'Something went wrong. Please try again !');
                                     }
-                                });
+                            });
                     } else {
                         tflag= 0;
                         notificationPopup('ERROR', file[0].name + ' is not a valid image file.');
@@ -899,45 +894,46 @@ $this->registerJs('
             var Z=Y[1].split(';');
             var dataString ='position='+Z[0];
             var position = Z[0];
-            /////////////////
+            /* Photo FIle Start */
                     var file = $('#bgphotoimgcover');
                     var formData = new FormData($('#bgimageform'));
                     formData.append( 'cover_photo', $('#bgphotoimgcover')[0].files[0]);
                     formData.append( 'position', position);
-            //////
-            
+            /* Photo FIle END */
             $.ajax({
                 type: 'POST',
                 url: 'savecoverphoto',
-                //data: dataString,
                 data: formData,
                 mimeType: 'multipart/form-data',
-                        contentType: false,
-                        cache: false,
-                        processData: false,
-                beforeSend: function(){ },
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function(){       Pace.restart(); },
                 success: function(data)
                 {
                     var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == 'SUCCESS') {
-                                $('#photo_list').html(DataObject.OUTPUT);
-                                $('#profile_list_popup').html(DataObject.OUTPUT_ONE);
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                    if (DataObject.STATUS == 'SUCCESS') {
+                         $('#photo_list').html(DataObject.OUTPUT);
+                         $('#profile_list_popup').html(DataObject.OUTPUT_ONE);
+                         
                                 
-                                $('.bgImagecover').fadeOut('slow');
-                                $('.bgSave').remove();
-                                $('.bgCancel').remove();
-                                $('#timelineShade').fadeIn('slow');
-                                $('#timelineBGload').removeClass('headerimage');
-                                $('#timelineBGload').removeClass('ui-corner-all');
-                                $('#timelineBGload').addClass('bgImagecover');
-                               $('#timelineBGload').css({'margin-top':position});
-                                return false;
-                            } else {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
-                            }
-                            profile_photo();
-                        
+                         $('.bgImagecover').fadeOut('slow');
+                         $('.bgSave').remove();
+                         $('.bgCancel').remove();
+                         $('#timelineShade').fadeIn('slow');
+                         $('#timelineBGload').removeClass('headerimage');
+                         $('#timelineBGload').removeClass('ui-corner-all');
+                         $('#timelineBGload').addClass('bgImagecover');
+                         $('#timelineBGload').css({'margin-top':position});
+                         
+                         $('#coverphotoreposition1').attr('id', 'coverphotoreposition');            
+                         $('#coverphotodelete1').attr('id', 'coverphotodelete');     
+                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                         return false;
+                    } else {
+                          notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                    }
+                    profile_photo();
                 }
             });
             return false;
@@ -952,99 +948,117 @@ $this->registerJs('
             var dataString ='position='+Z[0];
             var position = Z[0];
 
-                    var formData = new FormData();
-                    formData.append( 'position', position);
+            var formData = new FormData();
+            formData.append( 'position', position);
             
             $.ajax({
                 type: 'POST',
                 url: 'savecoverphoto',
-                //data: dataString,
                 data: formData,
                 mimeType: 'multipart/form-data',
-                        contentType: false,
-                        cache: false,
-                        processData: false,
-                beforeSend: function(){ },
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function(){       Pace.restart(); },
                 success: function(data)
                 {
                     var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == 'SUCCESS') {
-                                //$('#photo_list').html(DataObject.OUTPUT);
-                                //$('#profile_list_popup').html(DataObject.OUTPUT_ONE);
-                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
-                                
-                                $('.bgImagecover').fadeOut('slow');
-                                $('.bgSaveRP').remove();
-                                $('.bgCancel').remove();
-                                $('#timelineShade').fadeIn('slow');
-                                $('#timelineBGload').removeClass('headerimage');
-                                $('#timelineBGload').removeClass('ui-corner-all');
-                                $('#timelineBGload').addClass('bgImagecover');
-                               $('#timelineBGload').css({'margin-top':position});
-                                return false;
-                            } else {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
-                            }
-                            profile_photo();
-                        
+                    if (DataObject.STATUS == 'SUCCESS') {
+                         $('.bgImagecover').fadeOut('slow');
+                         $('.bgSaveRP').remove();
+                         $('.bgCancel').remove();
+                         $('#timelineShade').fadeIn('slow');
+                         $('#timelineBGload').removeClass('headerimage');
+                         $('#timelineBGload').removeClass('ui-corner-all');
+                         $('#timelineBGload').addClass('bgImagecover');
+                         $('#timelineBGload').css({'margin-top':position});
+                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                         return false;
+                    } else {
+                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                    }
+                    profile_photo();
                 }
             });
             return false;
         });
-
         $('#coverphotoreposition').click(function (){
-        var formData = new FormData();
+                    var formData = new FormData();
                     formData.append( 'ACTION', 'REPOSITION');
                     $.ajax({
-                                    type: 'POST',
-                                    url: 'coverupload',
-                                    data: formData,
-                                    mimeType: 'multipart/form-data',
-                                            contentType: false,
-                                            cache: false,
-                                            processData: false,
-                                    beforeSend: function(){ },
-                                    success: function(html)
-                                    {
-                                            var DATAV = JSON.parse(html);
-                                            $('#timelineBackground').html(DATAV.ABC);
-                                            /*var reader = new FileReader();
-                                            reader.onload = function (e) {
-                                            $('#timelineBGload').attr('src', e.target.result);
-                                            }
-                                                reader.readAsDataURL(file[0]);*/
-                                    },
-                                     error:function(){
-                                         notificationPopup('ERROR', 'Something went wrong. Please try again !');
-                                    }
-                                });            
+                        type: 'POST',
+                        url: 'coverupload',
+                        data: formData,
+                        mimeType: 'multipart/form-data',
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        beforeSend: function(){ },
+                        success: function(html)
+                        {
+                              var DATAV = JSON.parse(html);
+                              $('#timelineBackground').html(DATAV.ABC);
+                              
+                        },
+                        error:function(){
+                                   notificationPopup('ERROR', 'Something went wrong. Please try again !');
+                        }
+                    });            
+        })
+        $('#coverphotoreposition1').click(function (){
+             notificationPopup('ERROR', 'You can\\'t reposition default cover photo.');
         })
         $('body').on('click','.bgCancel',function ()
         { 
                 var formData = new FormData();
-                    formData.append( 'ACTION', 'CANCEL');
-                    $.ajax({
-                                    type: 'POST',
-                                    url: 'coverphotoback',
-                                    data: formData,
-                                    mimeType: 'multipart/form-data',
-                                            contentType: false,
-                                            cache: false,
-                                            processData: false,
-                                    beforeSend: function(){ },
-                                    success: function(html)
-                                    {
-                                            var DATAV = JSON.parse(html);
-                                            $('#timelineBackground').html(DATAV.ABC);
-                                            
-                                    },
-                                     error:function(){
-                                         notificationPopup('ERROR', 'Something went wrong. Please try again !');
-                                    }
-                                });
-                                
+                formData.append( 'ACTION', 'CANCEL');
+                $.ajax({
+                            type: 'POST',
+                            url: 'coverphotoback',
+                            data: formData,
+                            mimeType: 'multipart/form-data',
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            beforeSend: function(){ },
+                            success: function(html)
+                            {
+                                  var DATAV = JSON.parse(html);
+                                  $('#timelineBackground').html(DATAV.ABC);
+                            },
+                            error:function(){
+                                  notificationPopup('ERROR', 'Something went wrong. Please try again !');
+                            }
+                });
         });
 
+        $('body').on('click','#coverphotodelete',function ()
+        { 
+                var formData = new FormData();
+                formData.append( 'ACTION', 'DELETE');
+                $.ajax({
+                          type: 'POST',
+                          url: 'coverphotoback',
+                          data: formData,
+                          contentType: false,
+                          cache: false,
+                          processData: false,
+                          beforeSend: function(){ },
+                          success: function(html)
+                          {
+                               var DATAV = JSON.parse(html);
+                               $('#timelineBackground').html(DATAV.ABC);
+                               $('#coverphotoreposition').attr('id', 'coverphotoreposition1');            
+                               $('#coverphotodelete').attr('id', 'coverphotodelete1');            
+                          },
+                          error:function(){
+                               notificationPopup('ERROR', 'Something went wrong. Please try again !');
+                          }
+                });
+        });
+        $('#coverphotodelete1').click(function (){
+             notificationPopup('ERROR', 'You can\\'t delete default cover photo.');
+        })
     });
 
     $('#coverphotoupload').click(function(){

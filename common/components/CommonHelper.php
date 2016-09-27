@@ -355,7 +355,8 @@ class CommonHelper {
             $MAIN_URL = CommonHelper::getUserUploadFolder(2);
             $PATH = CommonHelper::getUserUploadFolder(1) . $U_PATH;
             $URL = $MAIN_URL . $U_PATH;
-            $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $MAIN_URL . 'no-user-img.jpg';
+            #$PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $MAIN_URL . 'no-user-img.jpg';
+            $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $MAIN_URL . 'profile-bg.jpg';
             #$PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : 'http://placehold.it/350x150';
             return $PHOTO_USER;
         }
@@ -389,7 +390,7 @@ class CommonHelper {
                 if (move_uploaded_file($uploadedfile, $path . $actual_image_name)) {
                     $PHOTO = $actual_image_name;
                     $UPDATE_FLAG = 1;
-                    if ($UPDATE_FLAG) {
+                    if ($UPDATE_FLAG && $OLD_PHOTO != '') {
                         CommonHelper::photoDeleteFromFolder($PATH, array(), $OLD_PHOTO);
                         $STATUS = 1;
                         $NOTIFICATION_TYPE = 'Success';

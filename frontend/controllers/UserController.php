@@ -113,8 +113,9 @@ class UserController extends Controller
         $model = User::find()->joinWith([countryName, stateName, cityName, height, maritalStatusName, talukaName, districtName, gotraName, subCommunityName, communityName, religionName, educationLevelName, communityName, workingWithName, workingAsName, dietName, fatherStatus])->where(['id' => $id])->one();
         $USER_PHOTO_MODEL = new  UserPhotos();
         $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
+        $COVER_PHOTO = CommonHelper::getCoverPhotos($TYPE = 'USER', $id, $model->cover_photo);
         return $this->render('my-profile',
-            ['model' => $model, 'photo_model' => $USER_PHOTOS_LIST]
+            ['model' => $model, 'photo_model' => $USER_PHOTOS_LIST, 'COVER_PHOTO' => $COVER_PHOTO]
         );
     }
 
@@ -490,9 +491,9 @@ class UserController extends Controller
         $COVER_PHOTO = CommonHelper::getCoverPhotos('USER', $id, $model->cover_photo, '');
         $bgSave = '';
         if ($ACTION == 'REPOSITION') {
-            $bgSave .= '<div id="uX' . $session_uid . '" class="bgSaveRP wallbutton blackButton"> Save </div>';
+            $bgSave .= '<div id="uX' . $session_uid . '" class="bgSaveRP wallbutton blackButton">&nbsp; Save &nbsp;</div>';
         } else {
-            $bgSave .= '<div id="uX' . $session_uid . '" class="bgSave wallbutton blackButton"> Save </div>';
+            $bgSave .= '<div id="uX' . $session_uid . '" class="bgSave wallbutton blackButton">&nbsp; Save &nbsp;</div>';
         }
         $bgSave .= '<div id="uX' . $session_uid . '" class="bgCancel wallbutton blackButton">Cancel</div>';
         $ABC = $bgSave . '<img src="' . $COVER_PHOTO . '"  id="timelineBGload" class="headerimage ui-corner-all" style="top:' . $model->cover_background_position . '"/>';
@@ -512,8 +513,15 @@ class UserController extends Controller
         $ABC = '';
         if ($ACTION == 'CANCEL') {
             $ABC = $bgSave . '<img src="' . $COVER_PHOTO . '"  id="timelineBGload" class="bgImagecover" style="margin-top:' . $model->cover_background_position . '"/>';
-        } else {
-
+        } else if ($ACTION == 'DELETE') {
+            $OLD_PHOTO = $model->cover_photo;
+            $model->cover_photo = '';
+            $model->cover_background_position = '';
+            $ACTION_FLAG = $model->save();
+            $PATH = CommonHelper::getUserUploadFolder(1) . "/" . $id . "/cover/";
+            CommonHelper::photoDeleteFromFolder($PATH, array(), $OLD_PHOTO);
+            $COVER_PHOTO = CommonHelper::getCoverPhotos('USER', $id, '', '');
+            $ABC = $bgSave . '<img src="' . $COVER_PHOTO . '"  id="timelineBGload" class="bgImagecover" />';
         }
 
         $RES = array("ABC" => $ABC);
@@ -527,7 +535,8 @@ class UserController extends Controller
         $model = User::findOne($id);
         $STATUS = "SUCCESS";
         $MESSAGE = 'Cover Photo Upload Successfully.';
-        $position = $P_ID = Yii::$app->request->post('position');
+        $P_ID = Yii::$app->request->post('position');
+        $position = $P_ID;
         if ($position != '') {
             $CM_HELPER = new CommonHelper();
             $PATH = $CM_HELPER->getUserUploadFolder(1) . "/" . $id . "/cover/";
@@ -535,10 +544,13 @@ class UserController extends Controller
             #$USER_SIZE_ARRAY = $CM_HELPER->getUserResizeRatio();
             $OLD_PHOTO = $model->cover_photo;
             $FILE_COUNT = count($_FILES);
+
             if ($FILE_COUNT != 0) {
                 $PHOTO_ARRAY = $CM_HELPER->coverPhotoUpload($id, $_FILES['cover_photo'], $PATH, $URL, '', $OLD_PHOTO);
                 $model->cover_photo = $PHOTO_ARRAY['PHOTO'];
             } else {
+                $STATUS = "SUCCESS";
+                $MESSAGE = 'Cover Photo Set Successfully.';
                 //$PHOTO_ARRAY = $CM_HELPER->coverPhotoUpload($id, $_FILES['cover_photo'], $PATH, $URL, '', $OLD_PHOTO);
             }
 
@@ -553,6 +565,7 @@ class UserController extends Controller
         $OUTPUT_HTML_ONE = '';
         $OUTPUT_HTML .= $this->getPhotoListOutput();
         $OUTPUT_HTML_ONE .= $this->getPhotoListOutputOne();
+
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'OUTPUT' => $OUTPUT_HTML, 'OUTPUT_ONE' => $OUTPUT_HTML_ONE);
         Yii::$app->response->format = Response::FORMAT_JSON;
         return $return;
