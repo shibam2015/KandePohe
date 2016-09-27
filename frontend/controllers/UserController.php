@@ -126,16 +126,16 @@ class UserController extends Controller
         if (!Yii::$app->user->isGuest) {
             #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
-            if ($model = User::findOne($id)) {
+            if($model = User::findOne($id)){
                 $model->scenario = User::SCENARIO_REGISTER6;
-                return $this->render('dashboard', [
+                return $this->render('dashboard',[
                     'model' => $model
                 ]);
 
-            } else {
+            }else{
                 return $this->redirect(Yii::getAlias('@web'));
             }
-        } else {
+        }else{
             return $this->redirect(Yii::getAlias('@web'));
         }
     }
@@ -332,23 +332,44 @@ class UserController extends Controller
 
     }
 
-    public function actionEditMyinfo()
-    {
+    public function actionEditMyinfo(){
         $id = Yii::$app->user->identity->id;
-        if (Yii::$app->request->post()) {
-            User::updateAll(['tYourSelf' => Yii::$app->request->post('User')['tYourSelf']], ['id' => $id]);
-            $model = User::findOne($id);
+        $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_EDIT_MY_INFO;
+        $show = false;
+        if(Yii::$app->request->post()){
+            if(Yii::$app->request->post('cancel')){
+                $show = false;
+            }
+            else {
+                $tYourSelf_old = $model->tYourSelf;
+                $model->tYourSelf = Yii::$app->request->post('User')['tYourSelf'];
+                if (strcmp($tYourSelf_old, $model->tYourSelf) !== 0) {
+                        $model->eStatusInOwnWord = 'Pending';
+                }
+                if($model->validate()){
+                    $model->save();
+                    $show = false;
+                }
+                else {
+                    $show = true;
+                }
+            }
+        }
+        else {
+            $show = true;
+        }
 
-            return $this->renderAjax('_myinfo', [
-                'model' => $model,
-                'show' => false,
-            ]);
-        } else {
-            $model = User::findOne($id);
-
-            return $this->renderAjax('_myinfo', [
+        if($show) {
+            return $this->renderAjax('_myinfo',[
                 'model' => $model,
                 'show' => true,
+            ]);
+        }
+        else {
+            return $this->renderAjax('_myinfo',[
+                'model' => $model,
+                'show' => false,
             ]);
         }
     }
