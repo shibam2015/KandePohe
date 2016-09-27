@@ -332,21 +332,39 @@ class UserController extends Controller
 
     public function actionEditMyinfo(){
         $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_EDIT_MY_INFO;
+        $show = false;
         if(Yii::$app->request->post()){
-            User::updateAll(['tYourSelf' => Yii::$app->request->post('User')['tYourSelf']], ['id' => $id]);
-            $model = User::findOne($id);
-
-            return $this->renderAjax('_myinfo',[
-                'model' => $model,
-                'show' => false,
-            ]);
+            if(Yii::$app->request->post('cancel')){
+                $show = false;  
+            }
+            else {
+                $tYourSelf_old = $model->tYourSelf;
+                $model->tYourSelf = Yii::$app->request->post('User')['tYourSelf'];
+                if($model->validate()){
+                    $model->save();
+                    $show = false;  
+                }
+                else {
+                    $show = true;
+                }
+            }                
         }
-        else{
-            $model = User::findOne($id);
-
+        else {
+            $show = true;
+        }
+        
+        if($show) {
             return $this->renderAjax('_myinfo',[
                 'model' => $model,
                 'show' => true,
+            ]);
+        }
+        else {
+            return $this->renderAjax('_myinfo',[
+                'model' => $model,
+                'show' => false,
             ]);
         }
     }

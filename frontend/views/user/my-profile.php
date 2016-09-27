@@ -698,6 +698,16 @@ $this->registerJs('
         }
       });
   });
+    $(document).on("click","#cancel_edit_myinfo",function(e){
+      $.ajax({
+        url : "'.Url::to(['user/edit-myinfo']).'",
+        type:"POST",
+        data:{"cancel":true},
+        success:function(res){
+          $(".dis_my_info").html(res);
+        }
+      });
+  });
     $(".edit_personal_btn").click(function(e){
     $.ajax({
         url : "' . Url::to(['user/edit-personal-info']) . '",

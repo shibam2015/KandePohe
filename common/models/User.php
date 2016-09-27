@@ -45,6 +45,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const SCENARIO_FP = 'Forgot Password';
     const SCENARIO_SFP = 'Set Forgot Password';
     const SCENARIO_FIRST_VERIFICATION = 'Firstverification';
+    const SCENARIO_EDIT_MY_INFO = 'Edit My Info';
     public $repeat_password;
     public $email_pin;
     public $email_verification_msg;
@@ -202,6 +203,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
            // [['captcha'],'captcha'],
             [['email'], 'email'],
             [['password_hash','repeat_password'], 'string', 'length' => [6,255]],
+            [['tYourSelf'], 'string','max' => '100'],
+            [['tYourSelf'], 'required', 'on' => self::SCENARIO_EDIT_MY_INFO],
             [['repeat_password'],'compare','compareAttribute' => 'password_hash', 'message'=>"Passwords don't match"],
             [['password_reset_token'], 'unique'],
         ];
@@ -223,7 +226,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             self::SCENARIO_FP => ['email'],
             "default"=>array('id'),
             self::SCENARIO_FP => ['email','password_hash','password_reset_token'],
-            self::SCENARIO_SFP => ['email','password_reset_token']
+            self::SCENARIO_SFP => ['email','password_reset_token'],
+            self::SCENARIO_EDIT_MY_INFO => ['tYourSelf']
         ];
 
     }
