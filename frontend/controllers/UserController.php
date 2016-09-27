@@ -342,6 +342,9 @@ class UserController extends Controller
             else {
                 $tYourSelf_old = $model->tYourSelf;
                 $model->tYourSelf = Yii::$app->request->post('User')['tYourSelf'];
+                if (strcmp($tYourSelf_old, $model->tYourSelf) !== 0) {
+                        $model->eStatusInOwnWord = 'Pending';
+                }
                 if($model->validate()){
                     $model->save();
                     $show = false;  

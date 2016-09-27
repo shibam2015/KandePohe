@@ -487,7 +487,7 @@ class SiteController extends Controller
                 if($model->load(Yii::$app->request->post())){
                     $model->completed_step = $model->setCompletedStep('6');
                     if (strcmp($tYourSelf_old, $model->tYourSelf) !== 0) {
-                        $model->eStatusInOwnWord = date('Y-m-d');
+                        $model->eStatusInOwnWord = 'Pending';
                     }
                     if($model->save()){
                         $this->redirect(['site/my-photos']);
