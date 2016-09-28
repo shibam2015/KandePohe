@@ -29,7 +29,6 @@ if ($show) {
     <div class="row">
         <div class="">
             <?= Html::submitButton('save', ['class' => 'btn btn-primary pull-right', 'name' => 'register5', 'style' => 'padding:5px;font-size:14px;']) ?>
-
         </div>
     </div>
     <?php ActiveForm::end();

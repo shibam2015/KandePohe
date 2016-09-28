@@ -533,7 +533,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public function getFatherStatusId()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iFatherStatusID']);
+        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iFatherWorkingAsID']);
     }
 
     public function getMotherStatus()
@@ -545,7 +545,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public function getMotherStatusId()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iMotherStatusID']);
+        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iMotherWorkingAsID']);
     }
 
     /**

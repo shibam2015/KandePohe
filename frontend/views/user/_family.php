@@ -19,9 +19,11 @@ if ($show) {
         'id' => 'form',
         'action' => ['edit-family'],
         'options' => ['data-pjax' => true],
+        'validateOnChange' => true,
+        'validateOnSubmit' => true,
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
+            'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
             'horizontalCssClasses' => [
                 'label' => 'col-sm-3 col-xs-3',
                 'offset' => '',
@@ -32,6 +34,7 @@ if ($show) {
             ]
     ]);
     ?>
+    <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
     <?= $form->field($model, 'iFatherStatusID')->dropDownList(
         ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
         ['prompt' => 'Father Status']
@@ -51,8 +54,8 @@ if ($show) {
         ArrayHelper::map(CommonHelper::getWorkingAS(), 'iWorkingAsID', 'vWorkingAsName'),
         ['prompt' => 'Mother Working AS']
     ); ?>
-    <?= $form->field($model, 'nob')->input('number', ['class' => 'input__field input__field--akira form-control']) ?>
-    <?= $form->field($model, 'nos')->input('number', ['class' => 'input__field input__field--akira form-control']) ?>
+    <?= $form->field($model, 'nob')->input('number') ?>
+    <?= $form->field($model, 'nos')->input('number') ?>
     <?= $form->field($model, 'iCountryCAId')->dropDownList(
         ArrayHelper::map(CommonHelper::getCountry(), 'iCountryId', 'vCountryName'),
         [
@@ -126,7 +129,7 @@ if ($show) {
     ); ?>
 
     <?= $form->field($model, 'vFamilyAffluenceLevel')->RadioList(
-        ['Affluent' => 'Affluent', 'Upper Middle Class' => 'Upper Middle Class', 'Middle Class' => 'Middle Class', 'Lower Middle Class' => 'Lower Middle Class'],
+         ArrayHelper::map(CommonHelper::getFamilyAffulenceLevel(), 'ID', 'Name'),
         [
             'item' => function ($index, $label, $name, $checked, $value) {
                 $checked = ($checked) ? 'checked' : '';
@@ -152,14 +155,14 @@ if ($show) {
     <?php global $ABC;
     $ABC = $model->vFamilyProperty; ?>
     <?= $form->field($model, 'vFamilyProperty')->checkboxList(
-        ['Ownership Flat' => 'Ownership Flat', 'Own Car' => 'Own Car'],
+        ArrayHelper::map(CommonHelper::getFamilyPropertyDetail(), 'ID', 'Name'),
         [
             'item' => function ($index, $label, $name, $checked, $value) {
                 global $ABC;
-                //if (in_array($value, explode(",",$model->vFamilyProperty))) { $checked='checked="checked"'; }else{$checked='';}
+                
                 $checked = (in_array($value, explode(",", $ABC))) ? 'checked' : '';
                 $return = '<input type="checkbox" id="vFamilyProperty' . $label . '" name="' . $name . '" value="' . $value . '"' . $checked . '>';
-                $return .= '<label for="vFamilyProperty' . $label . '" class="control-label toccl">' . $label . '</label>';
+                $return .= '<label for="vFamilyProperty' . $label . '" class="control-label no-content">' . $label . '</label>';
                 return $return;
             }
         ]
@@ -186,8 +189,9 @@ if ($show) {
     </div>
     <div class="row">
         <div class="">
+            <input type="hidden" name="save" value="1">
             <?= Html::submitButton('save', ['class' => 'btn btn-primary pull-right', 'name' => 'register5', 'style' => 'padding:5px;font-size:14px;']) ?>
-                        
+             <?= Html::Button('Cancel', ['class' => 'btn btn-primary pull-right', 'id' => 'cancel_edit_family', 'name' => 'cancel', 'style' => 'padding:5px;font-size:14px;margin-right:10px;']) ?>           
         </div>
     </div>
     <?php ActiveForm::end();
@@ -230,7 +234,16 @@ if ($show) {
             <dt>Family Type</dt>
             <dd><?= $model->vFamilyType ?></dd>
             <dt>Property Details</dt>
-            <dd><?= $model->vFamilyProperty ?></dd>
+            <?php
+                $family_property_array = ArrayHelper::map(CommonHelper::getFamilyPropertyDetail(), 'ID', 'Name');
+                $family_propertyId_array = explode(',', $model->vFamilyProperty);
+                $vFamilyProperty = "";
+                foreach ($family_propertyId_array as $key => $value) {
+                    $vFamilyProperty.= $family_property_array[$value].", ";
+                }
+                $vFamilyProperty = trim($vFamilyProperty,", ")
+            ?>
+            <dd><?= $vFamilyProperty ?></dd>
             <dt>You can enter your relative surnames etc</dt>
             <dd><?= $model->vAreaName ?></dd>
         </dl>

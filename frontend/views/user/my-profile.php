@@ -277,7 +277,9 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 <h1><span class="heading-icons icon9"></span> My Information</h1>
                                             </div>
                                             <?php Pjax::begin(['id' => 'my_index', 'enablePushState' => false]); ?>
-                                            <p class="dis_my_info"><?= $model->tYourSelf; ?></p>
+                                            <p class="dis_my_info">
+                                            
+                                            </p>
                                             <?php Pjax::end(); ?>
                                         </div>
                                         <div class="divider"></div>
@@ -331,32 +333,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             <h3><span class="heading-icons icon2"></span> Basic information</h3>
                                             <?php Pjax::begin(['id' => 'my_index2', 'enablePushState' => false]); ?>
                                             <div class="div_basic_info">
-                                                <dl class="dl-horizontal">
-                                                    <dt>Religion</dt>
-                                                    <dd><?= $model->religionName->vName; ?>
-                                                    <dd>
-                                                    <dt>Community</dt>
-                                                    <dd><?= $model->communityName->vName; ?></dd>
-                                                    <dt>Sub Community</dt>
-                                                    <dd><?= $model->subCommunityName->vName; ?>
-                                                    <dd>
-                                                    <dt>Marital Status</dt>
-                                                    <dd><?= $model->maritalStatusName->vName; ?></dd>
-                                                    <dt>Gotra</dt>
-                                                    <dd><?= $model->gotraName->vName; ?></dd>
-                                                    <dt>Country</dt>
-                                                    <dd><?= $model->countryName->vCountryName; ?></dd>
-                                                    <dt>State</dt>
-                                                    <dd><?= $model->stateName->vStateName; ?></dd>
-                                                    <dt>City</dt>
-                                                    <dd><?= $model->cityName->vCityName; ?></dd>
-                                                    <dt>Distict</dt>
-                                                    <dd><?= $model->districtName->vName; ?></dd>
-                                                    <dt>Taluks</dt>
-                                                    <dd><?= $model->talukaName->vName; ?></dd>
-                                                    <dt>Area Name</dt>
-                                                    <dd><?= $model->vAreaName ?></dd>
-                                                </dl>
+                                                
                                             </div>
                                             <?php Pjax::end(); ?>
                                         </div>
@@ -374,22 +351,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             </h3>
                                             <?php Pjax::begin(['id' => 'my_index3', 'enablePushState' => false]); ?>
                                             <div class="div_education">
-                                                <dl class="dl-horizontal">
-                                                    <dt>Education Level</dt>
-                                                    <dd><?= $model->educationLevelName->vEducationLevelName; ?>
-                                                    <dd>
-                                                    <dt>Education Field</dt>
-                                                    <dd><?= $model->educationFieldName->vEducationFieldName; ?></dd>
-                                                    <dt>Sub Community</dt>
-                                                    <dd><?= $model->communityName->vName; ?>
-                                                    <dd>
-                                                    <dt>Working With</dt>
-                                                    <dd><?= $model->workingWithName->vWorkingWithName; ?></dd>
-                                                    <dt>Woking As</dt>
-                                                    <dd><?= $model->workingAsName->vWorkingAsName; ?></dd>
-                                                    <dt>Annual Income</dt>
-                                                    <dd><?= $model->annualIncome->vAnnualIncome; ?></dd>
-                                                </dl>
+                                                
                                             </div>
                                             <?php Pjax::end(); ?>
                                         </div>
@@ -407,24 +369,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             </h3>
                                             <?php Pjax::begin(['id' => 'my_index4', 'enablePushState' => false]); ?>
                                             <div class="div_lifestyle">
-                                                <dl class="dl-horizontal">
-                                                    <dt>Height</dt>
-                                                    <dd><?= $model->height->vName ?>
-                                                    <dd>
-                                                    <dt>Skin Tone</dt>
-                                                    <dd><?= $model->vSkinTone; ?></dd>
-                                                    <dt>Body type</dt>
-                                                    <dd><?= $model->vBodyType; ?>
-                                                    <dd>
-                                                    <dt>Smoke</dt>
-                                                    <dd><?= $model->vSmoke; ?></dd>
-                                                    <dt>Drink</dt>
-                                                    <dd><?= $model->vDrink; ?></dd>
-                                                    <dt>Spectacles/Lens</dt>
-                                                    <dd><?= $model->vSpectaclesLens; ?></dd>
-                                                    <dt>Diet</dt>
-                                                    <dd><?= $model->dietName->vName; ?></dd>
-                                                </dl>
+                                                
                                             </div>
                                             <?php Pjax::end(); ?>
                                         </div>
@@ -441,46 +386,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             <h3><span class="heading-icons icon2"></span> Family</h3>
                                             <?php Pjax::begin(['id' => 'my_index5', 'enablePushState' => false]); ?>
                                             <div class="div_family">
-                                                <dl class="dl-horizontal">
-                                                    <dt>Father Status</dt>
-                                                    <dd><?= $model->fatherStatus->vName ?>
-                                                    <dd>
-                                                    <dt>Father Working As</dt>
-                                                    <dd><?= $model->fatherStatusId->vWorkingAsName; ?></dd>
-                                                    <dt>Mother Status</dt>
-                                                    <dd><?= $model->motherStatus->vName ?>
-                                                    <dd>
-                                                    <dt>Mother Working As</dt>
-                                                    <dd><?= $model->motherStatusId->vWorkingAsName; ?></dd>
-                                                    <dt>No of Brothers</dt>
-                                                    <dd><?= $model->nob; ?></dd>
-                                                    <dt>No of Sisters</dt>
-                                                    <dd><?= $model->nos; ?></dd>
-                                                    <dt>Country</dt>
-                                                    <dd><?= $model->countryNameCA->vCountryName; ?></dd>
-                                                    <dt>State</dt>
-                                                    <dd><?= $model->stateNameCA->vStateName; ?></dd>
-                                                    <dt>City</dt>
-                                                    <dd><?= $model->cityNameCA->vCityName; ?></dd>
-                                                    <dt>Distict</dt>
-                                                    <dd><?= $model->districtNameCA->vName; ?></dd>
-                                                    <dt>Taluks</dt>
-                                                    <dd><?= $model->talukaNameCA->vName; ?></dd>
-                                                    <dt>Area Name</dt>
-                                                    <dd><?= $model->vAreaName ?></dd>
-                                                    <dt>Native Place</dt>
-                                                    <dd><?= $model->vNativePlaceCA ?></dd>
-                                                    <dt>Parents Residing At</dt>
-                                                    <dd><?= $model->vParentsResiding ?></dd>
-                                                    <dt>Family Affluence Level</dt>
-                                                    <dd><?= $model->vFamilyAffluenceLevel; ?></dd>
-                                                    <dt>Family Type</dt>
-                                                    <dd><?= $model->vFamilyType ?></dd>
-                                                    <dt>Property Details</dt>
-                                                    <dd><?= $model->vFamilyProperty ?></dd>
-                                                    <dt>You can enter your relative surnames etc</dt>
-                                                    <dd><?= $model->vAreaName ?></dd>
-                                                </dl>
+                                                
                                             </div>
                                             <?php Pjax::end(); ?>
                                         </div>
@@ -762,26 +668,25 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 <script src="<?= $HOME_URL ?>js/selectFx.js"></script>
 <?php
 $this->registerJs('
-  $(".edit_btn").click(function(e){
-      $.ajax({
-        url : "'.Url::to(['user/edit-myinfo']).'",
-        type:"GET",
-        data:{},
-        success:function(res){
-          $(".dis_my_info").html(res);
-        }
-      });
-  });
-    $(document).on("click","#cancel_edit_myinfo",function(e){
-      $.ajax({
-        url : "'.Url::to(['user/edit-myinfo']).'",
+    function getInlineDetail(url,htmlId,cancel){
+        $.ajax({
+        url : url,
         type:"POST",
-        data:{"cancel":true},
+        data:{"cancel":cancel},
         success:function(res){
-          $(".dis_my_info").html(res);
+          $(htmlId).html(res);
         }
       });
-  });
+    }
+
+    $(".edit_btn").click(function(e){
+        getInlineDetail("'.Url::to(['user/edit-myinfo']).'",".dis_my_info","0");
+    });
+    getInlineDetail("'.Url::to(['user/edit-myinfo']).'",".dis_my_info","1");
+    $(document).on("click","#cancel_edit_myinfo",function(e){
+        getInlineDetail("'.Url::to(['user/edit-myinfo']).'",".dis_my_info","1");
+    });
+
     $(".edit_personal_btn").click(function(e){
     $.ajax({
         url : "' . Url::to(['user/edit-personal-info']) . '",
@@ -792,76 +697,39 @@ $this->registerJs('
         }
       });
   });
-  $(".edit_basic_information").click(function(e){
-    $.ajax({
-        url : "' . Url::to(['user/edit-basic-info']) . '",
-        type:"GET",
-        data:{},
-        success:function(res){
-          $(".div_basic_info").html(res);
-        }
-      });
-  });
-    $(document).on("click","#cancel_edit_education",function(e){
-        $.ajax({
-            url : "'.Url::to(['user/edit-basic-info']).'",
-            type:"POST",
-            data:{"cancel":true},
-            success:function(res){
-                $(".div_basic_info").html(res);
-            }
-        });
+
+    $(".edit_basic_information").click(function(e){
+        getInlineDetail("'.Url::to(['user/edit-basic-info']).'",".div_basic_info","0");
     });
-  $(".edit_education").click(function(e){
-    $.ajax({
-        url : "' . Url::to(['user/edit-education']) . '",
-        type:"GET",
-        data:{},
-        success:function(res){
-          $(".div_education").html(res);
-        }
-      });
-  });
-    $(document).on("click","#cancel_edit_education",function(e){
-        $.ajax({
-            url : "'.Url::to(['user/edit-education']).'",
-            type:"POST",
-            data:{"cancel":true},
-            success:function(res){
-                $(".div_education").html(res);
-            }
-        });
+    getInlineDetail("'.Url::to(['user/edit-basic-info']).'",".div_basic_info","1");
+    $(document).on("click","#cancel_edit_basicinfo",function(e){
+        getInlineDetail("'.Url::to(['user/edit-basic-info']).'",".div_basic_info","1");
     });
-  $(".edit_lifestyle").click(function(e){
-    $.ajax({
-        url : "' . Url::to(['user/edit-lifestyle']) . '",
-        type:"GET",
-        data:{},
-        success:function(res){
-          $(".div_lifestyle").html(res);
-        }
-      });
-  });
+    
+    $(".edit_education").click(function(e){
+        getInlineDetail("'.Url::to(['user/edit-education']).'",".div_education","0");
+    });
+    getInlineDetail("'.Url::to(['user/edit-education']).'",".div_education","1");
+    $(document).on("click","#cancel_edit_education",function(e){
+        getInlineDetail("'.Url::to(['user/edit-education']).'",".div_education","1");
+    });
+    
+    $(".edit_lifestyle").click(function(e){
+        getInlineDetail("'.Url::to(['user/edit-lifestyle']).'",".div_lifestyle","0");
+    });
+    getInlineDetail("'.Url::to(['user/edit-lifestyle']).'",".div_lifestyle","1");
     $(document).on("click","#cancel_edit_lifestyle",function(e){
-        $.ajax({
-            url : "'.Url::to(['user/edit-lifestyle']).'",
-            type:"POST",
-            data:{"cancel":true},
-            success:function(res){
-                $(".div_lifestyle").html(res);
-            }
-        });
+        getInlineDetail("'.Url::to(['user/edit-lifestyle']).'",".div_lifestyle","1");
     });
-  $(".edit_family").click(function(e){
-    $.ajax({
-        url : "' . Url::to(['user/edit-family']) . '",
-        type:"GET",
-        data:{},
-        success:function(res){
-          $(".div_family").html(res);
-        }
-      });
-  });
+    
+    $(".edit_family").click(function(e){
+        getInlineDetail("'.Url::to(['user/edit-family']).'",".div_family","0");
+    });
+    getInlineDetail("'.Url::to(['user/edit-family']).'",".div_family","1");
+    $(document).on("click","#cancel_edit_family",function(e){
+        getInlineDetail("'.Url::to(['user/edit-family']).'",".div_family","1");
+    });
+
         var P_ID = "";
         var P_TYPE = "";
         function profile_photo(){

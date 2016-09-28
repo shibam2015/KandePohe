@@ -747,6 +747,9 @@ input[type=checkbox]:checked + label:before {
 	line-height: 17px;
 	background-color: #a3a3a3;
 }
+input[type=checkbox]:checked + label.no-content:before {
+	content: "";
+}
 .checkbox, .radio {
     margin-bottom: 15px;
 }	
