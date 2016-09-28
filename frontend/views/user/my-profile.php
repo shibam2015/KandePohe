@@ -200,22 +200,32 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                     </div>
                                     <div class="divider"></div>
                                     <div class="panel no-border padd-hr-10 panel-default panel-friends">
-                                        <div class="panel-heading"><a href="#" class="pull-right text-muted">4/5</a>
+                                        <div class="panel-heading">
+
+                                            <a href="#" class="pull-right text-muted" id="tag_count">
+                                                <?= count($TAG_LIST_USER) ?>/<?= count($TAG_LIST) ?>
+                                            </a>
+
                                             <h3 class="panel-title text-muted mrg-bt-10">Add Tags</h3>
                                             <a href="#" class="text-muted">Add more tags</a></div>
                                         <div class="panel-body no-padd text-center">
-                                            <div class="bootstrap-tagsinput">
-                                                <?php if (count($TAG_LIST_USER) != 0) {
+                                            <div class="bootstrap-tagsinput" id="user_tag_list">
+                                                <?php
+                                                $SET_TAGS = array();
+                                                if (count($TAG_LIST_USER) != 0) {
                                                     foreach ($TAG_LIST_USER as $TK => $TV) {
+                                                        array_push($SET_TAGS, $TV->tag_id);
                                                         ?>
-                                                        <span class="tag label label-danger">
-                                                                                <?= $TV->tagName->Name ?>
-                                                            <i data-role="remove" class="fa fa-times"></i>
+                                                        <span class="tag label label-danger"
+                                                              id="tag_delete_<?= $TV->id ?>">
+                                                             <?= $TV->tagName->Name ?>
+                                                            <i data-role="remove" class="fa fa-times tag_delete"
+                                                               data-id="<?= $TV->id ?>"></i>
                                                         </span>
                                                     <?php }
                                                 } else { ?>
                                                     <span
-                                                        class="tag label label-default">Tag Suggestion Not Available</span>
+                                                        class="tag label label-danger">Tag Not Available</span>
                                                 <?php }
                                                 ?>
                                             </div>
@@ -224,18 +234,23 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                     <div class="divider"></div>
                                     <div class="panel no-border padd-hr-10 panel-default panel-friends">
                                         <div class="panel-heading">
-                                            <?php if (count($TAG_LIST) != 0) { ?>
-                                                <a href="#" class="pull-right">Add All</a>
+                                            <?php if (count($TAG_LIST) != count($TAG_LIST_USER)) { ?>
+                                                <a href="javascript:void(0)" class="pull-right suggest_tag_all">Add
+                                                    All</a>
                                             <?php } ?>
                                             <h3 class="panel-title text-muted">Tag Suggestions</h3>
                                         </div>
                                         <div class="panel-body no-padd text-center">
-                                            <div class="bootstrap-tagsinput">
-                                                <?php if (count($TAG_LIST) != 0) {
-                                                    foreach ($TAG_LIST as $TK => $TV) { ?>
+                                            <div class="bootstrap-tagsinput" id="suggest_tag_list">
+                                                <?php if (count($TAG_LIST) != count($TAG_LIST_USER)) {
+                                                    foreach ($TAG_LIST as $TK => $TV) {
+                                                        if (!in_array($TV['ID'], $SET_TAGS)) {
+                                                            ?>
                                                         <!-- <span class="tag label label-default"><?= $TV['Name'] ?></span> -->
-                                                        <button class="btn btn-default"><?= $TV['Name'] ?></button>
-                                                    <?php }
+                                                            <button class="btn btn-default suggest_tag"
+                                                                    data-id="<?= $TV['ID'] ?>"><?= $TV['Name'] ?></button>
+                                                        <?php }
+                                                    }
                                                 } else { ?>
                                                     <span
                                                         class="tag label label-default">Tag Suggestion Not Available</span>
@@ -1170,5 +1185,109 @@ $this->registerJs("
             })
            }
            hideshowfun();
+     ");
+?>
+<?php
+$this->registerJs("
+$(document).ready(function()
+{  
+          $('body').on('click','.suggest_tag',function () // single add from suggested tag
+          {
+                        var formData = new FormData();
+                        var  TAG_ID = $(this).data('id');
+                        formData.append( 'TAG_ID', TAG_ID);                        
+                        formData.append( 'ACTION', 'ADD-TAG');                        
+                        $.ajax({
+                            type: 'POST',
+                            url: 'suggest-tag-add',
+                            data: formData,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            beforeSend: function(){ Pace.restart(); },
+                            success: function(data)
+                            {
+                              var DataObject = JSON.parse(data);
+                              if (DataObject.STATUS == 'SUCCESS') {
+                                  $('#user_tag_list').html(DataObject.USER_TAG_LIST);
+                                  $('.suggest_tag[data-id='+TAG_ID+']').remove();
+                                  $('#tag_count').html(DataObject.TAG_COUNT);
+                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                              }else{
+                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                              }
+                              
+                            },
+                            error:function(){
+                                    notificationPopup('ERROR', 'Something went wrong. Please try again !');
+                            }
+                        });
+          });
+          
+          $('body').on('click','.suggest_tag_all',function () // Add All from suggested tag
+          {
+                        var formData = new FormData();
+                        formData.append( 'ACTION', 'ADD-ALL-TAG');                        
+                        $.ajax({
+                            type: 'POST',
+                            url: 'suggest-tag-add', 
+                            data: formData,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            beforeSend: function(){ Pace.restart(); },
+                            success: function(data)
+                            {
+                              var DataObject = JSON.parse(data);
+                              if (DataObject.STATUS == 'SUCCESS') {
+                                  $('#user_tag_list').html(DataObject.USER_TAG_LIST);
+                                  $('#suggest_tag_list').html(DataObject.TAG_LIST_SUGGEST);
+                                  $('#tag_count').html(DataObject.TAG_COUNT);
+                                  
+                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                              }else{
+                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                              }
+                            },
+                            error:function(){
+                                    notificationPopup('ERROR', 'Something went wrong. Please try again !');
+                            }
+                        });
+          });
+          
+          $('body').on('click','.tag_delete',function () // single delete from User List Tag
+          {
+                        var formData = new FormData();
+                        var  TAG_ID = $(this).data('id');
+                        formData.append( 'TAG_ID', TAG_ID);                        
+                        formData.append( 'ACTION', 'DELETE-TAG');                        
+                        $.ajax({
+                            type: 'POST',
+                            url: 'suggest-tag-add',
+                            data: formData,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            beforeSend: function(){ Pace.restart(); },
+                            success: function(data)
+                            {
+                              var DataObject = JSON.parse(data);
+                              if (DataObject.STATUS == 'SUCCESS') {
+                                  //$('#user_tag_list').html(DataObject.USER_TAG_LIST);
+                                  $('#tag_delete_'+TAG_ID).remove();
+                                  $('#suggest_tag_list').html(DataObject.TAG_LIST_SUGGEST);
+                                  $('#tag_count').html(DataObject.TAG_COUNT);
+                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                              }else{
+                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                              }
+                              
+                            },
+                            error:function(){
+                                    notificationPopup('ERROR', 'Something went wrong. Please try again !');
+                            }
+                        });
+          });
+});
      ");
 ?>

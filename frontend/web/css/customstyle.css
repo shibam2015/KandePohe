@@ -107,3 +107,6 @@ img.selected {
 }
 /* COVER PHOTO END*/
 
+.tag_delete {
+    cursor: pointer;
+}

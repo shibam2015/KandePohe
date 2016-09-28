@@ -117,8 +117,8 @@ class UserController extends Controller
         $USER_PHOTO_MODEL = new  UserPhotos();
         $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
         $COVER_PHOTO = CommonHelper::getCoverPhotos($TYPE = 'USER', $id, $model->cover_photo);
-        $TAG_LIST = Tags::find()->all();
-        $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->all();
+        $TAG_LIST = Tags::find()->orderBy('rand()')->all();   //orderBy(['rand()' => SORT_DESC]);
+        $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
         return $this->render('my-profile',
             ['model' => $model, 'photo_model' => $USER_PHOTOS_LIST, 'COVER_PHOTO' => $COVER_PHOTO, 'TAG_LIST' => $TAG_LIST, 'TAG_LIST_USER' => $TAG_LIST_USER]
 
@@ -164,7 +164,8 @@ class UserController extends Controller
 
     public function actionPhotoupload($id)
     {
-        $id = base64_decode($id);
+        #$id = base64_decode($id);
+        $id = Yii::$app->user->identity->id;
         $STATUS = "SUCCESS";
         $MESSAGE = 'Photo Upload Successfully.';
         if ($model = User::findOne($id)) {
@@ -348,7 +349,7 @@ class UserController extends Controller
                 $tYourSelf_old = $model->tYourSelf;
                 $model->tYourSelf = Yii::$app->request->post('User')['tYourSelf'];
                 if (strcmp($tYourSelf_old, $model->tYourSelf) !== 0) {
-                        $model->eStatusInOwnWord = 'Pending';
+                    $model->eStatusInOwnWord = 'Pending';
                 }
                 if($model->validate()){
                     $model->save();
@@ -390,7 +391,7 @@ class UserController extends Controller
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_EDIT_PERSONAL_INFO;
         $show = false;
-         if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if(Yii::$app->request->post('save')){
                 $model->First_Name = Yii::$app->request->post('User')['First_Name'];
@@ -490,7 +491,7 @@ class UserController extends Controller
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER3;
         $show = false;
-         if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if(Yii::$app->request->post('save')){
                 $model->iHeightID = Yii::$app->request->post('User')['iHeightID'];
@@ -520,7 +521,7 @@ class UserController extends Controller
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER4;
         $show = false;
-         if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if(Yii::$app->request->post('save')){
                 $model->iFatherStatusID = Yii::$app->request->post('User')['iFatherStatusID'];
@@ -541,7 +542,7 @@ class UserController extends Controller
                 $model->vFamilyType = Yii::$app->request->post('User')['vFamilyType'];
                 $family_property_array = Yii::$app->request->post('User')['vFamilyProperty'];
                 if(is_array($family_property_array)) {
-                        $model->vFamilyProperty = implode(",",$family_property_array);
+                    $model->vFamilyProperty = implode(",", $family_property_array);
                 }
                 else {
                     $model->vFamilyProperty = '';
@@ -766,6 +767,88 @@ class UserController extends Controller
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'OUTPUT' => $OUTPUT);
         #$Yii::$app->response->format = Response::FORMAT_JSON;
         #return $return;
+        return json_encode($return);
+        exit;
+    }
+
+    public function actionSuggestTagAdd() # Add Tag which are in suggested list
+    {
+        $id = Yii::$app->user->identity->id;
+        $ACTION = Yii::$app->request->post('ACTION');
+        $STATUS = $MESSAGE = $USER_TAG_LIST = $TAG_LIST_SUGGEST = '';
+        if ($ACTION != '' && $ACTION == 'ADD-TAG') {
+            $TAG_ID = Yii::$app->request->post('TAG_ID');
+            $USER_TAG = new UserTag();
+            $USER_TAG->iUser_Id = $id;
+            $USER_TAG->tag_id = $TAG_ID;
+            $ACTION_FLAG = $USER_TAG->save();
+            if (!$ACTION_FLAG) {
+                $STATUS = "ERROR";
+                $MESSAGE = 'Tag Not Added. Please Try Again !';
+            } else {
+                $STATUS = "SUCCESS";
+                $MESSAGE = 'Tag Added Successfully.';
+                $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
+                foreach ($TAG_LIST_USER as $TK => $TV) {
+                    $USER_TAG_LIST .= '<span class="tag label label-danger">
+                                           ' . $TV->tagName->Name . '
+                                          <i data-role="remove" class="fa fa-times"></i>
+                                       </span> &nbsp;';
+                }
+            }
+        } else if ($ACTION != '' && $ACTION == 'ADD-ALL-TAG') {
+            $TAG_LIST = Tags::find()->all();
+            $TAG_LIST_USER = UserTag::find()->where(['iUser_Id' => $id])->all();
+            $IN_USER_TAG_LIST = array();
+            foreach ($TAG_LIST_USER as $TK => $TV) {
+                array_push($IN_USER_TAG_LIST, $TV['tag_id']);
+            }
+            foreach ($TAG_LIST as $K => $V) {
+                if (!in_array($V['ID'], $IN_USER_TAG_LIST)) {
+                    #echo " <br> if ",$V['ID'];
+                    $USER_TAG = new UserTag();
+                    $USER_TAG->iUser_Id = $id;
+                    $USER_TAG->tag_id = $V['ID'];
+                    $ACTION_FLAG = $USER_TAG->save();
+                }
+            }
+            $STATUS = "SUCCESS";
+            $MESSAGE = 'All Tag Added Successfully.';
+            $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
+            foreach ($TAG_LIST_USER as $TK => $TV) {
+                $USER_TAG_LIST .= '<span class="tag label label-danger">
+                                           ' . $TV->tagName->Name . '
+                                          <i data-role="remove" class="fa fa-times"></i>
+                                       </span> &nbsp;';
+                #echo "<pre>";print_r($IN_USER_TAG_LIST);exit;
+            }
+            $TAG_LIST_SUGGEST = '<span class="tag label label-default">Tag Suggestion Not Available</span>';
+
+        } else if ($ACTION != '' && $ACTION == 'DELETE-TAG') {
+            $TAG_ID = Yii::$app->request->post('TAG_ID');
+            UserTag::deleteAll(['id' => $TAG_ID]);
+            $TAG_LIST = Tags::find()->all();
+            $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
+            $IN_USER_TAG_LIST = array();
+            foreach ($TAG_LIST_USER as $TK => $TV) {
+                array_push($IN_USER_TAG_LIST, $TV['tag_id']);
+            }
+            $STATUS = "SUCCESS";
+            $MESSAGE = 'Tag Deleted Successfully.';
+            foreach ($TAG_LIST_USER as $TK => $TV) {
+            }
+            foreach ($TAG_LIST as $TK => $TV) {
+                if (!in_array($TV['ID'], $IN_USER_TAG_LIST)) {
+                    $TAG_LIST_SUGGEST .= '<button class="btn btn-default suggest_tag" data-id="' . $TV['ID'] . '">' . $TV['Name'] . '</button> &nbsp;';
+                }
+            }
+        }
+
+        $TAG_LIST = Tags::find()->all();
+        $TAG_LIST_USER = UserTag::find()->where(['iUser_Id' => $id])->all();
+        $TAG_COUNT = count($TAG_LIST_USER) . "/" . count($TAG_LIST);
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, "USER_TAG_LIST" => $USER_TAG_LIST, 'TAG_LIST_SUGGEST' => $TAG_LIST_SUGGEST, 'TAG_COUNT' => $TAG_COUNT);
+        #Yii::$app->response->format = Response::FORMAT_JSON;
         return json_encode($return);
         exit;
     }
