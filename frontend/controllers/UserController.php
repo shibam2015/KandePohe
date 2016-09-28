@@ -342,11 +342,9 @@ class UserController extends Controller
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_EDIT_MY_INFO;
         $show = false;
-        if(Yii::$app->request->post()){
-            if(Yii::$app->request->post('cancel')){
-                $show = false;
-            }
-            else {
+        if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+
+            if(Yii::$app->request->post('save')){
                 $tYourSelf_old = $model->tYourSelf;
                 $model->tYourSelf = Yii::$app->request->post('User')['tYourSelf'];
                 if (strcmp($tYourSelf_old, $model->tYourSelf) !== 0) {
@@ -360,9 +358,14 @@ class UserController extends Controller
                     $show = true;
                 }
             }
+            else {
+                $show = true;
+            }
+
+
         }
         else {
-            $show = true;
+            $show = false;
         }
 
         if($show) {
@@ -383,23 +386,29 @@ class UserController extends Controller
 
     public function actionEditPersonalInfo()
     {
-        $show = true;
         $id = Yii::$app->user->identity->id;
-        if (Yii::$app->request->post()) {
-            $updateArray = array(
-                'First_Name' => Yii::$app->request->post('User')['First_Name'],
-                'Last_Name' => Yii::$app->request->post('User')['Last_Name'],
-                'iHeightID' => Yii::$app->request->post('User')['iHeightID'],
-                'iMaritalStatusID' => Yii::$app->request->post('User')['iMaritalStatusID'],
-            );
-            User::updateAll($updateArray, ['id' => $id]);
-            $show = false;
-        }
         $model = User::findOne($id);
-        return $this->renderAjax('_personalinfo', [
-            'model' => $model,
-            'show' => $show,
-        ]);
+        $model->scenario = User::SCENARIO_EDIT_PERSONAL_INFO;
+        $show = false;
+         if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if(Yii::$app->request->post('save')){
+                $model->First_Name = Yii::$app->request->post('User')['First_Name'];
+                $model->Last_Name = Yii::$app->request->post('User')['Last_Name'];
+                $model->iHeightID = Yii::$app->request->post('User')['iHeightID'];
+                $model->iMaritalStatusID = Yii::$app->request->post('User')['iMaritalStatusID'];
+                if($model->validate()){
+                    $model->save();
+                    $show = false;
+                }
+            }
+        }
+        if($show) {
+            return $this->actionRenderAjax($model,'_personalinfo',true);
+        }
+        else {
+            return $this->actionRenderAjax($model,'_personalinfo',false);
+        }
     }
 
     public function actionEditBasicInfo()
@@ -408,12 +417,10 @@ class UserController extends Controller
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER1;
         $show = false;
-
-        if(Yii::$app->request->post()){
-            if(Yii::$app->request->post('cancel')){
-                $show = false;
-            }
-            else {
+        
+        if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if(Yii::$app->request->post('save')){
                 $model->iReligion_ID = Yii::$app->request->post('User')['iReligion_ID'];
                 $model->iCommunity_ID = Yii::$app->request->post('User')['iCommunity_ID'];
                 $model->iSubCommunity_ID = Yii::$app->request->post('User')['iSubCommunity_ID'];
@@ -430,21 +437,22 @@ class UserController extends Controller
                     $model->save();
                     $show = false;
                 }
-                else {
-                    $show = true;
-                }
             }
         }
-        else {
-            $show = true;
-        }
 
-        if ($show) {
+        if($show) {            
             return $this->actionRenderAjax($model,'_basicinfo',true);
         }
         else {
             return $this->actionRenderAjax($model,'_basicinfo',false);
         }
+    }
+
+    function actionRenderAjax($model,$view,$show = false) {
+        return $this->renderAjax($view,[
+                'model' => $model,
+                'show' => $show,
+            ]);
     }
 
     public function actionEditEducation()
@@ -453,27 +461,19 @@ class UserController extends Controller
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER2;
         $show = false;
-        if(Yii::$app->request->post()){
-            if(Yii::$app->request->post('cancel')){
-                $show = false;  
-            }
-            else {
-                $iEducationLevelID = Yii::$app->request->post('User')['iEducationLevelID'];
-                $iEducationFieldID = Yii::$app->request->post('User')['iEducationFieldID'];
-                $iWorkingWithID = Yii::$app->request->post('User')['iWorkingWithID'];
-                $iWorkingAsID = Yii::$app->request->post('User')['iWorkingAsID'];
-                $iAnnualIncomeID = Yii::$app->request->post('User')['iAnnualIncomeID'];
-                if($model->validate()){
+        if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if(Yii::$app->request->post('save')){
+                $model->iEducationLevelID = Yii::$app->request->post('User')['iEducationLevelID'];
+                $model->iEducationFieldID = Yii::$app->request->post('User')['iEducationFieldID'];
+                $model->iWorkingWithID = Yii::$app->request->post('User')['iWorkingWithID'];
+                $model->iWorkingAsID = Yii::$app->request->post('User')['iWorkingAsID'];
+                $model->iAnnualIncomeID = Yii::$app->request->post('User')['iAnnualIncomeID'];
+                if($model->validate()) {
                     $model->save();
                     $show = false;  
                 }
-                else {
-                    $show = true;
-                }
             }                
-        }
-        else {
-            $show = true;
         }
 
         if($show) {            
@@ -490,29 +490,21 @@ class UserController extends Controller
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER3;
         $show = false;
-        if(Yii::$app->request->post()){
-            if(Yii::$app->request->post('cancel')){
-                $show = false;  
-            }
-            else {
-                $iHeightID = Yii::$app->request->post('User')['iHeightID'];
-                $vSkinTone = Yii::$app->request->post('User')['vSkinTone'];
-                $vBodyType = Yii::$app->request->post('User')['vBodyType'];
-                $vSmoke = Yii::$app->request->post('User')['vSmoke'];
-                $vDrink = Yii::$app->request->post('User')['vDrink'];
-                $vSpectaclesLens = Yii::$app->request->post('User')['vSpectaclesLens'];
-                $vDiet = Yii::$app->request->post('User')['vDiet'];
+         if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if(Yii::$app->request->post('save')){
+                $model->iHeightID = Yii::$app->request->post('User')['iHeightID'];
+                $model->vSkinTone = Yii::$app->request->post('User')['vSkinTone'];
+                $model->vBodyType = Yii::$app->request->post('User')['vBodyType'];
+                $model->vSmoke = Yii::$app->request->post('User')['vSmoke'];
+                $model->vDrink = Yii::$app->request->post('User')['vDrink'];
+                $model->vSpectaclesLens = Yii::$app->request->post('User')['vSpectaclesLens'];
+                $model->vDiet = Yii::$app->request->post('User')['vDiet'];
                 if($model->validate()){
                     $model->save();
                     $show = false;  
                 }
-                else {
-                    $show = true;
-                }
             }                
-        }
-        else {
-            $show = true;
         }
 
         if($show) {            
@@ -523,40 +515,51 @@ class UserController extends Controller
         }
     }
 
-    public function actionEditFamily()
-    {
-        $show = true;
+    public function actionEditFamily() {
         $id = Yii::$app->user->identity->id;
-        if (Yii::$app->request->post()) {
-            $updateArray = array(
-                'iFatherStatusID' => Yii::$app->request->post('User')['iFatherStatusID'],
-                'iFatherWorkingAsID' => Yii::$app->request->post('User')['iFatherWorkingAsID'],
-                'iMotherStatusID' => Yii::$app->request->post('User')['iMotherStatusID'],
-                'iMotherWorkingAsID' => Yii::$app->request->post('User')['iMotherWorkingAsID'],
-                'nob' => Yii::$app->request->post('User')['nob'],
-                'nos' => Yii::$app->request->post('User')['nos'],
-                'iCountryCAId' => Yii::$app->request->post('User')['iCountryCAId'],
-                'iStateCAId' => Yii::$app->request->post('User')['iStateCAId'],
-                'iCityCAId' => Yii::$app->request->post('User')['iCityCAId'],
-                'iDistrictCAID' => Yii::$app->request->post('User')['iDistrictCAID'],
-                'iTalukaCAID' => Yii::$app->request->post('User')['iTalukaCAID'],
-                'vAreaNameCA' => Yii::$app->request->post('User')['vAreaNameCA'],
-                'vNativePlaceCA' => Yii::$app->request->post('User')['vNativePlaceCA'],
-                'vParentsResiding' => Yii::$app->request->post('User')['vParentsResiding'],
-                'vFamilyAffluenceLevel' => Yii::$app->request->post('User')['vFamilyAffluenceLevel'],
-                'vFamilyType' => Yii::$app->request->post('User')['vFamilyType'],
-                'vFamilyProperty' => Yii::$app->request->post('User')['vFamilyProperty'],
-                'vDetailRelative' => Yii::$app->request->post('User')['vDetailRelative'],
-            );
-            User::updateAll($updateArray, ['id' => $id]);
-            $show = false;
-        }
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER4;
-        return $this->renderAjax('_family', [
-            'model' => $model,
-            'show' => $show,
-        ]);
+        $show = false;
+         if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if(Yii::$app->request->post('save')){
+                $model->iFatherStatusID = Yii::$app->request->post('User')['iFatherStatusID'];
+                $model->iFatherWorkingAsID = Yii::$app->request->post('User')['iFatherWorkingAsID'];
+                $model->iMotherStatusID = Yii::$app->request->post('User')['iMotherStatusID'];
+                $model->iMotherWorkingAsID = Yii::$app->request->post('User')['iMotherWorkingAsID'];
+                $model->nob = Yii::$app->request->post('User')['nob'];
+                $model->nos = Yii::$app->request->post('User')['nos'];
+                $model->iCountryCAId = Yii::$app->request->post('User')['iCountryCAId'];
+                $model->iStateCAId = Yii::$app->request->post('User')['iStateCAId'];
+                $model->iCityCAId = Yii::$app->request->post('User')['iCityCAId'];
+                $model->iDistrictCAID = Yii::$app->request->post('User')['iDistrictCAID'];
+                $model->iTalukaCAID = Yii::$app->request->post('User')['iTalukaCAID'];
+                $model->vAreaNameCA = Yii::$app->request->post('User')['vAreaNameCA'];
+                $model->vNativePlaceCA = Yii::$app->request->post('User')['vNativePlaceCA'];
+                $model->vParentsResiding = Yii::$app->request->post('User')['vParentsResiding'];
+                $model->vFamilyAffluenceLevel = Yii::$app->request->post('User')['vFamilyAffluenceLevel'];
+                $model->vFamilyType = Yii::$app->request->post('User')['vFamilyType'];
+                $family_property_array = Yii::$app->request->post('User')['vFamilyProperty'];
+                if(is_array($family_property_array)) {
+                        $model->vFamilyProperty = implode(",",$family_property_array);
+                }
+                else {
+                    $model->vFamilyProperty = '';
+                }
+                $model->vDetailRelative = Yii::$app->request->post('User')['vDetailRelative'];
+                if($model->validate()){
+                    $model->save();
+                    $show = false;
+                }
+            }
+        }
+
+        if($show) {
+            return $this->actionRenderAjax($model,'_family',true);
+        }
+        else {
+            return $this->actionRenderAjax($model,'_family',false);
+        }
     }
 
     public function actionCoverupload()

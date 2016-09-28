@@ -46,6 +46,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const SCENARIO_SFP = 'Set Forgot Password';
     const SCENARIO_FIRST_VERIFICATION = 'Firstverification';
     const SCENARIO_EDIT_MY_INFO = 'Edit My Info';
+    const SCENARIO_EDIT_PERSONAL_INFO = 'Edit Personal Info';
     public $repeat_password;
     public $email_pin;
     public $email_verification_msg;
@@ -227,7 +228,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             "default"=>array('id'),
             self::SCENARIO_FP => ['email','password_hash','password_reset_token'],
             self::SCENARIO_SFP => ['email','password_reset_token'],
-            self::SCENARIO_EDIT_MY_INFO => ['tYourSelf']
+            self::SCENARIO_EDIT_MY_INFO => ['tYourSelf'],
+            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name','Last_Name','Profile_created_for','iHeightId','weight','vDisability','mother_tongue','Marital_Status']
         ];
 
     }
@@ -533,7 +535,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public function getFatherStatusId()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iFatherStatusID']);
+        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iFatherWorkingAsID']);
     }
 
     public function getMotherStatus()
@@ -545,7 +547,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public function getMotherStatusId()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iMotherStatusID']);
+        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iMotherWorkingAsID']);
     }
 
     /**
