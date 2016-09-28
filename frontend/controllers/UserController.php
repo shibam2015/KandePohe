@@ -480,26 +480,41 @@ class UserController extends Controller
 
     public function actionEditLifestyle()
     {
-        $show = true;
         $id = Yii::$app->user->identity->id;
-        if (Yii::$app->request->post()) {
-            $updateArray = array(
-                'iHeightID' => Yii::$app->request->post('User')['iHeightID'],
-                'vSkinTone' => Yii::$app->request->post('User')['vSkinTone'],
-                'vBodyType' => Yii::$app->request->post('User')['vBodyType'],
-                'vSmoke' => Yii::$app->request->post('User')['vSmoke'],
-                'vDrink' => Yii::$app->request->post('User')['vDrink'],
-                'vSpectaclesLens' => Yii::$app->request->post('User')['vSpectaclesLens'],
-                'vDiet' => Yii::$app->request->post('User')['vDiet'],
-            );
-            User::updateAll($updateArray, ['id' => $id]);
-            $show = false;
-        }
         $model = User::findOne($id);
-        return $this->renderAjax('_lifestyle', [
-            'model' => $model,
-            'show' => $show,
-        ]);
+        $model->scenario = User::SCENARIO_REGISTER3;
+        $show = false;
+        if(Yii::$app->request->post()){
+            if(Yii::$app->request->post('cancel')){
+                $show = false;  
+            }
+            else {
+                $iHeightID = Yii::$app->request->post('User')['iHeightID'];
+                $vSkinTone = Yii::$app->request->post('User')['vSkinTone'];
+                $vBodyType = Yii::$app->request->post('User')['vBodyType'];
+                $vSmoke = Yii::$app->request->post('User')['vSmoke'];
+                $vDrink = Yii::$app->request->post('User')['vDrink'];
+                $vSpectaclesLens = Yii::$app->request->post('User')['vSpectaclesLens'];
+                $vDiet = Yii::$app->request->post('User')['vDiet'];
+                if($model->validate()){
+                    $model->save();
+                    $show = false;  
+                }
+                else {
+                    $show = true;
+                }
+            }                
+        }
+        else {
+            $show = true;
+        }
+
+        if($show) {            
+            return $this->actionRenderAjax($model,'_lifestyle',true);
+        }
+        else {
+            return $this->actionRenderAjax($model,'_lifestyle',false);
+        }
     }
 
     public function actionEditFamily()

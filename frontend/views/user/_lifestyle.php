@@ -21,8 +21,10 @@ if ($show) {
         'action' => ['edit-lifestyle'],
         'options' => ['data-pjax' => true],
         'layout' => 'horizontal',
+        'validateOnChange' => false,
+        'validateOnSubmit' => true,
         'fieldConfig' => [
-            'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
+            'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
             'horizontalCssClasses' => [
                 'label' => 'col-sm-3 col-xs-3',
                 'offset' => '',
@@ -33,6 +35,7 @@ if ($show) {
         ]
     ]);
     ?>
+    <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
     <?= $form->field($model, 'iHeightID')->dropDownList(
         ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
         ['prompt' => 'Height']
@@ -111,7 +114,7 @@ if ($show) {
     <div class="row">
         <div class="">
             <?= Html::submitButton('save', ['class' => 'btn btn-primary pull-right', 'name' => 'register5', 'style' => 'padding:5px;font-size:14px;']) ?>
-
+            <?= Html::submitButton('Cancel', ['class' => 'btn btn-primary pull-right', 'id' => 'cancel_edit_lifestyle', 'name' => 'cancel', 'style' => 'padding:5px;font-size:14px;margin-right:10px;']) ?>
         </div>
     </div>
     <?php ActiveForm::end();

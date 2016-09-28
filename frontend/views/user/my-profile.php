@@ -842,6 +842,16 @@ $this->registerJs('
         }
       });
   });
+    $(document).on("click","#cancel_edit_lifestyle",function(e){
+        $.ajax({
+            url : "'.Url::to(['user/edit-lifestyle']).'",
+            type:"POST",
+            data:{"cancel":true},
+            success:function(res){
+                $(".div_lifestyle").html(res);
+            }
+        });
+    });
   $(".edit_family").click(function(e){
     $.ajax({
         url : "' . Url::to(['user/edit-family']) . '",
