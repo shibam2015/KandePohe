@@ -2,7 +2,9 @@
 namespace frontend\controllers;
 
 use common\components\CommonHelper;
+use common\models\Tags;
 use common\models\UserPhotos;
+use common\models\UserTag;
 use common\models\Wightege;
 use Yii;
 use yii\base\InvalidParamException;
@@ -115,8 +117,11 @@ class UserController extends Controller
         $USER_PHOTO_MODEL = new  UserPhotos();
         $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
         $COVER_PHOTO = CommonHelper::getCoverPhotos($TYPE = 'USER', $id, $model->cover_photo);
+        $TAG_LIST = Tags::find()->all();
+        $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->all();
         return $this->render('my-profile',
-            ['model' => $model, 'photo_model' => $USER_PHOTOS_LIST, 'COVER_PHOTO' => $COVER_PHOTO]
+            ['model' => $model, 'photo_model' => $USER_PHOTOS_LIST, 'COVER_PHOTO' => $COVER_PHOTO, 'TAG_LIST' => $TAG_LIST, 'TAG_LIST_USER' => $TAG_LIST_USER]
+
         );
     }
 
@@ -368,6 +373,14 @@ class UserController extends Controller
         }
     }
 
+    function actionRenderAjax($model, $view, $show = false)
+    {
+        return $this->renderAjax($view, [
+            'model' => $model,
+            'show' => $show,
+        ]);
+    }
+
     public function actionEditPersonalInfo()
     {
         $show = true;
@@ -395,10 +408,10 @@ class UserController extends Controller
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER1;
         $show = false;
-        
+
         if(Yii::$app->request->post()){
             if(Yii::$app->request->post('cancel')){
-                $show = false;  
+                $show = false;
             }
             else {
                 $model->iReligion_ID = Yii::$app->request->post('User')['iReligion_ID'];
@@ -415,30 +428,23 @@ class UserController extends Controller
                 $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
                 if($model->validate()){
                     $model->save();
-                    $show = false;  
+                    $show = false;
                 }
                 else {
                     $show = true;
                 }
-            }                
+            }
         }
         else {
             $show = true;
         }
 
-        if($show) {            
+        if ($show) {
             return $this->actionRenderAjax($model,'_basicinfo',true);
         }
         else {
             return $this->actionRenderAjax($model,'_basicinfo',false);
         }
-    }
-
-    function actionRenderAjax($model,$view,$show = false) {
-        return $this->renderAjax($view,[
-                'model' => $model,
-                'show' => $show,
-            ]);
     }
 
     public function actionEditEducation()

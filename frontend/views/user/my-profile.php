@@ -204,27 +204,44 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             <h3 class="panel-title text-muted mrg-bt-10">Add Tags</h3>
                                             <a href="#" class="text-muted">Add more tags</a></div>
                                         <div class="panel-body no-padd text-center">
-                                            <div class="bootstrap-tagsinput"><span class="tag label label-danger">Spritual <i
-                                                        data-role="remove" class="fa fa-times"></i></span> <span
-                                                    class="tag label label-danger">Homely <i data-role="remove"
-                                                                                             class="fa fa-times"></i></span>
-                                                <span class="tag label label-danger">Music Lover <i
-                                                        data-role="remove" class="fa fa-times"></i></span> <span
-                                                    class="tag label label-danger">Well Educated <i
-                                                        data-role="remove" class="fa fa-times"></i></span></div>
+                                            <div class="bootstrap-tagsinput">
+                                                <?php if (count($TAG_LIST_USER) != 0) {
+                                                    foreach ($TAG_LIST_USER as $TK => $TV) {
+                                                        ?>
+                                                        <span class="tag label label-danger">
+                                                                                <?= $TV->tagName->Name ?>
+                                                            <i data-role="remove" class="fa fa-times"></i>
+                                                        </span>
+                                                    <?php }
+                                                } else { ?>
+                                                    <span
+                                                        class="tag label label-default">Tag Suggestion Not Available</span>
+                                                <?php }
+                                                ?>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="divider"></div>
                                     <div class="panel no-border padd-hr-10 panel-default panel-friends">
-                                        <div class="panel-heading"><a href="#" class="pull-right">Add All</a>
-                                            <h3 class="panel-title text-muted">Text Suggestions</h3>
+                                        <div class="panel-heading">
+                                            <?php if (count($TAG_LIST) != 0) { ?>
+                                                <a href="#" class="pull-right">Add All</a>
+                                            <?php } ?>
+                                            <h3 class="panel-title text-muted">Tag Suggestions</h3>
                                         </div>
                                         <div class="panel-body no-padd text-center">
-                                            <div class="bootstrap-tagsinput"><span class="tag label label-default">Traveller </span>
-                                                <span class="tag label label-default">Romantic </span> <span
-                                                    class="tag label label-default">Adventurous </span> <span
-                                                    class="tag label label-default">Foodie </span> <span
-                                                    class="tag label label-default">Talkative </span></div>
+                                            <div class="bootstrap-tagsinput">
+                                                <?php if (count($TAG_LIST) != 0) {
+                                                    foreach ($TAG_LIST as $TK => $TV) { ?>
+                                                        <!-- <span class="tag label label-default"><?= $TV['Name'] ?></span> -->
+                                                        <button class="btn btn-default"><?= $TV['Name'] ?></button>
+                                                    <?php }
+                                                } else { ?>
+                                                    <span
+                                                        class="tag label label-default">Tag Suggestion Not Available</span>
+                                                <?php }
+                                                ?>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="divider"></div>
