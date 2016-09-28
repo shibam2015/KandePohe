@@ -391,7 +391,6 @@ class UserController extends Controller
 
     public function actionEditBasicInfo()
     {
-        $show = true;
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER1;
@@ -444,24 +443,39 @@ class UserController extends Controller
 
     public function actionEditEducation()
     {
-        $show = true;
         $id = Yii::$app->user->identity->id;
-        if (Yii::$app->request->post()) {
-            $updateArray = array(
-                'iEducationLevelID' => Yii::$app->request->post('User')['iEducationLevelID'],
-                'iEducationFieldID' => Yii::$app->request->post('User')['iEducationFieldID'],
-                'iWorkingWithID' => Yii::$app->request->post('User')['iWorkingWithID'],
-                'iWorkingAsID' => Yii::$app->request->post('User')['iWorkingAsID'],
-                'iAnnualIncomeID' => Yii::$app->request->post('User')['iAnnualIncomeID'],
-            );
-            User::updateAll($updateArray, ['id' => $id]);
-            $show = false;
-        }
         $model = User::findOne($id);
-        return $this->renderAjax('_education', [
-            'model' => $model,
-            'show' => $show,
-        ]);
+        $model->scenario = User::SCENARIO_REGISTER2;
+        $show = false;
+        if(Yii::$app->request->post()){
+            if(Yii::$app->request->post('cancel')){
+                $show = false;  
+            }
+            else {
+                $iEducationLevelID = Yii::$app->request->post('User')['iEducationLevelID'];
+                $iEducationFieldID = Yii::$app->request->post('User')['iEducationFieldID'];
+                $iWorkingWithID = Yii::$app->request->post('User')['iWorkingWithID'];
+                $iWorkingAsID = Yii::$app->request->post('User')['iWorkingAsID'];
+                $iAnnualIncomeID = Yii::$app->request->post('User')['iAnnualIncomeID'];
+                if($model->validate()){
+                    $model->save();
+                    $show = false;  
+                }
+                else {
+                    $show = true;
+                }
+            }                
+        }
+        else {
+            $show = true;
+        }
+
+        if($show) {            
+            return $this->actionRenderAjax($model,'_education',true);
+        }
+        else {
+            return $this->actionRenderAjax($model,'_education',false);
+        }
     }
 
     public function actionEditLifestyle()

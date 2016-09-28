@@ -9,9 +9,11 @@ if ($show) {
         'id' => 'form',
         'action' => ['edit-education'],
         'options' => ['data-pjax' => true],
+        'validateOnChange' => false,
+        'validateOnSubmit' => true,
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
+            'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
             'horizontalCssClasses' => [
                 'label' => 'col-sm-3 col-xs-3',
                 'offset' => '',
@@ -22,6 +24,7 @@ if ($show) {
         ]
     ]);
     ?>
+    <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
     <?= $form->field($model, 'iEducationLevelID')->dropDownList(
         ArrayHelper::map(CommonHelper::getEducationLevel(), 'iEducationLevelID', 'vEducationLevelName'),
         ['prompt' => 'Education Level']
@@ -49,7 +52,7 @@ if ($show) {
     <div class="row">
         <div class="">
             <?= Html::submitButton('save', ['class' => 'btn btn-primary pull-right', 'name' => 'register5', 'style' => 'padding:5px;font-size:14px;']) ?>
-
+            <?= Html::submitButton('Cancel', ['class' => 'btn btn-primary pull-right', 'id' => 'cancel_edit_education', 'name' => 'cancel', 'style' => 'padding:5px;font-size:14px;margin-right:10px;']) ?>
         </div>
     </div>
     <?php ActiveForm::end();
