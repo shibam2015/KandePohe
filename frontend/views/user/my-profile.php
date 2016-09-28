@@ -200,13 +200,21 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                     </div>
                                     <div class="divider"></div>
                                     <div class="panel no-border padd-hr-10 panel-default panel-friends">
-                                        <div class="panel-heading"><a href="#" class="pull-right text-muted">4/5</a>
+                                        <div class="panel-heading">
+
+                                            <a href="#" class="pull-right text-muted"><?= count($TAG_LIST_USER) ?>
+                                                /<?= count($TAG_LIST) ?></a>
+
                                             <h3 class="panel-title text-muted mrg-bt-10">Add Tags</h3>
                                             <a href="#" class="text-muted">Add more tags</a></div>
                                         <div class="panel-body no-padd text-center">
                                             <div class="bootstrap-tagsinput">
-                                                <?php if (count($TAG_LIST_USER) != 0) {
+                                                <?php
+                                                $SEl_TAGS = array();
+                                                if (count($TAG_LIST_USER) != 0) {
+
                                                     foreach ($TAG_LIST_USER as $TK => $TV) {
+                                                        array_push($SEl_TAGS, $TV->tag_id);
                                                         ?>
                                                         <span class="tag label label-danger">
                                                                                 <?= $TV->tagName->Name ?>
@@ -215,7 +223,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     <?php }
                                                 } else { ?>
                                                     <span
-                                                        class="tag label label-default">Tag Suggestion Not Available</span>
+                                                        class="tag label label-danger">Tag Suggestion Not Available</span>
                                                 <?php }
                                                 ?>
                                             </div>
@@ -232,10 +240,13 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                         <div class="panel-body no-padd text-center">
                                             <div class="bootstrap-tagsinput">
                                                 <?php if (count($TAG_LIST) != 0) {
-                                                    foreach ($TAG_LIST as $TK => $TV) { ?>
+                                                    foreach ($TAG_LIST as $TK => $TV) {
+                                                        if (!in_array($TV['ID'], $SEl_TAGS)) {
+                                                            ?>
                                                         <!-- <span class="tag label label-default"><?= $TV['Name'] ?></span> -->
                                                         <button class="btn btn-default"><?= $TV['Name'] ?></button>
-                                                    <?php }
+                                                        <?php }
+                                                    }
                                                 } else { ?>
                                                     <span
                                                         class="tag label label-default">Tag Suggestion Not Available</span>
