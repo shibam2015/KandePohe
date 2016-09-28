@@ -8,7 +8,7 @@ if ($show) {
         'id' => 'form',
         'action' => ['edit-myinfo'],
         'options' => ['data-pjax' => true],
-        'validateOnChange' => false,
+        'validateOnChange' => true,
         'validateOnSubmit' => true,
     ]);
     ?>

@@ -361,16 +361,10 @@ class UserController extends Controller
         }
 
         if($show) {
-            return $this->renderAjax('_myinfo',[
-                'model' => $model,
-                'show' => true,
-            ]);
+            return $this->actionRenderAjax($model,'_myinfo',true);
         }
         else {
-            return $this->renderAjax('_myinfo',[
-                'model' => $model,
-                'show' => false,
-            ]);
+            return $this->actionRenderAjax($model,'_myinfo',false);
         }
     }
 
@@ -399,27 +393,53 @@ class UserController extends Controller
     {
         $show = true;
         $id = Yii::$app->user->identity->id;
-        if (Yii::$app->request->post()) {
-            $updateArray = array(
-                'iReligion_ID' => Yii::$app->request->post('User')['iReligion_ID'],
-                'iCommunity_ID' => Yii::$app->request->post('User')['iCommunity_ID'],
-                'iSubCommunity_ID' => Yii::$app->request->post('User')['iSubCommunity_ID'],
-                'iGotraID' => Yii::$app->request->post('User')['iGotraID'],
-                'iCountryId' => Yii::$app->request->post('User')['iCountryId'],
-                'iStateId' => Yii::$app->request->post('User')['iStateId'],
-                'iCityId' => Yii::$app->request->post('User')['iCityId'],
-                'iDistrictID' => Yii::$app->request->post('User')['iDistrictID'],
-                'iTalukaID' => Yii::$app->request->post('User')['iTalukaID'],
-                'vAreaName' => Yii::$app->request->post('User')['vAreaName'],
-            );
-            User::updateAll($updateArray, ['id' => $id]);
-            $show = false;
-        }
         $model = User::findOne($id);
-        return $this->renderAjax('_basicinfo', [
-            'model' => $model,
-            'show' => $show,
-        ]);
+        $model->scenario = User::SCENARIO_REGISTER1;
+        $show = false;
+        
+        if(Yii::$app->request->post()){
+            if(Yii::$app->request->post('cancel')){
+                $show = false;  
+            }
+            else {
+                $model->iReligion_ID = Yii::$app->request->post('User')['iReligion_ID'];
+                $model->iCommunity_ID = Yii::$app->request->post('User')['iCommunity_ID'];
+                $model->iSubCommunity_ID = Yii::$app->request->post('User')['iSubCommunity_ID'];
+                $model->iGotraID = Yii::$app->request->post('User')['iGotraID'];
+                $model->iMaritalStatusID = Yii::$app->request->post('User')['iMaritalStatusID'];
+                $model->noc = Yii::$app->request->post('User')['noc'];
+                $model->iCountryId = Yii::$app->request->post('User')['iCountryId'];
+                $model->iStateId = Yii::$app->request->post('User')['iStateId'];
+                $model->iCityId = Yii::$app->request->post('User')['iCityId'];
+                $model->iDistrictID = Yii::$app->request->post('User')['iDistrictID'];
+                $model->iTalukaID = Yii::$app->request->post('User')['iTalukaID'];
+                $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
+                if($model->validate()){
+                    $model->save();
+                    $show = false;  
+                }
+                else {
+                    $show = true;
+                }
+            }                
+        }
+        else {
+            $show = true;
+        }
+
+        if($show) {            
+            return $this->actionRenderAjax($model,'_basicinfo',true);
+        }
+        else {
+            return $this->actionRenderAjax($model,'_basicinfo',false);
+        }
+    }
+
+    function actionRenderAjax($model,$view,$show = false) {
+        return $this->renderAjax($view,[
+                'model' => $model,
+                'show' => $show,
+            ]);
     }
 
     public function actionEditEducation()

@@ -802,6 +802,16 @@ $this->registerJs('
         }
       });
   });
+    $(document).on("click","#cancel_edit_basicinfo",function(e){
+        $.ajax({
+            url : "'.Url::to(['user/edit-basic-info']).'",
+            type:"POST",
+            data:{"cancel":true},
+            success:function(res){
+                $(".div_basic_info").html(res);
+            }
+        });
+    });
   $(".edit_education").click(function(e){
     $.ajax({
         url : "' . Url::to(['user/edit-education']) . '",
