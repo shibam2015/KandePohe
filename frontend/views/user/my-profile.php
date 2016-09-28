@@ -295,26 +295,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             <h3><span class="heading-icons icon2"></span> Personal information</h3>
                                             <?php Pjax::begin(['id' => 'my_index1', 'enablePushState' => false]); ?>
                                             <div class="div_personal_info">
-                                                <dl class="dl-horizontal">
-                                                    <dt>Name</dt>
-                                                    <dd><?= $model->FullName; ?>
-                                                    <dd>
-                                                    <dt>Profile created by</dt>
-                                                    <dd>Self</dd>
-                                                    <dt>Age</dt>
-                                                    <dd>30 years
-                                                    <dd>
-                                                    <dt>Height</dt>
-                                                    <dd><?= $model->height->vName ?></dd>
-                                                    <dt>Weight</dt>
-                                                    <dd>76 kgs/ 172 lbs</dd>
-                                                    <dt>Physical status</dt>
-                                                    <dd>Normal</dd>
-                                                    <dt>Mother tongue</dt>
-                                                    <dd>Marathi</dd>
-                                                    <dt>Marital status</dt>
-                                                    <dd><?= $model->maritalStatusName->vName; ?></dd>
-                                                </dl>
+                                                
                                             </div>
                                             <?php Pjax::end(); ?>
 
@@ -688,15 +669,12 @@ $this->registerJs('
     });
 
     $(".edit_personal_btn").click(function(e){
-    $.ajax({
-        url : "' . Url::to(['user/edit-personal-info']) . '",
-        type:"GET",
-        data:{},
-        success:function(res){
-          $(".div_personal_info").html(res);
-        }
-      });
-  });
+        getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","0");
+    });
+    getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","1");
+    $(document).on("click","#cancel_edit_personalinfo",function(e){
+        getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","1");
+    });
 
     $(".edit_basic_information").click(function(e){
         getInlineDetail("'.Url::to(['user/edit-basic-info']).'",".div_basic_info","0");

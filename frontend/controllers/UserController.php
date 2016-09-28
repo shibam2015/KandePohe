@@ -373,23 +373,29 @@ class UserController extends Controller
 
     public function actionEditPersonalInfo()
     {
-        $show = true;
         $id = Yii::$app->user->identity->id;
-        if (Yii::$app->request->post()) {
-            $updateArray = array(
-                'First_Name' => Yii::$app->request->post('User')['First_Name'],
-                'Last_Name' => Yii::$app->request->post('User')['Last_Name'],
-                'iHeightID' => Yii::$app->request->post('User')['iHeightID'],
-                'iMaritalStatusID' => Yii::$app->request->post('User')['iMaritalStatusID'],
-            );
-            User::updateAll($updateArray, ['id' => $id]);
-            $show = false;
-        }
         $model = User::findOne($id);
-        return $this->renderAjax('_personalinfo', [
-            'model' => $model,
-            'show' => $show,
-        ]);
+        $model->scenario = User::SCENARIO_EDIT_PERSONAL_INFO;
+        $show = false;
+         if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if(Yii::$app->request->post('save')){
+                $model->First_Name = Yii::$app->request->post('User')['First_Name'];
+                $model->Last_Name = Yii::$app->request->post('User')['Last_Name'];
+                $model->iHeightID = Yii::$app->request->post('User')['iHeightID'];
+                $model->iMaritalStatusID = Yii::$app->request->post('User')['iMaritalStatusID'];
+                if($model->validate()){
+                    $model->save();
+                    $show = false;
+                }
+            }    
+        }
+        if($show) {            
+            return $this->actionRenderAjax($model,'_personalinfo',true);
+        }
+        else {
+            return $this->actionRenderAjax($model,'_personalinfo',false);
+        }
     }
 
     public function actionEditBasicInfo()
