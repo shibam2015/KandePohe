@@ -417,7 +417,7 @@ class UserController extends Controller
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER1;
         $show = false;
-        
+
         if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if(Yii::$app->request->post('save')){
@@ -440,7 +440,7 @@ class UserController extends Controller
             }
         }
 
-        if($show) {            
+        if ($show) {
             return $this->actionRenderAjax($model,'_basicinfo',true);
         }
         else {
@@ -448,12 +448,12 @@ class UserController extends Controller
         }
     }
 
-    function actionRenderAjax($model,$view,$show = false) {
+    /*function actionRenderAjax($model,$view,$show = false) {
         return $this->renderAjax($view,[
                 'model' => $model,
                 'show' => $show,
             ]);
-    }
+    }*/
 
     public function actionEditEducation()
     {
@@ -471,12 +471,12 @@ class UserController extends Controller
                 $model->iAnnualIncomeID = Yii::$app->request->post('User')['iAnnualIncomeID'];
                 if($model->validate()) {
                     $model->save();
-                    $show = false;  
+                    $show = false;
                 }
-            }                
+            }
         }
 
-        if($show) {            
+        if ($show) {
             return $this->actionRenderAjax($model,'_education',true);
         }
         else {
@@ -502,12 +502,12 @@ class UserController extends Controller
                 $model->vDiet = Yii::$app->request->post('User')['vDiet'];
                 if($model->validate()){
                     $model->save();
-                    $show = false;  
+                    $show = false;
                 }
-            }                
+            }
         }
 
-        if($show) {            
+        if ($show) {
             return $this->actionRenderAjax($model,'_lifestyle',true);
         }
         else {
