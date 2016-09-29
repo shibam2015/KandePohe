@@ -229,7 +229,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             self::SCENARIO_FP => ['email','password_hash','password_reset_token'],
             self::SCENARIO_SFP => ['email','password_reset_token'],
             self::SCENARIO_EDIT_MY_INFO => ['tYourSelf'],
-            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name','Last_Name','Profile_created_for','iHeightId','weight','vDisability','mother_tongue','Marital_Status']
+            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for','Mobile','county_code','mother_tongue','Marital_Status','vDisability'],
         ];
 
     }

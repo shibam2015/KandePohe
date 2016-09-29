@@ -7,11 +7,13 @@ use yii\helpers\ArrayHelper;
 if ($show) {
     $form = ActiveForm::begin([
         'id' => 'form',
+        'validateOnChange' => true,
+        'validateOnSubmit' => true,
         'action' => ['edit-personal-info'],
         'options' => ['data-pjax' => true],
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
+            'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
             'horizontalCssClasses' => [
                 'label' => 'col-sm-3 col-xs-3',
                 'offset' => '',
@@ -22,13 +24,63 @@ if ($show) {
         ]
     ]);
     ?>
+    <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
     <?= $form->field($model, 'First_Name')->textInput(['autofocus' => true]) ?>
-    <?= $form->field($model, 'Last_Name')->textInput(['autofocus' => true]) ?>
+    <?= $form->field($model, 'Last_Name')->textInput() ?>
+    <?= $form->field($model, 'Gender')->RadioList(
+                    ['MALE'=>'MALE','FEMALE'=>'FEMALE'],
+                    [
+                        'item' => function($index, $label, $name, $checked, $value) {
+                            $checked = ($checked) ? 'checked' : '';
+                          $return = '<input type="radio" class = "genderV" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
+                          $return .= '<label for="'.$value.'">' . ucwords($label) . '</label>';
+                          return $return;
+                        }
+                    ]
+                )
+    ?>
+    <?php
+    $this->registerJs('
+        $(".genderV").on("change",function(e){
+          var genderVal = $(this).val();
+          if(genderVal == "FEMALE") {
+            $("#DOB").datepicker("option","maxDate","'.date('Y-m-d',strtotime('-18 year')).'");
+            $("#DOB").datepicker("option","yearRange","-70:-18");
+          }
+          else {
+            $("#DOB").datepicker("option","maxDate","'.date('Y-m-d',strtotime('-21 year')).'");
+            $("#DOB").datepicker("option","yearRange","-70:-21");
+          }
+        });
+      ');
+    ?>
+    <?= $form->field($model, 'DOB')->textInput()
+                  ->widget(\yii\jui\DatePicker::classname(),
+                      [
+                        'dateFormat' => 'php:Y-m-d',
+                        'options'=>[
+                            'id'=>'DOB',
+                            'class' => 'form-control',
+                        ],
+                        'clientOptions' => [
+                            'changeMonth' => true,
+                            'yearRange' => '-70:-21',
+                            'changeYear' => true,
+                            'maxDate' => date('Y-m-d',strtotime('-21 year')),
+                        ]
+
+                      ]);
+              ?>
     <?= $form->field($model, 'Profile_created_for')->dropDownList(
-                  [''=>'Profile for','BRIDE'=>'BRIDE','GROOM'=>'GROOM','SELF'=>'SELF'],
+                  ['BRIDE'=>'BRIDE','GROOM'=>'GROOM','SELF'=>'SELF'],
                   ['prompt' => 'Profile For']
               );?>
-    <?= $form->field($model, 'iHeightID')->dropDownList(ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'), ['prompt' => 'Height']); ?>
+    <?= $form->field($model, 'county_code')->dropDownList(
+                      ['+91'=>'+91'],
+                      ['prompt' => 'Country Code']
+                  )
+    ?>
+    <?= $form->field($model, 'Mobile')->input('text')?>
     <div class="row">
         <div class="">
             <input type="hidden" name="save" value="1">
@@ -40,22 +92,20 @@ if ($show) {
     <?php ActiveForm::end();
 } else {
     ?>
-    <div class="div_personal_info">
+        <div class="div_personal_info">
         <dl class="dl-horizontal">
             <dt>Name</dt>
             <dd><?= $model->FullName; ?><dd>
             <dt>Profile created by</dt>
             <dd><?= $model->Profile_created_for; ?></dd>
+            <dt>Date Of Birth</dt>
+            <dd><?= $model->DOB; ?><dd>
             <dt>Age</dt>
             <dd>30 years<dd>
-            <dt>Height</dt>
-            <dd><?= $model->height->vName ?></dd>
-            <dt>Weight</dt>
-            <dd><?= $model->weight;?></dd>
-            <dt>Physical status</dt>
-            <dd><?= $model->vDisability;?></dd>
-            <dt>Mother tongue</dt>
-            <dd><?= $model->weight;?></dd>
+            <dt>Gender</dt>
+            <dd><?= $model->Gender ?></dd>
+            <dt>Mobile</dt>
+            <dd><?= $model->county_code." ".$model->Mobile; ?></dd>
             
         </dl>
     </div>

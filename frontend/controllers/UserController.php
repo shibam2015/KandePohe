@@ -396,8 +396,11 @@ class UserController extends Controller
             if(Yii::$app->request->post('save')){
                 $model->First_Name = Yii::$app->request->post('User')['First_Name'];
                 $model->Last_Name = Yii::$app->request->post('User')['Last_Name'];
-                $model->iHeightID = Yii::$app->request->post('User')['iHeightID'];
-                $model->iMaritalStatusID = Yii::$app->request->post('User')['iMaritalStatusID'];
+                $model->Profile_created_for = Yii::$app->request->post('User')['Profile_created_for'];
+                $model->DOB = Yii::$app->request->post('User')['DOB'];
+                $model->county_code = Yii::$app->request->post('User')['county_code'];
+                $model->Mobile = Yii::$app->request->post('User')['Mobile'];
+                $model->Gender = Yii::$app->request->post('User')['Gender'];
                 if($model->validate()){
                     $model->save();
                     $show = false;
@@ -435,6 +438,7 @@ class UserController extends Controller
                 $model->iTalukaID = Yii::$app->request->post('User')['iTalukaID'];
                 $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
                 if($model->validate()){
+                    $model->completed_step = $model->setCompletedStep('2');
                     $model->save();
                     $show = false;
                 }
@@ -448,13 +452,6 @@ class UserController extends Controller
             return $this->actionRenderAjax($model,'_basicinfo',false);
         }
     }
-
-    /*function actionRenderAjax($model,$view,$show = false) {
-        return $this->renderAjax($view,[
-                'model' => $model,
-                'show' => $show,
-            ]);
-    }*/
 
     public function actionEditEducation()
     {
@@ -471,6 +468,7 @@ class UserController extends Controller
                 $model->iWorkingAsID = Yii::$app->request->post('User')['iWorkingAsID'];
                 $model->iAnnualIncomeID = Yii::$app->request->post('User')['iAnnualIncomeID'];
                 if($model->validate()) {
+                    $model->completed_step = $model->setCompletedStep('3');
                     $model->save();
                     $show = false;
                 }
@@ -502,6 +500,7 @@ class UserController extends Controller
                 $model->vSpectaclesLens = Yii::$app->request->post('User')['vSpectaclesLens'];
                 $model->vDiet = Yii::$app->request->post('User')['vDiet'];
                 if($model->validate()){
+                    $model->completed_step = $model->setCompletedStep('4');
                     $model->save();
                     $show = false;
                 }
@@ -549,6 +548,7 @@ class UserController extends Controller
                 }
                 $model->vDetailRelative = Yii::$app->request->post('User')['vDetailRelative'];
                 if($model->validate()){
+                    $model->completed_step = $model->setCompletedStep('5');
                     $model->save();
                     $show = false;
                 }
