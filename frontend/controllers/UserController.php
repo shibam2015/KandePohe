@@ -790,9 +790,10 @@ class UserController extends Controller
                 $MESSAGE = 'Tag Added Successfully.';
                 $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
                 foreach ($TAG_LIST_USER as $TK => $TV) {
-                    $USER_TAG_LIST .= '<span class="tag label label-danger">
+                    $USER_TAG_LIST .= '<span class="tag label label-danger" id="tag_delete_' . $TV->id . '">
                                            ' . $TV->tagName->Name . '
-                                          <i data-role="remove" class="fa fa-times"></i>
+                                          <i data-role="remove" class="fa fa-times tag_delete"
+                                                               data-id="' . $TV->id . '"></i>
                                        </span> &nbsp;';
                 }
             }

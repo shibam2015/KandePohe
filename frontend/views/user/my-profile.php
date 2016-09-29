@@ -117,10 +117,12 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                                            data-name="<?= $model->hide_profile ?>">
                                                                             <i class="fa <?= ($model->hide_profile == 'Yes') ? 'fa-eye' : 'fa-eye-slash'; ?>"></i> <?= ($model->hide_profile == 'Yes') ? 'Show' : 'Hide'; ?>
                                                                             Profile</a></li>
-                                                                    <li><a href="#" data-target="#deleteProfile"
-                                                                           data-toggle="modal"><i
-                                                                                class="fa fa-times"></i> Delete
-                                                                            Profile</a></li>
+                                                                    <li>
+                                                                        <a href="#" data-target="#deleteProfile"
+                                                                           data-toggle="modal">
+                                                                            <i class="fa fa-times"></i> Delete
+                                                                            <Profile></Profile>
+                                                                        </a></li>
                                                                 </ul>
                                                             </div>
                                                             <div class="pull-right">
@@ -269,8 +271,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             <div class="panel-body text-center">
                                                 <ul class="friends">
                                                     <?php foreach ($photo_model as $K => $V) { ?>
-                                                        <li><a href="#">
-                                                                <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 75), ['class' => 'img-responsive tip', 'alt' => $V['File_Name'] . $K, 'style' => "height:72px;"]); ?>
+                                                        <li><a href="javascript:void(0)">
+                                                                <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 75), ['class' => 'img-responsive tip', 'alt' => $V['File_Name'] . $K]); ?>
                                                             </a></li>
                                                     <?php } ?>
                                                 </ul>
