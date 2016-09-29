@@ -3,7 +3,9 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
-
+?>
+<div class="div_personal_info">
+<?php
 if ($show) {
     $form = ActiveForm::begin([
         'id' => 'form',
@@ -81,6 +83,10 @@ if ($show) {
                   )
     ?>
     <?= $form->field($model, 'Mobile')->input('text')?>
+    <?= $form->field($model, 'mother_tongue')->dropDownList(
+        ArrayHelper::map(CommonHelper::getMotherTongue(), 'ID', 'Name'),
+        ['prompt' => 'Mother Tongue']
+    ); ?>
     <div class="row">
         <div class="">
             <input type="hidden" name="save" value="1">
@@ -92,7 +98,7 @@ if ($show) {
     <?php ActiveForm::end();
 } else {
     ?>
-        <div class="div_personal_info">
+        
         <dl class="dl-horizontal">
             <dt>Name</dt>
             <dd><?= $model->FullName; ?><dd>
@@ -101,13 +107,17 @@ if ($show) {
             <dt>Date Of Birth</dt>
             <dd><?= $model->DOB; ?><dd>
             <dt>Age</dt>
-            <dd>30 years<dd>
+            <dd><?= CommonHelper::getAge($model->DOB);?> years<dd>
             <dt>Gender</dt>
             <dd><?= $model->Gender ?></dd>
             <dt>Mobile</dt>
             <dd><?= $model->county_code." ".$model->Mobile; ?></dd>
+            <dt>Mother Tongue</dt>
+            <dd><?= $model->motherTongue->Name; ?></dd>
             
         </dl>
-    </div>
+    
     <?php
 }
+?>
+</div>

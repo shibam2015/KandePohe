@@ -13,6 +13,7 @@ use yii\helpers\ArrayHelper;
             content: "";
         }
     </style>
+<div class="div_family">
 <?php
 if ($show) {
     $form = ActiveForm::begin([
@@ -197,7 +198,7 @@ if ($show) {
     <?php ActiveForm::end();
 } else {
     ?>
-    <div class="div_family">
+    
         <dl class="dl-horizontal">
             <dt>Father Status</dt>
             <dd><?= $model->fatherStatus->vName ?>
@@ -247,6 +248,8 @@ if ($show) {
             <dt>You can enter your relative surnames etc</dt>
             <dd><?= $model->vAreaName ?></dd>
         </dl>
-    </div>
+    
     <?php
 }
+?>
+</div>
