@@ -443,6 +443,22 @@ class CommonHelper {
         return true;
     }
 
+    public static function getSiteUrl($TYPE = 'FRONTEND')
+    {
+
+        if ($TYPE == 'FRONTEND') {
+            $site_url = "http://" . $_SERVER["HTTP_HOST"] . Yii::getAlias('@web') . "/frontend/web/";
+        } else {
+            $site_url = "http://" . $_SERVER["HTTP_HOST"] . Yii::getAlias('@web') . "/backend/web/";
+        }
+        return $site_url;
+    }
+
+    public static function getMessage($TYPE = '')
+    {
+
+    }
+
     public function getReligion()
     {
         $religion = \common\models\Religion::find()->all();

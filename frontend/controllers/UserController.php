@@ -18,7 +18,7 @@ use common\models\LoginForm;
 use common\models\User;
 use yii\widgets\ActiveForm;
 use yii\web\Response;
-
+use common\components\MailHelper;
 
 /**
  * Site controller
@@ -111,6 +111,9 @@ class UserController extends Controller
         /*Yii::$app->session->setFlash('warning', 'bla bla bla bla 1');
         Yii::$app->session->setFlash('success', 'bla bla 2');
         Yii::$app->session->setFlash('error', 'bla bla 3');*/
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
 
         $id = Yii::$app->user->identity->id;
         $model = User::find()->joinWith([countryName, stateName, cityName, height, maritalStatusName, talukaName, districtName, gotraName, subCommunityName, communityName, religionName, educationLevelName, communityName, workingWithName, workingAsName, dietName, fatherStatus])->where(['id' => $id])->one();
@@ -674,7 +677,7 @@ class UserController extends Controller
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $STATUS = "SUCCESS";
-        $MESSAGE = '';//'Cover Photo Upload Successfully.';
+        $MESSAGE = '';
         $ACTION = Yii::$app->request->post('ACTION');
         $P_ID = Yii::$app->request->post('P_ID');
         $ABC = '';
@@ -852,5 +855,23 @@ class UserController extends Controller
         #Yii::$app->response->format = Response::FORMAT_JSON;
         return json_encode($return);
         exit;
+    }
+
+    public function actionAccountDelete() # Account Delete
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $STATUS = "SUCCESS";
+        $MESSAGE = 'Your Profile successfully deleted. <br>Please Wait for a few second.';
+        $model->status = STATUS_DELETED;
+        $model->save();
+        $LINK = CommonHelper::getSiteUrl('BACKEND') . 'user/' . $id;
+        $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "LINK" => $LINK);
+        MailHelper::SendMail('ADMIN_DELETE_ACCOUNT_USER', $MAIL_DATA);
+        Yii::$app->user->logout();
+
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE);
+        //Yii::$app->response->format = Response::FORMAT_JSON;
+        return json_encode($return);
     }
 }

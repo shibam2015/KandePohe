@@ -19,6 +19,7 @@ class MailHelper
         $EMAIL_TEMPLATE = EmailFormat::findOne(['vEmailFormatType' => $TYPE]);
         $TO_EMAIL = '';
         $FROM_EMAIL = '';
+        $ADMIN_EMAIL = 'parmarvikrantr@gmail.com';
         switch ($TYPE) {
             /** FRONT SIDE  **/
 
@@ -64,9 +65,17 @@ class MailHelper
                 $val_arr = Array($DB_INFO['NAME'], $DB_INFO['LINK']);
                 break;
 
+            /* ADMIN MAIL */
+
+            case "ADMIN_DELETE_ACCOUNT_USER": # For Forgot Password
+                $TO_EMAIL = $ADMIN_EMAIL;
+                $key_arr = Array("#NAME#", '#EMAIL#', '#LINK#');
+                $val_arr = Array($DB_INFO['NAME'], $DB_INFO['EMAIL'], $DB_INFO['LINK']);
+                break;
+
         }
 
-        #$TO_EMAIL = 'parmarvikrantr@gmail.com';
+        $TO_EMAIL = 'parmarvikrantr@gmail.com';
         #$maillanguage = $this->get_user_preffered_language($to_email);
         $MAIL_SUBJECT = $EMAIL_TEMPLATE->vEmailFormatSubject;//$res[0]['vSubject_'.$maillanguage];
         $MAIL_TITLE = $EMAIL_TEMPLATE->vEmailFormatTitle;//$res[0]['vSubject_'.$maillanguage];
