@@ -587,6 +587,16 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     }
 
+    public function getPermentAddress()
+    {
+        return $this->vAreaName.", ".$this->talukaName->vName.", ".$this->districtName->vName.", ".$this->cityName->vCityName.", ".$this->stateName->vStateName.", ".$this->countryName->vCountryName;
+    }
+
+    public function getCurrentAddress()
+    {
+        return $this->vAreaNameCA.", ".$this->talukaNameCA->vName.", ".$this->districtNameCA->vName.", ".$this->cityNameCA->vCityName.", ".$this->stateNameCA->vStateName.", ".$this->countryNameCA->vCountryName;
+    }
+
     public function generateUniqueRandomNumber($length = 9) {
         $PREFIX = CommonHelper::generatePrefix();
         $RANDOM_USER_NUMBER = $PREFIX.CommonHelper::generateNumericUniqueToken($length);
