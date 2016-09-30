@@ -75,7 +75,7 @@ class MailHelper
 
         }
 
-        $TO_EMAIL = 'parmarvikrantr@gmail.com';
+        #$TO_EMAIL = 'parmarvikrantr@gmail.com';
         #$maillanguage = $this->get_user_preffered_language($to_email);
         $MAIL_SUBJECT = $EMAIL_TEMPLATE->vEmailFormatSubject;//$res[0]['vSubject_'.$maillanguage];
         $MAIL_TITLE = $EMAIL_TEMPLATE->vEmailFormatTitle;//$res[0]['vSubject_'.$maillanguage];

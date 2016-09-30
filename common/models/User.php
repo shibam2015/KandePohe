@@ -42,6 +42,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const SCENARIO_REGISTER5 = 'register5';
     const SCENARIO_REGISTER6 = 'register6';
     const SCENARIO_REGISTER7 = 'register7';
+    const SCENARIO_REGISTER8 = 'register8';
+    const SCENARIO_REGISTER9 = 'register9';
     const SCENARIO_FP = 'Forgot Password';
     const SCENARIO_SFP = 'Set Forgot Password';
     const SCENARIO_FIRST_VERIFICATION = 'Firstverification';
@@ -49,6 +51,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const SCENARIO_EDIT_PERSONAL_INFO = 'Edit Personal Info';
     public $repeat_password;
     public $email_pin;
+    public $phone_pin;
     public $email_verification_msg;
     public $error_class;
     public $commentInOwnWordsAdmin;
@@ -183,7 +186,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public function rules()
     {
         return [
-            [['auth_key', 'password_hash', 'email', 'created_at', 'updated_at', 'Registration_Number', 'Mobile', 'First_Name', 'Last_Name', 'DOB', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'county_code', 'iDistrictID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId','Profile_created_for','repeat_password','Gender','toc','iHeightID','vSkinTone','vBodyType','vSmoke','vDrink','vDiet','iFatherStatusID','iMotherStatusID','nob','nos','iCountryCAId','iStateCAId','iDistrictCAID','iTalukaCAID','iCityCAId','vParentsResiding'], 'required'],
+            [['auth_key', 'password_hash', 'email', 'created_at', 'updated_at', 'Registration_Number', 'Mobile', 'First_Name', 'Last_Name', 'DOB', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'county_code', 'iDistrictID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'Profile_created_for', 'repeat_password', 'Gender', 'toc', 'iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vDiet', 'iFatherStatusID', 'iMotherStatusID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'iCityCAId', 'vParentsResiding', 'phone_pin', 'email_pin'], 'required'],
             [['status', 'created_at', 'updated_at', 'Age', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID'], 'integer'],
             [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus'], 'string'],
             [['DOB', 'Time_of_Birth','cnb','iSubCommunity_ID','vAreaName','iGotraID'], 'safe'],
@@ -196,7 +199,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             [['First_Name', 'Last_Name'], 'string', 'max' => 100],
             [['county_code'], 'string', 'max' => 5],
             [['First_Name', 'Last_Name'], 'string', 'max' => 100],
-            [['email_pin'], 'string', 'max' => 4, 'min' => 4],
+            [['email_pin', 'phone_pin'], 'string', 'max' => 4, 'min' => 4],
             // [['username'], 'unique'],
              [['email'], 'unique'],
             //[['captcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'secret' => '6Lc2xSgTAAAAAC37FZoNHA6KreseSCE5TrORJIbp'],
@@ -221,8 +224,11 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             self::SCENARIO_REGISTER3 => ['iHeightID', 'vSkinTone','vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet'],
             self::SCENARIO_REGISTER4 => ['completed_step','iFatherStatusID', 'iFatherWorkingAsID','iMotherStatusID', 'iMotherWorkingAsID','nob','nos','eSameAddress','iCountryCAId','iStateCAId','iDistrictCAID','iTalukaCAID','vAreaNameCA','iCityCAId','vNativePlaceCA','vParentsResiding','vFamilyAffluenceLevel','vFamilyType','vFamilyProperty','vDetailRelative'],
             self::SCENARIO_REGISTER5 => ['tYourSelf', 'vDisability','eStatusInOwnWord'],
-            self::SCENARIO_REGISTER6 => ['propic','pin_email_vaerification'],
-            self::SCENARIO_REGISTER7 => ['email_pin','pin_email_vaerification','eEmailVerifiedStatus','ePhoneVerifiedStatus'],
+            self::SCENARIO_REGISTER6 => ['propic', 'pin_email_vaerification', 'pin_phone_vaerification'],
+            self::SCENARIO_REGISTER7 => ['email_pin', 'pin_email_vaerification', 'eEmailVerifiedStatus'],
+            #self::SCENARIO_REGISTER7 => ['email_pin','phone_pin','pin_email_vaerification','eEmailVerifiedStatus','pin_phone_vaerification','ePhoneVerifiedStatus'],
+            self::SCENARIO_REGISTER8 => ['phone_pin', 'pin_phone_vaerification', 'ePhoneVerifiedStatus'],
+            self::SCENARIO_REGISTER9 => ['Mobile', 'county_code'],
             self::SCENARIO_FIRST_VERIFICATION => ['eFirstVerificationMailStatus'],
             self::SCENARIO_FP => ['email'],
             "default"=>array('id'),
@@ -310,6 +316,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             'propic' => 'Profile Pic',
             'vDisability' => 'Disability',
             'email_pin' => 'Email PIN',
+            'phone_pin' => 'Phone PIN',
             'iFatherStatusID' => 'Father Status',
             'iFatherWorkingAsID' => 'Father Working As',
             'iMotherStatusID' => 'Mother Status',

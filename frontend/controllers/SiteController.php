@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\components\SmsHelper;
 use common\models\otherlibraries\Compressimage;
 use Yii;
 use yii\base\InvalidParamException;
@@ -95,7 +96,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-         //die('hii');
+        //die('hii');
         if (!Yii::$app->user->isGuest) {
             //return $this->goHome();
             $this->redirect(['user/dashboard']);
@@ -105,12 +106,12 @@ class SiteController extends Controller
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
         {
-            
+
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
             Yii::$app->end();
         }
-            
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
             $this->redirect(['user/dashboard']);
@@ -298,7 +299,7 @@ class SiteController extends Controller
                 else {
                     $returnData['status'] = 0;
                 }
-                
+
             }
             else {
                 $returnData['status'] = 0;
@@ -324,8 +325,8 @@ class SiteController extends Controller
         } catch (InvalidParamException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
-        
-        
+
+
         if($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()){
             Yii::$app->session->setFlash('success', 'New password was saved.');
             return $this->goHome();
@@ -333,7 +334,7 @@ class SiteController extends Controller
         return $this->render('reset-password',[
             'model' => $model
         ]);
-        
+
     }
 
     public function actionActiveaccount($id){
@@ -515,26 +516,29 @@ class SiteController extends Controller
                 $model->scenario = User::SCENARIO_REGISTER6;
                 $target_dir = Yii::getAlias('@web').'/uploads/';
                 if(Yii::$app->request->post()){
-                    if($model->pin_email_vaerification ==''){}
-                    $PIN = (rand(1000,9999));
-                    $model->pin_email_vaerification = $PIN;
-                    $model->completed_step = $model->setCompletedStep('7');
-                    if($model->save($model)){
+                    if ($model->eEmailVerifiedStatus == 'No' && $model->pin_email_vaerification == '') {
+                        $PIN = (rand(1000, 9999));
+                        $model->pin_email_vaerification = $PIN;
                         $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
                         MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
-
+                    }
+                    if ($model->ePhoneVerifiedStatus == 'No' && $model->pin_phone_vaerification == 0) {
+                        $PIN_P = (rand(1000, 9999));
+                        $model->pin_phone_vaerification = $PIN_P;
+                        if ($model->Mobile != 0 && strlen($model->Mobile) == 10) {
+                            $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                        }
+                    }
+                    $model->completed_step = $model->setCompletedStep('7');
+                    if ($model->save($model)) {
                         $this->redirect(['site/verification']);
                     }
                 }
                 if($model->propic !='')
                     $model->propic = $target_dir.$model->propic;
-
-                #echo "<pre>";print_r($model);
                 return $this->render('register6',[
                     'model' => $model
                 ]);
-
-
             }else{
                 return $this->redirect(Yii::getAlias('@web'));
             }
@@ -596,7 +600,6 @@ class SiteController extends Controller
             #$id = base64_decode($id);
             if($model = User::findOne($id)){
                 $model->scenario = User::SCENARIO_REGISTER7;
-
                 if($model->load(Yii::$app->request->post())){
                     #echo "<pre>";print_r(Yii::$app->request->post());echo "</pre>";
                     $USERARRAY = Yii::$app->request->post('User');
@@ -606,7 +609,12 @@ class SiteController extends Controller
                             $model->eEmailVerifiedStatus = 'Yes';
                             $model->completed_step = $model->setCompletedStep('9');
                             $model->save($model);
-                            $this->redirect(['user/dashboard','id'=>base64_encode($id)]);
+                            #$this->redirect(['user/dashboard','id'=>base64_encode($id)]);
+                            $model->email_verification_msg = 'Incorrect PIN. Please Enter Valid PIN.';
+                            $model->error_class = 'SUCCESS';
+                            return $this->render('register7', [
+                                'model' => $model
+                            ]);
                         }else{
                             $model->email_verification_msg = 'Incorrect PIN. Please Enter Valid PIN.';
                             $model->error_class = 'error';
@@ -616,13 +624,12 @@ class SiteController extends Controller
                             //Oops! Please ensure all fields are valid
                         }
                     }
-
                 }
-
-                if($msg !='')
-                {$model->email_verification_msg = $msg;
+                if($msg !='') {
+                    $model->email_verification_msg = $msg;
                     $model->error_class = 'success';
                 }
+                $model->Mobile = ($model->county_code != '') ? "+" . $model->county_code . " " . $model->Mobile : $model->Mobile;
                 return $this->render('register7',[
                     'model' => $model
                 ]);
@@ -636,35 +643,27 @@ class SiteController extends Controller
 
 
     }
-    public function actionResendemailpin($id='')
+
+    public function actionResendEmailPin($id = '')
     {
+        $STATUS = $MESSAGE = '';
         if (!Yii::$app->user->isGuest) {
-            #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
-            #$id = base64_decode($id);
             if($model = User::findOne($id)){
-                #if($model->eFirstVerificationMailStatus == 'YES' ){
-                    $model->scenario = User::SCENARIO_REGISTER6;
-
-                    $target_dir = Yii::getAlias('@web').'/uploads/';
-                    #if(Yii::$app->request->post()){
-                    $PIN = (rand(1000,9999));
-                    $model->pin_email_vaerification = $PIN;
-                    if($model->save($model)){
-                        $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
-                        MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
-
-
-                        $this->redirect(['site/verification','msg'=>'New PIN has been sent on your Email.']);
-
+                $model->scenario = User::SCENARIO_REGISTER6;
+                $PIN = (rand(1000, 9999));
+                $model->pin_email_vaerification = $PIN;
+                if ($model->save($model)) {
+                    $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
+                    $MAIL_STATUS = MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
+                    if ($MAIL_STATUS) {
+                        $STATUS = "SUCCESS";
+                        $MESSAGE = "We have re-sent a 4 digit PIN number on your EMAIL " . $model->email . ".";
+                    } else {
+                        $STATUS = "ERROR";
+                        $MESSAGE = "Something went wrong. Please try again !";
                     }
-                    #}
-                    return $this->render('register7',[
-                        'model' => $model
-                    ]);
-                /*}else{
-                    return $this->redirect(Yii::getAlias('@web'));
-                }*/
+                }
 
             }else{
                 return $this->redirect(Yii::getAlias('@web'));
@@ -672,7 +671,121 @@ class SiteController extends Controller
         }else{
             return $this->redirect(Yii::getAlias('@web'));
         }
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE);
+        return json_encode($return);
 
     }
-    
+
+    public function actionResendPhonePin($id = '')
+    {
+        $STATUS = $MESSAGE = '';
+        if (!Yii::$app->user->isGuest) {
+            $id = Yii::$app->user->identity->id;
+            if ($model = User::findOne($id)) {
+                $model->scenario = User::SCENARIO_REGISTER6;
+                $PIN_P = (rand(1000, 9999));
+                $model->pin_phone_vaerification = $PIN_P;
+                if ($model->save($model)) {
+                    $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                    #$SMS_FLAG = 1;
+                    if ($SMS_FLAG) {
+                        $STATUS = "SUCCESS";
+                        $MESSAGE = "We have re-sent a 4 digit PIN number on your mobile number (" . $model->Mobile . ") via SMS/Text Message.";
+
+                    } else {
+                        $STATUS = "ERROR";
+                        $MESSAGE = "Something went wrong. Please try again !";
+                    }
+                }
+            } else {
+                return $this->redirect(Yii::getAlias('@web'));
+            }
+        } else {
+            return $this->redirect(Yii::getAlias('@web'));
+        }
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE);
+        #Yii::$app->response->format = Response::FORMAT_JSON;return $return;
+        return json_encode($return);
+    }
+
+    public function actionVerificationPhonePin()
+    {
+        $STATUS = $MESSAGE = '';
+        if (!Yii::$app->user->isGuest) {
+            $id = Yii::$app->user->identity->id;
+            if ($model = User::findOne($id)) {
+                #$model->scenario = User::SCENARIO_REGISTER7;
+                #$USERARRAY = Yii::$app->request->post('User');
+                #$PIN = $USERARRAY['PHONE_PIN'];
+                $PIN = $_REQUEST['PHONE_PIN'];
+                if ($PIN != '') {
+                    if ($model->pin_phone_vaerification == $PIN) {
+                        $model->ePhoneVerifiedStatus = 'Yes';
+                        $model->completed_step = $model->setCompletedStep('8');
+                        $model->save($model);
+                        $MESSAGE = 'Mobile Number Verified Successfully !';
+                        $STATUS = 'SUCCESS';
+                    } else {
+                        $MESSAGE = 'Incorrect PIN. Please Enter Valid PIN.';
+                        $STATUS = 'ERROR';
+                    }
+                } else {
+                    $MESSAGE = 'Please Enter Mobile PIN.';
+                    $STATUS = 'ERROR';
+                }
+                $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE);
+                # echo "<pre>"; print_r($return);exit;
+                return json_encode($return);
+            } else {
+                return $this->redirect(Yii::getAlias('@web'));
+            }
+        } else {
+            return $this->redirect(Yii::getAlias('@web'));
+        }
+
+
+    }
+
+    public function actionVerificationEmailPin()
+    {
+        $STATUS = $MESSAGE = '';
+        if (!Yii::$app->user->isGuest) {
+            $id = Yii::$app->user->identity->id;
+            if ($model = User::findOne($id)) {
+                #$model->scenario = User::SCENARIO_REGISTER7;
+                #$USERARRAY = Yii::$app->request->post('User');
+                #$PIN = $USERARRAY['PHONE_PIN'];
+                $PIN = $_REQUEST['EMAIL_PIN'];
+                if ($PIN != '') {
+                    if ($model->pin_email_vaerification == $PIN) {
+                        $model->eEmailVerifiedStatus = 'Yes';
+                        $model->completed_step = $model->setCompletedStep('9');
+                        $model->save($model);
+                        $MESSAGE = 'Email Verified Successfully !';
+                        $STATUS = 'SUCCESS';
+                    } else {
+                        $MESSAGE = 'Incorrect PIN. Please Enter Valid PIN.';
+                        $STATUS = 'ERROR';
+                    }
+                } else {
+                    $MESSAGE = 'Please Enter PIN.';
+                    $STATUS = 'ERROR';
+                }
+                $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE);
+                return json_encode($return);
+            } else {
+                return $this->redirect(Yii::getAlias('@web'));
+            }
+        } else {
+            return $this->redirect(Yii::getAlias('@web'));
+        }
+
+
+    }
+
+    public function actionChangeMobileNumber()
+    {
+
+
+    }
 }
