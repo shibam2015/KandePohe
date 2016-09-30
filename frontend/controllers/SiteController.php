@@ -600,6 +600,8 @@ class SiteController extends Controller
             #$id = base64_decode($id);
             if($model = User::findOne($id)){
                 $model->scenario = User::SCENARIO_REGISTER7;
+                $model1 = User::findOne($id);
+                $model1->scenario = User::SCENARIO_REGISTER8;
                 if($model->load(Yii::$app->request->post())){
                     #echo "<pre>";print_r(Yii::$app->request->post());echo "</pre>";
                     $USERARRAY = Yii::$app->request->post('User');
@@ -629,9 +631,10 @@ class SiteController extends Controller
                     $model->email_verification_msg = $msg;
                     $model->error_class = 'success';
                 }
-                $model->Mobile = ($model->county_code != '') ? "+" . $model->county_code . " " . $model->Mobile : $model->Mobile;
+                
                 return $this->render('register7',[
-                    'model' => $model
+                    'model' => $model,
+                    'model1' => $model1
                 ]);
 
             }else{
@@ -797,7 +800,22 @@ class SiteController extends Controller
 
     public function actionChangeMobileNumber()
     {
-
-
+        if (!Yii::$app->user->isGuest) {
+            $id = Yii::$app->user->identity->id;
+            if ($model = User::findOne($id)) {
+                $model->scenario = User::SCENARIO_REGISTER9;
+                    if($model->load(Yii::$app->request->post())){
+                        if($model->save()){
+                            $this->redirect(['site/verification']);
+                        }
+                    }   
+            }
+            else {
+                return $this->redirect(Yii::getAlias('@web'));
+            }
+        }
+        else {
+            return $this->redirect(Yii::getAlias('@web'));
+        }
     }
 }

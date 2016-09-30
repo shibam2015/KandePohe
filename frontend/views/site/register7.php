@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use common\models\User;
 #use frontend\components\CommonHelper;
 use yii\helpers\ArrayHelper;
 use common\components\CommonHelper;
@@ -77,7 +78,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 <div class="col-sm-4 col-xs-6">
                                     <div class="form-cont">
                                         <div class="form-cont">
-                                            <?= $form->field($model, 'phone_pin', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Enter Mobile PIN number</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control'], ['maxlength' => 4]) ?>
+                                            <?= $form->field($model1, 'phone_pin', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Enter Mobile PIN number</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control'], ['maxlength' => 4]) ?>
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +93,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 <span class="phone_status"></span>
                                 <p>Didn't get PIN? <a href="javascript:void(0)" class="phone_verification"
                                                       data-name="phone"> Resend PIN </a>to my mobile number
-                                    <strong><?= $model->Mobile ?></strong>
+                                    <strong><?= $model->DisplayMobile ?></strong>
                                     <a href="javascript:void(0)"
                                        data-target="#modelmobilenumber"
                                        data-toggle="modal" class="btn btn-default btn-xs"><span
@@ -222,30 +223,31 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
             </div>
             <!-- Modal Body -->
             <?php
+                $moblie_model = User::findOne($model->id);
+                $moblie_model->scenario = User::SCENARIO_REGISTER9;
             $form = ActiveForm::begin([
                 'id' => 'form-register9',
                 #'action' => 'javascript:void(0)',
-                #'action' => ['/site/change-mobile-number'],
-                'validateOnChange' => false,
+                'action' => ['/site/change-mobile-number'],
+                'validateOnChange' => true,
 
             ]);
             ?>
             <div class="modal-body ">
                 <div class="row">
                     <div class="form-cont col-xs-6">
-                        <?= $form->field($model, 'county_code')->dropDownList(
+                        <?= $form->field($moblie_model, 'county_code')->dropDownList(
                             ['+91' => '+91'],
                             ['class' => 'cs-select cs-skin-border', 'prompt' => 'Country Code']
                         )->label(false); ?>
                     </div>
                     <div class="form-cont col-xs-6">
-                        <?= $form->field($model, 'Mobile', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Mobile No#</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control']) ?>
+                        <?= $form->field($moblie_model, 'Mobile', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Mobile No#</span> </label></span>{error}'])->input('number', ['class' => 'input__field input__field--akira form-control']) ?>
                     </div>
                 </div>
                 <p></p><br>
                 <p>
-                    <button class="btn btn-primary delete_account">Yes</button>
-                    <?= Html::Button('Sign up free', ['class' => 'btn btn-primary mrg-tp-10', 'name' => 'signup-button', 'id' => 'btnSignup']) ?>
+                    <button class="btn btn-primary" id="change_mobile" type="submit">Yes</button>
                     <button class="btn btn-primary" data-dismiss="modal">cancel</button>
                 </p>
             </div>

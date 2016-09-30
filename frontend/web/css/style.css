@@ -2089,7 +2089,7 @@ dl:before, dl:after {
 	float: left;
 	width: 25%;
 	text-align: left;
-	/*text-overflow: ellipsis;*/
+	text-overflow: ellipsis;
 	font-size: 13px;
 	color: #949494;
 }

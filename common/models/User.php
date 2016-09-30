@@ -614,6 +614,10 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     }
 
+    public function getDisplayMobile(){
+        return ($this->county_code != '') ? $this->county_code . " " . $this->Mobile : $this->Mobile;
+    }
+
     public function setCompletedStep($step) {
         $returnVal = $this->completed_step;
         if($returnVal==""){
