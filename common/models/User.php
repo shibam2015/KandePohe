@@ -629,3 +629,4 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     }
 
 }
+
