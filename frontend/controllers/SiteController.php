@@ -722,9 +722,18 @@ class SiteController extends Controller
                     if ($model->pin_phone_vaerification == $PIN) {
                         $model->ePhoneVerifiedStatus = 'Yes';
                         $model->completed_step = $model->setCompletedStep('8');
-                        $model->save($model);
-                        $MESSAGE = 'Mobile Number Verified Successfully !';
-                        $STATUS = 'SUCCESS';
+                        if ($model->save()) {
+                            $MESSAGE = 'Mobile Number Verified Successfully !';
+                            $STATUS = 'SUCCESS';
+                            if ($model->eEmailVerifiedStatus == 'Yes') {
+                                #$this->redirect(['user/dashboard','type'=> base64_encode("VERIFICATION-DONE")]);
+                                #exit;
+                            }
+                        } else {
+                            $MESSAGE = 'Something went wrong. Please try again !';
+                            $STATUS = 'ERROR';
+                        }
+
                     } else {
                         $MESSAGE = 'Incorrect PIN. Please Enter Valid PIN.';
                         $STATUS = 'ERROR';
@@ -763,6 +772,9 @@ class SiteController extends Controller
                         $model->save($model);
                         $MESSAGE = 'Email Verified Successfully !';
                         $STATUS = 'SUCCESS';
+                        if ($model->ePhoneVerifiedStatus == 'Yes') {
+                            $this->redirect(['user/dashboard', 'type' => base64_encode("VERIFICATION-DONE")]);
+                        }
                     } else {
                         $MESSAGE = 'Incorrect PIN. Please Enter Valid PIN.';
                         $STATUS = 'ERROR';

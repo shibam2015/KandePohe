@@ -340,7 +340,7 @@ $(document).ready(function()
                             var DataObject = JSON.parse(data);
                             if (DataObject.STATUS == 'SUCCESS') {
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
-                            } else {
+                            } else if (DataObject.STATUS == 'ERROR') {
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
                             }
                             setTimeout(function(){ 

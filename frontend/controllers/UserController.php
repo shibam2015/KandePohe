@@ -128,7 +128,7 @@ class UserController extends Controller
         );
     }
 
-    public function actionDashboard()
+    public function actionDashboard($type = '')
     {
         //$id = base64_decode(getUserUploadFolder$id);
         if (!Yii::$app->user->isGuest) {
@@ -136,8 +136,14 @@ class UserController extends Controller
             $id = Yii::$app->user->identity->id;
             if($model = User::findOne($id)){
                 $model->scenario = User::SCENARIO_REGISTER6;
+                $VER_ARRAY = array();
+                if ($type != '' && base64_decode($type) == "VERIFICATION-DONE") {
+                    $VER_ARRAY = array("STATUS" => "SUCCESS", "MESSAGE" => 'Verification is successful.');
+                    #CommonHelper::pr($VER_ARRAY);
+                }
                 return $this->render('dashboard',[
-                    'model' => $model
+                    'model' => $model,
+                    'VER_ARRAY' => $VER_ARRAY
                 ]);
 
             }else{
