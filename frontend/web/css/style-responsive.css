@@ -51,10 +51,11 @@ div.cs-skin-border {
 @media only screen and (min-width: 768px) and (max-width: 991px) { 
 .dl-horizontal dt {
     font-size: 12px;
-    width: 147px;
+    width: 25%;
 }
 .dl-horizontal dd {
     font-size: 12px;
+    width: 70%;
 }
 .over-header{ position:static}
 .header {
