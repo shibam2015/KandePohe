@@ -404,6 +404,7 @@ class UserController extends Controller
                 $model->county_code = Yii::$app->request->post('User')['county_code'];
                 $model->Mobile = Yii::$app->request->post('User')['Mobile'];
                 $model->Gender = Yii::$app->request->post('User')['Gender'];
+                $model->mother_tongue = Yii::$app->request->post('User')['mother_tongue'];
                 if($model->validate()){
                     $model->save();
                     $show = false;
@@ -490,7 +491,7 @@ class UserController extends Controller
     {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
-        $model->scenario = User::SCENARIO_REGISTER3;
+        $model->scenario = User::SCENARIO_EDIT_LIFESTYLE;
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
@@ -502,6 +503,7 @@ class UserController extends Controller
                 $model->vDrink = Yii::$app->request->post('User')['vDrink'];
                 $model->vSpectaclesLens = Yii::$app->request->post('User')['vSpectaclesLens'];
                 $model->vDiet = Yii::$app->request->post('User')['vDiet'];
+                $model->weight = Yii::$app->request->post('User')['weight'];
                 if($model->validate()){
                     $model->completed_step = $model->setCompletedStep('4');
                     $model->save();

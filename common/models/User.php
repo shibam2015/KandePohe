@@ -49,6 +49,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const SCENARIO_FIRST_VERIFICATION = 'Firstverification';
     const SCENARIO_EDIT_MY_INFO = 'Edit My Info';
     const SCENARIO_EDIT_PERSONAL_INFO = 'Edit Personal Info';
+    const SCENARIO_EDIT_LIFESTYLE = 'Edit Lyfestyle and Appearance';
     public $repeat_password;
     public $email_pin;
     public $phone_pin;
@@ -186,12 +187,12 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public function rules()
     {
         return [
-            [['auth_key', 'password_hash', 'email', 'created_at', 'updated_at', 'Registration_Number', 'Mobile', 'First_Name', 'Last_Name', 'DOB', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'county_code', 'iDistrictID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'Profile_created_for', 'repeat_password', 'Gender', 'toc', 'iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vDiet', 'iFatherStatusID', 'iMotherStatusID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'iCityCAId', 'vParentsResiding', 'phone_pin', 'email_pin'], 'required'],
+            [['auth_key', 'password_hash', 'email', 'created_at', 'updated_at', 'Registration_Number', 'Mobile', 'First_Name', 'Last_Name', 'DOB', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'county_code', 'iDistrictID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId','Profile_created_for','repeat_password','Gender','toc','iHeightID','vSkinTone','vBodyType','vSmoke','vDrink','vDiet','iFatherStatusID','iMotherStatusID','nob','nos','iCountryCAId','iStateCAId','iDistrictCAID','iTalukaCAID','iCityCAId','vParentsResiding','mother_tongue','weight', 'phone_pin', 'email_pin'], 'required'],
             [['status', 'created_at', 'updated_at', 'Age', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID'], 'integer'],
             [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus'], 'string'],
             [['DOB', 'Time_of_Birth','cnb','iSubCommunity_ID','vAreaName','iGotraID'], 'safe'],
             [['DOB'],'checkDobYear'],
-            [['noc','nob','nos'],'integer','integerOnly'=>true,'min' => 0],
+            [['noc','nob','nos','weight'],'integer','integerOnly'=>true,'min' => 0],
             [['auth_key'], 'string', 'max' => 32],
             [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['Registration_Number', 'Birth_Place'], 'string', 'max' => 250],
@@ -222,6 +223,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             self::SCENARIO_REGISTER1 => ['iReligion_ID','First_Name', 'Last_Name','iCommunity_ID', 'iSubCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'noc', 'vAreaName','cnb'],
             self::SCENARIO_REGISTER2 => ['First_Name', 'Last_Name','iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID'],
             self::SCENARIO_REGISTER3 => ['iHeightID', 'vSkinTone','vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet'],
+            self::SCENARIO_EDIT_LIFESTYLE => ['iHeightID', 'vSkinTone','vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet','weight'],
             self::SCENARIO_REGISTER4 => ['completed_step','iFatherStatusID', 'iFatherWorkingAsID','iMotherStatusID', 'iMotherWorkingAsID','nob','nos','eSameAddress','iCountryCAId','iStateCAId','iDistrictCAID','iTalukaCAID','vAreaNameCA','iCityCAId','vNativePlaceCA','vParentsResiding','vFamilyAffluenceLevel','vFamilyType','vFamilyProperty','vDetailRelative'],
             self::SCENARIO_REGISTER5 => ['tYourSelf', 'vDisability','eStatusInOwnWord'],
             self::SCENARIO_REGISTER6 => ['propic', 'pin_email_vaerification', 'pin_phone_vaerification'],
@@ -235,7 +237,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             self::SCENARIO_FP => ['email','password_hash','password_reset_token'],
             self::SCENARIO_SFP => ['email','password_reset_token'],
             self::SCENARIO_EDIT_MY_INFO => ['tYourSelf'],
-            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for','Mobile','county_code','mother_tongue','Marital_Status','vDisability'],
+            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for','Mobile','county_code','mother_tongue','Marital_Status'],
         ];
 
     }
@@ -341,7 +343,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             'ePhoneVerifiedStatus' => 'Phone Verified Status',
             'eStatusInOwnWord' => 'Status In Own Word',
             'eStatusPhotoModify' => 'Status Of Profile Pic',
-
+            'weight' => 'Weight(in KG)'
         ];
     }
 
@@ -565,6 +567,11 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $this->hasOne(Cities::className(), ['iCityId' => 'iCityId']);
     }
 
+    public function getMotherTongue()
+    {
+        return $this->hasOne(MotherTongue::className(), ['ID' => 'mother_tongue']);
+    }
+
     function getUserInfo(){
         /*$query = new Query;
         $query	->select([
@@ -585,6 +592,16 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         echo "<pre>"; print_r($query);
         exit;
 
+    }
+
+    public function getPermentAddress()
+    {
+        return $this->vAreaName.", ".$this->talukaName->vName.", ".$this->districtName->vName.", ".$this->cityName->vCityName.", ".$this->stateName->vStateName.", ".$this->countryName->vCountryName;
+    }
+
+    public function getCurrentAddress()
+    {
+        return $this->vAreaNameCA.", ".$this->talukaNameCA->vName.", ".$this->districtNameCA->vName.", ".$this->cityNameCA->vCityName.", ".$this->stateNameCA->vStateName.", ".$this->countryNameCA->vCountryName;
     }
 
     public function generateUniqueRandomNumber($length = 9) {

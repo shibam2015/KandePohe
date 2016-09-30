@@ -3,7 +3,9 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
-
+?>
+<div class="div_education">
+<?php
 if ($show) {
     $form = ActiveForm::begin([
         'id' => 'form',
@@ -59,7 +61,7 @@ if ($show) {
     <?php ActiveForm::end();
 } else {
     ?>
-    <div class="div_education">
+    
         <dl class="dl-horizontal">
             <dt>Education Level</dt>
             <dd><?= $model->educationLevelName->vEducationLevelName; ?>
@@ -76,6 +78,8 @@ if ($show) {
             <dt>Annual Income</dt>
             <dd><?= $model->annualIncome->vAnnualIncome; ?></dd>
         </dl>
-    </div>
+    
     <?php
 }
+?>
+</div>

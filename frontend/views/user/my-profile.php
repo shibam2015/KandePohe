@@ -414,7 +414,23 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 
 
                                     <div role="tabpanel" class="tab-pane" id="tab2">Tab 2</div>
-                                    <div role="tabpanel" class="tab-pane" id="tab3">Tab 3</div>
+                                    <div role="tabpanel" class="tab-pane" id="tab3">
+                                    <div class="fb-profile-text padd-xs padd-tp-0">
+                                        <h1><span class="heading-icons icon9"></span> Contact Detail</h1>
+                                    </div>
+                                        <dl class="dl-horizontal">
+                                            <dt>Email</dt>
+                                            <dd><?= $model->email; ?>
+                                            <dd>
+                                            <dt>Phone No.</dt>
+                                            <dd><?= $model->county_code." ".$model->Mobile; ?></dd>
+                                            <dt>Perement Address</dt>
+                                            <dd><?= $model->permentAddress; ?><dd>
+                                            <dt>Current Address</dt>
+                                            <dd><?= $model->currentAddress; ?></dd>
+                                            
+                                        </dl>
+                                    </div>
                                 </div>
                             </div>
                         </div>

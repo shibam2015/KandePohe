@@ -3,7 +3,9 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
-
+?>
+<div class="div_basic_info">
+<?php
 if ($show) {
     $form = ActiveForm::begin([
         'id' => 'form-register1',
@@ -130,7 +132,7 @@ if ($show) {
     <?php ActiveForm::end();
 } else {
     ?>
-    <div class="div_basic_info">
+    
         <dl class="dl-horizontal">
             <dt>Religion</dt>
             <dd><?= $model->religionName->vName; ?>
@@ -158,7 +160,8 @@ if ($show) {
             <dt>Area Name</dt>
             <dd><?= $model->vAreaName ?></dd>
         </dl>
-    </div>
+    
     <?php
 }
 ?>
+</div>

@@ -581,6 +581,11 @@ class CommonHelper {
         return \common\models\MasterFmStatus::find()->all();
     }
 
+    public function getMotherTongue()
+    {
+        return \common\models\MotherTongue::find()->all();
+    }
+
     function encryptor($action, $string)
     {
         $output = false;
@@ -628,6 +633,14 @@ class CommonHelper {
 
         #echo $img;exit;
         return $img;
+    }
+    
+    function getAge($then) {
+        $then_ts = strtotime($then);
+        $then_year = date('Y', $then_ts);
+        $age = date('Y') - $then_year;
+        if(strtotime('+' . $age . ' years', $then_ts) > time()) $age--;
+        return $age;
     }
 }
 ?>

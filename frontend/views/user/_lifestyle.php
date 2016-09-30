@@ -14,6 +14,7 @@ use yii\helpers\ArrayHelper;
             content: "";
         }
     </style>
+<div class="div_lifestyle">
 <?php
 if ($show) {
     $form = ActiveForm::begin([
@@ -111,6 +112,7 @@ if ($show) {
         ['prompt' => 'Diet']
     ); ?>
 
+    <?= $form->field($model, 'weight')->input('number') ?>
     <div class="row">
         <div class="">
             <input type="hidden" name="save" value="1">
@@ -121,7 +123,7 @@ if ($show) {
     <?php ActiveForm::end();
 } else {
     ?>
-    <div class="div_lifestyle">
+   
         <dl class="dl-horizontal">
             <dt>Height</dt>
             <dd><?= $model->height->vName ?>
@@ -139,7 +141,11 @@ if ($show) {
             <dd><?= $model->vSpectaclesLens; ?></dd>
             <dt>Diet</dt>
             <dd><?= $model->dietName->vName; ?></dd>
+            <dt>Weight</dt>
+            <dd><?= $model->weight. " KG"; ?></dd>
         </dl>
-    </div>
+  
     <?php
 }
+?>
+  </div>
