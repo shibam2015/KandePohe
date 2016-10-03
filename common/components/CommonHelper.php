@@ -459,6 +459,12 @@ class CommonHelper {
 
     }
 
+    public static function getSiteUrlLogo()
+    {
+        $site_url_logo = "http://" . $_SERVER["HTTP_HOST"] . Yii::getAlias('@web') . "/frontend/web/images/logo.png";
+        return $site_url_logo;
+    }
+
     public function getReligion()
     {
         $religion = \common\models\Religion::find()->all();
@@ -634,7 +640,7 @@ class CommonHelper {
         #echo $img;exit;
         return $img;
     }
-    
+
     function getAge($then) {
         $then_ts = strtotime($then);
         $then_year = date('Y', $then_ts);

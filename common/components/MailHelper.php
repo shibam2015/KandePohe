@@ -76,19 +76,16 @@ class MailHelper
         }
 
         #$TO_EMAIL = 'parmarvikrantr@gmail.com';
-        #$maillanguage = $this->get_user_preffered_language($to_email);
-        $MAIL_SUBJECT = $EMAIL_TEMPLATE->vEmailFormatSubject;//$res[0]['vSubject_'.$maillanguage];
-        $MAIL_TITLE = $EMAIL_TEMPLATE->vEmailFormatTitle;//$res[0]['vSubject_'.$maillanguage];
+        $MAIL_SUBJECT = $EMAIL_TEMPLATE->vEmailFormatSubject;
+        $MAIL_TITLE = $EMAIL_TEMPLATE->vEmailFormatTitle;
         $MAIL_SUBJECT = '=?UTF-8?B?' . base64_encode($MAIL_SUBJECT) . '?=';
-        $MAIL_MESSAGE = $EMAIL_TEMPLATE->tEmailFormatDesc;//$res[0]['vBody_'.$maillanguage];
+        $MAIL_MESSAGE = $EMAIL_TEMPLATE->tEmailFormatDesc;
         $MAIL_MESSAGE = str_replace($key_arr, $val_arr, $MAIL_MESSAGE);
         $MAIL_MESSAGE = MailHelper::mailFormat($MAIL_MESSAGE, $MAIL_TITLE);
         #echo " <br> TMESSAGE <br>".$MAIL_MESSAGE;
         $response = Yii::$app->mailer->compose()
             ->setTo($TO_EMAIL)
-            #->setFrom('kandepohetest@gmail.com')
             ->setFrom(['kandepohetest@gmail.com' => Yii::$app->name])
-            #->setFrom('no-replay@vcodertechnolab.com')
             ->setSubject($MAIL_SUBJECT)
             ->setHtmlBody($MAIL_MESSAGE)
             ->send();
@@ -100,7 +97,7 @@ class MailHelper
 
     public static function mailFormat($BODY_CONTENT, $TITLE)
     {
-        #echo "Asdas ";exit;
+        $LOGO = CommonHelper::getSiteUrlLogo();
         $message = '';
         $message .= '
                 <html>
@@ -120,7 +117,7 @@ class MailHelper
                                                 <tbody>
                                                     <tr>
                                                         <td style="text-align: center; padding: 15px 0; font-family: sans-serif; font-weight: bold; color: #000000; font-size: 30px;">
-                                                        <img src="' . CommonHelper::getLogo() . '" width="157" height="61"
+                                                        <img src="' . $LOGO . '" width="157" height="61"
                                               alt="logo">
                                                         </td>
                                                     </tr>
