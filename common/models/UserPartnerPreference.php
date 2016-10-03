@@ -74,8 +74,7 @@ class UserPartnerPreference extends \common\models\base\baseUserPartnerPreferenc
         ];
     }
 
-    public static function findByUserId($userid)
-    {
+    public static function findByUserId($userid) {
 
         return static::findOne(['iUser_id' => $userid]);
     }

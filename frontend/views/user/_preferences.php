@@ -54,6 +54,32 @@ if ($show) {
             ['prompt' => 'Age To']
         ); ?>
 
+        <?= $form->field($PartnersMaritalStatus, 'iMarital_Status_ID')->dropDownList(
+            ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
+            ['prompt' => 'Maritial Status']
+        ); ?>
+        <?= $form->field($PartnersGotra, 'iGotra_ID')->dropDownList(
+            ArrayHelper::map(CommonHelper::getGotra(), 'iGotraID', 'vName'),
+            ['prompt' => 'Gotra']
+        ); ?>
+        <?= $form->field($PartnersFathersStatus, 'iFather_Status_ID')->dropDownList(
+            ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
+            ['prompt' => 'Father Status']
+        ); ?>
+        <?= $form->field($PartnersMothersStatus, 'iMother_Status_ID')->dropDownList(
+            ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
+            ['prompt' => 'Mother Status']
+        ); ?>
+        <?= $form->field($PartnersEducationalLevel, 'iEducation_Level_ID')->dropDownList(
+            ArrayHelper::map(CommonHelper::getEducationLevel(), 'iEducationLevelID', 'vEducationLevelName'),
+            ['prompt' => 'Education Level']
+        ); ?>
+
+        <?= $form->field($PartnersEducationField, 'iEducation_Field_ID')->dropDownList(
+            ArrayHelper::map(CommonHelper::getEducationField(), 'iEducationFieldID', 'vEducationFieldName'),
+            ['prompt' => 'Education Field']
+        ); ?>
+
     <div class="row">
         <div class="">
             <input type="hidden" name="save" value="1">
@@ -67,11 +93,23 @@ if ($show) {
    
         <dl class="dl-horizontal">
             <dt>Religion</dt>
-            <dd><?= $PartenersReligion->religionName->vName ?><dd>
+            <dd><?= CommonHelper::setInputVal($PartenersReligion->religionName->vName,'text') ?><dd>
             <dt>Age From</dt>
-            <dd><?= $UPP->age_from ?><dd>
+            <dd><?= CommonHelper::setInputVal($UPP->age_from,'age') ?><dd>
             <dt>Age To</dt>
-            <dd><?= $UPP->age_to ?><dd>
+            <dd><?= CommonHelper::setInputVal($UPP->age_to,'age') ?><dd>
+            <dt>Marital Status</dt>
+            <dd><?= CommonHelper::setInputVal($PartnersMaritalStatus->maritalStatusName->vName,'text') ?><dd>
+            <dt>Gotra</dt>
+            <dd><?= CommonHelper::setInputVal($PartnersGotra->gotraName->vName,'text') ?><dd>
+            <dt>Father Status</dt>
+            <dd><?= CommonHelper::setInputVal($PartnersFathersStatus->fatherStatus->vName,'text') ?><dd>
+            <dt>Mother Status</dt>
+            <dd><?= CommonHelper::setInputVal($PartnersMothersStatus->motherStatus->vName,'text') ?><dd>
+            <dt>Education Level</dt>
+            <dd><?= CommonHelper::setInputVal($PartnersEducationalLevel->educationLevelName->vEducationLevelName,'text') ?><dd>
+            <dt>Education Field</dt>
+            <dd><?= CommonHelper::setInputVal($PartnersEducationField->educationFieldName->vEducationFieldName,'text') ?><dd>
         </dl>
   
     <?php

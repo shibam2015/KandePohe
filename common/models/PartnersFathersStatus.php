@@ -29,8 +29,8 @@ class PartnersFathersStatus extends \common\models\base\basePartnersFathersStatu
     public function rules()
     {
         return [
-            [['iUser_ID', 'iFather_Status_ID'], 'required'],
-            [['iUser_ID', 'iFather_Status_ID'], 'integer'],
+            //[['iUser_ID', 'iFather_Status_ID'], 'required'],
+            //[['iUser_ID', 'iFather_Status_ID'], 'integer'],
             [['dtCreated', 'dtModified'], 'safe'],
         ];
     }
@@ -43,9 +43,19 @@ class PartnersFathersStatus extends \common\models\base\basePartnersFathersStatu
         return [
             'iPartners_Fathers_ID' => 'I Partners  Fathers  ID',
             'iUser_ID' => 'I User  ID',
-            'iFather_Status_ID' => 'I Father  Status  ID',
+            'iFather_Status_ID' => 'Father Status',
             'dtCreated' => 'Dt Created',
             'dtModified' => 'Dt Modified',
         ];
+    }
+
+    public static function findByUserId($userid) {
+
+        return static::findOne(['iUser_id' => $userid]);
+    }
+
+    public function getFatherStatus() {
+
+        return $this->hasOne(MasterFmStatus ::className(), ['iFMStatusID' => 'iFather_Status_ID']);
     }
 }
