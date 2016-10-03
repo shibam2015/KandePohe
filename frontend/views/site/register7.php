@@ -308,6 +308,9 @@ $(document).ready(function()
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
                                 $('#user-phone_pin').val('');
                                 $('.input--akira').removeClass('input--filled');
+                                if(DataObject.REDIRECT){
+                                    //$(location).attr('href', 'user/dashboard')
+                                }
                             } else {
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
                             }
@@ -328,7 +331,7 @@ $(document).ready(function()
 $this->registerJs("
 $(document).ready(function()
 {  
-    $('.email_verification').click(function(){ 
+    $('.email_verification').click(function(){
             Pace.restart();
             var formDataPhoto = new FormData();
             $.ajax({
@@ -342,6 +345,7 @@ $(document).ready(function()
                             var DataObject = JSON.parse(data);
                             if (DataObject.STATUS == 'SUCCESS') {
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                
                             } else if (DataObject.STATUS == 'ERROR') {
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
                             }
@@ -373,7 +377,11 @@ $(document).ready(function()
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
                                 $('#user-email_pin').val('');
                                 $('.input--akira').removeClass('input--filled');
-                            } else {
+                                                                
+                                /*if(DataObject.REDIRECT){
+                                    $(location).attr('href', 'user/dashboard')
+                                }*/
+                            } else if (DataObject.STATUS == 'ERROR') {
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
                             }
                             setTimeout(function(){ 

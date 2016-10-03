@@ -714,6 +714,7 @@ class SiteController extends Controller
     public function actionVerificationPhonePin()
     {
         $STATUS = $MESSAGE = '';
+        $RED = 0;
         if (!Yii::$app->user->isGuest) {
             $id = Yii::$app->user->identity->id;
             if ($model = User::findOne($id)) {
@@ -730,7 +731,7 @@ class SiteController extends Controller
                             $STATUS = 'SUCCESS';
                             if ($model->eEmailVerifiedStatus == 'Yes') {
                                 #$this->redirect(['user/dashboard','type'=> base64_encode("VERIFICATION-DONE")]);
-                                #exit;
+                                $RED = 1;
                             }
                         } else {
                             $MESSAGE = 'Something went wrong. Please try again !';
@@ -745,7 +746,7 @@ class SiteController extends Controller
                     $MESSAGE = 'Please Enter Mobile PIN.';
                     $STATUS = 'ERROR';
                 }
-                $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE);
+                $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'REDIRECT' => $RED);
                 # echo "<pre>"; print_r($return);exit;
                 return json_encode($return);
             } else {
