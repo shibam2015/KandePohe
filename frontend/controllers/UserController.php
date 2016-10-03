@@ -18,6 +18,12 @@ use common\models\LoginForm;
 use common\models\User;
 use common\models\PartenersReligion;
 use common\models\UserPartnerPreference;
+use common\models\PartnersMaritalStatus;
+use common\models\PartnersGotra;
+use common\models\PartnersFathersStatus;
+use common\models\PartnersMothersStatus;
+use common\models\PartnersEducationalLevel;
+use common\models\PartnersEducationField;
 use yii\widgets\ActiveForm;
 use yii\web\Response;
 use common\components\MailHelper;
@@ -109,10 +115,6 @@ class UserController extends Controller
 
     public function actionMyProfile()
     {
-        #Yii::$app->session->setFlash('error', 'This is the message');
-        /*Yii::$app->session->setFlash('warning', 'bla bla bla bla 1');
-        Yii::$app->session->setFlash('success', 'bla bla 2');
-        Yii::$app->session->setFlash('error', 'bla bla 3');*/
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -355,7 +357,7 @@ class UserController extends Controller
         $model->scenario = User::SCENARIO_EDIT_MY_INFO;
         $show = false;
         if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
-
+            $show = true;
             if(Yii::$app->request->post('save')){
                 $tYourSelf_old = $model->tYourSelf;
                 $model->tYourSelf = Yii::$app->request->post('User')['tYourSelf'];
@@ -366,18 +368,7 @@ class UserController extends Controller
                     $model->save();
                     $show = false;
                 }
-                else {
-                    $show = true;
-                }
             }
-            else {
-                $show = true;
-            }
-
-
-        }
-        else {
-            $show = false;
         }
 
         if($show) {
@@ -419,12 +410,8 @@ class UserController extends Controller
                 }
             }
         }
-        if($show) {
-            return $this->actionRenderAjax($model,'_personalinfo',true);
-        }
-        else {
-            return $this->actionRenderAjax($model,'_personalinfo',false);
-        }
+       
+        return $this->actionRenderAjax($model,'_personalinfo',$show);
     }
 
     public function actionEditBasicInfo()
@@ -456,13 +443,8 @@ class UserController extends Controller
                 }
             }
         }
-
-        if ($show) {
-            return $this->actionRenderAjax($model,'_basicinfo',true);
-        }
-        else {
-            return $this->actionRenderAjax($model,'_basicinfo',false);
-        }
+        //var_dump($show);
+        return $this->actionRenderAjax($model,'_basicinfo',$show);
     }
 
     public function actionEditEducation()
@@ -581,36 +563,110 @@ class UserController extends Controller
         $id = Yii::$app->user->identity->id;
         $PartenersReligion = PartenersReligion::findByUserId($id) == NULL ? new PartenersReligion() : PartenersReligion::findByUserId($id);
         $UPP = UserPartnerPreference::findByUserId($id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($id);
+        $PartnersMaritalStatus = PartnersMaritalStatus::findByUserId($id) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findByUserId($id);
+        $PartnersGotra = PartnersGotra::findByUserId($id) == NULL ? new PartnersGotra() : PartnersGotra::findByUserId($id);
+        $PartnersFathersStatus = PartnersFathersStatus::findByUserId($id) == NULL ? new PartnersFathersStatus() : PartnersFathersStatus::findByUserId($id);
+        $PartnersMothersStatus = PartnersMothersStatus::findByUserId($id) == NULL ? new PartnersMothersStatus() : PartnersMothersStatus::findByUserId($id);
+        $PartnersEducationalLevel = PartnersEducationalLevel::findByUserId($id) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findByUserId($id);
+        $PartnersEducationField = PartnersEducationField::findByUserId($id) == NULL ? new PartnersEducationField() : PartnersEducationField::findByUserId($id);
         $model = User::findOne($id);
         
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if(Yii::$app->request->post('save')){
-                $religion_id = Yii::$app->request->post('PartenersReligion')['iReligion_ID'];
+                $CurrDate = date('Y-m-d H:i:s');
+                
+                $ReligionId = Yii::$app->request->post('PartenersReligion')['iReligion_ID'];                
                 $PartenersReligion->iUser_ID = $id;
-                $PartenersReligion->iReligion_ID = $religion_id;   
-                $PartenersReligion->dtModified = date('Y-m-d H:i:s');
-            
+                $PartenersReligion->iReligion_ID = $ReligionId;   
+                $PartenersReligion->dtModified = $CurrDate;            
                 if($PartenersReligion->iPartners_Religion_ID == ""){
-                    $PartenersReligion->dtCreated = date('Y-m-d H:i:s');
+                    $PartenersReligion->dtCreated = $CurrDate;
                 }
                 $PartenersReligion->save();
 
                 $UPP->iUser_id = $id;
                 $UPP->age_from = Yii::$app->request->post('UserPartnerPreference')['age_from'];
                 $UPP->age_to = Yii::$app->request->post('UserPartnerPreference')['age_to'];
-                $UPP->modified_on = date('Y-m-d H:i:s');
+                $UPP->modified_on = $CurrDate;
                 
                 if($UPP->ID == ""){
-                    $UPP->created_on = date('Y-m-d H:i:s');
+                    $UPP->created_on = $CurrDate;
                 }
                 $UPP->save();
+
+                $MaritalStatusID = Yii::$app->request->post('PartnersMaritalStatus')['iMarital_Status_ID'];
+                $PartnersMaritalStatus->iUser_ID = $id;
+                $PartnersMaritalStatus->iMarital_Status_ID = $MaritalStatusID;   
+                $PartnersMaritalStatus->dtModified = $CurrDate;            
+                if($PartnersMaritalStatus->iPartners_Marital_Status_ID == ""){
+                    $PartnersMaritalStatus->dtCreated = $CurrDate;
+                }
+                $PartnersMaritalStatus->save();
+
+                $GotraID = Yii::$app->request->post('PartnersGotra')['iGotra_ID'];
+                $PartnersGotra->iUser_ID = $id;
+                $PartnersGotra->iGotra_ID = $GotraID;   
+                $PartnersGotra->dtModified = $CurrDate;            
+                if($PartnersGotra->iPartners_Gotra_ID == ""){
+                    $PartnersGotra->dtCreated = $CurrDate;
+                }
+                $PartnersGotra->save();
+                $show = false;
+
+                $FatherStatusID = Yii::$app->request->post('PartnersFathersStatus')['iFather_Status_ID'];
+                $PartnersFathersStatus->iUser_ID = $id;
+                $PartnersFathersStatus->iFather_Status_ID = $FatherStatusID;   
+                $PartnersFathersStatus->dtModified = $CurrDate;            
+                if($PartnersFathersStatus->iPartners_Fathers_ID == ""){
+                    $PartnersFathersStatus->dtCreated = $CurrDate;
+                }
+                $PartnersFathersStatus->save();
+
+                $MotherStatusID = Yii::$app->request->post('PartnersMothersStatus')['iMother_Status_ID'];
+                $PartnersMothersStatus->iUser_ID = $id;
+                $PartnersMothersStatus->iMother_Status_ID = $MotherStatusID;   
+                $PartnersMothersStatus->dtModified = $CurrDate;            
+                if($PartnersMothersStatus->iPartners_Mother_ID == ""){
+                    $PartnersMothersStatus->dtCreated = $CurrDate;
+                }
+                $PartnersMothersStatus->save();
+
+                $EducationLevelID = Yii::$app->request->post('PartnersEducationalLevel')['iEducation_Level_ID'];
+                $PartnersEducationalLevel->iUser_ID = $id;
+                $PartnersEducationalLevel->iEducation_Level_ID = $EducationLevelID;   
+                $PartnersEducationalLevel->dtModified = $CurrDate;            
+                if($PartnersEducationalLevel->iPartners_Educational_Level_ID == ""){
+                    $PartnersEducationalLevel->dtCreated = $CurrDate;
+                }
+                $PartnersEducationalLevel->save();
+
+                $EducationFieldID = Yii::$app->request->post('PartnersEducationField')['iEducation_Field_ID'];
+                $PartnersEducationField->iUser_ID = $id;
+                $PartnersEducationField->iEducation_Field_ID = $EducationFieldID;   
+                $PartnersEducationField->dtModified = $CurrDate;            
+                if($PartnersEducationField->iPartners_Education_Field_ID == ""){
+                    $PartnersEducationField->dtCreated = $CurrDate;
+                }
+                $PartnersEducationField->save();
+
                 $show = false;
              
             }
         }
-        $myModel = ['PartenersReligion' => $PartenersReligion,'model' => $model,'UPP' => $UPP,'show' => $show];
+        $myModel = [
+                'PartenersReligion' => $PartenersReligion,
+                'model' => $model,
+                'UPP' => $UPP,
+                'PartnersMaritalStatus'=>$PartnersMaritalStatus,
+                'PartnersGotra'=>$PartnersGotra,
+                'PartnersFathersStatus'=>$PartnersFathersStatus,
+                'PartnersMothersStatus'=>$PartnersMothersStatus,
+                'PartnersEducationalLevel'=>$PartnersEducationalLevel,
+                'PartnersEducationField'=>$PartnersEducationField,
+                'show' => $show
+            ];
         return $this->renderAjax('_preferences', $myModel);
     }
 

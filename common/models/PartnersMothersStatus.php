@@ -5,22 +5,22 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "partners_education_field".
+ * This is the model class for table "partners_mothers_status".
  *
- * @property integer $iPartners_Education_Field_ID
+ * @property integer $iPartners_Mother_ID
  * @property integer $iUser_ID
- * @property integer $iEducation_Field_ID
+ * @property integer $iMother_Status_ID
  * @property string $dtCreated
  * @property string $dtModified
  */
-class PartnersEducationField extends \common\models\base\basePartnersEducationField
+class PartnersMothersStatus extends \common\models\base\basePartnersMothersStatus
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'partners_education_field';
+        return 'partners_mothers_status';
     }
 
     /**
@@ -29,8 +29,8 @@ class PartnersEducationField extends \common\models\base\basePartnersEducationFi
     public function rules()
     {
         return [
-           // [['iUser_ID', 'iEducation_Field_ID'], 'required'],
-            //[['iUser_ID', 'iEducation_Field_ID'], 'integer'],
+           // [['iUser_ID', 'iMother_Status_ID'], 'required'],
+            //[['iUser_ID', 'iMother_Status_ID'], 'integer'],
             [['dtCreated', 'dtModified'], 'safe'],
         ];
     }
@@ -41,9 +41,9 @@ class PartnersEducationField extends \common\models\base\basePartnersEducationFi
     public function attributeLabels()
     {
         return [
-            'iPartners_Education_Field_ID' => 'I Partners  Education  Field  ID',
+            'iPartners_Mother_ID' => 'I Partners  Mother  ID',
             'iUser_ID' => 'I User  ID',
-            'iEducation_Field_ID' => 'Education Field',
+            'iMother_Status_ID' => 'Mother Status',
             'dtCreated' => 'Dt Created',
             'dtModified' => 'Dt Modified',
         ];
@@ -54,8 +54,8 @@ class PartnersEducationField extends \common\models\base\basePartnersEducationFi
         return static::findOne(['iUser_id' => $userid]);
     }
 
-    public function getEducationFieldName()
-    {
-        return $this->hasOne(EducationField ::className(), ['iEducationFieldID' => 'iEducation_Field_ID']);
+    public function getMotherStatus() {
+
+        return $this->hasOne(MasterFmStatus ::className(), ['iFMStatusID' => 'iMother_Status_ID']);
     }
 }
