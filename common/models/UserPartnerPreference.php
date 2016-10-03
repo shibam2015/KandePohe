@@ -41,7 +41,7 @@ class UserPartnerPreference extends \common\models\base\baseUserPartnerPreferenc
     public function rules()
     {
         return [
-            [['iUser_id', 'age_from', 'age_to', 'no_of_childs', 'childs_living_with_you', 'height_from', 'height_to', 'weight_from', 'weight_to', 'health_information', 'created_on', 'modified_on'], 'required'],
+            // [['iUser_id', 'age_from', 'age_to', 'no_of_childs', 'childs_living_with_you', 'height_from', 'height_to', 'weight_from', 'weight_to', 'health_information', 'created_on', 'modified_on'], 'required'],
             [['iUser_id'], 'integer'],
             [['age_from', 'age_to', 'no_of_childs', 'childs_living_with_you', 'height_from', 'height_to', 'weight_from', 'weight_to', 'health_information', 'any_disability', 'manglik', 'drink', 'smoke'], 'string'],
             [['created_on', 'modified_on'], 'safe'],
@@ -72,5 +72,11 @@ class UserPartnerPreference extends \common\models\base\baseUserPartnerPreferenc
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];
+    }
+
+    public static function findByUserId($userid)
+    {
+
+        return static::findOne(['iUser_id' => $userid]);
     }
 }

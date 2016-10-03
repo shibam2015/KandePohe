@@ -574,6 +574,50 @@ class UserController extends Controller
         }
     }
 
+    public function actionEditPreferences()
+    {
+        $id = Yii::$app->user->identity->id;
+        $PartenersReligion = PartenersReligion::findByUserId($id) == NULL ? new PartenersReligion() : PartenersReligion::findByUserId($id);
+        $UPP = UserPartnerPreference::findByUserId($id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($id);
+        $model = User::findOne($id);
+        
+        $show = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if(Yii::$app->request->post('save')){
+                $religion_id = Yii::$app->request->post('PartenersReligion')['iReligion_ID'];
+                $PartenersReligion->iUser_ID = $id;
+                $PartenersReligion->iReligion_ID = $religion_id;   
+                $PartenersReligion->dtModified = date('Y-m-d H:i:s');
+            
+                if($PartenersReligion->iPartners_Religion_ID == ""){
+                    $PartenersReligion->dtCreated = date('Y-m-d H:i:s');
+                }
+                $PartenersReligion->save();
+
+                $UPP->iUser_id = $id;
+                $UPP->age_from = Yii::$app->request->post('UserPartnerPreference')['age_from'];
+                $UPP->age_to = Yii::$app->request->post('UserPartnerPreference')['age_to'];
+                $UPP->modified_on = date('Y-m-d H:i:s');
+                
+                if($UPP->ID == ""){
+                    $UPP->created_on = date('Y-m-d H:i:s');
+                }
+                $UPP->save();
+                $show = false;
+
+
+                
+
+                //$model->save();
+                                
+            }
+        }
+        $myModel = ['PartenersReligion' => $PartenersReligion,'model' => $model,'UPP' => $UPP,'show' => $show];
+        return $this->renderAjax('_preferences', $myModel);
+    }
+
+
     public function actionCoverupload()
     {
         $id = Yii::$app->user->identity->id;
