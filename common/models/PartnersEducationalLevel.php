@@ -29,8 +29,8 @@ class PartnersEducationalLevel extends \common\models\base\basePartnersEducation
     public function rules()
     {
         return [
-            [['iUser_ID', 'iEducation_Level_ID'], 'required'],
-            [['iUser_ID', 'iEducation_Level_ID'], 'integer'],
+          //  [['iUser_ID', 'iEducation_Level_ID'], 'required'],
+          //  [['iUser_ID', 'iEducation_Level_ID'], 'integer'],
             [['dtCreated', 'dtModified'], 'safe'],
         ];
     }
@@ -43,9 +43,19 @@ class PartnersEducationalLevel extends \common\models\base\basePartnersEducation
         return [
             'iPartners_Educational_Level_ID' => 'I Partners  Educational  Level  ID',
             'iUser_ID' => 'I User  ID',
-            'iEducation_Level_ID' => 'I Education  Level  ID',
+            'iEducation_Level_ID' => 'Education Level',
             'dtCreated' => 'Dt Created',
             'dtModified' => 'Dt Modified',
         ];
+    }
+
+    public static function findByUserId($userid) {
+
+        return static::findOne(['iUser_id' => $userid]);
+    }
+
+    public function getEducationLevelName()
+    {
+        return $this->hasOne(EducationLevel ::className(), ['iEducationLevelID' => 'iEducation_Level_ID']);
     }
 }

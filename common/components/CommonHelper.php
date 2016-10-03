@@ -648,6 +648,21 @@ class CommonHelper {
         if(strtotime('+' . $age . ' years', $then_ts) > time()) $age--;
         return $age;
     }
+
+    function setInputVal($val,$type="text"){
+        
+        $RetVal = "";
+        switch ($type) {
+            case 'text':
+                $RetVal = $val == ""?'-':$val;
+                break;
+
+            case 'age':
+                $RetVal = $val == ""?'-':$val." Years";
+                break;
+        }
+        return $RetVal;
+    }
 }
 ?>
 
