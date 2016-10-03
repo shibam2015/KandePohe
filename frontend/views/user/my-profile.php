@@ -413,7 +413,26 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                     </div>
 
 
-                                    <div role="tabpanel" class="tab-pane" id="tab2">Tab 2</div>
+                                    <div role="tabpanel" class="tab-pane" id="tab2">
+                                        <div class="profile-edit pull-right">
+                                            <ul class="list-inline major-control">
+                                                <li role="presentation"><a href="javascript:void(0)"
+                                                                           class="edit_preferences" attr-name="my_info"><i
+                                                            class="fa fa-pencil"></i> Edit</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="inner-block">
+                                            <div class="fb-profile-text padd-xs padd-tp-0">
+                                                <h1><span class="heading-icons icon9"></span> My Preferences</h1>
+                                            </div>
+                                            <?php Pjax::begin(['id' => 'my_preferences', 'enablePushState' => false]); ?>
+                                            <div class="div_preferences">
+                                                
+                                            </div>
+                                            <?php Pjax::end(); ?>
+                                        </div>
+
+                                    </div>
                                     <div role="tabpanel" class="tab-pane" id="tab3">
                                     <div class="fb-profile-text padd-xs padd-tp-0">
                                         <h1><span class="heading-icons icon9"></span> Contact Detail</h1>
@@ -774,6 +793,14 @@ $this->registerJs('
     getInlineDetail("'.Url::to(['user/edit-family']).'",".div_family","1");
     $(document).on("click","#cancel_edit_family",function(e){
         getInlineDetail("'.Url::to(['user/edit-family']).'",".div_family","1");
+    });
+
+    $(".edit_preferences").click(function(e){
+        getInlineDetail("'.Url::to(['user/edit-preferences']).'","#my_preferences","0");
+    });
+    getInlineDetail("'.Url::to(['user/edit-preferences']).'","#my_preferences","1");
+    $(document).on("click","#cancel_edit_preferences",function(e){
+        getInlineDetail("'.Url::to(['user/edit-preferences']).'","#my_preferences","1");
     });
 
         var P_ID = "";

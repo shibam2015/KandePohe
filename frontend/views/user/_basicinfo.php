@@ -27,7 +27,7 @@ if ($show) {
     ]);
     ?>
     <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
-    <?= $form->field($model, 'iReligion_ID')->dropDownList(
+    <?= $form->field($PartenersReligion, 'iReligion_ID')->dropDownList(
         ArrayHelper::map(CommonHelper::getReligion(), 'iReligion_ID', 'vName'),
         ['prompt' => 'Religion']
     ); ?>

@@ -56,6 +56,9 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $email_verification_msg;
     public $error_class;
     public $commentInOwnWordsAdmin;
+    public $minage;
+    public $maxage;
+    public $Profile_created_for_pref;
    // public $captcha;
     /**
      * @inheritdoc
