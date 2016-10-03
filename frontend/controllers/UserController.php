@@ -16,6 +16,8 @@ use common\models\LoginForm;
 #use frontend\components\CommonHelper;
 
 use common\models\User;
+use common\models\PartenersReligion;
+use common\models\UserPartnerPreference;
 use yii\widgets\ActiveForm;
 use yii\web\Response;
 use common\components\MailHelper;
@@ -605,12 +607,7 @@ class UserController extends Controller
                 }
                 $UPP->save();
                 $show = false;
-
-
-                
-
-                //$model->save();
-                                
+             
             }
         }
         $myModel = ['PartenersReligion' => $PartenersReligion,'model' => $model,'UPP' => $UPP,'show' => $show];
