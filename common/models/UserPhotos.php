@@ -17,6 +17,8 @@ use yii\data\ActiveDataProvider;
  */
 class UserPhotos extends \common\models\base\baseUserPhotos
 {
+    public $photo_id;
+    public $comment;
     /**
      * @inheritdoc
      */
@@ -34,7 +36,7 @@ class UserPhotos extends \common\models\base\baseUserPhotos
             [['iUser_ID', 'File_Name'], 'required'],
             [['iUser_ID'], 'integer'],
             [['File_Name', 'Is_Profile_Photo'], 'string'],
-            [['dtCreated', 'dtModified'], 'safe'],
+            [['dtCreated', 'dtModified', 'eStatus'], 'safe'],
         ];
     }
 
@@ -50,6 +52,7 @@ class UserPhotos extends \common\models\base\baseUserPhotos
             'Is_Profile_Photo' => 'Is  Profile  Photo',
             'dtCreated' => 'Created',
             'dtModified' => 'Modified',
+            'eStatus' => 'Status'
         ];
     }
 

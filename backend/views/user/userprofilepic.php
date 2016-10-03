@@ -67,24 +67,22 @@ $this->params['breadcrumbs'][] = $this->title;
                     return '<img class="profile-user-img img-responsive img-circle" src="'.$PROPIC.'" alt="User profile picture">';
                 },
             ],
+
             [
                 'attribute'=>'eStatusPhotoModify',
-                #'filter' => [5=>'Approve'],
-                'filter'=>false,
+                'filter' => ['Approve' => 'Approve', 'Disapprove' => 'Disapprove', 'Pending' => 'Pending'],
                 'format'=>'raw',
                 'value' => function($model, $key, $index)
                 {
                     if($model->eStatusPhotoModify == 'Approve')
                     {
                         return '<button class="btn btn-success">&nbsp;&nbsp;Approve&nbsp;&nbsp;</button>';
-                    }
-                    else if($model->eStatusInOwnWord == 'Disapprove')
+                    } else if ($model->eStatusPhotoModify == 'Disapprove')
                     {
                         return '<button class="btn bg-red">&nbsp;&nbsp;Disapprove&nbsp;&nbsp;</button>';
                     }else{
                         return '<button class="btn bg-yellow btn-flat margin">&nbsp;&nbsp;Pending&nbsp;&nbsp;</button>';
                     }
-
                 },
             ],
 

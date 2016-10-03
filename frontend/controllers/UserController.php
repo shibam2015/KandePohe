@@ -915,7 +915,7 @@ class UserController extends Controller
         $model->status = STATUS_DELETED;
         $model->save();
         $LINK = CommonHelper::getSiteUrl('BACKEND') . 'user/' . $id;
-        $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "LINK" => $LINK);
+        $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "LINK" => $LINK);
         MailHelper::SendMail('ADMIN_DELETE_ACCOUNT_USER', $MAIL_DATA);
         Yii::$app->user->logout();
 

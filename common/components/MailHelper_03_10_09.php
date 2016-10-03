@@ -1,46 +1,103 @@
 <?php
 /**
- *     Use For : Sending Mail.
+ *
  */
 namespace common\components;
 
 use common\models\EmailFormat;
 use Yii;
+
 class MailHelper
 {
+
+    /*function __construct(argument) {
+
+    }*/
+
     public static function SendMail($TYPE, $DB_INFO = '', $newsid = '')
     {
         $EMAIL_TEMPLATE = EmailFormat::findOne(['vEmailFormatType' => $TYPE]);
-        #TO_EMAIL = 'parmarvikrantr@gmail.com';
-        $TO_EMAIL = Yii::$app->params['adminEmail'];
-        $MailContentArray = array('#NAME#', '#EMAIL_TO#', '#EMAIL#', '#ACTIVATION_LINK#', '#PIN#', '#COMMENT#', '#LINK#', '#EMAIL#');
+        $TO_EMAIL = '';
+        $FROM_EMAIL = '';
+        $ADMIN_EMAIL = 'parmarvikrantr@gmail.com';
+        $MailContentArray = array('#NAME#', '#EMAILTO#', '#ACTIVATION_LINK#', '#PIN#', '#COMMENT#', '#LINK#', '#EMAIL#');
         $MAIL_MESSAGE = $EMAIL_TEMPLATE->tEmailFormatDesc;
         foreach ($MailContentArray as $Key => $Value) {
             $Array_Key = str_replace('#', '', $Value);
             if (array_key_exists($Array_Key, $DB_INFO)) {
                 $MAIL_MESSAGE = str_replace($Value, $DB_INFO[$Array_Key], $MAIL_MESSAGE);
-                if ($Array_Key == 'EMAIL_TO') {
-                    $TO_EMAIL = $DB_INFO[$Array_Key];
-                }
-                if ($Array_Key == 'ADMIN_EMAIL') {
-                    $TO_EMAIL = Yii::$app->params['adminEmail'];
-                }
             }
         }
-        $TO_EMAIL = 'parmarvikrantr@gmail.com';
+        switch ($TYPE) {
+            case "VERIFY_ACCOUNT": # First verification Mail
+                $TO_EMAIL = $DB_INFO['EMAIL'];
+                $key_arr = Array("#NAME#", "#EMAILTO#", "#ACTIVATION_LINK#");
+                $val_arr = Array($DB_INFO['NAME'], $DB_INFO['EMAIL'], $DB_INFO['ACTIVATION_LINK']);
+                break;
+
+            case "EMAIL_VERIFICATION_PIN": # For Email verification Pin
+                $TO_EMAIL = $DB_INFO['EMAIL'];
+                $key_arr = Array("#NAME#", "#EMAILTO#", "#PIN#");
+                $val_arr = Array($DB_INFO['NAME'], $DB_INFO['EMAIL'], $DB_INFO['PIN']);
+                break;
+
+            case "IN_OWN_WORDS_APPROVE": # For In Own Words Approve
+                $TO_EMAIL = $DB_INFO['EMAIL'];
+                $key_arr = Array("#NAME#", '#COMMENT#');
+                $val_arr = Array($DB_INFO['NAME'], $DB_INFO['COMMENT']);
+                break;
+
+            case "IN_OWN_WORDS_DISAPPROVE": # For In Own Words DisApprove
+                $TO_EMAIL = $DB_INFO['EMAIL'];
+                $key_arr = Array("#NAME#", '#COMMENT#');
+                $val_arr = Array($DB_INFO['NAME'], $DB_INFO['COMMENT']);
+                break;
+
+            case "PROFILE_PHOTO_APPROVE": # For Profile Photo Approve
+                $TO_EMAIL = $DB_INFO['EMAIL'];
+                $key_arr = Array("#NAME#", '#COMMENT#');
+                $val_arr = Array($DB_INFO['NAME'], $DB_INFO['COMMENT']);
+                break;
+
+            case "PROFILE_PHOTO_DISAPPROVE": # For Profile Photo DisApprove
+                $TO_EMAIL = $DB_INFO['EMAIL'];
+                $key_arr = Array("#NAME#", '#COMMENT#');
+                $val_arr = Array($DB_INFO['NAME'], $DB_INFO['COMMENT']);
+                break;
+
+            case "FORGOT_PASSWORD": # For Forgot Password
+                $TO_EMAIL = $DB_INFO['EMAIL'];
+                $key_arr = Array("#NAME#", '#LINK#');
+                $val_arr = Array($DB_INFO['NAME'], $DB_INFO['LINK']);
+                break;
+
+            case "ADMIN_DELETE_ACCOUNT_USER": # For Forgot Password
+                $TO_EMAIL = $ADMIN_EMAIL;
+                $key_arr = Array("#NAME#", '#EMAIL#', '#LINK#');
+                $val_arr = Array($DB_INFO['NAME'], $DB_INFO['EMAIL'], $DB_INFO['LINK']);
+                break;
+        }
+
+        #$TO_EMAIL = 'parmarvikrantr@gmail.com';
         $MAIL_SUBJECT = $EMAIL_TEMPLATE->vEmailFormatSubject;
         $MAIL_TITLE = $EMAIL_TEMPLATE->vEmailFormatTitle;
         $MAIL_SUBJECT = '=?UTF-8?B?' . base64_encode($MAIL_SUBJECT) . '?=';
+        $MAIL_MESSAGE = $EMAIL_TEMPLATE->tEmailFormatDesc;
+        $MAIL_MESSAGE = str_replace($key_arr, $val_arr, $MAIL_MESSAGE);
         $MAIL_MESSAGE = MailHelper::mailFormat($MAIL_MESSAGE, $MAIL_TITLE);
-        #echo " <br> TMESSAGE <br>".$MAIL_MESSAGE;exit;
+        #echo " <br> TMESSAGE <br>".$MAIL_MESSAGE;
         $response = Yii::$app->mailer->compose()
             ->setTo($TO_EMAIL)
             ->setFrom(['kandepohetest@gmail.com' => Yii::$app->name])
             ->setSubject($MAIL_SUBJECT)
             ->setHtmlBody($MAIL_MESSAGE)
             ->send();
+        #exit;
         return $response;
+
+
     }
+
     public static function mailFormat($BODY_CONTENT, $TITLE)
     {
         $LOGO = CommonHelper::getSiteUrlLogo();
@@ -108,5 +165,47 @@ class MailHelper
                 </html>';
         return $message;
     }
+
+    function general_mail_format_html($mail_body)
+    {
+        global $tconfig, $Emaillogodis;
+        $mail_str = "";
+        $mail_str = '<style type="text/css">
+			p {font-size: 12px; color: #444444; !important; font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", sans-serif; line-height: 1.5;}
+			span {font-size: 12px; color: #00000; !important; font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", sans-serif; line-height: 1.5;}
+			</style>
+			
+			<table id="main" width="600" align="center" cellpadding="0" cellspacing="15" bgcolor="ffffff" style="border:2px solid #c3c3c3">
+			<tr>
+			<td>
+			<table id="header" cellpadding="10" cellspacing="0" align="center" bgcolor="8fb3e9">
+			<tr>
+			<td width="570" bgcolor="#ffffff" style="background-color:#fff; border-top:1px solid ' . SITE_COLOR . '; border-left:1px solid ' . SITE_COLOR . '; border-right:1px solid ' . SITE_COLOR . ';"><img src="' . $Emaillogodis . '"></td>
+			</tr>
+			<tr>
+			<td width="570" align="right" bgcolor="' . SITE_COLOR . '" style="color:#fff;border-left:1px solid ' . SITE_COLOR . '; border-right:1px solid ' . SITE_COLOR . ';"><span>' . date("F j, Y") . '</span></td>
+			</tr>
+			</table>
+			</td>
+			</tr>
+			<tr>
+			<td></td>
+			</tr>
+			<tr>
+			<td>
+			<table id="content-2" cellpadding="0" cellspacing="0" align="center">
+			<tr>
+			<td width="570">' . $mail_body . '</td>
+			</tr>
+			</table>
+			</td>
+			</tr>
+			</table>';
+        return $mail_str;
+    }
+
 }
+
 ?>
+
+

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
+use common\components\CommonHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
@@ -60,9 +61,7 @@ if($model->propic !='') {
             ],
         ]) ?> -->
     </p>
-
     <div class="row">
-
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border text-center">
@@ -70,55 +69,71 @@ if($model->propic !='') {
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body ">
-                    <p class="text-muted">
-                        <img class="img-responsive" src="<?=$PROPIC?>" alt="User profile picture" >
-                    </p>
-                    <!--<div class="row">
-                        <div class="col-md-6">
-                            <?= Html::a('Approve', ['approve', 'id' => $model->id], ['class' => 'btn btn-block btn-success']) ?>
-                        </div>
-                        <div class="col-md-6">
-                            <?= Html::a('Disapprove', ['disapprove', 'id' => $model->id], ['class' => 'btn btn-danger btn-block',
-                                'data' => [
-                                    'confirm' => 'Are you sure you want to disapprove this item?',
-                                    'method' => 'post',
-                                ],
-                            ]) ?>
-                        </div>
+                    <?php
+                    if (count($PHOTO_LIST) > 0) {
+                        foreach ($PHOTO_LIST as $K => $V) {
+                            ?>
 
-                    </div>-->
-                    <?php $form = ActiveForm::begin(); ?>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        <div class="col-md-3">
+                                            <?= Html::img(CommonHelper::getPhotosBackend('USER', $model->id, $V['File_Name'], 140), ['class' => 'img-responsive ', 'height' => '140', 'alt' => 'Photo' . $K]); ?>
+                                            <?php if ($V['Is_Profile_Photo'] == 'YES') { ?>
+                                                <span class="btn btn-block btn-success">
+                                            Profile Photo
+                                        </span>
+                                            <?php } ?>
 
-
-
-                        <div class="row">
-                            <div class="col-md-12 text-center">
-                            <?= $form->field($model, 'commentInOwnWordsAdmin')->textArea(['rows' => '6','cols'=>'50']) ?>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <?php if ($V['eStatus'] == 'Approve') { ?>
+                                                <span class="btn btn-block btn-success">
+                                        Approve
+                                    </span>
+                                            <?php } else if ($V['eStatus'] == 'Disapprove') { ?>
+                                                <span class="btn btn-block btn-danger">
+                                        Disapprove
+                                    </span>
+                                            <?php } else { ?>
+                                                <span class="btn btn-block btn-warning">
+                                        Pending
+                                    </span>
+                                            <?php } ?>
+                                        </div>
                             </div>
-                            </div>
-                        <div class="row">
                             <div class="col-md-6">
-
-                            <?= Html::submitButton('Approve', ['class' => 'btn btn-block btn-success','name'=>'submit', 'value'=>'APPROVE']) ?>
+                                <?php $form = ActiveForm::begin(); ?>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <?= $form->field($model, 'commentAdmin')->textArea(['rows' => '6', 'cols' => '50']) ?>
+                                        <input type="hidden" name="User[iPhoto_ID]" value="<?= $V->iPhoto_ID ?>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <?= Html::submitButton('Approve', ['class' => 'btn btn-block btn-success', 'name' => 'submit', 'value' => 'Approve']) ?>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <?= Html::submitButton('Disapprove', ['class' => 'btn btn-block btn-danger', 'name' => 'submit', 'value' => 'Disapprove']) ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php ActiveForm::end(); ?>
                             </div>
-                                <div class="col-md-6">
-                        <?= Html::submitButton('Disapprove', ['class' => 'btn btn-block btn-danger' ,'name'=>'submit', 'value'=>'DISAPPROVE']) ?>
-                            </div>
-
-
                         </div>
+                            </div>
 
-
-                    <?php ActiveForm::end(); ?>
-
-
+                        <?php }
+                    } else {
+                        ?>
+                        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                            <p> No Photos Available</p>
+                        </div>
+                    <?php } ?>
+                    <!-- /.box-body -->
                 </div>
-                <!-- /.box-body -->
             </div>
         </div>
-
     </div>
-
-</div>
-<div class="user-view">
-</div>

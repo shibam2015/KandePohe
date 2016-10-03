@@ -12,12 +12,9 @@ use kartik\editable\Editable;
 use yii\widgets\Pjax;
 /*$religion_data = CommonHelper::getReligion();
 $community_data = CommonHelper::getCommunity();*/
-
-// var_dump($id = Yii::$app->user->identity->id);
 $id = 0;
 $PROFILE_COMPLETENESS = 0;
 if (!Yii::$app->user->isGuest) {
-#$id = base64_decode($id);
     $id = Yii::$app->user->identity->id;
     $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
 }
@@ -26,7 +23,8 @@ $HOME_URL = Yii::getAlias('@web')."/";
 $HOME_URL_SITE = Yii::getAlias('@web')."/site/";
 $UPLOAD_DIR = Yii::getAlias('@frontend') .'/web/uploads/';
 $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
-
+#$ARR = array("NAME"=>"abc","EMAIL_TO"=>'abc@abc.com',"EMAIL"=>'abc1@abc.com',"ACTIVATION_LINK"=>"http://google.com");
+#\common\components\MailHelper::SendMail('VERIFY_ACCOUNT',$ARR);
 ?>
 
 <link rel="stylesheet" type="text/css" href="<?= $HOME_URL ?>css/radical-progress.css"/>

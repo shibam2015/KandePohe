@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\components\MessageHelper;
 use common\components\SmsHelper;
 use common\models\otherlibraries\Compressimage;
 use Yii;
@@ -237,7 +238,7 @@ class SiteController extends Controller
                 #$OUTPUT .= $activation_link1;
                 //$return = array('status' => 200,'message' => 'success','OUTPUT'=>$OUTPUT);
 
-                $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "ACTIVATION_LINK" => $activation_link);
+                $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => ucwords($model->First_Name . " " . $model->Last_Name), "ACTIVATION_LINK" => $activation_link);
                 MailHelper::SendMail('VERIFY_ACCOUNT', $MAIL_DATA);
 
                 $model1 = new LoginForm();
@@ -519,7 +520,7 @@ class SiteController extends Controller
                     if ($model->eEmailVerifiedStatus == 'No' && $model->pin_email_vaerification == '') {
                         $PIN = (rand(1000, 9999));
                         $model->pin_email_vaerification = $PIN;
-                        $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
+                        $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
                         MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
                     }
                     if ($model->ePhoneVerifiedStatus == 'No' && $model->pin_phone_vaerification == 0) {
@@ -612,7 +613,7 @@ class SiteController extends Controller
                             $model->completed_step = $model->setCompletedStep('9');
                             $model->save($model);
                             #$this->redirect(['user/dashboard','id'=>base64_encode($id)]);
-                            $model->email_verification_msg = 'Incorrect PIN. Please Enter Valid PIN.';
+                            $model->email_verification_msg = 'Successfully Verified.';
                             $model->error_class = 'SUCCESS';
                             return $this->render('register7', [
                                 'model' => $model
@@ -657,7 +658,7 @@ class SiteController extends Controller
                 $PIN = (rand(1000, 9999));
                 $model->pin_email_vaerification = $PIN;
                 if ($model->save($model)) {
-                    $MAIL_DATA = array("EMAIL" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
+                    $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
                     $MAIL_STATUS = MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
                     if ($MAIL_STATUS) {
                         $STATUS = "SUCCESS";

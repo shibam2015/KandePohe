@@ -59,6 +59,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $minage;
     public $maxage;
     public $Profile_created_for_pref;
+    public $commentAdmin;
    // public $captcha;
     /**
      * @inheritdoc
