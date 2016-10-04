@@ -100,10 +100,10 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                 <div class="pull-right">
                                                                     <ul class="list-inline minor-control">
                                                                         <?php
-                                                                        $USER_FACEBOOK = \common\models\User::wightegeCheck(11);
-                                                                        $USER_PHONE = \common\models\User::wightegeCheck(8);
-                                                                        $USER_EMAIL = \common\models\User::wightegeCheck(9);
-                                                                        $USER_APPROVED = \common\models\User::wightegeCheck(10);
+                                                                        $USER_FACEBOOK = \common\models\User::weightedCheck(11);
+                                                                        $USER_PHONE = \common\models\User::weightedCheck(8);
+                                                                        $USER_EMAIL = \common\models\User::weightedCheck(9);
+                                                                        $USER_APPROVED = \common\models\User::weightedCheck(10);
                                                                         ?>
                                                                         <li><a href="javascript:void(0)"
                                                                                <?php if ($USER_FACEBOOK){ ?>class="active"<?php } ?>><i

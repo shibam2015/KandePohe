@@ -207,7 +207,8 @@ class SiteController extends Controller
             $model->toc=$model->toc[0];
             $model->status= 1;
             $region_id = $model->iReligion_ID;
-            $U_R_ID = $model->generateUniqueRandomNumber(9);
+            #$U_R_ID = $model->generateUniqueRandomNumber(9);
+            $U_R_ID = CommonHelper::generateUniqueRandomNumber(9);
             $model->Registration_Number = $U_R_ID;
             $model->completed_step = $model->setCompletedStep('1');
             /*$model->save();

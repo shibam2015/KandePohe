@@ -18,21 +18,6 @@ class CommonHelper {
     {
         return 'Kande Pohe';
     }
-    public static function generatePrefix()
-    {
-        return 'KP';
-    }
-
-    public static function generateNumericUniqueToken($number)
-    {
-        $arr = array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
-        $token = "";
-        for ($i = 0; $i < $number; $i++) {
-            $index = rand(0, count($arr) - 1);
-            $token .= $arr[$index];
-        }
-        return $token;
-    }
 
     public static function  generateUniqueToken($number)
     {
@@ -465,6 +450,51 @@ class CommonHelper {
         return $site_url_logo;
     }
 
+    public static function generateUniqueRandomNumber($length = 9)
+    {
+        $PREFIX = CommonHelper::generatePrefix();
+        $RANDOM_USER_NUMBER = $PREFIX . CommonHelper::generateNumericUniqueToken($length);
+        if (!User::findOne(['Registration_Number' => $RANDOM_USER_NUMBER]))
+            return $RANDOM_USER_NUMBER;
+        else
+            return CommonHelper::generateUniqueRandomNumber($length);
+    }
+
+    public static function generatePrefix()
+    {
+        return 'KP';
+    }
+
+    public static function generateNumericUniqueToken($number)
+    {
+        $arr = array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
+        $token = "";
+        for ($i = 0; $i < $number; $i++) {
+            $index = rand(0, count($arr) - 1);
+            $token .= $arr[$index];
+        }
+        return $token;
+    }
+
+    public static function getPhotosBackend($TYPE = 'USER', $ID, $PHOTO, $SIZE = '') // GET USER PHOTO (Profile)
+    {
+        if ($TYPE == 'USER') {
+            $U_PATH = $ID . "/";
+
+            if ($SIZE != '') {
+                $PHOTO_WITH_SIZE = $SIZE . "_" . $PHOTO;
+            } else {
+                $PHOTO_WITH_SIZE = $PHOTO;
+            }
+
+            $MAIN_URL = '../../../../frontend/web/uploads/users/' . $U_PATH;
+            $PATH = CommonHelper::getUserUploadFolder(1) . $U_PATH;
+            $URL = $MAIN_URL . $U_PATH;
+            $PHOTO_USER = $MAIN_URL . $PHOTO_WITH_SIZE;
+            return $PHOTO_USER;
+        }
+    }
+
     public function getReligion()
     {
         $religion = \common\models\Religion::find()->all();
@@ -650,7 +680,7 @@ class CommonHelper {
     }
 
     function setInputVal($val,$type="text"){
-        
+
         $RetVal = "";
         switch ($type) {
             case 'text':
@@ -663,6 +693,7 @@ class CommonHelper {
         }
         return $RetVal;
     }
+
 }
 ?>
 

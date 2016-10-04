@@ -272,4 +272,47 @@ class UserController extends Controller
             'PHOTO_LIST' => $USER_PHOTOS_LIST
         ]);
     }
+
+    public function actionPhotosview($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+            $USER_ARRAY = Yii::$app->request->post();
+            $commentAdmin = $USER_ARRAY['User']['commentAdmin'];
+            $photo_id = $USER_ARRAY['User']['iPhoto_ID'];
+            $ACTION_TYPE = $USER_ARRAY['submit'];
+            $PG = new UserPhotos();
+            $UP = $PG->findByPhotoId($id, $photo_id);
+            if ($ACTION_TYPE == 'Approve') {
+                if ($UP->Is_Profile_Photo == 'YES') {
+                    $model->eStatusPhotoModify = 'Approve';
+                    $model->save();
+                }
+                $UP->eStatus = 'Approve';
+                if ($UP->save()) {
+                    $MAIL_DATA = array("EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "COMMENT" => $commentAdmin);
+                    MailHelper::SendMail('PROFILE_PHOTO_APPROVE', $MAIL_DATA);
+                }
+            } else {
+                if ($UP->Is_Profile_Photo == 'YES') {
+                    $model->eStatusPhotoModify = 'Disapprove';
+                    $model->save();
+                }
+                $UP->eStatus = 'Disapprove';
+                if ($UP->save()) {
+                    $MAIL_DATA = array("EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "COMMENT" => $commentAdmin);
+                    MailHelper::SendMail('PROFILE_PHOTO_DISAPPROVE', $MAIL_DATA);
+                }
+            }
+
+        }
+        $USER_PHOTO_MODEL = new UserPhotos();
+        $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
+        return $this->render('photosview', [
+            'model' => $this->findModel($id),
+            'PHOTO_LIST' => $USER_PHOTOS_LIST
+        ]);
+    }
+
+
 }

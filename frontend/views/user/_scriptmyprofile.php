@@ -31,17 +31,17 @@ $this->registerJs("
                                         reader.readAsDataURL(file[0]);
                                     },
                                      error:function(){
-                                         notificationPopup('ERROR', 'Something went wrong. Please try again !');
+                                         notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                                     }
                             });
                     } else {
                         tflag= 0;
-                        notificationPopup('ERROR', file[0].name + ' is not a valid image file.');
+                        notificationPopup('ERROR', file[0].name + ' is not a valid image file.', 'Error');
                         return false;
                     }
                 });
             } else {
-                notificationPopup('ERROR', 'This browser does not support HTML5 FileReader.');
+                notificationPopup('ERROR', 'This browser does not support HTML5 FileReader.', 'Error');
             }
         });
 		
@@ -94,7 +94,7 @@ $this->registerJs("
                 success: function(data)
                 {
                     var DataObject = JSON.parse(data);
-                    if (DataObject.STATUS == 'SUCCESS') {
+                    if (DataObject.STATUS == 'S') {
                          $('#photo_list').html(DataObject.OUTPUT);
                          $('#profile_list_popup').html(DataObject.OUTPUT_ONE);
                          
@@ -110,10 +110,10 @@ $this->registerJs("
                          
                          $('#coverphotoreposition1').attr('id', 'coverphotoreposition');            
                          $('#coverphotodelete1').attr('id', 'coverphotodelete');     
-                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                          return false;
                     } else {
-                          notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                          notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                     }
                     profile_photo();
                 }
@@ -145,7 +145,7 @@ $this->registerJs("
                 success: function(data)
                 {
                     var DataObject = JSON.parse(data);
-                    if (DataObject.STATUS == 'SUCCESS') {
+                    if (DataObject.STATUS == 'S') {
                          $('.bgImagecover').fadeOut('slow');
                          $('.bgSaveRP').remove();
                          $('.bgCancel').remove();
@@ -154,10 +154,10 @@ $this->registerJs("
                          $('#timelineBGload').removeClass('ui-corner-all');
                          $('#timelineBGload').addClass('bgImagecover');
                          $('#timelineBGload').css({'margin-top':position});
-                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                          return false;
                     } else {
-                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                     }
                     profile_photo();
                 }
@@ -183,12 +183,12 @@ $this->registerJs("
                               
                         },
                         error:function(){
-                                   notificationPopup('ERROR', 'Something went wrong. Please try again !');
+                                   notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                         }
                     });            
         })
         $('#coverphotoreposition1').click(function (){
-             notificationPopup('ERROR', 'You can\\'t reposition default cover photo.');
+             notificationPopup('ERROR', 'You can\\'t reposition default cover photo.', 'Error');
         })
         $('body').on('click','.bgCancel',function ()
         { 
@@ -209,7 +209,7 @@ $this->registerJs("
                                   $('#timelineBackground').html(DATAV.ABC);
                             },
                             error:function(){
-                                  notificationPopup('ERROR', 'Something went wrong. Please try again !');
+                                  notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                             }
                 });
         });
@@ -234,12 +234,12 @@ $this->registerJs("
                                $('#coverphotodelete').attr('id', 'coverphotodelete1');            
                           },
                           error:function(){
-                               notificationPopup('ERROR', 'Something went wrong. Please try again !');
+                               notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                           }
                 });
         });
         $('#coverphotodelete1').click(function (){
-             notificationPopup('ERROR', 'You can\\'t delete default cover photo.');
+             notificationPopup('ERROR', 'You can\\'t delete default cover photo.', 'Error');
         })
     });
 
@@ -278,16 +278,16 @@ $this->registerJs("
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == 'SUCCESS') {
+                            if (DataObject.STATUS == 'S') {
                                 $('#timelineBackground').html(DataObject.ABC);
                                 $('.modal').modal('hide');
                             } else {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                             profile_photo();
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            notificationPopup('ERROR', 'Request Failed');
+                            notificationPopup('ERROR', 'Request Failed', 'Error');
                         }
             });
     })            
@@ -315,7 +315,7 @@ $this->registerJs("
                 success: function(data)
                 {
                     var DataObject = JSON.parse(data);
-                    if (DataObject.STATUS == 'SUCCESS') {
+                    if (DataObject.STATUS == 'S') {
                          $('.bgImagecover').fadeOut('slow');
                          $('.bgSaveFP').remove();
                          $('.bgCancel').remove();
@@ -324,10 +324,10 @@ $this->registerJs("
                          $('#timelineBGload').removeClass('ui-corner-all');
                          $('#timelineBGload').addClass('bgImagecover');
                          $('#timelineBGload').css({'margin-top':position});
-                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                          return false;
                     } else {
-                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                     }
                     profile_photo();
                 }
@@ -353,11 +353,11 @@ $this->registerJs("
                             {
                               var DataObject = JSON.parse(data);
                               $('#hideshow_a').html(DataObject.OUTPUT);
-                              notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                              notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                               hideshowfun();
                             },
                             error:function(){
-                            notificationPopup('ERROR', 'Something went wrong. Please try again !');
+                            notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
   }
                             });
             });
@@ -367,9 +367,9 @@ $this->registerJs("
                  var name = $(this).data('name');
                  $('#model_heading_hideshow').html('');
                   if(name=='Yes'){
-                    $('#model_heading_hideshow').html('If You Want To Show Your Profile!');
+                    $('#model_heading_hideshow').html('If You Want To Show Your Profile!','Profile Show');
                   }else{
-                    $('#model_heading_hideshow').html('If You Want To Hide Your Profile!');
+                    $('#model_heading_hideshow').html('If You Want To Hide Your Profile!','Profile Hide');
                   }
             })
            }
@@ -398,18 +398,18 @@ $(document).ready(function()
                             success: function(data)
                             {
                               var DataObject = JSON.parse(data);
-                              if (DataObject.STATUS == 'SUCCESS') {
+                              if (DataObject.STATUS == 'S') {
                                   $('#user_tag_list').html(DataObject.USER_TAG_LIST);
                                   $('.suggest_tag[data-id='+TAG_ID+']').remove();
                                   $('#tag_count').html(DataObject.TAG_COUNT);
-                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                               }else{
-                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                               }
                               
                             },
                             error:function(){
-                                    notificationPopup('ERROR', 'Something went wrong. Please try again !');
+                                    notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                             }
                         });
           });
@@ -429,18 +429,17 @@ $(document).ready(function()
                             success: function(data)
                             {
                               var DataObject = JSON.parse(data);
-                              if (DataObject.STATUS == 'SUCCESS') {
+                              if (DataObject.STATUS == 'S') {
                                   $('#user_tag_list').html(DataObject.USER_TAG_LIST);
                                   $('#suggest_tag_list').html(DataObject.TAG_LIST_SUGGEST);
                                   $('#tag_count').html(DataObject.TAG_COUNT);
-                                  
-                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                               }else{
-                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                               }
                             },
                             error:function(){
-                                    notificationPopup('ERROR', 'Something went wrong. Please try again !');
+                                    notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                             }
                         });
           });
@@ -462,19 +461,19 @@ $(document).ready(function()
                             success: function(data)
                             {
                               var DataObject = JSON.parse(data);
-                              if (DataObject.STATUS == 'SUCCESS') {
+                              if (DataObject.STATUS == 'S') {
                                   //$('#user_tag_list').html(DataObject.USER_TAG_LIST);
                                   $('#tag_delete_'+TAG_ID).remove();
                                   $('#suggest_tag_list').html(DataObject.TAG_LIST_SUGGEST);
                                   $('#tag_count').html(DataObject.TAG_COUNT);
-                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                               }else{
-                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                               }
                               
                             },
                             error:function(){
-                                    notificationPopup('ERROR', 'Something went wrong. Please try again !');
+                                    notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                             }
                         });
           });

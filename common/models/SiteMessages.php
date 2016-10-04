@@ -14,6 +14,10 @@ use Yii;
  */
 class SiteMessages extends \common\models\base\baseSiteMessages
 {
+
+    const SCENARIO_ADD = 'ADD';
+    const SCENARIO_UPDATE = 'Update';
+
     /**
      * @inheritdoc
      */
@@ -28,9 +32,11 @@ class SiteMessages extends \common\models\base\baseSiteMessages
     public function rules()
     {
         return [
-            [['message_action', 'message_value'], 'required'],
+            [['message_action', 'message_value', 'Subject'], 'required'],
             [['message_type', 'message_value'], 'string'],
             [['message_action'], 'string', 'max' => 200],
+
+
         ];
     }
 
@@ -44,6 +50,18 @@ class SiteMessages extends \common\models\base\baseSiteMessages
             'message_action' => 'Message Action',
             'message_type' => 'Message Type',
             'message_value' => 'Message Value',
+            'Subject' => 'Subject',
         ];
+    }
+
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_ADD => ['message_action', 'message_type', 'message_value', 'Subject'],
+            self::SCENARIO_UPDATE => ['message_type', 'message_value', 'Subject'],
+            // array('message_action', 'safe', 'except'=>'SCENARIO_UPDATE'),
+            //array('message_action', 'unsafe', 'on'=>'SCENARIO_UPDATE'),
+        ];
+
     }
 }

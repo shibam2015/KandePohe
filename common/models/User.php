@@ -69,68 +69,6 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return '{{%user}}';
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['auth_key', 'password_hash', 'email', 'created_at', 'updated_at', 'Registration_Number', 'Mobile', 'First_Name', 'Last_Name', 'DOB', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'county_code', 'iDistrictID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId','Profile_created_for','repeat_password','Gender','toc','iHeightID','vSkinTone','vBodyType','vSmoke','vDrink','vDiet','iFatherStatusID','iMotherStatusID','nob','nos','iCountryCAId','iStateCAId','iDistrictCAID','iTalukaCAID','iCityCAId','vParentsResiding','mother_tongue','weight', 'phone_pin', 'email_pin'], 'required'],
-            [['status', 'created_at', 'updated_at', 'Age', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID'], 'integer'],
-            [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus'], 'string'],
-            [['DOB', 'Time_of_Birth','cnb','iSubCommunity_ID','vAreaName','iGotraID'], 'safe'],
-            [['DOB'],'checkDobYear'],
-            [['noc','nob','nos','weight'],'integer','integerOnly'=>true,'min' => 0],
-            [['auth_key'], 'string', 'max' => 32],
-            [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
-            [['Registration_Number', 'Birth_Place'], 'string', 'max' => 250],
-            [['Mobile'], 'string', 'max' => 20],
-            [['First_Name', 'Last_Name'], 'string', 'max' => 100],
-            [['county_code'], 'string', 'max' => 5],
-            [['First_Name', 'Last_Name'], 'string', 'max' => 100],
-            [['email_pin', 'phone_pin'], 'string', 'max' => 4, 'min' => 4],
-            // [['username'], 'unique'],
-             [['email'], 'unique'],
-            //[['captcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'secret' => '6Lc2xSgTAAAAAC37FZoNHA6KreseSCE5TrORJIbp'],
-           // [['captcha'],'required'],
-           // [['captcha'],'captcha'],
-            [['email'], 'email'],
-            [['password_hash','repeat_password'], 'string', 'length' => [6,255]],
-            [['tYourSelf'], 'string','max' => '100'],
-            [['tYourSelf'], 'required', 'on' => self::SCENARIO_EDIT_MY_INFO],
-            [['repeat_password'],'compare','compareAttribute' => 'password_hash', 'message'=>"Passwords don't match"],
-            [['password_reset_token'], 'unique'],
-        ];
-    }
-
-    public function scenarios()
-    {
-        return [
-            self::SCENARIO_LOGIN => ['password_hash'],
-            self::SCENARIO_REGISTER => ['email', 'password_hash', 'repeat_password', 'First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for','Mobile','county_code','toc','Registration_Number'],
-            self::SCENARIO_REGISTER1 => ['iReligion_ID','First_Name', 'Last_Name','iCommunity_ID', 'iSubCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'noc', 'vAreaName','cnb'],
-            self::SCENARIO_REGISTER2 => ['First_Name', 'Last_Name','iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID'],
-            self::SCENARIO_REGISTER3 => ['iHeightID', 'vSkinTone','vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet'],
-            self::SCENARIO_EDIT_LIFESTYLE => ['iHeightID', 'vSkinTone','vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet','weight'],
-            self::SCENARIO_REGISTER4 => ['completed_step','iFatherStatusID', 'iFatherWorkingAsID','iMotherStatusID', 'iMotherWorkingAsID','nob','nos','eSameAddress','iCountryCAId','iStateCAId','iDistrictCAID','iTalukaCAID','vAreaNameCA','iCityCAId','vNativePlaceCA','vParentsResiding','vFamilyAffluenceLevel','vFamilyType','vFamilyProperty','vDetailRelative'],
-            self::SCENARIO_REGISTER5 => ['tYourSelf', 'vDisability','eStatusInOwnWord'],
-            self::SCENARIO_REGISTER6 => ['propic', 'pin_email_vaerification', 'pin_phone_vaerification'],
-            self::SCENARIO_REGISTER7 => ['email_pin', 'pin_email_vaerification', 'eEmailVerifiedStatus'],
-            #self::SCENARIO_REGISTER7 => ['email_pin','phone_pin','pin_email_vaerification','eEmailVerifiedStatus','pin_phone_vaerification','ePhoneVerifiedStatus'],
-            self::SCENARIO_REGISTER8 => ['phone_pin', 'pin_phone_vaerification', 'ePhoneVerifiedStatus'],
-            self::SCENARIO_REGISTER9 => ['Mobile', 'county_code'],
-            self::SCENARIO_FIRST_VERIFICATION => ['eFirstVerificationMailStatus'],
-            self::SCENARIO_FP => ['email'],
-            "default"=>array('id'),
-            self::SCENARIO_FP => ['email','password_hash','password_reset_token'],
-            self::SCENARIO_SFP => ['email','password_reset_token'],
-            self::SCENARIO_EDIT_MY_INFO => ['tYourSelf'],
-            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for','Mobile','county_code','mother_tongue','Marital_Status'],
-        ];
-
-    }
-
-    
     public static function findIdentity($id)
     {
         return static::findOne(['id' => $id, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]]);
@@ -201,16 +139,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $timestamp + $expire >= time();
     }
 
-    /**
-     * FOR GET STATUS NAME
-     */
-    public static function findByApprove($id)
-    {
-        #echo "========= ".$email;exit;
-        #return static::findOne(['email' => $email]);
-    }
-
-    public static function wightegeCheck($type)
+    public static function weightedCheck($type)
     {
         $iUserId = Yii::$app->user->identity->id;
         $USER = User::findOne($iUserId);
@@ -232,6 +161,67 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         } else {
             return 0;
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['auth_key', 'password_hash', 'email', 'created_at', 'updated_at', 'Registration_Number', 'Mobile', 'First_Name', 'Last_Name', 'DOB', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'county_code', 'iDistrictID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'Profile_created_for', 'repeat_password', 'Gender', 'toc', 'iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vDiet', 'iFatherStatusID', 'iMotherStatusID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'iCityCAId', 'vParentsResiding', 'mother_tongue', 'weight', 'phone_pin', 'email_pin'], 'required'],
+            [['status', 'created_at', 'updated_at', 'Age', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID'], 'integer'],
+            [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus'], 'string'],
+            [['DOB', 'Time_of_Birth', 'cnb', 'iSubCommunity_ID', 'vAreaName', 'iGotraID'], 'safe'],
+            [['DOB'], 'checkDobYear'],
+            [['noc', 'nob', 'nos', 'weight'], 'integer', 'integerOnly' => true, 'min' => 0],
+            [['auth_key'], 'string', 'max' => 32],
+            [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['Registration_Number', 'Birth_Place'], 'string', 'max' => 250],
+            [['Mobile'], 'string', 'max' => 20],
+            [['First_Name', 'Last_Name'], 'string', 'max' => 100],
+            [['county_code'], 'string', 'max' => 5],
+            [['First_Name', 'Last_Name'], 'string', 'max' => 100],
+            [['email_pin', 'phone_pin'], 'string', 'max' => 4, 'min' => 4],
+            // [['username'], 'unique'],
+            [['email'], 'unique'],
+            //[['captcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'secret' => '6Lc2xSgTAAAAAC37FZoNHA6KreseSCE5TrORJIbp'],
+            // [['captcha'],'required'],
+            // [['captcha'],'captcha'],
+            [['email'], 'email'],
+            [['password_hash', 'repeat_password'], 'string', 'length' => [6, 255]],
+            [['tYourSelf'], 'string', 'max' => '100'],
+            [['tYourSelf'], 'required', 'on' => self::SCENARIO_EDIT_MY_INFO],
+            [['repeat_password'], 'compare', 'compareAttribute' => 'password_hash', 'message' => "Passwords don't match"],
+            [['password_reset_token'], 'unique'],
+        ];
+    }
+
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_LOGIN => ['password_hash'],
+            self::SCENARIO_REGISTER => ['email', 'password_hash', 'repeat_password', 'First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'toc', 'Registration_Number'],
+            self::SCENARIO_REGISTER1 => ['iReligion_ID', 'First_Name', 'Last_Name', 'iCommunity_ID', 'iSubCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'noc', 'vAreaName', 'cnb'],
+            self::SCENARIO_REGISTER2 => ['First_Name', 'Last_Name', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID'],
+            self::SCENARIO_REGISTER3 => ['iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet'],
+            self::SCENARIO_EDIT_LIFESTYLE => ['iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet', 'weight'],
+            self::SCENARIO_REGISTER4 => ['completed_step', 'iFatherStatusID', 'iFatherWorkingAsID', 'iMotherStatusID', 'iMotherWorkingAsID', 'nob', 'nos', 'eSameAddress', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'vAreaNameCA', 'iCityCAId', 'vNativePlaceCA', 'vParentsResiding', 'vFamilyAffluenceLevel', 'vFamilyType', 'vFamilyProperty', 'vDetailRelative'],
+            self::SCENARIO_REGISTER5 => ['tYourSelf', 'vDisability', 'eStatusInOwnWord'],
+            self::SCENARIO_REGISTER6 => ['propic', 'pin_email_vaerification', 'pin_phone_vaerification'],
+            self::SCENARIO_REGISTER7 => ['email_pin', 'pin_email_vaerification', 'eEmailVerifiedStatus'],
+            #self::SCENARIO_REGISTER7 => ['email_pin','phone_pin','pin_email_vaerification','eEmailVerifiedStatus','pin_phone_vaerification','ePhoneVerifiedStatus'],
+            self::SCENARIO_REGISTER8 => ['phone_pin', 'pin_phone_vaerification', 'ePhoneVerifiedStatus'],
+            self::SCENARIO_REGISTER9 => ['Mobile', 'county_code'],
+            self::SCENARIO_FIRST_VERIFICATION => ['eFirstVerificationMailStatus'],
+            self::SCENARIO_FP => ['email'],
+            "default" => array('id'),
+            self::SCENARIO_FP => ['email', 'password_hash', 'password_reset_token'],
+            self::SCENARIO_SFP => ['email', 'password_reset_token'],
+            self::SCENARIO_EDIT_MY_INFO => ['tYourSelf'],
+            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status'],
+        ];
+
     }
 
     /**
@@ -577,28 +567,6 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $this->hasOne(MotherTongue::className(), ['ID' => 'mother_tongue']);
     }
 
-    function getUserInfo(){
-        /*$query = new Query;
-        $query	->select([
-                'user.First_Name',
-                'master_community.vName as  cName'
-            ])
-            ->from('user')
-            ->join('LEFT JOIN', 'master_community',
-                'master_community.iCommunity_ID  = user.iCommunity_ID')
-            ->LIMIT(5)	;
-
-        $command = $query->createCommand();
-        print_r($query->createCommand()->getRawSql());exit;
-        $data = $command->queryAll();*/
-        $sql = 'SELECT * FROM user WHERE 1=1';
-        $query = User::findBySql($sql)->all();
-        #echo $query->createCommand()->sql;
-        echo "<pre>"; print_r($query);
-        exit;
-
-    }
-
     public function getPermentAddress()
     {
         return $this->vAreaName.", ".$this->talukaName->vName.", ".$this->districtName->vName.", ".$this->cityName->vCityName.", ".$this->stateName->vStateName.", ".$this->countryName->vCountryName;
@@ -609,7 +577,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $this->vAreaNameCA.", ".$this->talukaNameCA->vName.", ".$this->districtNameCA->vName.", ".$this->cityNameCA->vCityName.", ".$this->stateNameCA->vStateName.", ".$this->countryNameCA->vCountryName;
     }
 
-    public function generateUniqueRandomNumber($length = 9) {
+    /*public function generateUniqueRandomNumber($length = 9) {
         $PREFIX = CommonHelper::generatePrefix();
         $RANDOM_USER_NUMBER = $PREFIX.CommonHelper::generateNumericUniqueToken($length);
         if(!$this->findOne(['Registration_Number' => $RANDOM_USER_NUMBER]))
@@ -617,7 +585,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         else
             return $this->generateUniqueRandomNumber($length);
 
-    }
+    }*/
 
     public function getDisplayMobile(){
         return ($this->county_code != '') ? $this->county_code . " " . $this->Mobile : $this->Mobile;

@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\widgets\Pjax;
+use common\components\MessageHelper;
 
 if ($show) {
     $form = ActiveForm::begin([
@@ -36,7 +37,15 @@ if ($show) {
 } else {
   ?>
     <p class="dis_my_info"><?= $model->tYourSelf; ?></p>
-  <?php 
+    <?php
+    if ($popup) {
+        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'CHANGE_YOURSELF_DETAIL');
+        $this->registerJs(' 
+            notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
+        ');
+    }
+    ?>
+    <?php
 }
 ?>
 
@@ -44,16 +53,12 @@ if ($show) {
   $this->registerJs('
     $("#form").on("submit",function(e){
       var tYourSelf = $("#tYourSelf").val();
-      
-
       $(".error-field").removeClass("error-field");
-      
       var error_flag = true;
       if(tYourSelf == ""){
         $("#tYourSelf").addClass("error-field");
         error_flag = false;
       }
-
       if(!error_flag){
          $("#top-error").show();
         return false;

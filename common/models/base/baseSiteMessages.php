@@ -28,7 +28,7 @@ class baseSiteMessages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['message_action', 'message_value'], 'required'],
+            [['message_action', 'message_value', 'Subject'], 'required'],
             [['message_type', 'message_value'], 'string'],
             [['message_action'], 'string', 'max' => 200],
         ];
@@ -44,6 +44,7 @@ class baseSiteMessages extends \yii\db\ActiveRecord
             'message_action' => 'Message Action',
             'message_type' => 'Message Type',
             'message_value' => 'Message Value',
+            'Subject' => 'Subject',
         ];
     }
 }

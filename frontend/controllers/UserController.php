@@ -65,6 +65,9 @@ class UserController extends Controller
             ],
         ];
     }*/
+    public $STATUS;
+    public $MESSAGE;
+    public $TITLE;
 
     public static function profileCompleteness($x)
     {
@@ -212,10 +215,7 @@ class UserController extends Controller
 
     public function actionPhotoupload($id)
     {
-        #$id = base64_decode($id);
         $id = Yii::$app->user->identity->id;
-        $STATUS = "SUCCESS";
-        $MESSAGE = 'Photo Upload Successfully.';
         if ($model = User::findOne($id)) {
             $model->scenario = User::SCENARIO_REGISTER6;
             $FILE_COUNT = count($_FILES);
@@ -236,8 +236,9 @@ class UserController extends Controller
                         $PG->dtModified = CommonHelper::getTime();
                         $ACTION_FLAG = $PG->save();
                         if (!$ACTION_FLAG) {
-                            $STATUS = "ERROR";
-                            $MESSAGE = 'Photo Not Uploaded. Please Try Again !';
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHOTO_UPLOAD');
+                        } else {
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHOTO_UPLOAD');
                         }
                     }
                 }
@@ -247,7 +248,7 @@ class UserController extends Controller
             $OUTPUT_HTML_ONE = '';
             $OUTPUT_HTML .= $this->getPhotoListOutput();
             $OUTPUT_HTML_ONE .= $this->getPhotoListOutputOne();
-            $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'OUTPUT' => $OUTPUT_HTML, 'OUTPUT_ONE' => $OUTPUT_HTML_ONE);
+            $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE, 'OUTPUT' => $OUTPUT_HTML, 'OUTPUT_ONE' => $OUTPUT_HTML_ONE);
             Yii::$app->response->format = Response::FORMAT_JSON;
             return $return;
 
@@ -340,11 +341,9 @@ class UserController extends Controller
                     $PROFILE_PHOTO_ONE = CommonHelper::getPhotos('USER', $id, $PHOTO, '30');
                 }
                 if ($ACTION_FLAG) {
-                    $STATUS = 'SUCCESS';
-                    $MESSAGE = 'Photo Deleted Successfully.';
+                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHOTO_DELETE');
                 } else {
-                    $STATUS = 'ERROR';
-                    $MESSAGE = 'Photo Not Deleted. Please Try Again !';
+                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHOTO_DELETE');
 
                 }
             }
@@ -365,13 +364,11 @@ class UserController extends Controller
                 $USER_PHOTOS_LIST->eStatus = 'Pending';
                 $USER_PHOTOS_LIST->save();
                 if ($ACTION_FLAG) {
-                    $STATUS = 'SUCCESS';
-                    $MESSAGE = 'Photo Set AS Profile Photo.';
                     $PROFILE_PHOTO .= CommonHelper::getPhotos('USER', $id, $PHOTO, '200');
                     $PROFILE_PHOTO_ONE = CommonHelper::getPhotos('USER', $id, $PHOTO, '30');
+                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PROFILE_PHOTO_SET');
                 } else {
-                    $STATUS = 'ERROR';
-                    $MESSAGE = 'Photo Not Set As Profile Photo. Please Try Again !';
+                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PROFILE_PHOTO_SET');
                 }
             }
 
@@ -379,18 +376,18 @@ class UserController extends Controller
 
         $OUTPUT_HTML .= $this->getPhotoListOutput();
         $OUTPUT_HTML_ONE .= $this->getPhotoListOutputOne();
-        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'OUTPUT' => $OUTPUT_HTML, 'OUTPUT_ONE' => $OUTPUT_HTML_ONE, 'PROFILE_PHOTO' => $PROFILE_PHOTO, 'PROFILE_PHOTO_ONE' => $PROFILE_PHOTO_ONE);
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE, 'OUTPUT' => $OUTPUT_HTML, 'OUTPUT_ONE' => $OUTPUT_HTML_ONE, 'PROFILE_PHOTO' => $PROFILE_PHOTO, 'PROFILE_PHOTO_ONE' => $PROFILE_PHOTO_ONE);
         #Yii::$app->response->format = Response::FORMAT_JSON;
         return json_encode($return);
-        exit;
-
     }
+
 
     public function actionEditMyinfo(){
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_EDIT_MY_INFO;
         $show = false;
+        $popup = false;
         if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if(Yii::$app->request->post('save')){
@@ -398,6 +395,7 @@ class UserController extends Controller
                 $model->tYourSelf = Yii::$app->request->post('User')['tYourSelf'];
                 if (strcmp($tYourSelf_old, $model->tYourSelf) !== 0) {
                     $model->eStatusInOwnWord = 'Pending';
+                    $popup = true;
                 }
                 if($model->validate()){
                     $model->save();
@@ -405,19 +403,16 @@ class UserController extends Controller
                 }
             }
         }
-        if($show) {
-            return $this->actionRenderAjax($model,'_myinfo',true);
-        }
-        else {
-            return $this->actionRenderAjax($model,'_myinfo',false);
-        }
+        #return $this->actionRenderAjax($model,'_myinfo',true);
+        return $this->actionRenderAjax($model, '_myinfo', $show, $popup);
     }
 
-    function actionRenderAjax($model, $view, $show = false)
+    function actionRenderAjax($model, $view, $show = false, $popup = false)
     {
         return $this->renderAjax($view, [
             'model' => $model,
             'show' => $show,
+            'popup' => $popup,
         ]);
     }
 
@@ -444,7 +439,7 @@ class UserController extends Controller
                 }
             }
         }
-       
+
         return $this->actionRenderAjax($model,'_personalinfo',$show);
     }
 
@@ -604,17 +599,17 @@ class UserController extends Controller
         $PartnersEducationalLevel = PartnersEducationalLevel::findByUserId($id) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findByUserId($id);
         $PartnersEducationField = PartnersEducationField::findByUserId($id) == NULL ? new PartnersEducationField() : PartnersEducationField::findByUserId($id);
         $model = User::findOne($id);
-        
+
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if(Yii::$app->request->post('save')){
                 $CurrDate = date('Y-m-d H:i:s');
-                
-                $ReligionId = Yii::$app->request->post('PartenersReligion')['iReligion_ID'];                
+
+                $ReligionId = Yii::$app->request->post('PartenersReligion')['iReligion_ID'];
                 $PartenersReligion->iUser_ID = $id;
-                $PartenersReligion->iReligion_ID = $ReligionId;   
-                $PartenersReligion->dtModified = $CurrDate;            
+                $PartenersReligion->iReligion_ID = $ReligionId;
+                $PartenersReligion->dtModified = $CurrDate;
                 if($PartenersReligion->iPartners_Religion_ID == ""){
                     $PartenersReligion->dtCreated = $CurrDate;
                 }
@@ -624,7 +619,7 @@ class UserController extends Controller
                 $UPP->age_from = Yii::$app->request->post('UserPartnerPreference')['age_from'];
                 $UPP->age_to = Yii::$app->request->post('UserPartnerPreference')['age_to'];
                 $UPP->modified_on = $CurrDate;
-                
+
                 if($UPP->ID == ""){
                     $UPP->created_on = $CurrDate;
                 }
@@ -632,8 +627,8 @@ class UserController extends Controller
 
                 $MaritalStatusID = Yii::$app->request->post('PartnersMaritalStatus')['iMarital_Status_ID'];
                 $PartnersMaritalStatus->iUser_ID = $id;
-                $PartnersMaritalStatus->iMarital_Status_ID = $MaritalStatusID;   
-                $PartnersMaritalStatus->dtModified = $CurrDate;            
+                $PartnersMaritalStatus->iMarital_Status_ID = $MaritalStatusID;
+                $PartnersMaritalStatus->dtModified = $CurrDate;
                 if($PartnersMaritalStatus->iPartners_Marital_Status_ID == ""){
                     $PartnersMaritalStatus->dtCreated = $CurrDate;
                 }
@@ -641,8 +636,8 @@ class UserController extends Controller
 
                 $GotraID = Yii::$app->request->post('PartnersGotra')['iGotra_ID'];
                 $PartnersGotra->iUser_ID = $id;
-                $PartnersGotra->iGotra_ID = $GotraID;   
-                $PartnersGotra->dtModified = $CurrDate;            
+                $PartnersGotra->iGotra_ID = $GotraID;
+                $PartnersGotra->dtModified = $CurrDate;
                 if($PartnersGotra->iPartners_Gotra_ID == ""){
                     $PartnersGotra->dtCreated = $CurrDate;
                 }
@@ -651,8 +646,8 @@ class UserController extends Controller
 
                 $FatherStatusID = Yii::$app->request->post('PartnersFathersStatus')['iFather_Status_ID'];
                 $PartnersFathersStatus->iUser_ID = $id;
-                $PartnersFathersStatus->iFather_Status_ID = $FatherStatusID;   
-                $PartnersFathersStatus->dtModified = $CurrDate;            
+                $PartnersFathersStatus->iFather_Status_ID = $FatherStatusID;
+                $PartnersFathersStatus->dtModified = $CurrDate;
                 if($PartnersFathersStatus->iPartners_Fathers_ID == ""){
                     $PartnersFathersStatus->dtCreated = $CurrDate;
                 }
@@ -660,8 +655,8 @@ class UserController extends Controller
 
                 $MotherStatusID = Yii::$app->request->post('PartnersMothersStatus')['iMother_Status_ID'];
                 $PartnersMothersStatus->iUser_ID = $id;
-                $PartnersMothersStatus->iMother_Status_ID = $MotherStatusID;   
-                $PartnersMothersStatus->dtModified = $CurrDate;            
+                $PartnersMothersStatus->iMother_Status_ID = $MotherStatusID;
+                $PartnersMothersStatus->dtModified = $CurrDate;
                 if($PartnersMothersStatus->iPartners_Mother_ID == ""){
                     $PartnersMothersStatus->dtCreated = $CurrDate;
                 }
@@ -669,8 +664,8 @@ class UserController extends Controller
 
                 $EducationLevelID = Yii::$app->request->post('PartnersEducationalLevel')['iEducation_Level_ID'];
                 $PartnersEducationalLevel->iUser_ID = $id;
-                $PartnersEducationalLevel->iEducation_Level_ID = $EducationLevelID;   
-                $PartnersEducationalLevel->dtModified = $CurrDate;            
+                $PartnersEducationalLevel->iEducation_Level_ID = $EducationLevelID;
+                $PartnersEducationalLevel->dtModified = $CurrDate;
                 if($PartnersEducationalLevel->iPartners_Educational_Level_ID == ""){
                     $PartnersEducationalLevel->dtCreated = $CurrDate;
                 }
@@ -678,29 +673,29 @@ class UserController extends Controller
 
                 $EducationFieldID = Yii::$app->request->post('PartnersEducationField')['iEducation_Field_ID'];
                 $PartnersEducationField->iUser_ID = $id;
-                $PartnersEducationField->iEducation_Field_ID = $EducationFieldID;   
-                $PartnersEducationField->dtModified = $CurrDate;            
+                $PartnersEducationField->iEducation_Field_ID = $EducationFieldID;
+                $PartnersEducationField->dtModified = $CurrDate;
                 if($PartnersEducationField->iPartners_Education_Field_ID == ""){
                     $PartnersEducationField->dtCreated = $CurrDate;
                 }
                 $PartnersEducationField->save();
 
                 $show = false;
-             
+
             }
         }
         $myModel = [
-                'PartenersReligion' => $PartenersReligion,
-                'model' => $model,
-                'UPP' => $UPP,
-                'PartnersMaritalStatus'=>$PartnersMaritalStatus,
-                'PartnersGotra'=>$PartnersGotra,
-                'PartnersFathersStatus'=>$PartnersFathersStatus,
-                'PartnersMothersStatus'=>$PartnersMothersStatus,
-                'PartnersEducationalLevel'=>$PartnersEducationalLevel,
-                'PartnersEducationField'=>$PartnersEducationField,
-                'show' => $show
-            ];
+            'PartenersReligion' => $PartenersReligion,
+            'model' => $model,
+            'UPP' => $UPP,
+            'PartnersMaritalStatus' => $PartnersMaritalStatus,
+            'PartnersGotra' => $PartnersGotra,
+            'PartnersFathersStatus' => $PartnersFathersStatus,
+            'PartnersMothersStatus' => $PartnersMothersStatus,
+            'PartnersEducationalLevel' => $PartnersEducationalLevel,
+            'PartnersEducationField' => $PartnersEducationField,
+            'show' => $show
+        ];
         return $this->renderAjax('_preferences', $myModel);
     }
 
@@ -757,8 +752,6 @@ class UserController extends Controller
     {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
-        $STATUS = "SUCCESS";
-        $MESSAGE = 'Cover Photo Upload Successfully.';
         $P_ID = Yii::$app->request->post('position');
         $position = $P_ID;
         if ($position != '') {
@@ -773,16 +766,14 @@ class UserController extends Controller
                 $PHOTO_ARRAY = $CM_HELPER->coverPhotoUpload($id, $_FILES['cover_photo'], $PATH, $URL, '', $OLD_PHOTO);
                 $model->cover_photo = $PHOTO_ARRAY['PHOTO'];
             } else {
-                $STATUS = "SUCCESS";
-                $MESSAGE = 'Cover Photo Set Successfully.';
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'COVER_PHOTO_SET');
                 //$PHOTO_ARRAY = $CM_HELPER->coverPhotoUpload($id, $_FILES['cover_photo'], $PATH, $URL, '', $OLD_PHOTO);
             }
 
             $model->cover_background_position = $position;
             $ACTION_FLAG = $model->save();
             if (!$ACTION_FLAG) {
-                $STATUS = "ERROR";
-                $MESSAGE = 'Photo Not Uploaded. Please Try Again !';
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'COVER_PHOTO_UPLOAD');
             }
         }
         $OUTPUT_HTML = '';
@@ -790,7 +781,7 @@ class UserController extends Controller
         $OUTPUT_HTML .= $this->getPhotoListOutput();
         $OUTPUT_HTML_ONE .= $this->getPhotoListOutputOne();
 
-        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'OUTPUT' => $OUTPUT_HTML, 'OUTPUT_ONE' => $OUTPUT_HTML_ONE);
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE, 'OUTPUT' => $OUTPUT_HTML, 'OUTPUT_ONE' => $OUTPUT_HTML_ONE);
         Yii::$app->response->format = Response::FORMAT_JSON;
         return $return;
     }
@@ -801,14 +792,13 @@ class UserController extends Controller
         $model = User::findOne($id);
         $user_privacy_option = $P_ID = Yii::$app->request->post('user_privacy_option');
         $model->user_privacy_option = $user_privacy_option;
-        $ACTION_FLAG = $model->save();
-        $STATUS = "SUCCESS";
-        $MESSAGE = 'Privacy Setting Save Successfully.';
-        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE);
-        #$Yii::$app->response->format = Response::FORMAT_JSON;
-        #return $return;
+        if ($model->save()) {
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PRIVACY_SETTING');
+        } else {
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PRIVACY_SETTING');
+        }
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
         return json_encode($return);
-        exit;
     }
 
     public function actionGetCoverPhotoFromPhoto($position = '')
@@ -866,14 +856,12 @@ class UserController extends Controller
                 $model->cover_background_position = $position;
                 $ACTION_FLAG = $model->save();
                 if (!$ACTION_FLAG) {
-                    $STATUS = "ERROR";
-                    $MESSAGE = 'Cover Photo Not Set. Please Try Again !';
+                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'COVER_PHOTO_SET');
                 } else {
-                    $STATUS = "SUCCESS";
-                    $MESSAGE = 'Cover Photo Set Successfully.';
+                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'COVER_PHOTO_SET');
                 }
             }
-            $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE);
+            $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
             //Yii::$app->response->format = Response::FORMAT_JSON;
             return json_encode($return);
         }
@@ -885,115 +873,24 @@ class UserController extends Controller
         $model = User::findOne($id);
         $HS = '';
         $OUTPUT = '';
-        $STATUS = "SUCCESS";
-
         if ($model->hide_profile == 'Yes') {
             $HS = 'No';
             $OUTPUT .= '<a href="javascript:void(0)" data-target="#hideProfile"
                                 data-toggle="modal" class="hideshowmenu" data-name="No">
                                 <i class="fa fa-eye-slash"></i> Hide Profile</a>';
-            $MESSAGE = 'Your Profile Show Successfully.';
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PROFILE_SHOW');
         } else {
             $HS = 'Yes';
             $OUTPUT .= '<a href="javascript:void(0)" data-target="#hideProfile"
                                 data-toggle="modal" class="hideshowmenu" data-name="Yes">
                                 <i class="fa fa-eye"></i> Show Profile</a>';
-            $MESSAGE = 'Your Profile Hide Successfully.';
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PROFILE_HIDE');
         }
         $model->hide_profile = $HS;
-        $ACTION_FLAG = $model->save();
-        if (!$ACTION_FLAG) {
-            $STATUS = 'ERROR';
-        }
-
-        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'OUTPUT' => $OUTPUT);
+        $model->save();
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'OUTPUT' => $OUTPUT, 'TITLE' => $TITLE);
         #$Yii::$app->response->format = Response::FORMAT_JSON;
-        #return $return;
         return json_encode($return);
-        exit;
-    }
-
-    public function actionSuggestTagAdd() # Add Tag which are in suggested list
-    {
-        $id = Yii::$app->user->identity->id;
-        $ACTION = Yii::$app->request->post('ACTION');
-        $STATUS = $MESSAGE = $USER_TAG_LIST = $TAG_LIST_SUGGEST = '';
-        if ($ACTION != '' && $ACTION == 'ADD-TAG') {
-            $TAG_ID = Yii::$app->request->post('TAG_ID');
-            $USER_TAG = new UserTag();
-            $USER_TAG->iUser_Id = $id;
-            $USER_TAG->tag_id = $TAG_ID;
-            $ACTION_FLAG = $USER_TAG->save();
-            if (!$ACTION_FLAG) {
-                $STATUS = "ERROR";
-                $MESSAGE = 'Tag Not Added. Please Try Again !';
-            } else {
-                $STATUS = "SUCCESS";
-                $MESSAGE = 'Tag Added Successfully.';
-                $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
-                foreach ($TAG_LIST_USER as $TK => $TV) {
-                    $USER_TAG_LIST .= '<span class="tag label label-danger" id="tag_delete_' . $TV->id . '">
-                                           ' . $TV->tagName->Name . '
-                                          <i data-role="remove" class="fa fa-times tag_delete"
-                                                               data-id="' . $TV->id . '"></i>
-                                       </span> &nbsp;';
-                }
-            }
-        } else if ($ACTION != '' && $ACTION == 'ADD-ALL-TAG') {
-            $TAG_LIST = Tags::find()->all();
-            $TAG_LIST_USER = UserTag::find()->where(['iUser_Id' => $id])->all();
-            $IN_USER_TAG_LIST = array();
-            foreach ($TAG_LIST_USER as $TK => $TV) {
-                array_push($IN_USER_TAG_LIST, $TV['tag_id']);
-            }
-            foreach ($TAG_LIST as $K => $V) {
-                if (!in_array($V['ID'], $IN_USER_TAG_LIST)) {
-                    #echo " <br> if ",$V['ID'];
-                    $USER_TAG = new UserTag();
-                    $USER_TAG->iUser_Id = $id;
-                    $USER_TAG->tag_id = $V['ID'];
-                    $ACTION_FLAG = $USER_TAG->save();
-                }
-            }
-            $STATUS = "SUCCESS";
-            $MESSAGE = 'All Tag Added Successfully.';
-            $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
-            foreach ($TAG_LIST_USER as $TK => $TV) {
-                $USER_TAG_LIST .= '<span class="tag label label-danger">
-                                           ' . $TV->tagName->Name . '
-                                          <i data-role="remove" class="fa fa-times"></i>
-                                       </span> &nbsp;';
-                #echo "<pre>";print_r($IN_USER_TAG_LIST);exit;
-            }
-            $TAG_LIST_SUGGEST = '<span class="tag label label-default">Tag Suggestion Not Available</span>';
-
-        } else if ($ACTION != '' && $ACTION == 'DELETE-TAG') {
-            $TAG_ID = Yii::$app->request->post('TAG_ID');
-            UserTag::deleteAll(['id' => $TAG_ID]);
-            $TAG_LIST = Tags::find()->all();
-            $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
-            $IN_USER_TAG_LIST = array();
-            foreach ($TAG_LIST_USER as $TK => $TV) {
-                array_push($IN_USER_TAG_LIST, $TV['tag_id']);
-            }
-            $STATUS = "SUCCESS";
-            $MESSAGE = 'Tag Deleted Successfully.';
-            foreach ($TAG_LIST_USER as $TK => $TV) {
-            }
-            foreach ($TAG_LIST as $TK => $TV) {
-                if (!in_array($TV['ID'], $IN_USER_TAG_LIST)) {
-                    $TAG_LIST_SUGGEST .= '<button class="btn btn-default suggest_tag" data-id="' . $TV['ID'] . '">' . $TV['Name'] . '</button> &nbsp;';
-                }
-            }
-        }
-
-        $TAG_LIST = Tags::find()->all();
-        $TAG_LIST_USER = UserTag::find()->where(['iUser_Id' => $id])->all();
-        $TAG_COUNT = count($TAG_LIST_USER) . "/" . count($TAG_LIST);
-        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, "USER_TAG_LIST" => $USER_TAG_LIST, 'TAG_LIST_SUGGEST' => $TAG_LIST_SUGGEST, 'TAG_COUNT' => $TAG_COUNT);
-        #Yii::$app->response->format = Response::FORMAT_JSON;
-        return json_encode($return);
-        exit;
     }
 
     public function actionAccountDelete() # Account Delete
@@ -1013,5 +910,63 @@ class UserController extends Controller
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
         //Yii::$app->response->format = Response::FORMAT_JSON;
         return json_encode($return);
+    }
+
+    public function actionTagList()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $show = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('TagId') != '' && Yii::$app->request->post('TagId') != 0)) {
+            $show = true;
+            $TagId = Yii::$app->request->post('TagId');
+            if ($TagId) {
+                $USER_TAG = new UserTag();
+                $USER_TAG->iUser_Id = $id;
+                $USER_TAG->tag_id = $TagId;
+                $USER_TAG->save();
+            }
+        }
+        $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
+        return $this->actionRenderAjax($TAG_LIST_USER, '_tags', $show);
+    }
+
+    public function actionTagDelete()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        if (Yii::$app->request->post() && (Yii::$app->request->post('TagId') != '' && Yii::$app->request->post('TagId') != 0)) {
+            $TagId = Yii::$app->request->post('TagId');
+            if ($TagId) {
+                UserTag::deleteAll(['id' => $TagId]);
+            }
+        }
+    }
+
+    public function actionTagSuggestionList()
+    { //tag-suggestion-list
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $show = false;
+        $UserTagList = array();
+        $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
+        if (count($TAG_LIST_USER) != 0) {
+            foreach ($TAG_LIST_USER as $TK => $TV) {
+                array_push($UserTagList, $TV->tag_id);
+            }
+        }
+        $TAG_LIST = Tags::find()->where(['not in', 'ID', $UserTagList])->orderBy('rand()')->all();
+        return $this->actionRenderAjax($TAG_LIST, '_tagssuggestion', $show);
+    }
+
+    public function actionTagCount()
+    { //tag-suggestion-list
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $show = false;
+        $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
+        $TAG_LIST = Tags::find()->orderBy('rand()')->all();
+        $TAG_COUNT = count($TAG_LIST_USER) . "/" . count($TAG_LIST);
+        return $this->actionRenderAjax($TAG_COUNT, '_tagscount', $show);
     }
 }
