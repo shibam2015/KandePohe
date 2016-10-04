@@ -209,20 +209,21 @@ $(document).ready(function(){
 
 });
 /* NOTIFICATION POPUP START */
-function notificationPopup(type, msg) {
+function notificationPopup(type, msg, title) {
     $(".modal").modal("hide");
-    if (type == 'SUCCESS') {
+    if (type == 'SUCCESS' || type == 'S') {
         var msg = '<span class="text-success"><strong>&#10003;</strong></span> ' + msg;
         $('#notification_msg').html(msg);
-        $('#notification_header').html(type);
-    } else if (type == 'ERROR') {
+        //$('#notification_header').html(type);
+    } else if (type == 'ERROR' || type == 'E') {
         var msg = '<span class="text-error"><strong>&#215;</strong></span> ' + msg;
         $('#notification_msg').html(msg);
-        $('#notification_header').html(type);
+        //$('#notification_header').html(type);
     } else {
-        $('#notification_header').html('Information');
+
     }
 
+    $('#notification_header').html(title);
     $("#notification-model").modal("show");
 }
 /* NOTIFICATION POPUP END */

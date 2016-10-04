@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\components\CommonHelper;
+use common\components\MessageHelper;
 use common\models\Tags;
 use common\models\UserPhotos;
 use common\models\UserTag;
@@ -966,16 +967,17 @@ class UserController extends Controller
     {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
-        $STATUS = "SUCCESS";
-        $MESSAGE = 'Your Profile successfully deleted. <br>Please Wait for a few second.';
         $model->status = STATUS_DELETED;
-        $model->save();
-        $LINK = CommonHelper::getSiteUrl('BACKEND') . 'user/' . $id;
-        $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "LINK" => $LINK);
-        MailHelper::SendMail('ADMIN_DELETE_ACCOUNT_USER', $MAIL_DATA);
-        Yii::$app->user->logout();
-
-        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE);
+        if ($model->save()) {
+            $LINK = CommonHelper::getSiteUrl('BACKEND') . 'user/' . $id;
+            $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "LINK" => $LINK);
+            MailHelper::SendMail('ADMIN_DELETE_ACCOUNT_USER', $MAIL_DATA);
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'ACCOUNT_DELETE');
+            Yii::$app->user->logout();
+        } else {
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'ACCOUNT_DELETE');
+        }
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
         //Yii::$app->response->format = Response::FORMAT_JSON;
         return json_encode($return);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\base;
+namespace common\models;
 
 use Yii;
 
@@ -12,7 +12,7 @@ use Yii;
  * @property string $message_type
  * @property string $message_value
  */
-class baseSiteMessages extends \yii\db\ActiveRecord
+class SiteMessages extends \common\models\base\baseSiteMessages
 {
     /**
      * @inheritdoc

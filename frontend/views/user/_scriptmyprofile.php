@@ -500,18 +500,18 @@ $(document).ready(function()
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == 'SUCCESS') {
+                            if (DataObject.STATUS == 'S') {
                                 $('#timelineBackground').html(DataObject.ABC);
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                                 setTimeout(function(){ 
                                       location.reload();                                      
                                 }, 1000);                    
                             } else {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            notificationPopup('ERROR', 'Request Failed');
+                            notificationPopup('ERROR', 'Request Failed', 'Error');
                         }
             });
     })            
