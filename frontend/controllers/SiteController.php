@@ -492,7 +492,7 @@ class SiteController extends Controller
                         $model->eStatusInOwnWord = 'Pending';
                     }
                     if($model->save()){
-                        $this->redirect(['site/my-photos']);
+                        $this->redirect(['user/my-photos']);
                     }
                 }
                 return $this->render('register5',[

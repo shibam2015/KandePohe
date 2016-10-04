@@ -31,7 +31,13 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 
                             <div class="white-section">
 
-                                <h3>Add Profile Photo </h3>
+                                <h3>Add Profile Photo
+                                    <?php if ($model_user->eEmailVerifiedStatus != 'Yes') { ?>
+                                        <a href="<?= $HOME_URL_SITE ?>verification" class="pull-right"><span
+                                                class="link_small">( I will do this later )</span></a>
+                                    <?php } ?>
+                                </h3>
+
                                 <div class="two-column">
                                     <div class="row">
                                         <div class="col-sm-6 bord">
@@ -182,16 +188,20 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                         <div class="col-sm-5">
 
                                             <?php
-                                            /*                    $form = ActiveForm::begin([
-                                                                    'id' => 'form-register6',
-                                                                ]);
-                                                                */ ?><!--
-                    <? /*= Html::submitButton('CONTINUE', ['class' => 'btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right', 'name' => 'CONTINUE']) */ ?>
+                                            if ($model_user->eEmailVerifiedStatus != 'Yes') {
+                                                $form = ActiveForm::begin([
+                                                    'id' => 'form-register6',
+                                                ]);
+                                                ?>
+                                                <?= Html::submitButton('CONTINUE', ['class' => 'btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right', 'name' => 'CONTINUE']) ?>
 
-                    --><?php /*ActiveForm::end(); */ ?>
+                                                <?php ActiveForm::end();
+                                            } else { ?>
                                             <a href="<?= $HOME_URL ?>user/my-profile"
-                                               class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right"> My
-                                                Profile</a>
+                                               class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right">
+                                                My Profile
+                                            </a>
+                                            <?php } ?>
                                             <h4 class="mrg-left-mins">Profile Photo Guidelines</h4>
 
                                             <div class="faces-pic">

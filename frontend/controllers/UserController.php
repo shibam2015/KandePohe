@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\components\CommonHelper;
 use common\components\MessageHelper;
+use common\components\SmsHelper;
 use common\models\Tags;
 use common\models\UserPhotos;
 use common\models\UserTag;
@@ -162,14 +163,47 @@ class UserController extends Controller
     public function actionPhotos()
     {
         if (!Yii::$app->user->isGuest) {
-            #$id = base64_decode($id);
-            $id = Yii::$app->user->identity->id;
-            #$id = base64_decode($id);
+            /*$id = Yii::$app->user->identity->id;
             $USER_PHOTO_MODEL = new UserPhotos();
             $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
             return $this->render('photos', [
                 'model' => $USER_PHOTOS_LIST
-            ]);
+            ]);*/
+            $id = Yii::$app->user->identity->id;
+            $USER_PHOTO_MODEL = new UserPhotos();
+            $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
+            if ($model = User::findOne($id)) {
+                $model->scenario = User::SCENARIO_REGISTER6;
+                $target_dir = Yii::getAlias('@web') . '/uploads/';
+                if (Yii::$app->request->post()) {
+                    if ($model->eEmailVerifiedStatus == 'No' && $model->pin_email_vaerification == '') {
+                        $PIN = (rand(1000, 9999));
+                        $model->pin_email_vaerification = $PIN;
+                        $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
+                        MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
+                    }
+                    if ($model->ePhoneVerifiedStatus == 'No' && $model->pin_phone_vaerification == 0) {
+                        $PIN_P = (rand(1000, 9999));
+                        $model->pin_phone_vaerification = $PIN_P;
+                        if ($model->Mobile != 0 && strlen($model->Mobile) == 10) {
+                            $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                        }
+                    }
+                    $model->completed_step = $model->setCompletedStep('7');
+                    if ($model->save($model)) {
+                        $this->redirect(['site/verification']);
+                    }
+                }
+                if ($model->propic != '')
+                    $model->propic = $target_dir . $model->propic;
+
+                return $this->render('photos', [
+                    'model' => $USER_PHOTOS_LIST,
+                    'model_user' => $model
+                ]);
+            } else {
+                return $this->redirect(Yii::getAlias('@web'));
+            }
         } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
@@ -371,7 +405,6 @@ class UserController extends Controller
                 }
             }
         }
-
         if($show) {
             return $this->actionRenderAjax($model,'_myinfo',true);
         }
