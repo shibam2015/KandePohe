@@ -1,43 +1,30 @@
 <?php
-
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use common\components\MailHelper;
 use yii\helpers\ArrayHelper;
-
 $HOME_URL = Yii::getAlias('@web') . "/";
 $HOME_URL_SITE = Yii::getAlias('@web') . "/site/";
-
 $HOME_PAGE_URL = Yii::getAlias('@web') . "/";
 $UPLOAD_DIR = Yii::getAlias('@frontend') . '/web/uploads/';
 $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
-#echo "<pre>"; print_r($model);
 ?>
-
 <div class="">
     <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
     <main>
-
         <div class="main-section">
-
             <section>
-
                 <div class="container">
-
                     <div class="row">
-
                         <div class="col-sm-12">
-
                             <div class="white-section">
-
                                 <h3>Add Profile Photo
                                     <?php if ($model_user->eEmailVerifiedStatus != 'Yes') { ?>
                                         <a href="<?= $HOME_URL_SITE ?>verification" class="pull-right"><span
                                                 class="link_small">( I will do this later )</span></a>
                                     <?php } ?>
                                 </h3>
-
                                 <div class="two-column">
                                     <div class="row">
                                         <div class="col-sm-6 bord">
@@ -56,24 +43,15 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                  data-target="#photo"><span class="file-input btn-file"> <i
                                                                         class="fa fa-plus-circle"></i> Add a photo </span>
                                                             </div>
-
                                                         </div>
-
                                                         <p class="mrg-tp-10">Upload a photo and get 12 times more
                                                             response</p>
-
                                                     </div>
-
                                                 </div>
-
                                                 <div class="col-sm-7">
-
                                                     <div class="upload">
-
                                                         <div>
-
                                                             <?php
-
                                                             $form = ActiveForm::begin([
                                                                 'id' => 'form-photo',
                                                             ]);
@@ -88,23 +66,15 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                             <!--</form>-->
                                                             <?php ActiveForm::end(); ?>
                                                         </div>
-
                                                         <!--<div class="bar-devider"> <span>OR</span> </div>-->
-
                                                         <!--<a class="btn btn-block btn-social btn-facebook"> <i class="fa fa-facebook"></i> Sign in with Facebook </a>-->
                                                         <div>
-
                                                         </div>
                                                     </div>
-
                                                 </div>
-
-                                                </div>
-
+                                            </div>
                                             <div class="choose-photo">
-
                                                 <div class="row" id="photo_list">
-
                                                     <?php
                                                     if (count($model) > 0) {
                                                         foreach ($model as $K => $V) {
@@ -118,23 +88,19 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                    href="#">
                                                                     <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive ' . $SELECTED, 'width' => '140', 'alt' => 'Photo' . $K]); ?>
                                                                 </a>
-
                                                                 <a href="javascript:void(0)"
                                                                    class="pull-left profile_set"
                                                                    data-id="<?= $V['iPhoto_ID'] ?>"
                                                                    data-target="#photodelete" data-toggle="modal">
                                                                     Profile pic
                                                                 </a>
-
                                                                 <a href="javascript:void(0)"
                                                                    class="pull-right profile_delete"
                                                                    data-id="<?= $V['iPhoto_ID'] ?>"
                                                                    data-target="#photodelete" data-toggle="modal">
                                                                     <i aria-hidden="true" class="fa fa-trash-o"></i>
                                                                 </a>
-
                                                             </div>
-
                                                         <?php }
                                                     } else {
                                                         ?>
@@ -143,13 +109,10 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                         </div>
                                                     <?php } ?>
                                                     <!-- <div class="col-md-3 col-sm-3 col-xs-6">
-
                                                         <a class="selected" href="#">
                                                             <?= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); ?>
                                                         </a>
-
                                                         <a href="#" class="pull-left"> Profile pic </a>
-
                                                         <a href="#" class="pull-right"> <i aria-hidden="true"
                                                                                            class="fa fa-trash-o"></i>
                                                         </a>
@@ -182,11 +145,10 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                         </div>
                                                     </div>
                                                 </div>
-                                                </div>
                                             </div>
+                                        </div>
                                         <div class="col-sm-1"></div>
                                         <div class="col-sm-5">
-
                                             <?php
                                             if ($model_user->eEmailVerifiedStatus != 'Yes') {
                                                 $form = ActiveForm::begin([
@@ -197,131 +159,86 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 
                                                 <?php ActiveForm::end();
                                             } else { ?>
-                                            <a href="<?= $HOME_URL ?>user/my-profile"
-                                               class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right">
-                                                My Profile
-                                            </a>
+                                                <a href="<?= $HOME_URL ?>user/my-profile"
+                                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right">
+                                                    My Profile
+                                                </a>
                                             <?php } ?>
                                             <h4 class="mrg-left-mins">Profile Photo Guidelines</h4>
-
                                             <div class="faces-pic">
-
                                                 <div class="row no-gutter mrg-tp-30">
-
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face1.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Close up">
-
                                                         <div class="title right">Close up</div>
-
                                                     </div>
-
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face2.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Full view">
-
                                                         <div class="title right">Full View</div>
-
                                                     </div>
-
                                                 </div>
-
                                                 <div class="row no-gutter mrg-tp-10">
-
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face2.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Side Face">
-
                                                         <div class="title wrong">Side Face</div>
-
                                                     </div>
-
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face4.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Blur Image">
-
                                                         <div class="title wrong">Blur Image</div>
-
                                                     </div>
-
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face5.jpg"
                                                             width="113" height="97" class="img-responsive" alt="Group ">
-
                                                         <div class="title wrong">Group</div>
-
                                                     </div>
-
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face6.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Watermark">
-
                                                         <div class="title wrong">Watermark</div>
-
                                                     </div>
-
                                                 </div>
-
                                             </div>
-
                                             <div class="privacy-promo">
-
                                                 <h4 class="mrg-tp-30">Other ways to upload photo</h4>
-
                                                 <div class="row">
-
                                                     <div class="col-sm-6">
-
                                                         <div class="promo">
-
-                                                            <figure><img src="<?= $HOME_PAGE_URL ?>images/icon4.jpg"
-                                                                         width="61" height="70"
-                                                                         alt="Upload from Mobile"></figure>
-
-                                                            <figcaption>
-
-                                                                <h4>Upload from Mobile</h4>
-
-                                                                <p>Click <a href="#">Click here</a> to upload photo from
-                                                                    your mobile. We will send you upload instructions
-                                                                    via SMS</p>
-
-                                                            </figcaption>
-
-                                                        </div>
-
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-
-                                                        <div class="promo">
-
-                                                            <figure><img src="<?= $HOME_PAGE_URL ?>images/icon5.jpg"
-                                                                         width="61" height="70" alt="Send via Email">
+                                                            <figure>
+                                                                <img src="<?= $HOME_PAGE_URL ?>images/icon4.jpg"
+                                                                     width="61" height="70"
+                                                                     alt="Upload from Mobile">
                                                             </figure>
 
                                                             <figcaption>
-
+                                                                <h4>Upload from Mobile</h4>
+                                                                <p>Click <a href="#">Click here</a> to upload photo from
+                                                                    your mobile. We will send you upload instructions
+                                                                    via SMS</p>
+                                                            </figcaption>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="promo">
+                                                            <figure>
+                                                                <img src="<?= $HOME_PAGE_URL ?>images/icon5.jpg"
+                                                                         width="61" height="70" alt="Send via Email">
+                                                            </figure>
+                                                            <figcaption>
                                                                 <h4>Send via Email</h4>
-
                                                                 <p>Email your photo to <a href="mailto:photos@kp.com">photos@kp.com</a>
                                                                     along with your profile id (KP245454567)</p>
-
                                                             </figcaption>
-
                                                         </div>
-
                                                     </div>
-
                                                 </div>
-
-                                                </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -329,6 +246,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                             </div>
                         </div>
                     </div>
+                </div>
             </section>
         </div>
     </main>
@@ -389,9 +307,9 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 
                 </div>
 
-                </div>
-
             </div>
+
+        </div>
 
         <!-- Modal Footer -->
 
@@ -481,7 +399,7 @@ $this->registerJs('
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == "SUCCESS") {
+                            if (DataObject.STATUS == "S") {
                                 $("#photo_list").html(DataObject.OUTPUT);
                                 $("#profile_list_popup").html(DataObject.OUTPUT_ONE);
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
@@ -529,7 +447,7 @@ $this->registerJs('
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == "SUCCESS") {
+                            if (DataObject.STATUS == "S") {
                                 if(P_TYPE=="PHOTO_PROFILE_SET"){
                                     $("#photo_list").html(DataObject.OUTPUT);
                                     $("#profile_list_popup").html(DataObject.OUTPUT_ONE);
