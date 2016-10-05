@@ -715,12 +715,7 @@ $this->registerJs('
         }
       });
     }
-
-    /*$(".suggest_tag1").click(function(e){
-        getInlineDetail("' . Url::to(['user/tag-list']) . '","#user_tag_list","0");
-        //getInlineDetail("' . Url::to(['user/tag-suggestion-list']) . '","#suggest_tag_list","1");
-        //getInlineDetail("' . Url::to(['user/tag-count']) . '","#tag_count","1");
-    });*/
+   
     getInlineDetail("' . Url::to(['user/tag-list']) . '","#user_tag_list","1");
     getInlineDetail("' . Url::to(['user/tag-suggestion-list']) . '","#suggest_tag_list","1");
     getInlineDetail("' . Url::to(['user/tag-count']) . '","#tag_count","1");

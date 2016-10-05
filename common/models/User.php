@@ -50,6 +50,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const SCENARIO_EDIT_MY_INFO = 'Edit My Info';
     const SCENARIO_EDIT_PERSONAL_INFO = 'Edit Personal Info';
     const SCENARIO_EDIT_LIFESTYLE = 'Edit Lyfestyle and Appearance';
+    const SCENARIO_VERIFY_PIN_FOR_PHONE = 'Verify Phone Pin';
     public $repeat_password;
     public $email_pin;
     public $phone_pin;
@@ -206,6 +207,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             self::SCENARIO_REGISTER2 => ['First_Name', 'Last_Name', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID'],
             self::SCENARIO_REGISTER3 => ['iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet'],
             self::SCENARIO_EDIT_LIFESTYLE => ['iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet', 'weight'],
+
             self::SCENARIO_REGISTER4 => ['completed_step', 'iFatherStatusID', 'iFatherWorkingAsID', 'iMotherStatusID', 'iMotherWorkingAsID', 'nob', 'nos', 'eSameAddress', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'vAreaNameCA', 'iCityCAId', 'vNativePlaceCA', 'vParentsResiding', 'vFamilyAffluenceLevel', 'vFamilyType', 'vFamilyProperty', 'vDetailRelative'],
             self::SCENARIO_REGISTER5 => ['tYourSelf', 'vDisability', 'eStatusInOwnWord'],
             self::SCENARIO_REGISTER6 => ['propic', 'pin_email_vaerification', 'pin_phone_vaerification'],
@@ -220,6 +222,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             self::SCENARIO_SFP => ['email', 'password_reset_token'],
             self::SCENARIO_EDIT_MY_INFO => ['tYourSelf'],
             self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus'],
+            self::SCENARIO_VERIFY_PIN_FOR_PHONE => ['phone_pin'],
         ];
 
     }

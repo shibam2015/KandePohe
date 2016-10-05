@@ -493,7 +493,7 @@ class SiteController extends Controller
                         $model->eStatusInOwnWord = 'Pending';
                     }
                     if($model->save()){
-                        $this->redirect(['user/my-photos']);
+                        $this->redirect(['user/photos']);
                     }
                 }
                 return $this->render('register5',[
@@ -815,4 +815,6 @@ class SiteController extends Controller
             return $this->redirect(Yii::getAlias('@web'));
         }
     }
+
+
 }

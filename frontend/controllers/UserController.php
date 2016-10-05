@@ -979,4 +979,43 @@ class UserController extends Controller
         $TAG_COUNT = count($TAG_LIST_USER) . "/" . count($TAG_LIST);
         return $this->actionRenderAjax($TAG_COUNT, '_tagscount', $show);
     }
+
+    public function actionPhoneVerification()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $show = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('type') != '' && Yii::$app->request->post('type') != 0)) {
+            $show = true;
+
+        }
+        return $this->actionRenderAjax($model, '_verificationphone', $show);
+    }
+
+    public function actionVerifyPhoneNumber()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_VERIFY_PIN_FOR_PHONE;
+        $show = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            /*if(Yii::$app->request->post('save')){
+                $model->iHeightID = Yii::$app->request->post('User')['iHeightID'];
+                $model->vSkinTone = Yii::$app->request->post('User')['vSkinTone'];
+                $model->vBodyType = Yii::$app->request->post('User')['vBodyType'];
+                $model->vSmoke = Yii::$app->request->post('User')['vSmoke'];
+                $model->vDrink = Yii::$app->request->post('User')['vDrink'];
+                $model->vSpectaclesLens = Yii::$app->request->post('User')['vSpectaclesLens'];
+                $model->vDiet = Yii::$app->request->post('User')['vDiet'];
+                $model->weight = Yii::$app->request->post('User')['weight'];
+                if($model->validate()){
+                    $model->completed_step = $model->setCompletedStep('4');
+                    $model->save();
+                    $show = false;
+                }
+            }*/
+        }
+        return $this->actionRenderAjax($model, '_verificationphone', $show);
+    }
 }
