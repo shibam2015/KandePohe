@@ -275,17 +275,17 @@ $(document).ready(function()
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == 'SUCCESS') {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            if (DataObject.STATUS == 'S') {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             } else {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                             setTimeout(function(){ 
                                       $('.modal').modal('hide');                                      
                                 }, 4000);               
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            notificationPopup('ERROR', 'Request Failed');
+                            notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                         }
             });
     })
@@ -304,22 +304,22 @@ $(document).ready(function()
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == 'SUCCESS') {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            if (DataObject.STATUS == 'S') {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                                 $('#user-phone_pin').val('');
                                 $('.input--akira').removeClass('input--filled');
                                 if(DataObject.REDIRECT){
                                     //$(location).attr('href', 'user/dashboard')
                                 }
                             } else {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                             setTimeout(function(){ 
                                       $('.modal').modal('hide');                                      
                                 }, 4000);               
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            notificationPopup('ERROR', 'Request Failed');
+                            notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                         }
             });
     })            
@@ -343,18 +343,18 @@ $(document).ready(function()
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == 'SUCCESS') {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            if (DataObject.STATUS == 'S') {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                                 
-                            } else if (DataObject.STATUS == 'ERROR') {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            } else if (DataObject.STATUS == 'E') {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                             setTimeout(function(){ 
                                       $('.modal').modal('hide');                                      
                                 }, 4000);               
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            notificationPopup('ERROR', 'Request Failed');
+                            notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                         }
             });
     })
@@ -373,23 +373,23 @@ $(document).ready(function()
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == 'SUCCESS') {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            if (DataObject.STATUS == 'S') {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                                 $('#user-email_pin').val('');
                                 $('.input--akira').removeClass('input--filled');
                                                                 
                                 /*if(DataObject.REDIRECT){
                                     $(location).attr('href', 'user/dashboard')
                                 }*/
-                            } else if (DataObject.STATUS == 'ERROR') {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            } else if (DataObject.STATUS == 'E') {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                             setTimeout(function(){ 
                                       $('.modal').modal('hide');                                      
                                 }, 4000);               
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            notificationPopup('ERROR', 'Request Failed');
+                            notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                         }
             });
     })

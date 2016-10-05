@@ -13,9 +13,9 @@ use yii\helpers\ArrayHelper;
 if ($model->ePhoneVerifiedStatus == 'No') {
     $form = ActiveForm::begin([
         'id' => 'form',
-        'action' => ['verify-phone-number'],
+        'action' => ['phone-verification'],
         'options' => ['data-pjax' => true],
-        'layout' => 'horizontal',
+        #'layout' => 'horizontal',
         'validateOnChange' => false,
         'validateOnSubmit' => true,
         'fieldConfig' => [
@@ -39,7 +39,6 @@ if ($model->ePhoneVerifiedStatus == 'No') {
             </div>
         </div>
         <div class="col-sm-6 col-xs-6">
-            <?= Html::Button('Verify', ['class' => 'btn btn-primary do_phone_verification', 'name' => 'register8']) ?>
             <?= Html::submitButton('Verify', ['class' => 'btn btn-primary', 'name' => 'register8']) ?>
         </div>
     </div>

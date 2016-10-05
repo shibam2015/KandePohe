@@ -984,22 +984,13 @@ class UserController extends Controller
     {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
-        $show = false;
-        if (Yii::$app->request->post() && (Yii::$app->request->post('type') != '' && Yii::$app->request->post('type') != 0)) {
-            $show = true;
-
-        }
-        return $this->actionRenderAjax($model, '_verificationphone', $show);
-    }
-
-    public function actionVerifyPhoneNumber()
-    {
-        $id = Yii::$app->user->identity->id;
-        $model = User::findOne($id);
         $model->scenario = User::SCENARIO_VERIFY_PIN_FOR_PHONE;
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
-            $show = true;
+            #$show = true;
+            echo "<pre>";
+            print_r($_REQUEST);
+            exit;
             /*if(Yii::$app->request->post('save')){
                 $model->iHeightID = Yii::$app->request->post('User')['iHeightID'];
                 $model->vSkinTone = Yii::$app->request->post('User')['vSkinTone'];
@@ -1016,6 +1007,8 @@ class UserController extends Controller
                 }
             }*/
         }
+
         return $this->actionRenderAjax($model, '_verificationphone', $show);
     }
+
 }
