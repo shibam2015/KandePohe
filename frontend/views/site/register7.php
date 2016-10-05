@@ -58,7 +58,10 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                         <div class="white-section">
 
                             <!--  'action' => 'javascript:void(0)', -->
+
                             <h3>Verify mobile and email <span class="font-light">(Verify your mobile number and email to unhide your profile)</span>
+                                <a href="<?= Yii::$app->homeUrl ?>user/dashboard" class="pull-right"><span
+                                        class="link_small">( I will do this later )</span> </a>
                             </h3>
                             <div class="mrg-tp-10 mrg-bt-10">
                                 <p>We have sent a 4 digit PIN to your given <strong>mobile number</strong> via SMS/Text
