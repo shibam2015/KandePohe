@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
+use common\components\MessageHelper;
 ?>
 <div class="div_personal_info">
 <?php
@@ -116,8 +117,16 @@ if ($show) {
             <dd><?= $model->motherTongue->Name; ?></dd>
             
         </dl>
-    
     <?php
+    if ($popup) {
+        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'CHANGE_PHONE_NUMBER');
+        $this->registerJs(' 
+            notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
+            $(".modal").on("hidden.bs.modal", function (e) {
+                window.location.href = "' . Yii::$app->homeUrl . 'site/verification";      
+            })
+        ');
+    }
 }
 ?>
 </div>

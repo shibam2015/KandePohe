@@ -551,7 +551,6 @@ class SiteController extends Controller
 
     }
 
-
     public function actionPhotoupload($id){
         $id = base64_decode($id);
 
@@ -662,11 +661,9 @@ class SiteController extends Controller
                     $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
                     $MAIL_STATUS = MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
                     if ($MAIL_STATUS) {
-                        $STATUS = "SUCCESS";
-                        $MESSAGE = "We have re-sent a 4 digit PIN number on your EMAIL " . $model->email . ".";
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PIN_RESEND_FOR_EMAIL');
                     } else {
-                        $STATUS = "ERROR";
-                        $MESSAGE = "Something went wrong. Please try again !";
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_RESEND_FOR_EMAIL');
                     }
                 }
 
@@ -676,7 +673,7 @@ class SiteController extends Controller
         }else{
             return $this->redirect(Yii::getAlias('@web'));
         }
-        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE);
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
         return json_encode($return);
 
     }
@@ -694,12 +691,9 @@ class SiteController extends Controller
                     $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
                     #$SMS_FLAG = 1;
                     if ($SMS_FLAG) {
-                        $STATUS = "SUCCESS";
-                        $MESSAGE = "We have re-sent a 4 digit PIN number on your mobile number (" . $model->Mobile . ") via SMS/Text Message.";
-
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PIN_RESEND_FOR_PHONE');
                     } else {
-                        $STATUS = "ERROR";
-                        $MESSAGE = "Something went wrong. Please try again !";
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_RESEND_FOR_PHONE');
                     }
                 }
             } else {
@@ -708,7 +702,7 @@ class SiteController extends Controller
         } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
-        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE);
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
         #Yii::$app->response->format = Response::FORMAT_JSON;return $return;
         return json_encode($return);
     }
@@ -729,26 +723,24 @@ class SiteController extends Controller
                         $model->ePhoneVerifiedStatus = 'Yes';
                         $model->completed_step = $model->setCompletedStep('8');
                         if ($model->save()) {
-                            $MESSAGE = 'Mobile Number Verified Successfully !';
-                            $STATUS = 'SUCCESS';
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHONE_VERIFICATION');
                             if ($model->eEmailVerifiedStatus == 'Yes') {
                                 #$this->redirect(['user/dashboard','type'=> base64_encode("VERIFICATION-DONE")]);
                                 $RED = 1;
                             }
                         } else {
-                            $MESSAGE = 'Something went wrong. Please try again !';
-                            $STATUS = 'ERROR';
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHONE_VERIFICATION');
                         }
 
                     } else {
-                        $MESSAGE = 'Incorrect PIN. Please Enter Valid PIN.';
-                        $STATUS = 'ERROR';
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_INCORRECT_FOR_PHONE');
                     }
                 } else {
                     $MESSAGE = 'Please Enter Mobile PIN.';
                     $STATUS = 'ERROR';
+                    $TITLE = 'Information';
                 }
-                $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'REDIRECT' => $RED);
+                $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE, 'REDIRECT' => $RED);
                 # echo "<pre>"; print_r($return);exit;
                 return json_encode($return);
             } else {
@@ -775,21 +767,23 @@ class SiteController extends Controller
                     if ($model->pin_email_vaerification == $PIN) {
                         $model->eEmailVerifiedStatus = 'Yes';
                         $model->completed_step = $model->setCompletedStep('9');
-                        $model->save($model);
-                        $MESSAGE = 'Email Verified Successfully !';
-                        $STATUS = 'SUCCESS';
+                        if ($model->save($model)) {
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHONE_VERIFICATION');
+                        } else {
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHONE_VERIFICATION');
+                        }
                         if ($model->ePhoneVerifiedStatus == 'Yes') {
                             $this->redirect(['user/dashboard', 'type' => base64_encode("VERIFICATION-DONE")]);
                         }
                     } else {
-                        $MESSAGE = 'Incorrect PIN. Please Enter Valid PIN.';
-                        $STATUS = 'ERROR';
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_INCORRECT_FOR_EMAIL');
                     }
                 } else {
                     $MESSAGE = 'Please Enter PIN.';
                     $STATUS = 'ERROR';
+                    $TITLE = 'Information';
                 }
-                $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE);
+                $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
                 return json_encode($return);
             } else {
                 return $this->redirect(Yii::getAlias('@web'));
@@ -809,7 +803,7 @@ class SiteController extends Controller
                 $model->scenario = User::SCENARIO_REGISTER9;
                     if($model->load(Yii::$app->request->post())){
                         if($model->save()){
-                            $this->redirect(['site/verification']);
+                            #$this->redirect(['site/verification']);
                         }
                     }   
             }

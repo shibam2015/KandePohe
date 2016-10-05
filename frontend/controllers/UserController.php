@@ -180,13 +180,13 @@ class UserController extends Controller
                 $target_dir = Yii::getAlias('@web') . '/uploads/';
                 if (Yii::$app->request->post()) {
                     if ($model->eEmailVerifiedStatus == 'No' && $model->pin_email_vaerification == '') {
-                        $PIN = (rand(1000, 9999));
+                        $PIN = CommonHelper::generateNumericUniqueToken(4);
                         $model->pin_email_vaerification = $PIN;
                         $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
                         MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
                     }
                     if ($model->ePhoneVerifiedStatus == 'No' && $model->pin_phone_vaerification == 0) {
-                        $PIN_P = (rand(1000, 9999));
+                        $PIN_P = CommonHelper::generateNumericUniqueToken(4);
                         $model->pin_phone_vaerification = $PIN_P;
                         if ($model->Mobile != 0 && strlen($model->Mobile) == 10) {
                             $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
@@ -422,25 +422,35 @@ class UserController extends Controller
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_EDIT_PERSONAL_INFO;
         $show = false;
+        $popup = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if(Yii::$app->request->post('save')){
+                $NewMobileNo = Yii::$app->request->post('User')['Mobile'];
+                $OldMobileNo = $model->Mobile;
                 $model->First_Name = Yii::$app->request->post('User')['First_Name'];
                 $model->Last_Name = Yii::$app->request->post('User')['Last_Name'];
                 $model->Profile_created_for = Yii::$app->request->post('User')['Profile_created_for'];
                 $model->DOB = Yii::$app->request->post('User')['DOB'];
                 $model->county_code = Yii::$app->request->post('User')['county_code'];
-                $model->Mobile = Yii::$app->request->post('User')['Mobile'];
+                $model->Mobile = $NewMobileNo;
                 $model->Gender = Yii::$app->request->post('User')['Gender'];
                 $model->mother_tongue = Yii::$app->request->post('User')['mother_tongue'];
                 if($model->validate()){
+                    if ($NewMobileNo != $OldMobileNo) {
+                        $PIN_P = CommonHelper::generateNumericUniqueToken(4);
+                        $model->pin_phone_vaerification = $PIN_P;
+                        $model->ePhoneVerifiedStatus = 'No';
+                        $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                        $popup = true;
+                    }
                     $model->save();
                     $show = false;
                 }
             }
         }
 
-        return $this->actionRenderAjax($model,'_personalinfo',$show);
+        return $this->actionRenderAjax($model, '_personalinfo', $show, $popup);
     }
 
     public function actionEditBasicInfo()

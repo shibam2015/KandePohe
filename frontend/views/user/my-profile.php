@@ -737,6 +737,7 @@ $this->registerJs('
         getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","0");
     });
     getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","1");
+    
     $(document).on("click","#cancel_edit_personalinfo",function(e){
         getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","1");
     });
