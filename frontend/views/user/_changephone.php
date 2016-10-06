@@ -57,6 +57,7 @@ use yii\helpers\Url;
             if ($flag) {
                 list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'CHANGE_PHONE_NUMBER');
                 $this->registerJs('
+                        loaderStop();
                     $(".modal").on("hidden.bs.modal", function (e) {
                             getInlineDetail("' . Url::to(['user/phone-verification']) . '","#phone_verification","1");
                     })
@@ -78,11 +79,12 @@ use yii\helpers\Url;
             }
         }
         $this->registerJs('
+          setDesign();
           (function() { 
               $(".phone_submit").click(function(){
                 $(".pw").show();            
                 })
-          setDesign(); 
+ 
           
           })();
          ');

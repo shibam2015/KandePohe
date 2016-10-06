@@ -145,8 +145,10 @@ if ($show) {
             <dd><?= $model->gotraName->vName; ?></dd>
             <dt>Marital Status</dt>
             <dd><?= $model->maritalStatusName->vName; ?></dd>
+            <?php if ($model->noc > 0) { ?>
             <dt>Number Of Children</dt>
             <dd><?= $model->noc; ?></dd>
+            <?php } ?>
             <dt>Country</dt>
             <dd><?= $model->countryName->vCountryName; ?></dd>
             <dt>State</dt>

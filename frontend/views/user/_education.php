@@ -68,9 +68,6 @@ if ($show) {
             <dd>
             <dt>Education Field</dt>
             <dd><?= $model->educationFieldName->vEducationFieldName; ?></dd>
-            <dt>Sub Community</dt>
-            <dd><?= $model->communityName->vName; ?>
-            <dd>
             <dt>Working With</dt>
             <dd><?= $model->workingWithName->vWorkingWithName; ?></dd>
             <dt>Woking As</dt>

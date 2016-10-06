@@ -18,6 +18,9 @@ return [
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'baseUrl' => $baseUrl,
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser', // required for POST input via `php://input`
+            ]
         ],
         'user' => [
             'identityClass' => 'common\models\User',

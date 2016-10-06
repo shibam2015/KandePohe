@@ -7,15 +7,11 @@ use common\models\LoginForm;
 use yii\captcha\Captcha;
 use common\components\CommonHelper;
 use common\components\MessageHelper;
-/*$religion_data = CommonHelper::getReligion();
-$community_data = CommonHelper::getCommunity();*/
 
-// var_dump($id = Yii::$app->user->identity->id);
 $id = 0;
 $PROFILE_COMPLETENESS = 0;
 
 if (!Yii::$app->user->isGuest) {
-#$id = base64_decode($id);
   $id = Yii::$app->user->identity->id;
   $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
 }
@@ -24,21 +20,10 @@ $HOME_URL = Yii::getAlias('@web')."/";
 $HOME_URL_SITE = Yii::getAlias('@web')."/site/";
 $UPLOAD_DIR = Yii::getAlias('@frontend') .'/web/uploads/';
 $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
-
-#echo $this->context->profileCompleteness(2);
-
 ?>
-
-<link rel="stylesheet" type="text/css" href="<?=$HOME_URL?>css/radical-progress.css" />
-<!-- Custom styles for this template -->
-<!-- <link rel="stylesheet" type="text/css" href="css/cs-select.css" />
-<link rel="stylesheet" type="text/css" href="css/radical-progress.css" />
-<link rel="stylesheet" type="text/css" href="css/cs-skin-border.css" />
-<link href="css/style.css" rel="stylesheet">
-<link href="css/style-responsive.css" rel="stylesheet"> -->
-<!--<div class="wrapper">-->
 <div class="">
   <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
+  <link rel="stylesheet" type="text/css" href="<?= $HOME_URL ?>css/radical-progress.css"/>
   <main>
     <section>
       <div class="container">
@@ -49,7 +34,6 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                 <div class="panel-body">
                   <div class="profile-header-container">
                     <div class="profile-header-img">
-                      <!--<img class="img-circle" src="<? /*=$model->propic*/ ?>" />-->
                       <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->user->identity->propic, 200), ['width' => '200', 'height' => '200', 'alt' => 'Profile Photo', 'class' => 'img-circle']); ?>
                       <!-- badge -->
                       <div class="rank-label-container img-circle">
@@ -276,6 +260,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
           <div class="col-sm-8 col-md-6">
             <div class="dashboard-wrapper">
               <!-- profile status -->
+              <?php if ($PROFILE_COMPLETENESS < 100) { ?>
               <div class="bg-white">
                 <div class="radial-progress pull-right" data-progress="0">
                   <div class="circle">
@@ -307,13 +292,20 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                 </div>
                 <div class="clearfix"></div>
               </div>
+              <?php } ?>
               <!-- view by -->
-              <div class="bg-white mrg-tp-20"> <a href="#" title="View All" class="pull-right">View All &gt;</a>
+              <div class="bg-white <?= ($PROFILE_COMPLETENESS < 100) ? 'mrg-tp-10' : ''; ?>"><a href="#"
+                                                                                                title="View All"
+                                                                                                class="pull-right">View
+                  All &gt;</a>
                 <h3 class="heading-xs">Your Profile Viewed By</h3>
                 <div class="user-list">
                   <div class="row">
                     <div class="col-xs-6 col-md-6 col-lg-3">
-                      <div class="item"> <a href="#" class="name-img" title="KP123WERT"><?= Html::img('@web/images/user.jpg', ['width' => '','height' => '','alt' => 'user','class'=>'']); ?> </a> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
+                      <div class="item">
+                        <a href="#" class="name-img" title="KP123WERT">
+                          <?= Html::img('@web/images/user.jpg', ['width' => '', 'height' => '', 'alt' => 'user', 'class' => '']); ?> </a>
+                        <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=KP204652667" class="name" title="KP123WERT">KP204652667</a>
                         <p>27yrs , 5’5”</p>
                         <p> <a href="#" class="btn btn-info" role="button">Send Interest <i class="fa fa-heart-o"></i></a></p>
                       </div>
@@ -475,7 +467,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                   <div class="clearfix"></div>
                 </li>
               </ul>
-              </table>
+              <!--</table>-->
               <span class="pull-right"><a href="#" class="text-right">Get in touch with her <i class="fa fa-angle-right"></i></a></span>
               <div class="clearfix"></div>
             </div>

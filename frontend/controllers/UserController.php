@@ -144,17 +144,11 @@ class UserController extends Controller
             if($model = User::findOne($id)){
                 $model->scenario = User::SCENARIO_REGISTER6;
                 $VER_ARRAY = array();
-                /*if ($type != '' && base64_decode($type) == "VERIFICATION-DONE") {
-                    $VER_ARRAY = array("STATUS" => "SUCCESS", "MESSAGE" => 'Email & Phone Verification are successfully Done.',"TITLE"=>"Verification Completed.");
-                    #CommonHelper::pr($VER_ARRAY);
-                }*/
                 return $this->render('dashboard',[
                     'model' => $model,
                     'VER_ARRAY' => $VER_ARRAY,
                     'type' => $type
-
                 ]);
-
             }else{
                 return $this->redirect(Yii::getAlias('@web'));
             }
@@ -1175,5 +1169,46 @@ class UserController extends Controller
             }
         }
         return $this->actionRenderAjax($model, '_verificationemail', $show, $popup, $flag);
+    }
+
+    public function actionProfileViewedBy()   #Profile Vied By Data
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        return $this->actionRenderAjax($model, '_profileviewedby');
+    }
+
+    public function actionProfile($uk = '') #Other User Profile View : VS
+    {
+        $id = Yii::$app->user->identity->id;
+        #echo $uk;exit;echo $Registration_Number;exit;
+        $model1 = User::findOne(['Registration_Number' => $uk]);
+        $flag = false;
+        $MatchCompatibility = array();
+        $PhotoList = array();
+        $model = array();
+        $Title = $Message = '';
+        if ($model1->id == $id) {
+            $flag = true;
+            $model = User::findOne($model1->id);
+            $UserPhotoModel = new UserPhotos();
+            $PhotoList = $UserPhotoModel->findByUserId($id);
+
+
+        } else if ($model1->id == $id) {
+            $Title = "Access Denied";
+            $Message = "You can't see your profile as user view.";
+        } else {
+            $Title = "Access Denied";
+            $Message = "Trying to access invalid data.";
+        }
+        return $this->render('profile', [
+            'model' => $model,
+            'MatchCompatibility' => $MatchCompatibility,
+            'PhotoList' => $PhotoList,
+            'flag' => $flag,
+            'Message' => $Message,
+            'Title' => $Title,
+        ]);
     }
 }

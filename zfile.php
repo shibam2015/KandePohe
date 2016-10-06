@@ -1,6 +1,24 @@
+http://blog.neattutorials.com/angularjs-and-yii2-part-2-authentication/
+
+Yii::$app->homeUrl
+
+setTimeout(function(){
+
+}, 3000);
+
+# FOR LOADER
+$('.main-section').pleaseWait();
+$('#test').pleaseWait('stop');
+
+
+$PIN_P = CommonHelper::generateNumericUniqueToken(4);
+$model->pin_phone_vaerification = $PIN_P;
+$SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+
+
+
 #echo $query->createCommand()->sql;
 #print_r($query->createCommand()->getRawSql());
-
 
 return $this->redirect(Yii::$app->request->referrer);  // Last Url
 
@@ -46,3 +64,43 @@ public static function getPhotos($TYPE = 'USER', $ID, $PHOTO, $SIZE)
 
 1,2,3,4,5,6,7,9,10
 
+<!-- Mail -->
+use common\components\MailHelper;
+MailHelper::mailFormate("asd asd ad a asd asd a","Vikrant");
+exit;
+
+MailHelper::SendMail('EMAIL_VERIFICATION_PIN');
+exit;
+
+
+$MAIL_DATA = array("EMAIL"=>$model->email,"NAME"=>$model->First_Name." ".$model->Last_Name);
+MailHelper::SendMail('VERIFY_ACCOUNT',$MAIL_DATA);
+
+\common\components\MailHelper::SendMail('VERIFY_ACCOUNT',array());
+
+list($STATUS, $MESSAGE, $TITLE) = \common\components\MessageHelper::getMessageNotification();
+echo " ST => ".$STATUS." === > MS ".$MESSAGE." ===> ".$TITLE;
+
+
+->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . '.com'])
+
+
+-----------------------------------
+
+SELECT * FROM table WHERE 3 IN (NUMBERS) AND 15 IN (NUMBERS)
+using the IN will look into a comma separated string eg. these two
+
+WHERE banana IN ('apple', 'banana', 'coconut')
+WHERE 3 IN (2,3,6,8,90)
+
+
+echo CommonHelper::getSiteUrlLogo();exit;
+
+
+-------------------------------------------------
+On successful verification of Mobile and email PIN, redirect user to Dashboard with popup saying “Verification is successful”
+Cropping
+
+
+<button class="btn btn-default" id="waitMe_ex_close" onclick="loaderStop()">STOP</button>
+<button class="btn btn-default" id="waitMe_ex_close" onclick="loaderStart()">start</button>

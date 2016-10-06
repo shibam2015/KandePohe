@@ -58,3 +58,4 @@
     <p>&copy; <?= date('Y') ?> Kande Pohe.com. All Rights Reserved.</p>
   </div>
 </footer>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
