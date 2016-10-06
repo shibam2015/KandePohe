@@ -809,7 +809,7 @@ $this->registerJs('
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == "SUCCESS") {
+                            if (DataObject.STATUS == "S") {
                                 if(P_TYPE=="PHOTO_PROFILE_SET"){
                                     $("#photo_list").html(DataObject.OUTPUT);
                                     $("#profile_list_popup").html(DataObject.OUTPUT_ONE);
