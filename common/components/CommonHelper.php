@@ -495,6 +495,13 @@ class CommonHelper {
         }
     }
 
+    public static function unsetStep($OriginalString, $UnsetString)
+    { # For Phone Verification : VS
+        $OriginalString = str_replace("," . $UnsetString, '', $OriginalString);
+        $OriginalString = str_replace($UnsetString . ",", '', $OriginalString);
+        return $OriginalString;
+    }
+
     public function getReligion()
     {
         $religion = \common\models\Religion::find()->all();
@@ -693,7 +700,6 @@ class CommonHelper {
         }
         return $RetVal;
     }
-
 }
 ?>
 

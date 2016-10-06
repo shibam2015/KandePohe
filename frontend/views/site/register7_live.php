@@ -5,8 +5,6 @@ use common\models\User;
 #use frontend\components\CommonHelper;
 use yii\helpers\ArrayHelper;
 use common\components\CommonHelper;
-use yii\helpers\Url;
-use yii\widgets\Pjax;
 
 $HOME_PAGE_URL = Yii::getAlias('@web') . "/";
 $UPLOAD_DIR = Yii::getAlias('@frontend') . '/web/uploads/';
@@ -59,16 +57,18 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-section">
-                            <h3>Verify mobile and email <span class="font-light">(Verify your mobile number and email to unhide your profile)</span>
-                            </h3>
-                            <div id="phone_verification">
-                                Information Loading...
-                            </div>
 
-                            <!--<div class="mrg-tp-10 mrg-bt-10">
-                                <p>We have sent a 4 digit PIN to your given <strong>mobile number</strong> via SMS/Text message</p>
-                            </div>-->
-                            <!--  <?php
+                            <!--  'action' => 'javascript:void(0)', -->
+
+                            <h3>Verify mobile and email <span class="font-light">(Verify your mobile number and email to unhide your profile)</span>
+                                <a href="<?= Yii::$app->homeUrl ?>user/dashboard" class="pull-right"><span
+                                        class="link_small">( I will do this later )</span> </a>
+                            </h3>
+                            <div class="mrg-tp-10 mrg-bt-10">
+                                <p>We have sent a 4 digit PIN to your given <strong>mobile number</strong> via SMS/Text
+                                    message</p>
+                            </div>
+                            <?php
                             $form = ActiveForm::begin([
                                 'id' => 'form-register8',
                                 'action' => 'javascript:void(0)',
@@ -77,20 +77,32 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                 'enableClientValidation'=> true,
                                 'method'=>'post',*/
                             ]);
-                            ?> -->
-                            <!--<div class="row">
+                            ?>
+                            <div class="row">
                                 <div class="col-sm-4 col-xs-6">
                                     <div class="form-cont">
                                         <div class="form-cont">
-                                            <? /*= $form->field($model1, 'phone_pin', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Enter Mobile PIN number</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control'], ['maxlength' => 4]) */ ?>
+                                            <?= $form->field($model1, 'phone_pin', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Enter Mobile PIN number</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control'], ['maxlength' => 4]) ?>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-xs-6">
-                                    <? /*= Html::Button('Verify', ['class' => 'btn btn-primary do_phone_verification', 'name' => 'register8']) */ ?>
+                                    <!-- <input type="button" name="Verify" value="Verify" class="btn btn-primary">-->
+                                    <!--<a href="javascript:void(0)" name="Verify" class="btn btn-primary do_phone_verification">Verify</a>-->
+                                    <?= Html::Button('Verify', ['class' => 'btn btn-primary do_phone_verification', 'name' => 'register8']) ?>
                                 </div>
-                            </div>-->
-                            <!-- <?php ActiveForm::end(); ?>-->
+                            </div>
+                            <?php ActiveForm::end(); ?>
+                            <div class="mrg-tp-20 mrg-bt-10">
+                                <span class="phone_status"></span>
+                                <p>Didn't get PIN? <a href="javascript:void(0)" class="phone_verification"
+                                                      data-name="phone"> Resend PIN </a>to my mobile number
+                                    <strong><?= $model->DisplayMobile ?></strong>
+                                    <a href="javascript:void(0)"
+                                       data-target="#modelmobilenumber"
+                                       data-toggle="modal" class="btn btn-default btn-xs"><span
+                                            class="glyphicon glyphicon-pencil"></span> Edit</a></p>
+                            </div>
 
                             <p class="font20 mrg-tp-30"><strong>OR</strong></p>
 
@@ -250,24 +262,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 </div>
 
 
-<?php
-
-$this->registerJs('
-    function getInlineDetail(url,htmlId,type){
-        $.ajax({
-        url : url,
-        type:"POST",
-        data:{"type":type},
-        success:function(res){          
-          $(htmlId).html(res);
-        }
-      });
-    }
-   
-    getInlineDetail("' . Url::to(['user/phone-verification']) . '","#phone_verification","1");
-');
-
-# PHONE PIN
+<?php # PHONE PIN
 $this->registerJs("
 $(document).ready(function()
 {  
@@ -284,17 +279,17 @@ $(document).ready(function()
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == 'SUCCESS') {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            if (DataObject.STATUS == 'S') {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             } else {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                             setTimeout(function(){ 
                                       $('.modal').modal('hide');                                      
                                 }, 4000);               
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            notificationPopup('ERROR', 'Request Failed');
+                            notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                         }
             });
     })
@@ -313,22 +308,22 @@ $(document).ready(function()
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == 'SUCCESS') {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            if (DataObject.STATUS == 'S') {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                                 $('#user-phone_pin').val('');
                                 $('.input--akira').removeClass('input--filled');
                                 if(DataObject.REDIRECT){
                                     //$(location).attr('href', 'user/dashboard')
                                 }
                             } else {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                             setTimeout(function(){ 
                                       $('.modal').modal('hide');                                      
                                 }, 4000);               
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            notificationPopup('ERROR', 'Request Failed');
+                            notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                         }
             });
     })            
@@ -352,18 +347,18 @@ $(document).ready(function()
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == 'SUCCESS') {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            if (DataObject.STATUS == 'S') {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                                 
-                            } else if (DataObject.STATUS == 'ERROR') {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            } else if (DataObject.STATUS == 'E') {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                             setTimeout(function(){ 
                                       $('.modal').modal('hide');                                      
                                 }, 4000);               
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            notificationPopup('ERROR', 'Request Failed');
+                            notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                         }
             });
     })
@@ -382,23 +377,23 @@ $(document).ready(function()
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            if (DataObject.STATUS == 'SUCCESS') {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            if (DataObject.STATUS == 'S') {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                                 $('#user-email_pin').val('');
                                 $('.input--akira').removeClass('input--filled');
                                                                 
                                 /*if(DataObject.REDIRECT){
                                     $(location).attr('href', 'user/dashboard')
                                 }*/
-                            } else if (DataObject.STATUS == 'ERROR') {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                            } else if (DataObject.STATUS == 'E') {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                             setTimeout(function(){ 
                                       $('.modal').modal('hide');                                      
                                 }, 4000);               
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            notificationPopup('ERROR', 'Request Failed');
+                            notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
                         }
             });
     })

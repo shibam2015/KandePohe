@@ -242,9 +242,13 @@ function photoPreview(input, divid) {
 /* PHOTO PREVIEW END */
 
 
-
-
-
-
-
-
+function getInlineDetail(url, htmlId, type) {
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: {"type": type},
+        success: function (res) {
+            $(htmlId).html(res);
+        }
+    });
+}

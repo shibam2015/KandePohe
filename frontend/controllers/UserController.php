@@ -407,12 +407,13 @@ class UserController extends Controller
         return $this->actionRenderAjax($model, '_myinfo', $show, $popup);
     }
 
-    function actionRenderAjax($model, $view, $show = false, $popup = false)
+    function actionRenderAjax($model, $view, $show = false, $popup = false, $flag = false)
     {
         return $this->renderAjax($view, [
             'model' => $model,
             'show' => $show,
             'popup' => $popup,
+            'flag' => $flag,
         ]);
     }
 
@@ -980,35 +981,104 @@ class UserController extends Controller
         return $this->actionRenderAjax($TAG_COUNT, '_tagscount', $show);
     }
 
-    public function actionPhoneVerification()
+    public function actionPhoneVerification()   # For Phone Verification : VS
     {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_VERIFY_PIN_FOR_PHONE;
         $show = false;
-        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
-            #$show = true;
-            echo "<pre>";
-            print_r($_REQUEST);
-            exit;
-            /*if(Yii::$app->request->post('save')){
-                $model->iHeightID = Yii::$app->request->post('User')['iHeightID'];
-                $model->vSkinTone = Yii::$app->request->post('User')['vSkinTone'];
-                $model->vBodyType = Yii::$app->request->post('User')['vBodyType'];
-                $model->vSmoke = Yii::$app->request->post('User')['vSmoke'];
-                $model->vDrink = Yii::$app->request->post('User')['vDrink'];
-                $model->vSpectaclesLens = Yii::$app->request->post('User')['vSpectaclesLens'];
-                $model->vDiet = Yii::$app->request->post('User')['vDiet'];
-                $model->weight = Yii::$app->request->post('User')['weight'];
-                if($model->validate()){
-                    $model->completed_step = $model->setCompletedStep('4');
+        $popup = false;
+        #CommonHelper::pr($_REQUEST);exit;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('verify') == 'PHONE_VERIFY')) {
+            $show = true;
+            $PIN = $model->pin_phone_vaerification;
+            $PhonePin = Yii::$app->request->post('User')['phone_pin'];
+            $model->phone_pin = $PhonePin;
+            #echo $model->scenario ;
+            if ($model->validate()) {
+                if ($PIN == $PhonePin) {
+                    $model->completed_step = $model->setCompletedStep('9');
+                    $model->ePhoneVerifiedStatus = 'Yes';
+                    $model->pin_phone_vaerification = 0;
                     $model->save();
+                    $model->phone_pin = '';
                     $show = false;
                 }
-            }*/
+                $popup = true;
+            } else {
+                $model->ePhoneVerifiedStatus = 'No';
+                #$popup = true;
+            }
         }
 
-        return $this->actionRenderAjax($model, '_verificationphone', $show);
+        return $this->actionRenderAjax($model, '_verificationphone', $show, $popup);
     }
+
+    public function actionPhoneNumberChange()
+    { # For Phone Verification : VS
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_PHONE_NUMBER_CHANGE;
+        $show = false;
+        $popup = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('save') == 'PHONE_NUMBER_CHANGE')) {
+            $show = true;
+            $OldNumber = $model->county_code . $model->Mobile;
+            $NewCountryCode = Yii::$app->request->post('User')['county_code'];
+            $NewPhoneNumber = Yii::$app->request->post('User')['Mobile'];
+            $NewNumber = $NewCountryCode . $NewPhoneNumber;
+            $model->county_code = $NewCountryCode;
+            $model->Mobile = $NewPhoneNumber;
+            if ($model->validate()) {
+                if ($OldNumber != $NewNumber) {
+                    $PIN_P = CommonHelper::generateNumericUniqueToken(4);
+                    $model->pin_phone_vaerification = $PIN_P;
+                    $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
+                    $model->ePhoneVerifiedStatus = 'No';
+                    if ($model->save()) {
+                        #$SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                        $flag = true;
+                        $show = false;
+                    } else {
+                        $flag = false;
+                    }
+                    $popup = true;
+                } else {
+                    $popup = false;
+                    $show = false;
+                    $flag = true;
+                }
+            } else {
+                $popup = false;
+                $show = false;
+                $flag = true;
+            }
+        }
+        return $this->actionRenderAjax($model, '_changephone', $show, $popup, $flag);
+    }
+
+    public function actionPhonePinResend()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_RESEND_PIN_FOR_PHONE;
+        $show = false;
+        $popup = false;
+        if (isset($_REQUEST['type']) && $_REQUEST['type'] == 10) { # For Resend PIN
+            $flag = true;
+            $PIN_P = CommonHelper::generateNumericUniqueToken(4);
+            $model->pin_phone_vaerification = $PIN_P;
+            $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
+            $model->ePhoneVerifiedStatus = 'No';
+            if ($model->save()) {
+                #$SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                $popup = true;
+            } else {
+                $popup = false;
+            }
+        }
+        return $this->actionRenderAjax($model, '_verificationphone', $show, $popup, $flag);
+    }
+
 
 }

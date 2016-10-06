@@ -768,9 +768,9 @@ class SiteController extends Controller
                         $model->eEmailVerifiedStatus = 'Yes';
                         $model->completed_step = $model->setCompletedStep('9');
                         if ($model->save($model)) {
-                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHONE_VERIFICATION');
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'EMAIL_VERIFICATION');
                         } else {
-                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHONE_VERIFICATION');
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'EMAIL_VERIFICATION');
                         }
                         if ($model->ePhoneVerifiedStatus == 'Yes') {
                             $this->redirect(['user/dashboard', 'type' => base64_encode("VERIFICATION-DONE")]);
