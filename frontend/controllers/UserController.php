@@ -1146,7 +1146,8 @@ class UserController extends Controller
             } else {
                 $popup = false;
                 $show = false;
-                $flag = true;
+                #$flag = true;
+                $flag = false;
             }
         }
         return $this->actionRenderAjax($model, '_changeemail', $show, $popup, $flag);

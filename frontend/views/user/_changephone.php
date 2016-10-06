@@ -16,26 +16,16 @@ use yii\helpers\Url;
             'options' => ['data-pjax' => true],
             #'layout' => 'horizontal',
             'validateOnChange' => false,
-            'validateOnSubmit' => true,
-            'fieldConfig' => [
-                'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
-                'horizontalCssClasses' => [
-                    'label' => 'col-sm-3 col-xs-3',
-                    'offset' => '',
-                    'wrapper' => 'col-sm-8 col-xs-8',
-                    'error' => '',
-                    'hint' => '',
-                ]
-            ]
+            'validateOnSubmit' => true
         ]);
         ?>
-        <div class="row">
+        <!--<div class="row">
             <div class="col-sm-3 col-xs-3">
                 <div class="form-cont center pw" style="display:none">
                     <p> Please wait...</p>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div class="row">
             <div class="col-sm-2 col-xs-2">
                 <div class="form-cont">
@@ -43,7 +33,7 @@ use yii\helpers\Url;
                         <?= $form->field($model, 'county_code')->dropDownList(
                             ['+91' => '+91'],
                             ['class' => 'cs-select cs-skin-border', 'prompt' => 'Country Code']
-                        )->label(false)->error(false); ?>
+                        )->label(false); ?>
                     </div>
                 </div>
             </div>
@@ -95,7 +85,7 @@ use yii\helpers\Url;
           setDesign(); 
           
           })();
- ');
+         ');
 
     }
     ?>

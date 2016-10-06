@@ -38,7 +38,7 @@ use yii\helpers\Url;
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-3 col-xs-3">
+            <div class="col-sm-4 col-xs-4">
                 <div class="form-cont">
                     <div class="form-cont">
                         <?= $form->field($model, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control']) ?>
@@ -80,11 +80,12 @@ use yii\helpers\Url;
         }
     }
     $this->registerJs('
+    setDesign();
           (function() { 
-              $(".email_submit").click(function(){
-            $(".ew").show();                
-                })
-          setDesign(); 
+                    $(".email_submit").click(function(){
+                       $(".ew").show();                
+                    });
+                 
           
           })();
  ');

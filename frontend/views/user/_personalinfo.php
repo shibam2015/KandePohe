@@ -114,7 +114,7 @@ if ($show) {
             <dt>Mobile</dt>
             <dd><?= $model->county_code." ".$model->Mobile; ?></dd>
             <dt>Mother Tongue</dt>
-            <dd><?= $model->motherTongue->Name; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->motherTongue->Name, 'text') ?></dd>
             
         </dl>
     <?php

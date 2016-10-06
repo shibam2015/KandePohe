@@ -36,7 +36,15 @@ if ($show) {
     <?php ActiveForm::end();
 } else {
   ?>
-    <p class="dis_my_info"><?= $model->tYourSelf; ?></p>
+    <p class="dis_my_info">
+        <?php if ($model->tYourSelf != '') { ?>
+            <?= $model->tYourSelf; ?>
+        <?php } else { ?>
+            Information Not Available
+        <?php } ?>
+
+
+    </p>
     <?php
     if ($popup) {
         list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'CHANGE_YOURSELF_DETAIL');
