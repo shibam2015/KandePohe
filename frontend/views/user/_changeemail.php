@@ -80,6 +80,7 @@ use yii\helpers\Url;
         }
     }
     $this->registerJs('
+          (function() { setDesign(); })();
     $(".email_submit").click(function(){
             $(".ew").show();                
     }) ');

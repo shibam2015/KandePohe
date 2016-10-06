@@ -23,6 +23,8 @@ echo $this->render('/layouts/parts/_headerregister.php');
                     <div class="col-sm-12">
                         <div class="white-section">
                             <h3>Verify mobile and email <span class="font-light">(Verify your mobile number and email to unhide your profile)</span>
+                                <a href="<?= Yii::$app->homeUrl ?>user/dashboard" class="pull-right"><span
+                                        class="link_small">( I will do this later )</span> </a>
                             </h3>
                             <?php Pjax::begin(['id' => 'my_index_phone', 'enablePushState' => false]); ?>
                             <div id="phone_verification">

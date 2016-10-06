@@ -241,7 +241,6 @@ function photoPreview(input, divid) {
 }
 /* PHOTO PREVIEW END */
 
-
 function getInlineDetail(url, htmlId, type) {
     $.ajax({
         url: url,
@@ -250,5 +249,18 @@ function getInlineDetail(url, htmlId, type) {
         success: function (res) {
             $(htmlId).html(res);
         }
+    });
+}
+
+function setDesign() {
+    $('select').niceSelect();
+    [].slice.call(document.querySelectorAll('input.input__field')).forEach(function (inputEl) {
+        // in case the input is already filled..
+        if (inputEl.value.trim() !== '') {
+            classie.add(inputEl.parentNode, 'input--filled');
+        }
+        // events:
+        inputEl.addEventListener('focus', onInputFocus);
+        inputEl.addEventListener('blur', onInputBlur);
     });
 }

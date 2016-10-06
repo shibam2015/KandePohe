@@ -79,6 +79,9 @@ use yii\helpers\Url;
                 ');
             }
         }
+        $this->registerJs('
+                 (function() { setDesign(); })();
+        ');
     }
     ?>
 </div>
