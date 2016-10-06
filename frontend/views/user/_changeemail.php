@@ -80,10 +80,14 @@ use yii\helpers\Url;
         }
     }
     $this->registerJs('
-          (function() { setDesign(); })();
-    $(".email_submit").click(function(){
+          (function() { 
+              $(".email_submit").click(function(){
             $(".ew").show();                
-    }) ');
+                })
+          setDesign(); 
+          
+          })();
+ ');
 
     ?>
 </div>

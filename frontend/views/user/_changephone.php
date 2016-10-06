@@ -29,7 +29,13 @@ use yii\helpers\Url;
             ]
         ]);
         ?>
-
+        <div class="row">
+            <div class="col-sm-3 col-xs-3">
+                <div class="form-cont center pw" style="display:none">
+                    <p> Please wait...</p>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-2 col-xs-2">
                 <div class="form-cont">
@@ -49,7 +55,7 @@ use yii\helpers\Url;
                 </div>
             </div>
             <div class="col-sm-3 col-xs-3">
-                <?= Html::submitButton('Save', ['class' => 'btn btn-primary', 'name' => 'save', 'value' => 'PHONE_NUMBER_CHANGE']) ?>
+                <?= Html::submitButton('Save', ['class' => 'btn btn-primary phone_submit', 'name' => 'save', 'value' => 'PHONE_NUMBER_CHANGE']) ?>
                 <?= Html::Button('Cancel', ['class' => 'btn btn-primary', 'id' => 'cancel_change_phone', 'name' => 'cancel',]) ?>
 
             </div>
@@ -70,18 +76,27 @@ use yii\helpers\Url;
             }
             $this->registerJs(' 
             notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
+                                        $(".pw").hide();
             ');
 
         } else {
             if ($flag) {
                 $this->registerJs('
                             getInlineDetail("' . Url::to(['user/phone-verification']) . '","#phone_verification","1");
+                                                        $(".pw").hide();
                 ');
             }
         }
         $this->registerJs('
-                 (function() { setDesign(); })();
-        ');
+          (function() { 
+              $(".phone_submit").click(function(){
+                $(".pw").show();            
+                })
+          setDesign(); 
+          
+          })();
+ ');
+
     }
     ?>
 </div>
