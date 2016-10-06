@@ -760,7 +760,7 @@ class UserController extends Controller
         exit;
     }
 
-    public function actionSavecoverphoto($position = '')
+    public function actionSaveCoverPhoto($position = '')
     {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
@@ -777,9 +777,9 @@ class UserController extends Controller
             if ($FILE_COUNT != 0) {
                 $PHOTO_ARRAY = $CM_HELPER->coverPhotoUpload($id, $_FILES['cover_photo'], $PATH, $URL, '', $OLD_PHOTO);
                 $model->cover_photo = $PHOTO_ARRAY['PHOTO'];
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'COVER_PHOTO_SET');
             } else {
                 list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'COVER_PHOTO_SET');
-                //$PHOTO_ARRAY = $CM_HELPER->coverPhotoUpload($id, $_FILES['cover_photo'], $PATH, $URL, '', $OLD_PHOTO);
             }
 
             $model->cover_background_position = $position;

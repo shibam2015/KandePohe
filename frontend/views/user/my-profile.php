@@ -703,6 +703,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
         var PRO_COMP = <?=$PROFILE_COMPLETENESS?>;
     </script>
     <script src="<?= $HOME_URL ?>js/selectFx.js"></script>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/js/cover/jquery-ui.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+
 <?php
 $this->registerJs('
     function getInlineDetail(url,htmlId,cancel){

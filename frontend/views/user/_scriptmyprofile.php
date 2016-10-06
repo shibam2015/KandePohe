@@ -84,7 +84,7 @@ $this->registerJs("
             /* Photo FIle END */
             $.ajax({
                 type: 'POST',
-                url: 'savecoverphoto',
+                url: 'save-cover-photo',
                 data: formData,
                 mimeType: 'multipart/form-data',
                 contentType: false,
@@ -135,7 +135,7 @@ $this->registerJs("
             
             $.ajax({
                 type: 'POST',
-                url: 'savecoverphoto',
+                url: 'save-cover-photo',
                 data: formData,
                 mimeType: 'multipart/form-data',
                 contentType: false,
