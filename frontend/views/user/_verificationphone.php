@@ -62,7 +62,8 @@ use yii\widgets\Pjax;
                     } else {
                         list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_RESEND_FOR_PHONE');
                     }
-                    $this->registerJs(' 
+                    $this->registerJs('
+                     loaderStop();
                     notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
                 ');
                 } else {
@@ -86,6 +87,7 @@ use yii\widgets\Pjax;
                 if ($popup) {
                     list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHONE_VERIFICATION');
                     $this->registerJs(' 
+                    
                        notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
                        setTimeout(function(){ 
                            $(".modal").modal("hide");                                      
@@ -122,6 +124,7 @@ $this->registerJs('
     $(".edit_phone").click(function(e){
         getInlineDetail("' . Url::to(['user/phone-number-change']) . '","#phone_verification","0");
     });
+    setDesign();
 ');
 
 ?>

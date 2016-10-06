@@ -8,7 +8,6 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 ?>
-
     <div id="email_verification" class="mrg-tp-30 mrg-bt-10">
         <?php
         if ($model->eEmailVerifiedStatus == 'No') {
@@ -49,7 +48,7 @@ use yii\widgets\Pjax;
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-6">
-                    <?= Html::submitButton('Verify', ['class' => 'btn btn-primary', 'name' => 'verify', 'value' => 'EMAIL_VERIFY']) ?>
+                    <?= Html::submitButton('Verify', ['class' => 'btn btn-primary email_verify_btn', 'name' => 'verify', 'value' => 'EMAIL_VERIFY']) ?>
                 </div>
             </div>
             <?php ActiveForm::end(); ?>
@@ -72,6 +71,7 @@ use yii\widgets\Pjax;
                         list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_RESEND_FOR_EMAIL');
                     }
                     $this->registerJs(' 
+                    loaderStop();
                     notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
                 ');
                 } else {
@@ -123,7 +123,7 @@ $this->registerJs('
         url : url,
         type:"POST",
         data:{"type":type},
-        success:function(res){          
+        success:function(res){
           $(htmlId).html(res);
         }
       });
@@ -131,6 +131,7 @@ $this->registerJs('
     $(".edit_email").click(function(e){
         getInlineDetail("' . Url::to(['user/email-id-change']) . '","#email_verification","0");
     });
+    setDesign();
 ');
 
 ?>

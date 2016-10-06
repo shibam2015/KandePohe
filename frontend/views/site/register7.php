@@ -114,7 +114,7 @@ $this->registerJs('
         url : url,
         type:"POST",
         data:{"type":type},
-        success:function(res){          
+        success:function(res){
           $(htmlId).html(res);
         }
       });
@@ -126,6 +126,7 @@ $this->registerJs('
     });
     $(document).on("click",".phone_verification",function(e){
                 Pace.restart();
+                loaderStart();
         getInlineDetail("' . Url::to(['user/phone-pin-resend']) . '","#phone_verification","10");
     });    
     
@@ -135,8 +136,8 @@ $this->registerJs('
         getInlineDetail("' . Url::to(['user/email-verification']) . '","#email_verification","1");
     });
     $(document).on("click",".email_verification",function(e){
-                Pace.restart();
-                $(".ew").show();
+        Pace.restart();
+        loaderStart();
         getInlineDetail("' . Url::to(['user/email-pin-resend']) . '","#email_verification","10");
         
     });    

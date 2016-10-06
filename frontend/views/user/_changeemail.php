@@ -30,13 +30,13 @@ use yii\helpers\Url;
             ]
         ]);
         ?>
-        <div class="row">
+        <!--<div class="row">
             <div class="col-sm-3 col-xs-3">
                 <div class="form-cont center ew" style="display:none">
                     <p> Please wait...</p>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div class="row">
             <div class="col-sm-4 col-xs-4">
                 <div class="form-cont">
@@ -80,7 +80,7 @@ use yii\helpers\Url;
         }
     }
     $this->registerJs('
-    setDesign();
+        setDesign();
           (function() { 
                     $(".email_submit").click(function(){
                        $(".ew").show();                
