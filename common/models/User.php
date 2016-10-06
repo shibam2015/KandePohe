@@ -53,6 +53,9 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const SCENARIO_VERIFY_PIN_FOR_PHONE = 'Verify Phone PIN';
     const SCENARIO_PHONE_NUMBER_CHANGE = 'Phone Number Update';
     const SCENARIO_RESEND_PIN_FOR_PHONE = 'Resend Phone PIN';
+    const SCENARIO_VERIFY_PIN_FOR_EMAIL = 'Verify Email PIN';
+    const SCENARIO_EMAIL_ID_CHANGE = 'Email Id Update';
+    const SCENARIO_RESEND_PIN_FOR_EMAIL = 'Resend Email PIN';
     public $repeat_password;
     public $email_pin;
     public $phone_pin;
@@ -226,9 +229,15 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             self::SCENARIO_SFP => ['email', 'password_reset_token'],
             self::SCENARIO_EDIT_MY_INFO => ['tYourSelf'],
             self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'completed_step'],
-            self::SCENARIO_VERIFY_PIN_FOR_PHONE => ['phone_pin', 'completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification'],
-            self::SCENARIO_PHONE_NUMBER_CHANGE => ['completed_step', 'Mobile', 'pin_phone_vaerification', 'ePhoneVerifiedStatus'],
-            self::SCENARIO_RESEND_PIN_FOR_PHONE => ['completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification'],
+
+            self::SCENARIO_VERIFY_PIN_FOR_PHONE => ['phone_pin', 'completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification'], # FOR PHONE VERIFICATION PROCESS
+            self::SCENARIO_PHONE_NUMBER_CHANGE => ['completed_step', 'Mobile', 'pin_phone_vaerification', 'ePhoneVerifiedStatus'], # FOR PHONE Number Change Process
+            self::SCENARIO_RESEND_PIN_FOR_PHONE => ['completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification'], # FOR Resend Phone PIN PROCESS
+
+            self::SCENARIO_VERIFY_PIN_FOR_EMAIL => ['email_pin', 'completed_step', 'eEmailVerifiedStatus', 'pin_email_vaerification'], # FOR EMAIL VERIFICATION PROCESS
+            self::SCENARIO_EMAIL_ID_CHANGE => ['completed_step', 'email', 'eEmailVerifiedStatus', 'pin_email_vaerification'], # FOR Email Id Change Process
+            self::SCENARIO_RESEND_PIN_FOR_EMAIL => ['completed_step', 'eEmailVerifiedStatus', 'pin_email_vaerification'], # FOR Resend Email PIN PROCESS
+
         ];
 
     }

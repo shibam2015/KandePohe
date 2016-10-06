@@ -139,20 +139,20 @@ class UserController extends Controller
 
     public function actionDashboard($type = '')
     {
-        //$id = base64_decode(getUserUploadFolder$id);
         if (!Yii::$app->user->isGuest) {
-            #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
             if($model = User::findOne($id)){
                 $model->scenario = User::SCENARIO_REGISTER6;
                 $VER_ARRAY = array();
-                if ($type != '' && base64_decode($type) == "VERIFICATION-DONE") {
-                    $VER_ARRAY = array("STATUS" => "SUCCESS", "MESSAGE" => 'Verification is successful.');
+                /*if ($type != '' && base64_decode($type) == "VERIFICATION-DONE") {
+                    $VER_ARRAY = array("STATUS" => "SUCCESS", "MESSAGE" => 'Email & Phone Verification are successfully Done.',"TITLE"=>"Verification Completed.");
                     #CommonHelper::pr($VER_ARRAY);
-                }
+                }*/
                 return $this->render('dashboard',[
                     'model' => $model,
-                    'VER_ARRAY' => $VER_ARRAY
+                    'VER_ARRAY' => $VER_ARRAY,
+                    'type' => $type
+
                 ]);
 
             }else{
@@ -997,7 +997,7 @@ class UserController extends Controller
             #echo $model->scenario ;
             if ($model->validate()) {
                 if ($PIN == $PhonePin) {
-                    $model->completed_step = $model->setCompletedStep('9');
+                    $model->completed_step = $model->setCompletedStep('8');
                     $model->ePhoneVerifiedStatus = 'Yes';
                     $model->pin_phone_vaerification = 0;
                     $model->save();
@@ -1014,7 +1014,7 @@ class UserController extends Controller
         return $this->actionRenderAjax($model, '_verificationphone', $show, $popup);
     }
 
-    public function actionPhoneNumberChange() # For Phone Numbe Change : VS
+    public function actionPhoneNumberChange() # For Phone Number Change : VS
     {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
@@ -1080,5 +1080,99 @@ class UserController extends Controller
         return $this->actionRenderAjax($model, '_verificationphone', $show, $popup, $flag);
     }
 
+    public function actionEmailVerification()   # For Email Verification : VS
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_VERIFY_PIN_FOR_EMAIL;
+        $show = false;
+        $popup = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('verify') == 'EMAIL_VERIFY')) {
+            $show = true;
+            $PIN = $model->pin_email_vaerification;
+            $EmailPin = Yii::$app->request->post('User')['email_pin'];
+            $model->email_pin = $EmailPin;
+            #echo $model->scenario ;
+            if ($model->validate()) {
+                if ($PIN == $EmailPin) {
+                    $model->completed_step = $model->setCompletedStep('9');
+                    $model->eEmailVerifiedStatus = 'Yes';
+                    $model->pin_email_vaerification = '';
+                    $model->save();
+                    $model->email_pin = '';
+                    $show = false;
+                }
+                $popup = true;
+            } else {
+                $model->eEmailVerifiedStatus = 'No';
+                #$popup = true;
+            }
+        }
+        return $this->actionRenderAjax($model, '_verificationemail', $show, $popup);
+    }
 
+    public function actionEmailIdChange() # For Email ID Change : VS
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_EMAIL_ID_CHANGE;
+        $show = false;
+        $popup = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('save') == 'EMAIL_ID_CHANGE')) {
+            $show = true;
+            $OldEmailId = $model->email;
+            $NewEmailID = Yii::$app->request->post('User')['email'];
+            $model->email = $NewEmailID;
+            if ($model->validate()) {
+                if ($OldEmailId != $NewEmailID) {
+                    $PIN_P = CommonHelper::generateNumericUniqueToken(4);
+                    $model->pin_email_vaerification = $PIN_P;
+                    $model->completed_step = CommonHelper::unsetStep($model->completed_step, 9);
+                    $model->eEmailVerifiedStatus = 'No';
+                    if ($model->save()) {
+                        $MAIL_DATA = array("EMAIL" => $NewEmailID, "EMAIL_TO" => $NewEmailID, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN_P);
+                        $MAIL_STATUS = MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
+                        $flag = true;
+                        $show = false;
+                    } else {
+                        $flag = false;
+                    }
+                    $popup = true;
+                } else {
+                    $popup = false;
+                    $show = false;
+                    $flag = true;
+                }
+            } else {
+                $popup = false;
+                $show = false;
+                $flag = true;
+            }
+        }
+        return $this->actionRenderAjax($model, '_changeemail', $show, $popup, $flag);
+    }
+
+    public function actionEmailPinResend() # For EMail PIN Resend : VS
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_RESEND_PIN_FOR_EMAIL;
+        $show = false;
+        $popup = false;
+        if (isset($_REQUEST['type']) && $_REQUEST['type'] == 10) { # For Resend PIN
+            $flag = true;
+            $PIN_P = CommonHelper::generateNumericUniqueToken(4);
+            $model->pin_email_vaerification = $PIN_P;
+            $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
+            $model->eEmailVerifiedStatus = 'No';
+            if ($model->save()) {
+                $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN_P);
+                $MAIL_STATUS = MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
+                $popup = true;
+            } else {
+                $popup = false;
+            }
+        }
+        return $this->actionRenderAjax($model, '_verificationemail', $show, $popup, $flag);
+    }
 }

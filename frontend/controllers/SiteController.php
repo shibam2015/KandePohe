@@ -519,13 +519,13 @@ class SiteController extends Controller
                 $target_dir = Yii::getAlias('@web').'/uploads/';
                 if(Yii::$app->request->post()){
                     if ($model->eEmailVerifiedStatus == 'No' && $model->pin_email_vaerification == '') {
-                        $PIN = (rand(1000, 9999));
+                        $PIN = CommonHelper::generateNumericUniqueToken(4);
                         $model->pin_email_vaerification = $PIN;
                         $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
                         MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
                     }
                     if ($model->ePhoneVerifiedStatus == 'No' && $model->pin_phone_vaerification == 0) {
-                        $PIN_P = (rand(1000, 9999));
+                        $PIN_P = CommonHelper::generateNumericUniqueToken(4);
                         $model->pin_phone_vaerification = $PIN_P;
                         if ($model->Mobile != 0 && strlen($model->Mobile) == 10) {
                             $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
@@ -655,7 +655,7 @@ class SiteController extends Controller
             $id = Yii::$app->user->identity->id;
             if($model = User::findOne($id)){
                 $model->scenario = User::SCENARIO_REGISTER6;
-                $PIN = (rand(1000, 9999));
+                $PIN = CommonHelper::generateNumericUniqueToken(4);
                 $model->pin_email_vaerification = $PIN;
                 if ($model->save($model)) {
                     $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
@@ -677,82 +677,6 @@ class SiteController extends Controller
         return json_encode($return);
 
     }
-
-    public function actionResendPhonePin($id = '')
-    {
-        $STATUS = $MESSAGE = '';
-        if (!Yii::$app->user->isGuest) {
-            $id = Yii::$app->user->identity->id;
-            if ($model = User::findOne($id)) {
-                $model->scenario = User::SCENARIO_REGISTER6;
-                $PIN_P = (rand(1000, 9999));
-                $model->pin_phone_vaerification = $PIN_P;
-                if ($model->save($model)) {
-                    $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
-                    #$SMS_FLAG = 1;
-                    if ($SMS_FLAG) {
-                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PIN_RESEND_FOR_PHONE');
-                    } else {
-                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_RESEND_FOR_PHONE');
-                    }
-                }
-            } else {
-                return $this->redirect(Yii::getAlias('@web'));
-            }
-        } else {
-            return $this->redirect(Yii::getAlias('@web'));
-        }
-        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
-        #Yii::$app->response->format = Response::FORMAT_JSON;return $return;
-        return json_encode($return);
-    }
-
-    public function actionVerificationPhonePin()
-    {
-        $STATUS = $MESSAGE = '';
-        $RED = 0;
-        if (!Yii::$app->user->isGuest) {
-            $id = Yii::$app->user->identity->id;
-            if ($model = User::findOne($id)) {
-                #$model->scenario = User::SCENARIO_REGISTER7;
-                #$USERARRAY = Yii::$app->request->post('User');
-                #$PIN = $USERARRAY['PHONE_PIN'];
-                $PIN = $_REQUEST['PHONE_PIN'];
-                if ($PIN != '') {
-                    if ($model->pin_phone_vaerification == $PIN) {
-                        $model->ePhoneVerifiedStatus = 'Yes';
-                        $model->completed_step = $model->setCompletedStep('8');
-                        if ($model->save()) {
-                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHONE_VERIFICATION');
-                            if ($model->eEmailVerifiedStatus == 'Yes') {
-                                #$this->redirect(['user/dashboard','type'=> base64_encode("VERIFICATION-DONE")]);
-                                $RED = 1;
-                            }
-                        } else {
-                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHONE_VERIFICATION');
-                        }
-
-                    } else {
-                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_INCORRECT_FOR_PHONE');
-                    }
-                } else {
-                    $MESSAGE = 'Please Enter Mobile PIN.';
-                    $STATUS = 'ERROR';
-                    $TITLE = 'Information';
-                }
-                $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE, 'REDIRECT' => $RED);
-                # echo "<pre>"; print_r($return);exit;
-                return json_encode($return);
-            } else {
-                return $this->redirect(Yii::getAlias('@web'));
-            }
-        } else {
-            return $this->redirect(Yii::getAlias('@web'));
-        }
-
-
-    }
-
     public function actionVerificationEmailPin()
     {
         $STATUS = $MESSAGE = '';
@@ -794,27 +718,5 @@ class SiteController extends Controller
 
 
     }
-
-    public function actionChangeMobileNumber()
-    {
-        if (!Yii::$app->user->isGuest) {
-            $id = Yii::$app->user->identity->id;
-            if ($model = User::findOne($id)) {
-                $model->scenario = User::SCENARIO_REGISTER9;
-                    if($model->load(Yii::$app->request->post())){
-                        if($model->save()){
-                            #$this->redirect(['site/verification']);
-                        }
-                    }   
-            }
-            else {
-                return $this->redirect(Yii::getAlias('@web'));
-            }
-        }
-        else {
-            return $this->redirect(Yii::getAlias('@web'));
-        }
-    }
-
 
 }

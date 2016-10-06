@@ -8,7 +8,6 @@ use yii\helpers\ArrayHelper;
 use common\components\CommonHelper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
-
 $HOME_PAGE_URL = Yii::getAlias('@web') . "/";
 $UPLOAD_DIR = Yii::getAlias('@frontend') . '/web/uploads/';
 $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
@@ -31,44 +30,11 @@ echo $this->render('/layouts/parts/_headerregister.php');
                             </div>
                             <?php Pjax::end(); ?>
                             <p class="font20 mrg-tp-30"><strong>OR</strong></p>
-                            <div class="mrg-tp-30 mrg-bt-10">
-                                <p>We have sent a 4 digit PIN to your given <strong>email address</strong></p>
+                            <?php Pjax::begin(['id' => 'my_index_email', 'enablePushState' => false]); ?>
+                            <div class="mrg-tp-30 mrg-bt-10" id="email_verification">
+                                Email Verification Information Loading...
                             </div>
-                            <?php
-                            $form = ActiveForm::begin([
-                                'id' => 'form-register7',
-                                'action' => 'javascript:void(0)',
-                            ]);
-                            ?>
-                            <!--<form class="mrg-tp-30" method="post">-->
-                            <div class="row">
-                                <div class="col-sm-4 col-xs-6">
-                                    <div class="form-cont">
-                                        <div class="form-cont">
-                                            <?= $form->field($model, 'email_pin', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Enter Email PIN number</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control'], ['maxlength' => 4]) ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-xs-6">
-                                    <!--<input type="submit" value="Verify" name="Verify" class="btn btn-primary">-->
-                                    <!-- <?= Html::submitButton('Verify', ['class' => 'btn btn-primary ', 'name' => 'register7']) ?>-->
-                                    <?= Html::Button('Verify', ['class' => 'btn btn-primary do_email_verification', 'name' => 'register7']) ?>
-                                    <!--<input type="button" name="Verify" value="Verify" class="btn btn-primary" onclick="window.location.href='index.php?r=site%2Fdashboard'">-->
-                                </div>
-                            </div>
-                            <div class="mrg-tp-10 mrg-bt-10">
-                                <?php if ($model->email_verification_msg != '') { ?><span
-                                    class="<?= $model->error_class ?>"> <?= $model->email_verification_msg ?></span> <?php } ?>
-                                <p>Didn't get PIN? <a href="javascript:void(0)" class="email_verification"
-                                                      data-name="email"> Resend PIN </a>to my email address
-                                    <strong><?= $model->email ?></strong>
-                                    <a href="#" class="btn btn-default btn-xs"><span
-                                            class="glyphicon glyphicon-pencil"></span> Edit</a></p>
-
-                            </div>
-                            <!--</form>-->
-                            <?php ActiveForm::end(); ?>
-
+                            <?php Pjax::end(); ?>
                             <div class="mrg-tp-30 mrg-bt-10">
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -138,7 +104,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
     </div>
 </main>
 <?php
-#Phone Pin
+#Phone PIN & Email PIN
 $this->registerJs('
     function getInlineDetail(url,htmlId,type){
                 Pace.restart();
@@ -159,6 +125,18 @@ $this->registerJs('
     $(document).on("click",".phone_verification",function(e){
                 Pace.restart();
         getInlineDetail("' . Url::to(['user/phone-pin-resend']) . '","#phone_verification","10");
+    });    
+    
+    getInlineDetail("' . Url::to(['user/email-verification']) . '","#email_verification","1");
+    $(document).on("click","#cancel_change_email",function(e){
+                Pace.restart();
+        getInlineDetail("' . Url::to(['user/email-verification']) . '","#email_verification","1");
+    });
+    $(document).on("click",".email_verification",function(e){
+                Pace.restart();
+                $(".ew").show();
+        getInlineDetail("' . Url::to(['user/email-pin-resend']) . '","#email_verification","10");
+        
     });    
     
 ');

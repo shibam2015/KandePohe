@@ -8,12 +8,13 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 ?>
-    <div id="phone_verification">
+
+    <div id="email_verification" class="mrg-tp-30 mrg-bt-10">
         <?php
-        if ($model->ePhoneVerifiedStatus == 'No') {
+        if ($model->eEmailVerifiedStatus == 'No') {
             $form = ActiveForm::begin([
                 'id' => 'form',
-                'action' => ['phone-verification'],
+                'action' => ['email-verification'],
                 'options' => ['data-pjax' => true],
                 #'layout' => 'horizontal',
                 'validateOnChange' => false,
@@ -31,43 +32,51 @@ use yii\widgets\Pjax;
             ]);
             ?>
             <div class="row">
+                <div class="col-sm-3 col-xs-3">
+                    <div class="form-cont center ew" style="display:none">
+                        <p> Please wait...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-sm-4 col-xs-6">
                     <div class="form-cont">
                         <div class="form-cont">
                             <!-- <?= $form->errorSummary($model, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?> -->
-                            <?= $form->field($model, 'phone_pin', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Enter Mobile PIN number</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control'], ['maxlength' => 4]) ?>
+                            <?= $form->field($model, 'email_pin', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Enter Email PIN number</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control'], ['maxlength' => 4]) ?>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-6">
-                    <?= Html::submitButton('Verify', ['class' => 'btn btn-primary', 'name' => 'verify', 'value' => 'PHONE_VERIFY']) ?>
+                    <?= Html::submitButton('Verify', ['class' => 'btn btn-primary', 'name' => 'verify', 'value' => 'EMAIL_VERIFY']) ?>
                 </div>
             </div>
             <?php ActiveForm::end(); ?>
             <div class="mrg-tp-20 mrg-bt-10">
                 <span class="phone_status"></span>
-                <p>Didn't get PIN? <a href="javascript:void(0)" class="phone_verification"
-                                      data-name="phone"> Resend PIN </a>to my mobile number
-                    <strong><?= $model->DisplayMobile ?></strong>
-                    <a href="javascript:void(0)" class="btn btn-default btn-xs edit_phone"><span
+                <p>Didn't get PIN? <a href="javascript:void(0)" class="email_verification"
+                                      data-name="phone"> Resend PIN </a>to my email address
+                    <strong><?= $model->email ?></strong>
+                    <a href="javascript:void(0)" class="btn btn-default btn-xs edit_email"><span
                             class="glyphicon glyphicon-pencil"></span> Edit</a></p>
             </div>
 
             <?php
 
-            if ($model->ePhoneVerifiedStatus == 'No') {
+            if ($model->eEmailVerifiedStatus == 'No') {
                 if ($flag) {
                     if ($popup) {
-                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PIN_RESEND_FOR_PHONE');
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PIN_RESEND_FOR_EMAIL');
                     } else {
-                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_RESEND_FOR_PHONE');
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_RESEND_FOR_EMAIL');
                     }
                     $this->registerJs(' 
                     notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
                 ');
                 } else {
                     if ($popup) {
-                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_INCORRECT_FOR_PHONE');
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_INCORRECT_FOR_EMAIL');
                         $this->registerJs(' 
                     notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
                 ');
@@ -77,22 +86,21 @@ use yii\widgets\Pjax;
         } else { ?>
             <div class="mrg-tp-20 mrg-bt-10">
                 <span class="phone_status"></span>
-                <p> Your <strong><?= $model->DisplayMobile ?></strong> mobile number is verified.
-                    <a href="javascript:void(0)" class="btn btn-default btn-xs edit_phone"><span
+                <p> Your <strong><?= $model->email ?></strong> email id is verified.
+                    <a href="javascript:void(0)" class="btn btn-default btn-xs edit_email"><span
                             class="glyphicon glyphicon-pencil"></span> Edit</a></p>
             </div>
             <?php
-            if ($model->ePhoneVerifiedStatus == 'Yes' && $model->phone_pin == '') {
+            if ($model->eEmailVerifiedStatus == 'Yes' && $model->email_pin == '') {
                 if ($popup) {
-                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHONE_VERIFICATION');
+                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'EMAIL_VERIFICATION');
                     $this->registerJs(' 
                        notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
                        setTimeout(function(){ 
-                           $(".modal").modal("hide");                                      
+                          $(".modal").modal("hide");                                      
                        }, 4000);
-                        
-                    ');
 
+                    ');
                     if ($model->eEmailVerifiedStatus == 'Yes' && $model->ePhoneVerifiedStatus == 'Yes') {
                         $this->registerJs(' 
                                $(".modal").on("hidden.bs.modal", function (e) {
@@ -101,6 +109,7 @@ use yii\widgets\Pjax;
 
                         ');
                     }
+
                 }
             }
         } ?>
@@ -119,8 +128,8 @@ $this->registerJs('
         }
       });
     }
-    $(".edit_phone").click(function(e){
-        getInlineDetail("' . Url::to(['user/phone-number-change']) . '","#phone_verification","0");
+    $(".edit_email").click(function(e){
+        getInlineDetail("' . Url::to(['user/email-id-change']) . '","#email_verification","0");
     });
 ');
 

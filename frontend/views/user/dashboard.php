@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use common\models\LoginForm;
 use yii\captcha\Captcha;
 use common\components\CommonHelper;
+use common\components\MessageHelper;
 /*$religion_data = CommonHelper::getReligion();
 $community_data = CommonHelper::getCommunity();*/
 
@@ -678,3 +679,14 @@ $this->registerJs("
 </script>
 <script src="<?=$HOME_URL?>js/jquery.js" type="text/javascript"></script>
 <script src="<?=$HOME_URL?>js/selectFx.js"></script>
+
+<?php
+if ($type != '' && base64_decode($type) == "VERIFICATION-DONE") {
+    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification("S", "VERIFICATION_COMPLETED");
+    $this->registerJs('
+        notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
+    ');
+}
+
+
+?>
