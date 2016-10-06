@@ -1036,7 +1036,7 @@ class UserController extends Controller
                     $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
                     $model->ePhoneVerifiedStatus = 'No';
                     if ($model->save()) {
-                        #$SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                        $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
                         $flag = true;
                         $show = false;
                     } else {
@@ -1071,7 +1071,7 @@ class UserController extends Controller
             $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
             $model->ePhoneVerifiedStatus = 'No';
             if ($model->save()) {
-                #$SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
                 $popup = true;
             } else {
                 $popup = false;

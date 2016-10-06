@@ -8,9 +8,6 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 ?>
-<!--<div class="mrg-tp-10 mrg-bt-10">
-    <p>We have sent a 4 digit PIN to your given <strong>mobile number</strong> via SMS/Text message</p>
-</div>-->
     <div id="phone_verification">
         <?php
         if ($model->ePhoneVerifiedStatus == 'No') {
@@ -30,22 +27,22 @@ use yii\widgets\Pjax;
                         'error' => '',
                         'hint' => '',
                     ]
-            ]
+                ]
             ]);
             ?>
             <div class="row">
                 <div class="col-sm-4 col-xs-6">
-                <div class="form-cont">
                     <div class="form-cont">
-                        <!-- <?= $form->errorSummary($model, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?> -->
-                        <?= $form->field($model, 'phone_pin', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Enter Mobile PIN number</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control'], ['maxlength' => 4]) ?>
+                        <div class="form-cont">
+                            <!-- <?= $form->errorSummary($model, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?> -->
+                            <?= $form->field($model, 'phone_pin', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Enter Mobile PIN number</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control'], ['maxlength' => 4]) ?>
+                        </div>
                     </div>
                 </div>
-            </div>
                 <div class="col-sm-6 col-xs-6">
                     <?= Html::submitButton('Verify', ['class' => 'btn btn-primary', 'name' => 'verify', 'value' => 'PHONE_VERIFY']) ?>
                 </div>
-        </div>
+            </div>
             <?php ActiveForm::end(); ?>
             <div class="mrg-tp-20 mrg-bt-10">
                 <span class="phone_status"></span>
@@ -54,7 +51,7 @@ use yii\widgets\Pjax;
                     <strong><?= $model->DisplayMobile ?></strong>
                     <a href="javascript:void(0)" class="btn btn-default btn-xs edit_phone"><span
                             class="glyphicon glyphicon-pencil"></span> Edit</a></p>
-        </div>
+            </div>
 
             <?php
 
@@ -89,8 +86,11 @@ use yii\widgets\Pjax;
                 if ($popup) {
                     list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHONE_VERIFICATION');
                     $this->registerJs(' 
-            notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
-        ');
+                       notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
+                            setTimeout(function(){ 
+                                      $(".modal").modal("hide");                                      
+                            }, 4000);
+                    ');
                 }
             }
         } ?>
