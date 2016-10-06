@@ -225,7 +225,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             self::SCENARIO_FP => ['email', 'password_hash', 'password_reset_token'],
             self::SCENARIO_SFP => ['email', 'password_reset_token'],
             self::SCENARIO_EDIT_MY_INFO => ['tYourSelf'],
-            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus'],
+            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'completed_step'],
             self::SCENARIO_VERIFY_PIN_FOR_PHONE => ['phone_pin', 'completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification'],
             self::SCENARIO_PHONE_NUMBER_CHANGE => ['completed_step', 'Mobile', 'pin_phone_vaerification', 'ePhoneVerifiedStatus'],
             self::SCENARIO_RESEND_PIN_FOR_PHONE => ['completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification'],

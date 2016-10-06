@@ -442,6 +442,7 @@ class UserController extends Controller
                         $PIN_P = CommonHelper::generateNumericUniqueToken(4);
                         $model->pin_phone_vaerification = $PIN_P;
                         $model->ePhoneVerifiedStatus = 'No';
+                        $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
                         $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
                         $popup = true;
                     }
@@ -988,7 +989,6 @@ class UserController extends Controller
         $model->scenario = User::SCENARIO_VERIFY_PIN_FOR_PHONE;
         $show = false;
         $popup = false;
-        #CommonHelper::pr($_REQUEST);exit;
         if (Yii::$app->request->post() && (Yii::$app->request->post('verify') == 'PHONE_VERIFY')) {
             $show = true;
             $PIN = $model->pin_phone_vaerification;
@@ -1014,8 +1014,8 @@ class UserController extends Controller
         return $this->actionRenderAjax($model, '_verificationphone', $show, $popup);
     }
 
-    public function actionPhoneNumberChange()
-    { # For Phone Verification : VS
+    public function actionPhoneNumberChange() # For Phone Numbe Change : VS
+    {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_PHONE_NUMBER_CHANGE;
@@ -1057,7 +1057,7 @@ class UserController extends Controller
         return $this->actionRenderAjax($model, '_changephone', $show, $popup, $flag);
     }
 
-    public function actionPhonePinResend()
+    public function actionPhonePinResend() # For Phone Pin Resend : VS
     {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
