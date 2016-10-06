@@ -264,3 +264,17 @@ function setDesign() {
         inputEl.addEventListener('blur', onInputBlur);
     });
 }
+/* Overlay Loader Start */
+
+function loaderStop() {
+    $('.main-section').waitMe('hide');
+}
+function loaderStart() {
+    $('.main-section').waitMe({
+        effect: 'bounce',
+        text: "Please Wait...",
+        bg: "rgba(255,255,255,0.7)",
+        color: "#EA0B44"
+    });
+}
+/* Overlay Loader End */

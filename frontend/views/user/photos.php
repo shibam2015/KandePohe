@@ -371,7 +371,7 @@ $this->registerJs('
                         reader.readAsDataURL(file[0]);
                     } else {
                         tflag= 0;
-                        alert(file[0].name + " is not a valid image file.");
+                        notificationPopup(\'ERROR\', file[0].name + " is not a valid image file.", \'Error\');
                         return false;
                     }
                 });
@@ -389,6 +389,7 @@ $this->registerJs('
                         });
                     }
                     var uid = userid;
+                    loaderStart();
                     $.ajax({
                         url: "photoupload?id=" + uid + "&FILE=" + file,
                         type: "POST",
@@ -399,17 +400,18 @@ $this->registerJs('
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
+                            loaderStop();
                             if (DataObject.STATUS == "S") {
                                 $("#photo_list").html(DataObject.OUTPUT);
                                 $("#profile_list_popup").html(DataObject.OUTPUT_ONE);
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             } else {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                             profile_photo();                    
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                        alert("Request Failed");
+                        notificationPopup(\'ERROR\', \'Something went wrong. Please try again !\', \'Error\');
                         }
                     });
                 }
@@ -435,6 +437,7 @@ $this->registerJs('
         
         $(".yes").click(function(){
         Pace.restart();
+        loaderStart();
         var formDataPhoto = new FormData();
         formDataPhoto.append( "P_ID", P_ID);
         formDataPhoto.append( "P_TYPE", P_TYPE);    
@@ -448,12 +451,13 @@ $this->registerJs('
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
                             if (DataObject.STATUS == "S") {
+                                loaderStop();
                                 if(P_TYPE=="PHOTO_PROFILE_SET"){
                                     $("#photo_list").html(DataObject.OUTPUT);
                                     $("#profile_list_popup").html(DataObject.OUTPUT_ONE);
                                     $(".mainpropic").attr("src", DataObject.PROFILE_PHOTO);
                                     $(".profile_photo_one").attr("src", DataObject.PROFILE_PHOTO_ONE);
-                                    notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                    notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                                 }else{
                                     $("#photo_list").html(DataObject.OUTPUT);
                                     $("#profile_list_popup").html(DataObject.OUTPUT_ONE);
@@ -463,16 +467,18 @@ $this->registerJs('
                                     if(DataObject.PROFILE_PHOTO_ONE != ""){
                                         $(".profile_photo_one").attr("src", DataObject.PROFILE_PHOTO_ONE);
                                     }
-                                    notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                    notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                                 }
                             } else {
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
+                                loaderStop();
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                                                                 
                         profile_photo();
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                        alert("Request Failed");
+                        loaderStop();
+                        notificationPopup(\'ERROR\', \'Something went wrong. Please try again !\', \'Error\');
                         }
                     });
         })

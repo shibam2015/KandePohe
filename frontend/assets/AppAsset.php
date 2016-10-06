@@ -19,7 +19,8 @@ class AppAsset extends AssetBundle
 		'css/cs-skin-border.css',
 		'css/style-responsive.css',
         'plugings/loader/pace.min.css',
-        'css/customstyle.css'
+        'css/customstyle.css',
+        'plugings/l1/waitMe.css'
     ];
     public $js = [
 		// 'js/jquery.js',
@@ -32,6 +33,7 @@ class AppAsset extends AssetBundle
         #'js/modernizr.js',
         'plugings/loader/pace.min.js',
         #'js/cover/jquery-ui.min.js', //Cover Photo
-        'js/cover/jquery.wallform.js' //Cover Photo
+        'js/cover/jquery.wallform.js', //Cover Photo
+        'plugings/l1/waitMe.js' // Loader
     ];
 }
