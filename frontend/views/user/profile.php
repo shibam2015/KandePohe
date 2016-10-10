@@ -323,7 +323,41 @@ use yii\helpers\ArrayHelper;
                                             </ul>
                                         </div>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane" id="profile">...</div>
+                                    <div role="tabpanel" class="tab-pane" id="profile">
+                                        <div class="inner-block">
+                                            <!--<h3><span class="heading-icons icon2"></span> Background</h3>-->
+                                            <dl class="dl-horizontal">
+                                                <dt>Religion</dt>
+                                                <dd><?= CommonHelper::setInputVal($PartenersReligion->religionName->vName, 'text') ?>
+                                                <dd>
+                                                <dt>Age From</dt>
+                                                <dd><?= CommonHelper::setInputVal($UPP->age_from, 'age') ?>
+                                                <dd>
+                                                <dt>Age To</dt>
+                                                <dd><?= CommonHelper::setInputVal($UPP->age_to, 'age') ?>
+                                                <dd>
+                                                <dt>Marital Status</dt>
+                                                <dd><?= CommonHelper::setInputVal($PartnersMaritalStatus->maritalStatusName->vName, 'text') ?>
+                                                <dd>
+                                                <dt>Gotra</dt>
+                                                <dd><?= CommonHelper::setInputVal($PartnersGotra->gotraName->vName, 'text') ?>
+                                                <dd>
+                                                <dt>Father Status</dt>
+                                                <dd><?= CommonHelper::setInputVal($PartnersFathersStatus->fatherStatus->vName, 'text') ?>
+                                                <dd>
+                                                <dt>Mother Status</dt>
+                                                <dd><?= CommonHelper::setInputVal($PartnersMothersStatus->motherStatus->vName, 'text') ?>
+                                                <dd>
+                                                <dt>Education Level</dt>
+                                                <dd><?= CommonHelper::setInputVal($PartnersEducationalLevel->educationLevelName->vEducationLevelName, 'text') ?>
+                                                <dd>
+                                                <dt>Education Field</dt>
+                                                <dd><?= CommonHelper::setInputVal($PartnersEducationField->educationFieldName->vEducationFieldName, 'text') ?>
+                                                <dd>
+
+                                            </dl>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

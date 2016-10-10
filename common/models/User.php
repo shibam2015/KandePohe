@@ -197,7 +197,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             // [['captcha'],'captcha'],
             [['email'], 'email'],
             [['password_hash', 'repeat_password'], 'string', 'length' => [6, 255]],
-            [['tYourSelf'], 'string', 'max' => '100'],
+            [['tYourSelf'], 'string', 'max' => '2000'],
             [['tYourSelf'], 'required', 'on' => self::SCENARIO_EDIT_MY_INFO],
             [['repeat_password'], 'compare', 'compareAttribute' => 'password_hash', 'message' => "Passwords don't match"],
             [['password_reset_token'], 'unique'],

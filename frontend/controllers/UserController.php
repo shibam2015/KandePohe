@@ -1183,19 +1183,27 @@ class UserController extends Controller
         $id = Yii::$app->user->identity->id;
         #echo $uk;exit;echo $Registration_Number;exit;
         $model1 = User::findOne(['Registration_Number' => $uk]);
+        $OtherUserId = $model1->id;
         $flag = false;
         $MatchCompatibility = array();
         $PhotoList = array();
         $model = array();
         $Title = $Message = '';
-        if ($model1->id == $id) {
+        if ($OtherUserId != $id) {
             $flag = true;
-            $model = User::findOne($model1->id);
+            $model = User::findOne($OtherUserId);
             $UserPhotoModel = new UserPhotos();
-            $PhotoList = $UserPhotoModel->findByUserId($id);
+            $PhotoList = $UserPhotoModel->findByUserId($OtherUserId);
+            $PartenersReligion = PartenersReligion::findByUserId($OtherUserId) == NULL ? new PartenersReligion() : PartenersReligion::findByUserId($OtherUserId);
+            $UPP = UserPartnerPreference::findByUserId($OtherUserId) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($OtherUserId);
+            $PartnersMaritalStatus = PartnersMaritalStatus::findByUserId($OtherUserId) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findByUserId($OtherUserId);
+            $PartnersGotra = PartnersGotra::findByUserId($OtherUserId) == NULL ? new PartnersGotra() : PartnersGotra::findByUserId($OtherUserId);
+            $PartnersFathersStatus = PartnersFathersStatus::findByUserId($OtherUserId) == NULL ? new PartnersFathersStatus() : PartnersFathersStatus::findByUserId($OtherUserId);
+            $PartnersMothersStatus = PartnersMothersStatus::findByUserId($OtherUserId) == NULL ? new PartnersMothersStatus() : PartnersMothersStatus::findByUserId($OtherUserId);
+            $PartnersEducationalLevel = PartnersEducationalLevel::findByUserId($OtherUserId) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findByUserId($OtherUserId);
+            $PartnersEducationField = PartnersEducationField::findByUserId($OtherUserId) == NULL ? new PartnersEducationField() : PartnersEducationField::findByUserId($OtherUserId);
 
-
-        } else if ($model1->id == $id) {
+        } else if ($OtherUserId == $id) {
             $Title = "Access Denied";
             $Message = "You can't see your profile as user view.";
         } else {
@@ -1209,6 +1217,14 @@ class UserController extends Controller
             'flag' => $flag,
             'Message' => $Message,
             'Title' => $Title,
+            'PartenersReligion' => $PartenersReligion,
+            'UPP' => $UPP,
+            'PartnersMaritalStatus' => $PartnersMaritalStatus,
+            'PartnersGotra' => $PartnersGotra,
+            'PartnersFathersStatus' => $PartnersFathersStatus,
+            'PartnersMothersStatus' => $PartnersMothersStatus,
+            'PartnersEducationalLevel' => $PartnersEducationalLevel,
+            'PartnersEducationField' => $PartnersEducationField,
         ]);
     }
 }
