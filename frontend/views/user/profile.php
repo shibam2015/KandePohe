@@ -122,11 +122,15 @@ use yii\helpers\ArrayHelper;
                                                         <?= Html::img('@web/images/email.png', ['width' => '', 'height' => '', 'alt' => 'email']); ?></i>
                                                     Send Email (with Profile)</a>
                                             </li>
-                                            <li><a href="#"><i class="fa">
+                                            <li>
+                                                <a href="<?= Yii::$app->homeUrl ?>/payment/payment?source=profile_chatnow&uk=<?= $model->Registration_Number ?>"
+                                                   target="_blank"><i class="fa">
                                                         <?= Html::img('@web/images/chat.png', ['width' => '', 'height' => '', 'alt' => 'chat']); ?></i>
                                                     Chat Now</a>
                                             </li>
-                                            <li><a href="#"><i class="fa">
+                                            <li>
+                                                <a href="<?= Yii::$app->homeUrl ?>/payment/payment?source=profile_callsmsnow&uk=<?= $model->Registration_Number ?>"
+                                                   target="_blank"><i class="fa">
                                                         <?= Html::img('@web/images/call.png', ['width' => '', 'height' => '', 'alt' => 'call']); ?>
                                                     </i> Call/ Send SMS</a></li>
                                             <li><a href="#"><i class="fa">

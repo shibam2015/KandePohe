@@ -113,9 +113,10 @@ class UserController extends Controller
     {
         $model = new User();
         $model->scenario = User::SCENARIO_REGISTER;
-        return $this->render('index',
+        return $this->redirect(['site/error']);
+        /*return $this->render('index',
             ['model' => $model]
-        );
+        );*/
     }
 
     public function actionMyProfile()
