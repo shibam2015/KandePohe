@@ -1717,11 +1717,11 @@ body.modal-open {
 	border: none;
 }
 .profile-control {
-	background: #ea0b44;
+	/*background: #ea0b44;
 	font-size: 16px;
 	box-shadow: #ccc 0px 0px 5px;
 	max-width: 437px;
-	width: 100%;
+	width: 100%;*/
 }
 .profile-control .btn {
 	background: #ea0b44;

@@ -83,8 +83,7 @@ use yii\helpers\ArrayHelper;
                                         <button type="button" class="btn"> Shortlist <i class="fa fa-list-ul"></i>
                                         </button>
                                         <button type="button" class="btn"> Block <i class="fa fa-ban"></i></button>
-                                        <button type="button" class="btn"> No <i class="fa fa-thumbs-o-down"></i>
-                                        </button>
+                                        <!--<button type="button" class="btn"> No <i class="fa fa-thumbs-o-down"></i></button>-->
                                     </div>
                                     <dl class="dl-horizontal mrg-tp-20">
                                         <dt>Personal Details</dt>
@@ -568,7 +567,9 @@ use yii\helpers\ArrayHelper;
 </div>
 <div class="modal fade" id="sendInterest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo"></p>
+        <p class="text-center mrg-bt-10">
+            <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+        </p>
 
         <div class="modal-content">
             <!-- Modal Header -->
@@ -591,12 +592,12 @@ use yii\helpers\ArrayHelper;
                         <h6 class="mrg-bt-30 font-15 text-dark"><strong>Request the member to add the following
                                 details</strong></h6>
 
-                        <div class="checkbox mrg-tp-0">
+                        <div class="checkbox mrg-tp-0 profile-control">
                             <input id="Photo" type="checkbox" name="Photo" value="check1">
                             <label for="Photo" class="control-label">Photo</label>
                             <input id="Horoscope" type="checkbox" name="Horoscope" value="check1">
                             <label for="Horoscope" class="control-label">Horoscope</label>
-                            <button class="btn btn-default">Send Request</button>
+                            <button type="button" class="btn active send_request"> Send Interest</button>
                         </div>
                     </div>
                     <div class="well">
@@ -609,8 +610,9 @@ use yii\helpers\ArrayHelper;
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="bg-white">
                                     <ul class="list-unstyled ad-prof user-list">
-                                        <li> <span class="imgarea"> <img src="images/profile-pic.jpg" width="65"
-                                                                         height="65" alt="Profile"> <br>
+                                        <li> <span class="imgarea">
+
+                                                <br>
                       <input id="Photo1" type="checkbox" name="Photo" value="check1">
                       </span> <span class="img-desc"> <a href="#" class="name" title="KP123WERT">Pallavi Jadhav <br>
                                                     KP123WERT</a>
@@ -627,8 +629,9 @@ use yii\helpers\ArrayHelper;
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="bg-white">
                                     <ul class="list-unstyled ad-prof user-list">
-                                        <li> <span class="imgarea"> <img src="images/profile-pic.jpg" width="65"
-                                                                         height="65" alt="Profile"> <br>
+                                        <li> <span
+                                                class="imgarea"> <?= Html::img('@web/images/profile4.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?>
+                                                <br>
                       <input id="Photo2" type="checkbox" name="Photo" value="check1">
                       </span> <span class="img-desc"> <a href="#" class="name" title="KP123WERT">Pallavi Jadhav <br>
                                                     KP123WERT</a>
@@ -647,8 +650,9 @@ use yii\helpers\ArrayHelper;
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="bg-white">
                                     <ul class="list-unstyled ad-prof user-list">
-                                        <li> <span class="imgarea"> <img src="images/profile-pic.jpg" width="65"
-                                                                         height="65" alt="Profile"> <br>
+                                        <li> <span
+                                                class="imgarea"> <?= Html::img('@web/images/profile4.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?>
+                                                <br>
                       <input id="Photo1" type="checkbox" name="Photo" value="check1">
                       </span> <span class="img-desc"> <a href="#" class="name" title="KP123WERT">Pallavi Jadhav <br>
                                                     KP123WERT</a>
@@ -665,8 +669,9 @@ use yii\helpers\ArrayHelper;
                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                 <div class="bg-white">
                                     <ul class="list-unstyled ad-prof user-list">
-                                        <li> <span class="imgarea"> <img src="images/profile-pic.jpg" width="65"
-                                                                         height="65" alt="Profile"> <br>
+                                        <li> <span
+                                                class="imgarea"> <?= Html::img('@web/images/profile4.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?>
+                                                <br>
                       <input id="Photo2" type="checkbox" name="Photo" value="check1">
                       </span> <span class="img-desc"> <a href="#" class="name" title="KP123WERT">Pallavi Jadhav <br>
                                                     KP123WERT</a>

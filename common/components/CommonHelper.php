@@ -201,14 +201,20 @@ class CommonHelper {
         if ($TYPE == 1) {
             $USER_UPLOAD = Yii::getAlias('@frontend') . '/web/uploads/users/';
         } else {
-            $USER_UPLOAD = Yii::getAlias('@web') . '/uploads/users/';
+            #$USER_UPLOAD = Yii::getAlias('@web') . '/uploads/users/';
+            $USER_UPLOAD = CommonHelper::getHost() . '/uploads/users/';
         }
         return $USER_UPLOAD;
     }
 
+    public static function getHost()
+    {
+        $HostName = "http://" . $_SERVER["HTTP_HOST"] . Yii::getAlias('@web');
+        return $HostName;
+    }
     public static function getUserDefaultPhoto()
     {
-        $MAIN_URL = CommonHelper::getUserUploadFolder(2);
+        $MAIN_URL = CommonHelper::getHost() . CommonHelper::getUserUploadFolder(2);
         return $MAIN_URL . 'no-user-img.jpg';
     }
 

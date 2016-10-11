@@ -70,4 +70,9 @@ class UserPhotos extends \common\models\base\baseUserPhotos
     {
         return static::updateAll(array('Is_Profile_Photo' => 'NO'), 'iUser_ID="' . $iUser_ID . '"');
     }
+
+    public function findByProfilePhoto($iUser_ID)
+    {
+        return static::findOne(['iUser_ID' => $iUser_ID, 'Is_Profile_Photo' => 'YES']);
+    }
 }
