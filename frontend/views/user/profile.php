@@ -4,9 +4,8 @@ use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use common\components\MailHelper;
 use yii\helpers\ArrayHelper;
-
 ?>
-<div class="">
+<div class="main-section">
     <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
     <main>
         <div class="container">
@@ -90,7 +89,8 @@ use yii\helpers\ArrayHelper;
                                     <dl class="dl-horizontal mrg-tp-20">
                                         <dt>Personal Details</dt>
                                         <dd><?= CommonHelper::getAge($model->DOB); ?> years,
-                                            <?= CommonHelper::setInputVal($model->height->vName, 'text') ?>, Capricorn
+                                            <?= CommonHelper::setInputVal($model->height->vName, 'text'); ?>, Capricorn
+                                            <!-- TODO : Raashi -->
                                         <dd>
 
                                         <dt>Marital Status</dt>
@@ -118,7 +118,7 @@ use yii\helpers\ArrayHelper;
                                 <div class="col-sm-12">
                                     <div class="gray-bg">
                                         <ul class="list-inline">
-                                            <li><a href="#"><i class="fa">
+                                            <li><a href="javascript:void(0);" class="send_email"><i class="fa">
                                                         <?= Html::img('@web/images/email.png', ['width' => '', 'height' => '', 'alt' => 'email']); ?></i>
                                                     Send Email (with Profile)</a>
                                             </li>
@@ -141,15 +141,24 @@ use yii\helpers\ArrayHelper;
                             <div>
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#home" aria-controls="home"
-                                                                              role="tab" data-toggle="tab">Home</a></li>
-                                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab"
-                                                               data-toggle="tab">Detailed Preferences</a></li>
-                                    <li role="presentation" class="active pull-right"><a href="#"><i class="fa">
+                                    <li role="presentation" class="active">
+                                        <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Detailed
+                                            Preferences</a>
+                                    </li>
+                                    <li role="presentation" class="active pull-right">
+                                        <a href="javascript:void(0);" class="send_email"><i class="fa">
                                                 <?= Html::img('@web/images/email.png', ['width' => '', 'height' => '', 'alt' => 'email']); ?>
-                                            </i> Send Email </a></li>
-                                    <li class="pull-right" role="presentation"><a href="#"><i class="fa fa-print"></i>
-                                            Take a print</a></li>
+                                            </i> Send Email
+                                        </a>
+                                    </li>
+                                    <li class="pull-right" role="presentation">
+                                        <a href="javascript:window.print();"><i class="fa fa-print"></i>
+                                            Take a print
+                                        </a>
+                                    </li>
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content">
@@ -686,6 +695,30 @@ use yii\helpers\ArrayHelper;
 
 
 <?php
-$this->registerJs('');
+$this->registerJs('
+$(document).on("click",".send_email",function(e){
+        loaderStart();
+         var formData = new FormData();
+         formData.append("UserId", ' . $model->id . ');
+         $.ajax({
+                        url: "send-email-profile",
+                        type: "POST",
+                        data: formData,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (data, textStatus, jqXHR) {
+                            loaderStop();
+                            var DataObject = JSON.parse(data);
+                            notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                                notificationPopup(\'ERROR\', \'Something went wrong. Please try again !\', \'Error\');
+                                loaderStop();
+                        }
+         });
+
+    });
+');
 ?>
 

@@ -281,7 +281,7 @@ class CommonHelper {
                 return date('F j, Y (H:i:s)', strtotime($text));
                 break;
             case "14":
-                return date('j M Y', strtotime($text));
+                return date('j-M-Y', strtotime($text));
                 break;
             case "15":
                 return date('D', strtotime($text));
@@ -428,13 +428,16 @@ class CommonHelper {
         return true;
     }
 
-    public static function getSiteUrl($TYPE = 'FRONTEND')
+    public static function getSiteUrl($TYPE = 'FRONTEND', $Mail = '')
     {
 
         if ($TYPE == 'FRONTEND') {
             $site_url = "http://" . $_SERVER["HTTP_HOST"] . Yii::getAlias('@web') . "/frontend/web/";
         } else {
             $site_url = "http://" . $_SERVER["HTTP_HOST"] . Yii::getAlias('@web') . "/backend/web/";
+        }
+        if ($Mail != '') {
+            $site_url = "http://" . $_SERVER["HTTP_HOST"] . Yii::getAlias('@web') . "/";
         }
         return $site_url;
     }

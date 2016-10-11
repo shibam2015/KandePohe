@@ -110,3 +110,7 @@ img.selected {
 .tag_delete1 {
     cursor: pointer;
 }
+
+.send_email {
+    cursor: pointer !important;
+}
