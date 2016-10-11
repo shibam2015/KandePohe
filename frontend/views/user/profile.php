@@ -62,8 +62,10 @@ use yii\helpers\ArrayHelper;
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="text-right"><a href="#" data-toggle="modal" data-target="#photo">View
-                                            Album <i class="fa fa-angle-right"></i></a></p>
+                                    <?php if (count($PhotoList) > 0) { ?>
+                                        <p class="text-right"><a href="#" data-toggle="modal" data-target="#photo">View
+                                                Album <i class="fa fa-angle-right"></i></a></p>
+                                    <?php } ?>
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="name-panel">

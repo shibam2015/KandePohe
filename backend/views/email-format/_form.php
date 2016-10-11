@@ -33,7 +33,8 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
-<script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
+<script src="//cdn.ckeditor.com/4.5.11/full/ckeditor.js"></script>
+<!--<script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>-->
 <?php
 $this->registerJs('$(function(){
                     CKEDITOR.replace("emailformat-temailformatdesc");
