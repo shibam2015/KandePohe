@@ -1181,7 +1181,7 @@ class UserController extends Controller
         return $this->actionRenderAjax($model, '_profileviewedby');
     }
 
-    public function actionProfile($uk = '') #Other User Profile View : VS
+    public function actionProfile($uk = '', $source = '') #Other User Profile View : VS
     {
         $id = Yii::$app->user->identity->id;
         #echo $uk;exit;echo $Registration_Number;exit;
@@ -1271,39 +1271,12 @@ class UserController extends Controller
         $show = $popup = false;
         $temp = array();
         if (Yii::$app->request->post() && (count(Yii::$app->request->post()) > 0)) {
-            #print_r($_REQUEST);exit;
             $RequestAction = Yii::$app->request->post('Action');
             $ToUserId = Yii::$app->request->post('ToUserId');
-
-            #CommonHelper::pr($ABC);
             if ($RequestAction == 'SEND_INTEREST') {
                 $temp['Action'] = 'SEND_INTEREST';
-                $RequestModel = new UserRequest();
-                $RequestModel->scenario = UserRequest::SCENARIO_SEND_INTEREST;
-                $RequestModel->from_user_id = $id; #who logged in.
-                $RequestModel->to_user_id = $ToUserId;
-                $RequestModel->send_request_status = 'Yes';
-                $RequestModel->date_send_request = date('Y-m-d');
-                if ($RequestModel->save()) {
-                    $temp['STATUS'] = 'S';
-                } else {
-                    $temp['STATUS'] = 'E';
-                }
+                $temp['STATUS'] = $this->actionSendInterest($id, $ToUserId);
             }
-
-
-            /*$RequestModel->short_list_status = 'Yes';
-            $RequestModel->block_status = 'Yes';
-            $RequestModel->like_status = 'Yes';
-            $RequestModel->profile_viewed = 'Yes';
-            $RequestModel->phone_number_viewed = 'Yes';
-            $RequestModel->date_accept_request = date('Y-m-d');
-            $RequestModel->date_decline_request = date('Y-m-d');
-            $RequestModel->date_block = date('Y-m-d');*/
-            #CommonHelper::pr($RequestModel->save());
-            #CommonHelper::pr($RequestModel->validate());
-
-            //SEND_INTEREST
         }
 
         $modelUser = UserRequest:: find()
@@ -1317,5 +1290,21 @@ class UserController extends Controller
             'modelUser' => $modelUser,
         ];
         return $this->actionRenderAjax($myModel, '_requests', $show, '', '', $temp);
+    }
+
+    public function actionSendInterest($id, $ToUserId)
+    {
+        $RequestModel = new UserRequest();
+        $RequestModel->scenario = UserRequest::SCENARIO_SEND_INTEREST;
+        $RequestModel->from_user_id = $id; #who logged in.
+        $RequestModel->to_user_id = $ToUserId;
+        $RequestModel->send_request_status = 'Yes';
+        $RequestModel->date_send_request = date('Y-m-d');
+        if ($RequestModel->save()) {
+            return 'S';
+        } else {
+            return 'E';
+        }
+
     }
 }
