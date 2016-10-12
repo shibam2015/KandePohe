@@ -294,6 +294,7 @@ function loaderStop() {
     $('.main-section').waitMe('hide');
 }
 function loaderStart() {
+    $(".modal").modal("hide");
     $('.main-section').waitMe({
         effect: 'bounce',
         text: "Please Wait...",
@@ -302,3 +303,20 @@ function loaderStart() {
     });
 }
 /* Overlay Loader End */
+
+/* Request send Start */
+
+function sendRequest(url, htmlId, dataArr) {
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: dataArr,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (res) {
+            $(htmlId).html(res);
+        }
+    });
+}
+/* Request send End */

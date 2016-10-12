@@ -6,6 +6,7 @@ use common\components\MessageHelper;
 use common\components\SmsHelper;
 use common\models\Tags;
 use common\models\UserPhotos;
+use common\models\UserRequest;
 use common\models\UserTag;
 use common\models\Wightege;
 use Yii;
@@ -402,13 +403,14 @@ class UserController extends Controller
         return $this->actionRenderAjax($model, '_myinfo', $show, $popup);
     }
 
-    function actionRenderAjax($model, $view, $show = false, $popup = false, $flag = false)
+    function actionRenderAjax($model, $view, $show = false, $popup = false, $flag = false, $temp = array())
     {
         return $this->renderAjax($view, [
             'model' => $model,
             'show' => $show,
             'popup' => $popup,
             'flag' => $flag,
+            'temp' => $temp,
         ]);
     }
 
@@ -1260,5 +1262,58 @@ class UserController extends Controller
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
         #$Yii::$app->response->format = Response::FORMAT_JSON;
         return json_encode($return);
+    }
+
+    public function actionUserRequest() # For User Request : VS
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $show = $popup = false;
+        $temp = array();
+        if (Yii::$app->request->post() && (count(Yii::$app->request->post()) > 0)) {
+            #print_r($_REQUEST);exit;
+            $RequestAction = Yii::$app->request->post('Action');
+            $ToUserId = Yii::$app->request->post('ToUserId');
+
+            #CommonHelper::pr($ABC);
+            if ($RequestAction == 'SEND_INTEREST') {
+                $temp['Action'] = 'SEND_INTEREST';
+                $RequestModel = new UserRequest();
+                $RequestModel->scenario = UserRequest::SCENARIO_SEND_INTEREST;
+                $RequestModel->from_user_id = $id; #who logged in.
+                $RequestModel->to_user_id = $ToUserId;
+                $RequestModel->send_request_status = 'Yes';
+                $RequestModel->date_send_request = date('Y-m-d');
+                if ($RequestModel->save()) {
+                    $temp['STATUS'] = 'S';
+                } else {
+                    $temp['STATUS'] = 'E';
+                }
+            }
+
+
+            /*$RequestModel->short_list_status = 'Yes';
+            $RequestModel->block_status = 'Yes';
+            $RequestModel->like_status = 'Yes';
+            $RequestModel->profile_viewed = 'Yes';
+            $RequestModel->phone_number_viewed = 'Yes';
+            $RequestModel->date_accept_request = date('Y-m-d');
+            $RequestModel->date_decline_request = date('Y-m-d');
+            $RequestModel->date_block = date('Y-m-d');*/
+            #CommonHelper::pr($RequestModel->save());
+            #CommonHelper::pr($RequestModel->validate());
+
+            //SEND_INTEREST
+        }
+
+        $modelUser = UserRequest:: find()
+            ->where("from_user_id = $id AND to_user_id = $ToUserId OR (from_user_id = $ToUserId AND to_user_id = $id)")
+            ->all();
+        $myModel = [
+            'ToUserId' => $ToUserId,
+            'model' => $model,
+            'modelUser' => $modelUser,
+        ];
+        return $this->actionRenderAjax($myModel, '_requests', $show, '', '', $temp);
     }
 }
