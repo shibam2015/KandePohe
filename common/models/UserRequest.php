@@ -23,6 +23,7 @@ use Yii;
  */
 class UserRequest extends \common\models\base\baseUserRequest
 {
+    const SCENARIO_SEND_INTEREST = 'SEND INTEREST';
     /**
      * @inheritdoc
      */
@@ -64,5 +65,19 @@ class UserRequest extends \common\models\base\baseUserRequest
             'date_decline_request' => 'Date Decline Request',
             'date_block' => 'Date Block',
         ];
+    }
+
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_SEND_INTEREST => ['from_user_id', 'to_user_id', 'send_request_status', 'date_send_request'],
+
+        ];
+
+    }
+
+    public function findSendRequest($id, $ToUserId)
+    {
+        return static::findOne(['from_user_id' => $id, 'to_user_id' => $ToUserId]);
     }
 }

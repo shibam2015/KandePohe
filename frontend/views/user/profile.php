@@ -4,6 +4,8 @@ use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use common\components\MailHelper;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
+use yii\widgets\Pjax;
 ?>
 <div class="main-section">
     <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
@@ -76,15 +78,17 @@ use yii\helpers\ArrayHelper;
                                             pm</p>
                                         <!-- TODO: Set Last login time and profile creted by -->
                                     </div>
-                                    <div class="profile-control">
-                                        <button type="button" class="btn active" data-target="#sendInterest"
+                                    <?php Pjax::begin(['id' => 'my_index', 'enablePushState' => false]); ?>
+                                    <div class="profile-control requests">
+                                        <!--<button type="button" class="btn active sendInterest" data-target="#sendInterest"
                                                 data-toggle="modal"> Send Interest <i class="fa fa-heart-o"></i>
                                         </button>
                                         <button type="button" class="btn"> Shortlist <i class="fa fa-list-ul"></i>
                                         </button>
-                                        <button type="button" class="btn"> Block <i class="fa fa-ban"></i></button>
+                                        <button type="button" class="btn"> Block <i class="fa fa-ban"></i></button>-->
                                         <!--<button type="button" class="btn"> No <i class="fa fa-thumbs-o-down"></i></button>-->
                                     </div>
+                                    <?php Pjax::end(); ?>
                                     <dl class="dl-horizontal mrg-tp-20">
                                         <dt>Personal Details</dt>
                                         <dd><?= CommonHelper::getAge($model->DOB); ?> years,
@@ -705,10 +709,11 @@ use yii\helpers\ArrayHelper;
 
 <?php
 $this->registerJs('
+var formData = new FormData();
+    formData.append("ToUserId", "' . $model->id . '");
+    formData.append("UserId", ' . $model->id . ');
 $(document).on("click",".send_email",function(e){
         loaderStart();
-         var formData = new FormData();
-         formData.append("UserId", ' . $model->id . ');
          $.ajax({
                         url: "send-email-profile",
                         type: "POST",
@@ -728,6 +733,13 @@ $(document).on("click",".send_email",function(e){
          });
 
     });
+
+    $(document).on("click",".send_request",function(e){
+        //loaderStart();
+        formData.append("Action", "SEND_INTEREST");
+        sendRequest("' . Url::to(['user/user-request']) . '",".requests",formData);
+    });
+    sendRequest("' . Url::to(['user/user-request']) . '",".requests",formData);
 ');
 ?>
 
