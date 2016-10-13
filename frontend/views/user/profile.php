@@ -17,10 +17,10 @@ use yii\widgets\Pjax;
                         <div class="padd-xs mrg-tp-10">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <ul class="list-inline pull-right">
-                                        <li><a href="#"><i class="fa fa-angle-left"></i> Previous Profile </a></li>
-                                        <li><a href="#">Next Profile <i class="fa fa-angle-right"></i></a></li>
-                                    </ul>
+                                    <!-- <ul class="list-inline pull-right">
+                                         <li><a href="#"><i class="fa fa-angle-left"></i> Previous Profile </a></li>
+                                         <li><a href="#">Next Profile <i class="fa fa-angle-right"></i></a></li>
+                                     </ul>-->
                                 </div>
                             </div>
                         </div>
@@ -74,8 +74,8 @@ use yii\widgets\Pjax;
                                                 class="font-light">(<?= CommonHelper::setInputVal($model->Registration_Number, 'text') ?>
                                                 )</span></h2>
 
-                                        <p>Profile created by <?= $model->Profile_created_for; ?> | Last online 2:36
-                                            pm</p>
+                                        <p>Profile created by <?= $model->Profile_created_for; ?> | Last
+                                            online <?= CommonHelper::DateTime($model->LastLoginTime, 7); ?></p>
                                         <!-- TODO: Set Last login time and profile creted by -->
                                     </div>
                                     <?php Pjax::begin(['id' => 'my_index', 'enablePushState' => false]); ?>
@@ -587,14 +587,14 @@ use yii\widgets\Pjax;
             <div class="modal-body">
                 <form>
                     <div class="text-center">
-                        <p class="mrg-bt-10 font-15"><span class="text-success"><strong>&#10003;</strong></span> Your
-                            interest has been sent successfully to</p>
+                        <!--<p class="mrg-bt-10 font-15"><span class="text-success"><strong>&#10003;</strong></span> Your
+                                interest has been sent successfully to</p>
 
                         <div class="fb-profile-text mrg-bt-30 text-dark">
                             <h1>Swapnil Kanherkar <span class="sub-text">(KP123456667)</span></h1>
                         </div>
                         <h6 class="mrg-bt-30 font-15 text-dark"><strong>Request the member to add the following
-                                details</strong></h6>
+                                details</strong></h6>-->
 
                         <div class="checkbox mrg-tp-0 profile-control">
                             <input id="Photo" type="checkbox" name="Photo" value="check1">
@@ -735,7 +735,7 @@ $(document).on("click",".send_email",function(e){
     });
 
     $(document).on("click",".send_request",function(e){
-        //loaderStart();
+        loaderStart();
         formData.append("Action", "SEND_INTEREST");
         sendRequest("' . Url::to(['user/user-request']) . '",".requests",formData);
     });

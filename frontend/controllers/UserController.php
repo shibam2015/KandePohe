@@ -147,9 +147,7 @@ class UserController extends Controller
                 $model->scenario = User::SCENARIO_REGISTER6;
                 $VER_ARRAY = array();
                 $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
-                $RecentlyJoinedMembers = User::find()->where(["Gender" => $Gender])->limit(4);
-                #$TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['id' => SORT_DESC])->all();
-                #['not in', 'ID', $UserTagList]
+                $RecentlyJoinedMembers = User::findRecentJoinedUserList($Gender, 4);
                 #CommonHelper::pr($RecentlyJoinedMembers);exit;
                 return $this->render('dashboard',[
                     'model' => $model,
@@ -1243,10 +1241,10 @@ class UserController extends Controller
     public function actionSendEmailProfile()
     {
         $UserId = Yii::$app->request->post('UserId');
-        $UserModel = User::findOne($UserId);
         $id = Yii::$app->user->identity->id;
-        $Model = User::findOne($id);
-        $LINK = CommonHelper::getSiteUrl('FRONTEND', 1) . 'user/profile?uk=' . $Model->Registration_Number;
+        /*$UserModel = User::findOne($UserId);
+        $Model = User::findOne($id);*/
+        /*$LINK = CommonHelper::getSiteUrl('FRONTEND', 1) . 'user/profile?uk=' . $Model->Registration_Number;
         $PG = new UserPhotos();
         $USER_PHOTOS_LIST = $PG->findByProfilePhoto($id);
         if (count($USER_PHOTOS_LIST) != 0) {
@@ -1261,7 +1259,8 @@ class UserController extends Controller
             $MAIL_STATUS = MailHelper::SendMail('PROFILE_OF_GROOM', $MAIL_DATA);
         } else {
             $MAIL_STATUS = MailHelper::SendMail('PROFILE_OF_BRIDE', $MAIL_DATA);
-        }
+        }*/
+        $MAIL_STATUS = $this->actionMailSendRequest($id, $UserId, 'PROFILE_OF');
         if ($MAIL_STATUS) {
             list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'SEND_PROFILE_WITH_EMAIL');
         } else {
@@ -1269,8 +1268,29 @@ class UserController extends Controller
         }
 
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
-        #$Yii::$app->response->format = Response::FORMAT_JSON;
         return json_encode($return);
+    }
+
+    public function actionMailSendRequest($id, $ToUserId, $MailType)
+    {
+        $Model = User::findOne($id);
+        $UserModel = User::findOne($ToUserId);
+        $PG = new UserPhotos();
+        $USER_PHOTOS_LIST = $PG->findByProfilePhoto($id);
+        if (count($USER_PHOTOS_LIST) != 0) {
+            $PHOTO = CommonHelper::getPhotos('USER', $id, $USER_PHOTOS_LIST->File_Name, 200);
+        } else {
+            $PHOTO = CommonHelper::getUserDefaultPhoto();
+        }
+        $LINK = CommonHelper::getSiteUrl('FRONTEND', 1) . 'user/profile?uk=' . $Model->Registration_Number;
+        $PHOTO = '<img src="' . $PHOTO . '" width="200"  alt="Profile Photo">';
+        $MAIL_DATA = array("EMAIL_TO" => $UserModel->email, "NAME" => $UserModel->First_Name . " " . $UserModel->Last_Name, "USER_NAME" => $Model->First_Name . " " . $Model->Last_Name, "TODAY_DATE" => date('d-m-Y'), "AGE" => CommonHelper::getAge($Model->DOB), "HEIGHT" => CommonHelper::setInputVal($Model->height->vName, 'text'), "RELIGION" => CommonHelper::setInputVal($Model->religionName->vName, 'text'), "MOTHER_TONGUE" => CommonHelper::setInputVal($Model->motherTongue->Name, 'text'), "COMMUNITY" => CommonHelper::setInputVal($Model->communityName->vName, 'text'), "LOCATION" => CommonHelper::setInputVal($Model->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($Model->countryName->vCountryName, 'text'), "EDUCATION" => CommonHelper::setInputVal($Model->educationLevelName->vEducationLevelName, 'text'), "PROFESSION" => CommonHelper::setInputVal($Model->workingAsName->vWorkingAsName, 'text'), "ABOUT_ME" => CommonHelper::truncate($Model->tYourSelf, 100), 'LINK' => $LINK, 'PHOTO' => $PHOTO);
+        if ($Model->Gender == 'MALE') {
+            $MAIL_STATUS = MailHelper::SendMail($MailType . '_GROOM', $MAIL_DATA);
+        } else {
+            $MAIL_STATUS = MailHelper::SendMail($MailType . '_BRIDE', $MAIL_DATA);
+        }
+        return $MAIL_STATUS;
     }
 
     public function actionUserRequest() # For User Request : VS
@@ -1284,14 +1304,12 @@ class UserController extends Controller
             $ToUserId = Yii::$app->request->post('ToUserId');
             if ($RequestAction == 'SEND_INTEREST') {
                 $temp['Action'] = 'SEND_INTEREST';
-                $temp['STATUS'] = $this->actionSendInterest($id, $ToUserId);
+                $temp['STATUS'] = $this->actionSendInterest($id, $ToUserId, 'PROFILE_OF');
             }
         }
-
         $modelUser = UserRequest:: find()
             ->where("from_user_id = $id AND to_user_id = $ToUserId OR (from_user_id = $ToUserId AND to_user_id = $id)")
             ->all();
-
         #CommonHelper::pr($modelUser);exit;
         $myModel = [
             'ToUserId' => $ToUserId,
@@ -1301,7 +1319,7 @@ class UserController extends Controller
         return $this->actionRenderAjax($myModel, '_requests', $show, '', '', $temp);
     }
 
-    public function actionSendInterest($id, $ToUserId)
+    public function actionSendInterest($id, $ToUserId, $MailType)
     {
         $RequestModel = new UserRequest();
         $RequestModel->scenario = UserRequest::SCENARIO_SEND_INTEREST;
@@ -1310,10 +1328,10 @@ class UserController extends Controller
         $RequestModel->send_request_status = 'Yes';
         $RequestModel->date_send_request = date('Y-m-d');
         if ($RequestModel->save()) {
+            $this->actionMailSendRequest($id, $ToUserId, $MailType);
             return 'S';
         } else {
             return 'E';
         }
-
     }
 }

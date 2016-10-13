@@ -7,7 +7,7 @@ use common\models\LoginForm;
 use yii\captcha\Captcha;
 use common\components\CommonHelper;
 use common\components\MessageHelper;
-
+use yii\helpers\Url;
 $id = 0;
 $PROFILE_COMPLETENESS = 0;
 
@@ -348,7 +348,9 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 
                         <p><?= CommonHelper::getAge($Value->DOB); ?> years,
                           <?= CommonHelper::setInputVal($Value->height->vName, 'text'); ?></p>
-                        <p> <a href="#" class="btn btn-info" role="button">Send Interest <i class="fa fa-heart-o"></i></a></p>
+
+                        <p><a href="javascript:void(0)" class="btn btn-info send_request" role="button"
+                              data-id="<?= $Value->id ?>">Send Interest <i class="fa fa-heart-o"></i></a></p>
                       </div>
                     </div>
                     <?php } ?>
@@ -678,6 +680,15 @@ if ($type != '' && base64_decode($type) == "VERIFICATION-DONE") {
         notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
     ');
 }
+$this->registerJs('
+$(document).on("click",".send_request",function(e){
+  loaderStart();
+  var formData = new FormData();
+  formData.append("ToUserId", "' . $model->id . '");
+  formData.append("Action", "SEND_INTEREST");
+  sendRequest("' . Url::to(['user/user-request']) . '",".requests",formData);
+});
+');
 
 
 ?>

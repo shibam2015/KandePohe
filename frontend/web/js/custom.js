@@ -315,6 +315,7 @@ function sendRequest(url, htmlId, dataArr) {
         cache: false,
         processData: false,
         success: function (res) {
+            loaderStop();
             $(htmlId).html(res);
         }
     });

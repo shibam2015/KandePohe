@@ -56,6 +56,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const SCENARIO_VERIFY_PIN_FOR_EMAIL = 'Verify Email PIN';
     const SCENARIO_EMAIL_ID_CHANGE = 'Email Id Update';
     const SCENARIO_RESEND_PIN_FOR_EMAIL = 'Resend Email PIN';
+    const SCENARIO_LAST_LOGIN = 'Last Login Time';
     public $repeat_password;
     public $email_pin;
     public $phone_pin;
@@ -66,7 +67,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $maxage;
     public $Profile_created_for_pref;
     public $commentAdmin;
-   // public $captcha;
+    // public $captcha;
     /**
      * @inheritdoc
      */
@@ -169,6 +170,15 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         }
     }
 
+    public static function findRecentJoinedUserList($Gender, $Limit = 4) # Get user list Gender Wise with limit
+    {
+        return static::find()->where(['Gender' => $Gender, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->limit($Limit)->all();
+        /*$sql="select user.id,user.email,user.Registration_Number from user
+                JOIN user_request ON user.id != user_request.from_user_id AND user.id != user_request.to_user_id
+                where user.Gender=:gen and user.status=:st ";
+         return static::findBySql($sql,[":gen"=>$Gender,":st"=> [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->limit($Limit)->all();*/
+    }
+
     /**
      * @inheritdoc
      */
@@ -224,6 +234,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             self::SCENARIO_REGISTER9 => ['Mobile', 'county_code'],
             self::SCENARIO_FIRST_VERIFICATION => ['eFirstVerificationMailStatus'],
             self::SCENARIO_FP => ['email'],
+            self::SCENARIO_LAST_LOGIN => ['LastLoginTime'],
             "default" => array('id'),
             self::SCENARIO_FP => ['email', 'password_hash', 'password_reset_token'],
             self::SCENARIO_SFP => ['email', 'password_reset_token'],
@@ -264,7 +275,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
         if($this->Gender == 'FEMALE'){
             if($years < 18)
-            $this->addError('DOB', 'Your age should be grater than 18 Years');
+                $this->addError('DOB', 'Your age should be grater than 18 Years');
         }
         else {
             if($years < 21)
@@ -587,12 +598,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public function getPermentAddress()
     {
-        return $this->vAreaName.", ".$this->talukaName->vName.", ".$this->districtName->vName.", ".$this->cityName->vCityName.", ".$this->stateName->vStateName.", ".$this->countryName->vCountryName;
-    }
-
-    public function getCurrentAddress()
-    {
-        return $this->vAreaNameCA.", ".$this->talukaNameCA->vName.", ".$this->districtNameCA->vName.", ".$this->cityNameCA->vCityName.", ".$this->stateNameCA->vStateName.", ".$this->countryNameCA->vCountryName;
+        return $this->vAreaName . ", " . $this->talukaName->vName . ", " . $this->districtName->vName . ", " . $this->cityName->vCityName . ", " . $this->stateName->vStateName . ", " . $this->countryName->vCountryName;
     }
 
     /*public function generateUniqueRandomNumber($length = 9) {
@@ -604,6 +610,11 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             return $this->generateUniqueRandomNumber($length);
 
     }*/
+
+    public function getCurrentAddress()
+    {
+        return $this->vAreaNameCA . ", " . $this->talukaNameCA->vName . ", " . $this->districtNameCA->vName . ", " . $this->cityNameCA->vCityName . ", " . $this->stateNameCA->vStateName . ", " . $this->countryNameCA->vCountryName;
+    }
 
     public function getDisplayMobile(){
         return ($this->county_code != '') ? $this->county_code . " " . $this->Mobile : $this->Mobile;
