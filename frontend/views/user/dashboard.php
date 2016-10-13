@@ -294,10 +294,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
               </div>
               <?php } ?>
               <!-- view by -->
-              <div class="bg-white <?= ($PROFILE_COMPLETENESS < 100) ? 'mrg-tp-10' : ''; ?>"><a href="#"
-                                                                                                title="View All"
-                                                                                                class="pull-right">View
-                  All &gt;</a>
+              <div class="bg-white <?= ($PROFILE_COMPLETENESS < 100) ? 'mrg-tp-10' : ''; ?>">
+                <a href="#" title="View All" class="pull-right">View All &gt;</a>
                 <h3 class="heading-xs">Your Profile Viewed By</h3>
                 <div class="user-list">
                   <div class="row">
@@ -332,37 +330,38 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                 </div>
               </div>
               <!-- recent member -->
+              <?php if (count($RecentlyJoinedMembers)) { ?>
               <div class="bg-white mrg-tp-20"> <a href="#" title="View All" class="pull-right">View All &gt;</a>
                 <h3 class="heading-xs">Recently Joined Members</h3>
                 <div class="user-list">
                   <div class="row">
+                    <?php foreach ($RecentlyJoinedMembers as $Key => $Value) { ?>
                     <div class="col-xs-6 col-md-6 col-lg-3">
-                      <div class="item"> <a href="#" class="name-img" title="KP123WERT"><?= Html::img('@web/images/user.jpg', ['width' => '','height' => '','alt' => 'user','class'=>'']); ?> </a> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
-                        <p>27yrs , 5’5”</p>
+                      <div class="item">
+                        <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $Value->Registration_Number ?>&source=recently_joined"
+                           class="name-img" title="<?= $Value->Registration_Number ?>">
+                          <?= Html::img(CommonHelper::getPhotos('USER', $Value->id, $Value->propic, 140), ['width' => '', 'height' => '140', 'alt' => 'Profile', 'class' => '']); ?>
+                        </a>
+                        <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $Value->Registration_Number ?>&source=recently_joined"
+                           class="name"
+                           title="<?= $Value->Registration_Number ?>"><?= $Value->Registration_Number ?></a>
+
+                        <p><?= CommonHelper::getAge($Value->DOB); ?> years,
+                          <?= CommonHelper::setInputVal($Value->height->vName, 'text'); ?></p>
                         <p> <a href="#" class="btn btn-info" role="button">Send Interest <i class="fa fa-heart-o"></i></a></p>
                       </div>
                     </div>
-                    <div class="col-xs-6 col-md-6 col-lg-3">
-                      <div class="item"> <a href="#" class="name-img" title="KP123WERT"><?= Html::img('@web/images/user.jpg', ['width' => '','height' => '','alt' => 'user','class'=>'']); ?> </a> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
-                        <p>27yrs , 5’5”</p>
-                        <p> <a href="#" class="btn btn-info" role="button">Send Interest <i class="fa fa-heart-o"></i></a></p>
-                      </div>
-                    </div>
-                    <div class="col-xs-6 col-md-6 col-lg-3">
-                      <div class="item"> <a href="#" class="name-img" title="KP123WERT"><?= Html::img('@web/images/no-user-img.jpg', ['width' => '','height' => '','alt' => 'user','class'=>'']); ?></a> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
+                    <?php } ?>
+                    <!--<div class="col-xs-6 col-md-6 col-lg-3">
+                      <div class="item"> <a href="#" class="name-img" title="KP123WERT"><? /*= Html::img('@web/images/no-user-img.jpg', ['width' => '','height' => '','alt' => 'user','class'=>'']); */ ?></a> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
                         <p>27yrs , 5’5”</p>
                         <p> <a href="#" class="btn btn-link" role="button">Interest Send <i class="fa fa-heart"></i></a></p>
                       </div>
-                    </div>
-                    <div class="col-xs-6 col-md-6 col-lg-3">
-                      <div class="item"> <a href="#" class="name-img" title="KP123WERT"><?= Html::img('@web/images/user.jpg', ['width' => '','height' => '','alt' => 'user','class'=>'']); ?> </a> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
-                        <p>27yrs , 5’5”</p>
-                        <p> <a href="#" class="btn btn-info" role="button">Send Interest <i class="fa fa-heart-o"></i></a></p>
-                      </div>
-                    </div>
+                    </div>-->
                   </div>
                 </div>
               </div>
+              <?php } ?>
               <!-- Short list block -->
               <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">

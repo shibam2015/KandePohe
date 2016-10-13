@@ -67,8 +67,10 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 </ul>
                                             </div>
                                             <div id="timelineBackground">
+                                                <?php $pos = strpos($COVER_PHOTO, 'profile-bg.jpg'); ?>
                                                 <img src="<?php echo $COVER_PHOTO; ?>" class="bgImagecover"
-                                                     style="margin-top: <?= $model->cover_background_position ?>;">
+                                                     style="margin-top: <?= (!$pos) ? $model->cover_background_position : ''; ?>;">
+
                                                 <!-- $model->cover_background_position -->
                                             </div>
                                             <div id="timelineShade" style="display: none">

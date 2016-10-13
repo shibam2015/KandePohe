@@ -146,10 +146,16 @@ class UserController extends Controller
             if($model = User::findOne($id)){
                 $model->scenario = User::SCENARIO_REGISTER6;
                 $VER_ARRAY = array();
+                $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
+                $RecentlyJoinedMembers = User::find()->where(["Gender" => $Gender])->limit(4);
+                #$TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['id' => SORT_DESC])->all();
+                #['not in', 'ID', $UserTagList]
+                #CommonHelper::pr($RecentlyJoinedMembers);exit;
                 return $this->render('dashboard',[
                     'model' => $model,
                     'VER_ARRAY' => $VER_ARRAY,
-                    'type' => $type
+                    'type' => $type,
+                    'RecentlyJoinedMembers' => $RecentlyJoinedMembers
                 ]);
             }else{
                 return $this->redirect(Yii::getAlias('@web'));
@@ -814,7 +820,7 @@ class UserController extends Controller
     {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
-        $STATUS = "SUCCESS";
+        $STATUS = "S";
         $MESSAGE = '';
         $ACTION = Yii::$app->request->post('ACTION');
         $P_ID = Yii::$app->request->post('P_ID');
@@ -859,6 +865,9 @@ class UserController extends Controller
                 $PATH = $CM_HELPER->getUserUploadFolder(1) . "/" . $id . "/";
                 $URL = $CM_HELPER->getUserUploadFolder(2) . "/" . $id . "/";
                 $USER_SIZE_ARRAY = $CM_HELPER->getUserResizeRatio();
+                if (!is_dir($PATH . 'cover/')) {
+                    mkdir($PATH . 'cover/', 0777);
+                }
                 copy($PATH . $PHOTO, $PATH . 'cover/' . $PHOTO);
                 CommonHelper::photoDeleteFromFolder($PATH . 'cover/', array(), $model->cover_photo);
                 $model->cover_photo = $PHOTO;
