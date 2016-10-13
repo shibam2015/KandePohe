@@ -44,12 +44,13 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const SCENARIO_REGISTER7 = 'register7';
     const SCENARIO_REGISTER8 = 'register8';
     const SCENARIO_REGISTER9 = 'register9';
+    const SCENARIO_REGISTER10 = 'register10';
     const SCENARIO_FP = 'Forgot Password';
     const SCENARIO_SFP = 'Set Forgot Password';
     const SCENARIO_FIRST_VERIFICATION = 'Firstverification';
     const SCENARIO_EDIT_MY_INFO = 'Edit My Info';
     const SCENARIO_EDIT_PERSONAL_INFO = 'Edit Personal Info';
-    const SCENARIO_EDIT_LIFESTYLE = 'Edit Lyfestyle and Appearance';
+    const SCENARIO_EDIT_LIFESTYLE = 'Edit Lifestyle and Appearance';
     const SCENARIO_VERIFY_PIN_FOR_PHONE = 'Verify Phone PIN';
     const SCENARIO_PHONE_NUMBER_CHANGE = 'Phone Number Update';
     const SCENARIO_RESEND_PIN_FOR_PHONE = 'Resend Phone PIN';
@@ -232,6 +233,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             #self::SCENARIO_REGISTER7 => ['email_pin','phone_pin','pin_email_vaerification','eEmailVerifiedStatus','pin_phone_vaerification','ePhoneVerifiedStatus'],
             self::SCENARIO_REGISTER8 => ['phone_pin', 'pin_phone_vaerification', 'ePhoneVerifiedStatus'],
             self::SCENARIO_REGISTER9 => ['Mobile', 'county_code'],
+            self::SCENARIO_REGISTER10 => ['RaashiId', 'NakshtraId','GanId','CharanId','Mangalik','NadiId','Mangalik'],
             self::SCENARIO_FIRST_VERIFICATION => ['eFirstVerificationMailStatus'],
             self::SCENARIO_FP => ['email'],
             self::SCENARIO_LAST_LOGIN => ['LastLoginTime'],
@@ -367,7 +369,14 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             'ePhoneVerifiedStatus' => 'Phone Verified Status',
             'eStatusInOwnWord' => 'Status In Own Word',
             'eStatusPhotoModify' => 'Status Of Profile Pic',
-            'weight' => 'Weight(in KG)'
+            'weight' => 'Weight(in KG)',
+            'LastLoginTime' => 'Last Login Time',
+            'RaashiId' => 'Raashi',
+            'NakshtraId' => 'Nakshtra',
+            'GanId' => 'Gan',
+            'CharanId' => 'Charan',
+            'Mangalik' => 'Mangalik',
+            'NadiId' => 'Nadi',
         ];
     }
 
@@ -590,7 +599,26 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     {
         return $this->hasOne(Cities::className(), ['iCityId' => 'iCityId']);
     }
-
+    public function getRaashiName()
+    {
+        return $this->hasOne(Raashi::className(), ['ID' => 'RaashiId']);
+    }
+    public function getNakshtraName()
+    {
+        return $this->hasOne(Nakshtra::className(), ['ID' => 'NakshtraId']);
+    }
+    public function getGanName()
+    {
+        return $this->hasOne(Gan::className(), ['ID' => 'GanId']);
+    }
+    public function getNadiName()
+    {
+        return $this->hasOne(Nadi::className(), ['ID' => 'NadiId']);
+    }
+    public function getCharanName()
+    {
+        return $this->hasOne(Charan::className(), ['ID' => 'CharanId']);
+    }
     public function getMotherTongue()
     {
         return $this->hasOne(MotherTongue::className(), ['ID' => 'mother_tongue']);

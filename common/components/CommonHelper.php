@@ -638,7 +638,24 @@ class CommonHelper {
     {
         return \common\models\MotherTongue::find()->all();
     }
-
+    public function getRaashi() {
+        return \common\models\Raashi::find()->all();
+    }
+    public function getNaksatra() {
+        return \common\models\Nakshtra::find()->all();
+    }
+    public function getGan() {
+        return \common\models\Gan::find()->all();
+    }
+    public function getNadi() {
+        return \common\models\Nadi::find()->all();
+    }
+    public function getCharan() {
+        return \common\models\Charan::find()->all();
+    }
+    public function getMasterGotra() {
+        return \common\models\MasterGotra::find()->all();
+    }
     function encryptor($action, $string)
     {
         $output = false;

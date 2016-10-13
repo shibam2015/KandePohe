@@ -379,6 +379,23 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
+                                            <div class="divider"></div>
+                                            <div class="inner-block">
+                                                <div class="profile-edit pull-right">
+                                                    <ul class="list-inline major-control">
+                                                        <li role="presentation">
+                                                            <a href="javascript:void(0)" class="edit_horoscope"
+                                                               attr-name="my_info"><i class="fa fa-pencil"></i> Edit</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <h3><span class="heading-icons icon2"></span> HOROSCOPE DETAILS</h3>
+                                                <?php Pjax::begin(['id' => 'my_index6', 'enablePushState' => false]); ?>
+                                                <div class="div_horoscope">
+                                                    HOROSCOPE DETAILS Loading...
+                                                </div>
+                                                <?php Pjax::end(); ?>
+                                            </div>
                                         </div>
 
 
@@ -779,6 +796,14 @@ $this->registerJs('
     getInlineDetail("'.Url::to(['user/edit-preferences']).'","#my_preferences","1");
     $(document).on("click","#cancel_edit_preferences",function(e){
         getInlineDetail("'.Url::to(['user/edit-preferences']).'","#my_preferences","1");
+    });
+
+    $(".edit_horoscope").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-horoscope']) . '",".div_horoscope","0");
+    });
+    getInlineDetail("' . Url::to(['user/edit-horoscope']) . '",".div_horoscope","1");
+    $(document).on("click","#cancel_edit_horoscope",function(e){
+        getInlineDetail("' . Url::to(['user/edit-horoscope']) . '",".div_horoscope","1");
     });
 
         var P_ID = "";

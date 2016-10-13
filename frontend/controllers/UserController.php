@@ -712,6 +712,35 @@ class UserController extends Controller
         return $this->renderAjax('_preferences', $myModel);
     }
 
+    public function actionEditHoroscope()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_REGISTER10;
+        $show = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if (Yii::$app->request->post('save')) {
+                $model->RaashiId = Yii::$app->request->post('User')['RaashiId'];
+                $model->CharanId = Yii::$app->request->post('User')['CharanId'];
+                $model->NadiId = Yii::$app->request->post('User')['NadiId'];
+                $model->NakshtraId = Yii::$app->request->post('User')['NakshtraId'];
+                $model->iGotraID = Yii::$app->request->post('User')['iGotraID'];
+                $model->Mangalik = Yii::$app->request->post('User')['Mangalik'];
+                if ($model->validate()) {
+                    $model->save();
+                    $show = false;
+                }
+            }
+        }
+
+        if ($show) {
+            return $this->actionRenderAjax($model, '_horoscope', true);
+        } else {
+            return $this->actionRenderAjax($model, '_horoscope', false);
+        }
+    }
+
 
     public function actionCoverupload()
     {
