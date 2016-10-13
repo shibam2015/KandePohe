@@ -56,6 +56,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const SCENARIO_VERIFY_PIN_FOR_EMAIL = 'Verify Email PIN';
     const SCENARIO_EMAIL_ID_CHANGE = 'Email Id Update';
     const SCENARIO_RESEND_PIN_FOR_EMAIL = 'Resend Email PIN';
+    const SCENARIO_LAST_LOGIN = 'Last Login Time';
     public $repeat_password;
     public $email_pin;
     public $phone_pin;
@@ -224,6 +225,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             self::SCENARIO_REGISTER9 => ['Mobile', 'county_code'],
             self::SCENARIO_FIRST_VERIFICATION => ['eFirstVerificationMailStatus'],
             self::SCENARIO_FP => ['email'],
+            self::SCENARIO_LAST_LOGIN => ['LastLoginTime'],
             "default" => array('id'),
             self::SCENARIO_FP => ['email', 'password_hash', 'password_reset_token'],
             self::SCENARIO_SFP => ['email', 'password_reset_token'],

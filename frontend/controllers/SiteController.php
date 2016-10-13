@@ -114,7 +114,10 @@ class SiteController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-
+            $UserModel = User::findOne(Yii::$app->user->identity->id);
+            $UserModel->scenario = User::SCENARIO_LAST_LOGIN;
+            $UserModel->LastLoginTime = CommonHelper::getTime();
+            $UserModel->save();
             $this->redirect(['user/dashboard']);
         } else {
 
