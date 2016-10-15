@@ -39,6 +39,13 @@ class UserRequest extends \common\models\base\baseUserRequest
 
     }
 
+    public static function checkSendInterest($id, $ToUserId)
+    {
+        return static::find()
+            ->where("(from_user_id = $id AND to_user_id = $ToUserId OR (from_user_id = $ToUserId AND to_user_id = $id)) AND  send_request_status = 'Yes' ")
+            ->one();
+    }
+
     /**
      * @inheritdoc
      */
@@ -91,7 +98,6 @@ class UserRequest extends \common\models\base\baseUserRequest
 
     public function checkUsers($id, $ToUserId)
     {
-        #return static::findOne(['from_user_id' => $id, 'to_user_id' => $ToUserId]);
         return static::find()
             ->where("from_user_id = $id AND to_user_id = $ToUserId")
             ->one();
@@ -100,6 +106,16 @@ class UserRequest extends \common\models\base\baseUserRequest
     public function getFromUserInfo()
     {
         return $this->hasOne(User::className(), ['id' => 'from_user_id']);
+    }
+
+    public function getToUserInfo()
+    {
+        return $this->hasOne(User::className(), ['id' => 'to_user_id']);
+    }
+
+    public function getUserInfo()
+    {
+        return $this->hasOne(User::className(), ['status' => [User::STATUS_ACTIVE, User::STATUS_APPROVE]]);
     }
 
 }
