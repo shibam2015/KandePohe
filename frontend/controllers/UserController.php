@@ -148,12 +148,14 @@ class UserController extends Controller
                 $VER_ARRAY = array();
                 $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
                 $RecentlyJoinedMembers = User::findRecentJoinedUserList($Gender, 4);
-                #CommonHelper::pr($RecentlyJoinedMembers);exit;
+                $ProfileViedByMembers = UserRequest::findProfileViewedByUserList($id, 4);
+                #CommonHelper::pr($ProfileViedByMembers);exit;
                 return $this->render('dashboard',[
                     'model' => $model,
                     'VER_ARRAY' => $VER_ARRAY,
                     'type' => $type,
-                    'RecentlyJoinedMembers' => $RecentlyJoinedMembers
+                    'RecentlyJoinedMembers' => $RecentlyJoinedMembers,
+                    'ProfileViedByMembers' => $ProfileViedByMembers
                 ]);
             }else{
                 return $this->redirect(Yii::getAlias('@web'));

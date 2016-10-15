@@ -180,6 +180,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                         <div class="radical-progress-wrapper">
                                             <div class="panel-body">
                                                 <h3 class="heading-xs">Profile Status</h3>
+                                                <?php if ($PROFILE_COMPLETENESS < 100) { ?>
                                                 <div class="radial-progress" data-progress="0">
                                                     <div class="circle">
                                                         <div class="mask full">
@@ -204,6 +205,11 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 <div class="text-center">
                                                     <p>Complete your profile for better search results</p>
                                                 </div>
+                                                <?php } else { ?>
+                                                    <div class="text-center text-muted mrg-tp-10">
+                                                        <p>Your profile completed 100%.</p>
+                                                    </div>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                         <div class="divider"></div>

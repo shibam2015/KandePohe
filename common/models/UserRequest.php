@@ -33,6 +33,12 @@ class UserRequest extends \common\models\base\baseUserRequest
         return 'user_request';
     }
 
+    public static function findProfileViewedByUserList($id, $Limit)
+    {
+        return static::find()->joinWith([fromUserInfo])->where(['to_user_id' => $id, 'profile_viewed' => 'Yes'])->limit($Limit)->all();
+
+    }
+
     /**
      * @inheritdoc
      */
@@ -89,6 +95,11 @@ class UserRequest extends \common\models\base\baseUserRequest
         return static::find()
             ->where("from_user_id = $id AND to_user_id = $ToUserId")
             ->one();
+    }
+
+    public function getFromUserInfo()
+    {
+        return $this->hasOne(User::className(), ['id' => 'from_user_id']);
     }
 
 }
