@@ -114,7 +114,7 @@ class UserController extends Controller
     {
         $model = new User();
         $model->scenario = User::SCENARIO_REGISTER;
-        return $this->redirect(['site/error']);
+        return $this->redirect(['user/dashboard']);
         /*return $this->render('index',
             ['model' => $model]
         );*/
@@ -1210,39 +1210,37 @@ class UserController extends Controller
         return $this->actionRenderAjax($model, '_verificationemail', $show, $popup, $flag);
     }
 
-    public function actionProfileViewedBy()   #Profile Vied By Data
-    {
-        $id = Yii::$app->user->identity->id;
-        $model = User::findOne($id);
-        return $this->actionRenderAjax($model, '_profileviewedby');
-    }
-
     public function actionProfile($uk = '', $source = '') #Other User Profile View : VS
     {
         $id = Yii::$app->user->identity->id;
         #echo $uk;exit;echo $Registration_Number;exit;
         $model1 = User::findOne(['Registration_Number' => $uk]);
-        $OtherUserId = $model1->id;
+        $ToUserId = $model1->id;
+
+        /* Insert Record for As Your Profile Viewed By Section Start */
+        $this->actionProfileViewedBy($id, $ToUserId);
+        /* Insert Record for As Your Profile Viewed By Section End */
+
         $flag = false;
         $MatchCompatibility = array();
         $PhotoList = array();
         $model = array();
         $Title = $Message = '';
-        if ($OtherUserId != $id) {
+        if ($ToUserId != $id) {
             $flag = true;
-            $model = User::findOne($OtherUserId);
+            $model = User::findOne($ToUserId);
             $UserPhotoModel = new UserPhotos();
-            $PhotoList = $UserPhotoModel->findByUserId($OtherUserId);
-            $PartenersReligion = PartenersReligion::findByUserId($OtherUserId) == NULL ? new PartenersReligion() : PartenersReligion::findByUserId($OtherUserId);
-            $UPP = UserPartnerPreference::findByUserId($OtherUserId) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($OtherUserId);
-            $PartnersMaritalStatus = PartnersMaritalStatus::findByUserId($OtherUserId) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findByUserId($OtherUserId);
-            $PartnersGotra = PartnersGotra::findByUserId($OtherUserId) == NULL ? new PartnersGotra() : PartnersGotra::findByUserId($OtherUserId);
-            $PartnersFathersStatus = PartnersFathersStatus::findByUserId($OtherUserId) == NULL ? new PartnersFathersStatus() : PartnersFathersStatus::findByUserId($OtherUserId);
-            $PartnersMothersStatus = PartnersMothersStatus::findByUserId($OtherUserId) == NULL ? new PartnersMothersStatus() : PartnersMothersStatus::findByUserId($OtherUserId);
-            $PartnersEducationalLevel = PartnersEducationalLevel::findByUserId($OtherUserId) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findByUserId($OtherUserId);
-            $PartnersEducationField = PartnersEducationField::findByUserId($OtherUserId) == NULL ? new PartnersEducationField() : PartnersEducationField::findByUserId($OtherUserId);
+            $PhotoList = $UserPhotoModel->findByUserId($ToUserId);
+            $PartenersReligion = PartenersReligion::findByUserId($ToUserId) == NULL ? new PartenersReligion() : PartenersReligion::findByUserId($ToUserId);
+            $UPP = UserPartnerPreference::findByUserId($ToUserId) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($ToUserId);
+            $PartnersMaritalStatus = PartnersMaritalStatus::findByUserId($ToUserId) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findByUserId($ToUserId);
+            $PartnersGotra = PartnersGotra::findByUserId($ToUserId) == NULL ? new PartnersGotra() : PartnersGotra::findByUserId($ToUserId);
+            $PartnersFathersStatus = PartnersFathersStatus::findByUserId($ToUserId) == NULL ? new PartnersFathersStatus() : PartnersFathersStatus::findByUserId($ToUserId);
+            $PartnersMothersStatus = PartnersMothersStatus::findByUserId($ToUserId) == NULL ? new PartnersMothersStatus() : PartnersMothersStatus::findByUserId($ToUserId);
+            $PartnersEducationalLevel = PartnersEducationalLevel::findByUserId($ToUserId) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findByUserId($ToUserId);
+            $PartnersEducationField = PartnersEducationField::findByUserId($ToUserId) == NULL ? new PartnersEducationField() : PartnersEducationField::findByUserId($ToUserId);
 
-        } else if ($OtherUserId == $id) {
+        } else if ($ToUserId == $id) {
             $Title = "Access Denied";
             $Message = "You can't see your profile as user view.";
         } else {
@@ -1265,6 +1263,59 @@ class UserController extends Controller
             'PartnersEducationalLevel' => $PartnersEducationalLevel,
             'PartnersEducationField' => $PartnersEducationField,
         ]);
+    }
+
+    public function actionProfileViewedBy($id, $ToUserId)
+    {
+        $RequestModel = new UserRequest();
+        $Model = $RequestModel->checkUsers($id, $ToUserId);
+        if ($Model->id) {
+            if ($Model->profile_viewed == 'No') {
+                $Model->scenario = UserRequest::SCENARIO_PROFILE_VIEWED_BY;
+                $Model->from_user_id = $id; #who logged in.
+                $Model->to_user_id = $ToUserId;
+                $Model->profile_viewed = 'Yes';
+                if ($Model->save()) {
+                    $this->actionMailSendRequest($id, $ToUserId, 'VIEW_PROFILE_OF');
+                    return 'S';
+                } else {
+                    return 'E';
+                }
+            }
+        } else {
+            $RequestModel->scenario = UserRequest::SCENARIO_PROFILE_VIEWED_BY;
+            $RequestModel->from_user_id = $id; #who logged in.
+            $RequestModel->to_user_id = $ToUserId;
+            $RequestModel->profile_viewed = 'Yes';
+            if ($RequestModel->save()) {
+                $this->actionMailSendRequest($id, $ToUserId, 'VIEW_PROFILE');
+                return 'S';
+            } else {
+                return 'E';
+            }
+        }
+    }
+
+    public function actionMailSendRequest($id, $ToUserId, $MailType)
+    {
+        $Model = User::findOne($id);
+        $UserModel = User::findOne($ToUserId);
+        $PG = new UserPhotos();
+        $USER_PHOTOS_LIST = $PG->findByProfilePhoto($id);
+        if (count($USER_PHOTOS_LIST) != 0) {
+            $PHOTO = CommonHelper::getPhotos('USER', $id, $USER_PHOTOS_LIST->File_Name, 200);
+        } else {
+            $PHOTO = CommonHelper::getUserDefaultPhoto();
+        }
+        $LINK = CommonHelper::getSiteUrl('FRONTEND', 1) . 'user/profile?uk=' . $Model->Registration_Number;
+        $PHOTO = '<img src="' . $PHOTO . '" width="200"  alt="Profile Photo">';
+        $MAIL_DATA = array("EMAIL_TO" => $UserModel->email, "NAME" => $UserModel->First_Name . " " . $UserModel->Last_Name, "USER_NAME" => $Model->First_Name . " " . $Model->Last_Name, "TODAY_DATE" => date('d-m-Y'), "AGE" => CommonHelper::getAge($Model->DOB), "HEIGHT" => CommonHelper::setInputVal($Model->height->vName, 'text'), "RELIGION" => CommonHelper::setInputVal($Model->religionName->vName, 'text'), "MOTHER_TONGUE" => CommonHelper::setInputVal($Model->motherTongue->Name, 'text'), "COMMUNITY" => CommonHelper::setInputVal($Model->communityName->vName, 'text'), "LOCATION" => CommonHelper::setInputVal($Model->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($Model->countryName->vCountryName, 'text'), "EDUCATION" => CommonHelper::setInputVal($Model->educationLevelName->vEducationLevelName, 'text'), "PROFESSION" => CommonHelper::setInputVal($Model->workingAsName->vWorkingAsName, 'text'), "ABOUT_ME" => CommonHelper::truncate($Model->tYourSelf, 100), 'LINK' => $LINK, 'PHOTO' => $PHOTO);
+        if ($Model->Gender == 'MALE') {
+            $MAIL_STATUS = MailHelper::SendMail($MailType . '_GROOM', $MAIL_DATA);
+        } else {
+            $MAIL_STATUS = MailHelper::SendMail($MailType . '_BRIDE', $MAIL_DATA);
+        }
+        return $MAIL_STATUS;
     }
 
     public function actionSendEmailProfile()
@@ -1300,28 +1351,6 @@ class UserController extends Controller
         return json_encode($return);
     }
 
-    public function actionMailSendRequest($id, $ToUserId, $MailType)
-    {
-        $Model = User::findOne($id);
-        $UserModel = User::findOne($ToUserId);
-        $PG = new UserPhotos();
-        $USER_PHOTOS_LIST = $PG->findByProfilePhoto($id);
-        if (count($USER_PHOTOS_LIST) != 0) {
-            $PHOTO = CommonHelper::getPhotos('USER', $id, $USER_PHOTOS_LIST->File_Name, 200);
-        } else {
-            $PHOTO = CommonHelper::getUserDefaultPhoto();
-        }
-        $LINK = CommonHelper::getSiteUrl('FRONTEND', 1) . 'user/profile?uk=' . $Model->Registration_Number;
-        $PHOTO = '<img src="' . $PHOTO . '" width="200"  alt="Profile Photo">';
-        $MAIL_DATA = array("EMAIL_TO" => $UserModel->email, "NAME" => $UserModel->First_Name . " " . $UserModel->Last_Name, "USER_NAME" => $Model->First_Name . " " . $Model->Last_Name, "TODAY_DATE" => date('d-m-Y'), "AGE" => CommonHelper::getAge($Model->DOB), "HEIGHT" => CommonHelper::setInputVal($Model->height->vName, 'text'), "RELIGION" => CommonHelper::setInputVal($Model->religionName->vName, 'text'), "MOTHER_TONGUE" => CommonHelper::setInputVal($Model->motherTongue->Name, 'text'), "COMMUNITY" => CommonHelper::setInputVal($Model->communityName->vName, 'text'), "LOCATION" => CommonHelper::setInputVal($Model->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($Model->countryName->vCountryName, 'text'), "EDUCATION" => CommonHelper::setInputVal($Model->educationLevelName->vEducationLevelName, 'text'), "PROFESSION" => CommonHelper::setInputVal($Model->workingAsName->vWorkingAsName, 'text'), "ABOUT_ME" => CommonHelper::truncate($Model->tYourSelf, 100), 'LINK' => $LINK, 'PHOTO' => $PHOTO);
-        if ($Model->Gender == 'MALE') {
-            $MAIL_STATUS = MailHelper::SendMail($MailType . '_GROOM', $MAIL_DATA);
-        } else {
-            $MAIL_STATUS = MailHelper::SendMail($MailType . '_BRIDE', $MAIL_DATA);
-        }
-        return $MAIL_STATUS;
-    }
-
     public function actionUserRequest() # For User Request : VS
     {
         $id = Yii::$app->user->identity->id;
@@ -1333,7 +1362,7 @@ class UserController extends Controller
             $ToUserId = Yii::$app->request->post('ToUserId');
             if ($RequestAction == 'SEND_INTEREST') {
                 $temp['Action'] = 'SEND_INTEREST';
-                $temp['STATUS'] = $this->actionSendInterest($id, $ToUserId, 'PROFILE_OF');
+                $temp['STATUS'] = $this->actionSendInterest($id, $ToUserId, 'SEND_INTEREST_OF');
             }
         }
         $modelUser = UserRequest:: find()

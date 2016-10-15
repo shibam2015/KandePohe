@@ -514,8 +514,9 @@ use yii\widgets\Pjax;
 <!-- Modal Photo -->
 <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61"
-                                              alt="logo"></p>
+        <p class="text-center mrg-bt-10">
+            <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+        </p>
 
         <div class="modal-content">
             <!-- Modal Header -->

@@ -24,6 +24,7 @@ use Yii;
 class UserRequest extends \common\models\base\baseUserRequest
 {
     const SCENARIO_SEND_INTEREST = 'SEND INTEREST';
+    const SCENARIO_PROFILE_VIEWED_BY = 'PROFILE VIEWED BY';
     /**
      * @inheritdoc
      */
@@ -71,6 +72,7 @@ class UserRequest extends \common\models\base\baseUserRequest
     {
         return [
             self::SCENARIO_SEND_INTEREST => ['from_user_id', 'to_user_id', 'send_request_status', 'date_send_request'],
+            self::SCENARIO_PROFILE_VIEWED_BY => ['from_user_id', 'to_user_id', 'profile_viewed'],
 
         ];
 
@@ -80,4 +82,13 @@ class UserRequest extends \common\models\base\baseUserRequest
     {
         return static::findOne(['from_user_id' => $id, 'to_user_id' => $ToUserId]);
     }
+
+    public function checkUsers($id, $ToUserId)
+    {
+        #return static::findOne(['from_user_id' => $id, 'to_user_id' => $ToUserId]);
+        return static::find()
+            ->where("from_user_id = $id AND to_user_id = $ToUserId")
+            ->one();
+    }
+
 }

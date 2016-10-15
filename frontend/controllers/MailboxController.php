@@ -19,7 +19,7 @@ use common\components\SmsHelper;
 /**
  * Site controller
  */
-class PaymentController extends Controller
+class MailboxController extends Controller
 {
     /**
      * @inheritdoc
@@ -75,16 +75,16 @@ class PaymentController extends Controller
      */
     public function actionIndex()
     {
-        return $this->redirect(['payment']);
+        return $this->redirect(['inbox']);
     }
 
-    public function actionPayment()
+    public function actionInbox()
     {
 
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        return $this->render('payment',
+        return $this->render('inbox',
             ['model' => '']
         );
     }

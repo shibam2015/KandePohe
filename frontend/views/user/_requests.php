@@ -14,7 +14,7 @@ $model = $model['model'];
 
 ?>
 <?php
-if (count($ModelUser) == 0) { ?>
+if (count($ModelUser) == 0 || $ModelUser[0]->send_request_status == 'No') { ?>
     <div class="profile-control requests">
         <!--<button type="button" class="btn active sendInterest" data-target="#sendInterest"
                 data-toggle="modal"> Send Interest <i class="fa fa-heart-o"></i>
