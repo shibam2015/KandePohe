@@ -41,6 +41,7 @@ class MailHelper
             ->send();
         return $response;
     }
+
     public static function mailFormat($BODY_CONTENT, $TITLE)
     {
         $LOGO = CommonHelper::getSiteUrlLogo();

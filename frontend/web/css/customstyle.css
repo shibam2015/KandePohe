@@ -114,3 +114,65 @@ img.selected {
 .send_email {
     cursor: pointer !important;
 }
+
+/* Notification Start */
+
+.kp_loader_section {
+    bottom: 35px;
+    right: 0;
+    min-width: 20%;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 0;
+    background: rgb(255, 187, 0);
+
+    z-index: 1000;
+    position: fixed;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+
+}
+
+.kp_notify {
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    padding: 10px;
+    color: #fff;
+    display: none;
+}
+
+.kp_notification {
+    width: 90%;
+    text-align: center;
+    /*border-top-right-radius:7px;
+    border-top-left-radius:7px;*/
+}
+
+.kp_notification_close {
+    z-index: 1001;
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    /*width: 10%;*/
+    cursor: pointer;
+}
+
+.kp_notify.red {
+    background: #ff0000;
+}
+
+.kp_notify.yellow {
+    background: rgb(255, 187, 0);
+}
+
+.kp_notify.green {
+    background: rgb(46, 204, 113);
+}
+
+/* Notification End */

@@ -169,9 +169,9 @@ use yii\helpers\Url;
             </div>
         </section>
     </main>
-
 </div>
-<!-- remove list -->
+
+    <!-- remove list -->
 <div class="modal fade" id="del" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <p class="text-center mrg-bt-10">

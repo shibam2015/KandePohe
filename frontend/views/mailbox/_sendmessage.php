@@ -9,7 +9,6 @@ use yii\helpers\Url;
 $modelInbox = $model['modelInbox'];
 $ToUserId = $model['ToUserId'];
 $model = $model['model'];
-echo " ==== " . $show;
 ?>
 <div class="send_message">
     <?php
@@ -82,7 +81,8 @@ echo " ==== " . $show;
                 list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'SEND_MESSAGE');
             }
             $this->registerJs('
-            notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
+            //notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
+             showNotification("' . $STATUS . '", "' . $MESSAGE . '", );
             ');
         }
 

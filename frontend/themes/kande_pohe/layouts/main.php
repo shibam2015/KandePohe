@@ -60,10 +60,14 @@ AppAsset::register($this);
       <section>
         <div class="container">
           --><? /*= Alert::widget() */ ?>
+
   <?= $content ?>
   <!--Footer-->
   <?= $this->render('_footer'); ?>
-
+  <div class="kp_notify">
+      <div class="kp_notification"></div>
+      <span class="kp_notification_close">&times;</span>
+  </div>
 
   <!-- Modal Forgot Password -->
   <div class="modal fade" id="fpswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

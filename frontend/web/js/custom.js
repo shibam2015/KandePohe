@@ -290,12 +290,16 @@ function setDesign() {
 }
 /* Overlay Loader Start */
 
-function loaderStop() {
-    $('.main-section').waitMe('hide');
+function loaderStop(element) {
+    if (typeof(element) === 'undefined') element = 'main-section';
+    $('.' + element).waitMe('hide');
+    //$('.main-section').waitMe('hide');
 }
-function loaderStart() {
+function loaderStart(element) {
+    if (typeof(element) === 'undefined') element = 'main-section';
     $(".modal").modal("hide");
-    $('.main-section').waitMe({
+    //$('.main-section').waitMe({
+    $('.' + element).waitMe({
         effect: 'bounce',
         text: "Please Wait...",
         bg: "rgba(255,255,255,0.7)",
@@ -337,7 +341,8 @@ function sendRequestDashboard(url, htmlId, type, pid, dataArr) {
                     $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-link isent" role="button">Interest Sent <i class="fa fa-heart"></i></a>');
                 }
             }
-            notificationPopup(dataObj.STATUS, dataObj.MESSAGE, dataObj.TITLE);
+            //notificationPopup(dataObj.STATUS, dataObj.MESSAGE, dataObj.TITLE);
+            showNotification(dataObj.STATUS, dataObj.MESSAGE);
         }
     });
 }
@@ -351,3 +356,25 @@ $(document).on("click", ".sendinterestpopup", function (e) {
     $(".send_request").attr("data-parentid", $(this).closest('p').attr('class'));
 
 });
+
+
+/* Notification start */
+$(document).on("click", ".kp_notification_close", function (e) {
+    //$('.kp_notify').hide();
+    $('.kp_notify').slideUp();
+});
+
+function showNotification(type, msg) {
+    if (type == 'S') {
+        $('.kp_notify').removeClass('red').addClass('green');
+        $('.kp_notification').html(msg);
+    } else if (type == 'E') {
+        $('.kp_notify').removeClass('green').addClass('red');
+        $('.kp_notification').html(msg);
+    } else {
+        $('.kp_notify').removeClass('green').removeClass('red').addClass('yellow');
+        $('.kp_notification').html(msg);
+    }
+    $('.kp_notify').slideDown();
+}
+/* Notification END  */
