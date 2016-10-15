@@ -7,7 +7,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-
+use common\models\UserRequest;
 /**
  * User model
  *
@@ -170,14 +170,17 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             return 0;
         }
     }
-
     public static function findRecentJoinedUserList($Gender, $Limit = 4) # Get user list Gender Wise with limit
     {
         return static::find()->where(['Gender' => $Gender, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->limit($Limit)->all();
-        /*$sql="select user.id,user.email,user.Registration_Number from user
-                JOIN user_request ON user.id != user_request.from_user_id AND user.id != user_request.to_user_id
-                where user.Gender=:gen and user.status=:st ";
-         return static::findBySql($sql,[":gen"=>$Gender,":st"=> [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->limit($Limit)->all();*/
+    }
+
+    public static function findRecentJoinedUserLists($Id, $Gender, $Limit = 4) # Get user list Gender Wise with limit
+    {
+        $sql = "select user.id,user.email,user.Registration_Number,user.propic,user.DOB,user.iHeightID, user_request.from_user_id, user_request.to_user_id,user_request.send_request_status from user
+                LEFT JOIN user_request ON 1=1
+                where user.Gender=:gen and user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "')  AND  user_request.from_user_id!= " . $Id;
+        return static::findBySql($sql, [":gen" => $Gender])->limit($Limit)->all();
     }
 
     /**
@@ -190,7 +193,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             [['status', 'created_at', 'updated_at', 'Age', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID'], 'integer'],
             [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus'], 'string'],
             [['DOB', 'Time_of_Birth', 'cnb', 'iSubCommunity_ID', 'vAreaName', 'iGotraID'], 'safe'],
-            [['DOB'], 'checkDobYear'],
+            [['c'], 'checkDobYear'],
             [['noc', 'nob', 'nos', 'weight'], 'integer', 'integerOnly' => true, 'min' => 0],
             [['auth_key'], 'string', 'max' => 32],
             [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
@@ -599,34 +602,35 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     {
         return $this->hasOne(Cities::className(), ['iCityId' => 'iCityId']);
     }
+
     public function getRaashiName()
     {
         return $this->hasOne(Raashi::className(), ['ID' => 'RaashiId']);
     }
+
     public function getNakshtraName()
     {
         return $this->hasOne(Nakshtra::className(), ['ID' => 'NakshtraId']);
     }
+
     public function getGanName()
     {
         return $this->hasOne(Gan::className(), ['ID' => 'GanId']);
     }
+
     public function getNadiName()
     {
         return $this->hasOne(Nadi::className(), ['ID' => 'NadiId']);
     }
+
     public function getCharanName()
     {
         return $this->hasOne(Charan::className(), ['ID' => 'CharanId']);
     }
+
     public function getMotherTongue()
     {
         return $this->hasOne(MotherTongue::className(), ['ID' => 'mother_tongue']);
-    }
-
-    public function getPermentAddress()
-    {
-        return $this->vAreaName . ", " . $this->talukaName->vName . ", " . $this->districtName->vName . ", " . $this->cityName->vCityName . ", " . $this->stateName->vStateName . ", " . $this->countryName->vCountryName;
     }
 
     /*public function generateUniqueRandomNumber($length = 9) {
@@ -638,6 +642,11 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             return $this->generateUniqueRandomNumber($length);
 
     }*/
+
+    public function getPermentAddress()
+    {
+        return $this->vAreaName . ", " . $this->talukaName->vName . ", " . $this->districtName->vName . ", " . $this->cityName->vCityName . ", " . $this->stateName->vStateName . ", " . $this->countryName->vCountryName;
+    }
 
     public function getCurrentAddress()
     {
@@ -661,6 +670,5 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         }
         return $returnVal;
     }
-
 }
 

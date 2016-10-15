@@ -1,6 +1,8 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Mailbox;
+use common\models\UserRequest;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -84,9 +86,59 @@ class MailboxController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+        $id = Yii::$app->user->identity->id;
+        $Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $id, 'send_request_status' => 'Yes'])->limit(10)->all();
+        #CommonHelper::pr($Model);exit;
         return $this->render('inbox',
-            ['model' => '']
+            ['model' => $Model]
         );
     }
+
+    public function actionInboxSendMessage()
+    {
+        $id = Yii::$app->user->identity->id;
+        $show = false;
+        $flag = false;
+        $popup = false;
+        $ModelInbox = new Mailbox();
+        $ModelInbox->scenario = Mailbox::SCENARIO_SEND_MESSAGE;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('ToUserId') != '')) {
+            $model = User::findOne(Yii::$app->request->post('ToUserId'));
+            $show = false;
+        }
+        if (Yii::$app->request->post() && (Yii::$app->request->post('Action') == 'SEND_MESSAGE')) {
+            #CommonHelper::pr(Yii::$app->request->post());
+            $ModelInbox->from_user_id = $id;
+            $ModelInbox->to_user_id = Yii::$app->request->post('User')['ToUserId'];
+            $ModelInbox->MailContent = Yii::$app->request->post('Mailbox')['MailContent'];
+            $popup = true;
+            if ($ModelInbox->save()) {
+                $flag = true;
+            } else {
+                $flag = false;
+            }
+            $show = true;
+        }
+        $myModel = [
+            'model' => $model,
+            'modelInbox' => $ModelInbox,
+            'ToUserId' => Yii::$app->request->post('ToUserId')
+        ];
+        return $this->actionRenderCall($myModel, '_sendmessage', $show, $popup, $flag);
+    }
+
+    function actionRenderCall($model, $view, $show = false, $popup = false, $flag = false, $temp = array())
+    {
+        return $this->renderAjax($view, [
+            'model' => $model,
+            'show' => $show,
+            'popup' => $popup,
+            'flag' => $flag,
+            'temp' => $temp,
+        ]);
+    }
+
+
+
 
 }

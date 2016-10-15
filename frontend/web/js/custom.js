@@ -320,4 +320,34 @@ function sendRequest(url, htmlId, dataArr) {
         }
     });
 }
+function sendRequestDashboard(url, htmlId, type, pid, dataArr) {
+    loaderStart();
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: dataArr,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (res) {
+            loaderStop();
+            var dataObj = JSON.parse(res);
+            if (type == 'SI') {
+                if (dataObj.STATUS == 'S') {
+                    $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-link isent" role="button">Interest Sent <i class="fa fa-heart"></i></a>');
+                }
+            }
+            notificationPopup(dataObj.STATUS, dataObj.MESSAGE, dataObj.TITLE);
+        }
+    });
+}
 /* Request send End */
+
+
+$(document).on("click", ".sendinterestpopup", function (e) {
+    $("#to_name").html($(this).data("name"));
+    $("#to_rg_number").html($(this).data("rgnumber"));
+    $(".send_request").attr("data-id", $(this).data("id"));
+    $(".send_request").attr("data-parentid", $(this).closest('p').attr('class'));
+
+});

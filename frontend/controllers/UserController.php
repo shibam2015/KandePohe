@@ -147,9 +147,12 @@ class UserController extends Controller
                 $model->scenario = User::SCENARIO_REGISTER6;
                 $VER_ARRAY = array();
                 $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
-                $RecentlyJoinedMembers = User::findRecentJoinedUserList($Gender, 4);
                 $ProfileViedByMembers = UserRequest::findProfileViewedByUserList($id, 4);
-                #CommonHelper::pr($ProfileViedByMembers);exit;
+                #$RecentlyJoinedMembers = User::findRecentJoinedUserLists($id,$Gender, 4);
+                $RecentlyJoinedMembers = User::findRecentJoinedUserList($Gender, 4);
+                #echo $RecentlyJoinedMembers->createCommand()->sql;exit;
+
+                #CommonHelper::pr($RecentlyJoinedMembers);exit;
                 return $this->render('dashboard',[
                     'model' => $model,
                     'VER_ARRAY' => $VER_ARRAY,
@@ -1290,7 +1293,7 @@ class UserController extends Controller
             $RequestModel->to_user_id = $ToUserId;
             $RequestModel->profile_viewed = 'Yes';
             if ($RequestModel->save()) {
-                $this->actionMailSendRequest($id, $ToUserId, 'VIEW_PROFILE');
+                $this->actionMailSendRequest($id, $ToUserId, 'VIEW_PROFILE_OF');
                 return 'S';
             } else {
                 return 'E';
@@ -1324,24 +1327,6 @@ class UserController extends Controller
     {
         $UserId = Yii::$app->request->post('UserId');
         $id = Yii::$app->user->identity->id;
-        /*$UserModel = User::findOne($UserId);
-        $Model = User::findOne($id);*/
-        /*$LINK = CommonHelper::getSiteUrl('FRONTEND', 1) . 'user/profile?uk=' . $Model->Registration_Number;
-        $PG = new UserPhotos();
-        $USER_PHOTOS_LIST = $PG->findByProfilePhoto($id);
-        if (count($USER_PHOTOS_LIST) != 0) {
-            $PHOTO = CommonHelper::getPhotos('USER', $id, $USER_PHOTOS_LIST->File_Name, 200);
-        } else {
-            $PHOTO = CommonHelper::getUserDefaultPhoto();
-        }
-        $PHOTO = '<img src="' . $PHOTO . '" width="200"  alt="Profile Photo">';
-        $MAIL_DATA = array("EMAIL_TO" => $UserModel->email, "NAME" => $UserModel->First_Name . " " . $UserModel->Last_Name, "USER_NAME" => $Model->First_Name . " " . $Model->Last_Name, "TODAY_DATE" => date('d-m-Y'), "AGE" => CommonHelper::getAge($Model->DOB), "HEIGHT" => CommonHelper::setInputVal($Model->height->vName, 'text'), "RELIGION" => CommonHelper::setInputVal($Model->religionName->vName, 'text'), "MOTHER_TONGUE" => CommonHelper::setInputVal($Model->motherTongue->Name, 'text'), "COMMUNITY" => CommonHelper::setInputVal($Model->communityName->vName, 'text'), "LOCATION" => CommonHelper::setInputVal($Model->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($Model->countryName->vCountryName, 'text'), "EDUCATION" => CommonHelper::setInputVal($Model->educationLevelName->vEducationLevelName, 'text'), "PROFESSION" => CommonHelper::setInputVal($Model->workingAsName->vWorkingAsName, 'text'), "ABOUT_ME" => CommonHelper::truncate($Model->tYourSelf, 100), 'LINK' => $LINK, 'PHOTO' => $PHOTO);
-
-        if ($Model->Gender == 'MALE') {
-            $MAIL_STATUS = MailHelper::SendMail('PROFILE_OF_GROOM', $MAIL_DATA);
-        } else {
-            $MAIL_STATUS = MailHelper::SendMail('PROFILE_OF_BRIDE', $MAIL_DATA);
-        }*/
         $MAIL_STATUS = $this->actionMailSendRequest($id, $UserId, 'PROFILE_OF');
         if ($MAIL_STATUS) {
             list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'SEND_PROFILE_WITH_EMAIL');
@@ -1370,7 +1355,6 @@ class UserController extends Controller
         $modelUser = UserRequest:: find()
             ->where("from_user_id = $id AND to_user_id = $ToUserId OR (from_user_id = $ToUserId AND to_user_id = $id)")
             ->all();
-        #CommonHelper::pr($modelUser);exit;
         $myModel = [
             'ToUserId' => $ToUserId,
             'model' => $model,
@@ -1382,16 +1366,51 @@ class UserController extends Controller
     public function actionSendInterest($id, $ToUserId, $MailType)
     {
         $RequestModel = new UserRequest();
-        $RequestModel->scenario = UserRequest::SCENARIO_SEND_INTEREST;
-        $RequestModel->from_user_id = $id; #who logged in.
-        $RequestModel->to_user_id = $ToUserId;
-        $RequestModel->send_request_status = 'Yes';
-        $RequestModel->date_send_request = date('Y-m-d');
-        if ($RequestModel->save()) {
-            $this->actionMailSendRequest($id, $ToUserId, $MailType);
-            return 'S';
+        $Model = $RequestModel->checkUsers($id, $ToUserId);
+        if ($Model->id) {
+            if ($Model->send_request_status == 'No') {
+                $Model->scenario = UserRequest::SCENARIO_SEND_INTEREST;
+                $Model->from_user_id = $id; #who logged in.
+                $Model->to_user_id = $ToUserId;
+                $Model->send_request_status = 'Yes';
+                $Model->date_send_request = date('Y-m-d');
+                if ($Model->save()) {
+                    $this->actionMailSendRequest($id, $ToUserId, $MailType);
+                    return 'S';
+                } else {
+                    return 'E';
+                }
+            } else {
+                return 'I';
+            }
         } else {
-            return 'E';
+            $RequestModel->scenario = UserRequest::SCENARIO_SEND_INTEREST;
+            $RequestModel->from_user_id = $id; #who logged in.
+            $RequestModel->to_user_id = $ToUserId;
+            $RequestModel->send_request_status = 'Yes';
+            $RequestModel->date_send_request = date('Y-m-d');
+            if ($RequestModel->save()) {
+                $this->actionMailSendRequest($id, $ToUserId, $MailType);
+                return 'S';
+            } else {
+                return 'E';
+            }
         }
+    }
+
+    public function actionSendIntDashboard()
+    {
+        $id = Yii::$app->user->identity->id;
+        $ToUserId = Yii::$app->request->post('ToUserId');
+        $Flag = $this->actionSendInterest($id, $ToUserId, 'SEND_INTEREST_OF');
+        if ($Flag == 'S') {
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'SEND_INTEREST');
+        } else if ($Flag == 'E') {
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'SEND_INTEREST');
+        } else {
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('I', 'SEND_INTEREST');
+        }
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
+        return json_encode($return);
     }
 }
