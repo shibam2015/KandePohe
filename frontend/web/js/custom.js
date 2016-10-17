@@ -363,7 +363,6 @@ $(document).on("click", ".kp_notification_close", function (e) {
     //$('.kp_notify').hide();
     $('.kp_notify').slideUp();
 });
-
 function showNotification(type, msg) {
     if (type == 'S') {
         $('.kp_notify').removeClass('red').addClass('green');
