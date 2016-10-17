@@ -364,6 +364,7 @@ $(document).on("click", ".kp_notification_close", function (e) {
     $('.kp_notify').slideUp();
 });
 function showNotification(type, msg) {
+    $(".modal").modal("hide");
     if (type == 'S') {
         $('.kp_notify').removeClass('red').addClass('green');
         $('.kp_notification').html(msg);

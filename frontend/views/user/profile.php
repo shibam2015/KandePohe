@@ -80,6 +80,7 @@ use yii\widgets\Pjax;
                                     </div>
                                     <?php Pjax::begin(['id' => 'my_index', 'enablePushState' => false]); ?>
                                     <div class="profile-control requests">
+                                        Loading...
                                         <!--<button type="button" class="btn active sendInterest" data-target="#sendInterest"
                                                 data-toggle="modal"> Send Interest <i class="fa fa-heart-o"></i>
                                         </button>
@@ -586,17 +587,60 @@ use yii\widgets\Pjax;
             </div>
             <!-- Modal Body -->
             <div class="modal-body">
+                <div class="row">
+                    <form>
+                        <div class="text-center">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="fb-profile-text mrg-bt-30 text-dark">
+                                    <h1 id="p_u_name"><?= $model->FullName; ?><span class="sub-text"
+                                                                                    id="p_u_rgno">(<?= CommonHelper::setInputVal($model->Registration_Number, 'text') ?>
+                                            )</span></h1>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $model->propic, 140), ['width' => '', 'height' => '120', 'alt' => 'Profile', 'class' => '']); ?>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <h6 class="mrg-bt-30 mrg-tp-20 font-15 text-dark"><strong>Request the member to add the
+                                        following
+                                        details</strong></h6>
+
+                                <div class="checkbox mrg-tp-0 profile-control">
+                                    <input id="Photo" type="checkbox" name="Photo" value="check1">
+                                    <label for="Photo" class="control-label">Photo</label>
+                                    <input id="Horoscope" type="checkbox" name="Horoscope" value="check1">
+                                    <label for="Horoscope" class="control-label">Horoscope</label>
+                                    <button type="button" class="btn active send_request"> Send Interest</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <!-- Modal Footer -->
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="operationrequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <p class="text-center mrg-bt-10">
+            <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+        </p>
+
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+                </button>
+                <h4 class="text-center"> Please wait.. </h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
                 <form>
                     <div class="text-center">
-                        <!--<p class="mrg-bt-10 font-15"><span class="text-success"><strong>&#10003;</strong></span> Your
-                                interest has been sent successfully to</p>
-
-                        <div class="fb-profile-text mrg-bt-30 text-dark">
-                            <h1>Swapnil Kanherkar <span class="sub-text">(KP123456667)</span></h1>
-                        </div>
-                        <h6 class="mrg-bt-30 font-15 text-dark"><strong>Request the member to add the following
-                                details</strong></h6>-->
-
                         <div class="checkbox mrg-tp-0 profile-control">
                             <input id="Photo" type="checkbox" name="Photo" value="check1">
                             <label for="Photo" class="control-label">Photo</label>
@@ -702,6 +746,7 @@ use yii\widgets\Pjax;
         </div>
     </div>
 </div>
+
 
 <script language="javascript" type="text/javascript">
     var userid = "<?=base64_encode(Yii::$app->user->identity->id)?>";

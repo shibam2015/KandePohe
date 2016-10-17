@@ -328,6 +328,12 @@ class CommonHelper {
             case "25":
                 return date('j M Y  h:i A', strtotime($text));
                 break;
+            case "26":
+                return date("jS M, Y", strtotime($text));
+                break;
+            case "27":
+                return date("jS M, Y h:i:s a", strtotime($text));
+                break;
             default :
                 return date('M j, Y', strtotime($text));
                 break;
@@ -512,6 +518,31 @@ class CommonHelper {
         return $OriginalString;
     }
 
+    public static function getUserUrl($RNo = '', $Type)
+    {
+        $UserUrl = 'user/profile?uk=';
+        switch ($Type) {
+            case "1":
+                break;
+            default :
+                return Yii::$app->homeUrl . $UserUrl . $RNo;
+
+        }
+    }
+
+    public static function getMailBoxUrl($RNo = '', $Type = '')
+    {
+        $MailBoxUrl = 'mailbox/';
+        switch ($Type) {
+            case "1"://more-conversation
+                return Yii::$app->homeUrl . $MailBoxUrl . 'more-conversation?uk=' . $RNo;
+                break;
+            default :
+                return Yii::$app->homeUrl . $MailBoxUrl;
+
+        }
+    }
+
     public function getReligion()
     {
         $religion = \common\models\Religion::find()->all();
@@ -638,24 +669,31 @@ class CommonHelper {
     {
         return \common\models\MotherTongue::find()->all();
     }
+
     public function getRaashi() {
         return \common\models\Raashi::find()->all();
     }
+
     public function getNaksatra() {
         return \common\models\Nakshtra::find()->all();
     }
+
     public function getGan() {
         return \common\models\Gan::find()->all();
     }
+
     public function getNadi() {
         return \common\models\Nadi::find()->all();
     }
+
     public function getCharan() {
         return \common\models\Charan::find()->all();
     }
+
     public function getMasterGotra() {
         return \common\models\MasterGotra::find()->all();
     }
+
     function encryptor($action, $string)
     {
         $output = false;

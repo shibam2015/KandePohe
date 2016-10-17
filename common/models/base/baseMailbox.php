@@ -11,6 +11,11 @@ use Yii;
  * @property integer $from_user_id
  * @property integer $to_user_id
  * @property string $MailContent
+ * @property string $subject
+ * @property string $dtadded
+ * @property string $from_reg_no
+ * @property string $to_reg_no
+ * @property string $status
  */
 class baseMailbox extends \yii\db\ActiveRecord
 {
@@ -28,9 +33,11 @@ class baseMailbox extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['from_user_id', 'to_user_id', 'MailContent'], 'required'],
+            [['from_user_id', 'to_user_id', 'MailContent', 'subject', 'dtadded', 'from_reg_no', 'to_reg_no'], 'required'],
             [['from_user_id', 'to_user_id'], 'integer'],
-            [['MailContent'], 'string'],
+            [['MailContent', 'subject', 'status'], 'string'],
+            [['dtadded'], 'safe'],
+            [['from_reg_no', 'to_reg_no'], 'string', 'max' => 15],
         ];
     }
 
@@ -44,6 +51,11 @@ class baseMailbox extends \yii\db\ActiveRecord
             'from_user_id' => 'From User ID',
             'to_user_id' => 'To User ID',
             'MailContent' => 'Mail Content',
+            'subject' => 'Subject',
+            'dtadded' => 'Dtadded',
+            'from_reg_no' => 'From Reg No',
+            'to_reg_no' => 'To Reg No',
+            'status' => 'Status',
         ];
     }
 }

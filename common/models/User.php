@@ -183,6 +183,12 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return static::findBySql($sql, [":gen" => $Gender])->limit($Limit)->all();
     }
 
+    public static function getRegisterNo($Id)
+    {
+        $RegisterNo = User::find()->select('Registration_Number')->where(['id' => $Id])->one();
+        return $RegisterNo->Registration_Number;
+    }
+
     /**
      * @inheritdoc
      */
@@ -628,11 +634,6 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $this->hasOne(Charan::className(), ['ID' => 'CharanId']);
     }
 
-    public function getMotherTongue()
-    {
-        return $this->hasOne(MotherTongue::className(), ['ID' => 'mother_tongue']);
-    }
-
     /*public function generateUniqueRandomNumber($length = 9) {
         $PREFIX = CommonHelper::generatePrefix();
         $RANDOM_USER_NUMBER = $PREFIX.CommonHelper::generateNumericUniqueToken($length);
@@ -642,6 +643,11 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             return $this->generateUniqueRandomNumber($length);
 
     }*/
+
+    public function getMotherTongue()
+    {
+        return $this->hasOne(MotherTongue::className(), ['ID' => 'mother_tongue']);
+    }
 
     public function getPermentAddress()
     {

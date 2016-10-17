@@ -82,7 +82,7 @@ $model = $model['model'];
             }
             $this->registerJs('
             //notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
-             showNotification("' . $STATUS . '", "' . $MESSAGE . '" );
+             showNotification("' . $STATUS . '", "' . $MESSAGE . '", );
             ');
         }
 

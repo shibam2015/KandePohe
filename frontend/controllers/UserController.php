@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use common\components\CommonHelper;
 use common\components\MessageHelper;
 use common\components\SmsHelper;
+use common\models\Mailbox;
 use common\models\Tags;
 use common\models\UserPhotos;
 use common\models\UserRequest;
@@ -1217,6 +1218,9 @@ class UserController extends Controller
 
     public function actionProfile($uk = '', $source = '') #Other User Profile View : VS
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $id = Yii::$app->user->identity->id;
         #echo $uk;exit;echo $Registration_Number;exit;
         $model1 = User::findOne(['Registration_Number' => $uk]);
@@ -1363,19 +1367,20 @@ class UserController extends Controller
         return $this->actionRenderAjax($myModel, '_requests', $show, '', '', $temp);
     }
 
-    public function actionSendInterest($id, $ToUserId, $MailType)
+    public function actionSendInterest($Id, $ToUserId, $MailType)
     {
         $RequestModel = new UserRequest();
-        $Model = $RequestModel->checkUsers($id, $ToUserId);
+        $Model = $RequestModel->checkUsers($Id, $ToUserId);
         if ($Model->id) {
             if ($Model->send_request_status == 'No') {
                 $Model->scenario = UserRequest::SCENARIO_SEND_INTEREST;
-                $Model->from_user_id = $id; #who logged in.
+                $Model->from_user_id = $Id; #who logged in.
                 $Model->to_user_id = $ToUserId;
                 $Model->send_request_status = 'Yes';
                 $Model->date_send_request = date('Y-m-d');
                 if ($Model->save()) {
-                    $this->actionMailSendRequest($id, $ToUserId, $MailType);
+                    $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['sendInterestMessage']);
+                    $this->actionMailSendRequest($Id, $ToUserId, $MailType);
                     return 'S';
                 } else {
                     return 'E';
@@ -1385,12 +1390,13 @@ class UserController extends Controller
             }
         } else {
             $RequestModel->scenario = UserRequest::SCENARIO_SEND_INTEREST;
-            $RequestModel->from_user_id = $id; #who logged in.
+            $RequestModel->from_user_id = $Id; #who logged in.
             $RequestModel->to_user_id = $ToUserId;
             $RequestModel->send_request_status = 'Yes';
             $RequestModel->date_send_request = date('Y-m-d');
             if ($RequestModel->save()) {
-                $this->actionMailSendRequest($id, $ToUserId, $MailType);
+                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['sendInterestMessage']);
+                $this->actionMailSendRequest($Id, $ToUserId, $MailType);
                 return 'S';
             } else {
                 return 'E';
@@ -1398,11 +1404,29 @@ class UserController extends Controller
         }
     }
 
+    public function actionMailBoxLog($Id, $ToUserId, $Content)
+    {
+        $MailBoxModel = new Mailbox();
+        $MailBoxModel->scenario = Mailbox::SCENARIO_SEND_MESSAGE;
+        $MailBoxModel->from_user_id = $Id;
+        $MailBoxModel->to_user_id = $ToUserId;
+        $MailBoxModel->from_reg_no = User::getRegisterNo($Id);
+        $MailBoxModel->to_reg_no = User::getRegisterNo($ToUserId);
+        $MailBoxModel->subject = $Content;
+        $MailBoxModel->MailContent = $Content;
+        $MailBoxModel->dtadded = CommonHelper::getTime();
+        if ($MailBoxModel->save()) {
+            return 'S';
+        } else {
+            return 'E';
+        }
+    }
+
     public function actionSendIntDashboard()
     {
-        $id = Yii::$app->user->identity->id;
+        $Id = Yii::$app->user->identity->id;
         $ToUserId = Yii::$app->request->post('ToUserId');
-        $Flag = $this->actionSendInterest($id, $ToUserId, 'SEND_INTEREST_OF');
+        $Flag = $this->actionSendInterest($Id, $ToUserId, 'SEND_INTEREST_OF');
         if ($Flag == 'S') {
             list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'SEND_INTEREST');
         } else if ($Flag == 'E') {
@@ -1413,4 +1437,5 @@ class UserController extends Controller
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
         return json_encode($return);
     }
+
 }

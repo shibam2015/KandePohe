@@ -59,7 +59,6 @@ AppAsset::register($this);
       <section>
         <div class="container">
           --><? /*= Alert::widget() */ ?>
-
   <?= $content ?>
   <!--Footer-->
   <?= $this->render('_footer'); ?>

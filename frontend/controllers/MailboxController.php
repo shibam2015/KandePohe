@@ -82,15 +82,29 @@ class MailboxController extends Controller
 
     public function actionInbox()
     {
-
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        $id = Yii::$app->user->identity->id;
-        $Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $id, 'send_request_status' => 'Yes'])->limit(10)->all();
+        $Id = Yii::$app->user->identity->id;
+        $Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->limit(10)->all();
+        $MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
         #CommonHelper::pr($Model);exit;
+        $MailArray = array();
+        foreach ($Model as $Key => $Value) {
+            #CommonHelper::pr($Value->id);exit;
+            $LastMail = Mailbox::find()->where(['from_user_id' => $Value->from_user_id, 'to_user_id' => $Id])->orderBy('MailId')->one();
+            $MailCount = Mailbox::find()->where(['from_user_id' => $Value->from_user_id, 'to_user_id' => $Id])->count();
+            $MailCount += Mailbox::find()->where(['from_user_id' => $Id, 'to_user_id' => $Value->from_user_id])->count();
+            $MailArray[$Value->id]['LastMsg'] = str_replace("#NAME#", $Value->fromUserInfo->fullName, $LastMail->MailContent);
+            $MailArray[$Value->id]['MsgCount'] = $MailCount;
+        }
+        #CommonHelper::pr($MailArray);exit;
         return $this->render('inbox',
-            ['model' => $Model]
+            [
+                'model' => $Model,
+                'MailArray' => $MailArray,
+                'MailUnreadCount' => $MailUnreadCount
+            ]
         );
     }
 
@@ -111,6 +125,10 @@ class MailboxController extends Controller
             $ModelInbox->from_user_id = $id;
             $ModelInbox->to_user_id = Yii::$app->request->post('User')['ToUserId'];
             $ModelInbox->MailContent = Yii::$app->request->post('Mailbox')['MailContent'];
+            $ModelInbox->from_reg_no = User::getRegisterNo($id);
+            $ModelInbox->to_reg_no = User::getRegisterNo(Yii::$app->request->post('User')['ToUserId']);
+            $ModelInbox->subject = Yii::$app->request->post('Mailbox')['MailContent'];
+            $ModelInbox->dtadded = CommonHelper::getTime();
             $popup = true;
             if ($ModelInbox->save()) {
                 $flag = true;
@@ -136,6 +154,44 @@ class MailboxController extends Controller
             'flag' => $flag,
             'temp' => $temp,
         ]);
+    }
+
+    public function actionMoreConversation($uk = '')
+    {
+
+        $Id = Yii::$app->user->identity->id;
+        $FromUserId = User::find()->select('id')->where(['Registration_Number' => $uk])->one();
+        if (Yii::$app->user->isGuest || $uk == '' || $FromUserId == null) {
+            return $this->redirect(['inbox']);
+        }
+        $Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'from_user_id' => $FromUserId->id, 'send_request_status' => ['Yes', 'Accepted']])->one();
+        $MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
+        if ($Model != null) {
+            $MailArray = array();
+
+            $LastMail = Mailbox::find()->where(['from_user_id' => $Model->from_user_id, 'to_user_id' => $Id])->orderBy('MailId')->one();
+            $MailCount = Mailbox::find()->where(['from_user_id' => $Model->from_user_id, 'to_user_id' => $Id])
+                ->orWhere(['from_user_id' => $Id, 'to_user_id' => $Model->from_user_id])
+                ->count();
+            $MailConversation = Mailbox::find()->where(['from_user_id' => $Model->from_user_id, 'to_user_id' => $Id])
+                ->orWhere(['from_user_id' => $Id, 'to_user_id' => $Model->from_user_id])
+                ->orderBy(['MailId' => SORT_DESC])
+                ->all();
+            $MailArray[$Model->id]['LastMsg'] = str_replace("#NAME#", $Model->fromUserInfo->fullName, $LastMail->MailContent);
+            $MailArray[$Model->id]['MsgCount'] = $MailCount;
+
+            #CommonHelper::pr($MailConversation);exit;
+            return $this->render('moreconversation',
+                [
+                    'model' => $Model,
+                    'MailArray' => $MailArray,
+                    'MailConversation' => $MailConversation,
+                    'MailUnreadCount' => $MailUnreadCount,
+                ]
+            );
+        } else {
+            return $this->redirect(['inbox']);
+        }
     }
 
 

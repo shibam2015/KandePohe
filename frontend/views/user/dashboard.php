@@ -128,7 +128,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                   </div>
                   <div class="panel-body">
                     <ul class="reset list-item">
-                      <li><a href="#" title="Inbox">Inbox</a> <span class="badge">10</span></li>
+                      <li><a href="<?= CommonHelper::getMailBoxUrl() ?>" title="Inbox">Inbox</a> <span
+                            class="badge">10</span></li>
                       <li><a href="#" title="Accepted">Accepted Interest</a> <span class="badge">2</span></li>
                       <li><a href="#" title="Not Replied"> Not Replied </a> <span class="badge">1</span></li>
                       <li><a href="#" title="Sent"> Sent </a> <span class="badge">1</span></li>
