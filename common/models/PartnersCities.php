@@ -17,7 +17,6 @@ class PartnersCities extends \common\models\base\basePartnersCities
 {
     const SCENARIO_ADD = 'ADD';
     const SCENARIO_UPDATE = 'Update';
-
     /**
      * @inheritdoc
      */

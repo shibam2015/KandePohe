@@ -15,12 +15,20 @@ use Yii;
  */
 class PartnersSubcommunity extends \common\models\base\basePartnersSubcommunity
 {
+    const SCENARIO_ADD = 'ADD';
+    const SCENARIO_UPDATE = 'Update';
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'partners_subcommunity';
+    }
+
+    public static function findByUserId($userid)
+    {
+
+        return static::findOne(['iUser_ID' => $userid]);
     }
 
     /**
@@ -43,9 +51,22 @@ class PartnersSubcommunity extends \common\models\base\basePartnersSubcommunity
         return [
             'iPartners_Subcommunity_ID' => 'I Partners  Subcommunity  ID',
             'iUser_ID' => 'I User  ID',
-            'iSub_Community_ID' => 'I Sub  Community  ID',
+            'iSub_Community_ID' => 'Sub Community',
             'dtCreated' => 'Dt Created',
             'dtModified' => 'Dt Modified',
         ];
+    }
+
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_ADD => ['iUser_ID', 'iSub_Community_ID', 'dtModified'],
+            self::SCENARIO_UPDATE => ['iUser_ID', 'iSub_Community_ID', 'dtModified'],
+        ];
+    }
+
+    public function getSubCommunityName()
+    {
+        return $this->hasOne(MasterCommunitySub::className(), ['iSubCommunity_ID' => 'iSub_Community_ID']);
     }
 }

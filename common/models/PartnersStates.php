@@ -17,7 +17,6 @@ class PartnersStates extends \common\models\base\basePartnersStates
 {
     const SCENARIO_ADD = 'ADD';
     const SCENARIO_UPDATE = 'Update';
-
     public static function tableName()
     {
         return 'partners_states';

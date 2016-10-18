@@ -5,6 +5,15 @@ use common\components\CommonHelper;
 use common\components\MessageHelper;
 use common\components\SmsHelper;
 use common\models\Mailbox;
+use common\models\PartnersAnnualIncome;
+use common\models\PartnersCities;
+use common\models\PartnersCommunity;
+use common\models\PartnersCountries;
+use common\models\PartnersMothertongue;
+use common\models\PartnersStates;
+use common\models\PartnersSubcommunity;
+use common\models\PartnerWorkingAs;
+use common\models\PartnerWorkingWith;
 use common\models\Tags;
 use common\models\UserPhotos;
 use common\models\UserRequest;
@@ -724,11 +733,8 @@ class UserController extends Controller
         $PW = PartnerWorkingAs::findByUserId($id) == NULL ? new PartnerWorkingAs() : PartnerWorkingAs::findByUserId($id);
         $WorkingW = PartnerWorkingWith::findByUserId($id) == NULL ? new PartnerWorkingWith() : PartnerWorkingWith::findByUserId($id);
         $AI = PartnersAnnualIncome::findByUserId($id) == NULL ? new PartnersAnnualIncome() : PartnersAnnualIncome::findByUserId($id);
-        // $PartnersWorkingWith = PartnerWorkingWith::findByUserId($id) == NULL ? new PartnerWorkingWith() : PartnerWorkingWith::findByUserId($id);
-        //$PartnersAnnualIncome = PartnersAnnualIncome::findByUserId($id) == NULL ? new PartnersAnnualIncome() : PartnersAnnualIncome::findByUserId($id);
         $model = User::findOne($id);
         $show = false;
-        //CommonHelper::pr($PartnersWorkingAs);exit;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if (Yii::$app->request->post('save')) {

@@ -17,7 +17,6 @@ class PartnersCountries extends \common\models\base\basePartnersCountries
 {
     const SCENARIO_ADD = 'ADD';
     const SCENARIO_UPDATE = 'Update';
-
     /**
      * @inheritdoc
      */

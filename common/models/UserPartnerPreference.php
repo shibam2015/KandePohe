@@ -35,6 +35,12 @@ class UserPartnerPreference extends \common\models\base\baseUserPartnerPreferenc
         return 'user_partner_preference';
     }
 
+    public static function findByUserId($userid)
+    {
+
+        return static::findOne(['iUser_id' => $userid]);
+    }
+
     /**
      * @inheritdoc
      */
@@ -74,8 +80,13 @@ class UserPartnerPreference extends \common\models\base\baseUserPartnerPreferenc
         ];
     }
 
-    public static function findByUserId($userid) {
+    public function getHeightFrom()
+    {
+        return $this->hasOne(MasterHeight::className(), ['iHeightID' => 'height_from']);
+    }
 
-        return static::findOne(['iUser_id' => $userid]);
+    public function getHeightTo()
+    {
+        return $this->hasOne(MasterHeight::className(), ['iHeightID' => 'height_to']);
     }
 }

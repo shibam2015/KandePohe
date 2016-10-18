@@ -17,7 +17,6 @@ class PartnersMothertongue extends \common\models\base\basePartnersMothertongue
 {
     const SCENARIO_ADD = 'ADD';
     const SCENARIO_UPDATE = 'Update';
-
     public static function tableName()
     {
         return 'partners_mothertongue';
