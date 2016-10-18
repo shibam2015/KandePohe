@@ -424,6 +424,64 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 <?php Pjax::end(); ?>
                                             </div>
 
+                                            <div class="profile-edit pull-right">
+                                                <ul class="list-inline major-control">
+                                                    <li role="presentation"><a href="javascript:void(0)"
+                                                                               class="edit_profession "
+                                                                               attr-name="my_info"><i
+                                                                class="fa fa-pencil"></i> Edit</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="inner-block">
+                                                <div class="fb-profile-text padd-xs padd-tp-0">
+                                                    <h1><span class="heading-icons icon9"></span>Profession Preferences
+                                                    </h1>
+                                                </div>
+                                                <?php Pjax::begin(['id' => 'my_profession', 'enablePushState' => false]); ?>
+                                                <div class="div_profession">
+                                                    Profession Preferences Loading...
+                                                </div>
+                                                <?php Pjax::end(); ?>
+                                            </div>
+                                            <div class="profile-edit pull-right">
+                                                <ul class="list-inline major-control">
+                                                    <li role="presentation"><a href="javascript:void(0)"
+                                                                               class="edit_location"
+                                                                               attr-name="my_info"><i
+                                                                class="fa fa-pencil"></i> Edit</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="inner-block">
+                                                <div class="fb-profile-text padd-xs padd-tp-0">
+                                                    <h1><span class="heading-icons icon9"></span> Location Preferences
+                                                    </h1>
+                                                </div>
+                                                <?php Pjax::begin(['id' => 'my_location', 'enablePushState' => false]); ?>
+                                                <div class="div_location">
+                                                    Location Preferences Loading...
+                                                </div>
+                                                <?php Pjax::end(); ?>
+                                            </div>
+                                            <div class="profile-edit pull-right">
+                                                <ul class="list-inline major-control">
+                                                    <li role="presentation"><a href="javascript:void(0)"
+                                                                               class="edit_looking"
+                                                                               attr-name="my_info"><i
+                                                                class="fa fa-pencil"></i> Edit</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="inner-block">
+                                                <div class="fb-profile-text padd-xs padd-tp-0">
+                                                    <h1><span class="heading-icons icon9"></span> What I am looking for
+                                                        in My own words</h1>
+                                                </div>
+                                                <?php Pjax::begin(['id' => 'my_looking', 'enablePushState' => false]); ?>
+                                                <div class="div_looking">
+                                                    What I am looking for in My own words Loading...
+                                                </div>
+                                                <?php Pjax::end(); ?>
+                                            </div>
+
                                         </div>
                                         <div role="tabpanel" class="tab-pane" id="tab3">
                                             <div class="fb-profile-text padd-xs padd-tp-0">
@@ -811,6 +869,36 @@ $this->registerJs('
         getInlineDetail("' . Url::to(['user/edit-horoscope']) . '",".div_horoscope","1");
     });
 
+/*  partner preferences*/
+
+     $(".edit_preferences").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","0");
+    });
+    getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","1");
+    $(document).on("click","#cancel_edit_preferences",function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","1");
+    });
+    $(".edit_profession").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences-profession']) . '","#my_profession","0");
+    });
+    getInlineDetail("' . Url::to(['user/edit-preferences-profession']) . '","#my_profession","1");
+    $(document).on("click","#cancel_edit_profession",function(e){
+        getInlineDetail("' . Url::to(['user/edit-profession']) . '","#my_profession","1");
+    });
+    $(".edit_location").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences-location']) . '","#my_location","0");
+    });
+    getInlineDetail("' . Url::to(['user/edit-preferences-location']) . '","#my_location","1");
+    $(document).on("click","#cancel_edit_location",function(e){
+        getInlineDetail("' . Url::to(['user/edit-location']) . '","#my_location","1");
+    });
+    $(".edit_looking").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-looking-for']) . '","#my_looking","0");
+    });
+    getInlineDetail("' . Url::to(['user/edit-looking-for']) . '","#my_looking","1");
+    $(document).on("click","#cancel_edit_looking",function(e){
+        getInlineDetail("' . Url::to(['user/edit-looking-for']) . '","#my_looking","1");
+    });
         var P_ID = "";
         var P_TYPE = "";
         function profile_photo(){

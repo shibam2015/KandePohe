@@ -42,6 +42,7 @@ if ($show) {
             ['prompt' => 'Religion']
         ); ?>
         <?php
+    $heightrange = range(134, 204);
             $range = range(18, 100);
         ?>
         <?= $form->field($UPP, 'age_from')->dropDownList(
@@ -53,6 +54,20 @@ if ($show) {
             array_combine($range, $range),
             ['prompt' => 'Age To']
         ); ?>
+    <?= $form->field($UPP, 'height_from')->dropDownList(
+        ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
+        ['prompt' => 'Height From']
+    ); ?>
+    <?= $form->field($UPP, 'height_to')->dropDownList(
+        ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
+        ['prompt' => 'Height To']
+    ); ?>
+
+
+    <!-- <?= $form->field($PartnersMaritalStatus, 'iMarital_Status_ID')->dropDownList(
+        ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
+        ['prompt' => 'Maritial Status']
+    ); ?>-->
 
         <?= $form->field($PartnersMaritalStatus, 'iMarital_Status_ID')->dropDownList(
             ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
@@ -62,24 +77,54 @@ if ($show) {
             ArrayHelper::map(CommonHelper::getGotra(), 'iGotraID', 'vName'),
             ['prompt' => 'Gotra']
         ); ?>
-        <?= $form->field($PartnersFathersStatus, 'iFather_Status_ID')->dropDownList(
-            ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
-            ['prompt' => 'Father Status']
+    <?= $form->field($PartnersMothertongue, 'iMothertongue_ID')->dropDownList(
+        ArrayHelper::map(CommonHelper::getMotherTongue(), 'ID', 'Name'),
+        ['prompt' => 'Mother Toungue']
         ); ?>
-        <?= $form->field($PartnersMothersStatus, 'iMother_Status_ID')->dropDownList(
-            ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
-            ['prompt' => 'Mother Status']
+    <?= $form->field($UPP, 'manglik')->RadioList(
+        ['Yes' => 'Yes', 'No' => 'No'],
+        [
+            'item' => function ($index, $label, $name, $checked, $value) {
+                $checked = ($checked) ? 'checked' : '';
+                $return = '<input type="radio" class = "mangalik" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
+                $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
+                return $return;
+            }
+        ]
+    )
+    ?>
+    <?= $form->field($PartnersCommunity, 'iCommunity_ID')->dropDownList(
+        ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
+        ['prompt' => 'Community']
         ); ?>
-        <?= $form->field($PartnersEducationalLevel, 'iEducation_Level_ID')->dropDownList(
-            ArrayHelper::map(CommonHelper::getEducationLevel(), 'iEducationLevelID', 'vEducationLevelName'),
-            ['prompt' => 'Education Level']
+    <?= $form->field($PartnersSubCommunity, 'iSub_Community_ID')->dropDownList(
+        ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
+        ['prompt' => 'Sub Community']
         ); ?>
-
-        <?= $form->field($PartnersEducationField, 'iEducation_Field_ID')->dropDownList(
-            ArrayHelper::map(CommonHelper::getEducationField(), 'iEducationFieldID', 'vEducationFieldName'),
-            ['prompt' => 'Education Field']
-        ); ?>
-
+    <?= $form->field($UPP, 'drink')->RadioList(
+        ['Yes' => 'Yes', 'No' => 'No', 'Occasionally' => 'Occasionally'],
+        [
+            'item' => function ($index, $label, $name, $checked, $value) {
+                $checked = ($checked) ? 'checked' : '';
+                $return = '<input type="radio" class = "drink" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
+                $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
+                return $return;
+            }
+        ]
+    )
+    ?>
+    <?= $form->field($UPP, 'smoke')->RadioList(
+        ['Yes' => 'Yes', 'No' => 'No', 'Occasionally' => 'Occasionally'],
+        [
+            'item' => function ($index, $label, $name, $checked, $value) {
+                $checked = ($checked) ? 'checked' : '';
+                $return = '<input type="radio" class = "smoke" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
+                $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
+                return $return;
+            }
+        ]
+    )
+    ?>
     <div class="row">
         <div class="">
             <input type="hidden" name="save" value="1">
@@ -98,18 +143,34 @@ if ($show) {
             <dd><?= CommonHelper::setInputVal($UPP->age_from,'age') ?><dd>
             <dt>Age To</dt>
             <dd><?= CommonHelper::setInputVal($UPP->age_to,'age') ?><dd>
+            <dt>Height From</dt>
+            <dd><?= CommonHelper::setInputVal($UPP->heightFrom->vName, 'text') ?>
+            <dd>
+            <dt>Height To</dt>
+            <dd><?= CommonHelper::setInputVal($UPP->heightTo->vName, 'text') ?>
+            <dd>
             <dt>Marital Status</dt>
             <dd><?= CommonHelper::setInputVal($PartnersMaritalStatus->maritalStatusName->vName,'text') ?><dd>
             <dt>Gotra</dt>
             <dd><?= CommonHelper::setInputVal($PartnersGotra->gotraName->vName,'text') ?><dd>
-            <dt>Father Status</dt>
-            <dd><?= CommonHelper::setInputVal($PartnersFathersStatus->fatherStatus->vName,'text') ?><dd>
-            <dt>Mother Status</dt>
-            <dd><?= CommonHelper::setInputVal($PartnersMothersStatus->motherStatus->vName,'text') ?><dd>
-            <dt>Education Level</dt>
-            <dd><?= CommonHelper::setInputVal($PartnersEducationalLevel->educationLevelName->vEducationLevelName,'text') ?><dd>
-            <dt>Education Field</dt>
-            <dd><?= CommonHelper::setInputVal($PartnersEducationField->educationFieldName->vEducationFieldName,'text') ?><dd>
+            <dt>Mothertoungue</dt>
+            <dd><?= CommonHelper::setInputVal($PartnersMothertongue->partnersMothertongueName->Name, 'text') ?>
+            <dd>
+            <dt>Mangalik</dt>
+            <dd><?= CommonHelper::setInputVal($UPP->manglik, 'text') ?>
+            <dd>
+            <dt>Community</dt>
+            <dd><?= CommonHelper::setInputVal($PartnersCommunity->communityName->vName, 'text') ?>
+            <dd>
+            <dt>Sub Community</dt>
+            <dd><?= CommonHelper::setInputVal($PartnersSubCommunity->subCommunityName->vName, 'text') ?>
+            <dd>
+            <dt>Drink</dt>
+            <dd><?= CommonHelper::setInputVal($UPP->drink, 'text') ?>
+            <dd>
+            <dt>Smoke</dt>
+            <dd><?= CommonHelper::setInputVal($UPP->smoke, 'text') ?>
+            <dd>
         </dl>
   
     <?php

@@ -613,12 +613,11 @@ class UserController extends Controller
         $UPP = UserPartnerPreference::findByUserId($id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($id);
         $PartnersMaritalStatus = PartnersMaritalStatus::findByUserId($id) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findByUserId($id);
         $PartnersGotra = PartnersGotra::findByUserId($id) == NULL ? new PartnersGotra() : PartnersGotra::findByUserId($id);
-        $PartnersFathersStatus = PartnersFathersStatus::findByUserId($id) == NULL ? new PartnersFathersStatus() : PartnersFathersStatus::findByUserId($id);
-        $PartnersMothersStatus = PartnersMothersStatus::findByUserId($id) == NULL ? new PartnersMothersStatus() : PartnersMothersStatus::findByUserId($id);
-        $PartnersEducationalLevel = PartnersEducationalLevel::findByUserId($id) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findByUserId($id);
-        $PartnersEducationField = PartnersEducationField::findByUserId($id) == NULL ? new PartnersEducationField() : PartnersEducationField::findByUserId($id);
+        $PartnersMothertongue = PartnersMothertongue::findByUserId($id) == NULL ? new PartnersMothertongue() : PartnersMothertongue::findByUserId($id);
+        //$MasterHeight = MasterHeight::findByUserId($id) == NULL ? new MasterHeight() : MasterHeight::findByUserId($id);
+        $PartnersCommunity = PartnersCommunity::findByUserId($id) == NULL ? new PartnersCommunity() : PartnersCommunity::findByUserId($id);
+        $PartnersSubCommunity = PartnersSubcommunity::findByUserId($id) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findByUserId($id);
         $model = User::findOne($id);
-
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
@@ -637,6 +636,11 @@ class UserController extends Controller
                 $UPP->iUser_id = $id;
                 $UPP->age_from = Yii::$app->request->post('UserPartnerPreference')['age_from'];
                 $UPP->age_to = Yii::$app->request->post('UserPartnerPreference')['age_to'];
+                $UPP->manglik = Yii::$app->request->post('UserPartnerPreference')['manglik'];
+                $UPP->height_from = Yii::$app->request->post('UserPartnerPreference')['height_from'];
+                $UPP->height_to = Yii::$app->request->post('UserPartnerPreference')['height_to'];
+                $UPP->drink = Yii::$app->request->post('UserPartnerPreference')['drink'];
+                $UPP->smoke = Yii::$app->request->post('UserPartnerPreference')['smoke'];
                 $UPP->modified_on = $CurrDate;
 
                 if($UPP->ID == ""){
@@ -663,44 +667,39 @@ class UserController extends Controller
                 $PartnersGotra->save();
                 $show = false;
 
-                $FatherStatusID = Yii::$app->request->post('PartnersFathersStatus')['iFather_Status_ID'];
-                $PartnersFathersStatus->iUser_ID = $id;
-                $PartnersFathersStatus->iFather_Status_ID = $FatherStatusID;
-                $PartnersFathersStatus->dtModified = $CurrDate;
-                if($PartnersFathersStatus->iPartners_Fathers_ID == ""){
-                    $PartnersFathersStatus->dtCreated = $CurrDate;
+                $MotherID = Yii::$app->request->post('PartnersMothertongue')['iMothertongue_ID'];
+                $PartnersMothertongue->scenario = PartnersMothertongue::SCENARIO_ADD;
+                $PartnersMothertongue->iUser_ID = $id;
+                $PartnersMothertongue->iMothertongue_ID = $MotherID;
+                $PartnersMothertongue->dtModified = $CurrDate;
+                if ($PartnersMothertongue->iPartners_Mothertongue_ID == "") {
+                    $PartnersMothertongue->dtCreated = $CurrDate;
                 }
-                $PartnersFathersStatus->save();
-
-                $MotherStatusID = Yii::$app->request->post('PartnersMothersStatus')['iMother_Status_ID'];
-                $PartnersMothersStatus->iUser_ID = $id;
-                $PartnersMothersStatus->iMother_Status_ID = $MotherStatusID;
-                $PartnersMothersStatus->dtModified = $CurrDate;
-                if($PartnersMothersStatus->iPartners_Mother_ID == ""){
-                    $PartnersMothersStatus->dtCreated = $CurrDate;
-                }
-                $PartnersMothersStatus->save();
-
-                $EducationLevelID = Yii::$app->request->post('PartnersEducationalLevel')['iEducation_Level_ID'];
-                $PartnersEducationalLevel->iUser_ID = $id;
-                $PartnersEducationalLevel->iEducation_Level_ID = $EducationLevelID;
-                $PartnersEducationalLevel->dtModified = $CurrDate;
-                if($PartnersEducationalLevel->iPartners_Educational_Level_ID == ""){
-                    $PartnersEducationalLevel->dtCreated = $CurrDate;
-                }
-                $PartnersEducationalLevel->save();
-
-                $EducationFieldID = Yii::$app->request->post('PartnersEducationField')['iEducation_Field_ID'];
-                $PartnersEducationField->iUser_ID = $id;
-                $PartnersEducationField->iEducation_Field_ID = $EducationFieldID;
-                $PartnersEducationField->dtModified = $CurrDate;
-                if($PartnersEducationField->iPartners_Education_Field_ID == ""){
-                    $PartnersEducationField->dtCreated = $CurrDate;
-                }
-                $PartnersEducationField->save();
-
+                $PartnersMothertongue->save();
                 $show = false;
 
+                $CommunityID = Yii::$app->request->post('PartnersCommunity')['iCommunity_ID'];
+                $PartnersCommunity->scenario = PartnersCommunity::SCENARIO_ADD;
+                $PartnersCommunity->iUser_ID = $id;
+                $PartnersCommunity->iCommunity_ID = $CommunityID;
+                $PartnersCommunity->dtModified = $CurrDate;
+                if ($PartnersCommunity->iPartners_Community_ID == "") {
+                    $PartnersCommunity->dtCreated = $CurrDate;
+                }
+                $PartnersCommunity->save();
+                $show = false;
+
+                $SubCommuID = Yii::$app->request->post('PartnersSubcommunity')['iSub_Community_ID'];
+                //CommonHelper::pr($PartnersSubCommunity);exit;
+                $PartnersSubCommunity->scenario = PartnersSubcommunity::SCENARIO_ADD;
+                $PartnersSubCommunity->iUser_ID = $id;
+                $PartnersSubCommunity->iSub_Community_ID = $SubCommuID;
+                $PartnersSubCommunity->dtModified = $CurrDate;
+                if ($PartnersSubCommunity->iPartners_Subcommunity_ID == "") {
+                    $PartnersSubCommunity->dtCreated = $CurrDate;
+                }
+                $PartnersSubCommunity->save();
+                $show = false;
             }
         }
         $myModel = [
@@ -709,13 +708,174 @@ class UserController extends Controller
             'UPP' => $UPP,
             'PartnersMaritalStatus' => $PartnersMaritalStatus,
             'PartnersGotra' => $PartnersGotra,
-            'PartnersFathersStatus' => $PartnersFathersStatus,
-            'PartnersMothersStatus' => $PartnersMothersStatus,
-            'PartnersEducationalLevel' => $PartnersEducationalLevel,
-            'PartnersEducationField' => $PartnersEducationField,
+            'PartnersMothertongue' => $PartnersMothertongue,
+            'PartnersCommunity' => $PartnersCommunity,
+            'PartnersSubCommunity' => $PartnersSubCommunity,
             'show' => $show
         ];
         return $this->renderAjax('_preferences', $myModel);
+    }
+
+    public function actionEditPreferencesProfession()
+    {
+        $id = Yii::$app->user->identity->id;
+        $PartnersEducationalLevel = PartnersEducationalLevel::findByUserId($id) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findByUserId($id);
+        $PartnersEducationField = PartnersEducationField::findByUserId($id) == NULL ? new PartnersEducationField() : PartnersEducationField::findByUserId($id);
+        $PW = PartnerWorkingAs::findByUserId($id) == NULL ? new PartnerWorkingAs() : PartnerWorkingAs::findByUserId($id);
+        $WorkingW = PartnerWorkingWith::findByUserId($id) == NULL ? new PartnerWorkingWith() : PartnerWorkingWith::findByUserId($id);
+        $AI = PartnersAnnualIncome::findByUserId($id) == NULL ? new PartnersAnnualIncome() : PartnersAnnualIncome::findByUserId($id);
+        // $PartnersWorkingWith = PartnerWorkingWith::findByUserId($id) == NULL ? new PartnerWorkingWith() : PartnerWorkingWith::findByUserId($id);
+        //$PartnersAnnualIncome = PartnersAnnualIncome::findByUserId($id) == NULL ? new PartnersAnnualIncome() : PartnersAnnualIncome::findByUserId($id);
+        $model = User::findOne($id);
+        $show = false;
+        //CommonHelper::pr($PartnersWorkingAs);exit;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if (Yii::$app->request->post('save')) {
+                $EducationLevelID = Yii::$app->request->post('PartnersEducationalLevel')['iEducation_Level_ID'];
+                $PartnersEducationalLevel->iUser_ID = $id;
+                $PartnersEducationalLevel->iEducation_Level_ID = $EducationLevelID;
+                $PartnersEducationalLevel->save();
+
+                $EducationFieldID = Yii::$app->request->post('PartnersEducationField')['iEducation_Field_ID'];
+                $PartnersEducationField->iUser_ID = $id;
+                $PartnersEducationField->iEducation_Field_ID = $EducationFieldID;
+                $PartnersEducationField->save();
+                $show = false;
+
+                $PWI = Yii::$app->request->post('PartnerWorkingAs')['iWorking_As_ID'];
+                $PW->iUser_ID = $id;
+                $PW->iWorking_As_ID = $PWI;
+                $PW->save();
+                $show = false;
+
+                $WorkingId = Yii::$app->request->post('PartnerWorkingWith')['iWorking_With_ID'];
+                //$WorkingW->scenario = PartnerWorkingWith::SCENARIO_ADD;
+                $WorkingW->iUser_ID = $id;
+                $WorkingW->iWorking_With_ID = $WorkingId;
+                //$WorkingW->dtModified = $CurrDate;
+                //if($WorkingW->ID == ""){
+                //   $WorkingW->dtCreated = $CurrDate;
+                // }
+                $WorkingW->save();
+                $show = false;
+
+                $AnuualId = Yii::$app->request->post('PartnersAnnualIncome')['annual_income_id'];
+                //$WorkingW->scenario = PartnerWorkingWith::SCENARIO_ADD;
+                $AI->user_id = $id;
+                $AI->annual_income_id = $AnuualId;
+                //$WorkingW->dtModified = $CurrDate;
+                //if($WorkingW->ID == ""){
+                //   $WorkingW->dtCreated = $CurrDate;
+                // }
+                $AI->save();
+                $show = false;
+
+                /*  $PartnerWorkingWithId = Yii::$app->request->post('PartnerWorkingWith')['iWorking_With_ID'];
+                  $PartnerWorkingWith->iUser_ID = $id;
+                  $PartnerWorkingWith->iWorking_With_ID = $PartnerWorkingWithId;
+                  $show = false;
+
+                  $PartnersAnnualIncomeId = Yii::$app->request->post('PartnersAnnualIncome')['annual_income_id'];
+                  $PartnersAnnualIncome->iUser_ID = $id;
+                  $PartnersAnnualIncome->annual_income_id = $PartnersAnnualIncomeId;
+                  $show = false;*/
+
+            }
+        }
+        $myModel = [
+            //'model' => $model,
+            'PartnersEducationalLevel' => $PartnersEducationalLevel,
+            'PartnersEducationField' => $PartnersEducationField,
+            'PW' => $PW,
+            'WorkingW' => $WorkingW,
+            'AI' => $AI,
+            //'PartnerWorkingWith' => $PartnerWorkingWith,
+            //'PartnersAnnualIncome' => $PartnersAnnualIncome,
+            'show' => $show
+        ];
+        return $this->renderAjax('_profession', $myModel);
+    }
+
+    public function actionEditPreferencesLocation()
+    {
+        $id = Yii::$app->user->identity->id;
+        $UPP = UserPartnerPreference::findByUserId($id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($id);
+        $PC = PartnersCities::findByUserId($id) == NULL ? new PartnersCities() : PartnersCities::findByUserId($id);
+        $PS = PartnersStates::findByUserId($id) == NULL ? new PartnersStates() : PartnersStates::findByUserId($id);
+        $PCS = PartnersCountries::findByUserId($id) == NULL ? new PartnersCountries() : PartnersCountries::findByUserId($id);
+        $model = User::findOne($id);
+        $show = false;
+        #CommonHelper::pr($PartenersCities);exit;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if (Yii::$app->request->post('save')) {
+                $CurrDate = date('Y-m-d H:i:s');
+                $CitiesId = Yii::$app->request->post('PartnersCities')['city_id'];
+                $PC->scenario = PartnersCities::SCENARIO_ADD;
+                $PC->user_id = $id;
+                $PC->city_id = $CitiesId;
+                $PC->modified_on = $CurrDate;
+                if ($PC->ID == "") {
+                    $PC->created_on = $CurrDate;
+                }
+                $PC->save();
+
+                $StateId = Yii::$app->request->post('PartnersStates')['state_id'];
+                $PS->scenario = PartnersStates::SCENARIO_ADD;
+                $PS->user_id = $id;
+                $PS->state_id = $StateId;
+                $PS->modified_on = $CurrDate;
+                if ($PS->ID == "") {
+                    $PS->created_on = $CurrDate;
+                }
+                $PS->save();
+
+                $CountriesId = Yii::$app->request->post('PartnersCountries')['country_id'];
+                $PCS->scenario = PartnersCountries::SCENARIO_ADD;
+                $PCS->user_id = $id;
+                $PCS->country_id = $CountriesId;
+                $PCS->modified_on = $CurrDate;
+                if ($PCS->ID == "") {
+                    $PCS->created_on = $CurrDate;
+                }
+                $PCS->save();
+                $show = false;
+            }
+        }
+        $myModel = [
+            'PC' => $PC,
+            'PartnersMaritalStatus' => $PartnersMaritalStatus,
+            'PartnersFathersStatus' => $PartnersFathersStatus,
+            #'model' => $model,
+            'PS' => $PS,
+            'PCS' => $PCS,
+            'show' => $show
+        ];
+        return $this->renderAjax('_location', $myModel);
+    }
+
+    public function actionEditLookingFor()
+    {
+        $id = Yii::$app->user->identity->id;
+        $UPP = UserPartnerPreference::findByUserId($id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($id);
+        $model = User::findOne($id);
+        $show = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if (Yii::$app->request->post('save')) {
+                $UPP->iUser_id = $id;
+                $UPP->LookingFor = Yii::$app->request->post('UserPartnerPreference')['LookingFor'];
+                $UPP->save();
+                $show = false;
+            }
+        }
+        $myModel = [
+            'model' => $model,
+            'UPP' => $UPP,
+            'show' => $show
+        ];
+        return $this->renderAjax('_looking', $myModel);
     }
 
     public function actionEditHoroscope()
