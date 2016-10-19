@@ -287,7 +287,9 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             </div>
                                             <div class="inner-block">
                                                 <div class="fb-profile-text padd-xs padd-tp-0">
-                                                    <h1><span class="heading-icons icon9"></span> My Information</h1>
+                                                    <h1><span
+                                                            class="heading-icons <?= ($model->Gender == 'MALE') ? 'icon9' : 'icon1'; ?>"></span>
+                                                        My Information</h1>
                                                 </div>
                                                 <?php Pjax::begin(['id' => 'my_index', 'enablePushState' => false]); ?>
                                                 <p class="dis_my_info">
@@ -472,7 +474,9 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             </div>
                                             <div class="inner-block">
                                                 <div class="fb-profile-text padd-xs padd-tp-0">
-                                                    <h1><span class="heading-icons icon9"></span> What I am looking for
+                                                    <h1><span
+                                                            class="heading-icons <?= ($model->Gender == 'MALE') ? 'icon1' : 'icon9'; ?>"></span>
+                                                        What I am looking for
                                                     </h1>
                                                 </div>
                                                 <?php Pjax::begin(['id' => 'my_looking', 'enablePushState' => false]); ?>
