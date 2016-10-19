@@ -244,3 +244,7 @@ img.selected {
 .pink {
     color: #ff517d;
 }
+
+.tab-content {
+    min-height: 250px;
+}

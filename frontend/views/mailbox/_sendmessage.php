@@ -81,7 +81,7 @@ $model = $model['model'];
                 list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'SEND_MESSAGE');
             }
             $this->registerJs('
-            //notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
+             $(window).trigger("hashchange");
              showNotification("' . $STATUS . '", "' . $MESSAGE . '" );
             ');
         }

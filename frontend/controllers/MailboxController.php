@@ -194,7 +194,44 @@ class MailboxController extends Controller
         }
     }
 
+    public function actionNew()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $Id = Yii::$app->user->identity->id;
+        return $this->render('new',
+            [
+                'model' => $Id
+            ]
+        );
+    }
 
+    public function actionAll()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $Id = Yii::$app->user->identity->id;
+        $Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->limit(10)->all();
+        $MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
+        #CommonHelper::pr($Model);exit;
+        $MailArray = array();
+        foreach ($Model as $Key => $Value) {
+            #CommonHelper::pr($Value->id);exit;
+            $LastMail = Mailbox::find()->where(['from_user_id' => $Value->from_user_id, 'to_user_id' => $Id])->orderBy('MailId')->one();
+            $MailCount = Mailbox::find()->where(['from_user_id' => $Value->from_user_id, 'to_user_id' => $Id])->count();
+            $MailCount += Mailbox::find()->where(['from_user_id' => $Id, 'to_user_id' => $Value->from_user_id])->count();
+            $MailArray[$Value->id]['LastMsg'] = str_replace("#NAME#", $Value->fromUserInfo->fullName, $LastMail->MailContent);
+            $MailArray[$Value->id]['MsgCount'] = $MailCount;
+        }
 
-
+        return $this->render('all',
+            [
+                'model' => $Model,
+                'MailArray' => $MailArray,
+                'MailUnreadCount' => $MailUnreadCount
+            ]
+        );
+    }
 }

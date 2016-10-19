@@ -141,7 +141,7 @@ $( document ).ready(function() {
                 }
             });
             $( "#amount" ).val( "km" + $( "#slider-range" ).slider( "values", 0 ) +
-                " - km" + $( "#slider-range" ).slider( "values", 1 ) );
+            " - km" + $("#slider-range").slider("values", 1));
         }
 
     });
@@ -378,3 +378,14 @@ function showNotification(type, msg) {
     $('.kp_notify').slideDown();
 }
 /* Notification END  */
+function loaderTab() {
+    var html = '<div class="text-center mrg-tp-20 mrg-lt-20"><p><i class="fa fa-spinner fa-spin pink"></i> Loading...</p></div>';
+    return html;
+}
+function pageError(type, msg) {
+    var html = '';
+    if (type == 'E') {
+        html = '<div class="notice kp_error"><p>' + msg + '</p></div>';
+    }
+    return html;
+}
