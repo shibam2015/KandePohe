@@ -268,7 +268,7 @@ use yii\helpers\Url;
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12 mrg-tp-20">
-                                Loading Information...
+                                <i class="fa fa-spinner fa-spin pink"></i> Loading Information...
                             </div>
                         </div>
                     </div>
