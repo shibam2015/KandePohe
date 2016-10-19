@@ -415,7 +415,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             </div>
                                             <div class="inner-block">
                                                 <div class="fb-profile-text padd-xs padd-tp-0">
-                                                    <h1><span class="heading-icons icon9"></span> My Preferences</h1>
+                                                    <h1><span class="heading-icons icon2"></span> My Preferences</h1>
                                                 </div>
                                                 <?php Pjax::begin(['id' => 'my_preferences', 'enablePushState' => false]); ?>
                                                 <div class="div_preferences">
@@ -434,7 +434,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             </div>
                                             <div class="inner-block">
                                                 <div class="fb-profile-text padd-xs padd-tp-0">
-                                                    <h1><span class="heading-icons icon9"></span>Profession Preferences
+                                                    <h1><span class="heading-icons icon2"></span>Profession Preferences
                                                     </h1>
                                                 </div>
                                                 <?php Pjax::begin(['id' => 'my_profession', 'enablePushState' => false]); ?>
@@ -453,7 +453,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             </div>
                                             <div class="inner-block">
                                                 <div class="fb-profile-text padd-xs padd-tp-0">
-                                                    <h1><span class="heading-icons icon9"></span> Location Preferences
+                                                    <h1><span class="heading-icons icon2"></span> Location Preferences
                                                     </h1>
                                                 </div>
                                                 <?php Pjax::begin(['id' => 'my_location', 'enablePushState' => false]); ?>
@@ -473,7 +473,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             <div class="inner-block">
                                                 <div class="fb-profile-text padd-xs padd-tp-0">
                                                     <h1><span class="heading-icons icon9"></span> What I am looking for
-                                                        in My own words</h1>
+                                                    </h1>
                                                 </div>
                                                 <?php Pjax::begin(['id' => 'my_looking', 'enablePushState' => false]); ?>
                                                 <div class="div_looking">

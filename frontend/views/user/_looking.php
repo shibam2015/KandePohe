@@ -49,13 +49,13 @@ use yii\helpers\ArrayHelper;
         <?php ActiveForm::end();
     } else {
         ?>
-
-        <dl class="dl-horizontal">
-            <dt>Own Words</dt>
-            <dd><?= CommonHelper::setInputVal($UPP->LookingFor, 'text') ?>
-            <dd>
-        </dl>
-
+        <p class="dis_my_info">
+            <?php if ($UPP->LookingFor != '') { ?>
+                <?= $UPP->LookingFor; ?>
+            <?php } else { ?>
+                Information Not Available
+            <?php } ?>
+        </p>
     <?php
     }
     ?>
