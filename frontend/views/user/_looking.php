@@ -48,15 +48,11 @@ use yii\helpers\ArrayHelper;
         </div>
         <?php ActiveForm::end();
     } else {
-        ?>
-        <p class="dis_my_info">
-            <?php if ($UPP->LookingFor != '') { ?>
-                <?= $UPP->LookingFor; ?>
-            <?php } else { ?>
-                Information Not Available
-            <?php } ?>
-        </p>
-    <?php
+        if ($UPP->LookingFor != '') {
+            echo $UPP->LookingFor;
+        } else { ?>
+            <div class="notice kp_info"><p>Information Not Available.</p></div>
+        <?php }
     }
     ?>
 </div>

@@ -180,7 +180,8 @@ use yii\widgets\Pjax;
                                                 <?php if ($model->tYourSelf != '') { ?>
                                                     <?= $model->tYourSelf; ?>
                                                 <?php } else { ?>
-                                                    Information Not Available
+
+                                            <div class="notice kp_info"><p>Information Not Available.</p></div>
                                                 <?php } ?>
                                             </p>
                                         </div>
@@ -435,7 +436,8 @@ use yii\widgets\Pjax;
                                                 <?php if ($UPP->LookingFor != '') { ?>
                                                     <?= CommonHelper::setInputVal($UPP->LookingFor, 'text') ?>
                                                 <?php } else { ?>
-                                                    Information Not Available
+
+                                            <div class="notice kp_info"><p>Information Not Available.</p></div>
                                                 <?php } ?>
                                             </p>
                                         </div>
