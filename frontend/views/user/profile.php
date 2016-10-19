@@ -172,7 +172,9 @@ use yii\widgets\Pjax;
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="home">
                                         <div class="inner-block">
-                                            <h3><span class="heading-icons icon1"></span> About</h3>
+                                            <h3><span
+                                                    class="heading-icons <?= ($model->Gender == 'MALE') ? 'icon3' : 'icon1'; ?>"></span>
+                                                About</h3>
 
                                             <p>
                                                 <?php if ($model->tYourSelf != '') { ?>
@@ -344,7 +346,7 @@ use yii\widgets\Pjax;
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="profile">
                                         <div class="inner-block">
-                                            <!--<h3><span class="heading-icons icon2"></span> Background</h3>-->
+                                            <h3><span class="heading-icons icon2"></span> My Preferences</h3>
                                             <dl class="dl-horizontal">
                                                 <dt>Religion</dt>
                                                 <dd><?= CommonHelper::setInputVal($PartenersReligion->religionName->vName, 'text') ?>
@@ -355,26 +357,87 @@ use yii\widgets\Pjax;
                                                 <dt>Age To</dt>
                                                 <dd><?= CommonHelper::setInputVal($UPP->age_to, 'age') ?>
                                                 <dd>
+                                                <dt>Height From</dt>
+                                                <dd><?= CommonHelper::setInputVal($UPP->heightFrom->vName, 'text') ?>
+                                                <dd>
+                                                <dt>Height To</dt>
+                                                <dd><?= CommonHelper::setInputVal($UPP->heightTo->vName, 'text') ?>
+                                                <dd>
                                                 <dt>Marital Status</dt>
                                                 <dd><?= CommonHelper::setInputVal($PartnersMaritalStatus->maritalStatusName->vName, 'text') ?>
                                                 <dd>
                                                 <dt>Gotra</dt>
                                                 <dd><?= CommonHelper::setInputVal($PartnersGotra->gotraName->vName, 'text') ?>
                                                 <dd>
-                                                <dt>Father Status</dt>
-                                                <dd><?= CommonHelper::setInputVal($PartnersFathersStatus->fatherStatus->vName, 'text') ?>
+                                                <dt>Mothertoungue</dt>
+                                                <dd><?= CommonHelper::setInputVal($PartnersMothertongue->partnersMothertongueName->Name, 'text') ?>
                                                 <dd>
-                                                <dt>Mother Status</dt>
-                                                <dd><?= CommonHelper::setInputVal($PartnersMothersStatus->motherStatus->vName, 'text') ?>
+                                                <dt>Mangalik</dt>
+                                                <dd><?= CommonHelper::setInputVal($UPP->manglik, 'text') ?>
                                                 <dd>
+                                                <dt>Community</dt>
+                                                <dd><?= CommonHelper::setInputVal($PartnersCommunity->communityName->vName, 'text') ?>
+                                                <dd>
+                                                <dt>Sub Community</dt>
+                                                <dd><?= CommonHelper::setInputVal($PartnersSubCommunity->subCommunityName->vName, 'text') ?>
+                                                <dd>
+                                                <dt>Drink</dt>
+                                                <dd><?= CommonHelper::setInputVal($UPP->drink, 'text') ?>
+                                                <dd>
+                                                <dt>Smoke</dt>
+                                                <dd><?= CommonHelper::setInputVal($UPP->smoke, 'text') ?>
+                                                <dd>
+
+                                            </dl>
+                                        </div>
+                                        <div class="inner-block">
+                                            <h3><span class="heading-icons icon2"></span> Profession Preferences</h3>
+                                            <dl class="dl-horizontal">
                                                 <dt>Education Level</dt>
                                                 <dd><?= CommonHelper::setInputVal($PartnersEducationalLevel->educationLevelName->vEducationLevelName, 'text') ?>
                                                 <dd>
                                                 <dt>Education Field</dt>
                                                 <dd><?= CommonHelper::setInputVal($PartnersEducationField->educationFieldName->vEducationFieldName, 'text') ?>
                                                 <dd>
+                                                <dt>Working As</dt>
+                                                <dd><?= CommonHelper::setInputVal($PW->workingAsName->vWorkingAsName, 'text') ?>
+                                                <dd>
+                                                <dt>Working With</dt>
+                                                <dd><?= CommonHelper::setInputVal($WorkingW->workingWithName->vWorkingWithName, 'text') ?>
+                                                <dd>
+                                                <dt>Annual Income</dt>
+                                                <dd><?= CommonHelper::setInputVal($AI->annualIncomeName->vAnnualIncome, 'text') ?>
+                                                <dd>
 
                                             </dl>
+                                        </div>
+                                        <div class="inner-block">
+                                            <h3><span class="heading-icons icon2"></span>Location Preferences</h3>
+                                            <dl class="dl-horizontal">
+                                                <dt>City</dt>
+                                                <dd><?= CommonHelper::setInputVal($PC->cityName->vCityName, 'text') ?>
+                                                <dd>
+                                                <dt>State</dt>
+                                                <dd><?= CommonHelper::setInputVal($PS->stateName->vStateName, 'text') ?>
+                                                <dd>
+                                                <dt>Country</dt>
+                                                <dd><?= CommonHelper::setInputVal($PCS->countryName->vCountryName, 'text') ?>
+                                                <dd>
+                                            </dl>
+                                        </div>
+                                        <div class="inner-block">
+                                            <h3>
+                                                <span
+                                                    class="heading-icons <?= ($model->Gender == 'MALE') ? 'icon1' : 'icon9'; ?>"></span>What
+                                                I am looking for</h3>
+
+                                            <p>
+                                                <?php if ($UPP->LookingFor != '') { ?>
+                                                    <?= CommonHelper::setInputVal($UPP->LookingFor, 'text') ?>
+                                                <?php } else { ?>
+                                                    Information Not Available
+                                                <?php } ?>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

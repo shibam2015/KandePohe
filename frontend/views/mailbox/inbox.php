@@ -79,17 +79,17 @@ use yii\helpers\Url;
                         <div class="col-sm-9 col-md-10">
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs">
-                                <li class="active"><a href="#tab1" data-toggle="tab">All</a></li>
-                                <li><a href="#tab2" data-toggle="tab">New</a></li>
-                                <li><a href="#tab3" data-toggle="tab"> Read &amp; Not Replied</a></li>
-                                <li><a href="#tab4" data-toggle="tab">Accepted</a></li>
-                                <li><a href="#tab5" data-toggle="tab">Replied</a></li>
-                                <li><a href="#tab6" data-toggle="tab">Not Interested</a></li>
+                                <li class="active"><a href="#all" data-toggle="tab">All</a></li>
+                                <li><a href="#new" data-toggle="tab">New</a></li>
+                                <li><a href="#read" data-toggle="tab"> Read &amp; Not Replied</a></li>
+                                <li><a href="#accepted" data-toggle="tab">Accepted</a></li>
+                                <li><a href="#replied" data-toggle="tab">Replied</a></li>
+                                <li><a href="#notinterested" data-toggle="tab">Not Interested</a></li>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
 
-                                <div class="tab-pane fade in active" id="tab1">
+                                <div class="tab-pane fade in active" id="all">
                                     <?php if (count($model)) {
                                         foreach ($model as $Key => $Value) {
                                             ?>
@@ -165,39 +165,51 @@ use yii\helpers\Url;
                                         <?php }
                                     } else { ?>
                                         <div class="list-group">
-                                            <div class="list-group-item"><span class="text-center">There are no conversations with this label.</span>
+                                            <div class="list-group-item">
+                                                <div class="notice kp_info"><p>There are no conversations with this
+                                                        label.</p></div>
                                             </div>
                                         </div>
                                     <?php } ?>
                                 </div>
 
-                                <div class="tab-pane fade in" id="tab2">
+                                <div class="tab-pane fade in" id="new">
                                     <div class="list-group">
-                                        <div class="list-group-item"><span class="text-center">There are no conversations with this label.</span>
+                                        <div class="list-group-item">
+                                            <div class="notice kp_info"><p>There are no conversations with this
+                                                    label.</p></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade in" id="tab3">
+                                <div class="tab-pane fade in" id="read">
                                     <div class="list-group">
-                                        <div class="list-group-item"><span class="text-center">There are no conversations with this label.</span>
+                                        <div class="list-group-item">
+                                            <div class="notice kp_info"><p>There are no conversations with this
+                                                    label.</p></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade in" id="tab4">
+                                <div class="tab-pane fade in" id="accepted">
                                     <div class="list-group">
-                                        <div class="list-group-item"><span class="text-center">There are no conversations with this label.</span>
+                                        <div class="list-group-item">
+                                            <div class="notice kp_info"><p>There are no conversations with this
+                                                    label.</p></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade in" id="tab5">
+                                <div class="tab-pane fade in" id="replied">
                                     <div class="list-group">
-                                        <div class="list-group-item"><span class="text-center">There are no conversations with this label.</span>
+                                        <div class="list-group-item">
+                                            <div class="notice kp_info"><p>There are no conversations with this
+                                                    label.</p></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade in" id="tab6">
+                                <div class="tab-pane fade in" id="notinterested">
                                     <div class="list-group">
-                                        <div class="list-group-item"><span class="text-center">There are no conversations with this label.</span>
+                                        <div class="list-group-item">
+                                            <div class="notice kp_info"><p>There are no conversations with this
+                                                    label.</p></div>
                                         </div>
                                     </div>
                                 </div>

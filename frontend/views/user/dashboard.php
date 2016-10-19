@@ -311,8 +311,9 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
             <div class="col-sm-8 col-md-6">
               <div class="dashboard-wrapper">
                 <!-- profile status -->
-                <?php if ($PROFILE_COMPLETENESS < 100) { ?>
+
                   <div class="bg-white">
+                    <?php if ($PROFILE_COMPLETENESS < 100) { ?>
                     <div class="radial-progress pull-right" data-progress="0">
                       <div class="circle">
                         <div class="mask full">
@@ -336,21 +337,27 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                         </div>
                       </div>
                     </div>
+                    <?php } ?>
                     <div class="fb-profile-text">
-                      <h1 class="user-name"><?= $model->First_Name . ' ' . $model->Last_Name; ?><span
-                            class="sub-text">(<?= ($model->Registration_Number != '') ? $model->Registration_Number : '-'; ?>
-                          )</span></h1>
+                      <h1 class="user-name"><?= $model->First_Name . ' ' . $model->Last_Name; ?>
+                        <span class="sub-text">
+                          (<?= ($model->Registration_Number != '') ? $model->Registration_Number : '-'; ?>)
+                        </span>
+                      </h1>
+                      <?php if ($PROFILE_COMPLETENESS < 100) { ?>
                       <h5 class="user-line mrg-tp-20">Add more details to get better visibility</h5>
-
                       <div class="ad-title mrg-tp-10"><a href="<?= $HOME_URL ?>user/my-profile">Complete your Profile
                           Now!</a></div>
+                      <?php } else { ?>
+                        <div class="notice kp_success"><p>Your Profile 100% completed.</p></div>
+                      <?php } ?>
                     </div>
                     <div class="clearfix"></div>
                   </div>
-                <?php } ?>
+
                 <!-- view by -->
 
-                <div class="bg-white <?= ($PROFILE_COMPLETENESS < 100) ? 'mrg-tp-10' : ''; ?>">
+                <div class="bg-white <?= ($PROFILE_COMPLETENESS < 100) ? 'mrg-tp-10' : 'mrg-tp-10'; ?>">
                   <!--<a href="#" title="View All" class="pull-right">View All &gt;</a>-->
                   <h3 class="heading-xs">Your Profile Viewed By</h3>
 
@@ -362,7 +369,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                             <div class="item">
                               <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $Value->fromUserInfo->Registration_Number ?>&source=profile_viewed_by"
                                  class="name-img" title="<?= $Value->fromUserInfo->Registration_Number ?>">
-                                <?= Html::img(CommonHelper::getPhotos('USER', $Value->fromUserInfo->id, $Value->fromUserInfo->propic, 140), ['width' => '', 'height' => '140', 'alt' => 'Profile', 'class' => '']); ?>
+                                <?= Html::img(CommonHelper::getPhotos('USER', $Value->fromUserInfo->id, $Value->fromUserInfo->propic, 140), ['width' => '120', 'height' => '130', 'alt' => 'Profile', 'class' => '']); ?>
                               </a>
                               <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $Value->fromUserInfo->Registration_Number ?>&source=profile_viewed_by"
                                  class="name"
@@ -395,10 +402,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                     <?php } else { ?>
                       <div class="row">
                         <div class="col-md-12">
-                          <div class="item">
-                            <div class="text-center text-muted mrg-tp-10">
-                              <p>No Records are available.</p>
-                            </div>
+                          <div class="mrg-tp-10">
+                            <div class="notice kp_info"><p>No Records are available.</p></div>
                           </div>
                         </div>
                       </div>
@@ -419,7 +424,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                             <div class="item">
                               <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $Value->Registration_Number ?>&source=recently_joined"
                                  class="name-img" title="<?= $Value->Registration_Number ?>">
-                                <?= Html::img(CommonHelper::getPhotos('USER', $Value->id, $Value->propic, 140), ['width' => '', 'height' => '140', 'alt' => 'Profile', 'class' => '']); ?>
+                                <?= Html::img(CommonHelper::getPhotos('USER', $Value->id, $Value->propic, 140), ['width' => '120', 'height' => '130', 'alt' => 'Profile', 'class' => '']); ?>
                               </a>
                               <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $Value->Registration_Number ?>&source=recently_joined"
                                  class="name"
