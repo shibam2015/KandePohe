@@ -23,6 +23,11 @@ class FavouriteMusic extends \common\models\base\baseCharan
         return 'favourite_music';
     }
 
+    public static function getMusicNames($MusicString)
+    {
+        return static::find()->select('Name')->where('ID In (' . $MusicString . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */

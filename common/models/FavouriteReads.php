@@ -23,6 +23,11 @@ class FavouriteReads extends \common\models\base\baseFavouriteReads
         return 'favourite_reads';
     }
 
+    public static function getReadsNames($ReadsString)
+    {
+        return static::find()->select('Name')->where('ID In (' . $ReadsString . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */

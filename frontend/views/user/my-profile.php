@@ -251,7 +251,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     <ul class="friends">
                                                         <?php foreach ($photo_model as $K => $V) { ?>
                                                             <li><a href="javascript:void(0)">
-                                                                    <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 75), ['class' => 'img-responsive tip', 'alt' => $V['File_Name'] . $K]); ?>
+                                                                    <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 75), ['width' => 75, 'height' => 75, 'class' => 'img-responsive tip', 'alt' => $V['File_Name'] . $K, 'style' => 'height: 75px;']); ?>
                                                                 </a></li>
                                                         <?php } ?>
                                                     </ul>
@@ -271,6 +271,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                    data-toggle="tab">Partner Preferences</a></li>
                                         <li role="presentation"><a href="#tab3" aria-controls="profile" role="tab"
                                                                    data-toggle="tab"> Contact Details</a></li>
+                                        <li role="presentation"><a href="#tab4" aria-controls="profile" role="tab"
+                                                                   data-toggle="tab"> Hobby / Interest</a></li>
                                     </ul>
                                     <!-- Tab panes -->
                                     <?php Pjax::begin(['id' => 'refresh_index']); ?>
@@ -514,6 +516,29 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 <dd><?= $model->currentAddress; ?></dd>
 
                                             </dl>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane" id="tab4">
+                                            <div class="profile-edit pull-right">
+                                                <ul class="list-inline major-control">
+                                                    <li role="presentation"><a href="javascript:void(0)"
+                                                                               class="edit_hobby"
+                                                                               attr-name="my_info"><i
+                                                                class="fa fa-pencil"></i> Edit</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="inner-block">
+                                                <div class="fb-profile-text padd-xs padd-tp-0">
+                                                    <h1><span
+                                                            class="heading-icons icon2"></span>
+                                                        Hobby/Interest Information
+                                                    </h1>
+                                                </div>
+                                                <?php Pjax::begin(['id' => 'my_hobby', 'enablePushState' => false]); ?>
+                                                <div class="div_hobby">
+                                                    Hobby/Interest Information Loading...
+                                                </div>
+                                                <?php Pjax::end(); ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -800,7 +825,6 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
     </script>
     <script src="<?= $HOME_URL ?>js/selectFx.js"></script>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/js/cover/jquery-ui.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
-
 <?php
 $this->registerJs('
     function getInlineDetail(url,htmlId,cancel){
@@ -912,6 +936,13 @@ $this->registerJs('
     getInlineDetail("' . Url::to(['user/edit-looking-for']) . '","#my_looking","1");
     $(document).on("click","#cancel_edit_looking",function(e){
         getInlineDetail("' . Url::to(['user/edit-looking-for']) . '","#my_looking","1");
+    });
+    $(".edit_hobby").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-hobby']) . '","#my_hobby","0");
+    });
+    getInlineDetail("' . Url::to(['user/edit-hobby']) . '","#my_hobby","1");
+    $(document).on("click","#cancel_edit_hobby",function(e){
+        getInlineDetail("' . Url::to(['user/edit-hobby']) . '","#my_hobby","1");
     });
         var P_ID = "";
         var P_TYPE = "";

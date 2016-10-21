@@ -300,12 +300,30 @@ use yii\widgets\Pjax;
                                                 <span class="mrg-lt-15"><a href="#">Upgrade Now!</a></span></p>
                                         </div>
                                         <div class="inner-block">
-                                            <h3><span class="heading-icons icon7"></span> Interests &amp; More</h3>
+                                            <h3><span class="heading-icons icon7"></span>Hobbies , Interests &amp; More
+                                            </h3>
                                             <dl class="dl-horizontal">
-                                                <dt>Hobbies &amp; Other Interests</dt>
-                                                <dd>Dancing, Travelling, Singing, Eating, Reading, Sports Activities
-                                                    <!-- TODO: set Hobbies and display -->
-                                                <dd>
+                                                <dt>Interest</dt>
+                                                <dd><?= CommonHelper::setInputVal($model->interestName->Name, 'text') ?>
+                                                </dd>
+                                                <dt>Favorite Reads</dt>
+                                                <dd><?= CommonHelper::setInputVal($model->favouriteReadsName->Name, 'text') ?>
+                                                </dd>
+                                                <dt>Favorite Music</dt>
+                                                <dd><?= CommonHelper::setInputVal($model->favouriteMusicName->Name, 'text') ?>
+                                                </dd>
+                                                <dt>Favorite Cousines</dt>
+                                                <dd><?= CommonHelper::setInputVal($model->favouriteCousinesName->Name, 'text') ?>
+                                                </dd>
+                                                <dt>Sports/Fitness and Activities</dt>
+                                                <dd><?= CommonHelper::setInputVal($model->sportsFitnActivitiesName->Name, 'text') ?>
+                                                </dd>
+                                                <dt>Preferred Dress Style</dt>
+                                                <dd><?= CommonHelper::setInputVal($model->preferredDressStyleName->Name, 'text') ?>
+                                                </dd>
+                                                <dt>Preferred Movie</dt>
+                                                <dd><?= CommonHelper::setInputVal($model->preferredMoviesName->Name, 'text') ?>
+                                                </dd>
                                             </dl>
                                         </div>
                                         <div class="inner-block">

@@ -23,6 +23,11 @@ class PreferredDressStyle extends \common\models\base\basePreferredDressStyle
         return 'preferred_dress_style';
     }
 
+    public static function getDressNames($DressString)
+    {
+        return static::find()->select('Name')->where('ID In (' . $DressString . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */

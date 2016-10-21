@@ -913,6 +913,52 @@ class UserController extends Controller
         }
     }
 
+    public function actionEditHobby()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_REGISTER10;
+        $show = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+
+            if (Yii::$app->request->post('save')) {
+                #CommonHelper::pr(Yii::$app->request->post());exit;
+                $InterestArray = Yii::$app->request->post('User')['InterestID'];
+                $model->InterestID = (is_array($InterestArray)) ? "," . implode(",", $InterestArray) : '';
+
+                $ReadsArray = Yii::$app->request->post('User')['FavioriteReadID'];
+                $model->FavioriteReadID = (is_array($ReadsArray)) ? "," . implode(",", $ReadsArray) : '';
+
+                $MusicArray = Yii::$app->request->post('User')['FaviouriteMusicID'];
+                $model->FaviouriteMusicID = (is_array($MusicArray)) ? "," . implode(",", $MusicArray) : '';
+
+                $CousinesArray = Yii::$app->request->post('User')['FavouriteCousinesID'];
+                $model->FavouriteCousinesID = (is_array($CousinesArray)) ? "," . implode(",", $CousinesArray) : '';
+
+                $SportsArray = Yii::$app->request->post('User')['SportsFittnessID'];
+                $model->SportsFittnessID = (is_array($SportsArray)) ? "," . implode(",", $SportsArray) : '';
+
+                $DressArray = Yii::$app->request->post('User')['PreferredDressID'];
+                $model->PreferredDressID = (is_array($DressArray)) ? "," . implode(",", $DressArray) : '';
+
+                $MovieArray = Yii::$app->request->post('User')['PreferredMovieID'];
+                $model->PreferredMovieID = (is_array($MovieArray)) ? "," . implode(",", $MovieArray) : '';
+
+                if ($model->validate()) {
+                    $model->save();
+                    $show = false;
+                }
+            }
+        }
+
+        if ($show) {
+            return $this->actionRenderAjax($model, '_hobby', true);
+        } else {
+            return $this->actionRenderAjax($model, '_hobby', false);
+        }
+    }
+
 
     public function actionCoverupload()
     {
