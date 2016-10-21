@@ -67,12 +67,12 @@ $model = $model['model'];*/
                             <p class="mrg-bt-20">
                                 <?= $MailArray[$Value->id]['LastMsg'] ?>
                             </p>
-
+                            <?php if ($MailArray[$Value->id]['MsgCount'] > 1 || $model->send_request_status == 'Yes') { ?>
                             <button class="btn btn-primary sendmail" data-target="#sendMail"
                                     data-id="<?= $Value->fromUserInfo->id ?>"
                                     data-toggle="modal">Send Mail
                             </button>
-
+                            <?php } ?>
                             <a href="<?= CommonHelper::getMailBoxUrl($Value->fromUserInfo->Registration_Number, 1) ?>"
                                class="btn btn-info pull-right">
                                 <?= ($MailArray[$Value->id]['MsgCount'] == 1) ? 'View conversation' : '+' . $MailArray[$Value->id]['MsgCount'] . ' more conversation'; ?>
