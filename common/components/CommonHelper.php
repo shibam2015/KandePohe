@@ -546,15 +546,20 @@ class CommonHelper {
     public static function getCommaSeperatedValue($MainArray, $key)
     {
         $Names = '';
-        foreach ($MainArray as $K => $V) {
-            $Names .= $V[$key] . " , ";
+        if (count($MainArray)) {
+            foreach ($MainArray as $K => $V) {
+                $Names .= $V[$key] . " , ";
+            }
         }
         return trim($Names, " , ");
     }
 
     public static function removeComma($MainArray)
     {
-        return implode(",", array_filter(explode(",", $MainArray)));
+        if (strlen($MainArray) > 0 && $MainArray != 0)
+            return implode(",", array_filter(explode(",", $MainArray)));
+        else
+            return '0';
     }
 
     public function getReligion()

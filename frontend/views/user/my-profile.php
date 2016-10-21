@@ -430,7 +430,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 </div>
                                                 <?php Pjax::begin(['id' => 'my_preferences', 'enablePushState' => false]); ?>
                                                 <div class="div_preferences">
-                                                    <i class="fa fa-spinner fa-spin pink"></i> My Preferences Loading...
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Preferences Loading...
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
@@ -535,7 +535,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 </div>
                                                 <?php Pjax::begin(['id' => 'my_hobby', 'enablePushState' => false]); ?>
                                                 <div class="div_hobby">
-                                                    Hobby/Interest Information Loading...
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Hobby/Interest
+                                                    Information Loading...
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
