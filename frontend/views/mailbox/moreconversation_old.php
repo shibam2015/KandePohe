@@ -58,37 +58,85 @@ use yii\helpers\Url;
                                                 </li>
                                             </ul>
                                             <div class="clearfix"></div>
+
                                         </div>
                                         <div class="clearfix"></div>
-                                        <?php Pjax::begin(['id' => 'my_last', 'enablePushState' => false]); ?>
-                                        <div></div>
-                                        <div class="gray-tabs-block padd-10 mrg-tp-10 mrg-bt-5"
-                                             id="last_message_section">
 
 
-                                            <i class="fa fa-spinner fa-spin pink"></i> Loading...
+                                        <div class="gray-tabs-block padd-10 mrg-tp-10 mrg-bt-5">
+                                            <?php if ($MailArray[$model->id]['MsgCount'] == 1 || $model->send_request_status == 'Yes') { ?>
+                                                <p><?= $MailArray[$model->id]['LastMsg'] ?></p>
+                                                <div class="desc-mail">
+                                                    <!--<p><strong><em>Member Message</em></strong></p>
+                                                    <p><em>Hello, we have gone through ur profile, suitable to our daughter. If you are interested pls call us on 9218392199.</em></p>-->
+                                                </div>
+                                                <div class="pull-right">
+                                                    <span>Would you like to communicate further</span>
+                                                    <button class="btn btn-info request_response"
+                                                            data-target="#request_response"
+                                                            data-id="<?= $model->fromUserInfo->id ?>" data-name="Yes"
+                                                            data-toggle="modal">Yes
+                                                    </button>
+                                                    <button class="btn btn-secondary request_response"
+                                                            data-target="#request_response"
+                                                            data-id="<?= $model->fromUserInfo->id ?>" data-name="No"
+                                                            data-toggle="modal">No
+                                                    </button>
+                                                </div>
 
+                                            <?php } else { ?>
+                                                <p><?= $MailConversation[0]->MailContent ?></p>
+                                                <div class="desc-mail">
+                                                    <!--<p><strong><em>Member Message</em></strong></p>
+                                                    <p><em>Hello, we have gone through ur profile, suitable to our daughter. If you are interested pls call us on 9218392199.</em></p>-->
+                                                    <button class="btn btn-primary sendmail" data-target="#sendMail"
+                                                            data-id="<?= $model->fromUserInfo->id ?>"
+                                                            data-toggle="modal">Send Mail
+                                                    </button>
+                                                </div>
+                                            <?php } ?>
 
                                             <div class="clearfix"></div>
                                         </div>
-                                        <?php Pjax::end(); ?>
                                         <div></div>
                                     </div>
                                 </li>
                             </ul>
 
                             <div>
-                                <?php Pjax::begin(['id' => 'my_covo', 'enablePushState' => false]); ?>
-                                <div class="panel panel-default" id="other_convo">
+                                <div class="panel panel-default">
                                     <div class="panel-heading"><h3><strong>Other conversation with member
-                                            </strong></h3></div>
+                                                (<?= $MailArray[$model->id]['MsgCount'] ?>)</strong></h3></div>
                                     <div class="panel-body">
-                                        <div id="conversations">
-                                            <i class="fa fa-spinner fa-spin pink"></i> Loading Conversation...
-                                        </div>
+                                        <table class="table table-condensed">
+                                            <tbody>
+                                            <?php
+                                            foreach ($MailConversation as $MKey => $MValue) { ?>
+                                                <tr data-toggle="collapse" data-target="#demo<?= $MKey ?>"
+                                                    class="accordion-toggle">
+                                                    <td>
+                                                        <button class="btn btn-default btn-xs"><span
+                                                                class="glyphicon glyphicon-eye-open"></span></button>
+                                                    </td>
+                                                    <td><?= $MValue->from_reg_no ?></td>
+                                                    <td>
+                                                        <?= str_replace("#NAME#", $model->fromUserInfo->fullName, CommonHelper::truncate($MValue->MailContent, 100)) ?></td>
+                                                    <td><?= CommonHelper::DateTime($MValue->dtadded, 27); ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="12" class="hiddenRow">
+                                                        <div class="accordian-body collapse" id="demo<?= $MKey ?>">
+                                                            <?= str_replace("#NAME#", $model->fromUserInfo->fullName, $MValue->MailContent) ?>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php }
+                                            ?>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
-                                <?php Pjax::end(); ?>
                             </div>
                         </div>
                     </div>
@@ -179,7 +227,6 @@ $(document).on("click",".sendmail",function(e){
 
 $this->registerJs('
 var formDataRequest = new FormData();
-formDataRequest.append("uk", "' . $model->fromUserInfo->Registration_Number . '");
 $(document).on("click",".request_response",function(e){
       $("#requestBody").html("");
       if($(this).data("name")== "Yes"){
@@ -194,12 +241,10 @@ $(document).on("click",".request_response",function(e){
 
   ');
 $this->registerJs('
-    $(document).on("click",".accept_decline",function(e){
+$(document).on("click",".accept_decline",function(e){
       formDataRequest.append("ToUserId", $(".request_response").data("id"));
       sendRequest("' . Url::to(['mailbox/accept-decline']) . '",".send_message",formData);
     });
-    sendRequest("' . Url::to(['mailbox/last-msg']) . '","#last_message_section",formDataRequest);
-    sendRequest("' . Url::to(['mailbox/more-coversation-all']) . '","#other_convo",formDataRequest);
-
+    sendRequest("' . Url::to(['mailbox/more-conversation']) . '",".send_message",formData);
   ');
 ?>
