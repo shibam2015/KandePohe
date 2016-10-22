@@ -216,14 +216,14 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             <div class="panel-heading">
                                                 <a href="javascript:void(0)" class="pull-right text-muted"
                                                    id="tag_count">
-                                                    wait...
+                                                    <i class="fa fa-spinner fa-spin pink"></i>
                                                 </a>
                                                 <h3 class="panel-title text-muted mrg-bt-10">Add Tags</h3>
                                                 <a href="javascript:void(0)" class="text-muted">Add more tags</a></div>
                                             <div class="panel-body no-padd text-center">
                                                 <?php Pjax::begin(['id' => 'my_index111', 'enablePushState' => false]); ?>
                                                 <div class="bootstrap-tagsinput" id="user_tag_list">
-                                                    Loading...
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Loading...
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
@@ -236,7 +236,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             </div>
                                             <div class="panel-body no-padd text-center">
                                                 <div class="bootstrap-tagsinput">
-                                                    Loading...
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Loading...
                                                 </div>
                                             </div>
                                         </div>
@@ -293,9 +293,10 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                             class="heading-icons <?= ($model->Gender == 'MALE') ? 'icon9' : 'icon1'; ?>"></span>
                                                         My Information</h1>
                                                 </div>
+
                                                 <?php Pjax::begin(['id' => 'my_index', 'enablePushState' => false]); ?>
                                                 <p class="dis_my_info">
-                                                    My Information Loading...
+                                                    <i class="fa fa-spinner fa-spin pink"></i> My Information Loading...
                                                 </p>
                                                 <?php Pjax::end(); ?>
                                             </div>
@@ -312,6 +313,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 <h3><span class="heading-icons icon2"></span> Personal information</h3>
                                                 <?php Pjax::begin(['id' => 'my_index1', 'enablePushState' => false]); ?>
                                                 <div class="div_personal_info">
+                                                    <i class="fa fa-spinner fa-spin pink"></i>
                                                     Personal Information Loading...
                                                 </div>
                                                 <?php Pjax::end(); ?>
@@ -331,7 +333,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 <h3><span class="heading-icons icon2"></span> Basic information</h3>
                                                 <?php Pjax::begin(['id' => 'my_index2', 'enablePushState' => false]); ?>
                                                 <div class="div_basic_info">
-                                                    Basic Information Loading...
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Basic Information
+                                                    Loading...
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
@@ -349,7 +352,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 </h3>
                                                 <?php Pjax::begin(['id' => 'my_index3', 'enablePushState' => false]); ?>
                                                 <div class="div_education">
-                                                    Educational & Occupational Information Loading...
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Educational &
+                                                    Occupational Information Loading...
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
@@ -367,7 +371,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 </h3>
                                                 <?php Pjax::begin(['id' => 'my_index4', 'enablePushState' => false]); ?>
                                                 <div class="div_lifestyle">
-                                                    Lifestyle & Appearance Information Loading...
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Lifestyle & Appearance
+                                                    Information Loading...
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
@@ -384,7 +389,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 <h3><span class="heading-icons icon2"></span> Family</h3>
                                                 <?php Pjax::begin(['id' => 'my_index5', 'enablePushState' => false]); ?>
                                                 <div class="div_family">
-                                                    Family Information Loading...
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Family Information
+                                                    Loading...
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
@@ -401,7 +407,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 <h3><span class="heading-icons icon2"></span> HOROSCOPE DETAILS</h3>
                                                 <?php Pjax::begin(['id' => 'my_index6', 'enablePushState' => false]); ?>
                                                 <div class="div_horoscope">
-                                                    HOROSCOPE DETAILS Loading...
+                                                    <i class="fa fa-spinner fa-spin pink"></i> HOROSCOPE DETAILS
+                                                    Loading...
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
@@ -423,7 +430,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 </div>
                                                 <?php Pjax::begin(['id' => 'my_preferences', 'enablePushState' => false]); ?>
                                                 <div class="div_preferences">
-                                                    My Preferences Loading...
+                                                    <i class="fa fa-spinner fa-spin pink"></i> My Preferences Loading...
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
@@ -443,7 +450,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 </div>
                                                 <?php Pjax::begin(['id' => 'my_profession', 'enablePushState' => false]); ?>
                                                 <div class="div_profession">
-                                                    Profession Preferences Loading...
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Profession Preferences
+                                                    Loading...
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
@@ -462,7 +470,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 </div>
                                                 <?php Pjax::begin(['id' => 'my_location', 'enablePushState' => false]); ?>
                                                 <div class="div_location">
-                                                    Location Preferences Loading...
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Location Preferences
+                                                    Loading...
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
@@ -483,7 +492,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 </div>
                                                 <?php Pjax::begin(['id' => 'my_looking', 'enablePushState' => false]); ?>
                                                 <div class="div_looking">
-                                                    What I am looking for in My own words Loading...
+                                                    <i class="fa fa-spinner fa-spin pink"></i> What I am looking for
+                                                    Loading...
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
