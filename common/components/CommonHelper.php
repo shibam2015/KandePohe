@@ -543,6 +543,20 @@ class CommonHelper {
         }
     }
 
+    public static function getCommaSeperatedValue($MainArray, $key)
+    {
+        $Names = '';
+        foreach ($MainArray as $K => $V) {
+            $Names .= $V[$key] . " , ";
+        }
+        return trim($Names, " , ");
+    }
+
+    public static function removeComma($MainArray)
+    {
+        return implode(",", array_filter(explode(",", $MainArray)));
+    }
+
     public function getReligion()
     {
         $religion = \common\models\Religion::find()->all();
@@ -688,6 +702,41 @@ class CommonHelper {
 
     public function getCharan() {
         return \common\models\Charan::find()->all();
+    }
+
+    public function getInterests()
+    {
+        return \common\models\Interests::find()->all();
+    }
+
+    public function getFavouriteReads()
+    {
+        return \common\models\FavouriteReads::find()->all();
+    }
+
+    public function getFavouriteMusic()
+    {
+        return \common\models\FavouriteMusic::find()->all();
+    }
+
+    public function getFavouriteCousines()
+    {
+        return \common\models\FavouriteCousines::find()->all();
+    }
+
+    public function getSportsFitnActivities()
+    {
+        return \common\models\SportsFitnActivities::find()->all();
+    }
+
+    public function getPreferredDressStyle()
+    {
+        return \common\models\PreferredDressStyle::find()->all();
+    }
+
+    public function getPreferredMovies()
+    {
+        return \common\models\PreferredMovies::find()->all();
     }
 
     public function getMasterGotra() {

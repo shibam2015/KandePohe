@@ -23,6 +23,11 @@ class SportsFitnActivities extends \common\models\base\baseSportsFitnActivities
         return 'sports_fitn_activities';
     }
 
+    public static function getSportsNames($SportsString)
+    {
+        return static::find()->select('Name')->where('ID In (' . $SportsString . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */

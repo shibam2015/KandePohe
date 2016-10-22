@@ -23,6 +23,11 @@ class PreferredMovies extends \common\models\base\basePreferredMovies
         return 'preferred_movies';
     }
 
+    public static function getMovieNames($MovieString)
+    {
+        return static::find()->select('Name')->where('ID In (' . $MovieString . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */

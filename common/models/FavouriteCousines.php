@@ -12,7 +12,7 @@ use Yii;
  * @property string $created_on
  * @property string $modified_on
  */
-class FavouriteCousines extends \common\models\base\baseCharan
+class FavouriteCousines extends \common\models\base\baseFavouriteCousines
 {
 
     const SCENARIO_ADD = 'ADD';
@@ -21,6 +21,11 @@ class FavouriteCousines extends \common\models\base\baseCharan
     public static function tableName()
     {
         return 'favourite_cousines';
+    }
+
+    public static function getCousinesNames($CousinesString)
+    {
+        return static::find()->select('Name')->where('ID In (' . $CousinesString . ')')->all();
     }
 
     /**

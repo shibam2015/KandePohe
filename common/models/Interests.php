@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\CommonHelper;
 use Yii;
 
 /**
@@ -21,6 +22,11 @@ class Interests extends \common\models\base\baseInterests
     public static function tableName()
     {
         return 'interests';
+    }
+
+    public static function getInterestNames($InterestString)
+    {
+        return static::find()->select('Name')->where('ID In (' . $InterestString . ')')->all();
     }
 
     /**
