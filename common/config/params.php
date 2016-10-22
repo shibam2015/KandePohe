@@ -6,4 +6,7 @@ return [
     'pageError' => 'Sorry but there was an error: ',
     'sendInterestMessage' => '#NAME#  is interested in your profile.',
     'phoneNumberSeeMessage' => '#NAME# is  viewed your phone number.',
+    'modalTitle' => 'Confirmation',
+    'acceptRequest' => 'Are You sure want to Accept Request ?',
+    'declineRequest' => 'Are You sure want to Reject Request ?',
 ];

@@ -3,22 +3,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
-
-#$Hobby = $model['Hobby'];
-#$model = $model['model'];
-
-//CommonHelper::pr($Hobby);
-//CommonHelper::pr($model); exit;
 ?>
-<style>
-    input[type="radio"], input[type="checkbox"] {
-        display: inline-block;
-    }
-
-    input[type="radio"]:checked + label::before {
-        content: "";
-    }
-</style>
 <div class="div_hobby">
     <?php
     if ($show) {

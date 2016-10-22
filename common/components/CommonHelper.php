@@ -556,10 +556,26 @@ class CommonHelper {
 
     public static function removeComma($MainArray)
     {
-        if (strlen($MainArray) > 0 && $MainArray != 0)
+        if (strlen($MainArray) > 0)
             return implode(",", array_filter(explode(",", $MainArray)));
         else
             return '0';
+    }
+
+    public static function setInputVal($val, $type = "text")
+    {
+
+        $RetVal = "";
+        switch ($type) {
+            case 'text':
+                $RetVal = $val == "" ? '-' : $val;
+                break;
+
+            case 'age':
+                $RetVal = $val == "" ? '-' : $val . " Years";
+                break;
+        }
+        return $RetVal;
     }
 
     public function getReligion()
@@ -803,21 +819,6 @@ class CommonHelper {
         $age = date('Y') - $then_year;
         if(strtotime('+' . $age . ' years', $then_ts) > time()) $age--;
         return $age;
-    }
-
-    function setInputVal($val,$type="text"){
-
-        $RetVal = "";
-        switch ($type) {
-            case 'text':
-                $RetVal = $val == ""?'-':$val;
-                break;
-
-            case 'age':
-                $RetVal = $val == ""?'-':$val." Years";
-                break;
-        }
-        return $RetVal;
     }
 }
 ?>

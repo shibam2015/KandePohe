@@ -72,8 +72,15 @@ use yii\helpers\Url;
                                                 </div>
                                                 <div class="pull-right">
                                                     <span>Would you like to communicate further</span>
-                                                    <button class="btn btn-info">Yes</button>
-                                                    <button class="btn btn-secondary">No</button>
+                                                    <button class="btn btn-info request_response"
+                                                            data-target="#request_response"
+                                                            data-id="<?= $model->fromUserInfo->id ?>" data-name="Yes"
+                                                            data-toggle="modal">Yes
+                                                    </button>
+                                                    <button class="btn btn-secondary " data-target="#request_response"
+                                                            data-id="<?= $model->fromUserInfo->id ?>" data-name="No"
+                                                            data-toggle="modal">No
+                                                    </button>
                                                 </div>
 
                                             <?php } else { ?>
@@ -162,20 +169,70 @@ use yii\helpers\Url;
                                 Loading Information...
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <a href="javascript:void(0)"
+                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right yes"> Yes </a>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 ">
+                                <a href="javascript:void(0)"
+                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left"
+                                   data-dismiss="modal"> No </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <?php Pjax::end(); ?>
         </div>
     </div>
+
+    <div class="modal fade" id="request_response" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <p class="text-center mrg-bt-10">
+                <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+            </p>
+
+            <div class="send_message">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span> <span
+                                class="sr-only">Close</span></button>
+                        <h2 class="text-center"><?= Yii::$app->params['modalTitle'] ?></h2>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12 mrg-tp-20" id="requestBody">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="<?= Yii::$app->homeUrl ?>js/jquery.js" type="text/javascript"></script>
     <script src="<?= Yii::$app->homeUrl ?>js/selectFx.js"></script>
 <?php
 $this->registerJs('
-    $(".sendmail").click(function(e){
+$(document).on("click",".sendmail",function(e){
       var formData = new FormData();
       formData.append("ToUserId", $(this).data("id"));
       sendRequest("' . Url::to(['mailbox/inbox-send-message']) . '",".send_message",formData);;
     });
+  ');
+
+$this->registerJs('
+$(document).on("click",".request_response",function(e){
+      var namefor = $(this).data("name");
+      if(namefor ==="Yes"){
+             $("#requestBody").html("' . Yii::$app->params['acceptRequest'] . '");
+      }else{
+             $("#requestBody").html("' . Yii::$app->params['declineRequest'] . '");
+      }
+
+    });
+
   ');
 ?>

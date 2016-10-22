@@ -220,7 +220,7 @@ function notificationPopup(type, msg, title) {
         $('#notification_msg').html(msg);
         //$('#notification_header').html(type);
     } else {
-
+        $('#notification_msg').html(msg);
     }
 
     $('#notification_header').html(title);
