@@ -126,23 +126,23 @@ if ($show) {
    
         <dl class="dl-horizontal">
             <dt>Height</dt>
-            <dd><?= $model->height->vName ?>
+            <dd><?= CommonHelper::setInputVal($model->height->vName, 'text') ?>
             <dd>
             <dt>Skin Tone</dt>
-            <dd><?= $model->vSkinTone; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->vSkinTone, 'text') ?></dd>
             <dt>Body type</dt>
-            <dd><?= $model->vBodyType; ?>
+            <dd><?= CommonHelper::setInputVal($model->vBodyType, 'text') ?>
             <dd>
             <dt>Smoke</dt>
-            <dd><?= $model->vSmoke; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->vSmoke, 'text') ?></dd>
             <dt>Drink</dt>
-            <dd><?= $model->vDrink; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->vDrink, 'text') ?></dd>
             <dt>Spectacles/Lens</dt>
-            <dd><?= $model->vSpectaclesLens; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->vSpectaclesLens, 'text') ?></dd>
             <dt>Diet</dt>
-            <dd><?= $model->dietName->vName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->dietName->vName, 'text') ?></dd>
             <dt>Weight</dt>
-            <dd><?= $model->weight. " KG"; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->weight . " KG", 'text') ?></dd>
         </dl>
   
     <?php

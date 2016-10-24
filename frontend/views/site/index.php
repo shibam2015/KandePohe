@@ -387,7 +387,7 @@ if (!Yii::$app->user->isGuest) {
               </div>
             </div>
             <div class="form-cont">
-              <div class="radio" id="IVA">
+              <div class="radio radio-new" id="IVA">
 
                 <?= $form->field($model, 'Gender')->RadioList(
                     ['MALE'=>'MALE','FEMALE'=>'FEMALE'],
@@ -458,7 +458,7 @@ if (!Yii::$app->user->isGuest) {
               </div> -->
 
                 <div class="row">
-                    <div class="checkbox col-sm-12" id="cjkbox">
+                  <div class="checkbox col-sm-12 checkbox-new" id="cjkbox">
 
                         <?= $form->field($model, 'toc')->checkboxList(
                             ['YES'],
@@ -473,7 +473,7 @@ if (!Yii::$app->user->isGuest) {
                         )->label(false); ?>
 
                     </div>
-                    <div class="col-sm-10 col-sm-offset-1">
+                  <div class="col-sm-10">
 
                         <?= Html::submitButton('Sign up free', ['class' => 'btn btn-primary mrg-tp-10', 'name' => 'signup-button', 'id' => 'btnSignup']) ?>
                     </div>
@@ -571,6 +571,21 @@ if (!Yii::$app->user->isGuest) {
 <style type="text/css">
   .ui-datepicker{
     z-index: 1200 !important;
+  }
+
+  .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: #ee1845;
+    color: #fff;
+    border-radius: 0%;
+    -moz-border-radius: 0%;
+    -webkit-border-radius: 0%;
+  }
+
+  .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    border: 1px solid #ee1845;
+    background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
+    font-weight: normal;
+    color: #ee1845;
   }
 </style>
 

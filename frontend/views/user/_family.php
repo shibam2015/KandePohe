@@ -201,39 +201,39 @@ if ($show) {
     
         <dl class="dl-horizontal">
             <dt>Father Status</dt>
-            <dd><?= $model->fatherStatus->vName ?>
+            <dd><?= CommonHelper::setInputVal($model->fatherStatus->vName, 'text') ?>
             <dd>
             <dt>Father Working As</dt>
-            <dd><?= $model->fatherStatusId->vWorkingAsName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->fatherStatusId->vWorkingAsName, 'text') ?></dd>
             <dt>Mother Status</dt>
-            <dd><?= $model->motherStatus->vName ?>
+            <dd><?= CommonHelper::setInputVal($model->motherStatus->vName, 'text') ?>
             <dd>
             <dt>Mother Working As</dt>
-            <dd><?= $model->motherStatusId->vWorkingAsName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->motherStatusId->vWorkingAsName, 'text') ?></dd>
             <dt>No of Brothers</dt>
-            <dd><?= $model->nob; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->nob, 'text') ?></dd>
             <dt>No of Sisters</dt>
             <dd><?= $model->nos; ?></dd>
             <dt>Country</dt>
-            <dd><?= $model->countryNameCA->vCountryName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->countryNameCA->vCountryName, 'text') ?></dd>
             <dt>State</dt>
-            <dd><?= $model->stateNameCA->vStateName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->stateNameCA->vStateName, 'text') ?></dd>
             <dt>City</dt>
-            <dd><?= $model->cityNameCA->vCityName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->cityNameCA->vCityName, 'text') ?></dd>
             <dt>Distict</dt>
-            <dd><?= $model->districtNameCA->vName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->districtNameCA->vName, 'text') ?></dd>
             <dt>Taluks</dt>
-            <dd><?= $model->talukaNameCA->vName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->talukaNameCA->vName, 'text') ?></dd>
             <dt>Area Name</dt>
-            <dd><?= $model->vAreaName ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->vAreaName, 'text') ?></dd>
             <dt>Native Place</dt>
-            <dd><?= $model->vNativePlaceCA ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->vNativePlaceCA, 'text') ?></dd>
             <dt>Parents Residing At</dt>
-            <dd><?= $model->vParentsResiding ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->vParentsResiding, 'text') ?></dd>
             <dt>Family Affluence Level</dt>
-            <dd><?= $model->vFamilyAffluenceLevel; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->vFamilyAffluenceLevel, 'text') ?></dd>
             <dt>Family Type</dt>
-            <dd><?= $model->vFamilyType ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->vFamilyType, 'text') ?></dd>
             <dt>Property Details</dt>
             <?php
                 $family_property_array = ArrayHelper::map(CommonHelper::getFamilyPropertyDetail(), 'ID', 'Name');
@@ -244,9 +244,9 @@ if ($show) {
                 }
                 $vFamilyProperty = trim($vFamilyProperty,", ")
             ?>
-            <dd><?= $vFamilyProperty ?></dd>
+            <dd><?= CommonHelper::setInputVal($vFamilyProperty, 'text') ?></dd>
             <dt>You can enter your relative surnames etc</dt>
-            <dd><?= $model->vAreaName ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->vAreaName, 'text') ?></dd>
         </dl>
     
     <?php
