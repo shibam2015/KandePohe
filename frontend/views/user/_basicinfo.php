@@ -4,7 +4,8 @@ use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
 ?>
-<div class="div_basic_info">
+<div class=
+     <"div_basic_info">
 <?php
 if ($show) {
     $form = ActiveForm::begin([

@@ -310,7 +310,7 @@ use yii\helpers\ArrayHelper;
                 </div>
 
                 <div class="row">
-                  <div class="col-sm-10 col-sm-offset-1">
+                  <div class="col-sm-10">
                     <label for="Remember" class="control-label required1"> <span class="text-danger">*</span> Parents Residing At :</label>
                   </div>
                 </div>
@@ -342,7 +342,7 @@ use yii\helpers\ArrayHelper;
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-10 col-sm-offset-1">
+                  <div class="col-sm-10">
                     <label for="Remember" class="control-label">Family Affluence Level :</label>
                   </div>
                 </div>
@@ -374,7 +374,7 @@ use yii\helpers\ArrayHelper;
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-10 col-sm-offset-1">
+                  <div class="col-sm-10">
                     <label for="Remember" class="control-label">Family Type :</label>
                   </div>
                 </div>
@@ -406,7 +406,7 @@ use yii\helpers\ArrayHelper;
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-10 col-sm-offset-1">
+                  <div class="col-sm-10">
                     <label for="Remember" class="control-label">Property Details :</label>
                   </div>
                 </div>
@@ -414,7 +414,7 @@ use yii\helpers\ArrayHelper;
                   <div class="small-col">&nbsp;</div>
                   <div class="mid-col">
                     <div class="form-cont">
-                      <div class="checkbox mrg-lt-30">
+                      <div class="checkbox">
                         <?php global $ABC ; $ABC= $model->vFamilyProperty; ?>
 
                         <?= $form->field($model, 'vFamilyProperty')->checkboxList(
@@ -487,7 +487,7 @@ use yii\helpers\ArrayHelper;
   </div>
 </main>
 <style>
-  .radio_step4{width : 200%;}
+  /*.radio_step4{width : 200%;}*/
 </style>
 
 <?php 

@@ -105,6 +105,10 @@ img.selected {
 .radio_step4 {
     width: 100%;
 }
+
+.radio_step4 label {
+    margin-bottom: 10px;
+}
 /* COVER PHOTO END*/
 
 .tag_delete1 {
