@@ -635,7 +635,7 @@ form {
 }
 form .form-cont {
 	position: relative;
-	margin-bottom: 15px;
+	margin-bottom: 10px;
 }
 .form-cont label {
 	display: inline-block;
@@ -3179,5 +3179,24 @@ padding: 5px 15px;
 	margin-top: 10px;
 	padding-top: 10px;
 	position: relative;
-	left: 10px;
+	/*left: 10px;*/
+}
+
+.checkbox-new {
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+.radio-new {
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+.checkbox-new label {
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+.radio-new label:before, .checkbox-new label:before {
+	top: 0;
 }

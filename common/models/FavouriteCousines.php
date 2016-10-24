@@ -56,8 +56,6 @@ class FavouriteCousines extends \common\models\base\baseFavouriteCousines
     public function scenarios()
     {
         return [
-            self::SCENARIO_ADD => ['Name', 'created_on', 'modified_on'],
-            self::SCENARIO_UPDATE => ['Name', 'modified_on'],
         ];
 
     }

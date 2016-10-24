@@ -1,5 +1,8 @@
-<div></div>
+<?php
+use yii\helpers\Url;
 
+?>
+<div></div>
 <div></div>
 <?php if ($MailArray[$model->id]['MsgCount'] == 1 || $model->send_request_status == 'Yes') { ?>
     <p><?= $MailArray[$model->id]['LastMsg'] ?></p>
@@ -31,5 +34,34 @@
         </button>
     </div>
 <?php } ?>
-
+<?php if ($MailArray[$model->id]['MsgCount'] == 1 || $model->send_request_status == 'Yes') {
+    $this->registerJs('
+    var formDataRequest = new FormData();
+    $(document).on("click",".request_response",function(e){
+      $("#requestBody").html("");
+      if($(this).data("name")== "Yes"){
+        $("#requestBody").html("' . Yii::$app->params['acceptRequest'] . '");
+        formDataRequest.append("Action", "Accept");
+        }
+      else{
+        $("#requestBody").html("' . Yii::$app->params['declineRequest'] . '");
+        formDataRequest.append("Action", "Decline");
+      }
+    });
+    $(document).on("click",".accept_decline",function(e){  /* Accept-Decline */
+          formDataRequest.append("ToUserId", $(".request_response").data("id"));
+          sendRequest("' . Url::to(['mailbox/accept-decline']) . '",".send_message",formDataRequest);
+        });
+  ');
+} else {
+    $this->registerJs('
+     //var formDataRequest = new FormData();
+        $(document).on("click",".sendmail",function(e){
+          var formData = new FormData();
+          formData.append("ToUserId", $(this).data("id"));
+          sendRequest("' . Url::to(['mailbox/inbox-send-message']) . '",".send_message",formData);;
+        });
+  ');
+}
+?>
 

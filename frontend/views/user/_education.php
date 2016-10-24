@@ -64,16 +64,16 @@ if ($show) {
     
         <dl class="dl-horizontal">
             <dt>Education Level</dt>
-            <dd><?= $model->educationLevelName->vEducationLevelName; ?>
+            <dd><?= CommonHelper::setInputVal($model->educationLevelName->vEducationLevelName, 'text') ?>
             <dd>
             <dt>Education Field</dt>
-            <dd><?= $model->educationFieldName->vEducationFieldName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->educationFieldName->vEducationFieldName, 'text') ?></dd>
             <dt>Working With</dt>
-            <dd><?= $model->workingWithName->vWorkingWithName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->workingWithName->vWorkingWithName, 'text') ?></dd>
             <dt>Woking As</dt>
-            <dd><?= $model->workingAsName->vWorkingAsName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->workingAsName->vWorkingAsName, 'text') ?></dd>
             <dt>Annual Income</dt>
-            <dd><?= $model->annualIncome->vAnnualIncome; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->annualIncome->vAnnualIncome, 'text') ?></dd>
         </dl>
     
     <?php

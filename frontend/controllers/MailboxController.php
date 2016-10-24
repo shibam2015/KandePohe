@@ -159,19 +159,55 @@ class MailboxController extends Controller
     public function actionMoreConversation($uk = '')
     {
         $Id = Yii::$app->user->identity->id;
-        $FromUserId = User::find()->select('id')->where(['Registration_Number' => $uk])->one();
-        if (Yii::$app->user->isGuest || $uk == '' || $FromUserId == null) {
-            return $this->redirect(['inbox']);
-        }
-        $Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'from_user_id' => $FromUserId->id, 'send_request_status' => ['Yes', 'Accepted']])->one();
-        $MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
-        if ($Model != null) {
-            return $this->render('moreconversation',
+        list($Model, $MailUnreadCount) = $this->actionMoreConversationCommon($Id, $uk);
+        return $this->render('moreconversation',
                 [
                     'model' => $Model,
                     'MailUnreadCount' => $MailUnreadCount
                 ]
+        );
+    }
+
+    public function actionMoreConversationCommon($Id, $uk = '')
+    {
+        $FromUserId = User::find()->select('id')->where(['Registration_Number' => $uk])->one();
+        if (Yii::$app->user->isGuest || $uk == '' || $FromUserId == null) {
+            return $this->redirect(['inbox']);
+        }
+        #echo " 1- ";
+        $Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'from_user_id' => $FromUserId->id, 'send_request_status' => ['Yes', 'Accepted']])->one();
+        $MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
+
+        if ($Model != null) {
+            #   echo " 2- ";
+            $MailArray = array();
+            $LastMail = Mailbox::find()->where(['from_user_id' => $Model->from_user_id, 'to_user_id' => $Id])->orderBy('MailId')->one();
+            $MailCount = Mailbox::find()->where(['from_user_id' => $Model->from_user_id, 'to_user_id' => $Id])
+                ->orWhere(['from_user_id' => $Id, 'to_user_id' => $Model->from_user_id])
+                ->count();
+            $MailConversation = Mailbox::find()->where(['from_user_id' => $Model->from_user_id, 'to_user_id' => $Id])
+                ->orWhere(['from_user_id' => $Id, 'to_user_id' => $Model->from_user_id])
+                ->orderBy(['MailId' => SORT_DESC])
+                ->all();
+            $MailArray[$Model->id]['LastMsg'] = str_replace("#NAME#", $Model->fromUserInfo->fullName, $LastMail->MailContent);
+            $MailArray[$Model->id]['MsgCount'] = $MailCount;
+
+            #CommonHelper::pr($MailConversation);exit;
+
+            return array(
+                $Model,
+                $MailArray,
+                $MailConversation,
+                $MailUnreadCount,
             );
+            /*
+            'model' => $Model,
+                    'MailArray' => $MailArray,
+                    'MailConversation' => $MailConversation,
+                    'MailUnreadCount' => $MailUnreadCount,
+            */
+
+            #return $allData;
         } else {
             return $this->redirect(['inbox']);
         }
@@ -324,6 +360,10 @@ class MailboxController extends Controller
             ];
             return $this->renderAjax('_moreconversation', $myModel);
         }
+    }
+
+    public function actionAcceptDecline()
+    {
 
     }
 }

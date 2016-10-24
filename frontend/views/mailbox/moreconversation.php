@@ -150,7 +150,8 @@ use yii\helpers\Url;
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <a href="javascript:void(0)"
-                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right accept_decline">
+                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right accept_decline1"
+                                   data-dismiss="modal">
                                     Yes </a>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6 ">
@@ -169,35 +170,16 @@ use yii\helpers\Url;
     <script src="<?= Yii::$app->homeUrl ?>js/jquery.js" type="text/javascript"></script>
     <script src="<?= Yii::$app->homeUrl ?>js/selectFx.js"></script>
 <?php
-$this->registerJs('
+/*$this->registerJs('
 $(document).on("click",".sendmail",function(e){
       var formData = new FormData();
       formData.append("ToUserId", $(this).data("id"));
       sendRequest("' . Url::to(['mailbox/inbox-send-message']) . '",".send_message",formData);;
     });
-  ');
-
+  ');*/
 $this->registerJs('
-var formDataRequest = new FormData();
-formDataRequest.append("uk", "' . $model->fromUserInfo->Registration_Number . '");
-$(document).on("click",".request_response",function(e){
-      $("#requestBody").html("");
-      if($(this).data("name")== "Yes"){
-        $("#requestBody").html("' . Yii::$app->params['acceptRequest'] . '");
-        formDataRequest.append("Action", "Accept");
-        }
-      else{
-        $("#requestBody").html("' . Yii::$app->params['declineRequest'] . '");
-        formDataRequest.append("Action", "Decline");
-      }
-    });
-
-  ');
-$this->registerJs('
-    $(document).on("click",".accept_decline",function(e){
-      formDataRequest.append("ToUserId", $(".request_response").data("id"));
-      sendRequest("' . Url::to(['mailbox/accept-decline']) . '",".send_message",formData);
-    });
+    var formDataRequest = new FormData();
+    formDataRequest.append("uk", "' . $model->fromUserInfo->Registration_Number . '");
     sendRequest("' . Url::to(['mailbox/last-msg']) . '","#last_message_section",formDataRequest);
     sendRequest("' . Url::to(['mailbox/more-coversation-all']) . '","#other_convo",formDataRequest);
 
