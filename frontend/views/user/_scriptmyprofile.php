@@ -110,10 +110,12 @@ $this->registerJs("
                          
                          $('#coverphotoreposition1').attr('id', 'coverphotoreposition');            
                          $('#coverphotodelete1').attr('id', 'coverphotodelete');     
-                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                         //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                         showNotification(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                          return false;
                     } else {
-                          notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                          //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                          showNotification(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                     }
                     profile_photo();
                 }
@@ -154,10 +156,12 @@ $this->registerJs("
                          $('#timelineBGload').removeClass('ui-corner-all');
                          $('#timelineBGload').addClass('bgImagecover');
                          $('#timelineBGload').css({'margin-top':position});
-                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                         //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                         showNotification(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                          return false;
                     } else {
-                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                         //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                         showNotification(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                     }
                     profile_photo();
                 }
@@ -183,12 +187,14 @@ $this->registerJs("
                               
                         },
                         error:function(){
-                                   notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
+                                   //notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
+                                   showNotification('ERROR', 'Something went wrong. Please try again !', 'Error');
                         }
                     });            
         })
         $('#coverphotoreposition1').click(function (){
-             notificationPopup('ERROR', 'You can\\'t reposition default cover photo.', 'Error');
+             //notificationPopup('ERROR', 'You can\\'t reposition default cover photo.', 'Error');
+             showNotification('ERROR', 'You can\\'t reposition default cover photo.', 'Error');
         })
         $('body').on('click','.bgCancel',function ()
         { 
@@ -209,7 +215,8 @@ $this->registerJs("
                                   $('#timelineBackground').html(DATAV.ABC);
                             },
                             error:function(){
-                                  notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
+                                  //notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
+                                  showNotification('ERROR', 'Something went wrong. Please try again !', 'Error');
                             }
                 });
         });
@@ -234,12 +241,14 @@ $this->registerJs("
                                $('#coverphotodelete').attr('id', 'coverphotodelete1');            
                           },
                           error:function(){
-                               notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
+                               //notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
+                               showNotification('ERROR', 'Something went wrong. Please try again !', 'Error');
                           }
                 });
         });
         $('#coverphotodelete1').click(function (){
-             notificationPopup('ERROR', 'You can\\'t delete default cover photo.', 'Error');
+             //notificationPopup('ERROR', 'You can\\'t delete default cover photo.', 'Error');
+             showNotification('ERROR', 'You can\\'t delete default cover photo.', 'Error');
         })
     });
 
@@ -287,7 +296,8 @@ $this->registerJs("
                             profile_photo();
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            notificationPopup('ERROR', 'Request Failed', 'Error');
+                            //notificationPopup('ERROR', 'Request Failed', 'Error');
+                            showNotification('ERROR', 'Something went wrong. Please try again !', 'Error');
                         }
             });
     })            
@@ -324,10 +334,12 @@ $this->registerJs("
                          $('#timelineBGload').removeClass('ui-corner-all');
                          $('#timelineBGload').addClass('bgImagecover');
                          $('#timelineBGload').css({'margin-top':position});
-                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                         //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                         showNotification(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                          return false;
                     } else {
-                         notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                         //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                         showNotification(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                     }
                     profile_photo();
                 }
@@ -337,9 +349,10 @@ $this->registerJs("
 "); ?>
 
 <?php # HIDE SHOW Profile
-$this->registerJs("  
+$this->registerJs("
           $('body').on('click','.hideshow',function ()
                     {
+                        loaderStart();
                         var formData = new FormData();
                         $.ajax({
                             type: 'POST',
@@ -351,13 +364,17 @@ $this->registerJs("
                             beforeSend: function(){ },
                             success: function(data)
                             {
+                              loaderStop();
                               var DataObject = JSON.parse(data);
                               $('#hideshow_a').html(DataObject.OUTPUT);
-                              notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                              //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                              showNotification(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                               hideshowfun();
                             },
                             error:function(){
-                            notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
+                                            loaderStop();
+                            //notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
+                            showNotification('ERROR', 'Something went wrong. Please try again !', 'Error');
   }
                             });
             });
@@ -402,14 +419,17 @@ $(document).ready(function()
                                   $('#user_tag_list').html(DataObject.USER_TAG_LIST);
                                   $('.suggest_tag[data-id='+TAG_ID+']').remove();
                                   $('#tag_count').html(DataObject.TAG_COUNT);
-                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                  //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                  showNotification(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                               }else{
-                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                  //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                  showNotification(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                               }
                               
                             },
                             error:function(){
-                                    notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
+                                    //notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
+                                    showNotification('ERROR', 'Something went wrong. Please try again !', 'Error');
                             }
                         });
           });
@@ -433,13 +453,16 @@ $(document).ready(function()
                                   $('#user_tag_list').html(DataObject.USER_TAG_LIST);
                                   $('#suggest_tag_list').html(DataObject.TAG_LIST_SUGGEST);
                                   $('#tag_count').html(DataObject.TAG_COUNT);
-                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                  //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                  showNotification(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                               }else{
-                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                  //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                  showNotification(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                               }
                             },
                             error:function(){
-                                    notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
+                                    //notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
+                                    showNotification('ERROR', 'Something went wrong. Please try again !', 'Error');
                             }
                         });
           });
@@ -466,14 +489,16 @@ $(document).ready(function()
                                   $('#tag_delete_'+TAG_ID).remove();
                                   $('#suggest_tag_list').html(DataObject.TAG_LIST_SUGGEST);
                                   $('#tag_count').html(DataObject.TAG_COUNT);
-                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                  //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                  showNotification(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                               }else{
-                                  notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                  //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                  showNotification(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                               }
                               
                             },
                             error:function(){
-                                    notificationPopup('ERROR', 'Something went wrong. Please try again !', 'Error');
+                                    showNotification('ERROR', 'Something went wrong. Please try again !', 'Error');
                             }
                         });
           });
@@ -510,7 +535,7 @@ $(document).ready(function()
                             }
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            notificationPopup('ERROR', 'Request Failed', 'Error');
+                            showNotification('ERROR', 'Something went wrong. Please try again !', 'Error');
                         }
             });
     })            

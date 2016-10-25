@@ -380,8 +380,8 @@ $this->registerJs('
                     
                     var file = $(this);
                     var formObj = $("#propicform");
-                    var formData = new FormData($("#propicform"));
-                    //formData.append( "fileInput", $("#file_browse")[0].files[0]);
+                    var formData = new FormData();
+                     //formData.append( "fileInput", $("#file_browse")[0].files[0]);
                     
                     if (file_len != 0) {
                         $.each($(this)[0].files, function (i, file) {
@@ -440,7 +440,7 @@ $this->registerJs('
         loaderStart();
         var formDataPhoto = new FormData();
         formDataPhoto.append( "P_ID", P_ID);
-        formDataPhoto.append( "P_TYPE", P_TYPE);    
+        formDataPhoto.append( "P_TYPE", P_TYPE);
                 $.ajax({
                         url: "photo-operation",
                         type: "POST",
@@ -471,7 +471,7 @@ $this->registerJs('
                                 }
                             } else {
                                 loaderStop();
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                   notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                                                                 
                         profile_photo();

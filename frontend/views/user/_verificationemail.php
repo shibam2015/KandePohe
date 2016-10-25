@@ -16,7 +16,7 @@ use yii\widgets\Pjax;
                 'action' => ['email-verification'],
                 'options' => ['data-pjax' => true],
                 #'layout' => 'horizontal',
-                'validateOnChange' => false,
+                'validateOnChange' => true,
                 'validateOnSubmit' => true,
                 'fieldConfig' => [
                     'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
@@ -48,7 +48,7 @@ use yii\widgets\Pjax;
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-6">
-                    <?= Html::submitButton('Verify', ['class' => 'btn btn-primary email_verify_btn', 'name' => 'verify', 'value' => 'EMAIL_VERIFY']) ?>
+                    <?= Html::submitButton('Verify', ['class' => 'btn btn-primary email_verify_btn', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Verifying', 'name' => 'verify', 'value' => 'EMAIL_VERIFY']) ?>
                 </div>
             </div>
             <?php ActiveForm::end(); ?>
@@ -132,6 +132,19 @@ $this->registerJs('
         getInlineDetail("' . Url::to(['user/email-id-change']) . '","#email_verification","0");
     });
     setDesign();
+     $(".email_verify_btn").on("click", function() {
+        var $this = $(this);
+        $this.button("loading");
+        setTimeout(function() {
+            $this.button("reset");
+        }, 8000);
+    });
 ');
 
 ?>
+<style>
+    .btn-primary.disabled, .btn-primary.disabled.active, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled].active, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary.active, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
+        background-color: #ee1845;
+        border-color: #ee1845;
+    }
+</style>

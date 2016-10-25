@@ -35,7 +35,7 @@ class UserRequest extends \common\models\base\baseUserRequest
 
     public static function findProfileViewedByUserList($id, $Limit)
     {
-        return static::find()->joinWith([fromUserInfo])->where(['to_user_id' => $id, 'profile_viewed' => 'Yes'])->limit($Limit)->all();
+        return static::find()->joinWith([fromUserInfo])->where(['to_user_id' => $id, 'profile_viewed' => 'Yes'])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
 
     }
 

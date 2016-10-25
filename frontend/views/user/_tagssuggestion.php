@@ -31,11 +31,13 @@ use yii\helpers\Url;
 $this->registerJs('
 function getTagData(url,htmlId,id){
      Pace.restart();
+     loaderStart();
         $.ajax({
         url : url,
         type:"POST",
         data:{"TagId":id},
-        success:function(res){          
+        success:function(res){
+          loaderStop();
           $(htmlId).html(res);
         }
       });
