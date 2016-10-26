@@ -43,7 +43,8 @@ if (!Yii::$app->user->isGuest) {
                     <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', ['site/logout'], ['data-method' => 'post']) ?></li>
                     <li><a href="user/my-profile" title="Profile">Profile</a></li>
                 <?php } else { ?>
-                    <li><a href="#" title="Login" data-toggle="modal" data-target="#login">Login</a></li>
+                  <li><a href="#" title="Login" data-toggle="modal" data-target="#login" id="login_button">Login</a>
+                  </li>
                     <li><a href="#" title="Sign up Free" data-toggle="modal" data-target="#myModalNorm" id="suf">Sign up
                             Free</a></li>
                 <?php } ?>
@@ -493,7 +494,8 @@ if (!Yii::$app->user->isGuest) {
 </div>
 
 <!-- Modal Login -->
-<div class="modal fade login login-top" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade login login-top" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-loading-text="Login...">
   <div class="modal-dialog">
     <p class="text-center mrg-bt-10"><?= Html::img('@web/images/logo.png', ['width' => '157','height' => 61,'alt' => 'logo']); ?></p>
     <div class="modal-content">
@@ -534,7 +536,7 @@ if (!Yii::$app->user->isGuest) {
                       <a href="#" class="pull-right mrg-tp-10" title="Forgot password" data-toggle="modal"
                          data-target="#fpswd">Forgot password?</a></div>
                   <!-- <a href="dash-board.html" class="">Login</a> -->
-                  <?= Html::submitButton('Login', ['class' => 'btn btn-primary mrg-tp-10 col-xs-12', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Login', ['class' => 'btn btn-primary mrg-tp-10 col-xs-12 login-btn', 'id' => '#loginbtn', 'name' => 'login-button', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Login...']) ?>
                   <div class="bar-devider"><span>OR</span></div>
                   <a class="btn btn-block btn-social btn-facebook"> <i class="fa fa-facebook"></i> Sign in with Facebook
                   </a>
@@ -586,9 +588,15 @@ if (!Yii::$app->user->isGuest) {
     background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
     font-weight: normal;
     color: #ee1845;
+
+  }
+
+  .btn-primary.disabled, .btn-primary.disabled.active, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled].active, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary.active, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
+    background-color: #ee1845;
+    border-color: #ee1845;
   }
 </style>
-
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/processing/processing.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <?php
 $this->registerJs('
     $("body").on("submit","#form-signup",function(e){
@@ -604,6 +612,32 @@ $this->registerJs('
         return false;
       }
       return true;
+    });
+    $("body").on("submit","#login-form",function(e){
+      var form = $(this);
+      if(form.find(".has-error").length) {
+            return false;
+      }
+      if(!$("#loginbtn").is(":disabled")){
+        var $this_l = $(".login-btn");
+        $this_l.button("loading");
+        setTimeout(function() {
+            $this_l.button("reset");
+        }, 8000);
+
+        return true;
+      }
+      else {
+        return false;
+      }
+      return true;
+    });
+
+    $("#suf").click(function(){
+    $("#form-signup")[0].reset();
+    });
+    $("#login_button").click(function(){
+    $("#login-form")[0].reset();
     });
   ');
 ?>

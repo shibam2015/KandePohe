@@ -252,3 +252,7 @@ img.selected {
 .tab-content {
     min-height: 250px;
 }
+
+.user_tag_delete {
+    cursor: pointer;
+}

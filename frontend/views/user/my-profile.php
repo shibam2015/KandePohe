@@ -35,7 +35,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet"> -->
     <!--<div class="wrapper">-->
-    <div class="">
+    <div class="main-section">
         <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
         <main>
             <section>
@@ -241,7 +241,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             </div>
                                         </div>
                                         <div class="divider"></div>
-                                        <?php if (count($photo_model) > 0) { ?>
+                                        <?php if (count($photo_model) > 1) { ?>
                                             <div class="panel no-border panel-default panel-friends">
                                                 <div class="panel-heading">
                                                     <h3 class="heading-xs"> Photos <span
@@ -813,7 +813,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                         such as your name in their Inbox list and messages that you've sent.</p>
                     <p></p><br>
                     <p>
-                        <button class="btn btn-primary delete_account">Yes</button>
+                        <button class="btn btn-primary delete_account yes">Yes</button>
                         <button class="btn btn-primary" data-dismiss="modal">cancel</button>
                     </p>
                 </div>
@@ -963,6 +963,7 @@ $this->registerJs('
         
         $(".yes").click(function(){
             Pace.restart();
+            loaderStart();
             var formDataPhoto = new FormData();
             formDataPhoto.append( "P_ID", P_ID);
             formDataPhoto.append( "P_TYPE", P_TYPE);    
@@ -976,6 +977,7 @@ $this->registerJs('
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
                             if (DataObject.STATUS == "S") {
+                            loaderStop();
                                 if(P_TYPE=="PHOTO_PROFILE_SET"){
                                     $("#photo_list").html(DataObject.OUTPUT);
                                     $("#profile_list_popup").html(DataObject.OUTPUT_ONE);
@@ -994,12 +996,14 @@ $this->registerJs('
                                     notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                                 }
                             } else {
+                                 loaderStop();
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                                                                 
                         profile_photo();
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
+                         loaderStop();
                                 notificationPopup(\'ERROR\', \'Something went wrong. Please try again !\', \'Error\');
                         }
                     });

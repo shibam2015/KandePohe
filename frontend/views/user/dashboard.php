@@ -904,6 +904,7 @@ if ($type != '' && base64_decode($type) == "VERIFICATION-DONE") {
 }
 $this->registerJs('
 $(document).on("click",".send_request",function(e){
+  Pace.restart();
   loaderStart();
   var formData = new FormData();
   formData.append("ToUserId", $(this).data("id"));

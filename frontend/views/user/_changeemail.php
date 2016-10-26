@@ -30,13 +30,6 @@ use yii\helpers\Url;
             ]
         ]);
         ?>
-        <!--<div class="row">
-            <div class="col-sm-3 col-xs-3">
-                <div class="form-cont center ew" style="display:none">
-                    <p> Please wait...</p>
-                </div>
-            </div>
-        </div>-->
         <div class="row">
             <div class="col-sm-4 col-xs-4">
                 <div class="form-cont">
@@ -45,12 +38,11 @@ use yii\helpers\Url;
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3 col-xs-3">
-                <?= Html::submitButton('Save', ['class' => 'btn btn-primary email_submit', 'name' => 'save', 'value' => 'EMAIL_ID_CHANGE']) ?>
+            <div class="col-sm-4 col-xs-4">
+                <input type="hidden" name="save" value="EMAIL_ID_CHANGE">
+                <?= Html::submitButton('Save', ['class' => 'btn btn-primary email_submit', 'name' => 'save', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Saving', 'value' => 'EMAIL_ID_CHANGE']) ?>
                 <?= Html::Button('Cancel', ['class' => 'btn btn-primary', 'id' => 'cancel_change_email', 'name' => 'cancel',]) ?>
-
             </div>
-
         </div>
         <?php ActiveForm::end(); ?>
         <?php
@@ -88,7 +80,20 @@ use yii\helpers\Url;
                  
           
           })();
+        $(".email_submit").on("click", function() {
+        var $this = $(this);
+        $this.button("loading");
+        setTimeout(function() {
+            $this.button("reset");
+        }, 8000);
+    });
  ');
 
     ?>
 </div>
+<style>
+    .btn-primary.disabled, .btn-primary.disabled.active, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled].active, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary.active, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
+        background-color: #ee1845;
+        border-color: #ee1845;
+    }
+</style>
