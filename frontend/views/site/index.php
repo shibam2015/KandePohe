@@ -80,7 +80,7 @@ use yii\jui\DatePicker;
           ]);
           ?>
           <div class="col-sm-4 col-md-2">
-            <?= $form->field($model, 'Profile_created_for')->dropDownList(
+            <?= $form->field($model, 'Profile_for')->dropDownList(
                 ['FEMALE' => 'BRIDE', 'MALE' => 'GROOM'],
                 ['class' => 'cs-select cs-skin-border',
                     'prompt' => 'Looking For'

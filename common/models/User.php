@@ -69,6 +69,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $Profile_created_for_pref;
     public $commentAdmin;
     public $Agerange;
+    public $Profile_for;
     // public $captcha;
     /**
      * @inheritdoc
