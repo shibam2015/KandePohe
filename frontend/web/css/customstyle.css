@@ -261,3 +261,12 @@ img.selected {
     padding-left: 0px;
     padding-right: 0px;
 }
+
+.pager-icon .badge1 {
+    background: gray;
+}
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background: #e00b41;
+    border-color: #e00b41;
+}

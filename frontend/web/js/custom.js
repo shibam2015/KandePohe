@@ -341,6 +341,11 @@ function sendRequestDashboard(url, htmlId, type, pid, dataArr) {
                     $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-link isent" role="button">Interest Sent <i class="fa fa-heart"></i></a>');
                 }
             }
+            if (type == 'SL') {
+                if (dataObj.STATUS == 'S') {
+                    $('.' + pid).html('<a href="javascript:void(0)" class="isent" role="button">Interest Sent <i class="fa fa-heart"></i></a>');
+                }
+            }
             //notificationPopup(dataObj.STATUS, dataObj.MESSAGE, dataObj.TITLE);
             showNotification(dataObj.STATUS, dataObj.MESSAGE);
         }
@@ -353,7 +358,13 @@ $(document).on("click", ".sendinterestpopup", function (e) {
     $("#to_name").html($(this).data("name"));
     $("#to_rg_number").html($(this).data("rgnumber"));
     $(".send_request").attr("data-id", $(this).data("id"));
-    $(".send_request").attr("data-parentid", $(this).closest('p').attr('class'));
+    if ($(this).closest('p').attr('class') === undefined) {
+        $(".send_request").attr("data-parentid", $(this).closest('li').attr('class'));
+    }
+    else {
+        $(".send_request").attr("data-parentid", $(this).closest('p').attr('class'));
+
+    }
 
 });
 
@@ -363,6 +374,7 @@ $(document).on("click", ".kp_notification_close", function (e) {
     //$('.kp_notify').hide();
     $('.kp_notify').slideUp();
 });
+
 function showNotification(type, msg) {
     $(".modal").modal("hide");
     if (type == 'S') {
@@ -375,6 +387,9 @@ function showNotification(type, msg) {
         $('.kp_notify').removeClass('green').removeClass('red').addClass('yellow');
         $('.kp_notification').html(msg);
     }
+    setTimeout(function () {
+        $('.kp_notify').slideUp();
+    }, 4000);
     $('.kp_notify').slideDown();
 }
 /* Notification END  */

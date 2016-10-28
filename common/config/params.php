@@ -10,7 +10,8 @@ return [
     'acceptRequest' => 'Are You sure want to Accept Request ?',
     'declineRequest' => 'Are You sure want to Reject Request ?',
     'requestAccepted' => '#NAME#  is accepted your request.',
-    'searchingLimit' => 5,
+    'searchingLimit' => 3,
     'noRecordsFoundInSearchList' => 'There are no record found as per your searching criteria.',
+    'loginFirst' => 'For this you have to login first...!',
 ];
 

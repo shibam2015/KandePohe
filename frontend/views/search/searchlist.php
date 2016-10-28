@@ -31,7 +31,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                     <div class="col-md-7">
                         <div class="sidebar1">
                             <div class="mrg-tp-20">
-                                <div class="dropdown drp-lg">
+                                <!--<div class="dropdown drp-lg">
                                     <button class="btn gray-filter dropdown-toggle" id="filter-toggle" type="button"
                                             aria-haspopup="true" aria-expanded="true"> Filters <i
                                             class="fa indicator fa-angle-down"></i></button>
@@ -120,7 +120,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                         <li><a href="#">Test 2</a></li>
                                         <li><a href="#">Test 3</a></li>
                                     </ul>
-                                </div>
+                                </div>-->
                                 <div class="gray-bg mrg-tp-5">
                                     <div class="matches pull-left padd-10"><span> Matches Found: <span
                                                 class="orange-text"><?= $TotalRecords ?></span> </span></div>
@@ -207,24 +207,48 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                             </div>
                                             <div class="col-sm-9">
                                                 <div class="name-panel">
-                                                    <h2 class="nameplate"><?= $SV->FullName; ?>
+                                                    <h2 class="nameplate">
+                                                        <?php
+                                                        if (!Yii::$app->user->isGuest) { ?>
+                                                            <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $Value->fromUserInfo->Registration_Number ?>&source=profile_viewed_by"
+                                                               class="name"
+                                                               title="<?= $Value->fromUserInfo->Registration_Number ?>">
+                                                                <?= $SV->FullName; ?>
+                                                            </a>
+                                                        <?php } else { ?>
+                                                            <?= $SV->FullName; ?>
+                                                        <?php } ?>
                                                         <span class="font-light">(<?= $SV->Registration_Number ?>
-                                                            )</span> <span class="premium"></span></h2>
+                                                            )</span>
+                                                        <?php
+                                                        #$USER_FACEBOOK = \common\models\User::weightedCheck(11);
+                                                        $USER_PHONE = \common\models\User::weightedCheck(8);
+                                                        $USER_EMAIL = \common\models\User::weightedCheck(9);
+                                                        $USER_APPROVED = \common\models\User::weightedCheck(10);
+                                                        if ($USER_PHONE && $USER_EMAIL && $USER_APPROVED) {
+                                                            ?>
+                                                            <span class="premium"></span>
+                                                        <?php } ?>
+                                                    </h2>
                                                     <?php $USER_PHONE = \common\models\User::weightedCheck(8); ?>
                                                     <p>Profile created by <?= $SV->Profile_created_for; ?> | Last
-                                                        online <?= CommonHelper::DateTime($SV->LastLoginTime, 28); ?> | <span
-                                                            class="pager-icon">
-
-                              <a><?php if ($USER_PHONE) { ?>class="active"<?php } ?><i
-                                      class="fa fa-mobile"></i> <span
-                                      class="badge"><i
-                                          class="fa fa-check"></i></span></a></p>
+                                                        online <?= CommonHelper::DateTime($SV->LastLoginTime, 28); ?> |
+                                                        <span class="pager-icon">
+                                                    <a href="javascript:void(0)">
+                                                        <i class="fa fa-mobile"></i>
+                                                      <span
+                                                          class="badge <?php if ($SV->ePhoneVerifiedStatus != 'Yes') { ?>badge1<?php } ?>">
+                                                          <i class="fa fa-check"></i>
+                                                      </span>
+                                                    </a>
+                                                            </span>
+                                                    </p>
                                                 </div>
                                                 <dl class="dl-horizontal mrg-tp-20">
                                                     <dt>Personal Details</dt>
                                                     <dd><?= CommonHelper::getAge($SV->DOB); ?>
-                                                        yrs,<?= CommonHelper::setInputVal($SV->height->vName, 'text'); ?>
-                                                        , Capricorn
+                                                        yrs, <?= CommonHelper::setInputVal($SV->height->vName, 'text'); ?>
+                                                        <?= ($SV->RaashiId > 0) ? ", " . CommonHelper::setInputVal($SV->raashiName->Name, 'text') : ''; ?>
                                                     </dd>
                                                     <dt>Marital Status</dt>
                                                     <dd><?= CommonHelper::setInputVal($SV->maritalStatusName->vName, 'text') ?></dd>
@@ -239,43 +263,49 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                 </dl>
                                             </div>
                                         </div>
+                                        <?php if ($SV->Gender != Yii::$app->user->identity->Gender) { ?>
                                         <div class="row gray-bg">
                                             <div class="col-sm-12">
                                                 <div class="profile-control-vertical">
                                                     <ul class="list-unstyled pull-right">
                                                         <li><a href="#">Shortlist <i class="fa fa-list-ul"></i></a></li>
-                                                        <li><a href="#" data-toggle="modal" data-target="#sendInterest">Send
-                                                                Interest <i class="fa fa-heart-o"></i></a></li>
-                                                        <li><a href="#" data-toggle="modal" class="sendmail"
-                                                               data-target="#sendMail">Send Email <i
+                                                        <li class="s__<?= $SV->id ?>">
+                                                            <?php
+                                                            $Check = \common\models\UserRequest::checkSendInterest(Yii::$app->user->identity->id, $SV->id);
+                                                            if ($Check->from_user_id == Yii::$app->user->identity->id && $Check->to_user_id == $SV->id && $Check->send_request_status == "Yes") {
+                                                                ?>
+                                                                <a href="javascript:void(0)" class="isent"
+                                                                   role="button">Interest Sent <i
+                                                                        class="fa fa-heart"></i></a>
+                                                            <?php } else { ?>
+                                                                <a href="javascript:void(0)" class="sendinterestpopup"
+                                                                   role="button"
+                                                                   data-target="#sendInterest" data-toggle="modal"
+                                                                   data-id="<?= $SV->id ?>"
+                                                                   data-name="<?= $SV->FullName ?>"
+                                                                   data-rgnumber="<?= $SV->Registration_Number ?>">Send
+                                                                    Interest
+                                                                    <i class="fa fa-heart-o"></i>
+                                                                </a>
+                                                            <?php } ?>
+                                                        </li>
+                                                        <li><a href="#" data-toggle="modal" class="send_email"
+                                                               <?php if (Yii::$app->user->isGuest) { ?>data-target="#sendMail"<?php } else { ?> data-id="<?= $SV->id ?>" <?php } ?>>Send
+                                                                Email <i
                                                                     class="fa fa-envelope-o"></i></a></li>
 
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
+                                        <?php } ?>
                                     </div>
                                 <?php } ?>
 
 
                                 <div class="mrg-bt-10 text-center">
                                     <nav>
-                                        <ul class="pagination pagination-lg">
-                                            <li class="page-item first"><a class="page-link" href="#"
-                                                                           aria-label="Previous"> <span
-                                                        aria-hidden="true">Previous</span> <span class="sr-only">Previous</span>
-                                                </a></li>
-                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">6</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">...</a></li>
-                                            <li class="page-item last"><a class="page-link" href="#" aria-label="Next">
-                                                    <span aria-hidden="true">Next</span> <span
-                                                        class="sr-only">Next</span> </a></li>
-                                        </ul>
+                                        <?php require_once(__DIR__ . '\pagination.php'); ?>
                                     </nav>
                                 </div>
                             <?php } ?>
@@ -356,12 +386,23 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                     <button type="button" class="close" data-dismiss="modal"><span
                             aria-hidden="true">&times;</span> <span
                             class="sr-only">Close</span></button>
-                    <h2 class="text-center">Please Wait</h2>
+                    <?php
+                    if (Yii::$app->user->isGuest) { ?>
+                        <h2 class="text-center">Please Wait</h2>
+                    <?php } else { ?>
+                        <h2 class="text-center">Information</h2>
+                    <?php } ?>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12 mrg-tp-20">
+                        <div class="col-md-12 mrg-tp-10 ">
+                            <?php
+                            if (Yii::$app->user->isGuest) { ?>
                             <i class="fa fa-spinner fa-spin pink"></i> Loading Information...
+                            <?php } else { ?>
+                                <div class="notice kp_warning marg-l"><p><?= Yii::$app->params['loginFirst'] ?></p>
+                                </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -370,15 +411,66 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
         <?php Pjax::end(); ?>
     </div>
 </div>
+<?php if (!Yii::$app->user->isGuest) { ?>
+    <div class="modal fade" id="sendInterest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <p class="text-center mrg-bt-10">
+                <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+            </p>
+
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
+                            class="sr-only">Close</span>
+                    </button>
+                    <h4 class="text-center"> Send Interest </h4>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form>
+                        <div class="text-center">
+                            <!--<p class="mrg-bt-10 font-15"><span class="text-success"><strong>&#10003;</strong></span> Your interest has been sent successfully to</p>-->
+                            <div class="fb-profile-text mrg-bt-30 text-dark">
+                                <h1 id="to_name"></h1>(<span class="sub-text mrg-tp-10" id="to_rg_number"></span>)
+                            </div>
+                            <!--<h6 class="mrg-bt-30 font-15 text-dark"><strong>Request the member to add the following details</strong></h6>-->
+
+                            <div class="checkbox mrg-tp-0 profile-control">
+                                <!--<input id="Photo" type="checkbox" name="Photo" value="check1">
+                                <label for="Photo" class="control-label">Photo</label>
+                                <input id="Horoscope" type="checkbox" name="Horoscope" value="check1">
+                                <label for="Horoscope" class="control-label">Horoscope</label>-->
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                        <button type="button" class="btn active pull-right send_request" data-id=""
+                                                data-parentid=""> Send
+                                            Interest
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6 ">
+                                        <button type="button" class="btn pull-left" data-dismiss="modal">Back</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+                <!-- Modal Footer -->
+            </div>
+        </div>
+    </div>
+<?php } ?>
 <?php
 $this->registerCssFile(Yii::$app->request->baseUrl . '/css/slider.css', ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/cover/jquery-ui.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <?php
 
 $this->registerJs('
-$(document).on("click",".send_request",function(e){
-
-});
        jQuery(document).ready(function($) {
 
         $("#myCarousel").carousel({
@@ -401,10 +493,37 @@ $(document).on("click",".send_request",function(e){
           $("#carousel-text").html($("#slide-content-"+id).html());
         });
 });
-$(document).on("click",".sendmail",function(e){
+    $(document).on("click",".send_email",function(e){
+        var formData = new FormData();
+        formData.append("ToUserId", $(this).data("id"));
+        formData.append("UserId", ' . Yii::$app->user->identity->id . ');
+        loaderStart();
+         $.ajax({
+                        url: "' . Yii::$app->homeUrl . 'user/send-email-profile",
+                        type: "POST",
+                        data: formData,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (data, textStatus, jqXHR) {
+                            loaderStop();
+                            var DataObject = JSON.parse(data);
+                            notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                                notificationPopup(\'ERROR\', \'Something went wrong. Please try again !\', \'Error\');
+                                loaderStop();
+                        }
+         });
+
+    });
+    $(document).on("click",".send_request",function(e){
+      Pace.restart();
+      loaderStart();
       var formData = new FormData();
       formData.append("ToUserId", $(this).data("id"));
-      sendRequest("' . Url::to(['search/search-send-message']) . '",".send_message",formData);;
+      formData.append("Action", "SEND_INTEREST");
+      sendRequestDashboard("' . Url::to(['user/send-int-dashboard']) . '",".requests","SL",$(this).data("parentid"),formData);
     });
 ');
 ?>

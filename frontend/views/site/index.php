@@ -418,21 +418,7 @@ use yii\jui\DatePicker;
                 )->label(false);?>
               </div>
             </div>
-            <?php
-            $this->registerJs('
-                $(".genderV").on("change",function(e){
-                  var genderVal = $(this).val();
-                  if(genderVal == "FEMALE") {
-                    $("#DOB").datepicker("option","maxDate","'.date('Y-m-d',strtotime('-18 year')).'");
-                    $("#DOB").datepicker("option","yearRange","-70:-18");
-                  }
-                  else {
-                    $("#DOB").datepicker("option","maxDate","'.date('Y-m-d',strtotime('-21 year')).'");
-                    $("#DOB").datepicker("option","yearRange","-70:-21");
-                  }
-                });
-              ');
-            ?>
+
             <div class="form-cont">
 
               <?= $form->field($model, 'DOB', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Date Of Birth</span> </label></span>{error}'])->input('text')
@@ -472,7 +458,6 @@ use yii\jui\DatePicker;
                   <div style="color:red;" id="cerror"></div>
                 </div>
               </div> -->
-
                 <div class="row">
                   <div class="checkbox col-sm-12 checkbox-new" id="cjkbox">
 
@@ -661,4 +646,29 @@ $this->registerJs('
     //$(".ui-datepicker").css("z-index","100");
 
   ');
+
+?>
+
+<?php
+$this->registerJs('
+                $(".genderV").on("change",function(e){
+                  var genderVal = $(this).val();
+                  if(genderVal == "FEMALE") {
+                    $("#DOB").datepicker("option","maxDate","' . date('Y-m-d', strtotime('-18 year')) . '");
+                    $("#DOB").datepicker("option","yearRange","-70:-18");
+                  }
+                  else {
+                    $("#DOB").datepicker("option","maxDate","' . date('Y-m-d', strtotime('-21 year')) . '");
+                    $("#DOB").datepicker("option","yearRange","-70:-21");
+                  }
+                });
+              var enforceModalFocusFn = $.fn.modal.Constructor.prototype.enforceFocus;
+              $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+              $confModal.on("hidden", function() {
+                  $.fn.modal.Constructor.prototype.enforceFocus = enforceModalFocusFn;
+              });
+              $confModal.modal({ backdrop : false });
+              ');
+
+
 ?>
