@@ -8,6 +8,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use common\models\UserRequest;
+
 /**
  * User model
  *
@@ -22,7 +23,6 @@ use common\models\UserRequest;
  * @property integer $updated_at
  * @property string $password write-only password
  */
-
 class User extends \common\models\base\baseUser implements IdentityInterface
 {
     const STATUS_DELETED = 0;
@@ -171,6 +171,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             return 0;
         }
     }
+
     public static function findRecentJoinedUserList($Gender, $Limit = 4) # Get user list Gender Wise with limit
     {
         return static::find()->where(['Gender' => $Gender, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->limit($Limit)->all();
@@ -202,18 +203,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public function rules()
     {
         return [
-            [['auth_key', 'created_at', 'updated_at', 'Registration_Number', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'toc', 'iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vDiet', 'iFatherStatusID', 'iMotherStatusID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'iCityCAId', 'vParentsResiding', 'mother_tongue', 'weight', 'phone_pin', 'email_pin'], 'required'],
-
-            ['email', 'required', 'message' => 'Please enter your email address.'],
-            ['First_Name', 'required', 'message' => 'Please enter first name.'],
-            ['Last_Name', 'required', 'message' => 'Please enter last name.'],
-            ['Mobile', 'required', 'message' => 'Please enter mobile number.'],
-            ['Gender', 'required', 'message' => 'Please Select Your Gender'],
-            ['DOB', 'required', 'message' => 'Please Select Your Date Of Birth'],
-            ['county_code', 'required', 'message' => 'Please Select your desired County Code.'],
-            ['password_hash', 'required', 'message' => 'Please create your desired password.'],
-            ['repeat_password', 'required', 'message' => 'Please re-type your desired password.'],
-            ['Profile_created_for', 'required', 'message' => 'Please mention relationship of to be bride/groom with you.'],
+            [['auth_key', 'password_hash', 'email', 'created_at', 'updated_at', 'Registration_Number', 'Mobile', 'First_Name', 'Last_Name', 'DOB', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'county_code', 'iDistrictID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'Profile_created_for', 'repeat_password', 'Gender', 'toc', 'iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vDiet', 'iFatherStatusID', 'iMotherStatusID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'iCityCAId', 'vParentsResiding', 'mother_tongue', 'weight', 'phone_pin', 'email_pin'], 'required'],
             [['status', 'created_at', 'updated_at', 'Age', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID'], 'integer'],
             [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus'], 'string'],
             [['DOB', 'Time_of_Birth', 'cnb', 'iSubCommunity_ID', 'vAreaName', 'iGotraID'], 'safe'],
@@ -223,10 +213,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['Registration_Number', 'Birth_Place'], 'string', 'max' => 250],
             #[['Mobile'], 'string', 'max' => 20],
-            #[['Mobile'], 'string', 'max' => 10, 'min' => 10],
-            ['Mobile', 'isNumbersOnly'],
-            ['First_Name', 'match', 'pattern' => '/^[a-zA-Z]+$/', 'message' => 'Please enter valid first name'],
-            ['Last_Name', 'match', 'pattern' => '/^[a-zA-Z]+$/', 'message' => 'Please enter valid last name'],
+            [['Mobile'], 'string', 'max' => 10, 'min' => 10],
             [['First_Name', 'Last_Name'], 'string', 'max' => 100],
             [['county_code'], 'string', 'max' => 5],
             [['First_Name', 'Last_Name'], 'string', 'max' => 100],
@@ -236,11 +223,11 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             //[['captcha'], \himiklab\yii2\recaptcha\ReCaptchaValidator::className(), 'secret' => '6Lc2xSgTAAAAAC37FZoNHA6KreseSCE5TrORJIbp'],
             // [['captcha'],'required'],
             // [['captcha'],'captcha'],
-            [['email'], 'email', 'message' => "Please enter valid email address."],
+            [['email'], 'email'],
             [['password_hash', 'repeat_password'], 'string', 'length' => [6, 255]],
             [['tYourSelf'], 'string', 'max' => '2000'],
             [['tYourSelf'], 'required', 'on' => self::SCENARIO_EDIT_MY_INFO],
-            [['repeat_password'], 'compare', 'compareAttribute' => 'password_hash', 'message' => "Password and Retype Password is not matching. Please try again."],
+            [['repeat_password'], 'compare', 'compareAttribute' => 'password_hash', 'message' => "Passwords don't match"],
             [['password_reset_token'], 'unique'],
             #[['phone_pin'], 'compare', 'compareAttribute' => 'pin_phone_vaerification', 'message' => "Phone PIN don't match"],
         ];
@@ -295,29 +282,21 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         ];
     }
 
-    public function isNumbersOnly($attribute)
-    {
-        if (!preg_match('/^[0-9]{10}$/', $this->$attribute)) {
-            $this->addError($attribute, 'Please enter valid mobile number.');
-        }
-    }
-
     /**
      * @inheritdoc
      */
-    public function checkDobYear($attribute,$params)
+    public function checkDobYear($attribute, $params)
     {
         $date1 = date('Y-m-d');
         $date2 = $this->DOB;
         $diff = abs(strtotime($date2) - strtotime($date1));
-        $years = floor($diff / (365*60*60*24));
+        $years = floor($diff / (365 * 60 * 60 * 24));
 
-        if($this->Gender == 'FEMALE'){
-            if($years < 18)
+        if ($this->Gender == 'FEMALE') {
+            if ($years < 18)
                 $this->addError('DOB', 'Your age should be grater than 18 Years');
-        }
-        else {
-            if($years < 21)
+        } else {
+            if ($years < 21)
                 $this->addError('DOB', 'Your age should be grater than 21 Years');
         }
 
@@ -494,8 +473,9 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         $this->password_reset_token = null;
     }
 
-    public function getFullName(){
-        return $this->First_Name.' '.$this->Last_Name;
+    public function getFullName()
+    {
+        return $this->First_Name . ' ' . $this->Last_Name;
     }
 
     public function getReligionName()
@@ -545,7 +525,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public function getCityName()
     {
-        return $this->hasOne(Cities ::className(), ['iCityId' => 'iCityId']);
+        return $this->hasOne(Cities::className(), ['iCityId' => 'iCityId']);
     }
 
     public function getCountryNameCA()
@@ -560,7 +540,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public function getCityNameCA()
     {
-        return $this->hasOne(Cities ::className(), ['iCityId' => 'iCityCAId']);
+        return $this->hasOne(Cities::className(), ['iCityId' => 'iCityCAId']);
     }
 
     public function getDistrictNameCA()
@@ -580,61 +560,61 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public function getEducationLevelName()
     {
-        return $this->hasOne(EducationLevel ::className(), ['iEducationLevelID' => 'iEducationLevelID']);
+        return $this->hasOne(EducationLevel::className(), ['iEducationLevelID' => 'iEducationLevelID']);
     }
 
     public function getEducationFieldName()
     {
-        return $this->hasOne(EducationField ::className(), ['iEducationFieldID' => 'iEducationFieldID']);
+        return $this->hasOne(EducationField::className(), ['iEducationFieldID' => 'iEducationFieldID']);
     }
 
     public function getWorkingWithName()
     {
-        return $this->hasOne(WorkingWith ::className(), ['iWorkingWithID' => 'iWorkingWithID']);
+        return $this->hasOne(WorkingWith::className(), ['iWorkingWithID' => 'iWorkingWithID']);
     }
 
     public function getWorkingAsName()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iWorkingAsID']);
+        return $this->hasOne(WorkingAS::className(), ['iWorkingAsID' => 'iWorkingAsID']);
     }
 
     public function getAnnualIncome()
     {
-        return $this->hasOne(AnnualIncome ::className(), ['iAnnualIncomeID' => 'iAnnualIncomeID']);
+        return $this->hasOne(AnnualIncome::className(), ['iAnnualIncomeID' => 'iAnnualIncomeID']);
     }
 
     public function getHeight()
     {
-        return $this->hasOne(MasterHeight ::className(), ['iHeightID' => 'iHeightID']);
+        return $this->hasOne(MasterHeight::className(), ['iHeightID' => 'iHeightID']);
     }
 
     public function getDietName()
     {
-        return $this->hasOne(MasterDiet ::className(), ['iDietID' => 'vDiet']);
+        return $this->hasOne(MasterDiet::className(), ['iDietID' => 'vDiet']);
     }
 
     public function getFatherStatus()
     {
-        $ABC = $this->hasOne(MasterFmStatus ::className(), ['iFMStatusID' => 'iFatherStatusID']);
+        $ABC = $this->hasOne(MasterFmStatus::className(), ['iFMStatusID' => 'iFatherStatusID']);
 
         return $ABC;
     }
 
     public function getFatherStatusId()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iFatherWorkingAsID']);
+        return $this->hasOne(WorkingAS::className(), ['iWorkingAsID' => 'iFatherWorkingAsID']);
     }
 
     public function getMotherStatus()
     {
-        $ABC = $this->hasOne(MasterFmStatus ::className(), ['iFMStatusID' => 'iMotherStatusID']);
+        $ABC = $this->hasOne(MasterFmStatus::className(), ['iFMStatusID' => 'iMotherStatusID']);
 
         return $ABC;
     }
 
     public function getMotherStatusId()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iMotherWorkingAsID']);
+        return $this->hasOne(WorkingAS::className(), ['iWorkingAsID' => 'iMotherWorkingAsID']);
     }
 
     /**
@@ -701,7 +681,6 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     }
 
 
-
     /*public function generateUniqueRandomNumber($length = 9) {
         $PREFIX = CommonHelper::generatePrefix();
         $RANDOM_USER_NUMBER = $PREFIX.CommonHelper::generateNumericUniqueToken($length);
@@ -732,19 +711,20 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $this->vAreaNameCA . ", " . $this->talukaNameCA->vName . ", " . $this->districtNameCA->vName . ", " . $this->cityNameCA->vCityName . ", " . $this->stateNameCA->vStateName . ", " . $this->countryNameCA->vCountryName;
     }
 
-    public function getDisplayMobile(){
+    public function getDisplayMobile()
+    {
         return ($this->county_code != '') ? $this->county_code . " " . $this->Mobile : $this->Mobile;
     }
 
-    public function setCompletedStep($step) {
+    public function setCompletedStep($step)
+    {
         $returnVal = $this->completed_step;
-        if($returnVal==""){
+        if ($returnVal == "") {
             $returnVal = $step;
-        }
-        else {
+        } else {
             $arrStep = explode(',', $returnVal);
-            if(!in_array($step, $arrStep)){
-                $returnVal = $returnVal.','.$step;
+            if (!in_array($step, $arrStep)) {
+                $returnVal = $returnVal . ',' . $step;
             }
         }
         return $returnVal;

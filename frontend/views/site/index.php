@@ -16,7 +16,7 @@ if (!Yii::$app->user->isGuest) {
   $id = Yii::$app->user->identity->id;
 }
 //die();
-//use yii\jui\DatePicker;
+use yii\jui\DatePicker;
 ?>
 <div class="video">
   <div class="drop-effect"></div>
@@ -658,6 +658,7 @@ $this->registerJs('
       var icommunity_id = $("#user-icommunity_id").val();
       var iSubCommunity_ID = $("#user-iSubCommunity_ID").val();
     });
+    //$(".ui-datepicker").css("z-index","100");
 
   ');
 ?>

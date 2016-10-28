@@ -13,3 +13,4 @@ return [
     'searchingLimit' => 5,
     'noRecordsFoundInSearchList' => 'There are no record found as per your searching criteria.',
 ];
+
