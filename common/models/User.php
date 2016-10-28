@@ -68,6 +68,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $maxage;
     public $Profile_created_for_pref;
     public $commentAdmin;
+    public $Agerange;
     // public $captcha;
     /**
      * @inheritdoc
@@ -187,6 +188,12 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     {
         $RegisterNo = User::find()->select('Registration_Number')->where(['id' => $Id])->one();
         return $RegisterNo->Registration_Number;
+    }
+
+    public static function searchBasic($WHERE = '', $Offset = 0, $Limit = '') # Get user list Gender Wise with limit
+    {
+        $Records = User::find()->select(' * ')->where(("1=1  AND user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "') $WHERE "))->limit($Limit)->all();
+        return $Records;
     }
 
     /**
@@ -672,11 +679,6 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $this->hasOne(PreferredDressStyle::className(), ['ID' => 'PreferredDressID']);
     }
 
-    public function getPreferredMoviesName()
-    {
-        return $this->hasOne(PreferredMovies::className(), ['ID' => 'PreferredMovieID']);
-    }
-
 
 
     /*public function generateUniqueRandomNumber($length = 9) {
@@ -688,6 +690,11 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             return $this->generateUniqueRandomNumber($length);
 
     }*/
+
+    public function getPreferredMoviesName()
+    {
+        return $this->hasOne(PreferredMovies::className(), ['ID' => 'PreferredMovieID']);
+    }
 
     public function getMotherTongue()
     {
