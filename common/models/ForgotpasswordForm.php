@@ -23,7 +23,8 @@ class ForgotpasswordForm extends Model
     {
         return [
             // username and password are both required
-            [['email'], 'required'],
+            #[['email'], 'required'],
+            ['email', 'required', 'message' => 'Please enter your email address.'],
             // rememberMe must be a boolean value
      #       ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
@@ -52,6 +53,19 @@ class ForgotpasswordForm extends Model
     }
 
     /**
+     * Finds user by [[username]]
+     *
+     * @return User|null
+     */
+    protected function getUser()
+    {
+        if ($this->_user === null) {
+            $this->_user = User::findByEmail($this->email);
+        }
+        return $this->_user;
+    }
+
+    /**
      * Logs in a user using the provided username and password.
      *
      * @return boolean whether the user is logged in successfully
@@ -63,18 +77,5 @@ class ForgotpasswordForm extends Model
         } else {
             return false;
         }
-    }
-
-    /**
-     * Finds user by [[username]]
-     *
-     * @return User|null
-     */
-    protected function getUser()
-    {
-        if ($this->_user === null) {
-            $this->_user = User::findByEmail($this->email);
-        }
-        return $this->_user;
     }
 }

@@ -267,41 +267,78 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                 </dl>
                                             </div>
                                         </div>
-                                        <?php if ($SV->Gender != Yii::$app->user->identity->Gender) { ?>
-                                        <div class="row gray-bg">
-                                            <div class="col-sm-12">
-                                                <div class="profile-control-vertical">
-                                                    <ul class="list-unstyled pull-right">
-                                                        <li><a href="#">Shortlist <i class="fa fa-list-ul"></i></a></li>
-                                                        <li class="s__<?= $SV->id ?>">
-                                                            <?php
-                                                            $Check = \common\models\UserRequest::checkSendInterest(Yii::$app->user->identity->id, $SV->id);
-                                                            if ($Check->from_user_id == Yii::$app->user->identity->id && $Check->to_user_id == $SV->id && $Check->send_request_status == "Yes") {
-                                                                ?>
-                                                                <a href="javascript:void(0)" class="isent"
-                                                                   role="button">Interest Sent <i
-                                                                        class="fa fa-heart"></i></a>
-                                                            <?php } else { ?>
-                                                                <a href="javascript:void(0)" class="sendinterestpopup"
+                                        <?php
+
+                                        if (!Yii::$app->user->isGuest) {
+                                            if ($SV->Gender != Yii::$app->user->identity->Gender) { ?>
+                                                <div class="row gray-bg">
+                                                    <div class="col-sm-12">
+                                                        <div class="profile-control-vertical">
+                                                            <ul class="list-unstyled pull-right">
+                                                                <li><a href="#">Shortlist <i class="fa fa-list-ul"></i></a>
+                                                                </li>
+                                                                <li class="s__<?= $SV->id ?>">
+                                                                    <?php
+                                                                    $Check = \common\models\UserRequest::checkSendInterest(Yii::$app->user->identity->id, $SV->id);
+                                                                    if ($Check->from_user_id == Yii::$app->user->identity->id && $Check->to_user_id == $SV->id && $Check->send_request_status == "Yes") {
+                                                                        ?>
+                                                                        <a href="javascript:void(0)" class="isent"
+                                                                           role="button">Interest Sent <i
+                                                                                class="fa fa-heart"></i></a>
+                                                                    <?php } else { ?>
+                                                                        <a href="javascript:void(0)"
+                                                                           class="sendinterestpopup"
+                                                                           role="button"
+                                                                           data-target="#sendInterest"
+                                                                           data-toggle="modal"
+                                                                           data-id="<?= $SV->id ?>"
+                                                                           data-name="<?= $SV->FullName ?>"
+                                                                           data-rgnumber="<?= $SV->Registration_Number ?>">Send
+                                                                            Interest
+                                                                            <i class="fa fa-heart-o"></i>
+                                                                        </a>
+                                                                    <?php } ?>
+                                                                </li>
+                                                                <li><a href="#" data-toggle="modal" class="send_email"
+                                                                       <?php if (Yii::$app->user->isGuest) { ?>data-target="#sendMail"<?php } else { ?> data-id="<?= $SV->id ?>" <?php } ?>>Send
+                                                                        Email <i
+                                                                            class="fa fa-envelope-o"></i></a></li>
+
+                                                            </ul>
+                                                        </div>
+                                                </div>
+                                            </div>
+
+                                        <?php } ?>
+
+                                        <?php } else { ?>
+                                            <div class="row gray-bg">
+                                                <div class="col-sm-12">
+                                                    <div class="profile-control-vertical">
+                                                        <ul class="list-unstyled pull-right">
+                                                            <li><a href="javascript:void(0)" class="send_email"
                                                                    role="button"
-                                                                   data-target="#sendInterest" data-toggle="modal"
-                                                                   data-id="<?= $SV->id ?>"
-                                                                   data-name="<?= $SV->FullName ?>"
-                                                                   data-rgnumber="<?= $SV->Registration_Number ?>">Send
+                                                                   data-target="#sendMail" data-toggle="modal"
+                                                                    >Shortlist <i class="fa fa-list-ul"></i></a></li>
+                                                            <li class="s__<?= $SV->id ?>">
+                                                                <a href="javascript:void(0)" class="send_email"
+                                                                   role="button"
+                                                                   data-target="#sendMail" data-toggle="modal"
+                                                                    >Send
                                                                     Interest
                                                                     <i class="fa fa-heart-o"></i>
                                                                 </a>
-                                                            <?php } ?>
-                                                        </li>
-                                                        <li><a href="#" data-toggle="modal" class="send_email"
-                                                               <?php if (Yii::$app->user->isGuest) { ?>data-target="#sendMail"<?php } else { ?> data-id="<?= $SV->id ?>" <?php } ?>>Send
-                                                                Email <i
-                                                                    class="fa fa-envelope-o"></i></a></li>
 
-                                                    </ul>
+                                                            </li>
+                                                            <li><a href="#" data-toggle="modal" class="send_email"
+                                                                   data-target="#sendMail">Send
+                                                                    Email <i
+                                                                        class="fa fa-envelope-o"></i></a></li>
+
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                         <?php } ?>
                                     </div>
                                 <?php } ?>
@@ -309,7 +346,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 
                                 <div class="mrg-bt-10 text-center">
                                     <nav>
-                                        <?php require_once(__DIR__ . '\pagination.php'); ?>
+                                        <?php require_once(__DIR__ . '/pagination.php'); ?>
                                     </nav>
                                 </div>
                             <?php } ?>
@@ -391,7 +428,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                             aria-hidden="true">&times;</span> <span
                             class="sr-only">Close</span></button>
                     <?php
-                    if (Yii::$app->user->isGuest) { ?>
+                    if (!Yii::$app->user->isGuest) { ?>
                         <h2 class="text-center">Please Wait</h2>
                     <?php } else { ?>
                         <h2 class="text-center">Information</h2>
@@ -401,7 +438,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                     <div class="row">
                         <div class="col-md-12 mrg-tp-10 ">
                             <?php
-                            if (Yii::$app->user->isGuest) { ?>
+                            if (!Yii::$app->user->isGuest) { ?>
                             <i class="fa fa-spinner fa-spin pink"></i> Loading Information...
                             <?php } else { ?>
                                 <div class="notice kp_warning marg-l"><p><?= Yii::$app->params['loginFirst'] ?></p>

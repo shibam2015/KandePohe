@@ -97,8 +97,8 @@ class SearchController extends Controller
         $Limit = Yii::$app->params['searchingLimit'];
 
         $Offset = (Yii::$app->request->get('Offset') == 0) ? 0 : Yii::$app->request->get('Offset');
-        $Page = (Yii::$app->request->get('page') == 0) ? 0 : Yii::$app->request->get('page');
-        if (isset($Page)) {
+        $Page = (Yii::$app->request->get('page') == 0 || Yii::$app->request->get('page') == '') ? 0 : Yii::$app->request->get('page');
+        if ($Page) {
             $Page = $Page - 1;
             $Offset = $Limit * $Page;
         } else {
