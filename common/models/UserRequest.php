@@ -25,6 +25,8 @@ class UserRequest extends \common\models\base\baseUserRequest
 {
     const SCENARIO_SEND_INTEREST = 'SEND INTEREST';
     const SCENARIO_PROFILE_VIEWED_BY = 'PROFILE VIEWED BY';
+    const SCENARIO_ACCEPT_INTEREST = 'Accept Interest Request';
+    const SCENARIO_DECLINE_INTEREST = 'Decline Interest Request';
     /**
      * @inheritdoc
      */
@@ -86,6 +88,8 @@ class UserRequest extends \common\models\base\baseUserRequest
         return [
             self::SCENARIO_SEND_INTEREST => ['from_user_id', 'to_user_id', 'send_request_status', 'date_send_request'],
             self::SCENARIO_PROFILE_VIEWED_BY => ['from_user_id', 'to_user_id', 'profile_viewed'],
+            self::SCENARIO_ACCEPT_INTEREST => ['from_user_id', 'to_user_id', 'send_request_status', 'date_accept_request'],
+            self::SCENARIO_DECLINE_INTEREST => ['from_user_id', 'to_user_id', 'send_request_status', 'date_decline_request'],
 
         ];
 

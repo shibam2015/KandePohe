@@ -4,6 +4,7 @@ use yii\helpers\Url;
 ?>
 <div></div>
 <div></div>
+<?= $model->send_request_status ?>
 <?php if ($MailArray[$model->id]['MsgCount'] == 1 || $model->send_request_status == 'Yes') { ?>
     <p><?= $MailArray[$model->id]['LastMsg'] ?></p>
     <div class="desc-mail">
@@ -50,7 +51,7 @@ use yii\helpers\Url;
     });
     $(document).on("click",".accept_decline",function(e){  /* Accept-Decline */
           formDataRequest.append("ToUserId", $(".request_response").data("id"));
-          sendRequest("' . Url::to(['mailbox/accept-decline']) . '",".send_message",formDataRequest);
+          mailBox("' . Url::to(['mailbox/accept-decline']) . '",".send_message",formDataRequest);
         });
   ');
 } else {

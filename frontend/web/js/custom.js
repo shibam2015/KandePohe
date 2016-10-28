@@ -389,3 +389,20 @@ function pageError(type, msg) {
     }
     return html;
 }
+
+function mailBox(url, htmlId, dataArr) {
+    loaderStart();
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: dataArr,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (res) {
+            loaderStop();
+            var dataObj = JSON.parse(res);
+            showNotification(dataObj.STATUS, dataObj.MESSAGE);
+        }
+    });
+}

@@ -9,4 +9,5 @@ return [
     'modalTitle' => 'Confirmation',
     'acceptRequest' => 'Are You sure want to Accept Request ?',
     'declineRequest' => 'Are You sure want to Reject Request ?',
+    'requestAccepted' => '#NAME#  is accepted your request.',
 ];

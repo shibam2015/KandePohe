@@ -150,8 +150,7 @@ use yii\helpers\Url;
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <a href="javascript:void(0)"
-                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right accept_decline1"
-                                   data-dismiss="modal">
+                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right accept_decline">
                                     Yes </a>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6 ">

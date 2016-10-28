@@ -17,7 +17,7 @@ use common\components\MailHelper;
 use common\components\CommonHelper;
 use common\components\MessageHelper;
 use common\components\SmsHelper;
-
+use frontend\controllers\UserController;
 /**
  * Site controller
  */
@@ -161,10 +161,10 @@ class MailboxController extends Controller
         $Id = Yii::$app->user->identity->id;
         list($Model, $MailUnreadCount) = $this->actionMoreConversationCommon($Id, $uk);
         return $this->render('moreconversation',
-                [
-                    'model' => $Model,
-                    'MailUnreadCount' => $MailUnreadCount
-                ]
+            [
+                'model' => $Model,
+                'MailUnreadCount' => $MailUnreadCount
+            ]
         );
     }
 
@@ -364,6 +364,41 @@ class MailboxController extends Controller
 
     public function actionAcceptDecline()
     {
+        $Id = Yii::$app->user->identity->id;
+        $ToUserId = Yii::$app->request->post('ToUserId');
+        $Action = Yii::$app->request->post('Action');
+        $RequestModel = new UserRequest();
+        $ModelUser = User::findOne($Id);
+        $ModelToUser = User::findOne($ToUserId);
+        if ($Action == 'Accept') {
+            $Model = $RequestModel->checkUsers($ToUserId, $Id);
+            if ($Model->id) {
+                $Model->scenario = UserRequest::SCENARIO_ACCEPT_INTEREST;
+                $Model->send_request_status = 'Accepted';
+                $Model->date_accept_request = CommonHelper::getTime();
+
+                if ($Model->save()) {
+                    $UserController = new UserController();
+                    $ConvoStatus = $UserController->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['requestAccepted']);
+                    #CommonHelper::pr($ConvoStatus);exit;
+                    if ($ConvoStatus == 'S') {
+                        $LINK = CommonHelper::getSiteUrl('FRONTEND', 1) . 'user/profile?uk=' . $ModelUser->Registration_Number;
+                        $GenderType = ($ModelUser->Gender == 'MALE') ? 'He' : 'She';
+                        $MAIL_DATA = array("EMAIL" => $ModelToUser->email, "EMAIL_TO" => $ModelToUser->email, "NAME" => $ModelToUser->FullName, "USER_NAME" => $ModelUser->FullName, "REGISTER_NO" => $ModelUser->Registration_Number, 'LINK' => $LINK, 'GENDER_TYPE' => $GenderType);
+                        MailHelper::SendMail('INTEREST_REQUEST_ACCEPT', $MAIL_DATA);
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'REQUEST_ACCEPTED');
+                    } else {
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'REQUEST_ACCEPTED');
+                    }
+                } else {
+                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'REQUEST_ACCEPTED');
+                }
+
+            }
+        }
+        #CommonHelper::pr(Yii::$app->request->post());exit;
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
+        return json_encode($return);
 
     }
 }
