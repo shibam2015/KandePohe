@@ -201,9 +201,10 @@ class CommonHelper {
         // User : echo CommonHelper::getUserUploadFolder(2);
         if ($TYPE == 1) {
             $USER_UPLOAD = Yii::getAlias('@frontend') . '/web/uploads/users/';
-        } else {
-            #$USER_UPLOAD = Yii::getAlias('@web') . '/uploads/users/';
+        } else if ($TYPE == 2) {
             $USER_UPLOAD = CommonHelper::getHost() . '/uploads/users/';
+        } else {
+            $USER_UPLOAD = '/uploads/users/';
         }
         return $USER_UPLOAD;
     }
@@ -215,7 +216,7 @@ class CommonHelper {
     }
     public static function getUserDefaultPhoto()
     {
-        $MAIN_URL = CommonHelper::getHost() . CommonHelper::getUserUploadFolder(2);
+        $MAIN_URL = CommonHelper::getHost() . CommonHelper::getUserUploadFolder(3);
         return $MAIN_URL . 'no-user-img.jpg';
     }
 
@@ -333,6 +334,9 @@ class CommonHelper {
                 break;
             case "27":
                 return date("jS M, Y h:i:s a", strtotime($text));
+                break;
+            case "28":
+                return date("jS M, Y h:i a", strtotime($text));
                 break;
             default :
                 return date('M j, Y', strtotime($text));

@@ -85,6 +85,20 @@ class SiteController extends Controller
     {
         $model = new User();
         $model->scenario = User::SCENARIO_REGISTER;
+        if ($model->load(Yii::$app->request->post())) {
+            #CommonHelper::pr($_REQUEST);exit;
+            #  return $this->redirect(['search/basic-search','search-type' => 'basic']);
+            return $this->redirect(['search/basic-search',
+                    'search-type' => 'basic',
+                    'profile-for' => Yii::$app->request->post('User')['Profile_created_for'],
+                    'Community' => Yii::$app->request->post('User')['iCommunity_ID'],
+                    'sub-community' => Yii::$app->request->post('User')['iSubCommunity_ID'],
+                    'agerange' => Yii::$app->request->post('User')['Agerange'],
+                    'height' => Yii::$app->request->post('User')['iHeightID'],
+                ]
+            );
+            exit;
+        }
         return $this->render('index',
             ['model' => $model]
         );

@@ -256,3 +256,8 @@ img.selected {
 .user_tag_delete {
     cursor: pointer;
 }
+
+.nice-select {
+    padding-left: 0px;
+    padding-right: 0px;
+}

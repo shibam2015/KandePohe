@@ -69,51 +69,66 @@ if (!Yii::$app->user->isGuest) {
     <div class="search-filter">
       <div class="container">
         <div class="row filter">
-          <div class="col-sm-4 col-md-2"> <span class="placeholder-text">Profile for</span>
-            <select class="cs-select cs-skin-border top">
-              <option value="Self" disabled selected> Self</option>
-              <option value="Son">Son</option>
-              <option value="Daughter">Daughter</option>
-              <option value="Brother">Brother</option>
-              <option value="Sister">Sister</option>
-              <option value="Friend">Friend</option>
-            </select>
+          <?php
+          $form = ActiveForm::begin([
+              'id' => 'form-search',
+              'enableClientValidation' => true,
+              'enableAjaxValidation' => false,
+              'validateOnSubmit' => true,
+              'validateOnChange' => false,
+
+          ]);
+          ?>
+          <div class="col-sm-4 col-md-2">
+            <?= $form->field($model, 'Profile_created_for')->dropDownList(
+                ['FEMALE' => 'BRIDE', 'MALE' => 'GROOM'],
+                ['class' => 'cs-select cs-skin-border',
+                    'prompt' => 'Looking For'
+                ]
+            )->label(false); ?>
           </div>
           <div class="col-sm-4 col-md-2">
-            <select class="cs-select cs-skin-border">
-              <option value="" disabled selected> Community</option>
-              <option value="Community 1">Community 1</option>
-              <option value="Community 2">Community 2</option>
-              <option value="Community 3">Community 3</option>
-            </select>
+
+            <?= $form->field($model, 'iCommunity_ID')->dropDownList(
+                ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
+                ['class' => 'cs-select cs-skin-border',
+                    'prompt' => 'Community'
+                ]
+
+            )->label(false)->error(false); ?>
+
           </div>
           <div class="col-sm-4 col-md-2">
-            <select class="cs-select cs-skin-border">
-              <option value="" disabled selected> Sub Caste</option>
-              <option value="Bride">Bride</option>
-              <option value="Groom">Groom</option>
-              <option value="Text3">Text3</option>
-            </select>
+            <?= $form->field($model, 'iSubCommunity_ID')->dropDownList(
+                ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
+                ['class' => 'cs-select cs-skin-border',
+                    'prompt' => 'Sub Caste'
+                ]
+
+            )->label(false)->error(false); ?>
           </div>
           <div class="col-sm-4 col-md-2">
-            <select class="cs-select cs-skin-border">
-              <option value="" disabled selected> Age Group</option>
-              <option value="Bride">Bride</option>
-              <option value="Groom">Groom</option>
-              <option value="Text3">Text3</option>
-            </select>
+            <?php
+            $range = range(18, 100);
+            ?>
+            <?= $form->field($model, 'Agerange')->dropDownList(
+                array_combine($range, $range),
+                ['prompt' => 'Age Group',
+                    'class' => 'cs-select cs-skin-border']
+            )->label(false)->error(false); ?>
           </div>
           <div class="col-sm-4 col-md-2">
-            <select class="cs-select cs-skin-border">
-              <option value="" disabled selected> Height</option>
-              <option value="Bride">Bride</option>
-              <option value="Groom">Groom</option>
-              <option value="Text3">Text3</option>
-            </select>
+            <?= $form->field($model, 'iHeightID')->dropDownList(
+                ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
+                ['class' => 'cs-select cs-skin-border',
+                    'prompt' => 'Height'
+                ]
+            )->label(false)->error(false); ?>
           </div>
           <div class="col-sm-4 col-md-2">
-            <input type="button" name="button" value="search" class="btn btn-primary mrg-tp-10">
+            <?= Html::submitButton('SEARCH', ['class' => 'btn btn-primary mrg-tp-10 ', 'name' => 'button']) ?>
           </div>
+          <?php ActiveForm::end(); ?>
         </div>
       </div>
     </div>
@@ -639,5 +654,10 @@ $this->registerJs('
     $("#login_button").click(function(){
     $("#login-form")[0].reset();
     });
+    $("#form-search").on("submit",function(e){
+      var icommunity_id = $("#user-icommunity_id").val();
+      var iSubCommunity_ID = $("#user-iSubCommunity_ID").val();
+    });
+
   ');
 ?>

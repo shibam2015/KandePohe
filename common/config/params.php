@@ -9,4 +9,6 @@ return [
     'modalTitle' => 'Confirmation',
     'acceptRequest' => 'Are You sure want to Accept Request ?',
     'declineRequest' => 'Are You sure want to Reject Request ?',
+    'searchingLimit' => 5,
+    'noRecordsFoundInSearchList' => 'There are no record found as per your searching criteria.',
 ];
