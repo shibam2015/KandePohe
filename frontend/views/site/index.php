@@ -643,8 +643,6 @@ $this->registerJs('
       var icommunity_id = $("#user-icommunity_id").val();
       var iSubCommunity_ID = $("#user-iSubCommunity_ID").val();
     });
-    //$(".ui-datepicker").css("z-index","100");
-
   ');
 
 ?>
@@ -669,6 +667,4 @@ $this->registerJs('
               });
               $confModal.modal({ backdrop : false });
               ');
-
-
 ?>
