@@ -139,7 +139,11 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                     <div class="row mrg-tp-10">
                                         <div class="col-md-12">
                                             <div class="notice kp_info">
-                                                <p><?= Yii::$app->params['noRecordsFoundInSearchList'] ?></p></div>
+                                                <p><?= Yii::$app->params['noRecordsFoundInSearchList'] ?></p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                <span class="pull-right"><a href="<?= Yii::$app->homeUrl ?>" class="text-right">Back To
+                                        Home Page<i class="fa fa-angle-right"></i></a></span>
                                         </div>
                                     </div>
                                 </div>

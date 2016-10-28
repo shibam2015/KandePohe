@@ -83,9 +83,17 @@ class SearchController extends Controller
 
     public function actionBasicSearch()
     {
+        //http://localhost/KandePohe/search/basic-search?search-type=basic&profile-for=FEMALE&Community=1&sub-community=1&agerange=19&height=2
         $Gender = Yii::$app->request->get('profile-for');
-        $Community = Yii::$app->request->get('iCommunity_ID');
-        $WHERE = ($Gender != '') ? ' AND user.Gender="' . $Gender . '" ' : '' OR ($Community != '') ? ' AND user.iCommunity_ID="' . $Community . '" ' : '';
+        $Community = Yii::$app->request->get('Community');
+        $SubCommunity = Yii::$app->request->get('sub-community');
+        $Height = Yii::$app->request->get('height');
+        $WHERE = '';
+        $WHERE = ($Gender != '') ? ' AND user.Gender="' . $Gender . '" ' : '';
+        $WHERE .= ($Community != '') ? ' AND user.iCommunity_ID="' . $Community . '" ' : '';
+        $WHERE .= ($Community != '') ? ' AND user.iCommunity_ID="' . $Community . '" ' : '';
+        $WHERE .= ($SubCommunity != '') ? ' AND user.iSubCommunity_ID="' . $SubCommunity . '" ' : '';
+        $WHERE .= ($Height != '') ? ' AND user.iHeightID="' . $Height . '" ' : '';
         $Limit = Yii::$app->params['searchingLimit'];
 
         $Offset = (Yii::$app->request->get('Offset') == 0) ? 0 : Yii::$app->request->get('Offset');
