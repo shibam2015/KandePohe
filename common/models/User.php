@@ -250,7 +250,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public function scenarios()
     {
         return [
-            self::SCENARIO_LOGIN => ['password_hash'],
+            self::SCENARIO_LOGIN => ['email', 'password'],
             self::SCENARIO_REGISTER => ['email', 'password_hash', 'repeat_password', 'First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'toc', 'Registration_Number'],
             self::SCENARIO_REGISTER1 => ['iReligion_ID', 'First_Name', 'Last_Name', 'iCommunity_ID', 'iSubCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'noc', 'vAreaName', 'cnb'],
             self::SCENARIO_REGISTER2 => ['First_Name', 'Last_Name', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID'],

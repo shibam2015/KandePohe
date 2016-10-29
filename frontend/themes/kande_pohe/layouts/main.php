@@ -67,85 +67,11 @@ AppAsset::register($this);
       <span class="kp_notification_close">&times;</span>
   </div>
 
-  <!-- Modal Forgot Password -->
-  <div class="modal fade" id="fpswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
-        </p>
-      <div class="modal-content">
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <button type="button" class="close"
-                  data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
-          </button>
-          <h2 class="text-center">Forgot Password ?</h2>
-        </div>
-        <!-- Modal Body -->
-        <div class="modal-body">
-          <!--<form>-->
 
-          <?php
-          use   frontend\models\PasswordResetRequestForm;
-          $forgot = new PasswordResetRequestForm();
-          ?>
-          <?php $form = ActiveForm::begin([
-              'id' => 'forget-password',
-              'action' => 'site/request-password-reset',
-              'enableAjaxValidation'=>true,
-              'validateOnSubmit'=>true
-          ]);
-          /**/?><!--       --><?php /*$form = ActiveForm::begin(['id' => 'request-password-reset-form']); */?>
-          <div class="row">
-            <!--<div class="col-sm-10 col-sm-offset-1 text-center"> <span class="error">Please enter valid email address</span> </div>-->
-          </div>
-          <div class="row">
-            <div class="col-sm-10 col-sm-offset-1 text-center">
-              <h4 class="mrg-bt-30 text-dark">We will email you the link to reset the password</h4>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-              <div class="form-cont">
-                <?= $form->field($forgot, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control']) ?>
-              </div>
-              <?= Html::submitButton('REQUEST RESET LINK', ['class' => 'btn btn-primary mrg-tp-10 col-xs-12', 'name' => 'reset-password-request']) ?>
-            </div>
-          </div>
-        </div>
-      </div>
-      <?php ActiveForm::end(); ?>
-      <?php
-      $this->registerJs('
-          $("form#forget-password").on("beforeSubmit",function(e){
-            var form = $(this);
-            if (form.find(".has-error").length) {
-              return false;
-            }
-            $.ajax({
-              url: form.attr("action"),
-              type: "POST",
-              data: form.serialize()+"&vStatus=1",
-              dataType: "JSON",
-              success: function(res){
-                if(res.status == 1) {
-                  $("#fpswd").modal("toggle");
-                  $("#forgot-password-id").html(res.email);
-                  $("#passwordresetrequestform-email").val("");
-                  $("#reset-pswd-link").modal("toggle");
-                }
-              }
-            });
-            return false;
-          });
-        ');
-      ?>
-      <!--</form>-->
-    </div>
-    <!-- Modal Footer -->
-    <div class="modal-footer"></div>
   </div>
   </div>
-  </div>
+
+  <?php if (Yii::$app->user->isGuest) { ?>
   <!-- Modal Reset Password Link -->
   <div class="modal fade" id="reset-pswd-link" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
        aria-hidden="true">
@@ -255,7 +181,7 @@ AppAsset::register($this);
     </div>
 
   </div>
-
+  <?php } ?>
 
   <!-- NOTIFICATION MODEL START -->
   <div class="modal fade" id="notification-model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

@@ -27,7 +27,7 @@ class MailHelper
                 }
             }
         }
-        #$TO_EMAIL = 'parmarvikrantr@gmail.com';
+        $TO_EMAIL = 'parmarvikrantr@gmail.com';
         $MAIL_SUBJECT = $EMAIL_TEMPLATE->vEmailFormatSubject;
         $MAIL_TITLE = $EMAIL_TEMPLATE->vEmailFormatTitle;
         $MAIL_SUBJECT = '=?UTF-8?B?' . base64_encode($MAIL_SUBJECT) . '?=';
@@ -35,7 +35,8 @@ class MailHelper
         #echo " <br> TMESSAGE <br>".$MAIL_MESSAGE;exit;
         $response = Yii::$app->mailer->compose()
             ->setTo($TO_EMAIL)
-            ->setFrom(['kandepohetest@gmail.com' => Yii::$app->name])
+            #->setFrom(['kandepohetest@gmail.com' => Yii::$app->name])
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name])
             ->setSubject($MAIL_SUBJECT)
             ->setHtmlBody($MAIL_MESSAGE)
             ->send();

@@ -1,11 +1,13 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use frontend\components\CommonHelper;
+Use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
 use common\models\LoginForm;
 use yii\captcha\Captcha;
+use frontend\models\PasswordResetRequestForm;
 
+$forgot = new PasswordResetRequestForm();
 /*$religion_data = CommonHelper::getReligion();
 $community_data = CommonHelper::getCommunity();*/
 
@@ -73,10 +75,9 @@ use yii\jui\DatePicker;
           $form = ActiveForm::begin([
               'id' => 'form-search',
               'enableClientValidation' => true,
-              'enableAjaxValidation' => false,
+              'enableAjaxValidation' => true,
               'validateOnSubmit' => true,
-              'validateOnChange' => false,
-
+              'validateOnChange' => true,
           ]);
           ?>
           <div class="col-sm-4 col-md-2">
@@ -348,166 +349,169 @@ use yii\jui\DatePicker;
     </div>
   </div>
 </section>
+<?php if (Yii::$app->user->isGuest) { ?>
+  <!-- Modal Signup -->
+  <div class="modal fade" id="myModalNorm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <p class="text-center mrg-bt-30">
+        <?= Html::img('@web/images/logo.png', ['width' => '157', 'height' => 61, 'alt' => 'logo']); ?>
+      </p>
 
-<!-- Modal Signup -->
-<div class="modal fade" id="myModalNorm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <p class="text-center mrg-bt-30">
-      <?= Html::img('@web/images/logo.png', ['width' => '157','height' => 61,'alt' => 'logo']); ?>
-    </p>
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <button type="button" class="close"
-                data-dismiss="modal"> <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span> </button>
-        <h2 class="text-center">Signup free</h2>
-      </div>
-      <!-- Modal Body -->
-      <div class="modal-body">
-        <?php
-        $form = ActiveForm::begin([
-            'id' => 'form-signup',
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close"
+                  data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+          </button>
+          <h2 class="text-center">Signup Free</h2>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <?php
+          $form = ActiveForm::begin([
+              'id' => 'form-signup',
             //'action' => 'javascript:void(0)',
-            'action' => ['/site/register'],
-            'enableAjaxValidation' => true,
-            'enableClientValidation' => true
+              'action' => ['/site/register'],
+              'enableAjaxValidation' => true,
+              'enableClientValidation' => true
 
-        ]);
-        ?>
-        <button type="button" class="btn btn-primary mrg-tp-10 col-xs-12" data-toggle="modal" id="signup_model_btn" data-target="#signup_model" style="display: none"></button>
-        <div class="row">
-          <div class="col-sm-10 col-sm-offset-1">
-            <div class="form-cont">
-              <?= $form->field($model, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email',['class'=>'input__field input__field--akira form-control'])?>
-            </div>
-            <div class="form-cont">
-              <?= $form->field($model, 'password_hash', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Password</span> </label></span>{error}'])->input('password',['class'=>'input__field input__field--akira form-control'])?>
-            </div>
-            <div class="form-cont">
-              <?= $form->field($model, 'repeat_password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Retype Password</span> </label></span>{error}'])->input('password',['class'=>'input__field input__field--akira form-control'])?>
-            </div>
-            <div class="form-cont">
-              <?= $form->field($model, 'Profile_created_for')->dropDownList(
-                  [''=>'Profile for','BRIDE'=>'BRIDE','GROOM'=>'GROOM','SELF'=>'SELF'],
-                  ['class' => 'cs-select cs-skin-border']
-              )->label(false);?>
-            </div>
-            <div>
-              <div class="row">
-                <div class="form-cont col-xs-6">
-                  <?= $form->field($model, 'First_Name', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">First Name</span> </label></span>{error}'])->input('text',['class'=>'input__field input__field--akira form-control'])?>
-                </div>
-                <div class="form-cont col-xs-6">
-                  <?= $form->field($model, 'Last_Name', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Last Name</span> </label></span>{error}'])->input('text',['class'=>'input__field input__field--akira form-control'])?>
-                </div>
+          ]);
+          ?>
+          <button type="button" class="btn btn-primary mrg-tp-10 col-xs-12" data-toggle="modal" id="signup_model_btn"
+                  data-target="#signup_model" style="display: none"></button>
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <div class="form-cont">
+                <?= $form->field($model, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control']) ?>
               </div>
-            </div>
-            <div class="form-cont">
-              <div class="radio radio-new" id="IVA">
-
-                <?= $form->field($model, 'Gender')->RadioList(
-                    ['MALE'=>'MALE','FEMALE'=>'FEMALE'],
-                    [
-                        'item' => function($index, $label, $name, $checked, $value) {
-
-                          $return = '<input type="radio" class="genderV" id="' . $value . '" name="' . $name . '" value="' . $value . '" >';
-                          $return .= '<label for="'.$value.'">' . ucwords($label) . '</label>';
-                          return $return;
-                        }
-                    ]
+              <div class="form-cont">
+                <?= $form->field($model, 'password_hash', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Password</span> </label></span>{error}'])->input('password', ['class' => 'input__field input__field--akira form-control']) ?>
+              </div>
+              <div class="form-cont">
+                <?= $form->field($model, 'repeat_password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Retype Password</span> </label></span>{error}'])->input('password', ['class' => 'input__field input__field--akira form-control']) ?>
+              </div>
+              <div class="form-cont">
+                <?= $form->field($model, 'Profile_created_for')->dropDownList(
+                    ['' => 'Profile for', 'BRIDE' => 'BRIDE', 'GROOM' => 'GROOM', 'SELF' => 'SELF'],
+                    ['class' => 'cs-select cs-skin-border']
                 )->label(false);?>
               </div>
-            </div>
-
-            <div class="form-cont">
-
-              <?= $form->field($model, 'DOB', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Date Of Birth</span> </label></span>{error}'])->input('text')
-                  ->widget(\yii\jui\DatePicker::classname(),
-                      [
-                          'dateFormat' => 'php:Y-m-d',
-                          'options'=>[
-                              'class'=>'input__field input__field--akira form-control',
-                              'id'=>'DOB',
-                          ],
-                          'clientOptions' => [
-                              'changeMonth' => true,
-                              'yearRange' => '-70:-21',
-                              'changeYear' => true,
-                              'maxDate' => date('Y-m-d',strtotime('-21 year')),
-                          ]
-
-                      ]);
-              ?>
-            </div>
-            <div>
-              <div class="row">
-                <div class="form-cont col-xs-6" >
-                  <?= $form->field($model, 'county_code')->dropDownList(
-                      ['+91'=>'+91'],
-                      ['class' => 'cs-select cs-skin-border','prompt' => 'Country Code']
-                  )->label(false);?>
-                </div>
-                <div class="form-cont col-xs-6" >
-                  <?= $form->field($model, 'Mobile', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Mobile No#</span> </label></span>{error}'])->input('text',['class'=>'input__field input__field--akira form-control'])?>
+              <div>
+                <div class="row">
+                  <div class="form-cont col-xs-6">
+                    <?= $form->field($model, 'First_Name', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">First Name</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control']) ?>
+                  </div>
+                  <div class="form-cont col-xs-6">
+                    <?= $form->field($model, 'Last_Name', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Last Name</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control']) ?>
+                  </div>
                 </div>
               </div>
-              <!-- <div class="row">
-                <div class="col-xs-12">
-                  <script src="https://www.google.com/recaptcha/api.js" type="text/javascript"></script>
-                  <div class="g-recaptcha" data-sitekey="6Lc2xSgTAAAAAGwyfpM9OHwcAa6GZa6-6ghDl4yY"></div>
-                  <div style="color:red;" id="cerror"></div>
+              <div class="form-cont">
+                <div class="radio radio-new" id="IVA">
+
+                  <?= $form->field($model, 'Gender')->RadioList(
+                      ['MALE' => 'MALE', 'FEMALE' => 'FEMALE'],
+                      [
+                          'item' => function ($index, $label, $name, $checked, $value) {
+
+                            $return = '<input type="radio" class="genderV" id="' . $value . '" name="' . $name . '" value="' . $value . '" >';
+                            $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
+                            return $return;
+                          }
+                      ]
+                  )->label(false);?>
                 </div>
-              </div> -->
+              </div>
+
+              <div class="form-cont">
+
+                <?= $form->field($model, 'DOB', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Date Of Birth</span> </label></span>{error}'])->input('text')
+                    ->widget(\yii\jui\DatePicker::classname(),
+                        [
+                            'dateFormat' => 'php:Y-m-d',
+                            'options' => [
+                                'class' => 'input__field input__field--akira form-control',
+                                'id' => 'DOB',
+                            ],
+                            'clientOptions' => [
+                                'changeMonth' => true,
+                                'yearRange' => '-70:-21',
+                                'changeYear' => true,
+                                'maxDate' => date('Y-m-d', strtotime('-21 year')),
+                            ]
+
+                        ]);
+                ?>
+              </div>
+              <div>
+                <div class="row">
+                  <div class="form-cont col-xs-6">
+                    <?= $form->field($model, 'county_code')->dropDownList(
+                        ['+91' => '+91'],
+                        ['class' => 'cs-select cs-skin-border', 'prompt' => 'Country Code']
+                    )->label(false); ?>
+                  </div>
+                  <div class="form-cont col-xs-6">
+                    <?= $form->field($model, 'Mobile', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Mobile No#</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control']) ?>
+                  </div>
+                </div>
+                <!-- <div class="row">
+                  <div class="col-xs-12">
+                    <script src="https://www.google.com/recaptcha/api.js" type="text/javascript"></script>
+                    <div class="g-recaptcha" data-sitekey="6Lc2xSgTAAAAAGwyfpM9OHwcAa6GZa6-6ghDl4yY"></div>
+                    <div style="color:red;" id="cerror"></div>
+                  </div>
+                </div> -->
                 <div class="row">
                   <div class="checkbox col-sm-12 checkbox-new" id="cjkbox">
 
-                        <?= $form->field($model, 'toc')->checkboxList(
-                            ['YES'],
-                            [
-                                'item' => function ($index, $label, $name, $checked, $value) {
+                    <?= $form->field($model, 'toc')->checkboxList(
+                        ['YES'],
+                        [
+                            'item' => function ($index, $label, $name, $checked, $value) {
 
-                                    $return = '<input type="checkbox" id="toc" name="' . $name . '" value="YES" >';
-                                    $return .= '<label for="toc" class="control-label toccl">By clicking ‘Sign Up Free’ you agree to our <a href="#" title="Terms">Terms</a></label>';
-                                    return $return;
-                                }
-                            ]
-                        )->label(false); ?>
+                              $return = '<input type="checkbox" id="toc" name="' . $name . '" value="YES" >';
+                              $return .= '<label for="toc" class="control-label toccl">By clicking ‘Sign Up Free’ you agree to our <a href="#" title="Terms">Terms</a></label>';
+                              return $return;
+                            }
+                        ]
+                    )->label(false); ?>
 
-                    </div>
+                  </div>
                   <div class="col-sm-10">
 
-                        <?= Html::submitButton('Sign up free', ['class' => 'btn btn-primary mrg-tp-10', 'name' => 'signup-button', 'id' => 'btnSignup']) ?>
-                    </div>
-              </div>
+                    <?= Html::submitButton('Sign up free', ['class' => 'btn btn-primary mrg-tp-10', 'name' => 'signup-button', 'id' => 'btnSignup']) ?>
+                  </div>
+                </div>
                 <?php ActiveForm::end(); ?>
 
                 <div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
   </div>
-</div>
 
-<!-- Modal Login -->
-<div class="modal fade login login-top" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true" data-loading-text="Login...">
-  <div class="modal-dialog">
-    <p class="text-center mrg-bt-10"><?= Html::img('@web/images/logo.png', ['width' => '157','height' => 61,'alt' => 'logo']); ?></p>
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
+  <!-- Modal Login -->
+  <div class="modal fade login login-top" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true" data-loading-text="Login..">
+    <div class="modal-dialog">
+      <p class="text-center mrg-bt-10"><?= Html::img('@web/images/logo.png', ['width' => '157', 'height' => 61, 'alt' => 'logo']); ?></p>
+
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
           <button type="button" class="close"
                   data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
           </button>
-        <h2 class="text-center">Log into your account</h2>
-      </div>
-      <!-- Modal Body -->
-      <div class="modal-body">
+          <h2 class="text-center">Log Into Your Account</h2>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
           <?php
           $login = new LoginForm();
           ?>
@@ -519,56 +523,108 @@ use yii\jui\DatePicker;
           ]);
           ?>
           <div class="row">
-              <div class="col-sm-10 col-sm-offset-1 text-center">
-                  <!--<span class="error">Email or Password used is incorrect</span> --></div>
+            <div class="col-sm-10 col-sm-offset-1 text-center">
+              <!--<span class="error">Email or Password used is incorrect</span> --></div>
           </div>
           <div class="row">
-              <div class="col-sm-10 col-sm-offset-1">
-                  <div
-                      class="form-cont"> <?= $form->field($login, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control']) ?> </div>
-                  <div class="form-cont">
-              <?= $form->field($login, 'password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Password</span> </label></span>{error}'])->input('password',['class'=>'input__field input__field--akira form-control'])?>
-            </div>
-                  <div class="checkbox">
-                      <input id="Remember" type="checkbox" name="Remember" value="yes">
+            <div class="col-sm-10 col-sm-offset-1">
+              <div
+                  class="form-cont"> <?= $form->field($login, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control']) ?> </div>
+              <div class="form-cont">
+                <?= $form->field($login, 'password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Password</span> </label></span>{error}'])->input('password', ['class' => 'input__field input__field--akira form-control']) ?>
+              </div>
+              <div class="checkbox">
+                <input id="Remember" type="checkbox" name="Remember" value="yes">
 
-                      <label for="Remember" class="control-label">Remember me</label>
-                      <a href="#" class="pull-right mrg-tp-10" title="Forgot password" data-toggle="modal"
-                         data-target="#fpswd">Forgot password?</a></div>
-                  <!-- <a href="dash-board.html" class="">Login</a> -->
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary mrg-tp-10 col-xs-12 login-btn', 'id' => '#loginbtn', 'name' => 'login-button', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Login...']) ?>
-                  <div class="bar-devider"><span>OR</span></div>
-                  <a class="btn btn-block btn-social btn-facebook"> <i class="fa fa-facebook"></i> Sign in with Facebook
-                  </a>
-                  <!--<a class="btn btn-block btn-social btn-google-plus"> <i class="fa fa-google-plus"></i> Sign in with Google </a>-->
-          </div>
+                <label for="Remember" class="control-label">Remember me</label>
+                <a href="#" class="pull-right mrg-tp-10" title="Forgot password" data-toggle="modal"
+                   data-target="#fpswd">Forgot password?</a></div>
+              <!-- <a href="dash-board.html" class="">Login</a> -->
+              <?= Html::submitButton('Login', ['class' => 'btn btn-primary mrg-tp-10 col-xs-12 login-btn', 'id' => '#loginbtn', 'name' => 'login-button', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Login...']) ?>
+              <div class="bar-devider"><span>OR</span></div>
+              <a class="btn btn-block btn-social btn-facebook"> <i class="fa fa-facebook"></i> Sign in with Facebook
+              </a>
+              <!--<a class="btn btn-block btn-social btn-google-plus"> <i class="fa fa-google-plus"></i> Sign in with Google </a>-->
+            </div>
           </div>
           <?php ActiveForm::end(); ?>
+        </div>
       </div>
-    </div>
 
       <!-- Modal Footer -->
+    </div>
   </div>
-</div>
+  <!-- Modal Sign Up After -->
+  <div class="modal fade" id="signup_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <p class="text-center mrg-bt-30"><img src="images/logo.png" width="157" height="61" alt="logo"></p>
 
-<!-- Modal Sign Up After -->
-<div class="modal fade" id="signup_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <p class="text-center mrg-bt-30"><img src="images/logo.png" width="157" height="61" alt="logo" ></p>
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <button type="button" class="close"
-                data-dismiss="modal"> <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span> </button>
-        <!--<h2 class="text-center">Signup free</h2>-->
-      </div>
-      <!-- Modal Body -->
-      <div class="modal-body" id="signupMSG">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close"
+                  data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+          </button>
+          <!--<h2 class="text-center">Signup free</h2>-->
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body" id="signupMSG">
 
+        </div>
       </div>
     </div>
   </div>
-</div>
+  <!-- Modal Forgot Password -->
+  <div class="modal fade" id="fpswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+      </p>
+
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close"
+                  data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+          </button>
+          <h2 class="text-center">Forgot Password ?</h2>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <!--<form>-->
+          <?php $form = ActiveForm::begin([
+              'id' => 'forget-password',
+              'action' => 'site/request-password-reset',
+              'enableAjaxValidation' => true,
+              'validateOnSubmit' => true
+          ]);
+          /**/ ?><!--       --><?php /*$form = ActiveForm::begin(['id' => 'request-password-reset-form']); */ ?>
+          <div class="row">
+            <!--<div class="col-sm-10 col-sm-offset-1 text-center"> <span class="error">Please enter valid email address</span> </div>-->
+          </div>
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1 text-center">
+              <h4 class="mrg-bt-30 text-dark">We will email you the link to reset the password</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <div class="form-cont">
+                <?= $form->field($forgot, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control']) ?>
+              </div>
+              <?= Html::submitButton('REQUEST RESET LINK', ['class' => 'btn btn-primary mrg-tp-10 col-xs-12 reset_password', 'name' => 'reset-password-request', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Wait...']) ?>
+            </div>
+          </div>
+        </div>
+      </div>
+      <?php ActiveForm::end(); ?>
+      <!--</form>-->
+    </div>
+    <!-- Modal Footer -->
+    <div class="modal-footer"></div>
+  </div>
+
+<?php } ?>
 
 <style type="text/css">
   .ui-datepicker{
@@ -590,14 +646,13 @@ use yii\jui\DatePicker;
     color: #ee1845;
 
   }
-
   .btn-primary.disabled, .btn-primary.disabled.active, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled].active, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary.active, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
     background-color: #ee1845;
     border-color: #ee1845;
   }
 </style>
-<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/processing/processing.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
-<?php
+<?php if (Yii::$app->user->isGuest) { ?>
+  <?php # SIGN UP
 $this->registerJs('
     $("body").on("submit","#form-signup",function(e){
       var form = $(this);
@@ -644,11 +699,35 @@ $this->registerJs('
       var iSubCommunity_ID = $("#user-iSubCommunity_ID").val();
     });
   ');
-
 ?>
-
-<?php
+  <?php #Password RESET
 $this->registerJs('
+          $("form#forget-password").on("beforeSubmit",function(e){
+            var form = $(this);
+            if (form.find(".has-error").length) {
+              return false;
+            }
+            $.ajax({
+              url: form.attr("action"),
+              type: "POST",
+              data: form.serialize()+"&vStatus=1",
+              dataType: "JSON",
+              success: function(res){
+                if(res.status == 1) {
+                  $("#fpswd").modal("toggle");
+                  $("#forgot-password-id").html(res.email);
+                  $("#passwordresetrequestform-email").val("");
+                  $("#fpswd").modal("toggle");
+                  $("#reset-pswd-link").modal("toggle");
+                }
+              }
+            });
+            return false;
+          });
+        ');
+  ?>
+  <?php # DOB
+  $this->registerJs('
                 $(".genderV").on("change",function(e){
                   var genderVal = $(this).val();
                   if(genderVal == "FEMALE") {
@@ -660,6 +739,14 @@ $this->registerJs('
                     $("#DOB").datepicker("option","yearRange","-70:-21");
                   }
                 });
+
+       $(".reset_password").on("click", function() {
+        var $this = $(this);
+        $this.button("loading");
+        setTimeout(function() {
+            $this.button("reset");
+        }, 15000);
+      });
               var enforceModalFocusFn = $.fn.modal.Constructor.prototype.enforceFocus;
               $.fn.modal.Constructor.prototype.enforceFocus = function() {};
               $confModal.on("hidden", function() {
@@ -668,3 +755,4 @@ $this->registerJs('
               $confModal.modal({ backdrop : false });
               ');
 ?>
+<?php } ?>
