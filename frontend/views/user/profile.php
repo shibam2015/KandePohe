@@ -93,8 +93,9 @@ use yii\widgets\Pjax;
                                     <dl class="dl-horizontal mrg-tp-20">
                                         <dt>Personal Details</dt>
                                         <dd><?= CommonHelper::getAge($model->DOB); ?> years,
-                                            <?= CommonHelper::setInputVal($model->height->vName, 'text'); ?>, Capricorn
-                                            <!-- TODO : Raashi -->
+                                            <?= CommonHelper::setInputVal($model->height->vName, 'text'); ?>
+                                            , <?= CommonHelper::setInputVal($model->raashiName->Name, 'text') ?>
+
                                         <dd>
 
                                         <dt>Marital Status</dt>

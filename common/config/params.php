@@ -12,6 +12,6 @@ return [
     'requestAccepted' => '#NAME#  is accepted your request.',
     'searchingLimit' => 3,
     'noRecordsFoundInSearchList' => 'There are no record found as per your searching criteria.',
-    'loginFirst' => 'For this you have to login first..',
+    'loginFirst' => 'For this you have to login first...!',
 ];
 

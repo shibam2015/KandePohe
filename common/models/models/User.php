@@ -8,6 +8,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use common\models\UserRequest;
+
 /**
  * User model
  *
@@ -22,7 +23,6 @@ use common\models\UserRequest;
  * @property integer $updated_at
  * @property string $password write-only password
  */
-
 class User extends \common\models\base\baseUser implements IdentityInterface
 {
     const STATUS_DELETED = 0;
@@ -68,7 +68,6 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $maxage;
     public $Profile_created_for_pref;
     public $commentAdmin;
-    public $Agerange;
     // public $captcha;
     /**
      * @inheritdoc
@@ -171,6 +170,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             return 0;
         }
     }
+
     public static function findRecentJoinedUserList($Gender, $Limit = 4) # Get user list Gender Wise with limit
     {
         return static::find()->where(['Gender' => $Gender, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->limit($Limit)->all();
@@ -188,12 +188,6 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     {
         $RegisterNo = User::find()->select('Registration_Number')->where(['id' => $Id])->one();
         return $RegisterNo->Registration_Number;
-    }
-
-    public static function searchBasic($WHERE = '', $Offset = 0, $Limit = '') # Get user list Gender Wise with limit
-    {
-        $Records = User::find()->select(' * ')->where(("1=1  AND user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "') $WHERE "))->offset($Offset)->limit($Limit)->all();
-        return $Records;
     }
 
     /**
@@ -284,19 +278,18 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     /**
      * @inheritdoc
      */
-    public function checkDobYear($attribute,$params)
+    public function checkDobYear($attribute, $params)
     {
         $date1 = date('Y-m-d');
         $date2 = $this->DOB;
         $diff = abs(strtotime($date2) - strtotime($date1));
-        $years = floor($diff / (365*60*60*24));
+        $years = floor($diff / (365 * 60 * 60 * 24));
 
-        if($this->Gender == 'FEMALE'){
-            if($years < 18)
+        if ($this->Gender == 'FEMALE') {
+            if ($years < 18)
                 $this->addError('DOB', 'Your age should be grater than 18 Years');
-        }
-        else {
-            if($years < 21)
+        } else {
+            if ($years < 21)
                 $this->addError('DOB', 'Your age should be grater than 21 Years');
         }
 
@@ -473,8 +466,9 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         $this->password_reset_token = null;
     }
 
-    public function getFullName(){
-        return $this->First_Name.' '.$this->Last_Name;
+    public function getFullName()
+    {
+        return $this->First_Name . ' ' . $this->Last_Name;
     }
 
     public function getReligionName()
@@ -524,7 +518,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public function getCityName()
     {
-        return $this->hasOne(Cities ::className(), ['iCityId' => 'iCityId']);
+        return $this->hasOne(Cities::className(), ['iCityId' => 'iCityId']);
     }
 
     public function getCountryNameCA()
@@ -539,7 +533,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public function getCityNameCA()
     {
-        return $this->hasOne(Cities ::className(), ['iCityId' => 'iCityCAId']);
+        return $this->hasOne(Cities::className(), ['iCityId' => 'iCityCAId']);
     }
 
     public function getDistrictNameCA()
@@ -559,61 +553,61 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public function getEducationLevelName()
     {
-        return $this->hasOne(EducationLevel ::className(), ['iEducationLevelID' => 'iEducationLevelID']);
+        return $this->hasOne(EducationLevel::className(), ['iEducationLevelID' => 'iEducationLevelID']);
     }
 
     public function getEducationFieldName()
     {
-        return $this->hasOne(EducationField ::className(), ['iEducationFieldID' => 'iEducationFieldID']);
+        return $this->hasOne(EducationField::className(), ['iEducationFieldID' => 'iEducationFieldID']);
     }
 
     public function getWorkingWithName()
     {
-        return $this->hasOne(WorkingWith ::className(), ['iWorkingWithID' => 'iWorkingWithID']);
+        return $this->hasOne(WorkingWith::className(), ['iWorkingWithID' => 'iWorkingWithID']);
     }
 
     public function getWorkingAsName()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iWorkingAsID']);
+        return $this->hasOne(WorkingAS::className(), ['iWorkingAsID' => 'iWorkingAsID']);
     }
 
     public function getAnnualIncome()
     {
-        return $this->hasOne(AnnualIncome ::className(), ['iAnnualIncomeID' => 'iAnnualIncomeID']);
+        return $this->hasOne(AnnualIncome::className(), ['iAnnualIncomeID' => 'iAnnualIncomeID']);
     }
 
     public function getHeight()
     {
-        return $this->hasOne(MasterHeight ::className(), ['iHeightID' => 'iHeightID']);
+        return $this->hasOne(MasterHeight::className(), ['iHeightID' => 'iHeightID']);
     }
 
     public function getDietName()
     {
-        return $this->hasOne(MasterDiet ::className(), ['iDietID' => 'vDiet']);
+        return $this->hasOne(MasterDiet::className(), ['iDietID' => 'vDiet']);
     }
 
     public function getFatherStatus()
     {
-        $ABC = $this->hasOne(MasterFmStatus ::className(), ['iFMStatusID' => 'iFatherStatusID']);
+        $ABC = $this->hasOne(MasterFmStatus::className(), ['iFMStatusID' => 'iFatherStatusID']);
 
         return $ABC;
     }
 
     public function getFatherStatusId()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iFatherWorkingAsID']);
+        return $this->hasOne(WorkingAS::className(), ['iWorkingAsID' => 'iFatherWorkingAsID']);
     }
 
     public function getMotherStatus()
     {
-        $ABC = $this->hasOne(MasterFmStatus ::className(), ['iFMStatusID' => 'iMotherStatusID']);
+        $ABC = $this->hasOne(MasterFmStatus::className(), ['iFMStatusID' => 'iMotherStatusID']);
 
         return $ABC;
     }
 
     public function getMotherStatusId()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iMotherWorkingAsID']);
+        return $this->hasOne(WorkingAS::className(), ['iWorkingAsID' => 'iMotherWorkingAsID']);
     }
 
     /**
@@ -679,6 +673,10 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $this->hasOne(PreferredDressStyle::className(), ['ID' => 'PreferredDressID']);
     }
 
+    public function getPreferredMoviesName()
+    {
+        return $this->hasOne(PreferredMovies::className(), ['ID' => 'PreferredMovieID']);
+    }
 
 
     /*public function generateUniqueRandomNumber($length = 9) {
@@ -690,11 +688,6 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             return $this->generateUniqueRandomNumber($length);
 
     }*/
-
-    public function getPreferredMoviesName()
-    {
-        return $this->hasOne(PreferredMovies::className(), ['ID' => 'PreferredMovieID']);
-    }
 
     public function getMotherTongue()
     {
@@ -711,19 +704,20 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $this->vAreaNameCA . ", " . $this->talukaNameCA->vName . ", " . $this->districtNameCA->vName . ", " . $this->cityNameCA->vCityName . ", " . $this->stateNameCA->vStateName . ", " . $this->countryNameCA->vCountryName;
     }
 
-    public function getDisplayMobile(){
+    public function getDisplayMobile()
+    {
         return ($this->county_code != '') ? $this->county_code . " " . $this->Mobile : $this->Mobile;
     }
 
-    public function setCompletedStep($step) {
+    public function setCompletedStep($step)
+    {
         $returnVal = $this->completed_step;
-        if($returnVal==""){
+        if ($returnVal == "") {
             $returnVal = $step;
-        }
-        else {
+        } else {
             $arrStep = explode(',', $returnVal);
-            if(!in_array($step, $arrStep)){
-                $returnVal = $returnVal.','.$step;
+            if (!in_array($step, $arrStep)) {
+                $returnVal = $returnVal . ',' . $step;
             }
         }
         return $returnVal;

@@ -86,8 +86,17 @@ class SearchController extends Controller
         $Gender = Yii::$app->request->get('profile-for');
         $Community = Yii::$app->request->get('iCommunity_ID');
         $WHERE = ($Gender != '') ? ' AND user.Gender="' . $Gender . '" ' : '' OR ($Community != '') ? ' AND user.iCommunity_ID="' . $Community . '" ' : '';
-        $Offset = (Yii::$app->request->get('Offset') == 0) ? 0 : Yii::$app->request->get('Offset');
         $Limit = Yii::$app->params['searchingLimit'];
+
+        $Offset = (Yii::$app->request->get('Offset') == 0) ? 0 : Yii::$app->request->get('Offset');
+        $Page = (Yii::$app->request->get('page') == 0) ? 0 : Yii::$app->request->get('page');
+        if (isset($Page)) {
+            $Page = $Page - 1;
+            $Offset = $Limit * $Page;
+        } else {
+            $Page = 0;
+            $Offset = 0;
+        }
 
         $TotalRecords = count(User::searchBasic($WHERE, 0));
         $Model = User::searchBasic($WHERE, $Offset, $Limit);
@@ -111,7 +120,8 @@ class SearchController extends Controller
                 'TotalRecords' => $TotalRecords,
                 'Photos' => $Photos,
                 'Offset' => $Offset,
-                'Limit' => $Limit
+                'Limit' => $Limit,
+                'Page' => $Page
             ]
         );
     }
