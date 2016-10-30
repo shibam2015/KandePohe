@@ -421,3 +421,11 @@ function mailBox(url, htmlId, dataArr) {
         }
     });
 }
+/*
+ $(document).on("click",".preferences_submit",function(e){
+ var $this = $(this);
+ $this.button("loading");
+ setTimeout(function() {
+ $this.button("reset");
+ }, 8000);
+ });*/

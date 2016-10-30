@@ -35,12 +35,14 @@ use yii\widgets\Pjax;
                                                 <!-- Wrapper for slides -->
                                                 <div class="carousel-inner">
                                                     <?php if (count($PhotoList) > 0) {
+                                                        #CommonHelper::pr($PhotoList);exit;
                                                         foreach ($PhotoList as $K => $V) {
                                                             $SELECTED = '';
                                                             if ($V['Is_Profile_Photo'] == 'YES') {
                                                                 $SELECTED = "active";
                                                             } ?>
-                                                            <div class="item <?= $SELECTED ?>">
+                                                            <!--<div class="item <?/*= $SELECTED */ ?>">-->
+                                                            <div class="item <?= ($K == 0) ? 'active' : ''; ?>">
                                                                 <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $V['File_Name'], 140), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
                                                             </div>
                                                         <?php }

@@ -829,11 +829,13 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 <?php
 $this->registerJs('
     function getInlineDetail(url,htmlId,cancel){
+     loaderStart();
         $.ajax({
         url : url,
         type:"POST",
         data:{"cancel":cancel},
-        success:function(res){          
+        success:function(res){
+                  loaderStop();
           $(htmlId).html(res);
         }
       });
@@ -847,7 +849,7 @@ $this->registerJs('
         getInlineDetail("'.Url::to(['user/edit-myinfo']).'",".dis_my_info","0");
     });
     getInlineDetail("'.Url::to(['user/edit-myinfo']).'",".dis_my_info","1");
-    $(document).on("click","#cancel_edit_myinfo",function(e){
+    $(document).on("click","#cancel_edit_info",function(e){
         getInlineDetail("'.Url::to(['user/edit-myinfo']).'",".dis_my_info","1");
     });
 

@@ -6,7 +6,6 @@ use yii\helpers\ArrayHelper;
 use common\models\LoginForm;
 use yii\captcha\Captcha;
 use frontend\models\PasswordResetRequestForm;
-
 $forgot = new PasswordResetRequestForm();
 /*$religion_data = CommonHelper::getReligion();
 $community_data = CommonHelper::getCommunity();*/
@@ -357,7 +356,6 @@ use yii\jui\DatePicker;
       <p class="text-center mrg-bt-30">
         <?= Html::img('@web/images/logo.png', ['width' => '157', 'height' => 61, 'alt' => 'logo']); ?>
       </p>
-
       <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header">
@@ -501,7 +499,6 @@ use yii\jui\DatePicker;
        aria-hidden="true" data-loading-text="Login..">
     <div class="modal-dialog">
       <p class="text-center mrg-bt-10"><?= Html::img('@web/images/logo.png', ['width' => '157', 'height' => 61, 'alt' => 'logo']); ?></p>
-
       <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header">
@@ -559,7 +556,6 @@ use yii\jui\DatePicker;
        aria-hidden="true">
     <div class="modal-dialog">
       <p class="text-center mrg-bt-30"><img src="images/logo.png" width="157" height="61" alt="logo"></p>
-
       <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header">
@@ -580,7 +576,6 @@ use yii\jui\DatePicker;
     <div class="modal-dialog">
       <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
       </p>
-
       <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header">
