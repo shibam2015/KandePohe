@@ -434,7 +434,7 @@ $(document).ready(function()
                         });
           });
           
-          $('body').on('click','.suggest_tag_all',function () // Add All from suggested tag
+          $('body').on('click','.suggest_tag_all_v',function () // Add All from suggested tag
           {
                         var formData = new FormData();
                         formData.append( 'ACTION', 'ADD-ALL-TAG');                        

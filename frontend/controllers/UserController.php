@@ -1194,6 +1194,32 @@ class UserController extends Controller
         return $this->actionRenderAjax($TAG_LIST_USER, '_tags', $show);
     }
 
+    public function actionAddAllTags()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $show = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('TagId') != '' && Yii::$app->request->post('TagId') != 0)) {
+            $show = true;
+            $TAG_LIST = Tags::find()->all();
+            $TAG_LIST_USER = UserTag::find()->where(['iUser_Id' => $id])->all();
+            $IN_USER_TAG_LIST = array();
+            foreach ($TAG_LIST_USER as $TK => $TV) {
+                array_push($IN_USER_TAG_LIST, $TV['tag_id']);
+            }
+            foreach ($TAG_LIST as $K => $V) {
+                if (!in_array($V['ID'], $IN_USER_TAG_LIST)) {
+                    $USER_TAG = new UserTag();
+                    $USER_TAG->iUser_Id = $id;
+                    $USER_TAG->tag_id = $V['ID'];
+                    $ACTION_FLAG = $USER_TAG->save();
+                }
+            }
+        }
+        $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
+        return $this->actionRenderAjax($TAG_LIST_USER, '_tags', $show);
+    }
+
     public function actionTagDelete()
     {
         $id = Yii::$app->user->identity->id;

@@ -50,5 +50,15 @@ function getTagData(url,htmlId,id){
         }, 1000);
         
     });
+    $("body").on("click",".suggest_tag_all",function () // Add All from suggested tag
+          {
+                  getTagData("' . Url::to(['user/add-all-tags']) . '","#user_tag_list","1");
+                  setTimeout(function(){
+                    getTagData("' . Url::to(['user/tag-suggestion-list']) . '","#suggest_tag_list","1");
+                    getTagData("' . Url::to(['user/tag-count']) . '","#tag_count","1");
+                  }, 1000);
+          });
+
+
   ');
 ?>
