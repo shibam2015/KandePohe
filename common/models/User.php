@@ -70,6 +70,13 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $commentAdmin;
     public $Agerange;
     public $Profile_for;
+    public $age_from;
+    public $age_to;
+
+    public $Community;
+    public $SubCommunity;
+    public $height;
+
     // public $captcha;
     /**
      * @inheritdoc

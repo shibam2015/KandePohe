@@ -41,13 +41,13 @@ use yii\jui\DatePicker;
 
               <ul class="list-inline">
                 <?php if($id){ ?>
-                    <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', ['site/logout'], ['data-method' => 'post']) ?></li>
-                    <li><a href="user/my-profile" title="Profile">Profile</a></li>
+                  <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', ['site/logout'], ['data-method' => 'post']) ?></li>
+                  <li><a href="user/my-profile" title="Profile">Profile</a></li>
                 <?php } else { ?>
                   <li><a href="#" title="Login" data-toggle="modal" data-target="#login" id="login_button">Login</a>
                   </li>
-                    <li><a href="#" title="Sign up Free" data-toggle="modal" data-target="#myModalNorm" id="suf">Sign up
-                            Free</a></li>
+                  <li><a href="#" title="Sign up Free" data-toggle="modal" data-target="#myModalNorm" id="suf">Sign up
+                      Free</a></li>
                 <?php } ?>
               </ul>
             </div>
@@ -647,8 +647,22 @@ use yii\jui\DatePicker;
   }
 </style>
 <?php if (Yii::$app->user->isGuest) { ?>
+  <?php # Popup Open
+  if ($ref == 'login') {
+    $this->registerJs('
+              $("#login").modal("toggle");
+    ');
+  }
+
+  if ($ref == 'signup') {
+    $this->registerJs('
+              $("#myModalNorm").modal("toggle");
+    ');
+  }
+  ?>
+
   <?php # SIGN UP
-$this->registerJs('
+  $this->registerJs('
     $("body").on("submit","#form-signup",function(e){
       var form = $(this);
       if(form.find(".has-error").length) {
@@ -693,10 +707,11 @@ $this->registerJs('
       var icommunity_id = $("#user-icommunity_id").val();
       var iSubCommunity_ID = $("#user-iSubCommunity_ID").val();
     });
+
   ');
-?>
+  ?>
   <?php #Password RESET
-$this->registerJs('
+  $this->registerJs('
           $("form#forget-password").on("beforeSubmit",function(e){
             var form = $(this);
             if (form.find(".has-error").length) {
@@ -749,5 +764,6 @@ $this->registerJs('
               });
               $confModal.modal({ backdrop : false });
               ');
-?>
+  ?>
+
 <?php } ?>

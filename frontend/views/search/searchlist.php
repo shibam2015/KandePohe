@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -14,6 +15,8 @@ $HOME_URL = Yii::getAlias('@web') . "/";
 $HOME_URL_SITE = Yii::getAlias('@web') . "/site/";
 $UPLOAD_DIR = Yii::getAlias('@frontend') . '/web/uploads/';
 $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
+
+$M1 = array();
 ?>
 
 <div class="main-section">
@@ -31,96 +34,195 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                     <div class="col-md-7">
                         <div class="sidebar1">
                             <div class="mrg-tp-20">
-                                <!--<div class="dropdown drp-lg">
+                                <div class="dropdown drp-lg">
                                     <button class="btn gray-filter dropdown-toggle" id="filter-toggle" type="button"
                                             aria-haspopup="true" aria-expanded="true"> Filters <i
                                             class="fa indicator fa-angle-down"></i></button>
-                                    <div class="open-div">
-                                        <ul class="list-inline">
-                                            <li>
-                                                <div id="age" class="filter-show">
-                                                    <label for="age">Age</label>
-                                                    <select id="age" class="select">
-                                                        <option value="option 1">18</option>
-                                                        <option value="option 2">19</option>
-                                                        <option value="option 3">20</option>
-                                                        <option value="option 1">20</option>
-                                                        <option value="option 2">21</option>
-                                                        <option value="option 3">30</option>
-                                                    </select>
-                                                    <select id="ageTo" class="select">
-                                                        <option value="option 1">18</option>
-                                                        <option value="option 2">19</option>
-                                                        <option value="option 3">20</option>
-                                                        <option value="option 1">20</option>
-                                                        <option value="option 2">21</option>
-                                                        <option value="option 3">30</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <label for="Community">Community</label>
-                                                <select id="Community" class="select">
-                                                    <option value="option 1">Community1</option>
-                                                    <option value="option 2">Community2</option>
-                                                    <option value="option 3">Community3</option>
-                                                </select>
-                                            </li>
-                                            <li>
-                                                <label for="SubCommunity">Sub-Community</label>
-                                                <select id="SubCommunity" class="select">
-                                                    <option value="option 1">SubCommunity1</option>
-                                                    <option value="option 2">SubCommunity2</option>
-                                                    <option value="option 3">SubCommunity3</option>
-                                                </select>
-                                            </li>
-                                            <li>
-                                                <label for="caste">Caste</label>
-                                                <select id="caste" class="select">
-                                                    <option value="option 1">caste1</option>
-                                                    <option value="option 2">caste2</option>
-                                                    <option value="option 3">caste3</option>
-                                                </select>
-                                            </li>
-                                            <li>
-                                                <label for="Subcaste">Sub Caste</label>
-                                                <select id="Subcaste" class="select">
-                                                    <option value="option 1">Subcaste1</option>
-                                                    <option value="option 2">Subcaste2</option>
-                                                    <option value="option 3">Subcaste3</option>
-                                                </select>
-                                            </li>
-                                            <li>
-                                                <label for="height">Height</label>
-                                                <input type="text" class="" placeholder="5ft 5">
-                                            </li>
-                                            <li>
-                                                <label for="MaritalStatus">Marital Status</label>
-                                                <select id="Subcaste" class="select">
-                                                    <option value="option 1">Doesn't Matter</option>
-                                                    <option value="option 2">Divorced</option>
-                                                    <option value="option 3">Widowed</option>
-                                                    <option value="option 3">Never Married</option>
-                                                    <option value="option 3">Awaiting Divorce</option>
-                                                    <option value="option 3">Annulled</option>
-                                                </select>
-                                            </li>
-                                            <div>
-                                                <label for="amount">Area:</label>
+                                    <div class="open-div"
+                                        >
 
-                                                <div id="slider-range"></div>
-                                                <input type="text" id="amount" readonly>
+                                        <?php
+                                        $form = ActiveForm::begin([
+                                            'id' => 'form',
+                                            'action' => '',
+                                            'options' => ['data-pjax' => true],
+                                            'layout' => 'horizontal',
+                                            'validateOnChange' => false,
+                                            'validateOnSubmit' => true,
+                                            'fieldConfig' => [
+                                                'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
+                                                'horizontalCssClasses' => [
+                                                    'label' => 'col-sm-3 col-xs-3',
+                                                    'offset' => '',
+                                                    'wrapper' => 'col-sm-8 col-xs-8',
+                                                    'error' => '',
+                                                    'hint' => '',
+                                                ]
+                                            ]
+                                        ]);
+                                        ?>
+
+
+                                        <div class="row">
+                                            <?php
+                                            $heightrange = range(134, 204);
+                                            $range = range(18, 100);
+                                            ?>
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="mid-col">
+                                                        <div class="form-cont bs">
+                                                            <?= $form->field($TempModel, 'age_from')->dropDownList(
+                                                                array_combine($range, $range),
+                                                                ['class' => 'cs-select cs-skin-border',
+                                                                    'prompt' => 'From']
+                                                            )->label(true)->error(false); ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="mid-col">
+                                                        <div class="form-cont bs">
+                                                            <?= $form->field($TempModel, 'age_to')->dropDownList(
+                                                                array_combine($range, $range),
+                                                                ['class' => 'cs-select cs-skin-border',
+                                                                    'prompt' => 'To']
+                                                            )->label(true)->error(false); ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </ul>
-                                        <input type="button" name="button" value="search" class="btn btn-primary">
-                                        <input type="reset" name="button" value="Reset" class="btn btn-primary">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="mid-col">
+                                                        <div class="form-cont bs">
+                                                            <?= $form->field($TempModel, 'Community')->dropDownList(
+                                                                ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
+                                                                ['class' => 'cs-select cs-skin-border',
+                                                                    'prompt' => 'Community'
+                                                                ]
+                                                            )->label(true)->error(false); ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="mid-col">
+                                                        <div class="form-cont bs">
+                                                            <?= $form->field($TempModel, 'SubCommunity')->dropDownList(
+                                                                ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
+                                                                ['class' => 'cs-select cs-skin-border',
+                                                                    'prompt' => 'Sub Community']
+                                                            )->label(true)->error(false); ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="mid-col">
+                                                        <div class="form-cont bs">
+                                                            <?= $form->field($TempModel, 'iReligion_ID')->dropDownList(
+                                                                ArrayHelper::map(CommonHelper::getReligion(), 'iReligion_ID', 'vName'),
+                                                                ['class' => 'cs-select cs-skin-border',
+                                                                    'prompt' => 'Religion']
+                                                            )->label(true)->error(false); ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="mid-col">
+                                                        <div class="form-cont bs">
+                                                            <?= $form->field($TempModel, 'Marital_Status')->dropDownList(
+                                                                ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
+                                                                ['class' => 'cs-select cs-skin-border',
+                                                                    'prompt' => 'Maritial Status',
+                                                                ]
+                                                            )->label(true)->error(false); ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="mid-col">
+                                                        <div class="form-cont bs">
+                                                            <?= $form->field($TempModel, 'iHeightID')->dropDownList(
+                                                                ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
+                                                                ['class' => 'cs-select cs-skin-border',
+                                                                    'prompt' => 'Height']
+                                                            )->label(true)->error(false); ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="mid-col">
+                                                        <div class="form-cont bs">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="mid-col">
+                                                        <div class="form-cont bs">
+                                                            <label for="amount">Area:</label>
+
+                                                            <div id="slider-range"></div>
+                                                            <input type="text" class="cs-select cs-skin-border"
+                                                                   id="amount" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="mid-col">
+                                                        <div class="form-cont bs">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="mid-col">
+                                                        <div class="form-cont bs">
+                                                            <?= Html::submitButton('search', ['class' => 'btn btn-primary', 'name' => 'button']) ?>
+                                                            <?= Html::resetButton('Reset', ['class' => 'btn btn-primary']) ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <?php ActiveForm::end(); ?>
+
+
                                     </div>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                         <li><a href="#">Test 1</a></li>
                                         <li><a href="#">Test 2</a></li>
                                         <li><a href="#">Test 3</a></li>
                                     </ul>
-                                </div>-->
+                                </div>
                                 <div class="gray-bg mrg-tp-5">
                                     <div class="matches pull-left padd-10"><span> Matches Found: <span
                                                 class="orange-text"><?= $TotalRecords ?></span> </span></div>
@@ -129,10 +231,10 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                             <li><a href="#">Search By ID</a></li>
                                             <li><a href="#">Save Search</a></li>
                                             <li><a href="#">Modify Search</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="clearfix"></div>
+                                    </ul>
                                 </div>
+                                    <div class="clearfix"></div>
+                            </div>
                             </div>
                             <?php if ($TotalRecords == 0) { ?>
                                 <div class="white-section listing border-sharp mrg-tp-10">
@@ -144,8 +246,8 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                             <div class="clearfix"></div>
                                 <span class="pull-right"><a href="<?= Yii::$app->homeUrl ?>" class="text-right">Back To
                                         Home Page<i class="fa fa-angle-right"></i></a></span>
-                                        </div>
                                     </div>
+                                </div>
                                 </div>
                             <?php } else { ?>
                                 <?php foreach ($Model as $SK => $SV) { ?>
@@ -160,7 +262,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                                           data-original-title="This is where the help text will appear when the mouse hovers over the help icon">
                                                             <?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => '21']); ?>
                                                         </a></span></div>
-                                            </div>
+                                        </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-3">
@@ -183,7 +285,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                         <div
                                                                             class="item <?= ($K == 0) ? 'active' : ''; ?>">
                                                                             <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, $V['File_Name'], 140), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
-                                                                        </div>
+                                                                    </div>
                                                                     <?php
                                                                     }
                                                                 } else { ?>
@@ -201,8 +303,8 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                     href="#carousel-example-generic" data-slide="next">
                                                                 <span class="glyphicon glyphicon-chevron-right"></span>
                                                             </a></div>
-                                                    </div>
                                                 </div>
+                                            </div>
                                                 <?php if (count($SV) > 0) { ?>
                                                     <p class="text-right"><a href="#" data-toggle="modal"
                                                                              data-target="#photo">View
@@ -214,10 +316,10 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                     <h2 class="nameplate">
                                                         <?php
                                                         if (!Yii::$app->user->isGuest) { ?>
-                                                            <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $Value->fromUserInfo->Registration_Number ?>&source=profile_viewed_by"
+                                                            <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $SV->Registration_Number ?>&source=profile_viewed_by"
                                                                class="name"
-                                                               title="<?= $Value->fromUserInfo->Registration_Number ?>">
-                                                                <?= $SV->FullName; ?>
+                                                               title="<?= $SV->Registration_Number ?>">
+                                                            <?= $SV->FullName; ?>
                                                             </a>
                                                         <?php } else { ?>
                                                             <?= $SV->FullName; ?>
@@ -247,7 +349,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                     </a>
                                                             </span>
                                                     </p>
-                                                </div>
+                                            </div>
                                                 <dl class="dl-horizontal mrg-tp-20">
                                                     <dt>Personal Details</dt>
                                                     <dd><?= CommonHelper::getAge($SV->DOB); ?>
@@ -265,47 +367,47 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                     <dt>Current Location</dt>
                                                     <dd><?= CommonHelper::setInputVal($SV->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($SV->countryName->vCountryName, 'text') ?></dd>
                                                 </dl>
-                                            </div>
+                                        </div>
                                         </div>
                                         <?php
 
                                         if (!Yii::$app->user->isGuest) {
                                             if ($SV->Gender != Yii::$app->user->identity->Gender) { ?>
-                                                <div class="row gray-bg">
-                                                    <div class="col-sm-12">
-                                                        <div class="profile-control-vertical">
-                                                            <ul class="list-unstyled pull-right">
-                                                                <li><a href="#">Shortlist <i class="fa fa-list-ul"></i></a>
-                                                                </li>
-                                                                <li class="s__<?= $SV->id ?>">
-                                                                    <?php
-                                                                    $Check = \common\models\UserRequest::checkSendInterest(Yii::$app->user->identity->id, $SV->id);
-                                                                    if ($Check->from_user_id == Yii::$app->user->identity->id && $Check->to_user_id == $SV->id && $Check->send_request_status == "Yes") {
-                                                                        ?>
-                                                                        <a href="javascript:void(0)" class="isent"
-                                                                           role="button">Interest Sent <i
-                                                                                class="fa fa-heart"></i></a>
-                                                                    <?php } else { ?>
-                                                                        <a href="javascript:void(0)"
-                                                                           class="sendinterestpopup"
-                                                                           role="button"
-                                                                           data-target="#sendInterest"
-                                                                           data-toggle="modal"
-                                                                           data-id="<?= $SV->id ?>"
-                                                                           data-name="<?= $SV->FullName ?>"
-                                                                           data-rgnumber="<?= $SV->Registration_Number ?>">Send
-                                                                            Interest
-                                                                            <i class="fa fa-heart-o"></i>
-                                                                        </a>
-                                                                    <?php } ?>
-                                                                </li>
-                                                                <li><a href="#" data-toggle="modal" class="send_email"
-                                                                       <?php if (Yii::$app->user->isGuest) { ?>data-target="#sendMail"<?php } else { ?> data-id="<?= $SV->id ?>" <?php } ?>>Send
-                                                                        Email <i
-                                                                            class="fa fa-envelope-o"></i></a></li>
+                                            <div class="row gray-bg">
+                                                <div class="col-sm-12">
+                                                    <div class="profile-control-vertical">
+                                                        <ul class="list-unstyled pull-right">
+                                                            <li><a href="#">Shortlist <i class="fa fa-list-ul"></i></a>
+                                                            </li>
+                                                            <li class="s__<?= $SV->id ?>">
+                                                                <?php
+                                                                $Check = \common\models\UserRequest::checkSendInterest(Yii::$app->user->identity->id, $SV->id);
+                                                                if ($Check->from_user_id == Yii::$app->user->identity->id && $Check->to_user_id == $SV->id && $Check->send_request_status == "Yes") {
+                                                                    ?>
+                                                                    <a href="javascript:void(0)" class="isent"
+                                                                       role="button">Interest Sent <i
+                                                                            class="fa fa-heart"></i></a>
+                                                                <?php } else { ?>
+                                                                    <a href="javascript:void(0)"
+                                                                       class="sendinterestpopup"
+                                                                       role="button"
+                                                                       data-target="#sendInterest"
+                                                                       data-toggle="modal"
+                                                                       data-id="<?= $SV->id ?>"
+                                                                       data-name="<?= $SV->FullName ?>"
+                                                                       data-rgnumber="<?= $SV->Registration_Number ?>">Send
+                                                                        Interest
+                                                                        <i class="fa fa-heart-o"></i>
+                                                                    </a>
+                                                                <?php } ?>
+                                                            </li>
+                                                            <li><a href="#" data-toggle="modal" class="send_email"
+                                                                   <?php if (Yii::$app->user->isGuest) { ?>data-target="#sendMail"<?php } else { ?> data-id="<?= $SV->id ?>" <?php } ?>>Send
+                                                                    Email <i
+                                                                        class="fa fa-envelope-o"></i></a></li>
 
-                                                            </ul>
-                                                        </div>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -340,8 +442,8 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                 </div>
                                             </div>
                                         <?php } ?>
-                                    </div>
-                                <?php } ?>
+                                </div>
+                            <?php } ?>
 
 
                                 <div class="mrg-bt-10 text-center">
@@ -351,19 +453,19 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                 </div>
                             <?php } ?>
 
-                        </div>
+                    </div>
                     </div>
                     <div class="col-md-5 col-sm-12 mrg-tp-20">
                         <div class="map">
                             <iframe width="100%" height="1000" frameborder="0" scrolling="no" marginheight="0"
                                     marginwidth="0"
                                     src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=15+Springfield+Way,+Hythe,+CT21+5SH&aq=t&sll=52.8382,-2.327815&sspn=8.047465,13.666992&ie=UTF8&hq=&hnear=15+Springfield+Way,+Hythe+CT21+5SH,+United+Kingdom&t=m&z=14&ll=51.077429,1.121722&output=embed"></iframe>
-                        </div>
                     </div>
                 </div>
-
             </div>
+
         </div>
+</div>
     </main>
 </div>
 <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -436,13 +538,22 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12 mrg-tp-10 ">
+                        <div class="col-md-12 mrg-tp-10 profile-control">
                             <?php
                             if (!Yii::$app->user->isGuest) { ?>
-                            <i class="fa fa-spinner fa-spin pink"></i> Loading Information...
+                                <i class="fa fa-spinner fa-spin pink"></i> Loading Information...
                             <?php } else { ?>
                                 <div class="notice kp_warning marg-l"><p><?= Yii::$app->params['loginFirst'] ?></p>
                                 </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <a href="<?= Yii::$app->homeUrl ?>?ref=login" class="btn active pull-right"
+                                       title="Login" id="login_button">Login</a>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6 ">
+                                    <a href="<?= Yii::$app->homeUrl ?>?ref=signup" title="Sign up Free"
+                                       class="btn active pull-left">Sign up Free</a>
+                                </div>
+
                             <?php } ?>
                         </div>
                     </div>
@@ -568,3 +679,34 @@ $this->registerJs('
     });
 ');
 ?>
+<style>
+    .bs label {
+        font-weight: bold;
+        display: block;
+        position: inherit;
+        color: #696767;
+        height: 20px;
+    }
+
+    #amount {
+        -webkit-border-radius: 2px;
+        border: #c4c4c4 1px solid;
+        padding: 1px;
+        -moz-box-shadow: 0 0 5px #dad9d9 inset;
+        -webkit-box-shadow: 0 0 5px #dad9d9 inset;
+        box-shadow: 0 0 5px #dad9d9 inset;
+        height: 42px;
+    }
+
+    .box {
+        margin: 0px !important;
+    }
+
+    .cs-select span {
+        padding: 0.4em 01em !important;
+    }
+
+    div.cs-select {
+        height: 42px !important;
+    }
+</style>

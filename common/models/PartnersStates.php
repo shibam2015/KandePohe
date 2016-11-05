@@ -47,7 +47,7 @@ class PartnersStates extends \common\models\base\basePartnersStates
         return [
             'ID' => 'ID',
             'user_id' => 'User ID',
-            'state_id' => 'State ID',
+            'state_id' => 'State',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

@@ -50,7 +50,7 @@ class PartnersCountries extends \common\models\base\basePartnersCountries
         return [
             'ID' => 'ID',
             'user_id' => 'User ID',
-            'country_id' => 'Country ID',
+            'country_id' => 'Country',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

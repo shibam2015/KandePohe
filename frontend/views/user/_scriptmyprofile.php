@@ -275,6 +275,7 @@ $this->registerJs("
     
     $('.yescover').click(function(){
             Pace.restart();
+            loaderStart();
             var formDataPhoto = new FormData();
             formDataPhoto.append( 'ACTION', 'GET_PHOTO_FROM_PHOTOS');
             formDataPhoto.append( 'P_ID', PP_ID);    
@@ -286,6 +287,7 @@ $this->registerJs("
                         cache: false,
                         processData: false,
                         success: function (data, textStatus, jqXHR) {
+                          loaderStop();
                             var DataObject = JSON.parse(data);
                             if (DataObject.STATUS == 'S') {
                                 $('#timelineBackground').html(DataObject.ABC);
@@ -296,6 +298,7 @@ $this->registerJs("
                             profile_photo();
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
+                        loaderStop();
                             //notificationPopup('ERROR', 'Request Failed', 'Error');
                             showNotification('ERROR', 'Something went wrong. Please try again !', 'Error');
                         }

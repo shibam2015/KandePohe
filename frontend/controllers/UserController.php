@@ -851,8 +851,8 @@ class UserController extends Controller
         }
         $myModel = [
             'PC' => $PC,
-            'PartnersMaritalStatus' => $PartnersMaritalStatus,
-            'PartnersFathersStatus' => $PartnersFathersStatus,
+            // 'PartnersMaritalStatus' => $PartnersMaritalStatus,
+            //'PartnersFathersStatus' => $PartnersFathersStatus,
             #'model' => $model,
             'PS' => $PS,
             'PCS' => $PCS,
@@ -1081,7 +1081,7 @@ class UserController extends Controller
                 $URL = $CM_HELPER->getUserUploadFolder(2) . "/" . $id . "/";
                 $COVER_PHOTO_1 = $PHOTO;
                 $USER_SIZE_ARRAY = $CM_HELPER->getUserResizeRatio();
-                //copy($PATH.$COVER_PHOTO_1, $PATH.'cover/'.$COVER_PHOTO_1);
+                copy($PATH . $COVER_PHOTO_1, $PATH . 'cover/' . $COVER_PHOTO_1);
                 $COVER_PHOTO = CommonHelper::getPhotos('USER', $id, $COVER_PHOTO_1, '');
                 $bgSave = '';
                 $bgSave .= '<div id="uX' . $session_uid . '" class="bgSaveFP wallbutton blackButton">&nbsp; Save &nbsp;</div>';

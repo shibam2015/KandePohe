@@ -81,7 +81,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($ref = '')
     {
         $model = new User();
         $model->scenario = User::SCENARIO_REGISTER;
@@ -99,8 +99,12 @@ class SiteController extends Controller
             );
             exit;
         }
+        //return $this->redirect(Yii::$app->request->referrer);
         return $this->render('index',
-            ['model' => $model]
+            [
+                'model' => $model,
+                'ref' => $ref,
+            ]
         );
     }
 

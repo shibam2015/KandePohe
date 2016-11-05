@@ -88,6 +88,11 @@ class SearchController extends Controller
         $Community = Yii::$app->request->get('Community');
         $SubCommunity = Yii::$app->request->get('sub-community');
         $Height = Yii::$app->request->get('height');
+
+        $ReligionID = Yii::$app->request->get('religion');
+        $MaritalStatusID = Yii::$app->request->get('maritalstatus');
+
+
         $WHERE = '';
         $WHERE = ($Gender != '') ? ' AND user.Gender="' . $Gender . '" ' : '';
         $WHERE .= ($Community != '') ? ' AND user.iCommunity_ID="' . $Community . '" ' : '';
@@ -122,6 +127,13 @@ class SearchController extends Controller
 
             }
         }
+        $id = Yii::$app->user->identity->id;
+        $TempModel = ($id != null) ? User::findOne($id) : array();
+        $TempModel->Community = $Community;
+        $TempModel->SubCommunity = $SubCommunity;
+        $TempModel->iReligion_ID = $ReligionID;
+        $TempModel->Marital_Status = $MaritalStatusID;
+        $TempModel->iHeightID = $Height;
         return $this->render('searchlist',
             [
                 'Model' => $Model,
@@ -129,11 +141,12 @@ class SearchController extends Controller
                 'Photos' => $Photos,
                 'Offset' => $Offset,
                 'Limit' => $Limit,
-                'Page' => $Page
+                'Page' => $Page,
+                'TempModel' => $TempModel
+
             ]
         );
     }
-
 
     function actionRenderCall($model, $view, $show = false, $popup = false, $flag = false, $temp = array())
     {
@@ -145,5 +158,4 @@ class SearchController extends Controller
             'temp' => $temp,
         ]);
     }
-
-}
+    }
