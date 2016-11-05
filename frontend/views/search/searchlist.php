@@ -214,9 +214,9 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                     <h2 class="nameplate">
                                                         <?php
                                                         if (!Yii::$app->user->isGuest) { ?>
-                                                            <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $Value->fromUserInfo->Registration_Number ?>&source=profile_viewed_by"
+                                                            <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $SV->Registration_Number ?>&source=profile_viewed_by"
                                                                class="name"
-                                                               title="<?= $Value->fromUserInfo->Registration_Number ?>">
+                                                               title="<?= $SV->Registration_Number ?>">
                                                                 <?= $SV->FullName; ?>
                                                             </a>
                                                         <?php } else { ?>
@@ -436,13 +436,22 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12 mrg-tp-10 ">
+                        <div class="col-md-12 mrg-tp-10 profile-control">
                             <?php
                             if (!Yii::$app->user->isGuest) { ?>
                             <i class="fa fa-spinner fa-spin pink"></i> Loading Information...
                             <?php } else { ?>
                                 <div class="notice kp_warning marg-l"><p><?= Yii::$app->params['loginFirst'] ?></p>
                                 </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <a href="<?= Yii::$app->homeUrl ?>?ref=login" class="btn active pull-right"
+                                       title="Login" id="login_button">Login</a>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6 ">
+                                    <a href="<?= Yii::$app->homeUrl ?>?ref=signup" title="Sign up Free"
+                                       class="btn active pull-left">Sign up Free</a>
+                                </div>
+
                             <?php } ?>
                         </div>
                     </div>
