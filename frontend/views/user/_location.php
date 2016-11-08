@@ -42,8 +42,8 @@ use yii\helpers\ArrayHelper;
         ); ?>
         <?php
         $stateList = [];
-        if ($model->iCountryId != "") {
-            $stateList = ArrayHelper::map(CommonHelper::getState($model->iCountryId), 'iStateId', 'vStateName');
+        if ($PCS->country_id != "") {
+            $stateList = ArrayHelper::map(CommonHelper::getState($PCS->country_id), 'iStateId', 'vStateName');
         }
         ?>
         <?= $form->field($PS, 'state_id')->dropDownList(
@@ -60,8 +60,8 @@ use yii\helpers\ArrayHelper;
         ); ?>
         <?php
         $cityList = [];
-        if ($model->iStateId != "") {
-            $cityList = ArrayHelper::map(CommonHelper::getCity($model->iStateId), 'iCityId', 'vCityName');
+        if ($PS->state_id != "") {
+            $cityList = ArrayHelper::map(CommonHelper::getCity($PS->state_id), 'iCityId', 'vCityName');
         }
         ?>
         <?= $form->field($PC, 'city_id')->dropDownList(

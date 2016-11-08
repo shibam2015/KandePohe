@@ -931,7 +931,7 @@ $this->registerJs('
     });
     getInlineDetail("' . Url::to(['user/edit-preferences-location']) . '","#my_location","1");
     $(document).on("click","#cancel_edit_location",function(e){
-        getInlineDetail("' . Url::to(['user/edit-location']) . '","#my_location","1");
+        getInlineDetail("' . Url::to(['user/edit-preferences-location']) . '","#my_location","1");
     });
     $(".edit_looking").click(function(e){
         getInlineDetail("' . Url::to(['user/edit-looking-for']) . '","#my_looking","0");
