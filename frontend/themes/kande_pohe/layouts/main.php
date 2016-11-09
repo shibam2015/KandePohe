@@ -27,7 +27,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width,  initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="images/favicon.ico">
+      <link rel="icon" href="<?= Yii::$app->homeUrl ?>images/favicon.ico">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
