@@ -214,7 +214,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                     <h2 class="nameplate">
                                                         <?php
                                                         if (!Yii::$app->user->isGuest) { ?>
-                                                            <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $SV->Registration_Number ?>&source=profile_viewed_by"
+                                                            <a href="<?= CommonHelper::getUserUrl($SV->Registration_Number) ?>&source=profile_viewed_by"
                                                                class="name"
                                                                title="<?= $SV->Registration_Number ?>">
                                                                 <?= $SV->FullName; ?>
@@ -268,7 +268,6 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                             </div>
                                         </div>
                                         <?php
-
                                         if (!Yii::$app->user->isGuest) {
                                             if ($SV->Gender != Yii::$app->user->identity->Gender) { ?>
                                                 <div class="row gray-bg">

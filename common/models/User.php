@@ -197,6 +197,11 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $Records;
     }
 
+    public static function findFeaturedMembers($Limit = 4) # Get Featured Members list with limit
+    {
+        return static::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
+    }
+
     /**
      * @inheritdoc
      */
@@ -496,7 +501,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     }
 
     public function getFullName(){
-        return $this->First_Name.' '.$this->Last_Name;
+        return ucwords($this->First_Name . ' ' . $this->Last_Name);
     }
 
     public function getReligionName()
@@ -696,11 +701,6 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $this->hasOne(SportsFitnActivities::className(), ['ID' => 'SportsFittnessID']);
     }
 
-    public function getPreferredDressStyleName()
-    {
-        return $this->hasOne(PreferredDressStyle::className(), ['ID' => 'PreferredDressID']);
-    }
-
 
 
     /*public function generateUniqueRandomNumber($length = 9) {
@@ -712,6 +712,11 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             return $this->generateUniqueRandomNumber($length);
 
     }*/
+
+    public function getPreferredDressStyleName()
+    {
+        return $this->hasOne(PreferredDressStyle::className(), ['ID' => 'PreferredDressID']);
+    }
 
     public function getPreferredMoviesName()
     {

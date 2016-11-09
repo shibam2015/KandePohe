@@ -173,7 +173,7 @@ class CommonHelper {
         return $USER_SIZE_ARRAY;
     }
 
-    public static function getPhotos($TYPE = 'USER', $ID, $PHOTO, $SIZE = '') // GET USER PHOTO (Profile)
+    public static function getPhotos($TYPE = 'USER', $ID, $PHOTO, $SIZE = '', $DefaultStatus = '') // GET USER PHOTO (Profile)
     {
         /*echo "<br>".$TYPE;
         echo "<br>".$ID;
@@ -191,7 +191,10 @@ class CommonHelper {
             $MAIN_URL = CommonHelper::getUserUploadFolder(2);
             $PATH = CommonHelper::getUserUploadFolder(1) . $U_PATH;
             $URL = $MAIN_URL . $U_PATH;
+            if ($DefaultStatus == '')
             $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $MAIN_URL . 'no-user-img.jpg';
+            else
+                $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $MAIN_URL . $SIZE . '_no-user-img.jpg';
             return $PHOTO_USER;
         }
     }
