@@ -121,5 +121,4 @@ class UserRequest extends \common\models\base\baseUserRequest
     {
         return $this->hasOne(User::className(), ['status' => [User::STATUS_ACTIVE, User::STATUS_APPROVE]]);
     }
-
 }

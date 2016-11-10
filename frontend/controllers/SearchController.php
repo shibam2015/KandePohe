@@ -91,6 +91,8 @@ class SearchController extends Controller
 
         $ReligionID = Yii::$app->request->get('religion');
         $MaritalStatusID = Yii::$app->request->get('maritalstatus');
+        $AgeFrom = Yii::$app->request->get('age_from');
+        $AgeTo = Yii::$app->request->get('age_to');
 
 
         $WHERE = '';
@@ -127,6 +129,7 @@ class SearchController extends Controller
 
             }
         }
+
         $id = Yii::$app->user->identity->id;
         $TempModel = ($id != null) ? User::findOne($id) : array();
         $TempModel->Community = $Community;
@@ -134,6 +137,25 @@ class SearchController extends Controller
         $TempModel->iReligion_ID = $ReligionID;
         $TempModel->Marital_Status = $MaritalStatusID;
         $TempModel->iHeightID = $Height;
+        $TempModel->Age_From = $AgeFrom;
+        $TempModel->Age_To = $AgeTo;
+        if ($TempModel->load(Yii::$app->request->post())) {
+            #CommonHelper::pr($_REQUEST);exit;
+            #  return $this->redirect(['search/basic-search','search-type' => 'basic']);
+            return $this->redirect(['search/basic-search',
+                    'search-type' => 'basic',
+                    //'profile-for' => Yii::$app->request->post('User')['Profile_for'],
+                    'age_from' => Yii::$app->request->post('User')['Age_From'],
+                    'age_to' => Yii::$app->request->post('User')['Age_To'],
+                    'Community' => Yii::$app->request->post('User')['Community'],
+                    'sub-community' => Yii::$app->request->post('User')['SubCommunity'],
+                    'religion' => Yii::$app->request->post('User')['iReligion_ID'],
+                    'maritalstatus' => Yii::$app->request->post('User')['Marital_Status'],
+                    'height' => Yii::$app->request->post('User')['iHeightID'],
+                ]
+            );
+            exit;
+        }
         return $this->render('searchlist',
             [
                 'Model' => $Model,
@@ -146,6 +168,8 @@ class SearchController extends Controller
 
             ]
         );
+
+
     }
 
     function actionRenderCall($model, $view, $show = false, $popup = false, $flag = false, $temp = array())

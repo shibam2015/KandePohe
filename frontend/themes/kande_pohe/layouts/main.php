@@ -27,16 +27,18 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width,  initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="images/favicon.ico">
+      <link rel="icon" href="<?= Yii::$app->homeUrl ?>images/favicon.ico">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     <meta name="apple-mobile-web-app-title" content="Kande Pohe">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" sizes="76x76" href="css/images/app-icon/wd-ipad.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="css/images/app-icon/wd-iphone-retina.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="css/images/app-icon/wd-ipad-retina.png">
+      <link rel="apple-touch-icon" sizes="76x76" href="<?= Yii::$app->homeUrl ?>css/images/app-icon/wd-ipad.png">
+      <link rel="apple-touch-icon" sizes="120x120"
+            href="<?= Yii::$app->homeUrl ?>css/images/app-icon/wd-iphone-retina.png">
+      <link rel="apple-touch-icon" sizes="152x152"
+            href="<?= Yii::$app->homeUrl ?>css/images/app-icon/wd-ipad-retina.png">
     <!-- Bootstrap core CSS -->
     <!-- Fonts CSS -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">

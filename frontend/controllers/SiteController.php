@@ -99,10 +99,13 @@ class SiteController extends Controller
             );
             exit;
         }
+        $FeaturedMembers = User::findFeaturedMembers(4);
+        #CommonHelper::pr($FeaturedMembers);exit;
         //return $this->redirect(Yii::$app->request->referrer);
         return $this->render('index',
             [
                 'model' => $model,
+                'FeaturedMembers' => $FeaturedMembers,
                 'ref' => $ref,
             ]
         );

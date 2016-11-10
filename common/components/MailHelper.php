@@ -33,6 +33,7 @@ class MailHelper
         $MAIL_SUBJECT = '=?UTF-8?B?' . base64_encode($MAIL_SUBJECT) . '?=';
         $MAIL_MESSAGE = MailHelper::mailFormat($MAIL_MESSAGE, $MAIL_TITLE);
         #echo " <br> TMESSAGE <br>".$MAIL_MESSAGE;exit;
+        #$response = 1;
         $response = Yii::$app->mailer->compose()
             ->setTo($TO_EMAIL)
             #->setFrom(['kandepohetest@gmail.com' => Yii::$app->name])

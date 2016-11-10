@@ -34,7 +34,13 @@ use yii\jui\DatePicker;
       <div class="container">
         <div class="row">
           <div class="col-sm-6 col-xs-12">
-            <div class="logo"> <a href="<?=Yii::$app->getUrlManager()->getBaseUrl()?>" title="logo"> <img src="images/logo1.png" width="250" height="88" alt="logo" class="img1" title="Kande Pohe"> </a> <a href="index.html" title="logo"> <img src="images/logo2.png" width="214" height="78" alt="logo" class="img2" title="Kande Pohe"> </a> </div>
+            <div class="logo"><a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>" title="logo"> <img
+                    src="images/logo1.png" width="250" height="88" alt="logo" class="img1" title="Kande Pohe"> </a>
+              <a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>" title="logo"> <img src="images/logo2.png"
+                                                                                           width="214" height="78"
+                                                                                           alt="logo" class="img2"
+                                                                                           title="Kande Pohe"> </a>
+            </div>
           </div>
           <div class="col-sm-6 col-xs-12">
             <div class="menu pull-right">
@@ -135,115 +141,79 @@ use yii\jui\DatePicker;
   </div>
 </header>
 <!--featured-member-->
-<section class="featured-member">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12 text-center">
-        <h2 class="heading-md">Featured Members</h2>
-        <p class="tagline">Find the one made for you among thousands of eligible matches</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 col-sm-6 col-md-3">
-        <div class="thumbnail">
-          <div class="caption">
-            <h4>SZR8953</h4>
-            <div class="details">
-              <p>Age:  22yrs</p>
-              <p>Height:  5' 2"</p>
-              <p>Education: BE.IT</p>
-              <p>Occupation: Teacher</p>
-              <p>Caste: 96 K</p>
-              <p>Native: Ahmednagar</p>
-              <p>Current City: Pune</p>
-            </div>
-          </div>
-          <img src="images/thumb1.jpg" width="235" height="235" alt="Devansh Tambe"> </div>
-        <figcaption> <a href="#"><small>Devansh Tambe</small></a>
-          <div class="inter">
-            <div class="int-ico pull-left">
-              <input id="int1" type="checkbox" name="Remember" value="check1">
-              <label for="int1" class="control-label"> <a href="#">Show Interest</a> </label>
-            </div>
+<?php if (count($FeaturedMembers) > 0) {
+  ?>
+  <section class="featured-member">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <h2 class="heading-md">Featured Members</h2>
 
-          </div>
-        </figcaption>
+          <p class="tagline">Find the one made for you among thousands of eligible matches</p>
+        </div>
       </div>
-      <div class="col-xs-12 col-sm-6 col-md-3">
-        <div class="thumbnail">
-          <div class="caption">
-            <h4>SZR8953</h4>
-            <div class="details">
-              <p>Age:  22yrs</p>
-              <p>Height:  5' 2"</p>
-              <p>Education: BE.IT</p>
-              <p>Occupation: Teacher</p>
-              <p>Caste: 96 K</p>
-              <p>Native: Ahmednagar</p>
-              <p>Current City: Pune</p>
+
+      <div class="row">
+        <?php
+        foreach ($FeaturedMembers as $FK => $FV) {
+          ?>
+
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="thumbnail">
+              <div class="caption">
+                <h4><?= $FV->Registration_Number ?></h4>
+
+                <div class="details">
+                  <p>Age:  <?= CommonHelper::getAge($FV->DOB); ?> years</p>
+
+                  <p>Height:  <?= CommonHelper::setInputVal($FV->height->vName, 'text'); ?></p>
+
+                  <p>
+                    Education: <?= CommonHelper::setInputVal($FV->educationLevelName->vEducationLevelName, 'text') ?></p>
+
+                  <p>Occupation: <?= CommonHelper::setInputVal($FV->workingAsName->vWorkingAsName, 'text') ?></p>
+
+                  <p>Caste: <?= $FV->communityName->vName; ?></p>
+
+                  <p>Native: <?= CommonHelper::setInputVal($FV->vNativePlaceCA, 'text') ?></p>
+
+                  <p>Current
+                    City: <?= CommonHelper::setInputVal($FV->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($FV->countryName->vCountryName, 'text') ?></p>
+                </div>
+              </div>
+              <?= Html::img(CommonHelper::getPhotos('USER', $FV->id, $FV->propic, 200, 1), ['alt' => $FV->FullName]); ?>
             </div>
+            <figcaption>
+              <a href="<?= CommonHelper::getUserUrl($FV->Registration_Number) ?>&source=recently_joined">
+                <small><?= $FV->FullName ?></small>
+              </a>
+
+              <div class="inter">
+                <div class="int-ico pull-left">
+                  <input id="<?= $FV->Registration_Number ?>" type="checkbox" name="Remember" value="check1">
+                  <label for="<?= $FV->Registration_Number ?>" class="control-label">
+                    <a <?php
+                    if (!Yii::$app->user->isGuest) { ?>
+                      href="<?= CommonHelper::getUserUrl($FV->Registration_Number) ?>&source=recently_joined"
+                    <?php } else { ?>
+                      href="#" title="Login" data-toggle="modal" data-target="#login" id="login_button"
+                    <?php }?>
+                        >Show Interest</a>
+                  </label>
+                </div>
+              </div>
+            </figcaption>
           </div>
-          <img src="images/thumb2.jpg" width="235" height="235" alt="Pari Jadhav"> </div>
-        <figcaption> <a href="#"><small>Pari Jadhav</small></a>
-          <div class="inter">
-            <div class="int-ico">
-              <input id="int2" type="checkbox" name="Remember" value="check1">
-              <label for="int2" class="control-label"> <a href="#">Show Interest</a> </label>
-            </div>
-          </div>
-        </figcaption>
-      </div>
-      <div class="col-xs-12 col-sm-6 col-md-3">
-        <div class="thumbnail">
-          <div class="caption">
-            <h4>SZR8953</h4>
-            <div class="details">
-              <p>Age:  22yrs</p>
-              <p>Height:  5' 2"</p>
-              <p>Education: BE.IT</p>
-              <p>Occupation: Teacher</p>
-              <p>Caste: 96 K</p>
-              <p>Native: Ahmednagar</p>
-              <p>Current City: Pune</p>
-            </div>
-          </div>
-          <img src="images/thumb2.jpg" width="235" height="235" alt="Arjun Patil"> </div>
-        <figcaption><a href="#"> <small>Arjun Patil</small></a>
-          <div class="inter">
-            <div class="int-ico">
-              <input id="int3" type="checkbox" name="Remember" value="check1">
-              <label for="int3" class="control-label"> <a href="#">Show Interest</a> </label>
-            </div>
-          </div>
-        </figcaption>
-      </div>
-      <div class="col-xs-12 col-sm-6 col-md-3">
-        <div class="thumbnail">
-          <div class="caption">
-            <h4>SZR8953</h4>
-            <div class="details">
-              <p>Age:  22yrs</p>
-              <p>Height:  5' 2"</p>
-              <p>Education: BE.IT</p>
-              <p>Occupation: Teacher</p>
-              <p>Caste: 96 K</p>
-              <p>Native: Ahmednagar</p>
-              <p>Current City: Pune</p>
-            </div>
-          </div>
-          <img src="images/thumb3.jpg" width="235" height="235" alt="thumb1"> </div>
-        <figcaption> <a href="#"><small>Shreya Gadkari</small></a>
-          <div class="inter">
-            <div class="int-ico">
-              <input id="int4" type="checkbox" name="Remember" value="check1">
-              <label for="int4" class="control-label"> <a href="#">Show Interest</a> </label>
-            </div>
-          </div>
-        </figcaption>
+
+        <?php
+        }
+        ?>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+<?php }
+?>
+
 <!--Success Stories-->
 <section>
   <div class="container">

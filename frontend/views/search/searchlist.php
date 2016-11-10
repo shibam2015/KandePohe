@@ -44,7 +44,6 @@ $M1 = array();
                                         <?php
                                         $form = ActiveForm::begin([
                                             'id' => 'form',
-                                            'action' => '',
                                             'options' => ['data-pjax' => true],
                                             'layout' => 'horizontal',
                                             'validateOnChange' => false,
@@ -72,7 +71,7 @@ $M1 = array();
                                                 <div class="box">
                                                     <div class="mid-col">
                                                         <div class="form-cont bs">
-                                                            <?= $form->field($TempModel, 'age_from')->dropDownList(
+                                                            <?= $form->field($TempModel, 'Age_From')->dropDownList(
                                                                 array_combine($range, $range),
                                                                 ['class' => 'cs-select cs-skin-border',
                                                                     'prompt' => 'From']
@@ -85,7 +84,7 @@ $M1 = array();
                                                 <div class="box">
                                                     <div class="mid-col">
                                                         <div class="form-cont bs">
-                                                            <?= $form->field($TempModel, 'age_to')->dropDownList(
+                                                            <?= $form->field($TempModel, 'Age_To')->dropDownList(
                                                                 array_combine($range, $range),
                                                                 ['class' => 'cs-select cs-skin-border',
                                                                     'prompt' => 'To']
@@ -176,29 +175,29 @@ $M1 = array();
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                            <label for="amount">Area:</label>
+                                        <!-- <div class="row">
+                                             <div class="col-md-6">
+                                                 <div class="box">
+                                                     <div class="mid-col">
+                                                         <div class="form-cont bs">
+                                                             <label for="amount">Area:</label>
 
-                                                            <div id="slider-range"></div>
-                                                            <input type="text" class="cs-select cs-skin-border"
-                                                                   id="amount" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                             <div id="slider-range"></div>
+                                                             <input type="text" class="cs-select cs-skin-border"
+                                                                    id="amount" readonly>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             <div class="col-md-6">
+                                                 <div class="box">
+                                                     <div class="mid-col">
+                                                         <div class="form-cont bs">
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </div>-->
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="box">
