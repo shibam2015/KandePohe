@@ -180,30 +180,31 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             <div class="panel-body">
                                                 <h3 class="heading-xs">Profile Status</h3>
                                                 <?php if ($PROFILE_COMPLETENESS < 100) { ?>
-                                                <div class="radial-progress" data-progress="0">
-                                                    <div class="circle">
-                                                        <div class="mask full">
-                                                            <div class="fill"></div>
+                                                    <div class="radial-progress" data-progress="0">
+                                                        <div class="circle">
+                                                            <div class="mask full">
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                            <div class="mask half">
+                                                                <div class="fill"></div>
+                                                                <div class="fill fix"></div>
+                                                            </div>
+                                                            <div class="shadow"></div>
                                                         </div>
-                                                        <div class="mask half">
-                                                            <div class="fill"></div>
-                                                            <div class="fill fix"></div>
-                                                        </div>
-                                                        <div class="shadow"></div>
-                                                    </div>
-                                                    <div class="inset">
-                                                        <div class="percentage">
-                                                            <div class="numbers"><span>-</span><span>0% Complete</span>
-                                                                <?php for ($i = 1; $i <= 100; $i++) { ?>
-                                                                    <span><?= $i ?>% Complete</span>
-                                                                <?php } ?>
+                                                        <div class="inset">
+                                                            <div class="percentage">
+                                                                <div class="numbers">
+                                                                    <span>-</span><span>0% Complete</span>
+                                                                    <?php for ($i = 1; $i <= 100; $i++) { ?>
+                                                                        <span><?= $i ?>% Complete</span>
+                                                                    <?php } ?>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="text-center">
-                                                    <p>Complete your profile for better search results</p>
-                                                </div>
+                                                    <div class="text-center">
+                                                        <p>Complete your profile for better search results</p>
+                                                    </div>
                                                 <?php } else { ?>
                                                     <div class="notice kp_success mrg-tp-10"><p>100% completed.</p>
                                                     </div>
@@ -264,10 +265,12 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 </div>
                                 <div class="col-sm-8">
                                     <ul class="nav nav-tabs bg-white my-profile" role="tablist">
-                                        <li role="presentation" class="active"><a href="#tab1" aria-controls="home"
+                                        <li role="presentation" <?= ($tab == '') ? 'class="active"' : ''; ?> ><a
+                                                href="#tab1" aria-controls="home"
                                                                                   role="tab" data-toggle="tab">Home</a>
                                         </li>
-                                        <li role="presentation"><a href="#tab2" aria-controls="profile" role="tab"
+                                        <li role="presentation" <?= ($tab == 'EP') ? 'class="active"' : ''; ?> ><a
+                                                href="#tab2" aria-controls="profile" role="tab"
                                                                    data-toggle="tab">Partner Preferences</a></li>
                                         <li role="presentation"><a href="#tab3" aria-controls="profile" role="tab"
                                                                    data-toggle="tab"> Contact Details</a></li>
@@ -279,7 +282,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                     <?= Html::a("Refresh", ['user/my-profile'], ['class' => 'btn btn-lg btn-primary hidden']) ?>
                                     <?php Pjax::end(); ?>
                                     <div class="tab-content my-profile">
-                                        <div role="tabpanel" class="tab-pane active" id="tab1">
+                                        <div role="tabpanel" class="tab-pane <?= ($tab == '') ? 'active' : ''; ?> "
+                                             id="tab1">
                                             <div class="profile-edit pull-right">
                                                 <ul class="list-inline major-control">
                                                     <li role="presentation"><a href="javascript:void(0)"
@@ -415,7 +419,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                         </div>
 
 
-                                        <div role="tabpanel" class="tab-pane" id="tab2">
+                                        <div role="tabpanel" class="tab-pane <?= ($tab == 'EP') ? 'active' : ''; ?> "
+                                             id="tab2">
                                             <div class="profile-edit pull-right">
                                                 <ul class="list-inline major-control">
                                                     <li role="presentation"><a href="javascript:void(0)"
@@ -545,16 +550,11 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 </div>
                             </div>
                         </div>
-                        <?= $this->render('/layouts/parts/_rightbar.php') ?>
+                        <?= $this->render('/layouts/parts/_rightbar.php', ['SimilarProfile' => $SimilarProfile]) ?>
                     </div>
                 </div>
             </section>
         </main>
-        <!--  <footer>
-            <div class="legal">
-              <p>© 2016 Kande Pohe.com. All Rights Reserved.</p>
-            </div>
-          </footer>-->
     </div>
     <div class="chatwe">
         <div class="panel panel-primary">
@@ -631,9 +631,9 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
           <button class="btn btn-default btn-sm" id="btn-chat"><i class="fa fa-pencil-square-o"></i></button>
           <button class="btn btn-default btn-sm" id="btn-chat" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-cog"></i> </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
           </ul>
           </span> </div>
                 </div>

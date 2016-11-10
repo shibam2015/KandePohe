@@ -130,12 +130,11 @@ class UserController extends Controller
         );*/
     }
 
-    public function actionMyProfile()
+    public function actionMyProfile($tab = '')
     {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
         $id = Yii::$app->user->identity->id;
         $model = User::find()->joinWith([countryName, stateName, cityName, height, maritalStatusName, talukaName, districtName, gotraName, subCommunityName, communityName, religionName, educationLevelName, communityName, workingWithName, workingAsName, dietName, fatherStatus])->where(['id' => $id])->one();
         $USER_PHOTO_MODEL = new  UserPhotos();
@@ -143,10 +142,18 @@ class UserController extends Controller
         $COVER_PHOTO = CommonHelper::getCoverPhotos($TYPE = 'USER', $id, $model->cover_photo);
         $TAG_LIST = Tags::find()->orderBy('rand()')->all();   //orderBy(['rand()' => SORT_DESC]);
         $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
+        $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
+        list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, 3);
         return $this->render('my-profile',
-            ['model' => $model, 'photo_model' => $USER_PHOTOS_LIST, 'COVER_PHOTO' => $COVER_PHOTO, 'TAG_LIST' => $TAG_LIST, 'TAG_LIST_USER' => $TAG_LIST_USER]
+            ['model' => $model, 'photo_model' => $USER_PHOTOS_LIST, 'COVER_PHOTO' => $COVER_PHOTO, 'TAG_LIST' => $TAG_LIST, 'TAG_LIST_USER' => $TAG_LIST_USER, 'SimilarProfile' => $SimilarProfile, 'tab' => $tab]
 
         );
+    }
+
+    public function actionRightSideBar($Gender, $Limit = 3)
+    {
+        $SimilarProfile = User::findRecentJoinedUserList($Gender, $Limit); #TODO : Change recent joined user list with Similer Profile.
+        return array($SimilarProfile, 'Success Stories');
     }
 
     public function actionDashboard($type = '')
@@ -161,14 +168,14 @@ class UserController extends Controller
                 #$RecentlyJoinedMembers = User::findRecentJoinedUserLists($id,$Gender, 4);
                 $RecentlyJoinedMembers = User::findRecentJoinedUserList($Gender, 4);
                 #echo $RecentlyJoinedMembers->createCommand()->sql;exit;
-
-                #CommonHelper::pr($RecentlyJoinedMembers);exit;
+                list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, 3);
                 return $this->render('dashboard',[
                     'model' => $model,
                     'VER_ARRAY' => $VER_ARRAY,
                     'type' => $type,
                     'RecentlyJoinedMembers' => $RecentlyJoinedMembers,
-                    'ProfileViedByMembers' => $ProfileViedByMembers
+                    'ProfileViedByMembers' => $ProfileViedByMembers,
+                    'SimilarProfile' => $SimilarProfile,
                 ]);
             }else{
                 return $this->redirect(Yii::getAlias('@web'));
@@ -395,7 +402,6 @@ class UserController extends Controller
         #Yii::$app->response->format = Response::FORMAT_JSON;
         return json_encode($return);
     }
-
 
     public function actionEditMyinfo(){
         $id = Yii::$app->user->identity->id;
@@ -959,7 +965,6 @@ class UserController extends Controller
         }
     }
 
-
     public function actionCoverupload()
     {
         $id = Yii::$app->user->identity->id;
@@ -1488,11 +1493,11 @@ class UserController extends Controller
             $PartnersEducationField = PartnersEducationField::findByUserId($ToUserId) == NULL ? new PartnersEducationField() : PartnersEducationField::findByUserId($ToUserId);
 
         } else if ($ToUserId == $id) {
-            $Title = "Access Denied";
-            $Message = "You can't see your profile as user view.";
+            $Title = Yii::$app->params['accessDenied'];
+            $Message = Yii::$app->params['accessDeniedYourProfile'];
         } else {
-            $Title = "Access Denied";
-            $Message = "Trying to access invalid data.";
+            $Title = Yii::$app->params['accessDenied'];
+            $Message = Yii::$app->params['accessDeniedInvalid'];
         }
         return $this->render('profile', [
             'model' => $model,
@@ -1675,5 +1680,4 @@ class UserController extends Controller
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
         return json_encode($return);
     }
-
 }

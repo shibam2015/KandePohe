@@ -585,6 +585,11 @@ class CommonHelper {
         return $RetVal;
     }
 
+    public static function setCommaInValue($str)
+    {
+        return ($str != '-') ? ', ' . $str : '';
+    }
+
     public function getReligion()
     {
         $religion = \common\models\Religion::find()->all();
