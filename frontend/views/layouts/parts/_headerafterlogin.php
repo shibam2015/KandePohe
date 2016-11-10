@@ -18,9 +18,10 @@ use common\components\CommonHelper;
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                     <div class="navbar-collapse collapse sidebar-navbar-collapse">
                       <ul class="nav navbar-nav">
-                        <li><a href="#">Matches <span class="badge">1</span></a></li>
+                        <li><a href="#">Matches <!--<span class="badge">1</span>--></a></li>
                         <li><a href="#">Search </a></li>
-                        <li><a href="<?= CommonHelper::getMailBoxUrl() ?>">Inbox <span class="badge">10</span></a></li>
+                        <li><a href="<?= CommonHelper::getMailBoxUrl() ?>">Inbox
+                            <!--<span class="badge">10</span>--></a></li>
                         <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Upgrade <span class="caret"></span></a>
                           <ul class="dropdown-menu">
                             <li><a href="#">Upgrade 1</a></li>

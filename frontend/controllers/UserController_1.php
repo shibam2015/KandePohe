@@ -130,11 +130,12 @@ class UserController extends Controller
         );*/
     }
 
-    public function actionMyProfile($tab = '')
+    public function actionMyProfile()
     {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+
         $id = Yii::$app->user->identity->id;
         $model = User::find()->joinWith([countryName, stateName, cityName, height, maritalStatusName, talukaName, districtName, gotraName, subCommunityName, communityName, religionName, educationLevelName, communityName, workingWithName, workingAsName, dietName, fatherStatus])->where(['id' => $id])->one();
         $USER_PHOTO_MODEL = new  UserPhotos();
@@ -142,25 +143,17 @@ class UserController extends Controller
         $COVER_PHOTO = CommonHelper::getCoverPhotos($TYPE = 'USER', $id, $model->cover_photo);
         $TAG_LIST = Tags::find()->orderBy('rand()')->all();   //orderBy(['rand()' => SORT_DESC]);
         $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
-        $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
-        list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, 3);
         return $this->render('my-profile',
-            ['model' => $model, 'photo_model' => $USER_PHOTOS_LIST, 'COVER_PHOTO' => $COVER_PHOTO, 'TAG_LIST' => $TAG_LIST, 'TAG_LIST_USER' => $TAG_LIST_USER, 'SimilarProfile' => $SimilarProfile, 'tab' => $tab]
+            ['model' => $model, 'photo_model' => $USER_PHOTOS_LIST, 'COVER_PHOTO' => $COVER_PHOTO, 'TAG_LIST' => $TAG_LIST, 'TAG_LIST_USER' => $TAG_LIST_USER]
 
         );
-    }
-
-    public function actionRightSideBar($Gender, $Limit = 3)
-    {
-        $SimilarProfile = User::findRecentJoinedUserList($Gender, $Limit); #TODO : Change recent joined user list with Similer Profile.
-        return array($SimilarProfile, 'Success Stories');
     }
 
     public function actionDashboard($type = '')
     {
         if (!Yii::$app->user->isGuest) {
             $id = Yii::$app->user->identity->id;
-            if($model = User::findOne($id)){
+            if ($model = User::findOne($id)) {
                 $model->scenario = User::SCENARIO_REGISTER6;
                 $VER_ARRAY = array();
                 $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
@@ -168,19 +161,19 @@ class UserController extends Controller
                 #$RecentlyJoinedMembers = User::findRecentJoinedUserLists($id,$Gender, 4);
                 $RecentlyJoinedMembers = User::findRecentJoinedUserList($Gender, 4);
                 #echo $RecentlyJoinedMembers->createCommand()->sql;exit;
-                list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, 3);
-                return $this->render('dashboard',[
+
+                #CommonHelper::pr($RecentlyJoinedMembers);exit;
+                return $this->render('dashboard', [
                     'model' => $model,
                     'VER_ARRAY' => $VER_ARRAY,
                     'type' => $type,
                     'RecentlyJoinedMembers' => $RecentlyJoinedMembers,
-                    'ProfileViedByMembers' => $ProfileViedByMembers,
-                    'SimilarProfile' => $SimilarProfile,
+                    'ProfileViedByMembers' => $ProfileViedByMembers
                 ]);
-            }else{
+            } else {
                 return $this->redirect(Yii::getAlias('@web'));
             }
-        }else{
+        } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
     }
@@ -403,22 +396,24 @@ class UserController extends Controller
         return json_encode($return);
     }
 
-    public function actionEditMyinfo(){
+
+    public function actionEditMyinfo()
+    {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_EDIT_MY_INFO;
         $show = false;
         $popup = false;
-        if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
-            if(Yii::$app->request->post('save')){
+            if (Yii::$app->request->post('save')) {
                 $tYourSelf_old = $model->tYourSelf;
                 $model->tYourSelf = Yii::$app->request->post('User')['tYourSelf'];
                 if (strcmp($tYourSelf_old, $model->tYourSelf) !== 0) {
                     $model->eStatusInOwnWord = 'Pending';
                     $popup = true;
                 }
-                if($model->validate()){
+                if ($model->validate()) {
                     $model->save();
                     $show = false;
                 }
@@ -448,7 +443,7 @@ class UserController extends Controller
         $popup = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
-            if(Yii::$app->request->post('save')){
+            if (Yii::$app->request->post('save')) {
                 $NewMobileNo = Yii::$app->request->post('User')['Mobile'];
                 $OldMobileNo = $model->Mobile;
                 $model->First_Name = Yii::$app->request->post('User')['First_Name'];
@@ -459,7 +454,7 @@ class UserController extends Controller
                 $model->Mobile = $NewMobileNo;
                 $model->Gender = Yii::$app->request->post('User')['Gender'];
                 $model->mother_tongue = Yii::$app->request->post('User')['mother_tongue'];
-                if($model->validate()){
+                if ($model->validate()) {
                     if ($NewMobileNo != $OldMobileNo) {
                         $PIN_P = CommonHelper::generateNumericUniqueToken(4);
                         $model->pin_phone_vaerification = $PIN_P;
@@ -484,9 +479,9 @@ class UserController extends Controller
         $model->scenario = User::SCENARIO_REGISTER1;
         $show = false;
 
-        if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
-            if(Yii::$app->request->post('save')){
+            if (Yii::$app->request->post('save')) {
                 $model->iReligion_ID = Yii::$app->request->post('User')['iReligion_ID'];
                 $model->iCommunity_ID = Yii::$app->request->post('User')['iCommunity_ID'];
                 $model->iSubCommunity_ID = Yii::$app->request->post('User')['iSubCommunity_ID'];
@@ -499,7 +494,7 @@ class UserController extends Controller
                 $model->iDistrictID = Yii::$app->request->post('User')['iDistrictID'];
                 $model->iTalukaID = Yii::$app->request->post('User')['iTalukaID'];
                 $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
-                if($model->validate()){
+                if ($model->validate()) {
                     $model->completed_step = $model->setCompletedStep('2');
                     $model->save();
                     $show = false;
@@ -507,7 +502,7 @@ class UserController extends Controller
             }
         }
         //var_dump($show);
-        return $this->actionRenderAjax($model,'_basicinfo',$show);
+        return $this->actionRenderAjax($model, '_basicinfo', $show);
     }
 
     public function actionEditEducation()
@@ -516,15 +511,15 @@ class UserController extends Controller
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER2;
         $show = false;
-        if(Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
-            if(Yii::$app->request->post('save')){
+            if (Yii::$app->request->post('save')) {
                 $model->iEducationLevelID = Yii::$app->request->post('User')['iEducationLevelID'];
                 $model->iEducationFieldID = Yii::$app->request->post('User')['iEducationFieldID'];
                 $model->iWorkingWithID = Yii::$app->request->post('User')['iWorkingWithID'];
                 $model->iWorkingAsID = Yii::$app->request->post('User')['iWorkingAsID'];
                 $model->iAnnualIncomeID = Yii::$app->request->post('User')['iAnnualIncomeID'];
-                if($model->validate()) {
+                if ($model->validate()) {
                     $model->completed_step = $model->setCompletedStep('3');
                     $model->save();
                     $show = false;
@@ -533,10 +528,9 @@ class UserController extends Controller
         }
 
         if ($show) {
-            return $this->actionRenderAjax($model,'_education',true);
-        }
-        else {
-            return $this->actionRenderAjax($model,'_education',false);
+            return $this->actionRenderAjax($model, '_education', true);
+        } else {
+            return $this->actionRenderAjax($model, '_education', false);
         }
     }
 
@@ -548,7 +542,7 @@ class UserController extends Controller
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
-            if(Yii::$app->request->post('save')){
+            if (Yii::$app->request->post('save')) {
                 $model->iHeightID = Yii::$app->request->post('User')['iHeightID'];
                 $model->vSkinTone = Yii::$app->request->post('User')['vSkinTone'];
                 $model->vBodyType = Yii::$app->request->post('User')['vBodyType'];
@@ -557,7 +551,7 @@ class UserController extends Controller
                 $model->vSpectaclesLens = Yii::$app->request->post('User')['vSpectaclesLens'];
                 $model->vDiet = Yii::$app->request->post('User')['vDiet'];
                 $model->weight = Yii::$app->request->post('User')['weight'];
-                if($model->validate()){
+                if ($model->validate()) {
                     $model->completed_step = $model->setCompletedStep('4');
                     $model->save();
                     $show = false;
@@ -566,21 +560,21 @@ class UserController extends Controller
         }
 
         if ($show) {
-            return $this->actionRenderAjax($model,'_lifestyle',true);
-        }
-        else {
-            return $this->actionRenderAjax($model,'_lifestyle',false);
+            return $this->actionRenderAjax($model, '_lifestyle', true);
+        } else {
+            return $this->actionRenderAjax($model, '_lifestyle', false);
         }
     }
 
-    public function actionEditFamily() {
+    public function actionEditFamily()
+    {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER4;
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
-            if(Yii::$app->request->post('save')){
+            if (Yii::$app->request->post('save')) {
                 $model->iFatherStatusID = Yii::$app->request->post('User')['iFatherStatusID'];
                 $model->iFatherWorkingAsID = Yii::$app->request->post('User')['iFatherWorkingAsID'];
                 $model->iMotherStatusID = Yii::$app->request->post('User')['iMotherStatusID'];
@@ -598,14 +592,13 @@ class UserController extends Controller
                 $model->vFamilyAffluenceLevel = Yii::$app->request->post('User')['vFamilyAffluenceLevel'];
                 $model->vFamilyType = Yii::$app->request->post('User')['vFamilyType'];
                 $family_property_array = Yii::$app->request->post('User')['vFamilyProperty'];
-                if(is_array($family_property_array)) {
+                if (is_array($family_property_array)) {
                     $model->vFamilyProperty = implode(",", $family_property_array);
-                }
-                else {
+                } else {
                     $model->vFamilyProperty = '';
                 }
                 $model->vDetailRelative = Yii::$app->request->post('User')['vDetailRelative'];
-                if($model->validate()){
+                if ($model->validate()) {
                     $model->completed_step = $model->setCompletedStep('5');
                     $model->save();
                     $show = false;
@@ -613,11 +606,10 @@ class UserController extends Controller
             }
         }
 
-        if($show) {
-            return $this->actionRenderAjax($model,'_family',true);
-        }
-        else {
-            return $this->actionRenderAjax($model,'_family',false);
+        if ($show) {
+            return $this->actionRenderAjax($model, '_family', true);
+        } else {
+            return $this->actionRenderAjax($model, '_family', false);
         }
     }
 
@@ -636,14 +628,14 @@ class UserController extends Controller
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
-            if(Yii::$app->request->post('save')){
+            if (Yii::$app->request->post('save')) {
                 $CurrDate = date('Y-m-d H:i:s');
 
                 $ReligionId = Yii::$app->request->post('PartenersReligion')['iReligion_ID'];
                 $PartenersReligion->iUser_ID = $id;
                 $PartenersReligion->iReligion_ID = $ReligionId;
                 $PartenersReligion->dtModified = $CurrDate;
-                if($PartenersReligion->iPartners_Religion_ID == ""){
+                if ($PartenersReligion->iPartners_Religion_ID == "") {
                     $PartenersReligion->dtCreated = $CurrDate;
                 }
                 $PartenersReligion->save();
@@ -658,7 +650,7 @@ class UserController extends Controller
                 $UPP->smoke = Yii::$app->request->post('UserPartnerPreference')['smoke'];
                 $UPP->modified_on = $CurrDate;
 
-                if($UPP->ID == ""){
+                if ($UPP->ID == "") {
                     $UPP->created_on = $CurrDate;
                 }
                 $UPP->save();
@@ -667,7 +659,7 @@ class UserController extends Controller
                 $PartnersMaritalStatus->iUser_ID = $id;
                 $PartnersMaritalStatus->iMarital_Status_ID = $MaritalStatusID;
                 $PartnersMaritalStatus->dtModified = $CurrDate;
-                if($PartnersMaritalStatus->iPartners_Marital_Status_ID == ""){
+                if ($PartnersMaritalStatus->iPartners_Marital_Status_ID == "") {
                     $PartnersMaritalStatus->dtCreated = $CurrDate;
                 }
                 $PartnersMaritalStatus->save();
@@ -676,7 +668,7 @@ class UserController extends Controller
                 $PartnersGotra->iUser_ID = $id;
                 $PartnersGotra->iGotra_ID = $GotraID;
                 $PartnersGotra->dtModified = $CurrDate;
-                if($PartnersGotra->iPartners_Gotra_ID == ""){
+                if ($PartnersGotra->iPartners_Gotra_ID == "") {
                     $PartnersGotra->dtCreated = $CurrDate;
                 }
                 $PartnersGotra->save();
@@ -857,8 +849,8 @@ class UserController extends Controller
         }
         $myModel = [
             'PC' => $PC,
-            // 'PartnersMaritalStatus' => $PartnersMaritalStatus,
-            //'PartnersFathersStatus' => $PartnersFathersStatus,
+            'PartnersMaritalStatus' => $PartnersMaritalStatus,
+            'PartnersFathersStatus' => $PartnersFathersStatus,
             #'model' => $model,
             'PS' => $PS,
             'PCS' => $PCS,
@@ -964,6 +956,7 @@ class UserController extends Controller
             return $this->actionRenderAjax($model, '_hobby', false);
         }
     }
+
 
     public function actionCoverupload()
     {
@@ -1493,11 +1486,11 @@ class UserController extends Controller
             $PartnersEducationField = PartnersEducationField::findByUserId($ToUserId) == NULL ? new PartnersEducationField() : PartnersEducationField::findByUserId($ToUserId);
 
         } else if ($ToUserId == $id) {
-            $Title = Yii::$app->params['accessDenied'];
-            $Message = Yii::$app->params['accessDeniedYourProfile'];
+            $Title = "Access Denied";
+            $Message = "You can't see your profile as user view.";
         } else {
-            $Title = Yii::$app->params['accessDenied'];
-            $Message = Yii::$app->params['accessDeniedInvalid'];
+            $Title = "Access Denied";
+            $Message = "Trying to access invalid data.";
         }
         return $this->render('profile', [
             'model' => $model,
@@ -1680,4 +1673,5 @@ class UserController extends Controller
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
         return json_encode($return);
     }
+
 }

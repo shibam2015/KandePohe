@@ -13,5 +13,8 @@ return [
     'searchingLimit' => 3,
     'noRecordsFoundInSearchList' => 'There are no record found as per your searching criteria.',
     'loginFirst' => 'For this you have to login first...!',
+    'accessDenied' => 'Access Denied',
+    'accessDeniedYourProfile' => "You can't see your profile as user view.",
+    'accessDeniedInvalid' => "Trying to access invalid data.",
 ];
 
