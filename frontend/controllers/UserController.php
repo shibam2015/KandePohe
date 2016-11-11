@@ -1499,6 +1499,8 @@ class UserController extends Controller
             $Title = Yii::$app->params['accessDenied'];
             $Message = Yii::$app->params['accessDeniedInvalid'];
         }
+        $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
+        list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, 3);
         return $this->render('profile', [
             'model' => $model,
             'MatchCompatibility' => $MatchCompatibility,
@@ -1514,6 +1516,7 @@ class UserController extends Controller
             'PartnersMothersStatus' => $PartnersMothersStatus,
             'PartnersEducationalLevel' => $PartnersEducationalLevel,
             'PartnersEducationField' => $PartnersEducationField,
+            'SimilarProfile' => $SimilarProfile,
         ]);
     }
 
