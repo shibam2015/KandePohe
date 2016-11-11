@@ -5,10 +5,10 @@ use common\components\CommonHelper;
 #\common\components\CommonHelper::pr($SimilarProfile);
 ?>
 <div class="col-sm-12 col-md-3">
-    <div class="bg-white padd-20">
+    <div class="bg-white <?= ($aside) ? 'aside ' : ''; ?> padd-20">
         <?php if (count($SimilarProfile) > 0) { ?>
             <div class="ad-title">
-                Similar Profiles
+                Similar Profiles <?= $flag1 ?>
             </div>
             <ul class="list-unstyled ad-prof">
                 <?php foreach ($SimilarProfile as $SPK => $SPV) { ?>
@@ -35,9 +35,9 @@ use common\components\CommonHelper;
             <div class="border"></div>
         <?php } ?>
 
-        <div class="ad-title">Success Stories</div>
+        <!--<div class="ad-title">Success Stories</div>
         <div class="mrg-bt-10">
-            <?= Html::img('@web/images/image1.jpg', ['width' => '', 'height' => '', 'alt' => 'Image', 'class' => 'img-responsive']); ?>
+            <? /*= Html::img('@web/images/image1.jpg', ['width' => '', 'height' => '', 'alt' => 'Image', 'class' => 'img-responsive']); */ ?>
         </div>
         <span class="pull-right"><a href="#" class="text-right">Read All Stories <i
                     class="fa fa-angle-right"></i></a></span>
@@ -49,7 +49,7 @@ use common\components\CommonHelper;
         <ul class="list-unstyled ad-prof">
             <li>
                 <span class="imgarea">
-                    <?= Html::img('@web/images/profile4.jpg', ['width' => '','height' => '','alt' => 'Profile']); ?>
+                    <? /*= Html::img('@web/images/profile4.jpg', ['width' => '','height' => '','alt' => 'Profile']); */ ?>
                   </span>
                 <span class="img-desc">
                   <p class="name">Mrunmal Sawant</p>
@@ -61,7 +61,7 @@ use common\components\CommonHelper;
             </li>
             <li>
                 <span class="imgarea">
-                    <?= Html::img('@web/images/heart.jpg', ['width' => '','height' => '','alt' => 'Profile']); ?>
+                    <? /*= Html::img('@web/images/heart.jpg', ['width' => '','height' => '','alt' => 'Profile']); */ ?>
                 </span>
                 <span class="img-desc">
                   <td width="87%" align="left" valign="top"><p><strong>Mrunmal Sawant</strong></p>
@@ -72,9 +72,9 @@ use common\components\CommonHelper;
                 <div class="clearfix"></div>
             </li>
         </ul>
-        <!--</table>-->
-        <span class="pull-right"><a href="#" class="text-right">Get in touch with her <i class="fa fa-angle-right"></i></a></span>
 
+        <span class="pull-right"><a href="#" class="text-right">Get in touch with her <i class="fa fa-angle-right"></i></a></span>
+-->
         <div class="clearfix"></div>
     </div>
 </div>

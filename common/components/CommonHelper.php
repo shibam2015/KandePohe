@@ -832,6 +832,18 @@ class CommonHelper {
         if(strtotime('+' . $age . ' years', $then_ts) > time()) $age--;
         return $age;
     }
+
+    function new_thumb_name($filename)
+    {
+        $string = trim($filename);
+        $string = strtolower($string);
+        $string = trim(ereg_replace("[^ A-Za-z0-9_]", " ", $string));
+        $string = ereg_replace("[ tnr]+", "_", $string);
+        $string = str_replace(" ", '_', $string);
+        $string = ereg_replace("[ _]+", "_", $string);
+
+        return $string;
+    }
 }
 ?>
 

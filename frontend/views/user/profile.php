@@ -506,22 +506,22 @@ use yii\widgets\Pjax;
                     <?php } ?>
 
                 </div>
-                <div class="col-md-3 col-sm-12">
+                <!--<div class="col-md-3 col-sm-12">
                     <div class="row">
                         <div class="bg-white aside padd-20">
                             <div class="ad-title">Similar Profiles</div>
                             <ul class="list-unstyled ad-prof">
                                 <li><span
-                                        class="imgarea"> <?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?></span> <span
+                                        class="imgarea"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></span> <span
                                         class="img-desc">
-                  <p class="name"><strong>Ishita J</strong></p>
-                  <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                  </span>
+                                <p class="name"><strong>Ishita J</strong></p>
+                                <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
+                                    </span>
 
                                     <div class="clearfix"></div>
                                 </li>
                                 <li><span
-                                        class="imgarea"> <?= Html::img('@web/images/profile2.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?></span> <span
+                                        class="imgarea"> <? /*= Html::img('@web/images/profile2.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></span> <span
                                         class="img-desc">
                   <p class="name"><strong>Arathi B</strong></p>
                   <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
@@ -530,7 +530,7 @@ use yii\widgets\Pjax;
                                     <div class="clearfix"></div>
                                 </li>
                                 <li><span
-                                        class="imgarea"> <?= Html::img('@web/images/profile3.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?></span> <span
+                                        class="imgarea"> <? /*= Html::img('@web/images/profile3.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></span> <span
                                         class="img-desc">
                   <p class="name"><strong>Arathi B</strong></p>
                   <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
@@ -546,7 +546,7 @@ use yii\widgets\Pjax;
                             <div class="border"></div>
                             <div class="ad-title">Success Stories</div>
                             <div class="mrg-bt-10">
-                                <?= Html::img('@web/images/image1.jpg', ['width' => '', 'height' => '', 'alt' => 'Image', 'class' => 'img-responsive']); ?>
+                                <? /*= Html::img('@web/images/image1.jpg', ['width' => '', 'height' => '', 'alt' => 'Image', 'class' => 'img-responsive']); */ ?>
                             </div>
                             <span class="pull-right"><a href="#" class="text-right">Read All Stories <i
                                         class="fa fa-angle-right"></i></a></span>
@@ -556,7 +556,7 @@ use yii\widgets\Pjax;
                             <div class="ad-title">Interest Accepted</div>
                             <ul class="list-unstyled ad-prof">
                                 <li> <span class="imgarea">
-                    <?= Html::img('@web/images/profile4.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?>
+                    <? /*= Html::img('@web/images/profile4.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?>
                   </span> <span class="img-desc">
                   <p class="name">Mrunmal Sawant</p>
                   <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
@@ -565,7 +565,7 @@ use yii\widgets\Pjax;
                                     <div class="clearfix"></div>
                                 </li>
                                 <li> <span class="imgarea">
-                    <?= Html::img('@web/images/heart.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?>
+                    <? /*= Html::img('@web/images/heart.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?>
                     </span> <span class="img-desc">
                   <td width="87%" align="left" valign="top"><p><strong>Mrunmal Sawant</strong></p>
 
@@ -581,16 +581,17 @@ use yii\widgets\Pjax;
                             <div class="clearfix"></div>
                         </div>
                     </div>
-                </div>
+                </div>-->
+                <?= $this->render('/layouts/parts/_rightbar.php', ['SimilarProfile' => $SimilarProfile, 'aside' => 1]) ?>
             </div>
             <?php if ($flag) { ?>
                 <div class="mrg-bt-10">
                     <div class="row">
                         <div class="col-sm-9">
-                            <div class="pull-left"><a href="#">Back to Top</a></div>
+                            <!--<div class="pull-left"><a href="#">Back to Top</a></div>
                             <div class="pull-right"><a href="#"> <i class="fa fa-angle-left"></i> Previous Profile</a>
                                 &nbsp; &nbsp; &nbsp; &nbsp; <a href="#">Next Profile <i class="fa fa-angle-right"></i>
-                                </a></div>
+                                </a></div>-->
                         </div>
                     </div>
                 </div>
