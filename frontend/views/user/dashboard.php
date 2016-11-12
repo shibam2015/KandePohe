@@ -138,7 +138,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                   </div>
                 </div>
                 <div class="divider no-mrg"></div>
-                <div class="panel no-border padd-hr-10 panel-default panel-friends">
+                <!--<div class="panel no-border padd-hr-10 panel-default panel-friends">
                   <div class="panel-heading">
                     <h3 class="panel-title text-muted">My Preferences</h3>
                   </div>
@@ -157,8 +157,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                           <div class="panel-body">
                             <ul class="list-unstyled ad-prof">
                               <li> <span class="imgarea"><a href="#" class="name" title="KP123WERT">
-                                    <!--<img src="images/profile1.jpg" alt="Profile">-->
-                                    <?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?>
+                                    <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?>
                                   </a></span> <span class="img-desc">
                                 <a href="#" class="name" title="KP123WERT">KP123WERT</a>
                               <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
@@ -167,7 +166,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 <div class="clearfix"></div>
                               </li>
                               <li> <span class="imgarea"><a href="#" class="name" title="KP123WERT">
-                                    <?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?>
+                                    <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?>
                                   </a></span> <span class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
                               <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                               </span>
@@ -191,7 +190,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                           <div class="panel-body">
                             <ul class="list-unstyled ad-prof">
                               <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?></a></span> <span
+                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
                                     class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
                               <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                               </span>
@@ -199,7 +198,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 <div class="clearfix"></div>
                               </li>
                               <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?></a></span> <span
+                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
                                     class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
                               <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                               </span>
@@ -223,7 +222,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                           <div class="panel-body">
                             <ul class="list-unstyled ad-prof">
                               <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?></a></span> <span
+                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
                                     class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
                               <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                               </span>
@@ -231,7 +230,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 <div class="clearfix"></div>
                               </li>
                               <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?></a></span> <span
+                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
                                     class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
                               <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                               </span>
@@ -254,7 +253,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                           <div class="panel-body">
                             <ul class="list-unstyled ad-prof">
                               <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?></a></span> <span
+                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
                                     class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
                               <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                               </span>
@@ -262,7 +261,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 <div class="clearfix"></div>
                               </li>
                               <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?></a></span> <span
+                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
                                     class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
                               <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                               </span>
@@ -285,7 +284,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                           <div class="panel-body">
                             <ul class="list-unstyled ad-prof">
                               <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?></a></span> <span
+                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
                                     class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
                               <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                               </span>
@@ -293,7 +292,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 <div class="clearfix"></div>
                               </li>
                               <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?></a></span> <span
+                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
                                     class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
                               <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                               </span>
@@ -306,7 +305,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                       </div>
                     </div>
                   </div>
-                </div>
+                </div>-->
               </div>
             </div>
             <div class="col-sm-8 col-md-6">
