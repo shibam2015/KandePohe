@@ -31,7 +31,7 @@ $M1 = array();
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-7">
+                    <div class="col-md-12">
                         <div class="sidebar1">
                             <div class="mrg-tp-20">
                                 <div class="dropdown drp-lg">
@@ -461,12 +461,13 @@ $M1 = array();
 
                     </div>
                     </div>
-                    <div class="col-md-5 col-sm-12 mrg-tp-20">
+                    <!--<div class="col-md-5 col-sm-12 mrg-tp-20">
                         <div class="map">
                             <iframe width="100%" height="1000" frameborder="0" scrolling="no" marginheight="0"
                                     marginwidth="0"
-                                    src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=15+Springfield+Way,+Hythe,+CT21+5SH&aq=t&sll=52.8382,-2.327815&sspn=8.047465,13.666992&ie=UTF8&hq=&hnear=15+Springfield+Way,+Hythe+CT21+5SH,+United+Kingdom&t=m&z=14&ll=51.077429,1.121722&output=embed"></iframe>
-                    </div>
+                                    src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=15+Springfield+Way,+Hythe,+CT21+5SH&aq=t&sll=52.8382,-2.327815&sspn=8.047465,13.666992&ie=UTF8&hq=&hnear=15+Springfield+Way,+Hythe+CT21+5SH,+United+Kingdom&t=m&z=14&ll=51.077429,1.121722&output=embed">
+                            </iframe>
+                    </div>-->
                 </div>
             </div>
 
