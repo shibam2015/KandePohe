@@ -111,7 +111,6 @@ class SearchController extends Controller
             $ReligionID = $session->get('iReligion_ID');
             $MaritalStatusID = $session->get('Marital_Status');
         }
-
         $WHERE = '';
         $WHERE = ($Gender != '') ? ' AND user.Gender="' . $Gender . '" ' : '';
         $WHERE .= ($Community != '') ? ' AND user.iCommunity_ID="' . $Community . '" ' : '';
