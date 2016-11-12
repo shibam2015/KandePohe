@@ -13,7 +13,7 @@ class MailHelper
         $EMAIL_TEMPLATE = EmailFormat::findOne(['vEmailFormatType' => $TYPE]);
         #TO_EMAIL = 'parmarvikrantr@gmail.com';
         $TO_EMAIL = Yii::$app->params['adminEmail'];
-        $MailContentArray = array('#NAME#', '#EMAIL_TO#', '#EMAIL#', '#ACTIVATION_LINK#', '#PIN#', '#COMMENT#', '#LINK#', '#EMAIL#', '#USER_NAME#', '#TODAY_DATE#', '#AGE#', '#HEIGHT#', '#RELIGION#', '#MOTHER_TONGUE#', '#COMMUNITY#', '#LOCATION#', '#EDUCATION#', '#PROFESSION#', '#ABOUT_ME#', '#PHOTO#');
+        $MailContentArray = array('#NAME#', 'FORGOT_PASSWORD#EMAIL_TO#', '#EMAIL#', '#ACTIVATION_LINK#', '#PIN#', '#COMMENT#', '#LINK#', '#EMAIL#', '#USER_NAME#', '#TODAY_DATE#', '#AGE#', '#HEIGHT#', '#RELIGION#', '#MOTHER_TONGUE#', '#COMMUNITY#', '#LOCATION#', '#EDUCATION#', '#PROFESSION#', '#ABOUT_ME#', '#PHOTO#');
         $MAIL_MESSAGE = $EMAIL_TEMPLATE->tEmailFormatDesc;
         $MAIL_SUBJECT = $EMAIL_TEMPLATE->vEmailFormatSubject;
         foreach ($MailContentArray as $Key => $Value) {
@@ -29,7 +29,7 @@ class MailHelper
                 }
             }
         }
-        #$TO_EMAIL = 'parmarvikrantr@gmail.com';
+        $TO_EMAIL = 'parmarvikrantr@gmail.com';
         #$MAIL_SUBJECT = $EMAIL_TEMPLATE->vEmailFormatSubject;
         $MAIL_TITLE = $EMAIL_TEMPLATE->vEmailFormatTitle;
         $MAIL_SUBJECT = '=?UTF-8?B?' . base64_encode($MAIL_SUBJECT) . '?=';

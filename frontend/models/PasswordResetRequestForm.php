@@ -58,7 +58,7 @@ class PasswordResetRequestForm extends Model
             }
         }
         $resetLink = Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 'token' => $user->password_reset_token]);
-        $MAIL_DATA = array("EMAIL" => $this->email, "EMAIL_TO" => $this->email, "NAME" => $this->First_Name . " " . $this->Last_Name, "LINK" => $resetLink);
+        $MAIL_DATA = array("EMAIL" => $this->email, "EMAIL_TO" => $this->email, "NAME" => $user->FullName, "LINK" => $resetLink);
         return MailHelper::SendMail('FORGOT_PASSWORD', $MAIL_DATA);
         /*return Yii::$app
             ->mailer

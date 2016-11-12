@@ -429,3 +429,12 @@ function mailBox(url, htmlId, dataArr) {
  $this.button("reset");
  }, 8000);
  });*/
+function pswd(x) {
+    if (x == 1) {
+        return '<span class="text-success"><strong>&#10003;</strong></span>';
+    } else if (x == 2) {
+        return '<span class="text-error"><strong>&#215;</strong></span>';
+    } else {
+        return '';
+    }
+}
