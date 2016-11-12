@@ -697,7 +697,7 @@ use yii\jui\DatePicker;
                   $("#fpswd").modal("toggle");
                   $("#forgot-password-id").html(res.email);
                   $("#passwordresetrequestform-email").val("");
-                  $("#fpswd").modal("toggle");
+                  //$("#fpswd").modal("toggle");
                   $("#reset-pswd-link").modal("toggle");
                 }
               }

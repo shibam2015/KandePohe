@@ -93,9 +93,13 @@ AppAsset::register($this);
           <form>
             <div class="row">
               <div class="col-sm-10 col-sm-offset-1 text-center">
-                <h4 class="mrg-bt-30 text-dark" id="forgot-password-id"></h4>
-                <h4 class="mrg-bt-30"><span class="text-success"><strong>&#10003;</strong></span> Please check email for
-                  Reset Password Link</h4>
+                  <h4 class="mrg-bt-10"><span class="text-success"></span> We just emailed you a link at-</h4>
+                  <h4 class="mrg-bt-10 text-dark resetid" id="forgot-password-id"><span class="text-success"><strong>
+                              &#10003;</strong></span></h4>
+                  <h4 class="mrg-bt-10 resetsucess">Please check your email and click on the secure link.</h4>
+                  <h4 class="mrg-bt resethelp">If you don't see our email, check your spam folder. Still having trouble?
+                      Please write to us at <a href="mailto:help@kande-pohe.com" target="_top">help@kande-pohe.com.</a>
+                  </h4>
               </div>
             </div>
             <div class="row">

@@ -45,8 +45,11 @@ class ResetPasswordForm extends Model
     public function rules()
     {
         return [
+            [['password'], 'required', 'message' => 'Please create your New password.'],
+            [['repassword'], 'required', 'message' => 'Please re-type your New password.'],
              [['password','repassword'], 'string', 'min' => 6],
-            [['repassword'],'compare','compareAttribute' => 'password', 'message'=>"Passwords don't match"],
+            [['password', 'repassword'], 'string', 'length' => [6, 255]],
+            [['repassword'], 'compare', 'compareAttribute' => 'password', 'message' => "New password and Retype Password is not matching. Please try again."],
         ];
     }
 

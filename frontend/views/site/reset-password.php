@@ -61,7 +61,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
       </div>
       <div class="col-md-9 col-sm-12">
         <div class="right-column"> <span class="welcome-note">
-          <p><strong>Welcome <?= $model->email; ?> !</strong> We need a few details that will use to chang password.</p>
+          <!--<p><strong>Welcome <? /*= $model->email; */ ?> !</strong> We need a few details that will use to chang password.</p>-->
+          <p><strong>Choose a new password </strong></p>
           </span>
           <div class="row no-gutter">
             <div class="col-lg-8 col-md-12 col-sm-12">
@@ -80,7 +81,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                   </div>
                   <div class="mid-col">
                     <div class="form-cont">
-                      <?= $form->field($model, 'password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">password</span> </label></span>{error}'])->input('password',['class'=>'input__field input__field--akira form-control'])?>
+                      <?= $form->field($model, 'password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">New password</span> </label></span>{error}'])->input('password', ['class' => 'input__field input__field--akira form-control']) ?>
                     </div>
                   </div>
                 </div>
@@ -91,14 +92,14 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                   </div>
                   <div class="mid-col">
                     <div class="form-cont">
-                      <?= $form->field($model, 'repassword', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Retype password</span> </label></span>{error}'])->input('password',['class'=>'input__field input__field--akira form-control'])?>
+                      <?= $form->field($model, 'repassword', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Retype password</span> </label></span>{error}'])->input('password', ['class' => 'input__field input__field--akira form-control repassword']) ?>
                     </div>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-10 col-sm-offset-1">
-                    <?= Html::submitButton('Change Password', ['class' => 'btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left', 'name' => 'change_password']) ?>
+                    <?= Html::submitButton('Change Password', ['class' => 'btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left change-password', 'name' => 'change_password']) ?>
                     <!-- <a href="<?/*=$HOME_URL_SITE*/?>life-style" class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right">Skip</a>-->
                   </div>
                 </div>
@@ -140,3 +141,29 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
     </div>
   </div>
 </main>
+<script>
+  $(document).ready(function () {
+    $(".change-password").attr("disabled", "true");
+    $(".form-control").blur(function () {
+      if ($(this).val() != "") {
+        $(".change-password").removeAttr("disabled");
+      } else {
+        $(".change-password").attr("disabled", "true");
+      }
+    });
+  });
+  $(function () {
+    $('input').change(function () {
+      var $input = $(this),
+          $flag = $input.next();
+
+      if (!$input.val()) {
+        $flag.remove();
+      }
+
+      if ($flag.length == 0 || !$flag.is('.valid')) {
+        $input.after('<div class="valid"></div>');
+      }
+    });
+  });
+</script>
