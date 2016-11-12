@@ -21,7 +21,7 @@
 </ul>
 -->
 <?php
-$URL = Yii::$app->request->url;
+$URL = $MainUrl = Yii::$app->request->url;
 $Page += 1;
 #$URL = str_replace("&page=" . $Page, '', $URL);
 $URL = str_replace("?page=" . $Page, '', $URL);
@@ -29,7 +29,6 @@ $total = ceil($TotalRecords / $Limit);
 $id = $Page;
 if (1) {
     #if($Page ==0)
-
     $cur_page = $Page;
     $Page -= 1;
     $per_page = $Limit;
@@ -38,9 +37,14 @@ if (1) {
     $first_btn = true;
     $last_btn = true;
     $start = $Page * $per_page;
-
     if ($TotalRecords > $Limit) {
         $no_of_paginations = ceil($TotalRecords / $per_page);
+        if ($no_of_paginations < $cur_page) {
+            return Yii::$app->response->redirect($_SESSION['previous_location']);
+        } else {
+            $_SESSION['previous_location'] = $MainUrl;
+        }
+
         /* ---------------Calculating the starting and endign values for the loop----------------------------------- */
         if ($cur_page >= 7) {
             $start_loop = $cur_page - 3;

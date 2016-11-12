@@ -72,7 +72,7 @@ $M1 = array();
                                                 <div class="box">
                                                     <div class="mid-col">
                                                         <div class="form-cont bs">
-                                                            <?= $form->field($TempModel, 'age_from')->dropDownList(
+                                                            <?= $form->field($TempModel, 'AgeFrom')->dropDownList(
                                                                 array_combine($range, $range),
                                                                 ['class' => 'cs-select cs-skin-border',
                                                                     'prompt' => 'From']
@@ -85,7 +85,7 @@ $M1 = array();
                                                 <div class="box">
                                                     <div class="mid-col">
                                                         <div class="form-cont bs">
-                                                            <?= $form->field($TempModel, 'age_to')->dropDownList(
+                                                            <?= $form->field($TempModel, 'AgeTo')->dropDownList(
                                                                 array_combine($range, $range),
                                                                 ['class' => 'cs-select cs-skin-border',
                                                                     'prompt' => 'To']

@@ -97,6 +97,8 @@ class SearchController extends Controller
             $Height = $params['User']['iHeightID'];
             $ReligionID = $params['User']['iReligion_ID'];
             $MaritalStatusID = $params['User']['Marital_Status'];
+            $AgeFrom = $params['User']['age_from'];
+            $AgeTo = $params['User']['age_to'];
             $session->set('Profile_for', $Gender);
             $session->set('iCommunity_ID', $Community);
             $session->set('iSubCommunity_ID', $SubCommunity);
@@ -152,6 +154,8 @@ class SearchController extends Controller
         $TempModel->Marital_Status = $MaritalStatusID;
         $TempModel->iHeightID = $Height;
         $TempModel->Profile_for = $Gender;
+        $TempModel->AgeFrom = $AgeFrom;
+        $TempModel->AgeTo = $AgeTo;
         return $this->render('searchlist',
             [
                 'Model' => $Model,
