@@ -18,7 +18,8 @@ use common\components\CommonHelper;
                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                   <div class="navbar-collapse collapse sidebar-navbar-collapse">
                     <ul class="nav navbar-nav">
-                      <!-- <li><a href="#">Matches <span class="badge">1</span></a></li>-->
+
+                    <!-- <li><a href="#">Matches <span class="badge">1</span></a></li>-->
                       <!--<li><a href="<? /*= CommonHelper::getMailBoxUrl() */ ?>">Search </a></li>-->
                       <li><?= html::a('<i class="ti-power-off m-r-5"></i> Search</a>', ['search/basic-search'], ['data-method' => 'post']) ?></li>
                       <li><a href="<?= CommonHelper::getMailBoxUrl() ?>">Inbox
