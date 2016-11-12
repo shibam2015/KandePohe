@@ -1,8 +1,10 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use frontend\components\CommonHelper;
+#use frontend\components\CommonHelper;
+use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
+use common\models\LoginForm;
 $HOME_URL = Yii::getAlias('@web')."/";
 $HOME_URL_SITE = Yii::getAlias('@web')."/site/";
 $UPLOAD_DIR = Yii::getAlias('@frontend') .'/web/uploads/';
@@ -33,10 +35,13 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
       <div class="container">
         <div class="row">
           <div class="col-xs-8">
-            <div class="logo"> <a href="" title="logo"> <!-- <img src="images/logo-inner.png" width="202" height="83" alt="logo" title="Kande Pohe"> --><?= Html::img('@web/images/logo-inner.png', ['width' => '202','height' => 83,'alt' => 'logo']); ?> </a> </div>
+            <div class="logo"><a href="" title="logo">
+                <?= Html::img('@web/images/logo-inner.png', ['width' => '202', 'height' => 83, 'alt' => 'logo']); ?> </a>
+            </div>
           </div>
           <div class="col-xs-4">
-            <div class="help pull-right"> <a href="#" title="Help"> <!-- <img src="images/help.png" width="21" height="21" alt="help" title="Help"> --><?= Html::img('@web/images/help.png', ['width' => '21','height' => 21,'alt' => 'help']); ?> </a> </div>
+            <div class="help pull-right"><a href="#" title="Help">
+                <?= Html::img('@web/images/help.png', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?> </a></div>
           </div>
         </div>
       </div>
@@ -46,7 +51,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 <main>
   <div class="container-fluid">
     <div class="row no-gutter bg-dark">
-      <div class="col-md-3  col-sm-12">
+      <!--<div class="col-md-3  col-sm-12">
         <div class="sidebar-nav">
           <div class="navbar navbar-default" role="navigation">
             <div class="navbar-header">
@@ -55,11 +60,10 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
             <div class="navbar-collapse collapse sidebar-navbar-collapse">
               
             </div>
-            <!--/.nav-collapse -->
           </div>
         </div>
-      </div>
-      <div class="col-md-9 col-sm-12">
+      </div>-->
+      <div class="col-md-9 col-sm-12 col-md-offset-2">
         <div class="right-column"> <span class="welcome-note">
           <!--<p><strong>Welcome <? /*= $model->email; */ ?> !</strong> We need a few details that will use to chang password.</p>-->
           <p><strong>Choose a new password </strong></p>
@@ -68,7 +72,6 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
             <div class="col-lg-8 col-md-12 col-sm-12">
               <div class="white-section mrg-tp-20 mrg-bt-10">
                 <h3>Change Password</h3>
-                <!-- <span class="error">Oops! Please ensure all fields are valid</span> -->
                 <?php
                 $form = ActiveForm::begin([
                     'id' => 'form-register1',
@@ -99,7 +102,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 
                 <div class="row">
                   <div class="col-sm-10 col-sm-offset-1">
-                    <?= Html::submitButton('Change Password', ['class' => 'btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left change-password', 'name' => 'change_password']) ?>
+                    <?= Html::submitButton('Change Password', ['class' => 'btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left change-pswd-link', 'name' => 'change_password']) ?>
                     <!-- <a href="<?/*=$HOME_URL_SITE*/?>life-style" class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right">Skip</a>-->
                   </div>
                 </div>
@@ -141,29 +144,4 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
     </div>
   </div>
 </main>
-<script>
-  $(document).ready(function () {
-    $(".change-password").attr("disabled", "true");
-    $(".form-control").blur(function () {
-      if ($(this).val() != "") {
-        $(".change-password").removeAttr("disabled");
-      } else {
-        $(".change-password").attr("disabled", "true");
-      }
-    });
-  });
-  $(function () {
-    $('input').change(function () {
-      var $input = $(this),
-          $flag = $input.next();
 
-      if (!$input.val()) {
-        $flag.remove();
-      }
-
-      if ($flag.length == 0 || !$flag.is('.valid')) {
-        $input.after('<div class="valid"></div>');
-      }
-    });
-  });
-</script>

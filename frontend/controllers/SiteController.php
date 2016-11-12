@@ -331,7 +331,6 @@ class SiteController extends Controller
                 $returnData['status'] = 0;
             }
             return $returnData;
-            Yii::$app->end();
         }
     }
 
@@ -351,11 +350,10 @@ class SiteController extends Controller
         } catch (InvalidParamException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
-
-
         if($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()){
             Yii::$app->session->setFlash('success', 'New password was saved.');
-            return $this->goHome();
+
+            return $this->redirect(Yii::$app->homeUrl . '?ref=cps');
         }
         return $this->render('reset-password',[
             'model' => $model
