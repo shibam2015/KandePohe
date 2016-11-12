@@ -275,3 +275,15 @@ img.selected {
     background-color: #ee1845;
     border-color: #ee1845;
 }
+
+.resetid {
+    font-size: 18px;
+}
+
+.resetsucess {
+    font-size: 16px;
+}
+
+.resethelp {
+    font-size: 14px;
+}

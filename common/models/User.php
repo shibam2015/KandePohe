@@ -70,8 +70,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $commentAdmin;
     public $Agerange;
     public $Profile_for;
-    public $age_from;
-    public $age_to;
+    public $Age_From;
+    public $Age_To;
 
     public $Community;
     public $SubCommunity;
@@ -226,6 +226,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             ['county_code', 'required', 'message' => 'Please Select your desired County Code.'],
             ['password_hash', 'required', 'message' => 'Please create your desired password.'],
             ['repeat_password', 'required', 'message' => 'Please re-type your desired password.'],
+            ['repassword', 'required', 'message' => 'Please re-type your desired password.'],
             ['Profile_created_for', 'required', 'message' => 'Please mention relationship of to be bride/groom with you.'],
             [['status', 'created_at', 'updated_at', 'Age', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID'], 'integer'],
             [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus'], 'string'],
@@ -251,9 +252,11 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             // [['captcha'],'captcha'],
             [['email'], 'email', 'message' => "Please enter valid email address."],
             [['password_hash', 'repeat_password'], 'string', 'length' => [6, 255]],
+            [['repassword', 'repeat_password'], 'string', 'length' => [6, 255]],
             [['tYourSelf'], 'string', 'max' => '2000'],
             [['tYourSelf'], 'required', 'on' => self::SCENARIO_EDIT_MY_INFO],
             [['repeat_password'], 'compare', 'compareAttribute' => 'password_hash', 'message' => "Password and Retype Password is not matching. Please try again."],
+            [['repassword'], 'compare', 'compareAttribute' => 'password_hash', 'message' => "Password and Retype Password is not matching. Please try again."],
             [['password_reset_token'], 'unique'],
             #[['phone_pin'], 'compare', 'compareAttribute' => 'pin_phone_vaerification', 'message' => "Phone PIN don't match"],
         ];
