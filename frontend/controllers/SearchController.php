@@ -83,15 +83,34 @@ class SearchController extends Controller
 
     public function actionBasicSearch()
     {
+        $request = Yii::$app->request;
+        $session = Yii::$app->session;
+        $params = $request->bodyParams;
+        #CommonHelper::pr($params);exit;
         //http://localhost/KandePohe/search/basic-search?search-type=basic&profile-for=FEMALE&Community=1&sub-community=1&agerange=19&height=2
-        $Gender = Yii::$app->request->get('profile-for');
-        $Community = Yii::$app->request->get('Community');
-        $SubCommunity = Yii::$app->request->get('sub-community');
-        $Height = Yii::$app->request->get('height');
-
-        $ReligionID = Yii::$app->request->get('religion');
-        $MaritalStatusID = Yii::$app->request->get('maritalstatus');
-
+        $id = Yii::$app->user->identity->id;
+        $TempModel = ($id != null) ? User::findOne($id) : array();
+        if ($TempModel->load(Yii::$app->request->post())) {
+            $Gender = $params['User']['Profile_for'];
+            $Community = $params['User']['iCommunity_ID'];
+            $SubCommunity = $params['User']['iSubCommunity_ID'];
+            $Height = $params['User']['iHeightID'];
+            $ReligionID = $params['User']['iReligion_ID'];
+            $MaritalStatusID = $params['User']['Marital_Status'];
+            $session->set('Profile_for', $Gender);
+            $session->set('iCommunity_ID', $Community);
+            $session->set('iSubCommunity_ID', $SubCommunity);
+            $session->set('iHeightID', $Height);
+            $session->set('iReligion_ID', $ReligionID);
+            $session->set('Marital_Status', $MaritalStatusID);
+        } else {
+            $Gender = $session->get('Profile_for');
+            $Community = $session->get('iCommunity_ID');
+            $SubCommunity = $session->get('iSubCommunity_ID');
+            $Height = $session->get('iHeightID');
+            $ReligionID = $session->get('iReligion_ID');
+            $MaritalStatusID = $session->get('Marital_Status');
+        }
 
         $WHERE = '';
         $WHERE = ($Gender != '') ? ' AND user.Gender="' . $Gender . '" ' : '';
@@ -124,16 +143,16 @@ class SearchController extends Controller
                 } else {
                     $Photos[$SV->id] = CommonHelper::getUserDefaultPhoto();
                 }
-
             }
         }
         $id = Yii::$app->user->identity->id;
         $TempModel = ($id != null) ? User::findOne($id) : array();
-        $TempModel->Community = $Community;
-        $TempModel->SubCommunity = $SubCommunity;
+        $TempModel->iCommunity_ID = $Community;
+        $TempModel->iSubCommunity_ID = $SubCommunity;
         $TempModel->iReligion_ID = $ReligionID;
         $TempModel->Marital_Status = $MaritalStatusID;
         $TempModel->iHeightID = $Height;
+        $TempModel->Profile_for = $Gender;
         return $this->render('searchlist',
             [
                 'Model' => $Model,

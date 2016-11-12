@@ -79,6 +79,7 @@ use yii\jui\DatePicker;
           <?php
           $form = ActiveForm::begin([
               'id' => 'form-search',
+              'action' => ['search/basic-search'],
               'enableClientValidation' => true,
               'enableAjaxValidation' => true,
               'validateOnSubmit' => true,

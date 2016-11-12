@@ -44,7 +44,7 @@ $M1 = array();
                                         <?php
                                         $form = ActiveForm::begin([
                                             'id' => 'form',
-                                            'action' => '',
+                                            'action' => ['search/basic-search'],
                                             'options' => ['data-pjax' => true],
                                             'layout' => 'horizontal',
                                             'validateOnChange' => false,
@@ -100,7 +100,7 @@ $M1 = array();
                                                 <div class="box">
                                                     <div class="mid-col">
                                                         <div class="form-cont bs">
-                                                            <?= $form->field($TempModel, 'Community')->dropDownList(
+                                                            <?= $form->field($TempModel, 'iCommunity_ID')->dropDownList(
                                                                 ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
                                                                 ['class' => 'cs-select cs-skin-border',
                                                                     'prompt' => 'Community'
@@ -114,7 +114,7 @@ $M1 = array();
                                                 <div class="box">
                                                     <div class="mid-col">
                                                         <div class="form-cont bs">
-                                                            <?= $form->field($TempModel, 'SubCommunity')->dropDownList(
+                                                            <?= $form->field($TempModel, 'iSubCommunity_ID')->dropDownList(
                                                                 ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
                                                                 ['class' => 'cs-select cs-skin-border',
                                                                     'prompt' => 'Sub Community']
@@ -171,12 +171,18 @@ $M1 = array();
                                                 <div class="box">
                                                     <div class="mid-col">
                                                         <div class="form-cont bs">
+                                                            <?= $form->field($TempModel, 'Profile_for')->dropDownList(
+                                                                ['FEMALE' => 'BRIDE', 'MALE' => 'GROOM'],
+                                                                ['class' => 'cs-select cs-skin-border',
+                                                                    'prompt' => 'Looking For'
+                                                                ]
+                                                            )->label(true); ?>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <!--<div class="row">
                                             <div class="col-md-6">
                                                 <div class="box">
                                                     <div class="mid-col">
@@ -198,7 +204,7 @@ $M1 = array();
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="box">

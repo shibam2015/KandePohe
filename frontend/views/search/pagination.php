@@ -23,7 +23,8 @@
 <?php
 $URL = Yii::$app->request->url;
 $Page += 1;
-$URL = str_replace("&page=" . $Page, '', $URL);
+#$URL = str_replace("&page=" . $Page, '', $URL);
+$URL = str_replace("?page=" . $Page, '', $URL);
 $total = ceil($TotalRecords / $Limit);
 $id = $Page;
 if (1) {
@@ -72,7 +73,7 @@ if (1) {
         if ($previous_btn && $cur_page > 1) {
             $pre = $cur_page - 1;
             $msg .= '<li class="page-item first" p="' . $pre . '">
-                        <a class="page-link" href="' . $URL . '&page=' . $pre . '" aria-label="Previous">
+                        <a class="page-link" href="' . $URL . '?page=' . $pre . '" aria-label="Previous">
                             <span aria-hidden="true">Previous</span>
                             <span class="sr-only">Previous</span>
                         </a>
@@ -80,9 +81,9 @@ if (1) {
         }
         for ($i = $start_loop; $i <= $end_loop; $i++) {
             if ($cur_page == $i)
-                $msg .= '<li class="page-item active"><a class="page-link" href="' . $URL . '&page=' . $i . '">' . $i . '</a></li>';
+                $msg .= '<li class="page-item active"><a class="page-link" href="' . $URL . '?page=' . $i . '">' . $i . '</a></li>';
             else
-                $msg .= '<li class="page-item "><a class="page-link" href="' . $URL . '&page=' . $i . '">' . $i . '</a></li>';
+                $msg .= '<li class="page-item "><a class="page-link" href="' . $URL . '?page=' . $i . '">' . $i . '</a></li>';
         }
 
 // TO ENABLE THE NEXT BUTTON
@@ -90,7 +91,7 @@ if (1) {
             $nex = $cur_page + 1;
             #$msg .= "<li p='$nex' class='active'>Next</li>";
             $msg .= '<li class="page-item last">
-                                                <a class="page-link" href="' . $URL . '&page=' . $nex . '" aria-label="Next">
+                                                <a class="page-link" href="' . $URL . '?page=' . $nex . '" aria-label="Next">
                                                     <span aria-hidden="true">Next</span>
                                                     <span class="sr-only">Next</span>
                                                 </a>
