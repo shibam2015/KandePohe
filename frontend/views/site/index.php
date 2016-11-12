@@ -590,6 +590,40 @@ use yii\jui\DatePicker;
     <div class="modal-footer"></div>
   </div>
 
+  <!-- Modal Password Reset Success-->
+  <div class="modal fade" id="change-pswd-link" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+      </p>
+
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close"
+                  data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+          </button>
+          <h2 class="text-center dark">Password Changed Sucessfully</h2>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form>
+            <div class="row">
+              <div class="col-sm-10 col-sm-offset-1">
+                <button type="button" class="btn btn-primary mrg-tp-10 col-xs-12" data-toggle="modal"
+                        data-target="#login">BACK TO LOGIN
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+  </div>
+
+
 <?php } ?>
 
 <style type="text/css">
@@ -628,6 +662,11 @@ use yii\jui\DatePicker;
   if ($ref == 'signup') {
     $this->registerJs('
               $("#myModalNorm").modal("toggle");
+    ');
+  }
+  if ($ref == 'cps') {
+    $this->registerJs('
+              $("#change-pswd-link").modal("toggle");
     ');
   }
   ?>
@@ -698,8 +737,9 @@ use yii\jui\DatePicker;
                   $("#fpswd").modal("toggle");
                   $("#forgot-password-id").html(res.email);
                   $("#passwordresetrequestform-email").val("");
-                  //$("#fpswd").modal("toggle");
                   $("#reset-pswd-link").modal("toggle");
+                }else{
+                  notificationPopup("ERROR", "Something went wrong. Please try again !");
                 }
               }
             });
