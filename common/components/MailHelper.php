@@ -29,7 +29,7 @@ class MailHelper
                 }
             }
         }
-        #$TO_EMAIL = 'parmarvikrantr@gmail.com';
+        $TO_EMAIL = 'parmarvikrantr@gmail.com';
         #$MAIL_SUBJECT = $EMAIL_TEMPLATE->vEmailFormatSubject;
         $MAIL_TITLE = $EMAIL_TEMPLATE->vEmailFormatTitle;
         $MAIL_SUBJECT = '=?UTF-8?B?' . base64_encode($MAIL_SUBJECT) . '?=';

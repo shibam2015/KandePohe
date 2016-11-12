@@ -75,6 +75,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                 <?php
                 $form = ActiveForm::begin([
                     'id' => 'form-register1',
+                    'enableClientValidation' => true,
+                    'validateOnChange' => true,
                 ]);
                 ?>
                 
@@ -84,7 +86,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                   </div>
                   <div class="mid-col">
                     <div class="form-cont">
-                      <?= $form->field($model, 'password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">New password</span> </label></span>{error}'])->input('password', ['class' => 'input__field input__field--akira form-control']) ?>
+                      <?= $form->field($model, 'password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">New password</span> </label></span>{error}'])->input('password', ['class' => 'input__field input__field--akira form-control pswd']) ?>
                     </div>
                   </div>
                 </div>
@@ -95,14 +97,16 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                   </div>
                   <div class="mid-col">
                     <div class="form-cont">
-                      <?= $form->field($model, 'repassword', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Retype password</span> </label></span>{error}'])->input('password', ['class' => 'input__field input__field--akira form-control repassword']) ?>
+                      <?= $form->field($model, 'repassword', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Retype password</span> </label></span>{error}'])->input('password', ['class' => 'input__field input__field--akira form-control repassword pswd']) ?>
+                      <span class="form-control-feedback mrg-tp-10 prp"></span>
                     </div>
                   </div>
+
                 </div>
 
                 <div class="row">
                   <div class="col-sm-10 col-sm-offset-1">
-                    <?= Html::submitButton('Change Password', ['class' => 'btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left change-pswd-link', 'name' => 'change_password']) ?>
+                    <?= Html::submitButton('Change Password', ['class' => 'btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left change-pswd-link', 'name' => 'change_password', 'disabled' => 'disabled']) ?>
                     <!-- <a href="<?/*=$HOME_URL_SITE*/?>life-style" class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right">Skip</a>-->
                   </div>
                 </div>
@@ -145,3 +149,32 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
   </div>
 </main>
 
+<?php
+$this->registerJs('
+  $(document).ready(function() {
+    $(document).on("keyup",".pswd",function(e){
+        var password = $("#resetpasswordform-password").val();
+        var confirmPassword = $("#resetpasswordform-repassword").val();
+        if (password.length >= 6 && confirmPassword.length >1 ) {
+            if (password != confirmPassword) {
+                //$("#resetpasswordform-password").css("background", "red");
+                //$("#resetpasswordform-repassword").css("background", "red");
+                $(".change-pswd-link").prop("disabled", true);
+                $(".prp").html(pswd(2));
+                return false;
+            } else {
+                //$("#resetpasswordform-password").css("background", "green");
+                //$("#resetpasswordform-repassword").css("background", "green");
+                $(".change-pswd-link").prop("disabled", false);
+                $(".prp").html(pswd(1));
+                return true;
+            }
+        }
+        if(confirmPassword.length == 0){
+          $(".prp").html(pswd(3));
+        }
+    });
+
+});
+');
+?>
