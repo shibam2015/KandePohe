@@ -199,7 +199,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public static function searchBasic($WHERE = '', $Offset = 0, $Limit = '') # Get user list Gender Wise with limit
     {
-        $Records = User::find()->select(' * ')->where(("1=1  AND user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "') $WHERE "))->offset($Offset)->limit($Limit)->all();
+        $Records = User::find()->select(' * ')->where((" 1=1  AND user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "') $WHERE "))->offset($Offset)->limit($Limit)->all();
         return $Records;
     }
 
@@ -265,7 +265,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     {
         return [
             self::SCENARIO_LOGIN => ['email', 'password'],
-            self::SCENARIO_REGISTER => ['email', 'password_hash', 'repeat_password', 'First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'toc', 'Registration_Number'],
+            self::SCENARIO_REGISTER => ['email', 'password_hash', 'repeat_password', 'First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'toc', 'Registration_Number', 'Age'],
             self::SCENARIO_REGISTER1 => ['iReligion_ID', 'First_Name', 'Last_Name', 'iCommunity_ID', 'iSubCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'noc', 'vAreaName', 'cnb'],
             self::SCENARIO_REGISTER2 => ['First_Name', 'Last_Name', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID'],
             self::SCENARIO_REGISTER3 => ['iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet'],
@@ -286,7 +286,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             self::SCENARIO_FP => ['email', 'password_hash', 'password_reset_token'],
             self::SCENARIO_SFP => ['email', 'password_reset_token'],
             self::SCENARIO_EDIT_MY_INFO => ['tYourSelf'],
-            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'completed_step'],
+            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'completed_step', 'Age'],
 
             self::SCENARIO_VERIFY_PIN_FOR_PHONE => ['phone_pin', 'completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification'], # FOR PHONE VERIFICATION PROCESS
             self::SCENARIO_PHONE_NUMBER_CHANGE => ['completed_step', 'county_code', 'Mobile', 'pin_phone_vaerification', 'ePhoneVerifiedStatus'], # FOR PHONE Number Change Process

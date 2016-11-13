@@ -97,14 +97,22 @@ class SearchController extends Controller
             $Height = $params['User']['iHeightID'];
             $ReligionID = $params['User']['iReligion_ID'];
             $MaritalStatusID = $params['User']['Marital_Status'];
-            $AgeFrom = $params['User']['age_from'];
-            $AgeTo = $params['User']['age_to'];
+            if ($params['User']['Agerange'] != '') {
+                list($AgeFrom, $AgeTo) = explode("-", $params['User']['Agerange']);
+            } else {
+
+                $AgeFrom = $params['User']['AgeFrom'];
+                $AgeTo = $params['User']['AgeTo'];
+            }
+
             $session->set('Profile_for', $Gender);
             $session->set('iCommunity_ID', $Community);
             $session->set('iSubCommunity_ID', $SubCommunity);
             $session->set('iHeightID', $Height);
             $session->set('iReligion_ID', $ReligionID);
             $session->set('Marital_Status', $MaritalStatusID);
+            $session->set('AgeFrom', $AgeFrom);
+            $session->set('AgeTo', $AgeTo);
         } else {
             $Gender = $session->get('Profile_for');
             $Community = $session->get('iCommunity_ID');
@@ -112,15 +120,19 @@ class SearchController extends Controller
             $Height = $session->get('iHeightID');
             $ReligionID = $session->get('iReligion_ID');
             $MaritalStatusID = $session->get('Marital_Status');
+            $AgeFrom = $session->get('AgeFrom');
+            $AgeTo = $session->get('AgeTo');
         }
         $WHERE = '';
-        $WHERE = ($Gender != '') ? ' AND user.Gender="' . $Gender . '" ' : '';
-        $WHERE .= ($Community != '') ? ' AND user.iCommunity_ID="' . $Community . '" ' : '';
-        $WHERE .= ($Community != '') ? ' AND user.iCommunity_ID="' . $Community . '" ' : '';
-        $WHERE .= ($SubCommunity != '') ? ' AND user.iSubCommunity_ID="' . $SubCommunity . '" ' : '';
-        $WHERE .= ($Height != '') ? ' AND user.iHeightID="' . $Height . '" ' : '';
+        $WHERE .= ($Gender != '') ? ' AND user.Gender = "' . $Gender . '" ' : '';
+        $WHERE .= ($Community != '') ? ' AND user.iCommunity_ID = "' . $Community . '" ' : '';
+        $WHERE .= ($SubCommunity != '') ? ' AND user.iSubCommunity_ID = "' . $SubCommunity . '" ' : '';
+        $WHERE .= ($Height != '') ? ' AND user.iHeightID = "' . $Height . '" ' : '';
+        $WHERE .= ($ReligionID != '') ? ' AND user.iReligion_ID = "' . $ReligionID . '" ' : '';
+        $WHERE .= ($MaritalStatusID != '') ? ' AND user.Marital_Status = "' . $MaritalStatusID . '" ' : '';
+        $WHERE .= ($AgeFrom != '') ? ' AND user.Age >= "' . $AgeFrom . '" ' : '';
+        $WHERE .= ($AgeTo != '') ? ' AND user.Age <= "' . $AgeTo . '" ' : '';
         $Limit = Yii::$app->params['searchingLimit'];
-
         $Offset = (Yii::$app->request->get('Offset') == 0) ? 0 : Yii::$app->request->get('Offset');
         $Page = (Yii::$app->request->get('page') == 0 || Yii::$app->request->get('page') == '') ? 0 : Yii::$app->request->get('page');
         if ($Page) {

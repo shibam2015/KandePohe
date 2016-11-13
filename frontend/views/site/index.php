@@ -119,7 +119,8 @@ use yii\jui\DatePicker;
             $range = range(18, 100);
             ?>
             <?= $form->field($model, 'Agerange')->dropDownList(
-                array_combine($range, $range),
+            //array_combine($range, $range),
+                ['18-21' => '18 To 21', '22-28' => '22 To 28', '29-35' => '29 To 35', '36-45' => '36 To 45', '46-60' => '46 To 60', '61-80' => '61 To 80', '81-100' => '81 To 100'],
                 ['prompt' => 'Age Group',
                     'class' => 'cs-select cs-skin-border']
             )->label(false)->error(false); ?>

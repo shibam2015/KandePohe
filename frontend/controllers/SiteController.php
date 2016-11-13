@@ -235,6 +235,8 @@ class SiteController extends Controller
             $U_R_ID = CommonHelper::generateUniqueRandomNumber(9);
             $model->Registration_Number = $U_R_ID;
             $model->completed_step = $model->setCompletedStep('1');
+            $model->Age = CommonHelper::ageCalculator($model->DOB);
+            #CommonHelper::pr(Yii::$app->request->post());exit;
             /*$model->save();
             var_dump($model->errors);
             die();*/

@@ -455,6 +455,7 @@ class UserController extends Controller
                 $model->Last_Name = Yii::$app->request->post('User')['Last_Name'];
                 $model->Profile_created_for = Yii::$app->request->post('User')['Profile_created_for'];
                 $model->DOB = Yii::$app->request->post('User')['DOB'];
+                $model->Age = CommonHelper::ageCalculator(Yii::$app->request->post('User')['DOB']);
                 $model->county_code = Yii::$app->request->post('User')['county_code'];
                 $model->Mobile = $NewMobileNo;
                 $model->Gender = Yii::$app->request->post('User')['Gender'];
