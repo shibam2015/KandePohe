@@ -344,7 +344,8 @@ use yii\jui\DatePicker;
             //'action' => 'javascript:void(0)',
               'action' => ['/site/register'],
               'enableAjaxValidation' => true,
-              'enableClientValidation' => true
+              'enableClientValidation' => true,
+              'validateOnChange' => true,
 
           ]);
           ?>

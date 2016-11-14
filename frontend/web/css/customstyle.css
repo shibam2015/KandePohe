@@ -287,3 +287,18 @@ img.selected {
 .resethelp {
     font-size: 14px;
 }
+
+/* Validation Error - Success - Label Start */
+.has-error .form-control {
+    border-color: #cf0d0d
+}
+
+.has-success .form-control {
+    border-color: #19b01c
+}
+
+.has-error .checkbox, .has-error .checkbox-inline, .has-error .control-label, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.checkbox label, .has-error.checkbox-inline label, .has-error.radio label, .has-error.radio-inline label {
+    border-color: #cf0d0d
+}
+
+/* Validation Error - Success - Label End */
