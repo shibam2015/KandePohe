@@ -57,15 +57,12 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
     public static function checkSendInterest($id, $ToUserId)
     {
         return static::find()
-            ->where("(from_user_id = $id AND to_user_id = $ToUserId AND  send_request_status_to_from = 'Yes' ) OR (from_user_id = $ToUserId AND to_user_id = $id AND send_request_status_from_to = 'Yes' )")
+            ->where("((from_user_id = $id AND to_user_id = $ToUserId ) OR (from_user_id = $ToUserId AND to_user_id = $id )) AND  (send_request_status_to_from = 'Yes' OR send_request_status_from_to = 'Yes' )")
             ->one();
-        /*
-        SELECT * FROM `user_request_op`
-        WHERE
-        (from_user_id = 2 AND to_user_id = 5 AND send_request_status_to_from = 'Yes' )
-        OR
-        (from_user_id = 5 AND to_user_id = 2 AND send_request_status_from_to = 'Yes' )
-        */
+        /*return static::find()
+            ->where("(from_user_id = $id AND to_user_id = $ToUserId AND  send_request_status_to_from = 'Yes' ) OR (from_user_id = $ToUserId AND to_user_id = $id AND send_request_status_from_to = 'Yes' )")
+            ->one();*/
+
     }
 
     public static function checkUsers($id, $ToUserId)

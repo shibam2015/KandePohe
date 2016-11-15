@@ -494,8 +494,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                            data-target="#"
                                            data-toggle="modal" data-id="<?= $UserInfoModel->id ?>"
                                            data-name="<?= $UserInfoModel->fullName ?>"
-                                           data-rgnumber="<?= $UserInfoModel->Registration_Number ?>">Cancel Interest<i
-                                                class="fa fa-close"></i> </a>
+                                           data-rgnumber="<?= $UserInfoModel->Registration_Number ?>">Cancel Interest
+                                            <i class="fa fa-close"></i> </a>
 
                                     <?php } else if (($Id == $Value->to_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->from_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) {
                                         ?>
