@@ -17,6 +17,7 @@ use common\models\PartnerWorkingWith;
 use common\models\Tags;
 use common\models\UserPhotos;
 use common\models\UserRequest;
+use common\models\UserRequestOp;
 use common\models\UserTag;
 use common\models\Wightege;
 use Yii;
@@ -164,10 +165,11 @@ class UserController extends Controller
                 $model->scenario = User::SCENARIO_REGISTER6;
                 $VER_ARRAY = array();
                 $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
-                $ProfileViedByMembers = UserRequest::findProfileViewedByUserList($id, 4);
-                #$RecentlyJoinedMembers = User::findRecentJoinedUserLists($id,$Gender, 4);
+                #$ProfileViedByMembers = UserRequest::findProfileViewedByUserList($id, 4);
+                $ProfileViedByMembers = UserRequestOp::findProfileViewedByUserList($id, 4);
+                //$RecentlyJoinedMembers = User::findRecentJoinedUserLists($id,$Gender, 4);
                 $RecentlyJoinedMembers = User::findRecentJoinedUserList($Gender, 4);
-                #echo $RecentlyJoinedMembers->createCommand()->sql;exit;
+                //echo $RecentlyJoinedMembers->createCommand()->sql;exit;
                 list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, 3);
                 return $this->render('dashboard',[
                     'model' => $model,
@@ -1521,30 +1523,33 @@ class UserController extends Controller
         ]);
     }
 
-    public function actionProfileViewedBy($id, $ToUserId)
+    public function actionProfileViewedBy($Id, $ToUserId)
     {
-        $RequestModel = new UserRequest();
-        $Model = $RequestModel->checkUsers($id, $ToUserId);
+        $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
+        #CommonHelper::pr($Model);//exit;
+        $Temp = 0;
+        $Model->scenario = UserRequest::SCENARIO_PROFILE_VIEWED_BY;
         if ($Model->id) {
-            if ($Model->profile_viewed == 'No') {
-                $Model->scenario = UserRequest::SCENARIO_PROFILE_VIEWED_BY;
-                $Model->from_user_id = $id; #who logged in.
-                $Model->to_user_id = $ToUserId;
-                $Model->profile_viewed = 'Yes';
-                if ($Model->save()) {
-                    $this->actionMailSendRequest($id, $ToUserId, 'VIEW_PROFILE_OF');
-                    return 'S';
-                } else {
-                    return 'E';
+            if ($Id == $Model->from_user_id) {
+                if ($Model->profile_viewed_from_to == 'No') {
+                    $Temp = 1;
+                    $Model->profile_viewed_from_to = 'Yes';
+                }
+            } else if ($Id == $Model->to_user_id) {
+                if ($Model->profile_viewed_to_from == 'No') {
+                    $Temp = 1;
+                    $Model->profile_viewed_to_from = 'Yes';
                 }
             }
         } else {
-            $RequestModel->scenario = UserRequest::SCENARIO_PROFILE_VIEWED_BY;
-            $RequestModel->from_user_id = $id; #who logged in.
-            $RequestModel->to_user_id = $ToUserId;
-            $RequestModel->profile_viewed = 'Yes';
-            if ($RequestModel->save()) {
-                $this->actionMailSendRequest($id, $ToUserId, 'VIEW_PROFILE_OF');
+            $Temp = 1;
+            $Model->from_user_id = $Id; #who logged in.
+            $Model->to_user_id = $ToUserId;
+            $Model->profile_viewed_from_to = 'Yes';
+        }
+        if ($Temp) {
+            if ($Model->save()) {
+                $this->actionMailSendRequest($Id, $ToUserId, 'VIEW_PROFILE_OF');
                 return 'S';
             } else {
                 return 'E';
@@ -1591,8 +1596,8 @@ class UserController extends Controller
 
     public function actionUserRequest() # For User Request : VS
     {
-        $id = Yii::$app->user->identity->id;
-        $model = User::findOne($id);
+        $Id = Yii::$app->user->identity->id;
+        $model = User::findOne($Id);
         $show = $popup = false;
         $temp = array();
         if (Yii::$app->request->post() && (count(Yii::$app->request->post()) > 0)) {
@@ -1600,31 +1605,79 @@ class UserController extends Controller
             $ToUserId = Yii::$app->request->post('ToUserId');
             if ($RequestAction == 'SEND_INTEREST') {
                 $temp['Action'] = 'SEND_INTEREST';
-                $temp['STATUS'] = $this->actionSendInterest($id, $ToUserId, 'SEND_INTEREST_OF');
+                $temp['STATUS'] = $this->actionSendInterest($Id, $ToUserId, 'SEND_INTEREST_OF');
             }
         }
-        $modelUser = UserRequest:: find()
-            ->where("from_user_id = $id AND to_user_id = $ToUserId OR (from_user_id = $ToUserId AND to_user_id = $id)")
-            ->all();
+        $modelUser = UserRequestOp::checkUsers($Id, $ToUserId);
+        /*$modelUser = UserRequest:: find()
+            ->where("from_user_id = $Id AND to_user_id = $ToUserId OR (from_user_id = $ToUserId AND to_user_id = $Id)")
+            ->all();*/
+        #CommonHelper::pr($modelUser);exit;
         $myModel = [
             'ToUserId' => $ToUserId,
             'model' => $model,
             'modelUser' => $modelUser,
+            'temp' => $temp,
         ];
-        return $this->actionRenderAjax($myModel, '_requests', $show, '', '', $temp);
+        return $this->actionRenderAjax($myModel, '_requests', $show, false, false, $temp);
     }
 
     public function actionSendInterest($Id, $ToUserId, $MailType)
     {
+        $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
+        $Temp = 0;
+        $Model->scenario = UserRequest::SCENARIO_SEND_INTEREST;
+        if ($Model->id) {
+            if ($Id == $Model->from_user_id) {
+                if ($Model->send_request_status_from_to == 'No') {
+                    if ($Model->send_request_status_to_from == 'No') {
+                        $Temp = 1;
+                        $Model->send_request_status_from_to = 'Yes';
+                        $Model->date_send_request_from_to = date('Y-m-d');
+                    } else {
+                        return 'W';
+                    }
+                } else {
+                    return 'I';
+                }
+            } else if ($Id == $Model->to_user_id) {
+                if ($Model->send_request_status_to_from == 'No') {
+                    if ($Model->send_request_status_from_to == 'No') {
+                        $Temp = 1;
+                        $Model->send_request_status_to_from = 'Yes';
+                        $Model->date_send_request_to_from = CommonHelper::getCurrentDate();
+                    } else {
+                        return 'W';
+                    }
+                } else {
+                    return 'I';
+                }
+            }
+        } else {
+            $Temp = 1;
+            $Model->from_user_id = $Id; #who logged in.
+            $Model->to_user_id = $ToUserId;
+            $Model->send_request_status_from_to = 'Yes';
+            $Model->date_send_request_from_to = CommonHelper::getCurrentDate();
+        }
+        if ($Temp) {
+            if ($Model->save()) {
+                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['sendInterestMessage']);
+                $this->actionMailSendRequest($Id, $ToUserId, $MailType);
+                return 'S';
+            } else {
+                return 'E';
+            }
+        }
+        /*
         $RequestModel = new UserRequest();
         $Model = $RequestModel->checkUsers($Id, $ToUserId);
         if ($Model->id) {
             if ($Model->send_request_status == 'No') {
-                $Model->scenario = UserRequest::SCENARIO_SEND_INTEREST;
                 $Model->from_user_id = $Id; #who logged in.
                 $Model->to_user_id = $ToUserId;
                 $Model->send_request_status = 'Yes';
-                $Model->date_send_request = date('Y-m-d');
+                $Model->date_send_request = CommonHelper::getCurrentDate();
                 if ($Model->save()) {
                     $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['sendInterestMessage']);
                     $this->actionMailSendRequest($Id, $ToUserId, $MailType);
@@ -1635,12 +1688,13 @@ class UserController extends Controller
             } else {
                 return 'I';
             }
-        } else {
+        }
+        else {
             $RequestModel->scenario = UserRequest::SCENARIO_SEND_INTEREST;
             $RequestModel->from_user_id = $Id; #who logged in.
             $RequestModel->to_user_id = $ToUserId;
             $RequestModel->send_request_status = 'Yes';
-            $RequestModel->date_send_request = date('Y-m-d');
+            $RequestModel->date_send_request = CommonHelper::getCurrentDate();
             if ($RequestModel->save()) {
                 $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['sendInterestMessage']);
                 $this->actionMailSendRequest($Id, $ToUserId, $MailType);
@@ -1648,7 +1702,7 @@ class UserController extends Controller
             } else {
                 return 'E';
             }
-        }
+        }*/
     }
 
     public function actionMailBoxLog($Id, $ToUserId, $Content)
@@ -1678,8 +1732,10 @@ class UserController extends Controller
             list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'SEND_INTEREST');
         } else if ($Flag == 'E') {
             list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'SEND_INTEREST');
-        } else {
+        } else if ($Flag == 'I') {
             list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('I', 'SEND_INTEREST');
+        } else {
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('W', 'SEND_INTEREST');
         }
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
         return json_encode($return);

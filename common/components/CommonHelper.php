@@ -52,6 +52,12 @@ class CommonHelper {
         return date('Y-m-d H:i:s');
     }
 
+    public static function getCurrentDate()
+    {
+        date_default_timezone_set('Asia/Kolkata');
+        return date('Y-m-d');
+    }
+
     public static function ageCalculator($dob)
     {
         //calculate years of age (input string: YYYY-MM-DD)

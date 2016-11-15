@@ -319,8 +319,8 @@ function sendRequest(url, htmlId, dataArr) {
         cache: false,
         processData: false,
         success: function (res) {
-            loaderStop();
             $(htmlId).html(res);
+            loaderStop();
         }
     });
 }
@@ -337,8 +337,13 @@ function sendRequestDashboard(url, htmlId, type, pid, dataArr) {
             loaderStop();
             var dataObj = JSON.parse(res);
             if (type == 'SI') {
+                console.log(dataObj.STATUS);
+                console.log(pid);
                 if (dataObj.STATUS == 'S') {
                     $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-link isent" role="button">Interest Sent <i class="fa fa-heart"></i></a>');
+                }
+                if (dataObj.STATUS == 'W') {
+                    $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info accept adbtn" role="button" data-target="#" data-toggle="modal" data-id="" data-name="" data-rgnumber="">Accept <i class="fa fa-check"></i> </a> <a href="javascript:void(0)" class="btn btn-info accept adbtn" role="button" data-target="#" data-toggle="modal" data-id=""data-name="" data-rgnumber="">Decline <i class="fa fa-close"></i> </a>');
                 }
             }
             if (type == 'SL') {

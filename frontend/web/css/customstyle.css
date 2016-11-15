@@ -302,3 +302,7 @@ img.selected {
 }
 
 /* Validation Error - Success - Label End */
+
+.adbtn {
+    width: 80% !important;
+}
