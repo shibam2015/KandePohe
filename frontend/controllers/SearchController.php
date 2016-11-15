@@ -88,8 +88,13 @@ class SearchController extends Controller
         $params = $request->bodyParams;
         #CommonHelper::pr($params);exit;
         //http://localhost/KandePohe/search/basic-search?search-type=basic&profile-for=FEMALE&Community=1&sub-community=1&agerange=19&height=2
-        $id = Yii::$app->user->identity->id;
-        $TempModel = ($id != null) ? User::findOne($id) : array();
+        if (Yii::$app->user->isGuest) {
+            $TempModel = new User();
+        } else {
+            $id = Yii::$app->user->identity->id;
+            $TempModel = User::findOne($id);
+        }
+
         if ($TempModel->load(Yii::$app->request->post())) {
             $Gender = $params['User']['Profile_for'];
             $Community = $params['User']['iCommunity_ID'];
@@ -158,8 +163,8 @@ class SearchController extends Controller
                 }
             }
         }
-        $id = Yii::$app->user->identity->id;
-        $TempModel = ($id != null) ? User::findOne($id) : array();
+        #$id = Yii::$app->user->identity->id;
+        #$TempModel = ($id != null) ? User::findOne($id) : array();
         $TempModel->iCommunity_ID = $Community;
         $TempModel->iSubCommunity_ID = $SubCommunity;
         $TempModel->iReligion_ID = $ReligionID;
