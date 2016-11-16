@@ -515,25 +515,24 @@ $M1 = array();
                                                 <div class="col-sm-12">
                                                     <div class="profile-control-vertical">
                                                         <ul class="list-unstyled pull-right">
-                                                            <li><a href="javascript:void(0)" class="send_email"
+                                                            <li>
+                                                                <a href="javascript:void(0)" class="send_email"
                                                                    role="button"
                                                                    data-target="#sendMail" data-toggle="modal"
-                                                                    >Shortlist <i class="fa fa-list-ul"></i></a></li>
+                                                                    >Shortlist <i class="fa fa-list-ul"></i></a>
+                                                            </li>
                                                             <li class="s__<?= $SV->id ?>">
                                                                 <a href="javascript:void(0)" class="send_email"
                                                                    role="button"
                                                                    data-target="#sendMail" data-toggle="modal"
-                                                                    >Send
-                                                                    Interest
-                                                                    <i class="fa fa-heart-o"></i>
+                                                                    >Send Interest <i class="fa fa-heart-o"></i>
                                                                 </a>
-
                                                             </li>
-                                                            <li><a href="#" data-toggle="modal" class="send_email"
-                                                                   data-target="#sendMail">Send
-                                                                    Email <i
-                                                                        class="fa fa-envelope-o"></i></a></li>
-
+                                                            <li>
+                                                                <a href="#" data-toggle="modal" class="send_email"
+                                                                   data-target="#sendMail">Send Email <i
+                                                                        class="fa fa-envelope-o"></i></a>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -541,15 +540,12 @@ $M1 = array();
                                         <?php } ?>
                                     </div>
                                 <?php } ?>
-
-
                                 <div class="mrg-bt-10 text-center">
                                     <nav>
                                         <?php require_once(__DIR__ . '/pagination.php'); ?>
                                     </nav>
                                 </div>
                             <?php } ?>
-
                         </div>
                     </div>
                     <!--<div class="col-md-5 col-sm-12 mrg-tp-20">
