@@ -406,7 +406,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 
                                                             <p class="s__<?= $UserInfoModel->id ?>">
                                                                 <?php
-                                                                if (($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'No' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'No' && $Value->send_request_status_from_to == 'No')) { ?>
+                                                                if (($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'No' && $Value->send_request_status_to_from == 'No') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'No' && $Value->send_request_status_from_to == 'No')) { ?>
                                                                     <a href="javascript:void(0)"
                                                                        class="btn btn-info sendinterestpopup"
                                                                        role="button"

@@ -1607,6 +1607,8 @@ class UserController extends Controller
             if ($RequestAction == 'SEND_INTEREST') {
                 $temp['Action'] = 'SEND_INTEREST';
                 $temp['STATUS'] = $this->actionSendInterest($Id, $ToUserId, 'SEND_INTEREST_OF');
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification($temp['STATUS'], 'SEND_INTEREST');
+                $temp['MESSAGE'] = $MESSAGE;
             } else if ($RequestAction == 'Accept Interest') {
                 $temp['Action'] = 'ACCEPT_INTEREST';
                 $temp['STATUS'] = $this->actionAcceptInterest($Id, $ToUserId, 'ACCEPT_INTEREST_OF');
@@ -1636,7 +1638,8 @@ class UserController extends Controller
                 }
             }
         }
-        $modelUser = UserRequestOp::checkUsers($Id, $ToUserId);
+        #$modelUser = UserRequestOp::checkUsers($Id, $ToUserId);
+        $modelUser = UserRequestOp::checkSendInterest($Id, $ToUserId);
         $ToUserInfo = User::getUserInfroamtion($ToUserId);
         $myModel = [
             'ToUserId' => $ToUserId,
