@@ -25,6 +25,7 @@ class LoginForm extends Model
             // username and password are both required
             #[['email', 'password'], 'required'],
             ['email', 'required', 'message' => 'Please enter your email address.'],
+            [['email'], 'email', 'message' => "Please enter valid email address."],
             ['password', 'required', 'message' => 'Please Enter your password.'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
@@ -48,7 +49,7 @@ class LoginForm extends Model
                 $this->addError($attribute, 'Incorrect email or password.');
             }
             else if (!$user || !$user->checkEmailVerify($this->email)) {
-                 $this->addError($attribute, 'Your account either block or panding, PLease contact to administrator for login');   
+                $this->addError($attribute, 'Your account either block or panding, PLease contact to administrator for login');
             }
         }
     }

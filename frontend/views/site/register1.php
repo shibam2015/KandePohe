@@ -16,8 +16,20 @@ use yii\helpers\ArrayHelper;
     ?>
       <div class="col-md-9 col-sm-12">
         <div class="right-column"> <span class="welcome-note">
-          <p><strong>Welcome <?= $model->First_Name; ?> !</strong> We need a few details that will get you started with registration.</p>
-          </span>
+            <?php
+            if ($model->Profile_created_for !== "Self") {
+              ?>
+              <p><strong>Welcome ,</strong> please give us few details about
+                <strong><?= $model->First_Name; ?> </strong>.</p>
+            <?php } else {
+              ?>
+              <p><strong>Welcome <?= $model->First_Name; ?> ,</strong> please give us few details about yourself.</p>
+
+            <?php
+            }
+            ?>
+
+              </span>
           <div class="row no-gutter">
             <div class="col-lg-8 col-md-12 col-sm-12">
               <div class="white-section mrg-tp-20 mrg-bt-10">
@@ -105,7 +117,7 @@ use yii\helpers\ArrayHelper;
                               'prompt' => 'Maritial Status',
                             'onchange' => '
                             var iMaritalStatusID = $(this).val();
-                            if(iMaritalStatusID == "4" || iMaritalStatusID == "5"){
+                            if(iMaritalStatusID == "4" || iMaritalStatusID == "5" || iMaritalStatusID == "6"){
                               $("#nocDiv").show();
                             }
                             else {
@@ -289,7 +301,9 @@ use yii\helpers\ArrayHelper;
                   </div>
                   <div class="mid-col">
                     <div class="form-cont">
-                      <?= $form->field($model, 'vAreaName', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Area Name</span> </label></span>{error}'])->input('text',['class'=>'input__field input__field--akira form-control'])?>
+                      <?= $form->field($model, 'vAreaName', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Area Name</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control', 'placeholder' => 'e.g.
+Koregaon Park
+']) ?>
                     </div>
                   </div>
                   <div class="small-col tp ">
@@ -375,5 +389,11 @@ use yii\helpers\ArrayHelper;
         return false;
       }
     });
+   var iMaritalStatusID = $("#iMaritalStatusID").val();
+   if(iMaritalStatusID==""){
+    $("select#iMaritalStatusID").prop("selectedIndex", 1);
+    $("select#iMaritalStatusID").niceSelect("update");
+   }
+
   ');
   ?>
