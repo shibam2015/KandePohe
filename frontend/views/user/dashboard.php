@@ -420,14 +420,15 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                 <?php } else if (($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) {
                                                                     ?>
                                                                     <a href="javascript:void(0)"
-                                                                       class="btn btn-info ci " role="button"
-                                                                       data-target="#"
+                                                                       class="btn btn-info ci accept_decline"
+                                                                       role="button"
+                                                                       data-target="#accept_decline"
                                                                        data-toggle="modal"
                                                                        data-id="<?= $UserInfoModel->id ?>"
                                                                        data-name="<?= $UserInfoModel->fullName ?>"
-                                                                       data-rgnumber="<?= $UserInfoModel->Registration_Number ?>">Cancel
-                                                                        Interest<i
-                                                                            class="fa fa-close"></i> </a>
+                                                                       data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
+                                                                       data-type="Cancel Interest">
+                                                                        Cancel Interest<i class="fa fa-close"></i> </a>
                                                                     <!-- <a href="javascript:void(0)" class="btn btn-link isent" role="button">Interest Sent
                                                                         <i class="fa fa-heart"></i></a> -->
                                                                 <?php } else if (($Id == $Value->to_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->from_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) {
@@ -548,13 +549,15 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                     </a>
                                                                 <?php } else if (($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) { ?>
                                                                     <a href="javascript:void(0)"
-                                                                       class="btn btn-info ci " role="button"
-                                                                       data-target="#"
+                                                                       class="btn btn-info ci accept_decline"
+                                                                       role="button"
+                                                                       data-target="#accept_decline"
                                                                        data-toggle="modal"
                                                                        data-id="<?= $UserInfoModel->id ?>"
                                                                        data-name="<?= $UserInfoModel->fullName ?>"
-                                                                       data-rgnumber="<?= $UserInfoModel->Registration_Number ?>">Cancel
-                                                                        Interest
+                                                                       data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
+                                                                       data-type="Cancel Interest">
+                                                                        Cancel Interest
                                                                         <i class="fa fa-close"></i> </a>
 
                                                                 <?php } else if (($Id == $Value->to_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->from_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) {
