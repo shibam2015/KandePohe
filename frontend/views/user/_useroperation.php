@@ -51,4 +51,5 @@ use common\components\CommonHelper;
 <script type="text/javascript">
     var AcceptInterest = "<?=Yii::$app->params['acceptInterest']?>";
     var DeclineInterest = "<?=Yii::$app->params['declineInterest']?>";
+    var CancelInterest = "<?=Yii::$app->params['cancelInterest']?>";
 </script>

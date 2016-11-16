@@ -38,7 +38,7 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
     const SCENARIO_PROFILE_VIEWED_BY = 'PROFILE VIEWED BY';
     const SCENARIO_ACCEPT_INTEREST = 'Accept Interest Request';
     const SCENARIO_DECLINE_INTEREST = 'Decline Interest Request';
-
+    const SCENARIO_CANCEL_INTEREST = 'Cancel Interest Request';
     /**
      * @inheritdoc
      */
@@ -62,10 +62,6 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
         /*return static::find()
             ->where("((from_user_id = $id AND to_user_id = $ToUserId ) OR (from_user_id = $ToUserId AND to_user_id = $id )) AND  (send_request_status_to_from = 'Yes' OR send_request_status_from_to = 'Yes' )")
             ->one();*/
-        /*return static::find()
-            ->where("(from_user_id = $id AND to_user_id = $ToUserId AND  send_request_status_to_from = 'Yes' ) OR (from_user_id = $ToUserId AND to_user_id = $id AND send_request_status_from_to = 'Yes' )")
-            ->one();*/
-
     }
 
     public static function checkUsers($id, $ToUserId)
@@ -127,6 +123,7 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
             self::SCENARIO_PROFILE_VIEWED_BY => ['from_user_id', 'to_user_id', 'profile_viewed_from_to', 'profile_viewed_to_from'],
             self::SCENARIO_ACCEPT_INTEREST => ['from_user_id', 'to_user_id', 'send_request_status_from_to', 'date_accept_request_from_to', 'send_request_status_to_from', 'date_accept_request_to_from'],
             self::SCENARIO_DECLINE_INTEREST => ['from_user_id', 'to_user_id', 'send_request_status_from_to', 'date_decline_request_from_to', 'send_request_status_to_from', 'date_decline_request_to_from'],
+            self::SCENARIO_CANCEL_INTEREST => ['from_user_id', 'to_user_id', 'send_request_status_from_to', 'send_request_status_to_from'],
 
         ];
 

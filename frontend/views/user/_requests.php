@@ -13,14 +13,15 @@ $Id = Yii::$app->user->identity->id;
 ?>
 
 <?php
-if (($Id == $ModelUser->from_user_id && $ModelUser->send_request_status_from_to == 'No' && $ModelUser->send_request_status_to_from != 'Yes') || ($Id == $ModelUser->to_user_id && $ModelUser->send_request_status_to_from == 'No' && $ModelUser->send_request_status_from_to == 'No')) { ?>
+
+if (($Id == $ModelUser->from_user_id && $ModelUser->send_request_status_from_to == 'No' && $ModelUser->send_request_status_to_from == 'No') || ($Id == $ModelUser->to_user_id && $ModelUser->send_request_status_to_from == 'No' && $ModelUser->send_request_status_from_to == 'No')) { ?>
     <div class="profile-control requests">
         <button type="button" class="btn active sendInterest" data-target="#sendInterest"
                 data-toggle="modal"> Send Interest <i class="fa fa-heart-o"></i>
         </button>
         <!--<button type="button" class="btn active sendInterest send_request1"> Send Interest <i class="fa fa-heart-o"></i> </button>-->
-        <button type="button" class="btn"> Shortlist <i class="fa fa-list-ul"></i></button>
-        <button type="button" class="btn"> Block <i class="fa fa-ban"></i></button>
+        <button type="button" class="btn active"> Shortlist <i class="fa fa-list-ul"></i></button>
+        <button type="button" class="btn active "> Block <i class="fa fa-ban"></i></button>
         <!--<button type="button" class="btn"> No <i class="fa fa-thumbs-o-down"></i></button>-->
     </div>
 <?php } else if (($Id == $ModelUser->from_user_id && $ModelUser->send_request_status_from_to == 'Yes' && $ModelUser->send_request_status_to_from != 'Yes') || ($Id == $ModelUser->to_user_id && $ModelUser->send_request_status_to_from == 'Yes' && $ModelUser->send_request_status_from_to != 'Yes')) {
@@ -30,7 +31,11 @@ if (($Id == $ModelUser->from_user_id && $ModelUser->send_request_status_from_to 
     </div>
     <div class="profile-control requests">
         <button type="button" class="btn active"> Send Reminder</button>
-        <button type="button" class="btn"> cancel Invitation</button>
+        <button type="button" class="btn active accept_decline" data-target="#accept_decline" data-toggle="modal"
+                data-id="<?= $ToUserInfo->id ?>"
+                data-name="<?= $ToUserInfo->fullName ?>"
+                data-rgnumber="<?= $ToUserInfo->Registration_Number ?>" data-type="Cancel Interest"> Cancel Invitation
+        </button>
     </div>
 <?php } else if (($Id == $ModelUser->to_user_id && $ModelUser->send_request_status_from_to == 'Yes' && $ModelUser->send_request_status_to_from != 'Yes') || ($Id == $ModelUser->from_user_id && $ModelUser->send_request_status_to_from == 'Yes' && $ModelUser->send_request_status_from_to != 'Yes')) {
     ?>

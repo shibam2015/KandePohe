@@ -1607,6 +1607,8 @@ class UserController extends Controller
             if ($RequestAction == 'SEND_INTEREST') {
                 $temp['Action'] = 'SEND_INTEREST';
                 $temp['STATUS'] = $this->actionSendInterest($Id, $ToUserId, 'SEND_INTEREST_OF');
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification($temp['STATUS'], 'SEND_INTEREST');
+                $temp['MESSAGE'] = $MESSAGE;
             } else if ($RequestAction == 'Accept Interest') {
                 $temp['Action'] = 'ACCEPT_INTEREST';
                 $temp['STATUS'] = $this->actionAcceptInterest($Id, $ToUserId, 'ACCEPT_INTEREST_OF');
@@ -1625,9 +1627,19 @@ class UserController extends Controller
                     return json_encode($temp);
                     exit;
                 }
+            } else if ($RequestAction == 'Cancel Interest') {
+                $temp['Action'] = 'CANCEL_INTEREST';
+                $temp['STATUS'] = $this->actionCancelInterest($Id, $ToUserId, 'CANCEL_INTEREST_OF');
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification($temp['STATUS'], 'CANCEL_INTEREST');
+                $temp['MESSAGE'] = $MESSAGE;
+                if ($Page != 'PROFILE') {
+                    return json_encode($temp);
+                    exit;
+                }
             }
         }
-        $modelUser = UserRequestOp::checkUsers($Id, $ToUserId);
+        #$modelUser = UserRequestOp::checkUsers($Id, $ToUserId);
+        $modelUser = UserRequestOp::checkSendInterest($Id, $ToUserId);
         $ToUserInfo = User::getUserInfroamtion($ToUserId);
         $myModel = [
             'ToUserId' => $ToUserId,
@@ -1645,7 +1657,7 @@ class UserController extends Controller
     {
         $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
         $Temp = 0;
-        $Model->scenario = UserRequest::SCENARIO_SEND_INTEREST;
+        $Model->scenario = UserRequestOp::SCENARIO_SEND_INTEREST;
         if ($Model->id) {
             if ($Id == $Model->from_user_id) {
                 if ($Model->send_request_status_from_to == 'No') {
@@ -1713,7 +1725,7 @@ class UserController extends Controller
     {
         $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
         $Temp = 0;
-        $Model->scenario = UserRequest::SCENARIO_ACCEPT_INTEREST;
+        $Model->scenario = UserRequestOp::SCENARIO_ACCEPT_INTEREST;
         if ($Model->id) {
             if ($Id == $Model->from_user_id) {
                 if ($Model->send_request_status_to_from == 'Yes') {
@@ -1758,7 +1770,7 @@ class UserController extends Controller
     {
         $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
         $Temp = 0;
-        $Model->scenario = UserRequest::SCENARIO_DECLINE_INTEREST;
+        $Model->scenario = UserRequestOp::SCENARIO_DECLINE_INTEREST;
         if ($Model->id) {
             if ($Id == $Model->from_user_id) {
                 if ($Model->send_request_status_to_from == 'Yes') {
@@ -1792,6 +1804,56 @@ class UserController extends Controller
             if ($Model->save()) {
                 $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['declineInterestMessage']);
                 $this->actionMailSendRequest($Id, $ToUserId, $MailType);
+                return 'S';
+            } else {
+                return 'E';
+            }
+        }
+    }
+
+    public function actionCancelInterest($Id, $ToUserId, $MailType)
+    {
+        $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
+        $Temp = 0;
+        $Model->scenario = UserRequestOp::SCENARIO_CANCEL_INTEREST;
+        if ($Model->id) {
+            if ($Id == $Model->from_user_id) {
+                if ($Model->send_request_status_from_to == 'Yes') {
+                    $Temp = 1;
+                    $Model->send_request_status_from_to = 'No';
+                    #$Model->date_send_request_from_to = CommonHelper::getCurrentDate();
+                } else if ($Model->send_request_status_from_to == 'No') {
+                    return 'IN';
+                } else if ($Model->send_request_status_from_to == 'Rejected') {
+                    return 'IR';
+                } else if ($Model->send_request_status_from_to == 'Accepted') {
+                    return 'IA';
+                } else {
+                    return 'W';
+                }
+
+            } else if ($Id == $Model->to_user_id) {
+                if ($Model->send_request_status_to_from == 'Yes') {
+                    $Temp = 1;
+                    $Model->send_request_status_to_from = 'No';
+                    #$Model->date_send_request_to_from = CommonHelper::getCurrentDate();
+                } else if ($Model->send_request_status_to_from == 'No') {
+                    return 'IN';
+                } else if ($Model->send_request_status_to_from == 'Rejected') {
+                    return 'IR';
+                } else if ($Model->send_request_status_to_from == 'Accepted') {
+                    return 'IA';
+                } else {
+                    return 'W';
+                }
+            }
+        } else {
+            return 'W';
+        }
+        if ($Temp) {
+            if ($Model->save()) {
+                #$this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['cancelInterestMessage']);
+                #$this->actionMailSendRequest($Id, $ToUserId, $MailType);
                 return 'S';
             } else {
                 return 'E';
