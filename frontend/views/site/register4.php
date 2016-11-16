@@ -32,7 +32,17 @@ use yii\helpers\ArrayHelper;
       </div>
       <div class="col-sm-9">
         <div class="right-column"> <span class="welcome-note">
-          <p><strong>Welcome <?= $model->First_Name; ?> !</strong> Your Family details will help us find you the best matches</p>
+          <?php
+          if ($model->Profile_created_for !== "Self") {
+              ?>
+              <p>Add<strong> </strong> Some details about <?= $model->First_Name; ?>'s family …</p>
+          <?php } else {
+              ?>
+              <p><strong><?= $model->First_Name; ?> ,</strong> Add Some details about your family …</p>
+
+          <?php
+          }
+          ?>
           </span>
           <div class="row no-gutter">
             <div class="col-lg-8 col-md-12 col-sm-12">
@@ -209,6 +219,14 @@ use yii\helpers\ArrayHelper;
                     <a href="#" data-toggle="tooltip" data-placement="right" title="Mention Your No of Sisters"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21','height' => 21,'alt' => 'help']); ?></a>
                   </div>
                 </div>
+                  <?php
+
+                  if ($model->nos == '0') {
+                      $style = "display:none";
+                  } else {
+                      $style = "display:block";
+                  }
+                  ?>
                   <div class="box NosM" id="nosmDiv" style="<?= $style ?>">
                       <div class="small-col">
                           <div class="required1"><!--<span class="text-danger">*</span>--></div>
@@ -225,13 +243,14 @@ use yii\helpers\ArrayHelper;
                   </div>
                 <div class="row">
                   <div class="col-sm-10 col-sm-offset-1">
-                    <label for="Remember" class="control-label">Your Permanent Address</label>
+                      <label for="Remember" class="control-label" id="Presiding">Your Permanent Address</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="checkbox col-sm-10 col-sm-offset-1">
                     <input id="sameaddress" type="checkbox" name="User[eSameAddress]" value="Yes" <?php echo($model->eSameAddress == 'Yes') ? 'checked': '';?>>
                     <label for="sameaddress" class="control-label">Same as my Current Address mentioned above</label>
+
                   </div>
                 </div>
                 <div class="box">
@@ -382,14 +401,21 @@ use yii\helpers\ArrayHelper;
                     <a href="#" data-toggle="tooltip" data-placement="right" title="Mention Your Native Place"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21','height' => 21,'alt' => 'help']); ?></a>
                   </div>
                 </div>
+                  <?php
 
-                <div class="row">
+                  if ($model->eSameAddress == 'Yes') {
+                      $style = "display:none";
+                  } else {
+                      $style = "display:block";
+                  }
+                  ?>
+                  <div class="row Paddress" style="<?= $style ?>">
                   <div class="col-sm-10">
                     <label for="Remember" class="control-label required1"> <span class="text-danger">*</span> Parents Residing At :</label>
                   </div>
                 </div>
 
-                <div class="box">
+                  <div class="box Paddress" style="<?= $style ?>">
                   <div class="small-col">&nbsp;</div>
                   <div class="mid-col">
                     <div class="form-cont">
@@ -575,6 +601,13 @@ $this->registerJs('
             sameAsAboveAddress();
         }
   });
+  $("#sameaddress").change(function () {
+        if (!this.checked)
+            //  ^
+            $(".Paddress").fadeIn("fast");
+        else
+            $(".Paddress").fadeOut("fast");
+    });
   function sameAsAboveAddress(){
       var iCountryId = "'.$model->iCountryId.'";
       var iStateId = "'.$model->iStateId .'";
