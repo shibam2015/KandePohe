@@ -29,11 +29,31 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 
       <div class="container">
 
+
         <div class="row">
 
           <div class="col-sm-12">
 
             <div class="white-section">
+              <div class="col-md-9 col-sm-12">
+                <div class="right-column"> <span class="welcome-note">
+            <?php
+            if ($model->Profile_created_for !== "Self") {
+              ?>
+              <p><strong>Welcome ,</strong> please give us few details about
+                <strong><?= $model->First_Name; ?> </strong>.</p>
+            <?php } else {
+              ?>
+              <p><strong>Welcome <?= $model->First_Name; ?> ,</strong> please give us few details about yourself.</p>
+
+            <?php
+            }
+            ?>
+
+              </span>
+                </div>
+              </div>
+
 
               <h3>Add Profile Photo <a href="<?=$HOME_URL_SITE?>verification" class="pull-right"><span class="link_small">( I will do this later )</span></a>
 

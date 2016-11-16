@@ -30,7 +30,19 @@ use yii\helpers\ArrayHelper;
       </div>
       <div class="col-sm-9">
         <div class="right-column"> <span class="welcome-note">
-          <p><strong>Welcome <?= $model->First_Name; ?> !</strong> Your lifestyle details will help us find you the best matches</p>
+          <?php
+          if ($model->Profile_created_for !== "Self") {
+            ?>
+            <p>Add<strong><?= $model->First_Name; ?>'s </strong> lifestyle details will help us find the best matches
+              for <?= $model->First_Name; ?> …</p>
+          <?php } else {
+            ?>
+            <p><strong><?= $model->First_Name; ?> ,</strong> Your lifestyle details will help us find the best matches
+              for you …</p>
+
+          <?php
+          }
+          ?>
           </span>
           <div class="row no-gutter">
             <div class="col-lg-8 col-md-12 col-sm-12">

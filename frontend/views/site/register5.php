@@ -86,8 +86,18 @@ use yii\helpers\ArrayHelper;
                                       $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
                                       $return .= '<label for="'.$value.'">' . ucwords($label) . '</label>';
                                       return $return;
-                                    }
+                                    },
+                                    'onchange' => '
+                            var vDisability = $("input[name=\'User[vDisability]\']:checked", "#form-register5").val();
 
+                            if(vDisability == "Physical Disability"){
+                              $("#nocDiv").show();
+                            }
+                            else {
+                              $("#nocDiv").hide();
+                              $("#user-vdisabilitydescription").val(" ");
+                            }
+                            '
                                 ]
                             )->label(false);?>
                           </dd>
@@ -101,9 +111,33 @@ use yii\helpers\ArrayHelper;
                       </div>
                     </div>
                     <div class="small-col tp ">
-                      <a href="#" data-toggle="tooltip" data-placement="right" title="Mention Your Family Affluence Level"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21','height' => 21,'alt' => 'help']); ?></a>
+                      <a href="#" data-toggle="tooltip" data-placement="right"
+                         title="Mention Your Disability"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
                     </div>
                   </div>
+                <?php
+                //CommonHelper::pr($model->vDisability);exit;
+                if ($model->vDisability == 'Physical Disability') {
+                  $style = "display:block";
+                } else {
+                  $style = "display:none";
+                }
+                ?>
+                <div class="box noc" id="nocDiv" style="<?= $style ?>">
+                  <div class="small-col">
+                    <div class="required1"><!--<span class="text-danger">*</span>--></div>
+                  </div>
+                  <div class="mid-col">
+                    <div class="form-cont">
+                      <?= $form->field($model, 'vDisabilityDescription', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Physical Disability</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control']) ?>
+                    </div>
+                  </div>
+                  <div class="small-col tp ">
+                    <a href="#" data-toggle="tooltip" data-placement="right"
+                       title="Mention Your Disability"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
+                  </div>
+                </div>
+
                 <div class="row">
                   <div class="col-sm-10 col-sm-offset-2">
                     <?= Html::submitButton('create my profile', ['class' => 'btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left', 'name' => 'register5']) ?>

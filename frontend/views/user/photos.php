@@ -10,15 +10,27 @@ $HOME_PAGE_URL = Yii::getAlias('@web') . "/";
 $UPLOAD_DIR = Yii::getAlias('@frontend') . '/web/uploads/';
 $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 ?>
-<div class="">
+<div class="" xmlns="http://www.w3.org/1999/html">
     <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
     <main>
         <div class="main-section">
+            <div class="col-md-9 col-sm-12">
+                <div class="right-column" style="margin-left: 73px;"> <span class="welcome-note">
+            <p><strong>Congratulations! Your profile has been created.</strong</p>
+
+               <p><strong> Now upload photos and get more visitors to your profile.</strong>
+               </p>
+
+              </span>
+                </div>
+            </div>
+
             <section>
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="white-section">
+
+                        <div class="white-section">
                                 <h3>Add Profile Photo
                                     <?php if ($model_user->eEmailVerifiedStatus != 'Yes') { ?>
                                         <a href="<?= $HOME_URL_SITE ?>verification" class="pull-right"><span

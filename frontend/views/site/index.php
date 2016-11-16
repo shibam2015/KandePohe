@@ -404,6 +404,7 @@ use yii\jui\DatePicker;
                             'options' => [
                                 'class' => 'input__field input__field--akira',
                                 'id' => 'DOB',
+                                'readOnly' => true,
                             ],
                             'clientOptions' => [
                                 'changeMonth' => true,
