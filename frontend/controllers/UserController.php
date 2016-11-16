@@ -1852,8 +1852,8 @@ class UserController extends Controller
         }
         if ($Temp) {
             if ($Model->save()) {
-                #$this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['cancelInterestMessage']);
-                #$this->actionMailSendRequest($Id, $ToUserId, $MailType);
+                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['cancelInterestMessage']);
+                $this->actionMailSendRequest($Id, $ToUserId, $MailType);
                 return 'S';
             } else {
                 return 'E';
