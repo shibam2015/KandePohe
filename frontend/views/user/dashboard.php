@@ -935,7 +935,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 <h1 id="to_name"></h1>(<span class="sub-text mrg-tp-10" id="to_rg_number"></span>)
                             </div>
                             <h6 class="mrg-bt-30 font-15 text-dark">
-                                <strong><?= Yii::$app->params['sendInterest'] ?></strong></h6>
+                                <strong><?= Yii::$app->params['sendInterest'] ?></strong>
+                            </h6>
                             <!--<h6 class="mrg-bt-30 font-15 text-dark"><strong>Request the member to add the following details</strong></h6>-->
 
                             <div class="checkbox mrg-tp-0 profile-control">

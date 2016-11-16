@@ -11,6 +11,10 @@ use yii\widgets\Pjax;
 $id = 0;
 $PROFILE_COMPLETENESS = 50;
 
+if (!Yii::$app->user->isGuest) {
+    $Id = Yii::$app->user->identity->id;
+}
+
 $HOME_URL = Yii::getAlias('@web') . "/";
 $HOME_URL_SITE = Yii::getAlias('@web') . "/site/";
 $UPLOAD_DIR = Yii::getAlias('@frontend') . '/web/uploads/';
@@ -80,7 +84,7 @@ $M1 = array();
                                                         </div>
                                                     </div>
                                                 </div>
-                                                </div>
+                                            </div>
                                             <div class="col-md-6">
                                                 <div class="box">
                                                     <div class="mid-col">
@@ -237,10 +241,10 @@ $M1 = array();
                                             <li><a href="#">Search By ID</a></li>
                                             <li><a href="#">Save Search</a></li>
                                             <li><a href="#">Modify Search</a></li>
-                                    </ul>
-                                </div>
+                                        </ul>
+                                    </div>
                                     <div class="clearfix"></div>
-                            </div>
+                                </div>
                             </div>
                             <?php if ($TotalRecords == 0) { ?>
                                 <div class="white-section listing border-sharp mrg-tp-10">
@@ -252,8 +256,8 @@ $M1 = array();
                                             <div class="clearfix"></div>
                                 <span class="pull-right"><a href="<?= Yii::$app->homeUrl ?>" class="text-right">Back To
                                         Home Page<i class="fa fa-angle-right"></i></a></span>
+                                        </div>
                                     </div>
-                                </div>
                                 </div>
                             <?php } else { ?>
                                 <?php foreach ($Model as $SK => $SV) { ?>
@@ -268,7 +272,7 @@ $M1 = array();
                                                                                           data-original-title="This is where the help text will appear when the mouse hovers over the help icon">
                                                             <?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => '21']); ?>
                                                         </a></span></div>
-                                        </div>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-3">
@@ -291,7 +295,7 @@ $M1 = array();
                                                                         <div
                                                                             class="item <?= ($K == 0) ? 'active' : ''; ?>">
                                                                             <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, $V['File_Name'], 140), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
-                                                                    </div>
+                                                                        </div>
                                                                     <?php
                                                                     }
                                                                 } else { ?>
@@ -309,8 +313,8 @@ $M1 = array();
                                                                     href="#carousel-example-generic" data-slide="next">
                                                                 <span class="glyphicon glyphicon-chevron-right"></span>
                                                             </a></div>
+                                                    </div>
                                                 </div>
-                                            </div>
                                                 <?php if (count($SV) > 0) { ?>
                                                     <p class="text-right"><a href="#" data-toggle="modal"
                                                                              data-target="#photo">View
@@ -325,7 +329,7 @@ $M1 = array();
                                                             <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $SV->Registration_Number ?>&source=profile_viewed_by"
                                                                class="name"
                                                                title="<?= $SV->Registration_Number ?>">
-                                                            <?= $SV->FullName; ?>
+                                                                <?= $SV->FullName; ?>
                                                             </a>
                                                         <?php } else { ?>
                                                             <?= $SV->FullName; ?>
@@ -355,7 +359,7 @@ $M1 = array();
                                                     </a>
                                                             </span>
                                                     </p>
-                                            </div>
+                                                </div>
                                                 <dl class="dl-horizontal mrg-tp-20">
                                                     <dt>Personal Details</dt>
                                                     <dd><?= CommonHelper::getAge($SV->DOB); ?>
@@ -373,51 +377,138 @@ $M1 = array();
                                                     <dt>Current Location</dt>
                                                     <dd><?= CommonHelper::setInputVal($SV->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($SV->countryName->vCountryName, 'text') ?></dd>
                                                 </dl>
-                                        </div>
+                                            </div>
                                         </div>
                                         <?php
 
                                         if (!Yii::$app->user->isGuest) {
                                             if ($SV->Gender != Yii::$app->user->identity->Gender) { ?>
-                                            <div class="row gray-bg">
-                                                <div class="col-sm-12">
-                                                    <div class="profile-control-vertical">
-                                                        <ul class="list-unstyled pull-right">
-                                                            <li><a href="#">Shortlist <i class="fa fa-list-ul"></i></a>
-                                                            </li>
-                                                            <li class="s__<?= $SV->id ?>">
-                                                                <?php
-                                                                $Check = \common\models\UserRequest::checkSendInterest(Yii::$app->user->identity->id, $SV->id);
-                                                                if ($Check->from_user_id == Yii::$app->user->identity->id && $Check->to_user_id == $SV->id && $Check->send_request_status == "Yes") {
-                                                                    ?>
+                                                <div class="row gray-bg">
+                                                    <div class="col-sm-12">
+                                                        <div class="profile-control-vertical">
+                                                            <ul class="list-unstyled pull-right">
+                                                                <li><a href="#">Shortlist <i class="fa fa-list-ul"></i></a>
+                                                                </li>
+                                                                <li class="s__<?= $SV->id ?>">
+                                                                    <?php
+
+                                                                    $Value = \common\models\UserRequestOp::checkSendInterest(Yii::$app->user->identity->id, $SV->id);
+                                                                    #CommonHelper::pr(\common\models\UserRequestOp::checkSendInterest(Yii::$app->user->identity->id, $ValueRM->id));
+                                                                    if (count($Value)) {
+                                                                        if ($Id == $Value->from_user_id && $Value->profile_viewed_from_to == 'Yes') {
+                                                                            $ViewerId = $Value->to_user_id;
+                                                                        } else {
+                                                                            $ViewerId = $Value->from_user_id;
+                                                                        }
+                                                                    } else {
+                                                                        $ViewerId = $Value->id;
+                                                                    }
+                                                                    $UserInfoModel = \common\models\User::getUserInfroamtion($ViewerId);
+
+                                                                    if (count($Value) == 0 || ($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'No' && $Value->send_request_status_to_from == 'No') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'No' && $Value->send_request_status_from_to == 'No')) { ?>
+                                                                        <a href="javascript:void(0)"
+                                                                           class=" sendinterestpopup"
+                                                                           role="button"
+                                                                           data-target="#sendInterest"
+                                                                           data-toggle="modal"
+                                                                           data-id="<?= $SV->id ?>"
+                                                                           data-name="<?= $SV->fullName ?>"
+                                                                           data-rgnumber="<?= $SV->Registration_Number ?>">Send
+                                                                            Interest
+                                                                            <i class="fa fa-heart-o"></i>
+                                                                        </a>
+                                                                    <?php } else if (($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) { ?>
+                                                                        <a href="javascript:void(0)"
+                                                                           class=" ci " role="button"
+                                                                           data-target="#"
+                                                                           data-toggle="modal"
+                                                                           data-id="<?= $UserInfoModel->id ?>"
+                                                                           data-name="<?= $UserInfoModel->fullName ?>"
+                                                                           data-rgnumber="<?= $UserInfoModel->Registration_Number ?>">Cancel
+                                                                            Interest
+                                                                            <i class="fa fa-close"></i> </a>
+
+                                                                    <?php } else if (($Id == $Value->to_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->from_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) {
+                                                                        ?>
+                                                                        <a href="javascript:void(0)"
+                                                                           class=" accept_decline adbtn"
+                                                                           role="button" data-target="#accept_decline"
+                                                                           data-toggle="modal"
+                                                                           data-id="<?= $UserInfoModel->id ?>"
+                                                                           data-name="<?= $UserInfoModel->fullName ?>"
+                                                                           data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
+                                                                           data-type="Accept Interest">
+                                                                            Accept
+                                                                            <i class="fa fa-check"></i>
+                                                                        </a>
+                                                                        <a href="javascript:void(0)"
+                                                                           class="accept_decline adbtn"
+                                                                           role="button" data-target="#accept_decline"
+                                                                           data-toggle="modal"
+                                                                           data-id="<?= $UserInfoModel->id ?>"
+                                                                           data-name="<?= $UserInfoModel->fullName ?>"
+                                                                           data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
+                                                                            >
+                                                                            Decline
+                                                                            <i class="fa fa-close"></i> </a>
+                                                                    <?php } else if ($Value->send_request_status_from_to == 'Accepted' || $Value->send_request_status_to_from == 'Accepted') {
+                                                                        ?>
+                                                                        <a href="javascript:void(0)" class=""
+                                                                           role="button"
+                                                                           data-target="#" data-toggle="modal"
+                                                                           data-id="<?= $UserInfoModel->id ?>"
+                                                                           data-name="<?= $UserInfoModel->fullName ?>"
+                                                                           data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
+                                                                           data-type="Connected">Connected
+                                                                            <i class="fa fa-heart"></i> </a>
+                                                                    <?php } else if ($Value->send_request_status_from_to == 'Rejected' || $Value->send_request_status_to_from == 'Rejected') {
+                                                                        ?>
+                                                                        <a href="javascript:void(0)" class=" "
+                                                                           role="button"
+                                                                           data-target="#" data-toggle="modal"
+                                                                           data-id="<?= $UserInfoModel->id ?>"
+                                                                           data-name="<?= $UserInfoModel->fullName ?>"
+                                                                           data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
+                                                                           data-type="Connected">Rejected <i
+                                                                                class="fa fa-close"></i> </a>
+
+                                                                    <?php } else { ?>
+                                                                        <a href="javascript:void(0)"
+                                                                           class="btn btn-link isent" role="button">Interest
+                                                                            Sent <i class="fa fa-heart"></i></a>
+                                                                    <?php } ?>
+                                                                    <!--
                                                                     <a href="javascript:void(0)" class="isent"
                                                                        role="button">Interest Sent <i
                                                                             class="fa fa-heart"></i></a>
-                                                                <?php } else { ?>
+                                                                <?php /*} else { */ ?>
                                                                     <a href="javascript:void(0)"
                                                                        class="sendinterestpopup"
                                                                        role="button"
                                                                        data-target="#sendInterest"
                                                                        data-toggle="modal"
-                                                                       data-id="<?= $SV->id ?>"
-                                                                       data-name="<?= $SV->FullName ?>"
-                                                                       data-rgnumber="<?= $SV->Registration_Number ?>">Send
+                                                                       data-id="<? /*= $SV->id */ ?>"
+                                                                       data-name="<? /*= $SV->FullName */ ?>"
+                                                                       data-rgnumber="<? /*= $SV->Registration_Number */ ?>">Send
                                                                         Interest
                                                                         <i class="fa fa-heart-o"></i>
                                                                     </a>
-                                                                <?php } ?>
-                                                            </li>
-                                                            <li><a href="#" data-toggle="modal" class="send_email"
-                                                                   <?php if (Yii::$app->user->isGuest) { ?>data-target="#sendMail"<?php } else { ?> data-id="<?= $SV->id ?>" <?php } ?>>Send
-                                                                    Email <i
-                                                                        class="fa fa-envelope-o"></i></a></li>
+                                                                --><?php /*} */ ?>
+                                                                </li>
 
-                                                        </ul>
+                                                                <li>
+                                                                    <a href="#" data-toggle="modal" class="send_email"
+                                                                       <?php if (Yii::$app->user->isGuest) { ?>data-target="#sendMail"<?php } else { ?> data-id="<?= $SV->id ?>" <?php } ?>>Send
+                                                                        Email <i class="fa fa-envelope-o"></i>
+                                                                    </a>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                        <?php } ?>
+                                            <?php } ?>
 
                                         <?php } else { ?>
                                             <div class="row gray-bg">
@@ -448,8 +539,8 @@ $M1 = array();
                                                 </div>
                                             </div>
                                         <?php } ?>
-                                </div>
-                            <?php } ?>
+                                    </div>
+                                <?php } ?>
 
 
                                 <div class="mrg-bt-10 text-center">
@@ -459,7 +550,7 @@ $M1 = array();
                                 </div>
                             <?php } ?>
 
-                    </div>
+                        </div>
                     </div>
                     <!--<div class="col-md-5 col-sm-12 mrg-tp-20">
                         <div class="map">
@@ -473,7 +564,7 @@ $M1 = array();
 
         </div>
 </div>
-    </main>
+</main>
 </div>
 <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -595,6 +686,10 @@ $M1 = array();
                             <div class="fb-profile-text mrg-bt-30 text-dark">
                                 <h1 id="to_name"></h1>(<span class="sub-text mrg-tp-10" id="to_rg_number"></span>)
                             </div>
+
+                            <h6 class="mrg-bt-30 font-15 text-dark">
+                                <strong><?= Yii::$app->params['sendInterest'] ?></strong>
+                            </h6>
                             <!--<h6 class="mrg-bt-30 font-15 text-dark"><strong>Request the member to add the following details</strong></h6>-->
 
                             <div class="checkbox mrg-tp-0 profile-control">
@@ -610,7 +705,8 @@ $M1 = array();
                                         </button>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-6 ">
-                                        <button type="button" class="btn pull-left" data-dismiss="modal">Back</button>
+                                        <button type="button" class="btn active pull-left" data-dismiss="modal">Back
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -623,7 +719,10 @@ $M1 = array();
             </div>
         </div>
     </div>
-<?php } ?>
+    <?php
+    require_once dirname(__DIR__) . '/user/_useroperation.php';
+}
+?>
 <?php
 $this->registerCssFile(Yii::$app->request->baseUrl . '/css/slider.css', ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/cover/jquery-ui.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
@@ -684,6 +783,19 @@ $this->registerJs('
       formData.append("Action", "SEND_INTEREST");
       sendRequestDashboard("' . Url::to(['user/send-int-dashboard']) . '",".requests","SL",$(this).data("parentid"),formData);
     });
+
+    $(document).on("click",".a_b_d",function(e){
+      Pace.restart();
+      loaderStart();
+      var formData = new FormData();
+      formData.append("ToUserId", $(this).data("id"));
+      formData.append("Name", $(".to_name").text());
+      formData.append("RGNumber", $(".to_rg_number").text());
+      formData.append("Action",  $(this).data("type"));
+      sendRequestDashboard("' . Url::to(['user/user-request']) . '",".requests","R_A_D_B",$(this).data("parentid"),formData);
+      //sendRequest("' . Url::to(['user/user-request']) . '",".requests",formData);
+    });
+
 ');
 ?>
 <style>
