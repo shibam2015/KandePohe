@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\CommonHelper;
 use Yii;
 
 /**
@@ -48,19 +49,20 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
 
     public static function findProfileViewedByUserList($id, $Limit)
     {
-        $sql = "SELECT user_request_op.* FROM user_request_op  LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $id . " AND user_request_op.profile_viewed_to_from = 'Yes' ) OR (user_request_op.to_user_id = " . $id . " AND user_request_op.profile_viewed_from_to = 'Yes') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC LIMIT " . $Limit;
+        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op  LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $id . " AND user_request_op.profile_viewed_to_from = 'Yes' ) OR (user_request_op.to_user_id = " . $id . " AND user_request_op.profile_viewed_from_to = 'Yes') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC LIMIT " . $Limit;
         return Static::findBySql($sql)->all();
-        #return static::find()->joinWith([userInfo])->where("(from_user_id = $id AND profile_viewed_to_from == 'Yes' ) OR (to_user_id = $id AND profile_viewed_from_to = 'Yes') ")
-        #   ->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
         #return static::find()->joinWith([fromUserInfo])->where(['to_user_id' => $id, 'profile_viewed_from_to' => 'Yes'])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
-        #TODO : Query (SELECT user_request_op.* FROM user_request_op  LEFT JOIN  user ON user.status=1  WHERE (user_request_op.from_user_id = 2 AND user_request_op.profile_viewed_to_from = 'Yes' ) OR (user_request_op.to_user_id = 2 AND user_request_op.profile_viewed_from_to = 'Yes') GROUP BY user_request_op.id DESC LIMIT 4)
     }
 
     public static function checkSendInterest($id, $ToUserId)
     {
         return static::find()
-            ->where("(from_user_id = $id AND to_user_id = $ToUserId OR (from_user_id = $ToUserId AND to_user_id = $id)) AND  send_request_status_from_to = 'Yes' ")
+            ->where("((from_user_id = $id AND to_user_id = $ToUserId ) OR (from_user_id = $ToUserId AND to_user_id = $id )) AND  (send_request_status_to_from = 'Yes' OR send_request_status_from_to = 'Yes' )")
             ->one();
+        /*return static::find()
+            ->where("(from_user_id = $id AND to_user_id = $ToUserId AND  send_request_status_to_from = 'Yes' ) OR (from_user_id = $ToUserId AND to_user_id = $id AND send_request_status_from_to = 'Yes' )")
+            ->one();*/
+
     }
 
     public static function checkUsers($id, $ToUserId)

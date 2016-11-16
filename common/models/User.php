@@ -210,6 +210,11 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return static::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
     }
 
+    public static function getUserInfroamtion($Id)
+    {
+        return static::find()->select('id, First_Name, Last_Name, Registration_Number,DOB,Age,user.iCountryId,user.iHeightID, propic')->joinWith([countryName, stateName, cityName, height, maritalStatusName])->where(['id' => $Id])->one();
+    }
+
     /**
      * @inheritdoc
      */
@@ -723,11 +728,6 @@ characters are allowed.'
         return $this->hasOne(FavouriteCousines::className(), ['ID' => 'FavouriteCousinesID']);
     }
 
-    public function getSportsFitnActivitiesName()
-    {
-        return $this->hasOne(SportsFitnActivities::className(), ['ID' => 'SportsFittnessID']);
-    }
-
 
 
     /*public function generateUniqueRandomNumber($length = 9) {
@@ -739,6 +739,11 @@ characters are allowed.'
             return $this->generateUniqueRandomNumber($length);
 
     }*/
+
+    public function getSportsFitnActivitiesName()
+    {
+        return $this->hasOne(SportsFitnActivities::className(), ['ID' => 'SportsFittnessID']);
+    }
 
     public function getPreferredDressStyleName()
     {

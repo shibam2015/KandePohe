@@ -91,9 +91,10 @@ class SearchController extends Controller
         if (Yii::$app->user->isGuest) {
             $TempModel = new User();
         } else {
-        $id = Yii::$app->user->identity->id;
+            $id = Yii::$app->user->identity->id;
             $TempModel = User::findOne($id);
         }
+
         if ($TempModel->load(Yii::$app->request->post())) {
             $Gender = $params['User']['Profile_for'];
             $Community = $params['User']['iCommunity_ID'];
@@ -162,8 +163,8 @@ class SearchController extends Controller
                 }
             }
         }
-        // $id = Yii::$app->user->identity->id;
-        //$TempModel = ($id != null) ? User::findOne($id) : array();
+        #$id = Yii::$app->user->identity->id;
+        #$TempModel = ($id != null) ? User::findOne($id) : array();
         $TempModel->iCommunity_ID = $Community;
         $TempModel->iSubCommunity_ID = $SubCommunity;
         $TempModel->iReligion_ID = $ReligionID;

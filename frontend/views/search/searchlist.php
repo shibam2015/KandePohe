@@ -43,7 +43,7 @@ $M1 = array();
 
                                         <?php
                                         $form = ActiveForm::begin([
-                                            'id' => 'form',
+                                            'id' => 'formsearch',
                                             'action' => ['search/basic-search'],
                                             'options' => ['data-pjax' => true],
                                             'layout' => 'horizontal',
