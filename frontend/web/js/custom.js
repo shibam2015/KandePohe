@@ -319,8 +319,14 @@ function sendRequest(url, htmlId, dataArr) {
         cache: false,
         processData: false,
         success: function (res) {
-            $(htmlId).html(res);
+            var dataObj = JSON.parse(res);
+            console.log(dataObj);
+            $(htmlId).html(dataObj.HtmlOutput);
             loaderStop();
+            if (dataObj.Notification.MESSAGE != '' && dataObj.Notification.length != 0) {
+                showNotification(dataObj.Notification.STATUS, dataObj.Notification.MESSAGE);
+            }
+
         }
     });
 }
@@ -336,20 +342,39 @@ function sendRequestDashboard(url, htmlId, type, pid, dataArr) {
         success: function (res) {
             loaderStop();
             var dataObj = JSON.parse(res);
+            var ToUserId = dataArr.get("ToUserId");
+            var UserName = dataArr.get("Name");
+            var RGNumber = dataArr.get("RGNumber");
             if (type == 'SI') {
-                console.log(dataObj.STATUS);
-                console.log(pid);
                 if (dataObj.STATUS == 'S') {
-                    $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-link isent" role="button">Interest Sent <i class="fa fa-heart"></i></a>');
+                    $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info isent" role="button" data-id="' + ToUserId + '" data-name="' + UserName + '" data-rgnumber="' + RGNumber + '">Cancel Interest <i class="fa fa-heart"></i></a>');
                 }
                 if (dataObj.STATUS == 'W') {
-                    $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info accept adbtn" role="button" data-target="#" data-toggle="modal" data-id="" data-name="" data-rgnumber="">Accept <i class="fa fa-check"></i> </a> <a href="javascript:void(0)" class="btn btn-info accept adbtn" role="button" data-target="#" data-toggle="modal" data-id=""data-name="" data-rgnumber="">Decline <i class="fa fa-close"></i> </a>');
+                    $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info accept_decline adbtn" role="button" data-target="#accept_decline" data-toggle="modal" data-id="' + ToUserId + '" data-name="' + UserName + '" data-rgnumber="' + RGNumber + '" data-type="Accept Interest"> Accept <i class="fa fa-check"></i> </a> <a href="javascript:void(0)" class="btn btn-info accept_decline adbtn" role="button" data-target="#accept_decline" data-toggle="modal" data-id="' + ToUserId + '" data-name="' + UserName + '" data-rgnumber="' + RGNumber + '" data-type="Decline Interest">Decline <i class="fa fa-close"></i> </a>');
                 }
             }
             if (type == 'SL') {
                 if (dataObj.STATUS == 'S') {
                     $('.' + pid).html('<a href="javascript:void(0)" class="isent" role="button">Interest Sent <i class="fa fa-heart"></i></a>');
                 }
+            }
+            if (type == 'R_A_D_B') {
+                if (dataObj.Action == 'ACCEPT_INTEREST') {
+                    if (dataObj.STATUS == 'S' || dataObj.STATUS == 'IA') {
+                        $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info isent" role="button">Connected <i class="fa fa-heart"></i></a>');
+                    } else if (dataObj.STATUS == 'IN') {
+                        $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info sendinterestpopup" role="button" data-target="#sendInterest" data-toggle="modal" data-id="' + ToUserId + '" data-name="' + UserName + '" data-rgnumber="' + RGNumber + '">Send Interest <i class="fa fa-heart-o"></i> </a>');
+                    } else {//(dataObj.STATUS == 'W')
+                        $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-link isent" role="button"><i class="fa fa-close"></i>Not Allowed</a>');
+                    }
+                } else if (dataObj.Action == 'DECLINE_INTEREST') {
+                    if (dataObj.STATUS == 'S' || dataObj.STATUS == 'IR') {
+                        $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info isent" role="button">Rejected<i class="fa fa-close"></i></a>');
+                    } else if (dataObj.STATUS == 'IN') {
+                        $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info sendinterestpopup" role="button" data-target="#sendInterest" data-toggle="modal" data-id="' + ToUserId + '" data-name="' + UserName + '" data-rgnumber="' + RGNumber + '">Send Interest <i class="fa fa-heart-o"></i> </a>');
+                    }
+                }
+
             }
             //notificationPopup(dataObj.STATUS, dataObj.MESSAGE, dataObj.TITLE);
             showNotification(dataObj.STATUS, dataObj.MESSAGE);
@@ -368,6 +393,27 @@ $(document).on("click", ".sendinterestpopup", function (e) {
     }
     else {
         $(".send_request").attr("data-parentid", $(this).closest('p').attr('class'));
+
+    }
+
+});
+
+$(document).on("click", ".accept_decline", function (e) {
+    $(".to_name").html($(this).data("name"));
+    $(".to_rg_number").html($(this).data("rgnumber"));
+    $(".a_b_d").attr("data-id", $(this).data("id"));
+    $(".a_b_d").attr("data-type", $(this).data("type"));
+    $(".main_title_popup").html($(this).data("type"));
+    if ($(this).data("type") == 'Accept Interest') {
+        $(".main_msg_popup").html(AcceptInterest);
+    } else {
+        $(".main_msg_popup").html(DeclineInterest);
+    }
+    if ($(this).closest('p').attr('class') === undefined) {
+        $(".a_b_d").attr("data-parentid", $(this).closest('li').attr('class'));
+    }
+    else {
+        $(".a_b_d").attr("data-parentid", $(this).closest('p').attr('class'));
 
     }
 

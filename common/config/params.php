@@ -16,5 +16,10 @@ return [
     'accessDenied' => 'Access Denied',
     'accessDeniedYourProfile' => "You can't see your profile as user view.",
     'accessDeniedInvalid' => "Trying to access invalid data.",
+    'sendInterest' => " Do You want to Accept Interest ?",
+    'acceptInterest' => " Do You want to Accept Interest ?",
+    'declineInterest' => " Do You want to Decline Interest ?",
+    'acceptInterestMessage' => '#NAME#  has accepted your request.',
+    'declineInterestMessage' => '#NAME#  has accepted your request.',
 ];
 

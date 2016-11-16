@@ -1603,23 +1603,42 @@ class UserController extends Controller
         if (Yii::$app->request->post() && (count(Yii::$app->request->post()) > 0)) {
             $RequestAction = Yii::$app->request->post('Action');
             $ToUserId = Yii::$app->request->post('ToUserId');
+            $Page = Yii::$app->request->post('Page');
             if ($RequestAction == 'SEND_INTEREST') {
                 $temp['Action'] = 'SEND_INTEREST';
                 $temp['STATUS'] = $this->actionSendInterest($Id, $ToUserId, 'SEND_INTEREST_OF');
+            } else if ($RequestAction == 'Accept Interest') {
+                $temp['Action'] = 'ACCEPT_INTEREST';
+                $temp['STATUS'] = $this->actionAcceptInterest($Id, $ToUserId, 'ACCEPT_INTEREST_OF');
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification($temp['STATUS'], 'ACCEPT_INTEREST');
+                $temp['MESSAGE'] = $MESSAGE;
+                if ($Page != 'PROFILE') {
+                    return json_encode($temp);
+                    exit;
+                }
+            } else if ($RequestAction == 'Decline Interest') {
+                $temp['Action'] = 'DECLINE_INTEREST';
+                $temp['STATUS'] = $this->actionDeclineInterest($Id, $ToUserId, 'DECLINE_INTEREST_OF');
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification($temp['STATUS'], 'DECLINE_INTEREST');
+                $temp['MESSAGE'] = $MESSAGE;
+                if ($Page != 'PROFILE') {
+                    return json_encode($temp);
+                    exit;
+                }
             }
         }
         $modelUser = UserRequestOp::checkUsers($Id, $ToUserId);
-        /*$modelUser = UserRequest:: find()
-            ->where("from_user_id = $Id AND to_user_id = $ToUserId OR (from_user_id = $ToUserId AND to_user_id = $Id)")
-            ->all();*/
-        #CommonHelper::pr($modelUser);exit;
+        $ToUserInfo = User::getUserInfroamtion($ToUserId);
         $myModel = [
             'ToUserId' => $ToUserId,
             'model' => $model,
             'modelUser' => $modelUser,
+            'ToUserInfo' => $ToUserInfo,
             'temp' => $temp,
         ];
-        return $this->actionRenderAjax($myModel, '_requests', $show, false, false, $temp);
+        $HtmlOutput = $this->actionRenderAjax($myModel, '_requests', $show, true, true, $temp);
+        $Output = array("HtmlOutput" => $HtmlOutput, "Notification" => $temp);
+        return json_encode($Output);
     }
 
     public function actionSendInterest($Id, $ToUserId, $MailType)
@@ -1633,7 +1652,7 @@ class UserController extends Controller
                     if ($Model->send_request_status_to_from == 'No') {
                         $Temp = 1;
                         $Model->send_request_status_from_to = 'Yes';
-                        $Model->date_send_request_from_to = date('Y-m-d');
+                        $Model->date_send_request_from_to = CommonHelper::getCurrentDate();
                     } else {
                         return 'W';
                     }
@@ -1669,40 +1688,7 @@ class UserController extends Controller
                 return 'E';
             }
         }
-        /*
-        $RequestModel = new UserRequest();
-        $Model = $RequestModel->checkUsers($Id, $ToUserId);
-        if ($Model->id) {
-            if ($Model->send_request_status == 'No') {
-                $Model->from_user_id = $Id; #who logged in.
-                $Model->to_user_id = $ToUserId;
-                $Model->send_request_status = 'Yes';
-                $Model->date_send_request = CommonHelper::getCurrentDate();
-                if ($Model->save()) {
-                    $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['sendInterestMessage']);
-                    $this->actionMailSendRequest($Id, $ToUserId, $MailType);
-                    return 'S';
-                } else {
-                    return 'E';
-                }
-            } else {
-                return 'I';
-            }
-        }
-        else {
-            $RequestModel->scenario = UserRequest::SCENARIO_SEND_INTEREST;
-            $RequestModel->from_user_id = $Id; #who logged in.
-            $RequestModel->to_user_id = $ToUserId;
-            $RequestModel->send_request_status = 'Yes';
-            $RequestModel->date_send_request = CommonHelper::getCurrentDate();
-            if ($RequestModel->save()) {
-                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['sendInterestMessage']);
-                $this->actionMailSendRequest($Id, $ToUserId, $MailType);
-                return 'S';
-            } else {
-                return 'E';
-            }
-        }*/
+
     }
 
     public function actionMailBoxLog($Id, $ToUserId, $Content)
@@ -1723,7 +1709,115 @@ class UserController extends Controller
         }
     }
 
+    public function actionAcceptInterest($Id, $ToUserId, $MailType)
+    {
+        $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
+        $Temp = 0;
+        $Model->scenario = UserRequest::SCENARIO_ACCEPT_INTEREST;
+        if ($Model->id) {
+            if ($Id == $Model->from_user_id) {
+                if ($Model->send_request_status_to_from == 'Yes') {
+                    $Temp = 1;
+                    $Model->send_request_status_to_from = 'Accepted';
+                    $Model->date_accept_request_to_from = CommonHelper::getCurrentDate();
+                } else if ($Model->send_request_status_to_from == 'No') {
+                    return 'IN';
+                } else if ($Model->send_request_status_to_from == 'Accepted') {
+                    return 'IA';
+                } else {
+                    return 'W';
+                }
+            } else if ($Id == $Model->to_user_id) {
+                if ($Model->send_request_status_from_to == 'Yes') {
+                    $Temp = 1;
+                    $Model->send_request_status_from_to = 'Accepted';
+                    $Model->date_accept_request_from_to = CommonHelper::getCurrentDate();
+                } else if ($Model->send_request_status_from_to == 'No') {
+                    return 'IN';
+                } else if ($Model->send_request_status_from_to == 'Accepted') {
+                    return 'IA';
+                } else {
+                    return 'W';
+                }
+            }
+        } else {
+            return 'W';
+        }
+        if ($Temp) {
+            if ($Model->save()) {
+                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['acceptInterestMessage']);
+                $this->actionMailSendRequest($Id, $ToUserId, $MailType);
+                return 'S';
+            } else {
+                return 'E';
+            }
+        }
+    }
+
+    public function actionDeclineInterest($Id, $ToUserId, $MailType)
+    {
+        $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
+        $Temp = 0;
+        $Model->scenario = UserRequest::SCENARIO_DECLINE_INTEREST;
+        if ($Model->id) {
+            if ($Id == $Model->from_user_id) {
+                if ($Model->send_request_status_to_from == 'Yes') {
+                    $Temp = 1;
+                    $Model->send_request_status_to_from = 'Rejected';
+                    $Model->date_accept_request_to_from = CommonHelper::getCurrentDate();
+                } else if ($Model->send_request_status_to_from == 'No') {
+                    return 'IN';
+                } else if ($Model->send_request_status_to_from == 'Rejected') {
+                    return 'IR';
+                } else {
+                    return 'W';
+                }
+            } else if ($Id == $Model->to_user_id) {
+                if ($Model->send_request_status_from_to == 'Yes') {
+                    $Temp = 1;
+                    $Model->send_request_status_from_to = 'Rejected';
+                    $Model->date_accept_request_from_to = CommonHelper::getCurrentDate();
+                } else if ($Model->send_request_status_from_to == 'No') {
+                    return 'IN';
+                } else if ($Model->send_request_status_from_to == 'Rejected') {
+                    return 'IR';
+                } else {
+                    return 'W';
+                }
+            }
+        } else {
+            return 'W';
+        }
+        if ($Temp) {
+            if ($Model->save()) {
+                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['declineInterestMessage']);
+                $this->actionMailSendRequest($Id, $ToUserId, $MailType);
+                return 'S';
+            } else {
+                return 'E';
+            }
+        }
+    }
+
     public function actionSendIntDashboard()
+    {
+        $Id = Yii::$app->user->identity->id;
+        $ToUserId = Yii::$app->request->post('ToUserId');
+        $Flag = $this->actionSendInterest($Id, $ToUserId, 'SEND_INTEREST_OF');
+        if ($Flag == 'S') {
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'SEND_INTEREST');
+        } else if ($Flag == 'E') {
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'SEND_INTEREST');
+        } else if ($Flag == 'I') {
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('I', 'SEND_INTEREST');
+        } else {
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('W', 'SEND_INTEREST');
+        }
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
+        return json_encode($return);
+    }
+
+    public function actionInterestAccept()
     {
         $Id = Yii::$app->user->identity->id;
         $ToUserId = Yii::$app->request->post('ToUserId');
