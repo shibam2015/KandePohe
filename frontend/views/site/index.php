@@ -493,7 +493,7 @@ Policy]</a> and <a href="#" title="[T&C]">[T&C]</a></label>';
           <?php $form = ActiveForm::begin([
               'id' => 'login-form',
               'action' => 'site/login',
-              'enableAjaxValidation' => true,
+              //'enableAjaxValidation' => true,
               //'enableClientValidation' => true,
               'validateOnSubmit' => true,
           ]);

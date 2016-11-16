@@ -406,7 +406,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 
                                                             <p class="s__<?= $UserInfoModel->id ?>">
                                                                 <?php
-                                                                if (($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'No' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'No' && $Value->send_request_status_from_to == 'No')) { ?>
+                                                                if (($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'No' && $Value->send_request_status_to_from == 'No') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'No' && $Value->send_request_status_from_to == 'No')) { ?>
                                                                     <a href="javascript:void(0)"
                                                                        class="btn btn-info sendinterestpopup"
                                                                        role="button"
@@ -420,14 +420,15 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                 <?php } else if (($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) {
                                                                     ?>
                                                                     <a href="javascript:void(0)"
-                                                                       class="btn btn-info ci " role="button"
-                                                                       data-target="#"
+                                                                       class="btn btn-info ci accept_decline"
+                                                                       role="button"
+                                                                       data-target="#accept_decline"
                                                                        data-toggle="modal"
                                                                        data-id="<?= $UserInfoModel->id ?>"
                                                                        data-name="<?= $UserInfoModel->fullName ?>"
-                                                                       data-rgnumber="<?= $UserInfoModel->Registration_Number ?>">Cancel
-                                                                        Interest<i
-                                                                            class="fa fa-close"></i> </a>
+                                                                       data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
+                                                                       data-type="Cancel Interest">
+                                                                        Cancel Interest<i class="fa fa-close"></i> </a>
                                                                     <!-- <a href="javascript:void(0)" class="btn btn-link isent" role="button">Interest Sent
                                                                         <i class="fa fa-heart"></i></a> -->
                                                                 <?php } else if (($Id == $Value->to_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->from_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) {
@@ -548,13 +549,15 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                     </a>
                                                                 <?php } else if (($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) { ?>
                                                                     <a href="javascript:void(0)"
-                                                                       class="btn btn-info ci " role="button"
-                                                                       data-target="#"
+                                                                       class="btn btn-info ci accept_decline"
+                                                                       role="button"
+                                                                       data-target="#accept_decline"
                                                                        data-toggle="modal"
                                                                        data-id="<?= $UserInfoModel->id ?>"
                                                                        data-name="<?= $UserInfoModel->fullName ?>"
-                                                                       data-rgnumber="<?= $UserInfoModel->Registration_Number ?>">Cancel
-                                                                        Interest
+                                                                       data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
+                                                                       data-type="Cancel Interest">
+                                                                        Cancel Interest
                                                                         <i class="fa fa-close"></i> </a>
 
                                                                 <?php } else if (($Id == $Value->to_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->from_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) {
@@ -935,7 +938,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 <h1 id="to_name"></h1>(<span class="sub-text mrg-tp-10" id="to_rg_number"></span>)
                             </div>
                             <h6 class="mrg-bt-30 font-15 text-dark">
-                                <strong><?= Yii::$app->params['sendInterest'] ?></strong></h6>
+                                <strong><?= Yii::$app->params['sendInterest'] ?></strong>
+                            </h6>
                             <!--<h6 class="mrg-bt-30 font-15 text-dark"><strong>Request the member to add the following details</strong></h6>-->
 
                             <div class="checkbox mrg-tp-0 profile-control">

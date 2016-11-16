@@ -373,8 +373,15 @@ function sendRequestDashboard(url, htmlId, type, pid, dataArr) {
                     } else if (dataObj.STATUS == 'IN') {
                         $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info sendinterestpopup" role="button" data-target="#sendInterest" data-toggle="modal" data-id="' + ToUserId + '" data-name="' + UserName + '" data-rgnumber="' + RGNumber + '">Send Interest <i class="fa fa-heart-o"></i> </a>');
                     }
+                } else if (dataObj.Action == 'CANCEL_INTEREST') {
+                    if (dataObj.STATUS == 'S' || dataObj.STATUS == 'IN') {
+                        $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info sendinterestpopup" role="button" data-target="#sendInterest" data-toggle="modal" data-id="' + ToUserId + '" data-name="' + UserName + '" data-rgnumber="' + RGNumber + '">Send Interest <i class="fa fa-heart-o"></i> </a>');
+                    } else if (dataObj.STATUS == 'IA') {
+                        $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info isent" role="button">Connected <i class="fa fa-heart"></i></a>');
+                    } else if (dataObj.STATUS == 'IR') {
+                        $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info isent" role="button">Rejected<i class="fa fa-close"></i></a>');
+                    }
                 }
-
             }
             //notificationPopup(dataObj.STATUS, dataObj.MESSAGE, dataObj.TITLE);
             showNotification(dataObj.STATUS, dataObj.MESSAGE);
@@ -406,8 +413,10 @@ $(document).on("click", ".accept_decline", function (e) {
     $(".main_title_popup").html($(this).data("type"));
     if ($(this).data("type") == 'Accept Interest') {
         $(".main_msg_popup").html(AcceptInterest);
-    } else {
+    } else if ($(this).data("type") == 'Decline Interest') {
         $(".main_msg_popup").html(DeclineInterest);
+    } else {
+        $(".main_msg_popup").html(CancelInterest);
     }
     if ($(this).closest('p').attr('class') === undefined) {
         $(".a_b_d").attr("data-parentid", $(this).closest('li').attr('class'));

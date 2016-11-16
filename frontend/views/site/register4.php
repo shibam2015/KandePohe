@@ -156,7 +156,7 @@ use yii\helpers\ArrayHelper;
                             var nob = $(this).val();
                             if(nob == 0){
                             $("#nobmDiv").hide();
-                              $("#NobM").val("0");
+                             // $("#NobM").val("0");
                             }
                             else {
                               $("#nobmDiv").show();
@@ -185,7 +185,7 @@ use yii\helpers\ArrayHelper;
                       </div>
                       <div class="mid-col">
                           <div class="form-cont">
-                              <?= $form->field($model, 'NobM', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Number Of Brothers Married</span> </label></span>{error}'])->input('number', ['id' => 'NobM', 'class' => 'input__field input__field--akira form-control', 'min' => '0', 'max' => '$nob'])->error(false) ?>
+                              <?= $form->field($model, 'NobM', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Number Of Brothers Married</span> </label></span>{error}'])->input('number', ['id' => 'NobM', 'class' => 'input__field input__field--akira form-control', 'min' => '0'])->error(false) ?>
                           </div>
                       </div>
                       <div class="small-col tp ">
@@ -379,7 +379,8 @@ use yii\helpers\ArrayHelper;
                   </div>
                   <div class="mid-col">
                     <div class="form-cont">
-                      <?= $form->field($model, 'vAreaNameCA', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Area Name</span> </label></span>{error}'])->input('text',['class'=>'input__field input__field--akira form-control'])?>
+                        <?= $form->field($model, 'vAreaNameCA', ["template" => '<span class="input input--akira input--filled">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Area Name</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control', 'placeholder' => 'e.g.
+Koregaon Park']) ?>
                     </div>
                   </div>
                   <div class="small-col tp ">
