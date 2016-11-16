@@ -290,15 +290,15 @@ img.selected {
 
 /* Validation Error - Success - Label Start */
 .has-error .form-control {
-    border-color: #cf0d0d
+    border-color: #cf0d0d !important;
 }
 
 .has-success .form-control {
-    border-color: #19b01c
+    border-color: #19b01c !important;
 }
 
 .has-error .checkbox, .has-error .checkbox-inline, .has-error .control-label, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.checkbox label, .has-error.checkbox-inline label, .has-error.radio label, .has-error.radio-inline label {
-    border-color: #cf0d0d
+    border-color: #cf0d0d !important;
 }
 
 /* Validation Error - Success - Label End */

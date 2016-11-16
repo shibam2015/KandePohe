@@ -364,8 +364,8 @@ use yii\jui\DatePicker;
               </div>
               <div class="form-cont">
                 <?= $form->field($model, 'Profile_created_for')->dropDownList(
-                    ['' => 'Profile for', 'BRIDE' => 'BRIDE', 'GROOM' => 'GROOM', 'SELF' => 'SELF'],
-                    ['class' => 'cs-select cs-skin-border']
+                    ['' => 'Profile for', 'Self' => 'Self', 'Son' => 'Son', 'Daughter' => 'Daughter', 'Brother' => 'Brother', 'Sister' => 'Sister', 'Friend' => 'Friend'],
+                    ['class' => 'cs-select cs-skin-border form-control']
                 )->label(false);?>
               </div>
               <div>
@@ -397,18 +397,20 @@ use yii\jui\DatePicker;
 
               <div class="form-cont">
 
-                <?= $form->field($model, 'DOB', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Date Of Birth</span> </label></span>{error}'])->input('text')
+                  <?= $form->field($model, 'DOB', ["template" => '<span class="input input--akira input-filled">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Date Of Birth</span> </label></span>{error}'])->input('text')
                     ->widget(\yii\jui\DatePicker::classname(),
                         [
                             'dateFormat' => 'php:Y-m-d',
                             'options' => [
-                                'class' => 'input__field input__field--akira form-control',
+                                'class' => 'input__field input__field--akira',
                                 'id' => 'DOB',
                             ],
                             'clientOptions' => [
                                 'changeMonth' => true,
                                 'yearRange' => '-70:-21',
                                 'changeYear' => true,
+                                //'readOnly'=>'readonly',
+
                                 'maxDate' => date('Y-m-d', strtotime('-21 year')),
                             ]
 
@@ -420,7 +422,7 @@ use yii\jui\DatePicker;
                   <div class="form-cont col-xs-6">
                     <?= $form->field($model, 'county_code')->dropDownList(
                         ['+91' => '+91'],
-                        ['class' => 'cs-select cs-skin-border', 'prompt' => 'Country Code']
+                        ['class' => 'cs-select cs-skin-border form-control', 'prompt' => 'Country Code']
                     )->label(false); ?>
                   </div>
                   <div class="form-cont col-xs-6">
@@ -443,7 +445,9 @@ use yii\jui\DatePicker;
                             'item' => function ($index, $label, $name, $checked, $value) {
 
                               $return = '<input type="checkbox" id="toc" name="' . $name . '" value="YES" >';
-                              $return .= '<label for="toc" class="control-label toccl">By clicking ‘Sign Up Free’ you agree to our <a href="#" title="Terms">Terms</a></label>';
+                                $return .= '<label for="toc" class="control-label toccl">I agree to the <a href="#" title="[Privacy
+Policy]">[Privacy
+Policy]</a> and <a href="#" title="[T&C]">[T&C]</a></label>';
                               return $return;
                             }
                         ]
@@ -489,7 +493,8 @@ use yii\jui\DatePicker;
               'id' => 'login-form',
               'action' => 'site/login',
               'enableAjaxValidation' => true,
-              'enableClientValidation' => true,
+              //'enableClientValidation' => true,
+              'validateOnSubmit' => true,
           ]);
           ?>
           <div class="row">
@@ -511,8 +516,15 @@ use yii\jui\DatePicker;
                    data-target="#fpswd">Forgot password?</a></div>
               <!-- <a href="dash-board.html" class="">Login</a> -->
               <?= Html::submitButton('Login', ['class' => 'btn btn-primary mrg-tp-10 col-xs-12 login-btn', 'id' => '#loginbtn', 'name' => 'login-button', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Login...']) ?>
-              <div class="bar-devider"><span>OR</span></div>
-              <a class="btn btn-block btn-social btn-facebook"> <i class="fa fa-facebook"></i> Sign in with Facebook
+                <div class="checkbox">
+                    <a href="#" class="pull-right freeacc" title="Register
+FREE" data-toggle="modal"
+                       data-target="#myModalNorm">[Register
+                        FREE]</a><span class="pull-right freeacc">Don’t have an
+                    account?</span></div>
+                <div class="bar-devider"><span>OR</span></div>
+
+                <a class="btn btn-block btn-social btn-facebook"> <i class="fa fa-facebook"></i> Sign in with Facebook
               </a>
               <!--<a class="btn btn-block btn-social btn-google-plus"> <i class="fa fa-google-plus"></i> Sign in with Google </a>-->
             </div>
@@ -648,6 +660,7 @@ use yii\jui\DatePicker;
     color: #ee1845;
 
   }
+
   .btn-primary.disabled, .btn-primary.disabled.active, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled].active, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary.active, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
     background-color: #ee1845;
     border-color: #ee1845;

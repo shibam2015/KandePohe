@@ -72,6 +72,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $Profile_for;
     public $AgeFrom;
     public $AgeTo;
+    // public $NobM;
+    //public $NosM;
 
     public $Community;
     public $SubCommunity;
@@ -219,7 +221,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public function rules()
     {
         return [
-            [['auth_key', 'created_at', 'updated_at', 'Registration_Number', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'toc', 'iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vDiet', 'iFatherStatusID', 'iMotherStatusID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'iCityCAId', 'vParentsResiding', 'mother_tongue', 'weight', 'phone_pin', 'email_pin'], 'required'],
+            [['auth_key', 'created_at', 'updated_at', 'Registration_Number', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vDiet', 'iFatherStatusID', 'iMotherStatusID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'iCityCAId', 'vParentsResiding', 'mother_tongue', 'weight', 'phone_pin', 'email_pin'], 'required'],
 
             ['email', 'required', 'message' => 'Please enter your email address.'],
             ['First_Name', 'required', 'message' => 'Please enter first name.'],
@@ -227,16 +229,20 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             ['Mobile', 'required', 'message' => 'Please enter mobile number.'],
             ['Gender', 'required', 'message' => 'Please Select Your Gender'],
             ['DOB', 'required', 'message' => 'Please Select Your Date Of Birth'],
-            ['county_code', 'required', 'message' => 'Please Select your desired County Code.'],
+            ['county_code', 'required', 'message' => 'Please Select your desired Country Code.'],
+            ['vDisability', 'required', 'message' => 'Please Select Disability Option.'],
+            ['toc', 'required', 'message' => 'You must agree to
+Privacy Policy and T&C to register on this site.'],
             ['password_hash', 'required', 'message' => 'Please create your desired password.'],
             ['repeat_password', 'required', 'message' => 'Please re-type your desired password.'],
             ['repassword', 'required', 'message' => 'Please re-type your desired password.'],
-            ['Profile_created_for', 'required', 'message' => 'Please mention relationship of to be bride/groom with you.'],
+            ['Profile_created_for', 'required', 'message' => 'Please select your relationship with the person you are registering on the site.
+'],
             [['status', 'created_at', 'updated_at', 'Age', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID'], 'integer'],
             [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus'], 'string'],
-            [['DOB', 'Time_of_Birth', 'cnb', 'iSubCommunity_ID', 'vAreaName', 'iGotraID'], 'safe'],
+            [['Time_of_Birth', 'cnb', 'iSubCommunity_ID', 'vAreaName', 'iGotraID'], 'safe'],
             [['c'], 'checkDobYear'],
-            [['noc', 'nob', 'nos', 'weight'], 'integer', 'integerOnly' => true, 'min' => 0],
+            [['noc', 'nob', 'nos', 'NosM', 'NobM', 'weight'], 'integer', 'integerOnly' => true, 'min' => 0],
             [['auth_key'], 'string', 'max' => 32],
             [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['Registration_Number', 'Birth_Place'], 'string', 'max' => 250],
@@ -245,9 +251,18 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             ['Mobile', 'isNumbersOnly'],
             ['First_Name', 'match', 'pattern' => '/^[a-zA-Z]+$/', 'message' => 'Please enter valid first name'],
             ['Last_Name', 'match', 'pattern' => '/^[a-zA-Z]+$/', 'message' => 'Please enter valid last name'],
-            [['First_Name', 'Last_Name'], 'string', 'max' => 100],
+            /*['First_Name', 'string', 'max' => 5,'message' => 'Max 22
+characters are allowed.'],*/
+
+            #[['First_Name'], 'string','max' => 5,'message' => 'Please enter valid last name'],
+            [['First_Name', 'Last_Name'], 'string', 'max' => 22, 'tooLong' => 'Max 22
+characters are allowed.'
+            ],
+            [['vAreaName', 'vAreaNameCA', 'vNativePlaceCA'], 'string', 'max' => 50, 'tooLong' => 'Max 50
+characters are allowed.'
+            ],
             [['county_code'], 'string', 'max' => 5],
-            [['First_Name', 'Last_Name'], 'string', 'max' => 100],
+            //[['First_Name', 'Last_Name'], 'string', 'max' => 100],
             [['email_pin', 'phone_pin'], 'string', 'max' => 4, 'min' => 4],
             // [['username'], 'unique'],
             [['email'], 'unique'],
@@ -255,13 +270,14 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             // [['captcha'],'required'],
             // [['captcha'],'captcha'],
             [['email'], 'email', 'message' => "Please enter valid email address."],
-            [['password_hash', 'repeat_password'], 'string', 'length' => [6, 255]],
-            [['repassword', 'repeat_password'], 'string', 'length' => [6, 255]],
+            [['password_hash'], 'string', 'length' => [6, 255]],
+            [['repassword'], 'string', 'length' => [6, 255]],
             [['tYourSelf'], 'string', 'max' => '2000'],
             [['tYourSelf'], 'required', 'on' => self::SCENARIO_EDIT_MY_INFO],
             [['repeat_password'], 'compare', 'compareAttribute' => 'password_hash', 'message' => "Password and Retype Password is not matching. Please try again."],
             [['repassword'], 'compare', 'compareAttribute' => 'password_hash', 'message' => "Password and Retype Password is not matching. Please try again."],
             [['password_reset_token'], 'unique'],
+            [['DOB'], 'date', 'format' => 'php:Y-m-d'],
             #[['phone_pin'], 'compare', 'compareAttribute' => 'pin_phone_vaerification', 'message' => "Phone PIN don't match"],
         ];
     }
@@ -276,7 +292,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             self::SCENARIO_REGISTER3 => ['iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet'],
             self::SCENARIO_EDIT_LIFESTYLE => ['iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet', 'weight'],
 
-            self::SCENARIO_REGISTER4 => ['completed_step', 'iFatherStatusID', 'iFatherWorkingAsID', 'iMotherStatusID', 'iMotherWorkingAsID', 'nob', 'nos', 'eSameAddress', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'vAreaNameCA', 'iCityCAId', 'vNativePlaceCA', 'vParentsResiding', 'vFamilyAffluenceLevel', 'vFamilyType', 'vFamilyProperty', 'vDetailRelative'],
+            self::SCENARIO_REGISTER4 => ['completed_step', 'iFatherStatusID', 'iFatherWorkingAsID', 'iMotherStatusID', 'iMotherWorkingAsID', 'nob', 'NobM', 'NosM', 'nos', 'eSameAddress', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'vAreaNameCA', 'iCityCAId', 'vNativePlaceCA', 'vParentsResiding', 'vFamilyAffluenceLevel', 'vFamilyType', 'vFamilyProperty', 'vDetailRelative'],
             self::SCENARIO_REGISTER5 => ['tYourSelf', 'vDisability', 'eStatusInOwnWord'],
             self::SCENARIO_REGISTER6 => ['propic', 'pin_email_vaerification', 'pin_phone_vaerification'],
             self::SCENARIO_REGISTER7 => ['email_pin', 'pin_email_vaerification', 'eEmailVerifiedStatus'],
@@ -407,7 +423,9 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             'iMotherStatusID' => 'Mother Status',
             'iMotherWorkingAsID' => 'Mother Working As',
             'nob' => 'Number Of Brothers',
+            'NobM' => 'Number Of Merried Brothers',
             'nos' => 'Number Of Sisters',
+            'NosM' => 'Number Of Merried Sisters',
             'eSameAddress' => 'Same Address',
             'iCountryCAId' => 'Country',
             'iStateCAId' => 'State',

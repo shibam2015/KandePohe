@@ -122,7 +122,7 @@ use yii\helpers\ArrayHelper;
                   </div>
                 </div>
 
-                <div class="box">
+                  <!-- <div class="box">
                   <div class="small-col">
                     <div class="required1"><span class="text-danger">*</span></div>
                   </div>
@@ -134,21 +134,95 @@ use yii\helpers\ArrayHelper;
                   <div class="small-col tp ">
                     <a href="#" data-toggle="tooltip" data-placement="right" title="Mention Your No of Brothers"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21','height' => 21,'alt' => 'help']); ?></a>
                   </div>
+                </div>-->
+                  <div class="box">
+                      <div class="small-col">
+                          <div class="required1"><span class="text-danger">*</span></div>
+                      </div>
+                      <div class="mid-col"><!--error-field-->
+                          <div class="form-cont">
+                              <?= $form->field($model, 'nob', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">No of Brothers</span> </label></span>'])->input('number', ['class' => 'input__field input__field--akira form-control', 'min' => '0',
+                                      'onchange' => '
+                            var nob = $(this).val();
+                            if(nob == 0){
+                            $("#nobmDiv").hide();
+                              $("#NobM").val("0");
+                            }
+                            else {
+                              $("#nobmDiv").show();
+                            }
+                            '
+                                  ]
+                              )->label(false)->error(false); ?>
+                          </div>
+                      </div>
+                      <div class="small-col tp ">
+                          <a href="#" data-toggle="tooltip" data-placement="right"
+                             title="Mention Your no Of Brother"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
+                      </div>
                 </div>
+                  <?php
 
-                <div class="box">
+                  if ($model->nob == '0') {
+                      $style = "display:none";
+                  } else {
+                      $style = "display:block";
+                  }
+                  ?>
+                  <div class="box NobM" id="nobmDiv" style="<?= $style ?>">
+                      <div class="small-col">
+                          <div class="required1"><!--<span class="text-danger">*</span>--></div>
+                      </div>
+                      <div class="mid-col">
+                          <div class="form-cont">
+                              <?= $form->field($model, 'NobM', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Number Of Brothers Married</span> </label></span>{error}'])->input('number', ['id' => 'NobM', 'class' => 'input__field input__field--akira form-control', 'min' => '0', 'max' => '$nob'])->error(false) ?>
+                          </div>
+                      </div>
+                      <div class="small-col tp ">
+                          <a href="#" data-toggle="tooltip" data-placement="right"
+                             title="Mention Your Number Of Brother Married"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
+                      </div>
+                  </div>
+
+
+                  <div class="box">
                   <div class="small-col">
                     <div class="required1"><span class="text-danger">*</span></div>
                   </div>
                   <div class="mid-col">
                     <div class="form-cont">
-                      <?= $form->field($model, 'nos', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">No of Sisters</span> </label></span>'])->input('number',['class'=>'input__field input__field--akira form-control'])?>
+                        <?= $form->field($model, 'nos', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">No of Sisters</span> </label></span>'])->input('number', ['class' => 'input__field input__field--akira form-control', 'min' => '0', 'onchange' => '
+                            var nos = $(this).val();
+                            if(nos == 0){
+                            $("#nosmDiv").hide();
+                              $("#NosM").val("0");
+                            }
+                            else {
+                              $("#nosmDiv").show();
+                            }
+                            '
+                        ]);
+                        ?>
                     </div>
                   </div>
                   <div class="small-col tp ">
                     <a href="#" data-toggle="tooltip" data-placement="right" title="Mention Your No of Sisters"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21','height' => 21,'alt' => 'help']); ?></a>
                   </div>
                 </div>
+                  <div class="box NosM" id="nosmDiv" style="<?= $style ?>">
+                      <div class="small-col">
+                          <div class="required1"><!--<span class="text-danger">*</span>--></div>
+                      </div>
+                      <div class="mid-col">
+                          <div class="form-cont">
+                              <?= $form->field($model, 'NosM', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Number Of Sisters Married</span> </label></span>{error}'])->input('number', ['id' => 'NosM', 'class' => 'input__field input__field--akira form-control', 'min' => '0'])->error(false) ?>
+                          </div>
+                      </div>
+                      <div class="small-col tp ">
+                          <a href="#" data-toggle="tooltip" data-placement="right"
+                             title="Mention Your Number Sister Married"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
+                      </div>
+                  </div>
                 <div class="row">
                   <div class="col-sm-10 col-sm-offset-1">
                     <label for="Remember" class="control-label">Your Permanent Address</label>
@@ -449,13 +523,17 @@ use yii\helpers\ArrayHelper;
                     <a href="#" data-toggle="tooltip" data-placement="right" title="Mention Your Property Details"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21','height' => 21,'alt' => 'help']); ?></a>
                   </div>
                 </div>
+                  <div class="col-sm-"><span><label class="control-label">Details about Relatives:</label></span></div>
                 <div class="box">
+
                   <div class="small-col">
-                    <div class="required1"><!--<span class="text-danger">*</span>--></div>
+
                   </div>
                   <div class="mid-col">
                     <div class="form-cont">
-					<span class="input input--akira input--filled input-textarea">
+                        <div class=""></div>
+
+					<span class="input input--akira input--filled input-textarea mrg-tp-10">
                           <textarea class="input__field input__field--akira" cols="50" rows="5" name="User[vDetailRelative]" ><?= ($model->vDetailRelative)?></textarea>
                           <label class="input__label input__label--akira" for="input-22">
                             <span class="input__label-content input__label-content--akira">You can enter your relative surnames etc...</span> </label>
