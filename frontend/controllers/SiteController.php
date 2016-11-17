@@ -214,9 +214,7 @@ class SiteController extends Controller
     public function actionRegister() {
         $model = new User;
         $model->scenario = User::SCENARIO_REGISTER;
-        //if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
             Yii::$app->end();
