@@ -32,7 +32,7 @@ class Mailbox extends \common\models\base\baseMailbox
             [['from_user_id', 'to_user_id', 'MailContent', 'subject', 'dtadded', 'from_reg_no', 'to_reg_no'], 'required'],
             [['from_user_id', 'to_user_id'], 'integer'],
             [['MailContent', 'subject', 'status'], 'string'],
-            [['dtadded'], 'safe'],
+            [['dtadded', 'msg_type'], 'safe'],
             [['from_reg_no', 'to_reg_no'], 'string', 'max' => 15],
         ];
     }
@@ -52,6 +52,7 @@ class Mailbox extends \common\models\base\baseMailbox
             'from_reg_no' => 'From Reg No',
             'to_reg_no' => 'To Reg No',
             'status' => 'Status',
+            'msg_type' => 'Message Type'
         ];
     }
 
@@ -60,7 +61,7 @@ class Mailbox extends \common\models\base\baseMailbox
         return [
             self::SCENARIO_ADD => ['from_user_id', 'to_user_id', 'MailContent', 'subject', 'dtadded', 'from_reg_no', 'to_reg_no'],
             self::SCENARIO_UPDATE => ['from_user_id', 'to_user_id', 'MailContent', 'subject', 'dtadded', 'from_reg_no', 'to_reg_no'],
-            self::SCENARIO_SEND_MESSAGE => ['from_user_id', 'to_user_id', 'MailContent', 'subject', 'dtadded', 'from_reg_no', 'to_reg_no'],
+            self::SCENARIO_SEND_MESSAGE => ['from_user_id', 'to_user_id', 'MailContent', 'subject', 'dtadded', 'from_reg_no', 'to_reg_no', 'msg_type'],
         ];
     }
 

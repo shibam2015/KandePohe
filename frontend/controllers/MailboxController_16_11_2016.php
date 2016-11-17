@@ -3,7 +3,6 @@ namespace frontend\controllers;
 
 use common\models\Mailbox;
 use common\models\UserRequest;
-use common\models\UserRequestOp;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -19,6 +18,7 @@ use common\components\CommonHelper;
 use common\components\MessageHelper;
 use common\components\SmsHelper;
 use frontend\controllers\UserController;
+
 /**
  * Site controller
  */
@@ -102,7 +102,7 @@ class MailboxController extends Controller
         #CommonHelper::pr($MailArray);exit;
         return $this->render('inbox',
             [
-                'Model' => $Model,
+                'model' => $Model,
                 'MailArray' => $MailArray,
                 'MailUnreadCount' => $MailUnreadCount
             ]
@@ -276,25 +276,24 @@ class MailboxController extends Controller
             return $this->goHome();
         }
         $Id = Yii::$app->user->identity->id;
-        $Model = UserRequestOp::getInboxList($Id, 10);
+        $Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->limit(10)->all();
+        $MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
         #CommonHelper::pr($Model);exit;
-        #$Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->limit(10)->all();
-        #$MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
-
         $MailArray = array();
-        /*foreach ($Model as $Key => $Value) {
+        foreach ($Model as $Key => $Value) {
             #CommonHelper::pr($Value->id);exit;
             $LastMail = Mailbox::find()->where(['from_user_id' => $Value->from_user_id, 'to_user_id' => $Id])->orderBy('MailId')->one();
             $MailCount = Mailbox::find()->where(['from_user_id' => $Value->from_user_id, 'to_user_id' => $Id])->count();
             $MailCount += Mailbox::find()->where(['from_user_id' => $Id, 'to_user_id' => $Value->from_user_id])->count();
             $MailArray[$Value->id]['LastMsg'] = str_replace("#NAME#", $Value->fromUserInfo->fullName, $LastMail->MailContent);
             $MailArray[$Value->id]['MsgCount'] = $MailCount;
-        }*/
+        }
+
         return $this->render('all',
             [
-                'Model' => $Model,
+                'model' => $Model,
                 'MailArray' => $MailArray,
-                'MailUnreadCount' => 10//$MailUnreadCount
+                'MailUnreadCount' => $MailUnreadCount
             ]
         );
     }

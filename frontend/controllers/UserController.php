@@ -1703,7 +1703,7 @@ class UserController extends Controller
 
     }
 
-    public function actionMailBoxLog($Id, $ToUserId, $Content)
+    public function actionMailBoxLog($Id, $ToUserId, $Content, $MessageType = 'System')
     {
         $MailBoxModel = new Mailbox();
         $MailBoxModel->scenario = Mailbox::SCENARIO_SEND_MESSAGE;
@@ -1713,6 +1713,7 @@ class UserController extends Controller
         $MailBoxModel->to_reg_no = User::getRegisterNo($ToUserId);
         $MailBoxModel->subject = $Content;
         $MailBoxModel->MailContent = $Content;
+        $MailBoxModel->msg_type = $MessageType;
         $MailBoxModel->dtadded = CommonHelper::getTime();
         if ($MailBoxModel->save()) {
             return 'S';

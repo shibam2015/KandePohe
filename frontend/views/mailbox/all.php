@@ -11,13 +11,18 @@ $ToUserId = $model['ToUserId'];
 $model = $model['model'];*/
 ?>
 <div class="tab-pane fade in active page-wrap-tab" id="all">
-    <?php if (count($model)) {
-        foreach ($model as $Key => $Value) {
+    <?php if (count($Model)) {
+        foreach ($Model as $Key => $Value) {
             ?>
             <ul class="list-group" id="list_all_<?= $Value->fromUserInfo->id ?>">
-                <li class="list-group-item">
+                <li class="list-group-item ">
                     <div class="thread-control">
-                        <p class="text-muted"><?= CommonHelper::DateTime($Value->date_send_request, 26); ?>
+                        <p class="text-muted">
+                            <?php if ($Value->send_request_status_from_to == 'Yes') { ?>
+                                <?= CommonHelper::DateTime($Value->date_send_request_from_to, 26); ?>
+                            <?php } else { ?>
+                                <?= CommonHelper::DateTime($Value->date_send_request_to_from, 26); ?>
+                            <?php } ?>
                             <a href="#" data-toggle="modal"
                                data-target="#del"><i
                                     class="fa fa-trash" aria-hidden="true"></i></a></p>
@@ -31,7 +36,7 @@ $model = $model['model'];*/
                             </div>
                         </div>
                         <div class="box-inbox pull-left">
-                            <?= Html::img(CommonHelper::getPhotos('USER', $Value->fromUserInfo->id, $Value->fromUserInfo->propic, 140), ['width' => '80', 'height' => '80', 'alt' => 'Profile', 'class' => '']); ?>
+                            <?= Html::img(CommonHelper::getPhotos('USER', $Value->fromUserInfo->id, $Value->fromUserInfo->propic, 140), ['width' => '65', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?>
                         </div>
                         <div class="box-inbox3 pull-right">
                             <p class="name">
@@ -67,7 +72,7 @@ $model = $model['model'];*/
                             <p class="mrg-bt-20">
                                 <?= $MailArray[$Value->id]['LastMsg'] ?>
                             </p>
-                            <?php if ($MailArray[$Value->id]['MsgCount'] > 1 || $model->send_request_status == 'Yes') { ?>
+                            <?php if ($MailArray[$Value->id]['MsgCount'] > 1 || $Model->send_request_status == 'Yes') { ?>
                             <button class="btn btn-primary sendmail" data-target="#sendMail"
                                     data-id="<?= $Value->fromUserInfo->id ?>"
                                     data-toggle="modal">Send Mail
