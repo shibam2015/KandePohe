@@ -301,7 +301,7 @@ use yii\helpers\ArrayHelper;
                   </div>
                   <div class="mid-col">
                     <div class="form-cont">
-                      <?= $form->field($model, 'vAreaName', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Area Name</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control', 'placeholder' => 'e.g.
+                        <?= $form->field($model, 'vAreaName', ["template" => '<span class="input input--akira input--filled">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Area Name</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control', 'placeholder' => 'e.g.
 Koregaon Park
 ']) ?>
                     </div>
