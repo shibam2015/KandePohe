@@ -528,9 +528,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                     $ViewerId = $Value->from_user_id;
                                                                 }
                                                             } else {
-                                                                $ViewerId = $Value->id;
+                                                                $ViewerId = $ValueRM->id;
                                                             }
-
                                                             $UserInfoModel = User::getUserInfroamtion($ViewerId);
                                                             ?>
                                                             <p class="s__<?= $UserInfoModel->id ?>">
@@ -1020,6 +1019,8 @@ $(document).on("click",".send_request",function(e){
   loaderStart();
   var formData = new FormData();
   formData.append("ToUserId", $(this).data("id"));
+  formData.append("Name", $("#to_name").text());
+  formData.append("RGNumber", $("#to_rg_number").text());
   formData.append("Action", "SEND_INTEREST");
   sendRequestDashboard("' . Url::to(['user/send-int-dashboard']) . '",".requests","SI",$(this).data("parentid"),formData);
 });
