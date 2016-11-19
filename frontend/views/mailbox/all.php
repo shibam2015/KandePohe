@@ -14,8 +14,13 @@ $model = $model['model'];*/
     <?php if (count($ModelBox) && $Type == 'Inbox') {
 
         foreach ($ModelBox as $Key => $Value) {
+            if ($Value->from_user_id == $Id) {
+                $ModelInfo = $Value->toUserInfo;
+            } else {
+                $ModelInfo = $Value->fromUserInfo;
+            }
             ?>
-            <ul class="list-group" id="list_all_<?= $Value->fromUserInfo->id ?>">
+            <ul class="list-group" id="list_all_<?= $ModelInfo->id ?>">
                 <li class="list-group-item <?= ($OtherInformationArray[$Value->id]['ReadUnreadStatus'] == 'No') ? 'mailread' : ''; ?>">
                     <div class="thread-control">
                         <p class="text-muted">
@@ -24,7 +29,7 @@ $model = $model['model'];*/
                             <?php /*} else { */ ?>
                                 <?/*= CommonHelper::DateTime($Value->date_send_request_to_from, 26); */ ?>
                             --><?php /*} */ ?>
-                            <?= CommonHelper::DateTime($OtherInformationArray[$Value->fromUserInfo->id]['LastMailDate'], 26); ?>
+                            <?= CommonHelper::DateTime($OtherInformationArray[$ModelInfo->id]['LastMailDate'], 26); ?>
                             <a href="#" data-toggle="modal"
                                data-target="#del"><i
                                     class="fa fa-trash" aria-hidden="true"></i></a></p>
@@ -38,35 +43,35 @@ $model = $model['model'];*/
                             </div>
                         </div>
                         <div class="box-inbox pull-left">
-                            <?= Html::img(CommonHelper::getPhotos('USER', $Value->fromUserInfo->id, $Value->fromUserInfo->propic, 140), ['width' => '65', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?>
+                            <?= Html::img(CommonHelper::getPhotos('USER', $ModelInfo->id, $ModelInfo->propic, 140), ['width' => '65', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?>
                         </div>
                         <div class="box-inbox3 pull-right">
                             <p class="name">
-                                <a href="<?= CommonHelper::getUserUrl($Value->fromUserInfo->Registration_Number); ?>">
-                                    <strong><?= $Value->fromUserInfo->fullName; ?></strong>
+                                <a href="<?= CommonHelper::getUserUrl($ModelInfo->Registration_Number); ?>">
+                                    <strong><?= $ModelInfo->fullName; ?></strong>
                                 </a>
                                 (Last online
-                                : <?= CommonHelper::DateTime($Value->fromUserInfo->LastLoginTime, 7); ?>
+                                : <?= CommonHelper::DateTime($ModelInfo->LastLoginTime, 7); ?>
                                 )</p>
                             <ul class="list-inline pull-left">
-                                <li><?= CommonHelper::getAge($Value->fromUserInfo->DOB); ?>
+                                <li><?= CommonHelper::getAge($ModelInfo->DOB); ?>
                                     YRS
-                                    <?= ($Value->fromUserInfo->height->vName != '') ? "," . $Value->fromUserInfo->height->vName : ''; ?></li>
+                                    <?= ($ModelInfo->height->vName != '') ? "," . $ModelInfo->height->vName : ''; ?></li>
                                 <li>
-                                    <strong>Religion:</strong> <?= $Value->fromUserInfo->religionName->vName; ?>
+                                    <strong>Religion:</strong> <?= $ModelInfo->religionName->vName; ?>
                                     , Caste
-                                    : <?= $Value->fromUserInfo->communityName->vName; ?>
+                                    : <?= $ModelInfo->communityName->vName; ?>
                                 </li>
                                 <li>
-                                    <strong>Location:</strong> <?= $Value->fromUserInfo->cityName->vCityName; ?>
-                                    <?= ($Value->fromUserInfo->stateName->vStateName != '') ? "," . $Value->fromUserInfo->stateName->vStateName : ''; ?>
-                                    <?= ($Value->fromUserInfo->countryName->vCountryName != '') ? "," . $Value->fromUserInfo->countryName->vCountryName : ''; ?>
+                                    <strong>Location:</strong> <?= $ModelInfo->cityName->vCityName; ?>
+                                    <?= ($ModelInfo->stateName->vStateName != '') ? "," . $ModelInfo->stateName->vStateName : ''; ?>
+                                    <?= ($ModelInfo->countryName->vCountryName != '') ? "," . $ModelInfo->countryName->vCountryName : ''; ?>
                                 </li>
                                 <li>
-                                    <strong>Education:</strong> <?= $Value->fromUserInfo->educationLevelName->vEducationLevelName; ?>
+                                    <strong>Education:</strong> <?= $ModelInfo->educationLevelName->vEducationLevelName; ?>
                                 </li>
                                 <li>
-                                    <strong>Occupation:</strong> <?= $Value->fromUserInfo->educationFieldName->vEducationFieldName; ?>
+                                    <strong>Occupation:</strong> <?= $ModelInfo->educationFieldName->vEducationFieldName; ?>
                                 </li>
                             </ul>
                             <div class="clearfix"></div>
@@ -76,13 +81,13 @@ $model = $model['model'];*/
                             </p>
                             <?php /*if ($MailArray[$Value->id]['MsgCount'] > 1 || $Model->send_request_status == 'Yes') { */ ?>
                             <button class="btn btn-primary sendmail" data-target="#sendMail"
-                                    data-id="<?/*= $Value->fromUserInfo->id */ ?>"
+                                    data-id="<?/*= $ModelInfo->id */ ?>"
                                     data-toggle="modal">Send Mail
                             </button>
                             --><?php /*} */ ?>
-                            <a href="<?= CommonHelper::getMailBoxUrl($Value->fromUserInfo->Registration_Number, 1) ?>"
+                            <a href="<?= CommonHelper::getMailBoxUrl($ModelInfo->Registration_Number, 1) ?>"
                                class="btn btn-info pull-right">
-                                <?= ($OtherInformationArray[$Value->fromUserInfo->id]['MailTotalCount'] == 1) ? 'View conversation' : '+' . $OtherInformationArray[$Value->fromUserInfo->id]['MailTotalCount'] . ' more conversation'; ?>
+                                <?= ($OtherInformationArray[$ModelInfo->id]['MailTotalCount'] == 1) ? 'View conversation' : '+' . $OtherInformationArray[$ModelInfo->id]['MailTotalCount'] . ' more conversation'; ?>
                             </a>
                         </div>
                         <div class="clearfix"></div>
@@ -94,8 +99,13 @@ $model = $model['model'];*/
         <?php }
     } else if (count($ModelBox) && $Type == 'Sentbox') {
         foreach ($ModelBox as $Key => $Value) {
+            if ($Value->from_user_id == $Id) {
+                $ModelInfo = $Value->toUserInfo;
+            } else {
+                $ModelInfo = $Value->fromUserInfo;
+            }
             ?>
-            <ul class="list-group" id="list_all_<?= $Value->toUserInfo->id ?>">
+            <ul class="list-group" id="list_all_<?= $ModelInfo->id ?>">
                 <li class="list-group-item ">
                     <div class="thread-control">
                         <p class="text-muted">
@@ -117,35 +127,35 @@ $model = $model['model'];*/
                             </div>
                         </div>
                         <div class="box-inbox pull-left">
-                            <?= Html::img(CommonHelper::getPhotos('USER', $Value->toUserInfo->id, $Value->toUserInfo->propic, 140), ['width' => '65', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?>
+                            <?= Html::img(CommonHelper::getPhotos('USER', $ModelInfo->id, $ModelInfo->propic, 140), ['width' => '65', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?>
                         </div>
                         <div class="box-inbox3 pull-right">
                             <p class="name">
-                                <a href="<?= CommonHelper::getUserUrl($Value->toUserInfo->Registration_Number); ?>">
-                                    <strong><?= $Value->toUserInfo->fullName; ?></strong>
+                                <a href="<?= CommonHelper::getUserUrl($ModelInfo->Registration_Number); ?>">
+                                    <strong><?= $ModelInfo->fullName; ?></strong>
                                 </a>
                                 (Last online
-                                : <?= CommonHelper::DateTime($Value->toUserInfo->LastLoginTime, 7); ?>
+                                : <?= CommonHelper::DateTime($ModelInfo->LastLoginTime, 7); ?>
                                 )</p>
                             <ul class="list-inline pull-left">
-                                <li><?= CommonHelper::getAge($Value->toUserInfo->DOB); ?>
+                                <li><?= CommonHelper::getAge($ModelInfo->DOB); ?>
                                     YRS
-                                    <?= ($Value->toUserInfo->height->vName != '') ? "," . $Value->toUserInfo->height->vName : ''; ?></li>
+                                    <?= ($ModelInfo->height->vName != '') ? "," . $ModelInfo->height->vName : ''; ?></li>
                                 <li>
-                                    <strong>Religion:</strong> <?= $Value->toUserInfo->religionName->vName; ?>
+                                    <strong>Religion:</strong> <?= $ModelInfo->religionName->vName; ?>
                                     , Caste
-                                    : <?= $Value->toUserInfo->communityName->vName; ?>
+                                    : <?= $ModelInfo->communityName->vName; ?>
                                 </li>
                                 <li>
-                                    <strong>Location:</strong> <?= $Value->toUserInfo->cityName->vCityName; ?>
-                                    <?= ($Value->toUserInfo->stateName->vStateName != '') ? "," . $Value->toUserInfo->stateName->vStateName : ''; ?>
-                                    <?= ($Value->toUserInfo->countryName->vCountryName != '') ? "," . $Value->toUserInfo->countryName->vCountryName : ''; ?>
+                                    <strong>Location:</strong> <?= $ModelInfo->cityName->vCityName; ?>
+                                    <?= ($ModelInfo->stateName->vStateName != '') ? "," . $ModelInfo->stateName->vStateName : ''; ?>
+                                    <?= ($ModelInfo->countryName->vCountryName != '') ? "," . $ModelInfo->countryName->vCountryName : ''; ?>
                                 </li>
                                 <li>
-                                    <strong>Education:</strong> <?= $Value->toUserInfo->educationLevelName->vEducationLevelName; ?>
+                                    <strong>Education:</strong> <?= $ModelInfo->educationLevelName->vEducationLevelName; ?>
                                 </li>
                                 <li>
-                                    <strong>Occupation:</strong> <?= $Value->toUserInfo->educationFieldName->vEducationFieldName; ?>
+                                    <strong>Occupation:</strong> <?= $ModelInfo->educationFieldName->vEducationFieldName; ?>
                                 </li>
                             </ul>
                             <div class="clearfix"></div>

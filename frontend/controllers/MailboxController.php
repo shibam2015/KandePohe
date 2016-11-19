@@ -258,11 +258,18 @@ class MailboxController extends Controller
         #$MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
         $OtherInformationArray = array();
         foreach ($ModelBox as $Key => $Value) {
+            #CommonHelper::pr($Value);exit;
+            /*if ($Id == $Value->from_user_id) {
+                $ToUserId = $Value->to_user_id;
+            } else {
+                $ToUserId = $Value->from_user_id;
+            }*/
             if ($Id == $Value->from_user_id) {
                 $ToUserId = $Value->to_user_id;
             } else {
                 $ToUserId = $Value->from_user_id;
             }
+            #echo $ToUserId;
             list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
             $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
             $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
@@ -270,6 +277,7 @@ class MailboxController extends Controller
         }
         return $this->render('all',
             [
+                'Id' => $Id,
                 'ModelBox' => $ModelBox,
                 'OtherInformationArray' => $OtherInformationArray,
                 'MailUnreadCount' => 10,//$MailUnreadCount
