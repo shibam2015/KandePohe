@@ -1693,7 +1693,7 @@ class UserController extends Controller
         }
         if ($Temp) {
             if ($Model->save()) {
-                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['sendInterestMessage']);
+                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['sendInterestMessage'], 'SendInterest');
                 $this->actionMailSendRequest($Id, $ToUserId, $MailType);
                 return 'S';
             } else {
@@ -1703,7 +1703,7 @@ class UserController extends Controller
 
     }
 
-    public function actionMailBoxLog($Id, $ToUserId, $Content, $MessageType = 'System')
+    public function actionMailBoxLog($Id, $ToUserId, $Content, $MessageType = 'Custom')
     {
         $MailBoxModel = new Mailbox();
         $MailBoxModel->scenario = Mailbox::SCENARIO_SEND_MESSAGE;
@@ -1758,7 +1758,7 @@ class UserController extends Controller
         }
         if ($Temp) {
             if ($Model->save()) {
-                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['acceptInterestMessage']);
+                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['acceptInterestMessage'], 'AcceptInterest');
                 $this->actionMailSendRequest($Id, $ToUserId, $MailType);
                 return 'S';
             } else {
@@ -1803,7 +1803,7 @@ class UserController extends Controller
         }
         if ($Temp) {
             if ($Model->save()) {
-                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['declineInterestMessage']);
+                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['declineInterestMessage'], 'DeclineInterest');
                 $this->actionMailSendRequest($Id, $ToUserId, $MailType);
                 return 'S';
             } else {
@@ -1853,7 +1853,7 @@ class UserController extends Controller
         }
         if ($Temp) {
             if ($Model->save()) {
-                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['cancelInterestMessage']);
+                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['cancelInterestMessage'], 'CancelInterest');
                 $this->actionMailSendRequest($Id, $ToUserId, $MailType);
                 return 'S';
             } else {

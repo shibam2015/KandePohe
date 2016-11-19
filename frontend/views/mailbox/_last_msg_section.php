@@ -1,68 +1,101 @@
 <?php
 use yii\helpers\Url;
 
+#\common\components\CommonHelper::pr($LastMail);
+#\common\components\CommonHelper::pr($Id);
+#\common\components\CommonHelper::pr($ToUserID);
+#exit;
 ?>
 <div></div>
 <div></div>
-<?= $model->send_request_status ?>
-<?php if ($MailArray[$model->id]['MsgCount'] == 1 || $model->send_request_status == 'Yes') { ?>
-    <p><?= $MailArray[$model->id]['LastMsg'] ?></p>
+
+<?php if ($Id == $LastMail->to_user_id) { ?>
+    <p><strong><?= $MailArray->FullName ?></strong></p>
     <div class="desc-mail">
-        <!--<p><strong><em>Member Message</em></strong></p>
-        <p><em>Hello, we have gone through ur profile, suitable to our daughter. If you are interested pls call us on 9218392199.</em></p>-->
+        <p><strong><em><?= $MailArray->LastMailContent ?></em></strong></p>
+        <!--<p><em><? /*= $LastMail->MailContent*/ ?></em></p>-->
     </div>
     <div class="text-right">
-        <span>Would you like to communicate further</span>
-        <button class="btn btn-info request_response"
-                data-target="#request_response"
-                data-id="<?= $model->fromUserInfo->id ?>" data-name="Yes"
-                data-toggle="modal">Yes
+        <?php if ($LastMail->msg_type == 'SendInterest') {
+            $TextMsg = Yii::$app->params['sendInterestMessageInbox'];
+        } ?>
+        <span><?= $TextMsg ?></span>
+        <?php if ($LastMail->msg_type == 'SendInterest') { ?>
+            <button class="btn btn-info accept_decline request_response1"
+                    role="button" data-target="#accept_decline"
+                    data-toggle="modal"
+                    data-id="<?= $FromUserId->id ?>"
+                    data-name="<?= $FromUserId->fullName ?>"
+                    data-rgnumber="<?= $FromUserId->Registration_Number ?>"
+                    data-type="Accept Interest">Yes
         </button>
-        <button class="btn btn-secondary request_response" data-target="#request_response"
-                data-id="<?= $model->fromUserInfo->id ?>" data-name="No"
-                data-toggle="modal">No
-        </button>
+            <button class="btn btn-secondary accept_decline request_response1"
+                    role="button" data-target="#accept_decline"
+                    data-toggle="modal"
+                    data-id="<?= $FromUserId->id ?>"
+                    data-name="<?= $FromUserId->fullName ?>"
+                    data-rgnumber="<?= $FromUserId->Registration_Number ?>"
+                    data-type="Decline Interest">No
+            </button>
+        <?php } ?>
     </div>
 
-<?php } else { ?>
-    <p><?= $MailConversation[0]->MailContent ?></p>
+<?php } elseif ($Id == $LastMail->from_user_id) { ?>
+    <p><strong><?= $MailArray->FullName ?></strong></p>
     <div class="desc-mail">
-        <!--<p><strong><em>Member Message</em></strong></p>
-        <p><em>Hello, we have gone through ur profile, suitable to our daughter. If you are interested pls call us on 9218392199.</em></p>-->
+        <p><strong><em><?= $MailArray->LastMailContent ?></em></strong></p>
+    </div>
+    <div class="text-right">
+        <?php if ($LastMail->msg_type == 'SendInterest') {
+            $TextMsg = Yii::$app->params['sendInterestMessageInbox'];
+        } ?>
+        <span><?= $TextMsg ?></span>
         <button class="btn btn-primary sendmail" data-target="#sendMail"
-                data-id="<?= $model->fromUserInfo->id ?>"
+                data-id="<?= $LastMail->MailId ?>"
                 data-toggle="modal">Send Mail
         </button>
     </div>
+<?php } else { ?>
+    <p><?= $LastMail->MailContent ?></p>
+    <div class="desc-mail">
+        <!--<p><strong><em>Member Message</em></strong></p>
+        <p><em>Hello, we have gone through ur profile, suitable to our daughter. If you are interested pls call us on 9218392199.</em></p>-->
+        <!--<button class="btn btn-primary sendmail" data-target="#sendMail"
+                data-id="<? /*= $LastMail->MailId */ ?>"
+                data-toggle="modal">Send Mail
+        </button>-->
+    </div>
 <?php } ?>
-<?php if ($MailArray[$model->id]['MsgCount'] == 1 || $model->send_request_status == 'Yes') {
-    $this->registerJs('
-    var formDataRequest = new FormData();
-    $(document).on("click",".request_response",function(e){
-      $("#requestBody").html("");
-      if($(this).data("name")== "Yes"){
-        $("#requestBody").html("' . Yii::$app->params['acceptRequest'] . '");
-        formDataRequest.append("Action", "Accept");
-        }
-      else{
-        $("#requestBody").html("' . Yii::$app->params['declineRequest'] . '");
-        formDataRequest.append("Action", "Decline");
-      }
-    });
-    $(document).on("click",".accept_decline",function(e){  /* Accept-Decline */
-          formDataRequest.append("ToUserId", $(".request_response").data("id"));
-          mailBox("' . Url::to(['mailbox/accept-decline']) . '",".send_message",formDataRequest);
-        });
-  ');
+
+
+<!--if ($LastMail->send_request_status == 'Yes') {-->
+<?php if (0) {
+
 } else {
     $this->registerJs('
      //var formDataRequest = new FormData();
         $(document).on("click",".sendmail",function(e){
           var formData = new FormData();
           formData.append("ToUserId", $(this).data("id"));
-          sendRequest("' . Url::to(['mailbox/inbox-send-message']) . '",".send_message",formData);;
+          //sendRequest("' . Url::to(['mailbox/inbox-send-message']) . '",".send_message",formData);;
         });
   ');
 }
 ?>
-
+<?php
+if ($LastMail->msg_type == 'SendInterest') {
+    $this->registerJs('
+     $(document).on("click",".a_b_d",function(e){
+      Pace.restart();
+      loaderStart();
+      var formData = new FormData();
+      formData.append("ToUserId", $(this).data("id"));
+      formData.append("Name", $(".to_name").text());
+      formData.append("RGNumber", $(".to_rg_number").text());
+      formData.append("Action",  $(this).data("type"));
+      formData.append("uk", $(".to_rg_number").text());
+      sendRequestDashboard("' . Url::to(['user/user-request']) . '",".requests","MAILBOX",$(this).data("parentid"),formData);
+       //sendRequest("' . Url::to(['mailbox/last-msg']) . '","#last_message_section",formData);
+    });
+  ');
+} ?>

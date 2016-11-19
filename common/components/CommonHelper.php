@@ -550,6 +550,10 @@ class CommonHelper {
             case "1"://more-conversation
                 return Yii::$app->homeUrl . $MailBoxUrl . 'more-conversation?uk=' . $RNo;
                 break;
+            case "2":
+                //SentBox
+                return Yii::$app->homeUrl . $MailBoxUrl . 'sentbox';
+                break;
             default :
                 return Yii::$app->homeUrl . $MailBoxUrl;
 

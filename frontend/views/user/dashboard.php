@@ -406,6 +406,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 
                                                             <p class="s__<?= $UserInfoModel->id ?>">
                                                                 <?php
+
                                                                 if (($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'No' && $Value->send_request_status_to_from == 'No') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'No' && $Value->send_request_status_from_to == 'No')) { ?>
                                                                     <a href="javascript:void(0)"
                                                                        class="btn btn-info sendinterestpopup"
@@ -528,8 +529,9 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                     $ViewerId = $Value->from_user_id;
                                                                 }
                                                             } else {
-                                                                $ViewerId = $ValueRM->id;
+                                                                $ViewerId = $Value->id;
                                                             }
+
                                                             $UserInfoModel = User::getUserInfroamtion($ViewerId);
                                                             ?>
                                                             <p class="s__<?= $UserInfoModel->id ?>">
@@ -1019,8 +1021,6 @@ $(document).on("click",".send_request",function(e){
   loaderStart();
   var formData = new FormData();
   formData.append("ToUserId", $(this).data("id"));
-  formData.append("Name", $("#to_name").text());
-  formData.append("RGNumber", $("#to_rg_number").text());
   formData.append("Action", "SEND_INTEREST");
   sendRequestDashboard("' . Url::to(['user/send-int-dashboard']) . '",".requests","SI",$(this).data("parentid"),formData);
 });

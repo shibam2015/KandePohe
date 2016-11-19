@@ -320,7 +320,6 @@ function sendRequest(url, htmlId, dataArr) {
         processData: false,
         success: function (res) {
             var dataObj = JSON.parse(res);
-            console.log(dataObj);
             $(htmlId).html(dataObj.HtmlOutput);
             loaderStop();
             if (dataObj.Notification.MESSAGE != '' && dataObj.Notification.length != 0) {
@@ -342,6 +341,7 @@ function sendRequestDashboard(url, htmlId, type, pid, dataArr) {
         success: function (res) {
             loaderStop();
             var dataObj = JSON.parse(res);
+            //console.log(dataObj);console.log(type);console.log(pid);
             var ToUserId = dataArr.get("ToUserId");
             var UserName = dataArr.get("Name");
             var RGNumber = dataArr.get("RGNumber");
@@ -382,6 +382,11 @@ function sendRequestDashboard(url, htmlId, type, pid, dataArr) {
                         $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info isent" role="button">Rejected<i class="fa fa-close"></i></a>');
                     }
                 }
+            }
+            if (type == 'MAILBOX') {
+                loaderStart();
+                sendRequest("last-msg", "#last_message_section", dataArr);
+                sendRequest("more-coversation-all", "#other_convo", dataArr);
             }
             //notificationPopup(dataObj.STATUS, dataObj.MESSAGE, dataObj.TITLE);
             showNotification(dataObj.STATUS, dataObj.MESSAGE);

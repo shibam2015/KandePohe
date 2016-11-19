@@ -78,6 +78,27 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
 
     }
 
+    public static function getMoreConversationInbox($Id, $ToUserId)
+    {
+        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $ToUserId . " AND user_request_op.to_user_id = " . $Id . " AND user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.to_user_id = " . $ToUserId . " AND user_request_op.from_user_id = " . $Id . " AND user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC ";
+        return Static::findBySql($sql)->one();
+
+    }
+
+    public static function getSendBoxList($id, $Limit)
+    {
+        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $id . " AND user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.to_user_id = " . $id . " AND user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC LIMIT " . $Limit;
+        return Static::findBySql($sql)->all();
+
+    }
+
+    public static function getMoreConversationSentBox($Id, $ToUserId)
+    {
+        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $Id . " AND user_request_op.to_user_id = " . $ToUserId . " AND user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.to_user_id = " . $Id . " AND user_request_op.from_user_id = " . $ToUserId . " AND user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC ";
+        return Static::findBySql($sql)->one();
+
+    }
+
     /**
      * @inheritdoc
      */

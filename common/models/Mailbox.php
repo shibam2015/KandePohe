@@ -23,6 +23,35 @@ class Mailbox extends \common\models\base\baseMailbox
         return 'mailbox';
     }
 
+    public static function getLastMail($Id, $ToUserId)
+    {
+        $LastMessage = Static::find()
+            ->where(['from_user_id' => $ToUserId, 'to_user_id' => $Id])
+            ->orWhere(['from_user_id' => $Id, 'to_user_id' => $ToUserId])
+            ->orderBy(['MailId' => SORT_DESC])->one();
+        return $LastMessage;
+
+    }
+
+    public static function getMailList($Id, $ToUserId)
+    {
+        $LastMessage = Static::find()
+            ->where(['from_user_id' => $ToUserId, 'to_user_id' => $Id])
+            ->orWhere(['from_user_id' => $Id, 'to_user_id' => $ToUserId])
+            ->orderBy(['MailId' => SORT_DESC])->all();
+        return $LastMessage;
+
+    }
+
+    public static function getMailListCount($Id, $ToUserId)
+    {
+        return Static::find()
+            ->where(['from_user_id' => $ToUserId, 'to_user_id' => $Id])
+            ->orWhere(['from_user_id' => $Id, 'to_user_id' => $ToUserId])
+            ->orderBy(['MailId' => SORT_DESC])->count();
+
+    }
+
     /**
      * @inheritdoc
      */

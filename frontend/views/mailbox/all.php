@@ -11,18 +11,20 @@ $ToUserId = $model['ToUserId'];
 $model = $model['model'];*/
 ?>
 <div class="tab-pane fade in active page-wrap-tab" id="all">
-    <?php if (count($Model)) {
-        foreach ($Model as $Key => $Value) {
+    <?php if (count($ModelBox) && $Type == 'Inbox') {
+
+        foreach ($ModelBox as $Key => $Value) {
             ?>
             <ul class="list-group" id="list_all_<?= $Value->fromUserInfo->id ?>">
-                <li class="list-group-item ">
+                <li class="list-group-item <?= ($OtherInformationArray[$Value->id]['ReadUnreadStatus'] == 'No') ? 'mailread' : ''; ?>">
                     <div class="thread-control">
                         <p class="text-muted">
-                            <?php if ($Value->send_request_status_from_to == 'Yes') { ?>
-                                <?= CommonHelper::DateTime($Value->date_send_request_from_to, 26); ?>
-                            <?php } else { ?>
-                                <?= CommonHelper::DateTime($Value->date_send_request_to_from, 26); ?>
-                            <?php } ?>
+                            <?php /*if ($Value->send_request_status_from_to == 'Yes') { */ ?><!--
+                                <?/*= CommonHelper::DateTime($Value->date_send_request_from_to, 26); */ ?>
+                            <?php /*} else { */ ?>
+                                <?/*= CommonHelper::DateTime($Value->date_send_request_to_from, 26); */ ?>
+                            --><?php /*} */ ?>
+                            <?= CommonHelper::DateTime($OtherInformationArray[$Value->fromUserInfo->id]['LastMailDate'], 26); ?>
                             <a href="#" data-toggle="modal"
                                data-target="#del"><i
                                     class="fa fa-trash" aria-hidden="true"></i></a></p>
@@ -69,19 +71,98 @@ $model = $model['model'];*/
                             </ul>
                             <div class="clearfix"></div>
                             <hr>
-                            <p class="mrg-bt-20">
-                                <?= $MailArray[$Value->id]['LastMsg'] ?>
+                            <!--<p class="mrg-bt-20">
+                                <?/*= $MailArray[$Value->id]['LastMsg'] */ ?>
                             </p>
-                            <?php if ($MailArray[$Value->id]['MsgCount'] > 1 || $Model->send_request_status == 'Yes') { ?>
+                            <?php /*if ($MailArray[$Value->id]['MsgCount'] > 1 || $Model->send_request_status == 'Yes') { */ ?>
                             <button class="btn btn-primary sendmail" data-target="#sendMail"
-                                    data-id="<?= $Value->fromUserInfo->id ?>"
+                                    data-id="<?/*= $Value->fromUserInfo->id */ ?>"
                                     data-toggle="modal">Send Mail
                             </button>
-                            <?php } ?>
+                            --><?php /*} */ ?>
                             <a href="<?= CommonHelper::getMailBoxUrl($Value->fromUserInfo->Registration_Number, 1) ?>"
                                class="btn btn-info pull-right">
-                                <?= ($MailArray[$Value->id]['MsgCount'] == 1) ? 'View conversation' : '+' . $MailArray[$Value->id]['MsgCount'] . ' more conversation'; ?>
+                                <?= ($OtherInformationArray[$Value->fromUserInfo->id]['MailTotalCount'] == 1) ? 'View conversation' : '+' . $OtherInformationArray[$Value->fromUserInfo->id]['MailTotalCount'] . ' more conversation'; ?>
                             </a>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div></div>
+                    </div>
+                </li>
+
+            </ul>
+        <?php }
+    } else if (count($ModelBox) && $Type == 'Sentbox') {
+        foreach ($ModelBox as $Key => $Value) {
+            ?>
+            <ul class="list-group" id="list_all_<?= $Value->toUserInfo->id ?>">
+                <li class="list-group-item ">
+                    <div class="thread-control">
+                        <p class="text-muted">
+                            <?php if ($Value->send_request_status_from_to == 'Yes') { ?>
+                                <?= CommonHelper::DateTime($Value->date_send_request_from_to, 26); ?>
+                            <?php } else { ?>
+                                <?= CommonHelper::DateTime($Value->date_send_request_to_from, 26); ?>
+                            <?php } ?>
+                            <a href="#" data-toggle="modal"
+                               data-target="#del"><i
+                                    class="fa fa-trash" aria-hidden="true"></i></a></p>
+                    </div>
+                    <div class="inbox-thread">
+                        <div class="box-inbox pull-left">
+                            <div class="checkbox mrg-tp-0">
+                                <input id="chk" type="checkbox" name="chk"
+                                       value="check1">
+                                <label for="chk" class="control-label"></label>
+                            </div>
+                        </div>
+                        <div class="box-inbox pull-left">
+                            <?= Html::img(CommonHelper::getPhotos('USER', $Value->toUserInfo->id, $Value->toUserInfo->propic, 140), ['width' => '65', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?>
+                        </div>
+                        <div class="box-inbox3 pull-right">
+                            <p class="name">
+                                <a href="<?= CommonHelper::getUserUrl($Value->toUserInfo->Registration_Number); ?>">
+                                    <strong><?= $Value->toUserInfo->fullName; ?></strong>
+                                </a>
+                                (Last online
+                                : <?= CommonHelper::DateTime($Value->toUserInfo->LastLoginTime, 7); ?>
+                                )</p>
+                            <ul class="list-inline pull-left">
+                                <li><?= CommonHelper::getAge($Value->toUserInfo->DOB); ?>
+                                    YRS
+                                    <?= ($Value->toUserInfo->height->vName != '') ? "," . $Value->toUserInfo->height->vName : ''; ?></li>
+                                <li>
+                                    <strong>Religion:</strong> <?= $Value->toUserInfo->religionName->vName; ?>
+                                    , Caste
+                                    : <?= $Value->toUserInfo->communityName->vName; ?>
+                                </li>
+                                <li>
+                                    <strong>Location:</strong> <?= $Value->toUserInfo->cityName->vCityName; ?>
+                                    <?= ($Value->toUserInfo->stateName->vStateName != '') ? "," . $Value->toUserInfo->stateName->vStateName : ''; ?>
+                                    <?= ($Value->toUserInfo->countryName->vCountryName != '') ? "," . $Value->toUserInfo->countryName->vCountryName : ''; ?>
+                                </li>
+                                <li>
+                                    <strong>Education:</strong> <?= $Value->toUserInfo->educationLevelName->vEducationLevelName; ?>
+                                </li>
+                                <li>
+                                    <strong>Occupation:</strong> <?= $Value->toUserInfo->educationFieldName->vEducationFieldName; ?>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                            <hr>
+                            <!--<p class="mrg-bt-20">
+                                <?/*= $MailArray[$Value->id]['LastMsg'] */ ?>
+                            </p>
+                            <?php /*if ($MailArray[$Value->id]['MsgCount'] > 1 || $Model->send_request_status == 'Yes') { */ ?>
+                            <button class="btn btn-primary sendmail" data-target="#sendMail"
+                                    data-id="<?/*= $Value->fromUserInfo->id */ ?>"
+                                    data-toggle="modal">Send Mail
+                            </button>
+                            <?php /*} */ ?>
+                            <a href="<?/*= CommonHelper::getMailBoxUrl($Value->toUserInfo->Registration_Number, 1) */ ?>"
+                               class="btn btn-info pull-right">
+                                <?/*= ($MailArray[$Value->id]['MsgCount'] == 1) ? 'View conversation' : '+' . $MailArray[$Value->id]['MsgCount'] . ' more conversation'; */ ?>
+                            </a>-->
                         </div>
                         <div class="clearfix"></div>
                         <div></div>
