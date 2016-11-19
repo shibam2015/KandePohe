@@ -26,6 +26,6 @@ return [
     'moreConversationErrorMessage' => 'Conversation no longer available,',
     'sendInterestMessageInbox' => 'Would you like to communicate further ?',
     'mailBoxSendInterestSender' => 'You sent #GENDER# interest request.',
-    'mailBoxSendInterestRECEIVER' => '#GENDER# sent you interest request.',
+    'mailBoxSendInterestReceiver' => '#GENDER# sent you interest request.',
 ];
 

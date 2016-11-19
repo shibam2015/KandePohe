@@ -19,6 +19,11 @@ use yii\helpers\Url;
                     <div class="row">
                         <?php require_once __DIR__ . '/_sidebar.php'; ?>
                         <?php if (count($Model) && count($HandleArray) == 0) {
+                            if ($Model->from_user_id == $Id) {
+                                $ModelInfo = $Model->toUserInfo;
+                            } else {
+                                $ModelInfo = $Model->fromUserInfo;
+                            }
                             ?>
                             <div class="col-sm-9 col-md-10">
                             <ul class="list-group">
@@ -38,33 +43,33 @@ use yii\helpers\Url;
                                     <div class="clearfix"></div>
                                     <div class="inbox-thread">
                                         <div class="box-inbox pull-left">
-                                            <?= Html::img(CommonHelper::getPhotos('USER', $Model->fromUserInfo->id, $Model->fromUserInfo->propic, 75), ['width' => '60', 'height' => '60', 'alt' => 'Profile', 'class' => '']); ?>
+                                            <?= Html::img(CommonHelper::getPhotos('USER', $ModelInfo->id, $ModelInfo->propic, 75), ['width' => '60', 'height' => '60', 'alt' => 'Profile', 'class' => '']); ?>
                                         </div>
                                         <div class="box-inbox3 conv pull-right">
                                             <p class="name">
-                                                <a href="<?= CommonHelper::getUserUrl($Model->fromUserInfo->Registration_Number); ?>">
-                                                    <strong><?= $Model->fromUserInfo->fullName; ?></strong>
+                                                <a href="<?= CommonHelper::getUserUrl($ModelInfo->Registration_Number); ?>">
+                                                    <strong><?= $ModelInfo->fullName; ?></strong>
                                                 </a>
                                                 (Last online
-                                                : <?= CommonHelper::DateTime($Model->fromUserInfo->LastLoginTime, 7); ?>
+                                                : <?= CommonHelper::DateTime($ModelInfo->LastLoginTime, 7); ?>
                                                 )</p>
                                             <ul class="list-inline pull-left">
-                                                <li><?= CommonHelper::getAge($Model->fromUserInfo->DOB); ?> YRS
-                                                    <?= ($Model->fromUserInfo->height->vName != '') ? "," . $Model->fromUserInfo->height->vName : ''; ?></li>
+                                                <li><?= CommonHelper::getAge($ModelInfo->DOB); ?> YRS
+                                                    <?= ($ModelInfo->height->vName != '') ? "," . $ModelInfo->height->vName : ''; ?></li>
                                                 <li>
-                                                    <strong>Religion:</strong> <?= $Model->fromUserInfo->religionName->vName; ?>
-                                                    , Caste : <?= $Model->fromUserInfo->communityName->vName; ?>
+                                                    <strong>Religion:</strong> <?= $ModelInfo->religionName->vName; ?>
+                                                    , Caste : <?= $ModelInfo->communityName->vName; ?>
                                                 </li>
                                                 <li>
-                                                    <strong>Location:</strong> <?= $Model->fromUserInfo->cityName->vCityName; ?>
-                                                    <?= ($Model->fromUserInfo->stateName->vStateName != '') ? "," . $Model->fromUserInfo->stateName->vStateName : ''; ?>
-                                                    <?= ($Model->fromUserInfo->countryName->vCountryName != '') ? "," . $Model->fromUserInfo->countryName->vCountryName : ''; ?>
+                                                    <strong>Location:</strong> <?= $ModelInfo->cityName->vCityName; ?>
+                                                    <?= ($ModelInfo->stateName->vStateName != '') ? "," . $ModelInfo->stateName->vStateName : ''; ?>
+                                                    <?= ($ModelInfo->countryName->vCountryName != '') ? "," . $ModelInfo->countryName->vCountryName : ''; ?>
                                                 </li>
                                                 <li>
-                                                    <strong>Education:</strong> <?= $Model->fromUserInfo->educationLevelName->vEducationLevelName; ?>
+                                                    <strong>Education:</strong> <?= $ModelInfo->educationLevelName->vEducationLevelName; ?>
                                                 </li>
                                                 <li>
-                                                    <strong>Occupation:</strong> <?= $Model->fromUserInfo->educationFieldName->vEducationFieldName; ?>
+                                                    <strong>Occupation:</strong> <?= $ModelInfo->educationFieldName->vEducationFieldName; ?>
                                                 </li>
                                             </ul>
                                             <div class="clearfix"></div>
@@ -220,12 +225,12 @@ if (count($Model) && count($HandleArray) == 0) {
 $(document).on("click",".sendmail",function(e){
       var formData = new FormData();
       formData.append("ToUserId", $(this).data("id"));
-      //sendRequest("' . Url::to(['mailbox/inbox-send-message']) . '",".send_message",formData);;
+      sendRequest("' . Url::to(['mailbox/inbox-send-message']) . '",".send_message",formData);;
     });
   ');
     $this->registerJs('
         var formDataRequest = new FormData();
-        formDataRequest.append("uk", "' . $Model->fromUserInfo->Registration_Number . '");
+        formDataRequest.append("uk", "' . $ModelInfo->Registration_Number . '");
         sendRequest("' . Url::to(['mailbox/last-msg']) . '","#last_message_section",formDataRequest);
         sendRequest("' . Url::to(['mailbox/more-coversation-all']) . '","#other_convo",formDataRequest);
     ');

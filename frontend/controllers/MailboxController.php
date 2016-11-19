@@ -166,6 +166,7 @@ class MailboxController extends Controller
         list($Model, $OtherInformationArray, $MailUnreadCount, $HandleArray) = $this->actionMoreConversationCommon($Id, $uk);
         return $this->render('moreconversation',
             [
+                'Id' => $Id,
                 'Model' => $Model,
                 'OtherInformationArray' => $OtherInformationArray,
                 #   'MailUnreadCount' => $OtherInformationArray[];
@@ -185,35 +186,20 @@ class MailboxController extends Controller
         } else {
             $Model = UserRequestOp::getMoreConversationSentBox($Id, $FromUserId->id);
         }
-
         if (count($Model)) {
             $OtherInformationArray = array();
-
             list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $FromUserId->id);
             $OtherInformationArray[0]['MailTotalCount'] = $TotalMailCount;
             $OtherInformationArray[0]['LastMailDate'] = $LastMail->dtadded;
             $OtherInformationArray[0]['ReadUnreadStatus'] = $LastMail->read_status;
-            /*$LastMail = Mailbox::find()->where(['from_user_id' => $Model->from_user_id, 'to_user_id' => $Id])->orderBy('MailId')->one();
-            $MailConversation = Mailbox::find()->where(['from_user_id' => $Model->from_user_id, 'to_user_id' => $Id])
-                ->orWhere(['from_user_id' => $Id, 'to_user_id' => $Model->from_user_id])
-                ->orderBy(['MailId' => SORT_DESC])
-                ->all();
-            $MailArray[$Model->id]['LastMsg'] = str_replace("#NAME#", $Model->fromUserInfo->fullName, $LastMail->MailContent);
-            $MailArray[$Model->id]['MsgCount'] = 10;//$MailCount;*/
-            #CommonHelper::pr($Model);exit;
             return array(
                 $Model,
                 $OtherInformationArray
-                /*$MailArray,
-                $MailConversation,
-                $MailUnreadCount,*/
             );
         } else {
-            $MailUnreadCount = 10;
             $HandleArray = array('NoDataFound');
             return array(
                 $Model,
-                #$MailUnreadCount,
                 $HandleArray,
             );
         }
@@ -258,18 +244,11 @@ class MailboxController extends Controller
         #$MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
         $OtherInformationArray = array();
         foreach ($ModelBox as $Key => $Value) {
-            #CommonHelper::pr($Value);exit;
-            /*if ($Id == $Value->from_user_id) {
-                $ToUserId = $Value->to_user_id;
-            } else {
-                $ToUserId = $Value->from_user_id;
-            }*/
             if ($Id == $Value->from_user_id) {
                 $ToUserId = $Value->to_user_id;
             } else {
                 $ToUserId = $Value->from_user_id;
             }
-            #echo $ToUserId;
             list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
             $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
             $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
@@ -367,7 +346,7 @@ class MailboxController extends Controller
                 $MailListArray[$KeyMail]['MailContent'] = str_replace('#NAME#', $FromUserId->FullName, $ValueMail->MailContent);
                 $MailListArray[$KeyMail]['Date'] = $ValueMail->dtadded;
                 if ($ValueMail->msg_type == 'SendInterest') {
-                    $mailBoxSendInterestRECEIVER = str_replace('#GENDER#', (Yii::$app->user->identity->Gender == 'MALE') ? 'She' : 'He', Yii::$app->params['mailBoxSendInterestRECEIVER']);
+                    $mailBoxSendInterestRECEIVER = str_replace('#GENDER#', (Yii::$app->user->identity->Gender == 'MALE') ? 'She' : 'He', Yii::$app->params['mailBoxSendInterestReceiver']);
                     $MailListArray[$KeyMail]['Subject'] = $mailBoxSendInterestRECEIVER;
                     $MailListArray[$KeyMail]['MailContent'] = str_replace('#NAME#', $FromUserId->FullName, $ValueMail->MailContent);
                 } else {
@@ -379,7 +358,9 @@ class MailboxController extends Controller
                 $MailListArray[$KeyMail]['MailContent'] = str_replace('#NAME#  has', 'You have been', $ValueMail->MailContent);
                 $MailListArray[$KeyMail]['Date'] = $ValueMail->dtadded;
                 if ($ValueMail->msg_type == 'SendInterest') {
-                    $MailListArray[$KeyMail]['Subject'] = $ValueMail->msg_type;
+                    $mailBoxSendInterestSender = str_replace('#GENDER#', (Yii::$app->user->identity->Gender == 'MALE') ? 'her' : 'him', Yii::$app->params['mailBoxSendInterestSender']);
+                    $MailListArray[$KeyMail]['Subject'] = $mailBoxSendInterestSender;
+                    $MailListArray[$KeyMail]['MailContent'] = $mailBoxSendInterestSender;
                 } else if ($ValueMail->msg_type == 'AcceptInterest') {
                     $MailListArray[$KeyMail]['Subject'] = str_replace('#NAME#  has', 'You have been', $ValueMail->MailContent);
                 } else {
