@@ -27,5 +27,6 @@ return [
     'sendInterestMessageInbox' => 'Would you like to communicate further ?',
     'mailBoxSendInterestSender' => 'You sent #GENDER# interest request.',
     'mailBoxSendInterestReceiver' => '#GENDER# sent you interest request.',
+    'smsGetwayError' => 'Something wrong with SMS sending Process. Please contact to site admin.'
 ];
 

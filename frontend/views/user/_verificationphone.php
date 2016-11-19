@@ -58,7 +58,13 @@ use yii\widgets\Pjax;
             if ($model->ePhoneVerifiedStatus == 'No') {
                 if ($flag) {
                     if ($popup) {
-                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PIN_RESEND_FOR_PHONE');
+                        if ($temp['Status'] == 'S') {
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PIN_RESEND_FOR_PHONE');
+                        } else {
+                            $STATUS = $temp['Status'];
+                            $MESSAGE = $temp['Message'];
+                            $TITLE = 'Information';
+                        }
                     } else {
                         list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_RESEND_FOR_PHONE');
                     }
@@ -87,7 +93,6 @@ use yii\widgets\Pjax;
                 if ($popup) {
                     list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHONE_VERIFICATION');
                     $this->registerJs(' 
-                    
                        notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
                        setTimeout(function(){ 
                            $(".modal").modal("hide");                                      

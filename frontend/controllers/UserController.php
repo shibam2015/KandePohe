@@ -1349,6 +1349,7 @@ class UserController extends Controller
         $model->scenario = User::SCENARIO_RESEND_PIN_FOR_PHONE;
         $show = false;
         $popup = false;
+        $temp = array();
         if (isset($_REQUEST['type']) && $_REQUEST['type'] == 10) { # For Resend PIN
             $flag = true;
             $PIN_P = CommonHelper::generateNumericUniqueToken(4);
@@ -1356,13 +1357,15 @@ class UserController extends Controller
             $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
             $model->ePhoneVerifiedStatus = 'No';
             if ($model->save()) {
-                $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                list($Status, $Message) = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                $temp['Status'] = $Status;
+                $temp['Message'] = $Message;
                 $popup = true;
             } else {
                 $popup = false;
             }
         }
-        return $this->actionRenderAjax($model, '_verificationphone', $show, $popup, $flag);
+        return $this->actionRenderAjax($model, '_verificationphone', $show, $popup, $flag, $temp);
     }
 
     public function actionEmailVerification()   # For Email Verification : VS
