@@ -49,12 +49,16 @@ use yii\helpers\ArrayHelper;
                 }
             ]
         ); ?>-->
+        <?php // CommonHelper::pr($model);exit;?>
+        <?=
 
-        <?= $form->field($model, 'InterestID')->dropDownList(
+        $form->field($model, 'InterestID', 'explode(" ",$model->InterestID)')->dropDownList(
             ArrayHelper::map(CommonHelper::getInterests(), 'ID', 'Name'),
             [
                 'class' => 'js-example-basic-multiple',
                 'multiple' => 'multiple',
+                //'selected'=>true,
+                'prompt' => '$model->InterestID'
             ]
         );
         ?>

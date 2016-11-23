@@ -522,6 +522,8 @@ Policy]</a> and <a href="#" title="[T&C]">[T&C]</a></label>';
                         'enableAjaxValidation' => true,
                         //'enableClientValidation' => true,
                         'validateOnSubmit' => true,
+                        // 'validateOnBlur' => false,
+                        'validateOnChange' => false,
                     ]);
                     ?>
                     <div class="row">
@@ -531,9 +533,13 @@ Policy]</a> and <a href="#" title="[T&C]">[T&C]</a></label>';
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">
                             <div
-                                class="form-cont"> <?= $form->field($login, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control']) ?> </div>
+                                class="form-cont"> <?= $form->field($login, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control', 'title' => 'Email ID is mandatory to register at Kande- Pohe.com. We never share your email address
+with 3rd parties.
+']) ?> </div>
                             <div class="form-cont">
-                                <?= $form->field($login, 'password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Password</span> </label></span>{error}'])->input('password', ['class' => 'input__field input__field--akira form-control']) ?>
+                                <?= $form->field($login, 'password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Password</span> </label></span>{error}<div class="loginerror"></div> '])->input('password', ['class' => 'input__field input__field--akira form-control', 'title' => 'Please enter a
+password with minimum 6 characters
+']) ?>
                             </div>
                             <div class="checkbox">
                                 <input id="Remember" type="checkbox" name="Remember" value="yes">
@@ -699,6 +705,10 @@ FREE" data-toggle="modal"
     .btn-primary.disabled, .btn-primary.disabled.active, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled].active, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary.active, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
         background-color: #ee1845;
         border-color: #ee1845;
+    }
+
+    .loginerror {
+        top: 0;
     }
 </style>
 <?php if (Yii::$app->user->isGuest) { ?>

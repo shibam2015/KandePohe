@@ -291,7 +291,10 @@ border-bottom:#ccc 1px solid;
 .tp {
 	display:none
 }
-.required{ display:none;}
+
+	.required {
+		/* display:none;*/
+	}
 form .mrg-lt-30{ margin-left:0 !important}
 .form-cont .radio label, .form-cont .checkbox label{ width:100%}
 .box{ margin:5px 0;}

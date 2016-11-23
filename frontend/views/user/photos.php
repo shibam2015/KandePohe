@@ -16,12 +16,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
         <div class="main-section">
             <div class="col-md-9 col-sm-12">
                 <div class="right-column" style="margin-left: 73px;"> <span class="welcome-note">
-            <p><strong>Congratulations! Your profile has been created.</strong</p>
-
-               <p><strong> Now upload photos and get more visitors to your profile.</strong>
-               </p>
-
-              </span>
+                         </span>
                 </div>
             </div>
 
