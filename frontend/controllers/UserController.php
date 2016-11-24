@@ -878,26 +878,32 @@ class UserController extends Controller
 
             if (Yii::$app->request->post('save')) {
                 #CommonHelper::pr(Yii::$app->request->post());exit;
-                $InterestArray = Yii::$app->request->post('User')['InterestID'];
-                $model->InterestID = (is_array($InterestArray)) ? "," . implode(",", $InterestArray) : '';
+                // $InterestArray = Yii::$app->request->post('User')['InterestID'];
+                $model->InterestID = implode(",", $_POST['User']['InterestID']);
+                //$model->InterestID = (is_array($InterestArray)) ? "," . implode(",", $InterestArray) : '';
+                // $ReadsArray = Yii::$app->request->post('User')['FavioriteReadID'];
+                $model->FavioriteReadID = implode(",", $_POST['User']['FavioriteReadID']);
+                //  $model->FavioriteReadID = (is_array($ReadsArray)) ? "," . implode(",", $ReadsArray) : '';
 
-                $ReadsArray = Yii::$app->request->post('User')['FavioriteReadID'];
-                $model->FavioriteReadID = (is_array($ReadsArray)) ? "," . implode(",", $ReadsArray) : '';
+                // $MusicArray = Yii::$app->request->post('User')['FaviouriteMusicID'];
+                $model->FaviouriteMusicID = implode(",", $_POST['User']['FaviouriteMusicID']);
+                //$model->FaviouriteMusicID = (is_array($MusicArray)) ? "," . implode(",", $MusicArray) : '';
 
-                $MusicArray = Yii::$app->request->post('User')['FaviouriteMusicID'];
-                $model->FaviouriteMusicID = (is_array($MusicArray)) ? "," . implode(",", $MusicArray) : '';
+                //$CousinesArray = Yii::$app->request->post('User')['FavouriteCousinesID'];
+                $model->FavouriteCousinesID = implode(",", $_POST['User']['FavouriteCousinesID']);
+                //$model->FavouriteCousinesID = (is_array($CousinesArray)) ? "," . implode(",", $CousinesArray) : '';
 
-                $CousinesArray = Yii::$app->request->post('User')['FavouriteCousinesID'];
-                $model->FavouriteCousinesID = (is_array($CousinesArray)) ? "," . implode(",", $CousinesArray) : '';
+                //$SportsArray = Yii::$app->request->post('User')['SportsFittnessID'];
+                $model->SportsFittnessID = implode(",", $_POST['User']['SportsFittnessID']);
+                // $model->SportsFittnessID = (is_array($SportsArray)) ? "," . implode(",", $SportsArray) : '';
 
-                $SportsArray = Yii::$app->request->post('User')['SportsFittnessID'];
-                $model->SportsFittnessID = (is_array($SportsArray)) ? "," . implode(",", $SportsArray) : '';
+                //$DressArray = Yii::$app->request->post('User')['PreferredDressID'];
+                $model->PreferredDressID = implode(",", $_POST['User']['PreferredDressID']);
+                //$model->PreferredDressID = (is_array($DressArray)) ? "," . implode(",", $DressArray) : '';
 
-                $DressArray = Yii::$app->request->post('User')['PreferredDressID'];
-                $model->PreferredDressID = (is_array($DressArray)) ? "," . implode(",", $DressArray) : '';
-
-                $MovieArray = Yii::$app->request->post('User')['PreferredMovieID'];
-                $model->PreferredMovieID = (is_array($MovieArray)) ? "," . implode(",", $MovieArray) : '';
+                // $MovieArray = Yii::$app->request->post('User')['PreferredMovieID'];
+                $model->PreferredMovieID = implode(",", $_POST['User']['PreferredMovieID']);
+                // $model->PreferredMovieID = (is_array($MovieArray)) ? "," . implode(",", $MovieArray) : '';
 
                 if ($model->validate()) {
                     $model->save();

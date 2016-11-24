@@ -46,7 +46,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect email or password.');
+                $this->addError($attribute, 'The email ID or password you entered is not correct. Try again!');
             }
             else if (!$user || !$user->checkEmailVerify($this->email)) {
                 $this->addError($attribute, 'Your account either block or panding, PLease contact to administrator for login');

@@ -77,7 +77,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public $Community;
     public $SubCommunity;
-    #public $height;
+    public $height;
 
     // public $captcha;
     /**
@@ -228,6 +228,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             ['First_Name', 'required', 'message' => 'Please enter first name.'],
             ['Last_Name', 'required', 'message' => 'Please enter last name.'],
             ['Mobile', 'required', 'message' => 'Please enter mobile number.'],
+            ['phone_pin', 'required', 'message' => 'Please mention Mobile PIN.'],
+            ['email_pin', 'required', 'message' => 'Please mention Email PIN.'],
             ['Gender', 'required', 'message' => 'Please Select Your Gender'],
             ['DOB', 'required', 'message' => 'Please Select Your Date Of Birth'],
             ['county_code', 'required', 'message' => 'Please Select your desired Country Code.'],

@@ -1,4 +1,4 @@
-<?php
+sea<?php
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -42,9 +42,7 @@ $M1 = array();
                                     <button class="btn gray-filter dropdown-toggle" id="filter-toggle" type="button"
                                             aria-haspopup="true" aria-expanded="true"> Filters <i
                                             class="fa indicator fa-angle-down"></i></button>
-                                    <div class="open-div"
-                                        >
-
+                                    <div class="open-div">
                                         <?php
                                         $form = ActiveForm::begin([
                                             'id' => 'formsearch',
@@ -217,6 +215,16 @@ $M1 = array();
                                                             <?= Html::submitButton('search', ['class' => 'btn btn-primary', 'name' => 'button']) ?>
                                                             <?= Html::resetButton('Reset', ['class' => 'btn btn-primary']) ?>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="mid-col">
+                                                        <div class="form-cont bs">
+                                                            <?= html::a('<i class="ti-power-off m-r-5"></i> Advanced Search</a>', ['search/advanced-search'], ['data-method' => 'post']) ?>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
