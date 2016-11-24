@@ -77,7 +77,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public $Community;
     public $SubCommunity;
-    public $height;
+    #public $height;
 
     // public $captcha;
     /**
@@ -221,7 +221,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public function rules()
     {
         return [
-            [['auth_key', 'created_at', 'updated_at', 'Registration_Number', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vDiet', 'iFatherStatusID', 'iMotherStatusID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'iCityCAId', 'vParentsResiding', 'mother_tongue', 'weight', 'phone_pin', 'email_pin'], 'required'],
+            [['auth_key', 'created_at', 'updated_at', 'Registration_Number', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', '
+            ', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vDiet', 'iFatherStatusID', 'iMotherStatusID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'iCityCAId', 'vParentsResiding', 'mother_tongue', 'weight', 'phone_pin', 'email_pin'], 'required'],
 
             ['email', 'required', 'message' => 'Please enter your email address.'],
             ['First_Name', 'required', 'message' => 'Please enter first name.'],

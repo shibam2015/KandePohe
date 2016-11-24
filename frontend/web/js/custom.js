@@ -503,3 +503,25 @@ function pswd(x) {
         return '';
     }
 }
+
+function lightBox() {
+    if ($(".gallery a").length) {
+        var gallery = $('.gallery a').simpleLightbox();
+    }
+}
+lightBox();
+
+function commonRequest(url, htmlId, dataArr) {
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: dataArr,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (res) {
+            var dataObj = JSON.parse(res);
+            $(htmlId).html(dataObj.HtmlOutput);
+        }
+    });
+}

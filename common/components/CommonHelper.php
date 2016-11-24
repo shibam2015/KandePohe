@@ -6,6 +6,7 @@ namespace common\components;
 
 use common\models\otherlibraries\Compressimage;
 use common\models\otherlibraries\Getextension;
+use common\models\otherlibraries\ImageResize;
 use common\models\User;
 use Yii;
 class CommonHelper {
@@ -82,7 +83,6 @@ class CommonHelper {
         $USER_PHOTO_FOLDER = $PATH;
         if (!is_dir($USER_PHOTO_FOLDER)) {
             mkdir($USER_PHOTO_FOLDER, 0777);
-
         }
         $DEL_IMG = $SIZE_ARRAY;//array('',100,200,50);
         #pr($DEL_IMG);exit;
@@ -173,12 +173,6 @@ class CommonHelper {
 
     }
 
-    public static function getUserResizeRatio()
-    {//For User photo resize
-        $USER_SIZE_ARRAY = array('', 30, 75, 140, 200, 350, 500, 900);
-        return $USER_SIZE_ARRAY;
-    }
-
     public static function getPhotos($TYPE = 'USER', $ID, $PHOTO, $SIZE = '', $DefaultStatus = '') // GET USER PHOTO (Profile)
     {
         /*echo "<br>".$TYPE;
@@ -187,31 +181,34 @@ class CommonHelper {
         echo "<br>".$SIZE;exit;*/
         if ($TYPE == 'USER') {
             $U_PATH = $ID . "/";
-
-            if ($SIZE != '') {
+            /*if ($SIZE != '') {
                 $PHOTO_WITH_SIZE = $SIZE . "_" . $PHOTO;
             } else {
                 $PHOTO_WITH_SIZE = $PHOTO;
-            }
-
+            }*/
+            $PHOTO_WITH_SIZE = $PHOTO;
             $MAIN_URL = CommonHelper::getUserUploadFolder(2);
             $PATH = CommonHelper::getUserUploadFolder(1) . $U_PATH;
             $URL = $MAIN_URL . $U_PATH;
             if ($DefaultStatus == '')
-            $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $MAIN_URL . 'no-user-img.jpg';
+                $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $MAIN_URL . 'no-user-img.jpg';
             else
                 $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $MAIN_URL . $SIZE . '_no-user-img.jpg';
             return $PHOTO_USER;
         }
     }
 
-    public static function getUserUploadFolder($TYPE = 1)
+    public static function getUserUploadFolder($TYPE = 1, $UserId = '')
     {//For path AND URL
         // User : echo CommonHelper::getUserUploadFolder(2);
         if ($TYPE == 1) {
             $USER_UPLOAD = Yii::getAlias('@frontend') . '/web/uploads/users/';
         } else if ($TYPE == 2) {
             $USER_UPLOAD = CommonHelper::getHost() . '/uploads/users/';
+        } else if ($TYPE == 3) { //Profile Photo Path
+            $USER_UPLOAD = Yii::getAlias('@frontend') . '/web/uploads/users/' . $UserId . '/profile/';
+        } else if ($TYPE == 4) { //Profile Photo URL
+            $USER_UPLOAD = CommonHelper::getHost() . '/uploads/users/' . $UserId . '/profile/';
         } else {
             $USER_UPLOAD = '/uploads/users/';
         }
@@ -223,6 +220,7 @@ class CommonHelper {
         $HostName = "http://" . $_SERVER["HTTP_HOST"] . Yii::getAlias('@web');
         return $HostName;
     }
+
     public static function getUserDefaultPhoto()
     {
         $MAIN_URL = CommonHelper::getHost() . CommonHelper::getUserUploadFolder(3);
@@ -600,6 +598,102 @@ class CommonHelper {
         return ($str != '-') ? ', ' . $str : '';
     }
 
+    public static function photoUploads($iUserId, $FILES, $PATH, $URL, $SIZE_ARRAY, $OLD_PHOTO = '')
+    {
+        #CommonHelper::pr($FILES);exit;
+
+        $config["generate_image_file"] = true;
+        $config["generate_thumbnails"] = true;
+        $config["image_max_size"] = 1000; //Maximum image size (height and width)
+        #$config["thumbnail_size"]  			= 150; //Thumbnails will be cropped to 200x200 pixels
+        $config["thumbnail_prefix"] = Yii::$app->params['thumbnailPrefix']; //Normal thumb Prefix
+        $config["destination_folder"] = $PATH;//'uploads/'; //upload directory ends with / (slash)
+        $config["thumbnail_destination_folder"] = $PATH;//'uploads/'; //upload directory ends with / (slash)
+        $config["upload_url"] = $URL;//"http://localhost/Demo/photo/ajax-image-upload-master/uploads/";
+        $config["quality"] = 100; //jpeg quality
+        $config["random_file_name"] = true; //randomize each file name
+        $config["file_data"] = $FILES;
+        $config["thumbnail_size"] = CommonHelper::getUserResizeRatio();
+        $ImageResize = new ImageResize($config);
+        $UploadFolderPath = $PATH;
+        if (!is_dir($UploadFolderPath)) {
+            mkdir($UploadFolderPath, 0777);
+        }
+        try {
+            $ImageResponse = $ImageResize->resize(); //initiate image resize
+            $STATUS = 1;
+            /*echo '<h3>Thumbnails</h3>';
+            //output thumbnails
+            foreach($ImageResponse["thumbs"] as $response){
+                echo '<img src="'.$config["upload_url"].$response.'" class="thumbnails" title="'.$response.'" />';
+            }
+            echo '<h3>Images</h3>';
+            //output images
+            foreach($ImageResponse["images"] as $response){
+                echo '<img src="'.$config["upload_url"].$response.'" class="images" title="'.$response.'" />';
+            }*/
+        } catch (Exception $e) {
+            $STATUS = 1;
+            $MESSAGE = $e->getMessage();
+        }
+        return array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, "PhotoArray" => $ImageResponse);
+
+    }
+
+    public static function getUserResizeRatio()
+    {//For User photo resize
+        #$USER_SIZE_ARRAY = array('', 30, 75, 140, 200, 350, 500, 900);
+        $USER_SIZE_ARRAY = array(30, 63, 75, 110, 120, 155, 180, 200, 260);
+        return $USER_SIZE_ARRAY;
+    }
+
+    public static function replaceNotificationMessage($Message, $ParamArray)
+    {
+        $MesssageArray = array('#TSF#', '#TFA#');
+        foreach ($MesssageArray as $Key => $Value) {
+            $ArrayKey = str_replace('#', '', $Value);
+            if (array_key_exists($ArrayKey, $ParamArray)) {
+                $NotificationMsg = str_replace($Value, $ParamArray[$ArrayKey], $Message);
+            }
+        }
+        return $NotificationMsg;
+    }
+
+    /****
+     * For Get Photo Height
+     ***/
+    public static function getPhotoHeight($image)
+    {
+        $sizes = getimagesize($image);
+        $height = $sizes[1];
+        return $height;
+    }
+
+    /****
+     * For Get Photo Width
+     ***/
+    public static function getPhotoWidth($image)
+    {
+        $sizes = getimagesize($image);
+        $width = $sizes[0];
+        return $width;
+    }
+
+    /****
+     * For Resize Profile Photo
+     ***/
+    public static function resizeImage($image, $width, $height, $scale)
+    {
+        $newImageWidth = ceil($width * $scale);
+        $newImageHeight = ceil($height * $scale);
+        $newImage = imagecreatetruecolor($newImageWidth, $newImageHeight);
+        $source = imagecreatefromjpeg($image);
+        imagecopyresampled($newImage, $source, 0, 0, 0, 0, $newImageWidth, $newImageHeight, $width, $height);
+        imagejpeg($newImage, $image, 90);
+        chmod($image, 0777);
+        return $image;
+    }
+
     public function getReligion()
     {
         $religion = \common\models\Religion::find()->all();
@@ -782,7 +876,8 @@ class CommonHelper {
         return \common\models\PreferredMovies::find()->all();
     }
 
-    public function getMasterGotra() {
+    public function getMasterGotra()
+    {
         return \common\models\MasterGotra::find()->all();
     }
 
