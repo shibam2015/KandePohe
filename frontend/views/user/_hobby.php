@@ -30,7 +30,7 @@ use yii\helpers\ArrayHelper;
 
         <!-- <?= $form->field($model, 'iReligion_ID')->dropDownList(
             ArrayHelper::map(CommonHelper::getReligion(), 'iReligion_ID', 'vName'),
-            ['class' => 'js-example-basic-multiple',
+            ['class' => 'js-example-basic-multiple tag-select-box',
                 'multiple' => 'multiple'
             ]
 
@@ -52,21 +52,20 @@ use yii\helpers\ArrayHelper;
         <?php // CommonHelper::pr($model);exit;?>
         <?=
 
-        $form->field($model, 'InterestID', 'explode(" ",$model->InterestID)')->dropDownList(
+        $form->field($model, 'InterestID')->dropDownList(
             ArrayHelper::map(CommonHelper::getInterests(), 'ID', 'Name'),
-            [
-                'class' => 'js-example-basic-multiple',
-                'multiple' => 'multiple',
-                //'selected'=>true,
-                'prompt' => '$model->InterestID'
-            ]
+            ['class' => 'js-example-basic-multiple tag-select-box',
+                'multiple' => 'multiple',]
+
+
         );
         ?>
+        <input value="activate selectator" id="activate_selectator4" type="hidden">
 
         <?= $form->field($model, 'FavioriteReadID')->DropDownList(
             ArrayHelper::map(CommonHelper::getFavouriteReads(), 'ID', 'Name'),
             [
-                'class' => 'js-example-basic-multiple',
+                'class' => 'js-example-basic-multiple tag-select-box',
                 'multiple' => 'multiple',
             ]
         );
@@ -110,7 +109,6 @@ use yii\helpers\ArrayHelper;
             </div>
         </div>
         <?php ActiveForm::end();
-
         $this->registerCssFile(Yii::$app->request->baseUrl . '/plugings/select2/select2.min.css');
         $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/select2/select2.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
         $this->registerJs('
