@@ -4,6 +4,7 @@ use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use common\components\MailHelper;
 use yii\helpers\ArrayHelper;
+
 $HOME_URL = Yii::getAlias('@web') . "/";
 $HOME_URL_SITE = Yii::getAlias('@web') . "/site/";
 $HOME_PAGE_URL = Yii::getAlias('@web') . "/";
@@ -15,7 +16,13 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
     <main>
         <div class="main-section">
             <div class="col-md-9 col-sm-12">
-                <div class="right-column" style="margin-left: 73px;">
+                <div class="right-column" style="margin-left: 73px;"> <span class="welcome-note">
+            <p><strong>Congratulations! Your profile has been created.</strong</p>
+
+               <p><strong> Now upload photos and get more visitors to your profile.</strong>
+               </p>
+
+              </span>
                 </div>
             </div>
 
@@ -23,6 +30,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
+
                             <div class="white-section">
                                 <h3>Add Profile Photo
                                     <?php if ($model_user->eEmailVerifiedStatus != 'Yes') { ?>
@@ -30,6 +38,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                 class="link_small">( I will do this later )</span></a>
                                     <?php } ?>
                                 </h3>
+
                                 <div class="two-column">
                                     <div class="row">
                                         <div class="col-sm-6 bord">
@@ -41,9 +50,9 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-5">
-                                                    <div class="image gallery-popup">
+                                                    <div class="image">
                                                         <div class="placeholder text-center">
-                                                            <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->params['thumbnailPrefix'] . "200_" . Yii::$app->user->identity->propic, 200), ['class' => 'img-responsive mainpropic ', 'width' => '200', 'alt' => 'Profile Photo']); ?>
+                                                            <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->user->identity->propic, 200), ['class' => 'img-responsive mainpropic', 'width' => '200', 'alt' => 'Profile Photo']); ?>
                                                             <div class="add-photo" data-toggle="modal"
                                                                  data-target="#photo"><span class="file-input btn-file"> <i
                                                                         class="fa fa-plus-circle"></i> Add a photo </span>
@@ -56,23 +65,24 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                 <div class="col-sm-7">
                                                     <div class="upload">
                                                         <div>
-                                                            <form action="" method="post" enctype="multipart/form-data"
-                                                                  id="upload_form">
-                                                                <div id="file_browse_wrapper">Upload photo from computer
-                                                                </div>
-                                                                <input name="__files[]" id="file_browse" type="file"
-                                                                       multiple class="fileupload"/>
-                                                            </form>
-                                                        </div>
-                                                        <div class="bar-devider"><span>OR</span></div>
-                                                        <a class="btn btn-block btn-social btn-facebook"
-                                                           data-toggle="modal"
-                                                           data-target="#profilecrop"> <i class="fa fa-facebook"></i>
-                                                            Sign in with Facebook </a>
+                                                            <?php
+                                                            $form = ActiveForm::begin([
+                                                                'id' => 'form-photo',
+                                                            ]);
+                                                            ?>
+                                                            <!--<form method="POST" name="propicform" id="propicform" enctype="multipart/form-data">-->
+                                                            <input type="hidden" name="id" id="id"
+                                                                   value="<?= base64_encode(Yii::$app->user->identity->id) ?>">
 
+                                                            <div id="file_browse_wrapper">Upload photo from computer
+                                                                <input type="file" id="file_browse" name="file_browse[]"
+                                                                       class="fileupload" multiple>
+                                                            </div>
+                                                            <!--</form>-->
+                                                            <?php ActiveForm::end(); ?>
+                                                        </div>
                                                         <!--<div class="bar-devider"> <span>OR</span> </div>-->
                                                         <!--<a class="btn btn-block btn-social btn-facebook"> <i class="fa fa-facebook"></i> Sign in with Facebook </a>-->
-
                                                         <div>
                                                         </div>
                                                     </div>
@@ -85,18 +95,14 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                         foreach ($model as $K => $V) {
                                                             ?>
                                                             <?php $SELECTED = '';
-                                                            if ($V->Is_Profile_Photo == 'YES') {
+                                                            if ($V['Is_Profile_Photo'] == 'YES') {
                                                                 $SELECTED = "selected";
                                                             } ?>
-                                                            <div class="col-md-3 col-sm-3 col-xs-6"
-                                                                 id="img_<?= $V['iPhoto_ID'] ?>">
-                                                                <div class="gallery">
-                                                                    <a class="<?= $SELECTED ?>"
-                                                                       href="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>">
-                                                                        <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->params['thumbnailPrefix'] . "110_" . $V['File_Name'], 110), ['class' => 'img-responsive ' . $SELECTED, 'width' => '140', 'alt' => 'Photo' . $K]); ?>
-                                                                    </a>
-                                                                </div>
-
+                                                            <div class="col-md-3 col-sm-3 col-xs-6">
+                                                                <a <?php if ($V['Is_Profile_Photo'] == 'YES'){ ?>class="selected"<?php } ?>
+                                                                   href="#">
+                                                                    <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive ' . $SELECTED, 'width' => '140', 'alt' => 'Photo' . $K]); ?>
+                                                                </a>
                                                                 <a href="javascript:void(0)"
                                                                    class="pull-left profile_set"
                                                                    data-id="<?= $V['iPhoto_ID'] ?>"
@@ -109,27 +115,25 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                    data-target="#photodelete" data-toggle="modal">
                                                                     <i aria-hidden="true" class="fa fa-trash-o"></i>
                                                                 </a>
-                                                                <a href="javascript:void(0)"
-                                                                   class="pull-right set_profile_photo"
-                                                                   data-id="<?= $V['iPhoto_ID'] ?>"
-                                                                   data-target="#profilecrop" data-toggle="modal"
-                                                                   data-item="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
-                                                                   data-name="<?= $V['File_Name'] ?>">
-                                                                    <i aria-hidden="true" class="fa fa-heart-o"></i>
-                                                                </a>
                                                             </div>
                                                         <?php }
                                                     } else {
                                                         ?>
-                                                        <div
-                                                            class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12 text-center mrg-tp-20">
-                                                            <div class="notice kp_info"><p>No Photos Available.</p>
-                                                            </div>
+                                                        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                                            <p> No Photos Available</p>
                                                         </div>
                                                     <?php } ?>
+                                                    <!-- <div class="col-md-3 col-sm-3 col-xs-6">
+                                                        <a class="selected" href="#">
+                                                            <?= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); ?>
+                                                        </a>
+                                                        <a href="#" class="pull-left"> Profile pic </a>
+                                                        <a href="#" class="pull-right"> <i aria-hidden="true"
+                                                                                           class="fa fa-trash-o"></i>
+                                                        </a>
+                                                    </div> -->
                                                 </div>
                                             </div>
-                                            <?php if (count($model) > 0) { ?>
                                             <div class="privacy-promo">
                                                 <div class="row">
                                                     <div class="col-sm-12">
@@ -157,8 +161,6 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                     </div>
                                                 </div>
                                             </div>
-                                            <?php } ?>
-
                                         </div>
                                         <div class="col-sm-1"></div>
                                         <div class="col-sm-5">
@@ -178,18 +180,21 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                 </a>
                                             <?php } ?>
                                             <h4 class="mrg-left-mins">Profile Photo Guidelines</h4>
+
                                             <div class="faces-pic">
                                                 <div class="row no-gutter mrg-tp-30">
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face1.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Close up">
+
                                                         <div class="title right">Close up</div>
                                                     </div>
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face2.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Full view">
+
                                                         <div class="title right">Full View</div>
                                                     </div>
                                                 </div>
@@ -198,29 +203,34 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face2.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Side Face">
+
                                                         <div class="title wrong">Side Face</div>
                                                     </div>
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face4.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Blur Image">
+
                                                         <div class="title wrong">Blur Image</div>
                                                     </div>
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face5.jpg"
                                                             width="113" height="97" class="img-responsive" alt="Group ">
+
                                                         <div class="title wrong">Group</div>
                                                     </div>
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face6.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Watermark">
+
                                                         <div class="title wrong">Watermark</div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="privacy-promo">
                                                 <h4 class="mrg-tp-30">Other ways to upload photo</h4>
+
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="promo">
@@ -232,6 +242,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 
                                                             <figcaption>
                                                                 <h4>Upload from Mobile</h4>
+
                                                                 <p>Click <a href="#">Click here</a> to upload photo from
                                                                     your mobile. We will send you upload instructions
                                                                     via SMS</p>
@@ -246,6 +257,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                             </figure>
                                                             <figcaption>
                                                                 <h4>Send via Email</h4>
+
                                                                 <p>Email your photo to <a href="mailto:photos@kp.com">photos@kp.com</a>
                                                                     along with your profile id (KP245454567)</p>
                                                             </figcaption>
@@ -264,15 +276,243 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
         </div>
     </main>
 </div>
+<!-- Modal Photo -->
+<div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61"
+                                              alt="logo"></p>
+
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
+                        class="sr-only">Close</span></button>
+                <h2 class="text-center">My Photo Gallery</h2>
+
+                <div class="profile-control photo-btn">
+                    <button class="btn " type="button"> Upload Video or Photo</button>
+                    <button class="btn active" type="button"> Choose from Photos</button>
+                    <button class="btn" type="button"> Albums</button>
+                </div>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body photo-gallery">
+                <div class="choose-photo">
+                    <div class="row" id="profile_list_popup">
+                        <?php
+                        if (count($model) > 0) {
+                            foreach ($model as $K => $V) {
+                                ?>
+                                <div class="col-md-3 col-sm-3 col-xs-6">
+                                    <?php $SELECTED = '';
+                                    if ($V['Is_Profile_Photo'] == 'YES') {
+                                        $SELECTED = "selected";
+                                    } ?>
+                                    <a href="javascript:void(0)" class="pull-left profile_set"
+                                       data-id="<?= $V['iPhoto_ID'] ?>"
+                                       data-target="#photodelete" data-toggle="modal">
+                                        <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive ' . $SELECTED, 'height' => '140', 'alt' => 'Photo' . $K]); ?>
+                                    </a>
+                                </div>
+                                <!-- <div class="col-md-3 col-sm-3 col-xs-6">
+                                    <a href="javascript:void(0)" class="pull-left profile_set" data-id="<?= $V['iPhoto_ID'] ?>"
+                                       data-target="#photodelete" data-toggle="modal">
+                                        Profile pic
+                                    </a>
+                                </div>
+-->
+                            <?php }
+                        } else {
+                            ?>
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                <p> No Photos Available</p>
+                            </div>
+                        <?php } ?>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Modal Footer -->
+
+    </div>
+
+</div>
+<div class="modal fade" id="photodelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <p class="text-center mrg-bt-10">
+            <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
+
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
+                        class="sr-only">Close</span></button>
+                <h2 class="text-center" id="model_heading"></h2>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body photo-gallery">
+                <div class="choose-photo">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <a href="javascript:void(0)"
+                               class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right yes"> Yes </a>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 ">
+                            <a href="javascript:void(0)" class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left"
+                               data-dismiss="modal"> No </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Footer -->
+    </div>
+</div>
+
+<script language="javascript" type="text/javascript">
+    var userid = "<?=base64_encode(Yii::$app->user->identity->id)?>";
+</script>
 
 
 <?php
-require_once __DIR__ . '/_photosection.php';
+$this->registerJs('
+  $(function () {
+        $(".fileupload").change(function () {
+        Pace.restart();
+        var tflag= 1;
+            if (typeof (FileReader) != "undefined") {
+                //var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg)$/;
+                $($(this)[0].files).each(function () {
+                    var file = $(this);
+                    if (regex.test(file[0].name.toLowerCase())) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            //$(".mainpropic").attr("src", e.target.result);
+                        }
+                        reader.readAsDataURL(file[0]);
+                    } else {
+                        tflag= 0;
+                        notificationPopup(\'ERROR\', file[0].name + " is not a valid image file.", \'Error\');
+                        return false;
+                    }
+                });
+                var file_len = $(this)[0].files.length;
+                if (file_len != 0 && tflag == 1) {
+                    
+                    var file = $(this);
+                    var formObj = $("#propicform");
+                    var formData = new FormData();
+                     //formData.append( "fileInput", $("#file_browse")[0].files[0]);
+                    
+                    if (file_len != 0) {
+                        $.each($(this)[0].files, function (i, file) {
+                            formData.append("fileInput_" + i, file);
+                        });
+                    }
+                    var uid = userid;
+                    loaderStart();
+                    $.ajax({
+                        url: "photoupload?id=" + uid + "&FILE=" + file,
+                        type: "POST",
+                        data: formData,
+                        mimeType: "multipart/form-data",
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (data, textStatus, jqXHR) {
+                            var DataObject = JSON.parse(data);
+                            loaderStop();
+                            if (DataObject.STATUS == "S") {
+                                $("#photo_list").html(DataObject.OUTPUT);
+                                $("#profile_list_popup").html(DataObject.OUTPUT_ONE);
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                            } else {
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                            }
+                            profile_photo();                    
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                        notificationPopup(\'ERROR\', \'Something went wrong. Please try again !\', \'Error\');
+                        }
+                    });
+                }
+            } else {
+                alert("This browser does not support HTML5 FileReader.");
+            }
+        });
+        var P_ID = "";
+        var P_TYPE = "";
+        function profile_photo(){
+        $(".profile_delete").click(function(){
+                P_ID = $(this).data("id");
+                P_TYPE = "PHOTO_DELETE";
+                $("#model_heading").html("Are you sure want to delete this photo ?");
+        })
+        $(".profile_set").click(function(){
+                P_ID = $(this).data("id");
+                P_TYPE = "PHOTO_PROFILE_SET";
+                $("#model_heading").html("Are you sure want to set this photo as profile photo?");
+        })
+        }
+        profile_photo();
+        
+        $(".yes").click(function(){
+        Pace.restart();
+        loaderStart();
+        var formDataPhoto = new FormData();
+        formDataPhoto.append( "P_ID", P_ID);
+        formDataPhoto.append( "P_TYPE", P_TYPE);
+                $.ajax({
+                        url: "photo-operation",
+                        type: "POST",
+                        data: formDataPhoto,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (data, textStatus, jqXHR) {
+                            var DataObject = JSON.parse(data);
+                            if (DataObject.STATUS == "S") {
+                                loaderStop();
+                                if(P_TYPE=="PHOTO_PROFILE_SET"){
+                                    $("#photo_list").html(DataObject.OUTPUT);
+                                    $("#profile_list_popup").html(DataObject.OUTPUT_ONE);
+                                    $(".mainpropic").attr("src", DataObject.PROFILE_PHOTO);
+                                    $(".profile_photo_one").attr("src", DataObject.PROFILE_PHOTO_ONE);
+                                    notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                }else{
+                                    $("#photo_list").html(DataObject.OUTPUT);
+                                    $("#profile_list_popup").html(DataObject.OUTPUT_ONE);
+                                    if(DataObject.PROFILE_PHOTO != ""){
+                                        $(".mainpropic").attr("src", DataObject.PROFILE_PHOTO);
+                                    }
+                                    if(DataObject.PROFILE_PHOTO_ONE != ""){
+                                        $(".profile_photo_one").attr("src", DataObject.PROFILE_PHOTO_ONE);
+                                    }
+                                    notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                }
+                            } else {
+                                loaderStop();
+                                   notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                            }
+                                                                
+                        profile_photo();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                        loaderStop();
+                        notificationPopup(\'ERROR\', \'Something went wrong. Please try again !\', \'Error\');
+                        }
+                    });
+        })
+        
+    });
+    
+   ');
 ?>
-<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/simplelightbox/simple-lightbox.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
-<link href='<?= Yii::$app->request->baseUrl ?>/plugings/simplelightbox/simplelightbox.min.css' rel='stylesheet'
-      type='text/css'>
 
-<link href='<?= Yii::$app->request->baseUrl ?>/plugings/cropping/imgareaselect.css' rel='stylesheet' type='text/css'>
-<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.imgareaselect.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
-<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.form.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>

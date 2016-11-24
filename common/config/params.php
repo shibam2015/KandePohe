@@ -27,6 +27,21 @@ return [
     'sendInterestMessageInbox' => 'Would you like to communicate further ?',
     'mailBoxSendInterestSender' => 'You sent #GENDER# interest request.',
     'mailBoxSendInterestReceiver' => '#GENDER# sent you interest request.',
-    'smsGetwayError' => 'Something wrong with SMS sending Process. Please contact to site admin.'
+    'smsGetwayError' => 'Something wrong with SMS sending Process. Please contact to site admin.',
+    'photoMissingError' => 'Photo Name has issue. Please try again !',
+    'photoCopyError' => 'Photo saving has issue. Please try again !',
+
+
+    'total_files_allowed' => 10,
+    'max_file_size' => 2048576,
+    'maxWidth' => 500,
+    'thumbnailPrefix' => 'thumb_',
+    'profilePrefix' => '_profile',
+    'allowed_file_types' => "'image/png', 'image/gif', 'image/jpeg', 'image/pjpeg'",
+    'browserFileSupportError' => 'Your browser does not support new File API! Please upgrade.',
+    'fileUploadSize' => 'You are trying to upload photos more than limit.',
+    'fileUnsoupportedType' => 'You are trying to upload unsupported file type.',
+    'profilePhotoFolder' => 'profile',
+
 ];
 
