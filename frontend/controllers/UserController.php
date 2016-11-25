@@ -81,6 +81,11 @@ class UserController extends Controller
     public $MESSAGE;
     public $TITLE;
 
+    public function beforeAction($action) {
+        //$this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+
     public static function profileCompleteness($x)
     {
         #$id = Yii::$app->user->identity->id;
