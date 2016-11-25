@@ -527,7 +527,7 @@ Policy]</a> and <a href="#" title="[T&C]">[T&C]</a></label>';
                     ?>
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1 text-left">
-                            <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?></div>
+                            <?= $form->errorSummary($model,['header' => '']); ?></div>
                     </div>
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">

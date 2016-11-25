@@ -778,6 +778,24 @@ input[type=checkbox]:checked + label.no-content:before {
 .error-summary ul {
 	text-align: left;
 }
+#login-form .error-summary{
+	background: inherit;
+	padding-left: 0px;
+}
+#login-form .error-summary ul{
+	padding-left: 0px;
+}
+#login-form .error-summary li {
+	background: url(../images/error.png) 0 0 no-repeat;
+	color: #ae1414;
+	width: 100%;
+	font-size: 13px;
+	font-weight: 600;
+	padding: 0px 10px 3px 25px;
+	display: inline-block;
+	margin-bottom: 3px;
+	text-align: left;
+}
 
 .success {
 	background: url(../images/error.png) 0 0 no-repeat;
