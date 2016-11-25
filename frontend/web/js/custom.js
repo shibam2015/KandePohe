@@ -7,7 +7,9 @@ $( document ).ready(function() {
         if( $('select').length ){
             $('select').niceSelect();
         }
-
+        if ($('select.tag-select-box').length) {
+            $('select.tag-select-box').niceSelect('destroy');
+        }
     })();
 
 

@@ -217,7 +217,7 @@ $M1 = array();
                                                         </div>
                                                     </div>
                                                 </div>
-                                                </div>
+                                            </div>
                                             <div class="col-md-6">
                                                 <div class="box">
                                                     <div class="mid-col">

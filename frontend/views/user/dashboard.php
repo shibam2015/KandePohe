@@ -25,7 +25,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
     <div class="main-section">
         <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
         <link rel="stylesheet" type="text/css" href="<?= $HOME_URL ?>css/radical-progress.css"/>
-        <main>
+        <main data-ng-app="myApp" data-ng-controller="dashboardController">
             <section>
                 <div class="container">
                     <div class="row">
@@ -708,8 +708,72 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                     </div>
                 </div>
             </section>
-        </main>
+            <div class="modal fade" id="privacyoption" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <p class="text-center mrg-bt-10">
+                <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
 
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span> <span
+                            class="sr-only">Close</span></button>
+                    <h2 class="text-center" id="model_heading">Set Privacy Options For Your Profile</h2>
+                </div>
+                <!-- Modal Body -->
+
+
+                <div class="modal-body photo-gallery">
+                    <div class="choose-photo">
+                        <?php $form = ActiveForm::begin(); ?>
+                        <div class="form-cont">
+                            <div class="radio dl" id="IVA">
+                                <dt></dt>
+                                <dd data-ng-init="user_privacy_option=<?=$model->user_privacy_option?>">
+
+                                    <?= $form->field($model, 'user_privacy_option')->RadioList(
+                                        ['0' => 'Visible to all', '1' => 'Visible only to members whom I had contacted / responded'],
+                                        [
+                                            'item' => function ($index, $label, $name, $checked, $value) {
+                                                $checked = ($checked) ? 'checked' : '';
+                                                $return = '<input data-ng-model="user_privacy_option" type="radio" id="user_privacy_option_' . $value . '" name="' . $name . '" value="' . $value . '" ngValue="' . $checked . '">';
+                                                $return .= '<label for="user_privacy_option_' . $value . '">' . ucwords($label) . '</label>';
+                                                return $return;
+                                            }
+
+                                        ]
+                                    )->label(false); ?>
+
+
+                                </dd>
+
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <a href="javascript:void(0)"
+                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right " id="privacysetting" data-ng-click="changePrivacy()">
+                                    Save </a>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 ">
+                                <a href="javascript:void(0)"
+                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left"
+                                   data-dismiss="modal"> Back </a>
+                            </div>
+                        </div>
+                        <?php ActiveForm::end(); ?>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Footer -->
+        </div>
+    </div>x`
+        </main>
     </div>
     <div class="chatwe">
         <div class="panel panel-primary">
@@ -849,71 +913,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
             <!-- Modal Footer -->
         </div>
     </div>
-    <div class="modal fade" id="privacyoption" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <p class="text-center mrg-bt-10">
-                <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
-
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span> <span
-                            class="sr-only">Close</span></button>
-                    <h2 class="text-center" id="model_heading">Set Privacy Options For Your Profile</h2>
-                </div>
-                <!-- Modal Body -->
-
-
-                <div class="modal-body photo-gallery">
-                    <div class="choose-photo">
-                        <?php $form = ActiveForm::begin(); ?>
-                        <div class="form-cont">
-                            <div class="radio dl" id="IVA">
-                                <dt></dt>
-                                <dd>
-
-                                    <?= $form->field($model, 'user_privacy_option')->RadioList(
-                                        ['0' => 'Visible to all', '1' => 'Visible only to members whom I had contacted / responded'],
-                                        [
-                                            'item' => function ($index, $label, $name, $checked, $value) {
-                                                $checked = ($checked) ? 'checked' : '';
-                                                $return = '<input type="radio" id="user_privacy_option_' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                                                $return .= '<label for="user_privacy_option_' . $value . '">' . ucwords($label) . '</label>';
-                                                return $return;
-                                            }
-
-                                        ]
-                                    )->label(false); ?>
-
-
-                                </dd>
-
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-6">
-                                <a href="javascript:void(0)"
-                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right " id="privacysetting">
-                                    Save </a>
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-6 ">
-                                <a href="javascript:void(0)"
-                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left"
-                                   data-dismiss="modal"> Back </a>
-                            </div>
-                        </div>
-                        <?php ActiveForm::end(); ?>
-
-
-                    </div>
-                </div>
-            </div>
-            <!-- Modal Footer -->
-        </div>
-    </div>
+    
     <div class="modal fade" id="sendInterest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -970,43 +970,15 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
         </div>
     </div>
 
-<?php
-$this->registerJs("
-          $('body').on('click','#privacysetting',function ()
-                    {
-                        var formData = new FormData();
-                        var ps_value = $('input[name=\"User[user_privacy_option]\"]:checked').val();
-                        formData.append( 'ACTION', 'Save');
-                        formData.append( 'user_privacy_option', ps_value);
-                        $.ajax({
-                            type: 'POST',
-                            url: 'saveprivacy-setting',
-                            data: formData,
-                            contentType: false,
-                            cache: false,
-                            processData: false,
-                            beforeSend: function(){ },
-                            success: function(data)
-                            {
-                              var DataObject = JSON.parse(data);
-                              $('#photo_list').html(DataObject.OUTPUT);
-                              notificationPopup(DataObject.STATUS, DataObject.MESSAGE);
-                            },
-                            error:function(){
-                            notificationPopup('ERROR', 'Something went wrong. Please try again !');
-  }
-                            });
-            });
-     ");
-?>
+<?=$this->registerJsFile(Yii::$app->request->baseUrl.'/js/angular/controller/dashboardController.js', ['depends' => [\frontend\assets\AppAsset::className()],'position' => \yii\web\View::POS_END]);?>
+
 
     <script type="text/javascript">
         var PRO_COMP = <?=$PROFILE_COMPLETENESS?>;
         //var AcceptInterest = "<?=Yii::$app->params['acceptInterest']?>";
         //var DeclineInterest = "<?=Yii::$app->params['declineInterest']?>";
     </script>
-    <script src="<?= $HOME_URL ?>js/jquery.js" type="text/javascript"></script>
-    <script src="<?= $HOME_URL ?>js/selectFx.js"></script>
+    
 
 <?php
 if ($type != '' && base64_decode($type) == "VERIFICATION-DONE") {

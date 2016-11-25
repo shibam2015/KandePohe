@@ -520,26 +520,21 @@ Policy]</a> and <a href="#" title="[T&C]">[T&C]</a></label>';
                         'id' => 'login-form',
                         'action' => 'site/login',
                         'enableAjaxValidation' => true,
+                        'validateOnChange' => false,
                         //'enableClientValidation' => true,
                         'validateOnSubmit' => true,
-                        // 'validateOnBlur' => false,
-                        'validateOnChange' => false,
                     ]);
                     ?>
                     <div class="row">
-                        <div class="col-sm-10 col-sm-offset-1 text-center">
-                            <!--<span class="error">Email or Password used is incorrect</span> --></div>
+                        <div class="col-sm-10 col-sm-offset-1 text-left">
+                            <?= $form->errorSummary($model,['header' => '']); ?></div>
                     </div>
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">
                             <div
-                                class="form-cont"> <?= $form->field($login, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control', 'title' => 'Email ID is mandatory to register at Kande- Pohe.com. We never share your email address
-with 3rd parties.
-']) ?> </div>
+                                class="form-cont"> <?= $form->field($login, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control', 'title' => 'Email ID is mandatory to register at Kande- Pohe.com. We never share your email address with 3rd parties.'])->error('false'); ?> </div>
                             <div class="form-cont">
-                                <?= $form->field($login, 'password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Password</span> </label></span>{error}<div class="loginerror"></div> '])->input('password', ['class' => 'input__field input__field--akira form-control', 'title' => 'Please enter a
-password with minimum 6 characters
-']) ?>
+                                <?= $form->field($login, 'password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Password</span> </label></span>{error}<div class="loginerror"></div> '])->input('password', ['class' => 'input__field input__field--akira form-control', 'title' => 'Please enter a password with minimum 6 characters'])->error(false); ?>
                             </div>
                             <div class="checkbox">
                                 <input id="Remember" type="checkbox" name="Remember" value="yes">

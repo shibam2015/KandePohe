@@ -81,6 +81,11 @@ class UserController extends Controller
     public $MESSAGE;
     public $TITLE;
 
+    public function beforeAction($action) {
+        //$this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+
     public static function profileCompleteness($x)
     {
         #$id = Yii::$app->user->identity->id;
@@ -879,10 +884,10 @@ class UserController extends Controller
             if (Yii::$app->request->post('save')) {
                 #CommonHelper::pr(Yii::$app->request->post());exit;
                 // $InterestArray = Yii::$app->request->post('User')['InterestID'];
-                $model->InterestID = implode(",", $_POST['User']['InterestID']);
+                $model->InterestID = "," . implode(",", $_POST['User']['InterestID']);
                 //$model->InterestID = (is_array($InterestArray)) ? "," . implode(",", $InterestArray) : '';
                 // $ReadsArray = Yii::$app->request->post('User')['FavioriteReadID'];
-                $model->FavioriteReadID = implode(",", $_POST['User']['FavioriteReadID']);
+                $model->FavioriteReadID = "," . implode(",", $_POST['User']['FavioriteReadID']);
                 //  $model->FavioriteReadID = (is_array($ReadsArray)) ? "," . implode(",", $ReadsArray) : '';
 
                 // $MusicArray = Yii::$app->request->post('User')['FaviouriteMusicID'];
