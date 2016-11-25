@@ -78,6 +78,9 @@ use yii\helpers\Url;
             <!-- Modal Body -->
             <div class="modal-body ">
                 <div class="choose-photo">
+                    <div class="text-center " id="crop_loader">
+                        <i class="fa fa-spinner fa-spin pink"></i> Loading...
+                    </div>
                     <!--<div class="row">
                         <div class="col-sm-2">
                             <img class="img-circle" id="avatar-edit-img" height="128" data-src="default.jpg"  data-holder-rendered="true" style="width: 140px; height: 140px;" src="default.jpg"/>
@@ -96,11 +99,10 @@ use yii\helpers\Url;
                                     <input type="hidden" name="hdn-thumb-height" id="hdn-thumb-height" value=""/>
                                     <input type="hidden" name="action" value="" id="action"/>
                                     <input type="hidden" name="image_name" value="" id="image_name"/>
-
+                                    <input type="hidden" name="image_id" value="" id="image_id"/>
                                     <div id='preview-avatar-profile' class="">
-                                        <img class="img-responsive preview" id='photov' width="" alt="Photo1">
+                                        <img class="img-responsive preview" id='photov' width="" alt="">
                                     </div>
-                                    <!--<div id="thumbs" style="padding:5px; width:600p"></div>-->
                                 </form>
                             </div>
                         </div>
@@ -108,14 +110,15 @@ use yii\helpers\Url;
                     <!-- Modal Footer -->
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer crop_save" style="display: none;">
                 <div class="row">
                     <div class="col-md-4 col-sm-10 col-sm-offset-1">
                         <button type="button" class="btn btn-primary mrg-tp-10 col-xs-12" data-dismiss="modal">Back
                         </button>
                     </div>
-                    <div class="col-md-4  col-sm-10 col-sm-offset-1">
-                        <button type="button" id="btn-crop" class="btn btn-primary mrg-tp-10 col-xs-12">Crop & Save
+                    <div class="col-md-4  col-sm-10 col-sm-offset-1 ">
+                        <button type="button" id="btn-crop" class="btn btn-primary mrg-tp-10 col-xs-12 crop-save-btn"
+                                disabled>Crop & Save
                         </button>
                     </div>
                 </div>
@@ -291,26 +294,69 @@ $this->registerJs('
 $this->registerJs("
     $(function () {
         $('.set_profile_photo').click(function(){
-            var item= $(this).data('item');
+            $('#profilecrop').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            $('#crop_loader').show();
+            $('.crop_save').hide();
+            $('#photov').attr('src','');
+            $('#image_name').val('');
+            $('#image_id').val('');
+            var imageid = $(this).data('id');
+            $('.crop-save-btn').html('Crop & Save').prop( 'disabled', true); //disable submit button
+            $.ajax({
+                        url: 'photo-cropping',
+                        type: 'POST',
+                        data: {
+                            imageid: imageid,
+                            image_name : $(this).data('name'),
+                        },
+                        cache: false,
+                        //processData: false,
+                        success: function (data, textStatus, jqXHR) {
+                            var DataObject = JSON.parse(data);
+                            $('#crop_loader').hide();
+                            $('#photov').attr('src',DataObject.PhotoCrop);
+                            $('#image_name').val(DataObject.ImageName);
+                            $('#image_id').val(imageid);
+                            $('.crop_save').show();
+                            $('img#photov').imgAreaSelect({
+                             x1 : 0, y1 : 0, x2 : 200, y2: 200,
+                                handles: true,
+                                fadeSpeed: 200,
+                                show : true,
+                                maxWidth: 200, maxHeight: 200,
+                                minWidth: 200, minHeight: 200,
+                                onSelectEnd: getSizes,
+                                parent: '.photo-kp-crop'
+                            });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            notificationPopup('E', 'Something went wrong. Please try again !', 'Error');
+                        }
+            });
+            /*var item= $(this).data('item');
             $('#photov').attr('src',item);
             $('#image_name').val($(this).data('name'));
             $('img#photov').imgAreaSelect({
+             x1 : 0, y1 : 0, x2 : 200, y2: 200,
+                handles: true,
+                fadeSpeed: 200,
+                show : true,
                 maxWidth: 200, maxHeight: 200,
                 minWidth: 200, minHeight: 200,
-                //handles: true,
-                fadeSpeed: 200,
                 onSelectEnd: getSizes,
                 parent: '.photo-kp-crop'
-            });
+            });*/
         })
-
         $('#profilecrop').on('hide.bs.modal', function () {
           /*$(this).find('.modal-dialog').css({width:'80%',
                 height:'auto',
                 'max-height':'100%'
             });*/
 
-            //$('.imgareaselect-border1,.imgareaselect-border2,.imgareaselect-border3,.imgareaselect-border4,.imgareaselect-border2,.imgareaselect-outer').css('display', 'none');
+            $('.imgareaselect-border1,.imgareaselect-border2,.imgareaselect-border3,.imgareaselect-border4,.imgareaselect-border2,.imgareaselect-outer').css('display', 'none');
         });
 
         $('#btn-crop').on('click', function(e){
@@ -323,12 +369,11 @@ $this->registerJs("
                 x2_axis: $('#hdn-x2-axis').val(),
                 y2_axis : $('#hdn-y2-axis').val(),
                 thumb_width : $('#hdn-thumb-width').val(),
-                thumb_height:$('#hdn-thumb-height').val()
+                thumb_height:$('#hdn-thumb-height').val(),
+                image_id:$('#image_id').val()
             };
             saveCropImage(params);
         });
-
-
 
         function getSizes(img, obj)
         {
@@ -346,19 +391,23 @@ $this->registerJs("
                 $('#hdn-y2-axis').val(y2_axis);
                 $('#hdn-thumb-width').val(thumb_width);
                 $('#hdn-thumb-height').val(thumb_height);
+                $('.crop-save-btn').prop( 'disabled', false);
+                $('.crop-save-btn').html('Crop & Save').prop( 'disabled', false);
             }
-            else
-                alert('Please select portion..!');
+            else{
+                $('.crop-save-btn').prop( 'disabled', true);
+                showNotification('E', '" . Yii::$app->params['photoCropAreaSelection'] . "', 'P');
+            }
         }
 
         function saveCropImage(params) {
+            $('.crop-save-btn').html('Please Wait..').prop( 'disabled', true); //disable submit button
             $.ajax({
                 url: params['targetUrl'],
                 cache: false,
                 dataType: 'html',
                 data: {
                     action: params['action'],
-                    id: $('#hdn-profile-id').val(),
                     t: 'ajax',
                     w1:params['thumb_width'],
                     x1:params['x_axis'],
@@ -366,31 +415,27 @@ $this->registerJs("
                     y1:params['y_axis'],
                     x2:params['x2_axis'],
                     y2:params['y2_axis'],
+                    image_id:params['image_id'],
                     image_name :$('#image_name').val()
                 },
                 type: 'Post',
                 // async:false,
                 success: function (response) {
                        var DataObject = JSON.parse(response);
-                       console.log(DataObject);
                          if (DataObject.STATUS == 'S') {
-                                //$('#photo_list').html(DataObject.HtmlOutput);
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
-                                //profile_photo();
-                                //lightBox();
 $('.mainpropic').attr('src', '');
-                                setTimeout(function(){
-
                                     $('.mainpropic').attr('src', DataObject.ProfilePhoto);
                                     $('.profile_photo_one').attr('src', DataObject.ProfilePhotoThumb);
-                                }, 3000);
-
+                                    //$('#photo_list a').remove
+                                    $('#photo_list a').find('img').removeClass('selected');
+                                    $('#img_'+params['image_id']+' a').find('img').addClass('selected');
                          } else {
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                          }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    alert('status Code:' + xhr.status + 'Error Message :' + thrownError);
+                    notificationPopup('E', 'status Code:' + xhr.status + 'Error Message :' + thrownError, 'Error');
                 }
             });
         }
@@ -398,7 +443,3 @@ $('.mainpropic').attr('src', '');
 ");
 
 ?>
-<script>
-    /*$('#thumbnail').imgAreaSelect({  x1 : 0, y1 : 0, x2 : 180, y2: 180, aspectRatio: '1:1', handles: true  , onSelectChange: preview });*/
-
-</script>

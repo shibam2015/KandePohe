@@ -43,7 +43,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                 <div class="col-sm-5">
                                                     <div class="image gallery-popup">
                                                         <div class="placeholder text-center">
-                                                            <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->params['thumbnailPrefix'] . "200_" . Yii::$app->user->identity->propic, 200), ['class' => 'img-responsive mainpropic ', 'width' => '200', 'alt' => 'Profile Photo']); ?>
+                                                            <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes'), ['class' => 'img-responsive mainpropic ', 'width' => '200', 'alt' => 'Profile Photo']); ?>
                                                             <div class="add-photo" data-toggle="modal"
                                                                  data-target="#photo"><span class="file-input btn-file"> <i
                                                                         class="fa fa-plus-circle"></i> Add a photo </span>
@@ -64,12 +64,11 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                        multiple class="fileupload"/>
                                                             </form>
                                                         </div>
-                                                        <div class="bar-devider"><span>OR</span></div>
+                                                        <!--<div class="bar-devider"><span>OR</span></div>
                                                         <a class="btn btn-block btn-social btn-facebook"
                                                            data-toggle="modal"
                                                            data-target="#profilecrop"> <i class="fa fa-facebook"></i>
-                                                            Sign in with Facebook </a>
-
+                                                            Sign in with Facebook </a>-->
                                                         <!--<div class="bar-devider"> <span>OR</span> </div>-->
                                                         <!--<a class="btn btn-block btn-social btn-facebook"> <i class="fa fa-facebook"></i> Sign in with Facebook </a>-->
 
@@ -98,9 +97,11 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                 </div>
 
                                                                 <a href="javascript:void(0)"
-                                                                   class="pull-left profile_set"
+                                                                   class="pull-left profile_set_kp set_profile_photo"
                                                                    data-id="<?= $V['iPhoto_ID'] ?>"
-                                                                   data-target="#photodelete" data-toggle="modal">
+                                                                   data-target="#profilecrop" data-toggle="modal"
+                                                                   data-item="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
+                                                                   data-name="<?= $V['File_Name'] ?>">
                                                                     Profile pic
                                                                 </a>
                                                                 <a href="javascript:void(0)"
@@ -108,14 +109,6 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                    data-id="<?= $V['iPhoto_ID'] ?>"
                                                                    data-target="#photodelete" data-toggle="modal">
                                                                     <i aria-hidden="true" class="fa fa-trash-o"></i>
-                                                                </a>
-                                                                <a href="javascript:void(0)"
-                                                                   class="pull-right set_profile_photo"
-                                                                   data-id="<?= $V['iPhoto_ID'] ?>"
-                                                                   data-target="#profilecrop" data-toggle="modal"
-                                                                   data-item="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
-                                                                   data-name="<?= $V['File_Name'] ?>">
-                                                                    <i aria-hidden="true" class="fa fa-heart-o"></i>
                                                                 </a>
                                                             </div>
                                                         <?php }

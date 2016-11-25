@@ -28,8 +28,9 @@ return [
     'mailBoxSendInterestSender' => 'You sent #GENDER# interest request.',
     'mailBoxSendInterestReceiver' => '#GENDER# sent you interest request.',
     'smsGetwayError' => 'Something wrong with SMS sending Process. Please contact to site admin.',
-    'photoMissingError' => 'Photo Name has issue. Please try again !',
+    'photoMissingError' => 'Photo has issue. Please try again !',
     'photoCopyError' => 'Photo saving has issue. Please try again !',
+    'photoCropAreaSelection' => 'Please first select photo portion !',
 
 
     'total_files_allowed' => 10,

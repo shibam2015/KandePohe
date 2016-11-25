@@ -440,8 +440,10 @@ $(document).on("click", ".kp_notification_close", function (e) {
     $('.kp_notify').slideUp();
 });
 
-function showNotification(type, msg) {
-    $(".modal").modal("hide");
+function showNotification(type, msg, flag) {
+    if (flag != 'P') {
+        $(".modal").modal("hide");
+    }
     if (type == 'S') {
         $('.kp_notify').removeClass('red').addClass('green');
         $('.kp_notification').html(msg);
@@ -454,7 +456,7 @@ function showNotification(type, msg) {
     }
     setTimeout(function () {
         $('.kp_notify').slideUp();
-    }, 4000);
+    }, 5000);
     $('.kp_notify').slideDown();
 }
 /* Notification END  */

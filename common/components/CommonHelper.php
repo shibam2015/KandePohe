@@ -173,23 +173,20 @@ class CommonHelper {
 
     }
 
-    public static function getPhotos($TYPE = 'USER', $ID, $PHOTO, $SIZE = '', $DefaultStatus = '') // GET USER PHOTO (Profile)
+    public static function getPhotos($TYPE = 'USER', $ID, $PHOTO, $SIZE = '', $DefaultStatus = '', $Profile = 'No') // GET USER PHOTO (Profile)
     {
-        /*echo "<br>".$TYPE;
-        echo "<br>".$ID;
-        echo "<br>".$PHOTO;
-        echo "<br>".$SIZE;exit;*/
         if ($TYPE == 'USER') {
             $U_PATH = $ID . "/";
-            /*if ($SIZE != '') {
-                $PHOTO_WITH_SIZE = $SIZE . "_" . $PHOTO;
-            } else {
-                $PHOTO_WITH_SIZE = $PHOTO;
-            }*/
             $PHOTO_WITH_SIZE = $PHOTO;
-            $MAIN_URL = CommonHelper::getUserUploadFolder(2);
-            $PATH = CommonHelper::getUserUploadFolder(1) . $U_PATH;
-            $URL = $MAIN_URL . $U_PATH;
+            if ($Profile == 'No') {
+                $MAIN_URL = CommonHelper::getUserUploadFolder(2);
+                $PATH = CommonHelper::getUserUploadFolder(1) . $U_PATH;
+                $URL = $MAIN_URL . $U_PATH;
+            } else {
+                $MAIN_URL = CommonHelper::getUserUploadFolder(4, $ID);
+                $PATH = CommonHelper::getUserUploadFolder(3, $ID);
+                $URL = $MAIN_URL;
+            }
             if ($DefaultStatus == '')
                 $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $MAIN_URL . 'no-user-img.jpg';
             else
@@ -692,6 +689,24 @@ class CommonHelper {
         imagejpeg($newImage, $image, 90);
         chmod($image, 0777);
         return $image;
+    }
+
+    public static function ProfilePhotoDeleteFromFolder($PATH, $SIZE_ARRAY, $OLD_PHOTO)
+    {
+        $DEL_IMG = $SIZE_ARRAY;
+        $path = $PATH;
+        if ($OLD_PHOTO != '') {
+            if (count($SIZE_ARRAY) != 0) {
+                foreach ($DEL_IMG as $k => $V) {
+                    $vImage_hid = $V . $OLD_PHOTO;
+                    unlink($path . $vImage_hid);
+                }
+            } else {
+                $vImage_hid = $OLD_PHOTO;
+                unlink($path . $vImage_hid);
+            }
+        }
+        return true;
     }
 
     public function getReligion()
