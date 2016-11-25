@@ -520,15 +520,14 @@ Policy]</a> and <a href="#" title="[T&C]">[T&C]</a></label>';
                         'id' => 'login-form',
                         'action' => 'site/login',
                         'enableAjaxValidation' => true,
+                        'validateOnChange' => false,
                         //'enableClientValidation' => true,
                         'validateOnSubmit' => true,
-                        // 'validateOnBlur' => false,
-                        'validateOnChange' => false,
                     ]);
                     ?>
                     <div class="row">
-                        <div class="col-sm-10 col-sm-offset-1 text-center">
-                            <!--<span class="error">Email or Password used is incorrect</span> --></div>
+                        <div class="col-sm-10 col-sm-offset-1 text-left">
+                            <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?></div>
                     </div>
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">

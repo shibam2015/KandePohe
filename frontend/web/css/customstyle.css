@@ -306,3 +306,11 @@ img.selected {
 .adbtn {
     width: 80% !important;
 }
+
+#login-form .has-error .form-control {
+    border: 1px solid #c4c4c4 !important;
+}
+
+#login-form .has-success .form-control {
+    border: 1px solid #c4c4c4 !important;
+}
