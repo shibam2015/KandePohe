@@ -35,7 +35,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                     <div class="panel-body">
                                         <div class="profile-header-container">
                                             <div class="profile-header-img">
-                                                <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->user->identity->propic, 200), ['width' => '200', 'height' => '200', 'alt' => 'Profile Photo', 'class' => 'img-circle']); ?>
+                                                <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes'), ['width' => '200', 'height' => '200', 'alt' => 'Profile Photo', 'class' => 'img-circle']); ?>
                                                 <!-- badge -->
                                                 <div class="rank-label-container img-circle">
                                                     <div class="dropdown">
