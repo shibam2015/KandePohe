@@ -265,7 +265,6 @@ require_once __DIR__ . '/_photosection.php';
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/simplelightbox/simple-lightbox.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <link href='<?= Yii::$app->request->baseUrl ?>/plugings/simplelightbox/simplelightbox.min.css' rel='stylesheet'
       type='text/css'>
-
 <link href='<?= Yii::$app->request->baseUrl ?>/plugings/cropping/imgareaselect.css' rel='stylesheet' type='text/css'>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.imgareaselect.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.form.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>

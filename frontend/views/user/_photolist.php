@@ -1,8 +1,6 @@
 <?php
 use common\components\CommonHelper;
 use yii\bootstrap\Html;
-
-#CommonHelper::pr($model);exit;
 if (count($model) > 0) {
     foreach ($model as $K => $V) {
         ?>

@@ -2,7 +2,6 @@
 use yii\widgets\Pjax;
 use yii\helpers\Html;
 use common\components\CommonHelper;
-
 ?>
 <div class="modal-body photo-gallery">
     <div class="profile-control photo-btn">
