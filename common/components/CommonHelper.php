@@ -183,14 +183,16 @@ class CommonHelper {
                 $PATH = CommonHelper::getUserUploadFolder(1) . $U_PATH;
                 $URL = $MAIN_URL . $U_PATH;
             } else {
+                //$MAIN_URL = CommonHelper::getUserUploadFolder(2);
                 $MAIN_URL = CommonHelper::getUserUploadFolder(4, $ID);
                 $PATH = CommonHelper::getUserUploadFolder(3, $ID);
                 $URL = $MAIN_URL;
             }
+            $DefaultPhotoURL = CommonHelper::getUserUploadFolder(2);
             if ($DefaultStatus == '')
-                $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $MAIN_URL . 'no-user-img.jpg';
+                $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $DefaultPhotoURL . 'no-user-img.jpg';
             else
-                $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $MAIN_URL . $SIZE . '_no-user-img.jpg';
+                $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $DefaultPhotoURL . $SIZE . '_no-user-img.jpg';
             return $PHOTO_USER;
         }
     }
