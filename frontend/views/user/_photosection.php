@@ -293,7 +293,8 @@ $this->registerJs('
 #CROPPING
 $this->registerJs("
     $(function () {
-        $('.set_profile_photo').click(function(){
+    $(document).on('click','.set_profile_photo',function(e){
+        //$('.set_profile_photo').click(function(){
             $('#profilecrop').modal({
                 backdrop: 'static',
                 keyboard: false
@@ -336,30 +337,19 @@ $this->registerJs("
                             notificationPopup('E', 'Something went wrong. Please try again !', 'Error');
                         }
             });
-            /*var item= $(this).data('item');
-            $('#photov').attr('src',item);
-            $('#image_name').val($(this).data('name'));
-            $('img#photov').imgAreaSelect({
-             x1 : 0, y1 : 0, x2 : 200, y2: 200,
-                handles: true,
-                fadeSpeed: 200,
-                show : true,
-                maxWidth: 200, maxHeight: 200,
-                minWidth: 200, minHeight: 200,
-                onSelectEnd: getSizes,
-                parent: '.photo-kp-crop'
-            });*/
-        })
-        $('#profilecrop').on('hide.bs.modal', function () {
+        }
+    )
+    $('#profilecrop').on('hide.bs.modal', function () {
           /*$(this).find('.modal-dialog').css({width:'80%',
                 height:'auto',
                 'max-height':'100%'
             });*/
 
             $('.imgareaselect-border1,.imgareaselect-border2,.imgareaselect-border3,.imgareaselect-border4,.imgareaselect-border2,.imgareaselect-outer').css('display', 'none');
-        });
+    });
 
-        $('#btn-crop').on('click', function(e){
+        $(document).on('click','#btn-crop',function(e){
+        //$('#btn-crop').on('click', function(e){
             e.preventDefault();
             params = {
                 targetUrl: 'set-profile-photo',
@@ -424,7 +414,7 @@ $this->registerJs("
                        var DataObject = JSON.parse(response);
                          if (DataObject.STATUS == 'S') {
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
-$('.mainpropic').attr('src', '');
+                $('.mainpropic').attr('src', '');
                                     $('.mainpropic').attr('src', DataObject.ProfilePhoto);
                                     $('.profile_photo_one').attr('src', DataObject.ProfilePhotoThumb);
                                     //$('#photo_list a').remove

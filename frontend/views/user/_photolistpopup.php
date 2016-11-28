@@ -20,9 +20,12 @@ use common\components\CommonHelper;
                         if ($V['Is_Profile_Photo'] == 'YES') {
                             $SELECTED = "selected";
                         } ?>
-                        <a href="javascript:void(0)" class="pull-left profile_set"
+                        <a href="javascript:void(0)"
+                           class="pull-left profile_set_kp set_profile_photo"
                            data-id="<?= $V['iPhoto_ID'] ?>"
-                           data-target="#photodelete" data-toggle="modal">
+                           data-target="#profilecrop" data-toggle="modal"
+                           data-item="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
+                           data-name="<?= $V['File_Name'] ?>">
                             <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->params['thumbnailPrefix'] . "120_" . $V['File_Name'], 120), ['class' => 'img-responsive ' . $SELECTED, 'height' => '', 'alt' => 'Photo' . $K]); ?>
                         </a>
                     </div>
