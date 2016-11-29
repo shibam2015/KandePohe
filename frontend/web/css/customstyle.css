@@ -314,3 +314,9 @@ img.selected {
 #login-form .has-success .form-control {
     border: 1px solid #c4c4c4 !important;
 }
+
+.profilecropmodal {
+    overflow-x: inherit !important;
+    overflow-y: inherit !important;
+    position: absolute !important;
+}

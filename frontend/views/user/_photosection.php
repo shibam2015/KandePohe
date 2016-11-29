@@ -62,9 +62,10 @@ use yii\helpers\Url;
         <!-- Modal Footer -->
     </div>
 </div>
-<div class="modal fade photo-kp-crop" id="profilecrop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade photo-kp-crop1 profilecropmodal" id="profilecrop" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog "><!--modal-lg -->
+    <div class="modal-dialog"><!--modal-lg -->
         <p class="text-center mrg-bt-10">
             <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
 
@@ -76,7 +77,7 @@ use yii\helpers\Url;
                 <h2 class="text-center" id="model_heading"> Set Profile Photo</h2>
             </div>
             <!-- Modal Body -->
-            <div class="modal-body ">
+            <div class="modal-body">
                 <div class="choose-photo">
                     <div class="text-center " id="crop_loader">
                         <i class="fa fa-spinner fa-spin pink"></i> Loading...
@@ -100,7 +101,8 @@ use yii\helpers\Url;
                                     <input type="hidden" name="action" value="" id="action"/>
                                     <input type="hidden" name="image_name" value="" id="image_name"/>
                                     <input type="hidden" name="image_id" value="" id="image_id"/>
-                                    <div id='preview-avatar-profile' class="">
+
+                                    <div id='preview-avatar-profile' class="photo-kp-crop">
                                         <img class="img-responsive preview" id='photov' width="" alt="">
                                     </div>
                                 </form>
@@ -323,14 +325,20 @@ $this->registerJs("
                             $('#image_id').val(imageid);
                             $('.crop_save').show();
                             $('img#photov').imgAreaSelect({
-                             x1 : 0, y1 : 0, x2 : 200, y2: 200,
-                                handles: true,
-                                fadeSpeed: 200,
-                                show : true,
-                                maxWidth: 200, maxHeight: 200,
-                                minWidth: 200, minHeight: 200,
+                             //x1 : 0, y1 : 0, x2 : 200, y2: 200,
+                                //handles: true,
+                                //fadeSpeed: 200,
+                                //show : true,
+                                //maxWidth: 200, maxHeight: 200,
+                                //minWidth: 200, minHeight: 200,
+                                aspectRatio: '1:1',
                                 onSelectEnd: getSizes,
-                                parent: '.photo-kp-crop'
+                               // parent: '.photo-kp-crop'
+                               'Close': function() {
+                                $('.imgareaselect-selection').parent().remove();
+                                  $('.imgareaselect-outer').remove();
+                                  $(this).dialog('close');
+                                },
                             });
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
@@ -344,7 +352,6 @@ $this->registerJs("
                 height:'auto',
                 'max-height':'100%'
             });*/
-
             $('.imgareaselect-border1,.imgareaselect-border2,.imgareaselect-border3,.imgareaselect-border4,.imgareaselect-border2,.imgareaselect-outer').css('display', 'none');
     });
 
