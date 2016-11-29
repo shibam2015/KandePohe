@@ -1,5 +1,5 @@
 //Module..........
-var app = angular.module('myApp', []);
+var app = angular.module('myApp', ['myCommonApp']);
 
 //Configuration......
 app.config(['$httpProvider', function ($httpProvider) {
@@ -12,7 +12,7 @@ app.run(function run($http) {
 });
 
 //Controller............
-app.controller('dashboardController', function ($scope, $http) {
+app.controller('dashboardController', function ($scope, vService, $http) {
 
 	//scope Variable
 	$scope.dashboardDetais = {
@@ -31,19 +31,9 @@ app.controller('dashboardController', function ($scope, $http) {
 
 	function changePrivacy() {
 		var user_privacy_option = $scope.user_privacy_option;
-		
-		$http({
-            method: "POST",
-            url: 'saveprivacy-setting',
-            data: {'user_privacy_option': user_privacy_option,'ACTION': 'Save'},
-        }).then(function mySucces(response) {
-        	console.log(response.data);
-            //var DataObject = JSON.parse(response);
-          	//$('#photo_list').html(DataObject.OUTPUT);
-        	notificationPopup(response.data.STATUS, response.data.MESSAGE);
-        }, function myError(response) {
-            notificationPopup('ERROR', 'Something went wrong. Please try again !');
-        });
+		vService.ajaxWithnotification({
+			url:'saveprivacy-setting',
+			data:{'user_privacy_option': user_privacy_option,'ACTION': 'Save'}
+		});
 	}
-
 });

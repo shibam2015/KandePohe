@@ -529,7 +529,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                     $ViewerId = $Value->from_user_id;
                                                                 }
                                                             } else {
-                                                                $ViewerId = $ValueRM->id; //$Value->id;
+                                                                $ViewerId = $Value->id;
                                                             }
                                                             $UserInfoModel = User::getUserInfroamtion($ViewerId);
                                                             ?>
@@ -770,7 +770,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
             </div>
             <!-- Modal Footer -->
         </div>
-    </div>x`
+    </div>
         </main>
     </div>
     <div class="chatwe">
