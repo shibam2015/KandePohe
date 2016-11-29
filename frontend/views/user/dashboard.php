@@ -770,7 +770,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
             </div>
             <!-- Modal Footer -->
         </div>
-    </div>x`
+    </div>
         </main>
     </div>
     <div class="chatwe">
