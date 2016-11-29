@@ -138,7 +138,8 @@ use yii\helpers\Url;
 $this->registerJs('
   $(function () {
         var max_file_size 		= 2048576; //allowed file size. (1 MB = 1048576)
-        var allowed_file_types 		= ["image/png", "image/gif", "image/jpeg", "image/pjpeg"]; //allowed file types
+        //var allowed_file_types 		= ["image/png", "image/gif", "image/jpeg", "image/pjpeg"]; //allowed file types
+        var allowed_file_types 		= ["image/jpeg", "image/pjpeg"]; //allowed file types
         var result_output 		= "#output"; //ID of an element for response output
         var my_form_id 			= "#upload_form"; //ID of an element for response output
         var total_files_allowed 	= 3; //Number files allowed to upload
@@ -325,12 +326,12 @@ $this->registerJs("
                             $('#image_id').val(imageid);
                             $('.crop_save').show();
                             $('img#photov').imgAreaSelect({
-                             //x1 : 0, y1 : 0, x2 : 200, y2: 200,
+                                x1 : 0, y1 : 0, x2 : 200, y2: 200,
                                 //handles: true,
                                 //fadeSpeed: 200,
                                 //show : true,
                                 //maxWidth: 200, maxHeight: 200,
-                                //minWidth: 200, minHeight: 200,
+                                minWidth: 200, minHeight: 200,
                                 aspectRatio: '1:1',
                                 onSelectEnd: getSizes,
                                // parent: '.photo-kp-crop'
@@ -348,11 +349,9 @@ $this->registerJs("
         }
     )
     $('#profilecrop').on('hide.bs.modal', function () {
-          /*$(this).find('.modal-dialog').css({width:'80%',
-                height:'auto',
-                'max-height':'100%'
-            });*/
-            $('.imgareaselect-border1,.imgareaselect-border2,.imgareaselect-border3,.imgareaselect-border4,.imgareaselect-border2,.imgareaselect-outer').css('display', 'none');
+    $('img#photov').imgAreaSelect({remove:true});
+            $('.imgareaselect-selection,.imgareaselect-border1,.imgareaselect-border2,.imgareaselect-border3,.imgareaselect-border4,.imgareaselect-border2,.imgareaselect-outer').css('display', 'none');
+
     });
 
         $(document).on('click','#btn-crop',function(e){

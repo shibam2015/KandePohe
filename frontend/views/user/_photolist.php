@@ -16,11 +16,14 @@ if (count($model) > 0) {
                 </a>
             </div>
             <a href="javascript:void(0)"
-               class="pull-left profile_set"
+               class="pull-left profile_set_kp set_profile_photo"
                data-id="<?= $V['iPhoto_ID'] ?>"
-               data-target="#photodelete" data-toggle="modal">
+               data-target="#profilecrop" data-toggle="modal"
+               data-item="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
+               data-name="<?= $V['File_Name'] ?>">
                 Profile pic
             </a>
+
             <a href="javascript:void(0)"
                class="pull-right profile_delete"
                data-id="<?= $V['iPhoto_ID'] ?>"
