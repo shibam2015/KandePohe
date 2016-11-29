@@ -529,9 +529,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                     $ViewerId = $Value->from_user_id;
                                                                 }
                                                             } else {
-                                                                $ViewerId = $Value->id;
+                                                                $ViewerId = $ValueRM->id; //$Value->id;
                                                             }
-
                                                             $UserInfoModel = User::getUserInfroamtion($ViewerId);
                                                             ?>
                                                             <p class="s__<?= $UserInfoModel->id ?>">
@@ -545,8 +544,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                        data-id="<?= $UserInfoModel->id ?>"
                                                                        data-name="<?= $UserInfoModel->fullName ?>"
                                                                        data-rgnumber="<?= $UserInfoModel->Registration_Number ?>">Send
-                                                                        Interest
-                                                                        <i class="fa fa-heart-o"></i>
+                                                                        Interest <i class="fa fa-heart-o"></i>
                                                                     </a>
                                                                 <?php } else if (($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) { ?>
                                                                     <a href="javascript:void(0)"
