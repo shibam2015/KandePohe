@@ -35,15 +35,19 @@ use yii\widgets\Pjax;
                                                     <!-- Wrapper for slides -->
                                                     <div class="carousel-inner">
                                                         <?php if (count($PhotoList) > 0) {
-                                                            #CommonHelper::pr($PhotoList);exit;
                                                             foreach ($PhotoList as $K => $V) {
                                                                 $SELECTED = '';
+                                                                $Photo = Yii::$app->params['thumbnailPrefix'] . '120_' . $V->File_Name;
+                                                                $Yes = 'No';
                                                                 if ($V['Is_Profile_Photo'] == 'YES') {
                                                                     $SELECTED = "active";
-                                                                } ?>
-                                                                <!--<div class="item <?/*= $SELECTED */ ?>">-->
+                                                                    $Photo = '120' . $model->propic;
+                                                                    $Yes = 'Yes';
+                                                                }
+                                                                ?>
                                                                 <div class="item <?= ($K == 0) ? 'active' : ''; ?>">
-                                                                    <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $V['File_Name'], 140), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
+                                                                    <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $Photo, 120, '', $Yes), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
+
                                                                 </div>
                                                             <?php }
                                                         } else { ?>
@@ -68,8 +72,8 @@ use yii\widgets\Pjax;
                                             </div>
                                         </div>
                                         <?php if (count($PhotoList) > 0) { ?>
-                                            <p class="text-right"><a href="#" data-toggle="modal" data-target="#photo">View
-                                                    Album <i class="fa fa-angle-right"></i></a></p>
+                                            <!--<p class="text-right"><a href="#" data-toggle="modal" data-target="#photo">View
+                                                    Album <i class="fa fa-angle-right"></i></a></p>-->
                                         <?php } ?>
                                     </div>
                                     <div class="col-sm-9">

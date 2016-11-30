@@ -14,7 +14,8 @@ use common\components\CommonHelper;
                 <?php foreach ($SimilarProfile as $SPK => $SPV) { ?>
                     <li>
                               <span class="imgarea">
-                                  <?= Html::img(CommonHelper::getPhotos('USER', $SPV->id, $SPV->propic, 75, 1), ['alt' => $SPV->FullName, 'class' => '', 'style' => '    width: 65px !important;']); ?>
+                                  <?= Html::img(CommonHelper::getPhotos('USER', $SPV->id, "75" . $SPV->propic, 120, '', 'Yes'), ['alt' => $SPV->FullName, 'class' => '', 'style' => '    width: 65px !important;']); ?>
+
                               </span>
                               <span class="img-desc">
                                       <p class="name"><strong><?= $SPV->FullName ?></strong></p>

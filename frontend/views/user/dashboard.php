@@ -395,7 +395,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                             <a href="<?= CommonHelper::getUserUrl($UserInfoModel->Registration_Number) ?>&source=profile_viewed_by"
                                                                class="name-img"
                                                                title="<?= $UserInfoModel->Registration_Number ?>">
-                                                                <?= Html::img(CommonHelper::getPhotos('USER', $ViewerId, $UserInfoModel->propic, 140), ['width' => '120', 'height' => '130', 'alt' => 'Profile', 'class' => '']); ?>
+                                                                <?= Html::img(CommonHelper::getPhotos('USER', $ViewerId, "120" . $UserInfoModel->propic, 120, '', 'Yes'), ['width' => '120', 'height' => '130', 'alt' => 'Profile', 'class' => '']); ?>
                                                             </a>
                                                             <a href="<?= CommonHelper::getUserUrl($UserInfoModel->Registration_Number) ?>&source=profile_viewed_by"
                                                                class="name"
@@ -512,7 +512,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                             <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $ValueRM->Registration_Number ?>&source=recently_joined"
                                                                class="name-img"
                                                                title="<?= $ValueRM->Registration_Number ?>">
-                                                                <?= Html::img(CommonHelper::getPhotos('USER', $ValueRM->id, $ValueRM->propic, 140), ['width' => '120', 'height' => '130', 'alt' => 'Profile', 'class' => '']); ?>
+                                                                <?= Html::img(CommonHelper::getPhotos('USER', $ValueRM->id, "120" . $ValueRM->propic, 120, '', 'Yes'), ['width' => '120', 'height' => '130', 'alt' => 'Profile', 'class' => '']); ?>
                                                             </a>
                                                             <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $ValueRM->Registration_Number ?>&source=recently_joined"
                                                                class="name"

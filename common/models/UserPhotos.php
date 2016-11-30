@@ -58,7 +58,7 @@ class UserPhotos extends \common\models\base\baseUserPhotos
 
     public function findByUserId($iUser_ID)
     {
-        return static::findAll(['iUser_ID' => $iUser_ID]);
+        return static::find()->where(['iUser_ID' => $iUser_ID])->orderBy(['iPhoto_ID' => SORT_DESC])->all();
     }
 
     public function findByPhotoId($iUser_ID, $P_ID)

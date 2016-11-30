@@ -7,11 +7,10 @@ use yii\widgets\Pjax;
 use common\models\User;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-
 ?>
     <div class="main-section">
         <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
-        <main>
+        <main data-ng-app="myApp" data-ng-controller="mailboxController">
             <section class="inbox">
                 <div class="container">
                     <div class="row">
@@ -193,6 +192,10 @@ use yii\helpers\Url;
     </div>
     <script src="<?= Yii::$app->homeUrl ?>js/jquery.js" type="text/javascript"></script>
     <script src="<?= Yii::$app->homeUrl ?>js/selectFx.js"></script>
+
+
+<?= $this->registerJsFile(Yii::$app->request->baseUrl . '/js/angular/controller/mailboxController.js', ['depends' => [\frontend\assets\AppAsset::className()], 'position' => \yii\web\View::POS_END]); ?>
+
 <?php
 $this->registerJs('
 $(document).on("click",".sendmail",function(e){
