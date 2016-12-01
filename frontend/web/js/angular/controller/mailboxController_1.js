@@ -15,24 +15,24 @@ app.run(function run($http) {
 app.controller('mailboxController', function ($scope, vService, $http) {
 
     //scope Variable
-    $scope.dashboardDetais = {
+    $scope.mailboxDetais = {
         test: 'test'
-    }
+    };
+    $scope.inboxAll = '';
     //local variable
-
     //Scope Function declaretion
     $scope.init = init;
-    $scope.changePrivacy = changePrivacy;
+    $scope.student = tabAll;
 
     function init() {
-
+        window.alert("hi!");
     }
 
-    function changePrivacy() {
-        var user_privacy_option = $scope.user_privacy_option;
-        vService.ajaxWithnotification({
-            url: 'saveprivacy-setting',
-            data: {'user_privacy_option': user_privacy_option, 'ACTION': 'Save'}
+    function tabAll() {
+        var av = vService.ajaxWithOutNotification({
+            url: 'all',
+            data: {'Type': 'Inbox'}
         });
+        console.log(av);
     }
 });

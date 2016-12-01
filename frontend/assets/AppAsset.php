@@ -35,6 +35,6 @@ class AppAsset extends AssetBundle
         #'js/cover/jquery-ui.min.js', //Cover Photo
         'js/cover/jquery.wallform.js', //Cover Photo
         'plugings/l1/waitMe.js', // Loader
-        'js/angular/controller/commonController.js' // Loader
+        'js/angular/controller/commonController.js' // Angular Controller
     ];
 }
