@@ -21,8 +21,17 @@
 <div ng-if="totalItems > 0">
     <!-- Your Else Block -->
     <h3> {{totalItems}} bloack </h3>
+
+    <div ng-if="type == 'Inbox'">
+        <h3> {{type}} bloack </h3>
+    </div>
+
 </div>
 
+<div ng-repeat="value in data">
+    {{ value.id }}
+    {{ value.short_list_status_from_to }}
+</div>
 <table class="table table-bordered pagin-table">
     <thead>
     <tr>

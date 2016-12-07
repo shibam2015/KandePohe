@@ -26,85 +26,86 @@ use yii\helpers\Url;
                             }
                             ?>
                             <div class="col-sm-9 col-md-10">
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    <div class="pull-right">
-                                        <p class="text-muted">
-                                            <?php /*if ($Model->send_request_status_from_to == 'Yes') { */ ?><!--
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <div class="pull-right">
+                                            <p class="text-muted">
+                                                <?php /*if ($Model->send_request_status_from_to == 'Yes') { */ ?><!--
                                                 <? /*= CommonHelper::DateTime($Model->date_send_request_from_to, 26); */ ?>
                                             <?php /*} else { */ ?>
                                                 <? /*= CommonHelper::DateTime($Model->date_send_request_to_from, 26); */ ?>
                                             --><?php /*} */ ?>
-                                            <?= CommonHelper::DateTime($OtherInformationArray[0]['LastMailDate'], 26); ?>
-                                            <a href="#" data-toggle="modal" data-target="#del"><i class="fa fa-trash"
-                                                                                                  aria-hidden="true"></i></a>
-                                        </p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <div class="inbox-thread">
-                                        <div class="box-inbox pull-left">
-                                            <?= Html::img(CommonHelper::getPhotos('USER', $ModelInfo->id, $ModelInfo->propic, 75), ['width' => '60', 'height' => '60', 'alt' => 'Profile', 'class' => '']); ?>
-                                        </div>
-                                        <div class="box-inbox3 conv pull-right">
-                                            <p class="name">
-                                                <a href="<?= CommonHelper::getUserUrl($ModelInfo->Registration_Number); ?>">
-                                                    <strong><?= $ModelInfo->fullName; ?></strong>
-                                                </a>
-                                                (Last online
-                                                : <?= CommonHelper::DateTime($ModelInfo->LastLoginTime, 7); ?>
-                                                )</p>
-                                            <ul class="list-inline pull-left">
-                                                <li><?= CommonHelper::getAge($ModelInfo->DOB); ?> YRS
-                                                    <?= ($ModelInfo->height->vName != '') ? "," . $ModelInfo->height->vName : ''; ?></li>
-                                                <li>
-                                                    <strong>Religion:</strong> <?= $ModelInfo->religionName->vName; ?>
-                                                    , Caste : <?= $ModelInfo->communityName->vName; ?>
-                                                </li>
-                                                <li>
-                                                    <strong>Location:</strong> <?= $ModelInfo->cityName->vCityName; ?>
-                                                    <?= ($ModelInfo->stateName->vStateName != '') ? "," . $ModelInfo->stateName->vStateName : ''; ?>
-                                                    <?= ($ModelInfo->countryName->vCountryName != '') ? "," . $ModelInfo->countryName->vCountryName : ''; ?>
-                                                </li>
-                                                <li>
-                                                    <strong>Education:</strong> <?= $ModelInfo->educationLevelName->vEducationLevelName; ?>
-                                                </li>
-                                                <li>
-                                                    <strong>Occupation:</strong> <?= $ModelInfo->educationFieldName->vEducationFieldName; ?>
-                                                </li>
-                                            </ul>
-                                            <div class="clearfix"></div>
+                                                <?= CommonHelper::DateTime($OtherInformationArray[0]['LastMailDate'], 26); ?>
+                                                <a href="#" data-toggle="modal" data-target="#del"><i
+                                                        class="fa fa-trash"
+                                                        aria-hidden="true"></i></a>
+                                            </p>
                                         </div>
                                         <div class="clearfix"></div>
-                                        <?php ?>
-                                        <?php Pjax::begin(['id' => 'my_last', 'enablePushState' => false]); ?>
-                                        <div></div>
-                                        <div class="gray-tabs-block padd-10 mrg-tp-10 mrg-bt-5"
-                                             id="last_message_section">
-                                            <i class="fa fa-spinner fa-spin pink"></i> Loading...
+                                        <div class="inbox-thread">
+                                            <div class="box-inbox pull-left">
+                                                <?= Html::img(CommonHelper::getPhotos('USER', $ModelInfo->id, $ModelInfo->propic, 75), ['width' => '60', 'height' => '60', 'alt' => 'Profile', 'class' => '']); ?>
+                                            </div>
+                                            <div class="box-inbox3 conv pull-right">
+                                                <p class="name">
+                                                    <a href="<?= CommonHelper::getUserUrl($ModelInfo->Registration_Number); ?>">
+                                                        <strong><?= $ModelInfo->fullName; ?></strong>
+                                                    </a>
+                                                    (Last online
+                                                    : <?= CommonHelper::DateTime($ModelInfo->LastLoginTime, 7); ?>
+                                                    )</p>
+                                                <ul class="list-inline pull-left">
+                                                    <li><?= CommonHelper::getAge($ModelInfo->DOB); ?> YRS
+                                                        <?= ($ModelInfo->height->vName != '') ? "," . $ModelInfo->height->vName : ''; ?></li>
+                                                    <li>
+                                                        <strong>Religion:</strong> <?= $ModelInfo->religionName->vName; ?>
+                                                        , Caste : <?= $ModelInfo->communityName->vName; ?>
+                                                    </li>
+                                                    <li>
+                                                        <strong>Location:</strong> <?= $ModelInfo->cityName->vCityName; ?>
+                                                        <?= ($ModelInfo->stateName->vStateName != '') ? "," . $ModelInfo->stateName->vStateName : ''; ?>
+                                                        <?= ($ModelInfo->countryName->vCountryName != '') ? "," . $ModelInfo->countryName->vCountryName : ''; ?>
+                                                    </li>
+                                                    <li>
+                                                        <strong>Education:</strong> <?= $ModelInfo->educationLevelName->vEducationLevelName; ?>
+                                                    </li>
+                                                    <li>
+                                                        <strong>Occupation:</strong> <?= $ModelInfo->educationFieldName->vEducationFieldName; ?>
+                                                    </li>
+                                                </ul>
+                                                <div class="clearfix"></div>
+                                            </div>
                                             <div class="clearfix"></div>
+                                            <?php ?>
+                                            <?php Pjax::begin(['id' => 'my_last', 'enablePushState' => false]); ?>
+                                            <div></div>
+                                            <div class="gray-tabs-block padd-10 mrg-tp-10 mrg-bt-5"
+                                                 id="last_message_section">
+                                                <i class="fa fa-spinner fa-spin pink"></i> Loading...
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <?php Pjax::end(); ?>
+                                            <div></div>
                                         </div>
-                                        <?php Pjax::end(); ?>
-                                        <div></div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div>
-                                <?php Pjax::begin(['id' => 'my_covo', 'enablePushState' => false]); ?>
-                                <div class="panel panel-default" id="other_convo">
-                                    <div class="panel-heading">
-                                        <h3>
-                                            <strong>Other conversation with member </strong>
-                                        </h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div id="conversations">
-                                            <i class="fa fa-spinner fa-spin pink"></i> Loading Conversation...
+                                    </li>
+                                </ul>
+                                <div>
+                                    <?php Pjax::begin(['id' => 'my_covo', 'enablePushState' => false]); ?>
+                                    <div class="panel panel-default" id="other_convo">
+                                        <div class="panel-heading">
+                                            <h3>
+                                                <strong>Other conversation with member </strong>
+                                            </h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div id="conversations">
+                                                <i class="fa fa-spinner fa-spin pink"></i> Loading Conversation...
+                                            </div>
                                         </div>
                                     </div>
+                                    <?php Pjax::end(); ?>
                                 </div>
-                                <?php Pjax::end(); ?>
                             </div>
-                        </div>
                         <?php } else { ?>
                             <div class="col-sm-9 col-md-10">
                                 <ul class="list-group">

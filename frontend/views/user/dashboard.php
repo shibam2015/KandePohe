@@ -523,15 +523,17 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                             <?php $Value = \common\models\UserRequestOp::checkSendInterest(Yii::$app->user->identity->id, $ValueRM->id);
                                                             #CommonHelper::pr(\common\models\UserRequestOp::checkSendInterest(Yii::$app->user->identity->id, $ValueRM->id));
                                                             if (count($Value)) {
+
                                                                 if ($Id == $Value->from_user_id && $Value->profile_viewed_from_to == 'Yes') {
                                                                     $ViewerId = $Value->to_user_id;
                                                                 } else {
                                                                     $ViewerId = $Value->from_user_id;
                                                                 }
                                                             } else {
-                                                                $ViewerId = $Value->id;
+                                                                $ViewerId = $ValueRM->id;
                                                             }
                                                             $UserInfoModel = User::getUserInfroamtion($ViewerId);
+                                                            #CommonHelper::pr($UserInfoModel);
                                                             ?>
                                                             <p class="s__<?= $UserInfoModel->id ?>">
                                                                 <?php
@@ -721,8 +723,6 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                     <h2 class="text-center" id="model_heading">Set Privacy Options For Your Profile</h2>
                 </div>
                 <!-- Modal Body -->
-
-
                 <div class="modal-body photo-gallery">
                     <div class="choose-photo">
                         <?php $form = ActiveForm::begin(); ?>
@@ -730,7 +730,6 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                             <div class="radio dl" id="IVA">
                                 <dt></dt>
                                 <dd data-ng-init="user_privacy_option=<?=$model->user_privacy_option?>">
-
                                     <?= $form->field($model, 'user_privacy_option')->RadioList(
                                         ['0' => 'Visible to all', '1' => 'Visible only to members whom I had contacted / responded'],
                                         [

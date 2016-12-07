@@ -5,7 +5,6 @@ use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
 use common\components\MessageHelper;
 use yii\helpers\Url;
-
 ?>
 
 <?php

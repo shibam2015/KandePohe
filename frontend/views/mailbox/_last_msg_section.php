@@ -28,7 +28,7 @@ use yii\helpers\Url;
                     data-name="<?= $FromUserId->fullName ?>"
                     data-rgnumber="<?= $FromUserId->Registration_Number ?>"
                     data-type="Accept Interest">Yes
-        </button>
+            </button>
             <button class="btn btn-secondary accept_decline request_response1"
                     role="button" data-target="#accept_decline"
                     data-toggle="modal"

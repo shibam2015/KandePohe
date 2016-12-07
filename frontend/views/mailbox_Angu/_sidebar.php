@@ -7,7 +7,6 @@ use yii\widgets\Pjax;
 use common\models\User;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-
 ?>
 
 <div class="col-sm-3 col-md-2" id="mailbox_sidebar">

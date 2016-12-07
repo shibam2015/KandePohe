@@ -15,8 +15,10 @@ app.controller('ItemController', function (dataFactory, $scope, $http) {
     function getResultsPage(pageNumber) {
         if (!$.isEmptyObject($scope.libraryTemp)) {
             dataFactory.httpRequest(URL + '/api/getData.php?search=' + $scope.searchText + '&page=' + pageNumber).then(function (data) {
-                $scope.data = data.data;
-                $scope.totalItems = data.total;
+                $scope.data = data.Data;
+                $scope.totalItems = data.Total;
+                $scope.type = data.Type;
+                $scope.id = data.Id;
             }).finally(function () {
                 // called no matter success or failure
                 $scope.showLoader = false;
@@ -24,8 +26,10 @@ app.controller('ItemController', function (dataFactory, $scope, $http) {
         } else {
             //dataFactory.httpRequest(URL + '/api/getData.php?page='+pageNumber).then(function(data) {
             dataFactory.httpRequest(URL + '/get-data?page=' + pageNumber).then(function (data) {
-                $scope.data = data.data;
-                $scope.totalItems = data.total;
+                $scope.data = data.Data;
+                $scope.totalItems = data.Total;
+                $scope.type = data.Type;
+                $scope.id = data.Id;
                 return false;
             });
         }
