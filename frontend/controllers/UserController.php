@@ -81,11 +81,6 @@ class UserController extends Controller
     public $MESSAGE;
     public $TITLE;
 
-    public function beforeAction($action) {
-        //$this->enableCsrfValidation = false;
-        return parent::beforeAction($action);
-    }
-
     public static function profileCompleteness($x)
     {
         #$id = Yii::$app->user->identity->id;
@@ -106,6 +101,11 @@ class UserController extends Controller
         if ($PERCENTAGE != 0) $PERCENTAGE += 5;
 
         return $PERCENTAGE;
+    }
+
+    public function beforeAction($action) {
+        //$this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
     }
 
     /**
@@ -2017,7 +2017,8 @@ class UserController extends Controller
         }
         $width = $orig_width;
         $height = $orig_height;
-        $max_height = $max_width = 500;
+        $max_width = 500;
+        $max_height = 350;
         # taller
         if ($height > $max_height) {
             $width = ($max_height / $height) * $width;

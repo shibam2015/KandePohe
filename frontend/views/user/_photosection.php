@@ -130,6 +130,24 @@ use yii\helpers\Url;
     </div>
 </div>
 
+<div class="modal fade" id="photoList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <p class="text-center mrg-bt-10">
+            <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+        </p>
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>-->
+                <h2 class="text-center">Photo List</h2>
+            </div>
+            <div class="modal-body" id="photoListDiv" style="margin-top: -35px;">
+            </div>
+        </div>
+    </div>
+</div>
 <script language="javascript" type="text/javascript">
     var userid = "<?=base64_encode(Yii::$app->user->identity->id)?>";
 </script>
@@ -152,6 +170,7 @@ $(my_form_id).on( "submit", function(event) {
     event.preventDefault();
     var proceed = true; //set proceed flag
     var error = [];	//errors
+    var names_photo = [];	//photo list
     var total_files_size = 0;
 
     if(!window.File && window.FileReader && window.FileList && window.Blob){ //if browser doesn"t supports File API
@@ -170,6 +189,7 @@ $(my_form_id).on( "submit", function(event) {
                     showNotification("E", "<b>"+ ifile.name + "</b> is unsupported file type!", "Error");
                     proceed = false; //set proceed flag to false
                 }
+                names_photo.push(ifile.name);
                 total_files_size = total_files_size + ifile.size; //add file size to total size
             }
         });
@@ -183,7 +203,18 @@ $(my_form_id).on( "submit", function(event) {
 		//if everything looks good, proceed with jQuery Ajax
 		if(proceed){
 		    submit_btn.html("Please Wait...").prop( "disabled", true); //disable submit button
-		    loaderStart();
+		    //loaderStart();
+		    var htmlPhotoList = "";
+		    for (ctri = 0; ctri < names_photo.length; ctri++) {
+		        htmlPhotoList += "<div class=\"notice kp_warningv\" id=\"photolists_"+ctri+"\"><span>"+names_photo[ctri]+"</span> </div>";
+            }
+            $("#photoList").modal({
+                backdrop: "static",
+                keyboard: false
+            });
+            $("#photoListDiv").html(htmlPhotoList);
+            //$("#photoList").modal();
+            //return false;
             var form_data = new FormData(this); //Creates new FormData object
             //var post_url = $(this).attr("action"); //get action URL of form
             var uid = userid;
@@ -201,10 +232,23 @@ $(my_form_id).on( "submit", function(event) {
                 $(my_form_id)[0].reset(); //reset form
                 //$(result_output).html(res); //output response from server
                 var DataObject = JSON.parse(res);
-                            loaderStop();
                             if (DataObject.STATUS == "S") {
+                                $("#photoList").modal();
                                 $("#photo_list").html(DataObject.HtmlOutput);
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                setTimeout(function(){
+                                       setTimeout(function(){
+                                          var Total = names_photo.length - 1;
+                                          for (tempi = 0; tempi < names_photo.length; tempi++) {
+                                              $("#photolists_"+tempi).addClass("kp_success").removeClass("kp_warningv");
+                                              if(tempi == Total){
+                                                setTimeout(function(){
+                                                    notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                                }, 1500);
+                                              }
+                                          }
+                                       }, 1000);
+                                }, 3000);
+                                //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                                 lightBox();
                                 profile_photo();
                             } else {

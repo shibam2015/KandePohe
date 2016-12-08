@@ -320,3 +320,17 @@ img.selected {
     overflow-y: inherit !important;
     position: absolute !important;
 }
+
+.kp_warningv {
+    border-color: #FFDC00;
+
+}
+
+.kp_warningv:before {
+    -webkit-animation: fa-spin 2s infinite linear;
+    animation: fa-spin 2s infinite linear;
+    content: "\f110";
+    font-family: FontAwesome;
+    font-size: 20px;
+    background-color: #FFDC00;
+}
