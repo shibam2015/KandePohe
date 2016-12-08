@@ -338,7 +338,7 @@ $this->registerJs('
 $this->registerJs("
     $(function () {
     $(document).on('click','.set_profile_photo',function(e){
-        //$('.set_profile_photo').click(function(){
+        //$('.set_profile_photo').click(function(){e
         $('#profilecrop').modal({
                 backdrop: 'static',
                 keyboard: false
@@ -367,7 +367,7 @@ $this->registerJs("
                             $('#image_id').val(imageid);
                             $('.crop_save').show();
                             $('img#photov').imgAreaSelect({
-                                x1 : 0, y1 : 0, x2 : 200, y2: 200,
+                                //x1 : 0, y1 : 0, x2 : 200, y2: 200,
                                 //handles: true,
                                 //fadeSpeed: 200,
                                 //show : true,
