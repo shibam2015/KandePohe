@@ -1,7 +1,6 @@
 <?php
 use yii\widgets\Pjax;
 use yii\helpers\Url;
-
 ?>
 <!-- Modal Photo -->
 <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -129,7 +128,6 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="photoList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <p class="text-center mrg-bt-10">
@@ -152,7 +150,6 @@ use yii\helpers\Url;
     var userid = "<?=base64_encode(Yii::$app->user->identity->id)?>";
 </script>
 <?php
-
 $this->registerJs('
   $(function () {
         var max_file_size 		= 2048576; //allowed file size. (1 MB = 1048576)
