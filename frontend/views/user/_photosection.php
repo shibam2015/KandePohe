@@ -64,7 +64,7 @@ use yii\helpers\Url;
 </div>
 <div class="modal fade photo-kp-crop1 profilecropmodal" id="profilecrop" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel"
-     aria-hidden="true">
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog"><!--modal-lg -->
         <p class="text-center mrg-bt-10">
             <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
@@ -342,7 +342,7 @@ $this->registerJs("
     $(function () {
     $(document).on('click','.set_profile_photo',function(e){
         //$('.set_profile_photo').click(function(){
-            $('#profilecrop').modal({
+        $('#profilecrop').modal({
                 backdrop: 'static',
                 keyboard: false
             });

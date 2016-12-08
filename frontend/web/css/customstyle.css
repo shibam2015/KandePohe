@@ -334,3 +334,11 @@ img.selected {
     font-size: 20px;
     background-color: #FFDC00;
 }
+
+#changePic {
+    margin-top: -22px !important;
+}
+
+.crop_save {
+    margin-top: -30px !important;
+}
