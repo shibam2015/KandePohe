@@ -93,6 +93,7 @@ class SearchController extends Controller
         } else {
             $id = Yii::$app->user->identity->id;
             $TempModel = User::findOne($id);
+            $WhereId = " AND user.id != " . $id;
         }
 
         if ($TempModel->load(Yii::$app->request->post())) {
@@ -129,7 +130,15 @@ class SearchController extends Controller
             $AgeTo = $session->get('AgeTo');
         }
         $WHERE = '';
+        if ($Gender == '') {
+            if ($TempModel->Gender == 'MALE') {
+                $WHERE .= " AND user.Gender = 'FEMALE'";
+            } else if ($TempModel->Gender == 'FEMALE') {
+                $WHERE .= " AND user.Gender = 'MALE'";
+            }
+        }
         $WHERE .= ($Gender != '') ? ' AND user.Gender = "' . $Gender . '" ' : '';
+
         $WHERE .= ($Community != '') ? ' AND user.iCommunity_ID = "' . $Community . '" ' : '';
         $WHERE .= ($SubCommunity != '') ? ' AND user.iSubCommunity_ID = "' . $SubCommunity . '" ' : '';
         $WHERE .= ($Height != '') ? ' AND user.iHeightID = "' . $Height . '" ' : '';
@@ -137,6 +146,7 @@ class SearchController extends Controller
         $WHERE .= ($MaritalStatusID != '') ? ' AND user.Marital_Status = "' . $MaritalStatusID . '" ' : '';
         $WHERE .= ($AgeFrom != '') ? ' AND user.Age >= "' . $AgeFrom . '" ' : '';
         $WHERE .= ($AgeTo != '') ? ' AND user.Age <= "' . $AgeTo . '" ' : '';
+        $WHERE .= $WhereId;
         $Limit = Yii::$app->params['searchingLimit'];
         $Offset = (Yii::$app->request->get('Offset') == 0) ? 0 : Yii::$app->request->get('Offset');
         $Page = (Yii::$app->request->get('page') == 0 || Yii::$app->request->get('page') == '') ? 0 : Yii::$app->request->get('page');
