@@ -532,9 +532,9 @@ Policy]</a> and <a href="#" title="[T&C]">[T&C]</a></label>';
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">
                             <div
-                                class="form-cont"> <?= $form->field($login, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control', 'title' => 'Email ID is mandatory to register at Kande- Pohe.com. We never share your email address with 3rd parties.'])->error('false'); ?> </div>
+                                class="form-cont"> <?= $form->field($login, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control', "data-toggle" => "tooltip", "data-placement" => "top", 'data-original-title' => 'Email ID is mandatory to register at Kande- Pohe.com. We never share your email address with 3rd parties.'])->error('false'); ?> </div>
                             <div class="form-cont">
-                                <?= $form->field($login, 'password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Password</span> </label></span>{error}<div class="loginerror"></div> '])->input('password', ['class' => 'input__field input__field--akira form-control', 'title' => 'Please enter a password with minimum 6 characters'])->error(false); ?>
+                                <?= $form->field($login, 'password', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Password</span> </label></span>{error}<div class="loginerror"></div> '])->input('password', ['class' => 'input__field input__field--akira form-control', "data-toggle" => "tooltip", "data-placement" => "top", 'data-original-title' => 'Please enter a password with minimum 6 characters'])->error(false); ?>
                             </div>
                             <div class="checkbox">
                                 <input id="Remember" type="checkbox" name="Remember" value="yes">
@@ -624,7 +624,7 @@ FREE" data-toggle="modal"
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">
                             <div class="form-cont">
-                                <?= $form->field($forgot, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control']) ?>
+                                <?= $form->field($forgot, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control', "data-toggle" => "tooltip", "data-placement" => "top", 'data-original-title' => 'Email ID is mandatory.']) ?>
                             </div>
                             <?= Html::submitButton('REQUEST RESET LINK', ['class' => 'btn btn-primary mrg-tp-10 col-xs-12 reset_password', 'name' => 'reset-password-request', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Wait...']) ?>
                         </div>
