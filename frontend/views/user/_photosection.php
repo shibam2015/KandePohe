@@ -151,6 +151,10 @@ use yii\helpers\Url;
 </script>
 <?php
 $this->registerJs('
+$("#file_browse_wrapper").click(function() {
+    $("#file_browse").click();
+});
+
   $(function () {
         var max_file_size 		= 2048576; //allowed file size. (1 MB = 1048576)
         //var allowed_file_types 		= ["image/png", "image/gif", "image/jpeg", "image/pjpeg"]; //allowed file types
