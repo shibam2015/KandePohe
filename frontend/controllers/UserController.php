@@ -1537,7 +1537,6 @@ class UserController extends Controller
     public function actionProfileViewedBy($Id, $ToUserId)
     {
         $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
-        #CommonHelper::pr($Model);//exit;
         $Temp = 0;
         $Model->scenario = UserRequest::SCENARIO_PROFILE_VIEWED_BY;
         if ($Model->id) {
@@ -1574,11 +1573,12 @@ class UserController extends Controller
         $UserModel = User::findOne($ToUserId);
         $PG = new UserPhotos();
         $USER_PHOTOS_LIST = $PG->findByProfilePhoto($id);
-        if (count($USER_PHOTOS_LIST) != 0) {
-            $PHOTO = CommonHelper::getPhotos('USER', $id, $USER_PHOTOS_LIST->File_Name, 200);
+        /*if (count($USER_PHOTOS_LIST) != 0) {
+            $PHOTO = CommonHelper::getPhotos('USER', $id, "200" . $USER_PHOTOS_LIST->File_Name, 200, '', 'Yes');
         } else {
             $PHOTO = CommonHelper::getUserDefaultPhoto();
-        }
+        }*/
+        $PHOTO = CommonHelper::getPhotos('USER', $id, "200" . $Model->propic, 200, '', 'Yes');
         $LINK = CommonHelper::getSiteUrl('FRONTEND', 1) . 'user/profile?uk=' . $Model->Registration_Number;
         $PHOTO = '<img src="' . $PHOTO . '" width="200"  alt="Profile Photo">';
         $MAIL_DATA = array("EMAIL_TO" => $UserModel->email, "NAME" => $UserModel->First_Name . " " . $UserModel->Last_Name, "USER_NAME" => $Model->First_Name . " " . $Model->Last_Name, "TODAY_DATE" => date('d-m-Y'), "AGE" => CommonHelper::getAge($Model->DOB), "HEIGHT" => CommonHelper::setInputVal($Model->height->vName, 'text'), "RELIGION" => CommonHelper::setInputVal($Model->religionName->vName, 'text'), "MOTHER_TONGUE" => CommonHelper::setInputVal($Model->motherTongue->Name, 'text'), "COMMUNITY" => CommonHelper::setInputVal($Model->communityName->vName, 'text'), "LOCATION" => CommonHelper::setInputVal($Model->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($Model->countryName->vCountryName, 'text'), "EDUCATION" => CommonHelper::setInputVal($Model->educationLevelName->vEducationLevelName, 'text'), "PROFESSION" => CommonHelper::setInputVal($Model->workingAsName->vWorkingAsName, 'text'), "ABOUT_ME" => CommonHelper::truncate($Model->tYourSelf, 100), 'LINK' => $LINK, 'PHOTO' => $PHOTO);
