@@ -58,7 +58,10 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                         <div>
                                                             <form action="" method="post" enctype="multipart/form-data"
                                                                   id="upload_form">
-                                                                <div id="file_browse_wrapper">Upload photo from computer
+                                                                <div id="file_browse_wrapper" data-toggle="tooltip"
+                                                                     data-placement="top"
+                                                                     data-original-title="Click here to upload photos from your PC’s /Laptop’s local drive ">
+                                                                    Upload photo from computer
                                                                 </div>
                                                                 <input name="__files[]" id="file_browse" type="file"
                                                                        multiple class="fileupload"/>
@@ -91,7 +94,9 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                  id="img_<?= $V['iPhoto_ID'] ?>">
                                                                 <div class="gallery">
                                                                     <a class="<?= $SELECTED ?>"
-                                                                       href="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>">
+                                                                       href="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
+                                                                       data-toggle="tooltip" data-placement="top"
+                                                                       data-original-title="Click for full view">
                                                                         <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->params['thumbnailPrefix'] . "110_" . $V['File_Name'], 110), ['class' => 'img-responsive ' . $SELECTED, 'width' => '140', 'alt' => 'Photo' . $K]); ?>
                                                                     </a>
                                                                 </div>
