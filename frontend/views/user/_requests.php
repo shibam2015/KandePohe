@@ -20,13 +20,22 @@ if (($Id == $ModelUser->from_user_id && $ModelUser->send_request_status_from_to 
                 data-toggle="modal"> Send Interest <i class="fa fa-heart-o"></i>
         </button>
         <!--<button type="button" class="btn active sendInterest send_request1"> Send Interest <i class="fa fa-heart-o"></i> </button>-->
-        <button type="button" class="btn active"> Shortlist <i class="fa fa-list-ul"></i></button>
+        <button type="button"
+                class="btn active <?php if ($ModelUser->short_list_status_from_to == 'No') { ?>shortlistUser<?php } ?>"
+                data-name="<?= $ToUserInfo->fullName ?>">
+            Shortlist<?php if ($ModelUser->short_list_status_from_to != 'No') { ?>ed <?php } ?> <i
+                class="fa fa-list-ul"></i></button>
         <button type="button" class="btn active "> Block <i class="fa fa-ban"></i></button>
         <!--<button type="button" class="btn"> No <i class="fa fa-thumbs-o-down"></i></button>-->
     </div>
+    <?php if ($ModelUser->short_list_status_from_to != 'No') { ?>
+        <div class="name-panel inblock-msg mrg-tp-20">
+            <p> You have added this member to Shortlist. <a>View More</a>.</p>
+        </div>
+    <?php } ?>
 <?php } else if (($Id == $ModelUser->from_user_id && $ModelUser->send_request_status_from_to == 'Yes' && $ModelUser->send_request_status_to_from != 'Yes') || ($Id == $ModelUser->to_user_id && $ModelUser->send_request_status_to_from == 'Yes' && $ModelUser->send_request_status_from_to != 'Yes')) {
     ?>
-    <div class="name-panel">
+    <div class="name-panel inblock-msg mrg-tp-20">
         <p>Waiting for a response? Send <?= ($model->Gender != 'MALE') ? 'her' : 'his'; ?> a Reminder...</p>
     </div>
     <div class="profile-control requests">

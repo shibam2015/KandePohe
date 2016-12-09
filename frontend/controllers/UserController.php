@@ -1647,6 +1647,27 @@ class UserController extends Controller
                     return json_encode($temp);
                     exit;
                 }
+            } else if ($RequestAction == 'Block User') {
+                $temp['Action'] = 'BLOCK_USER';
+                $temp['STATUS'] = $this->actionUserBlock($Id, $ToUserId, 'BLOCK_USER_OF');
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification($temp['STATUS'], 'BLOCK_USER');
+                $temp['MESSAGE'] = $MESSAGE;
+                $temp['TITLE'] = $TITLE;
+                if ($Page != 'PROFILE') {
+                    return json_encode($temp);
+                    exit;
+                }
+            } else if ($RequestAction == 'SHORTLIST_USER') {
+                $temp['Action'] = 'SHORTLIST_USER';
+                $temp['STATUS'] = $this->actionUserShortList($Id, $ToUserId, 'SHORTLIST_USER_OF');
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification($temp['STATUS'], 'SHORTLIST_USER', array("NAME" => Yii::$app->request->post('Name')));
+                $temp['STATUS'] = $STATUS;
+                $temp['MESSAGE'] = $MESSAGE;
+                $temp['TITLE'] = $TITLE;
+                if ($Page != 'PROFILE') {
+                    return json_encode($temp);
+                    exit;
+                }
             }
         }
         #$modelUser = UserRequestOp::checkUsers($Id, $ToUserId);
@@ -1865,6 +1886,94 @@ class UserController extends Controller
         if ($Temp) {
             if ($Model->save()) {
                 $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['cancelInterestMessage'], 'CancelInterest');
+                $this->actionMailSendRequest($Id, $ToUserId, $MailType);
+                return 'S';
+            } else {
+                return 'E';
+            }
+        }
+    }
+
+    public function actionUserBlock($Id, $ToUserId, $MailType)
+    {
+        $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
+        $Temp = 0;
+        $Model->scenario = UserRequestOp::SCENARIO_CANCEL_INTEREST;
+        if ($Model->id) {
+            if ($Id == $Model->from_user_id) {
+                if ($Model->send_request_status_from_to == 'Yes') {
+                    $Temp = 1;
+                    $Model->send_request_status_from_to = 'No';
+                } else if ($Model->send_request_status_from_to == 'No') {
+                    return 'IN';
+                } else if ($Model->send_request_status_from_to == 'Rejected') {
+                    return 'IR';
+                } else if ($Model->send_request_status_from_to == 'Accepted') {
+                    return 'IA';
+                } else {
+                    return 'W';
+                }
+
+            } else if ($Id == $Model->to_user_id) {
+                if ($Model->send_request_status_to_from == 'Yes') {
+                    $Temp = 1;
+                    $Model->send_request_status_to_from = 'No';
+                } else if ($Model->send_request_status_to_from == 'No') {
+                    return 'IN';
+                } else if ($Model->send_request_status_to_from == 'Rejected') {
+                    return 'IR';
+                } else if ($Model->send_request_status_to_from == 'Accepted') {
+                    return 'IA';
+                } else {
+                    return 'W';
+                }
+            }
+        } else {
+            return 'W';
+        }
+        if ($Temp) {
+            if ($Model->save()) {
+                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['cancelInterestMessage'], 'CancelInterest');
+                //$this->actionMailSendRequest($Id, $ToUserId, $MailType);
+                return 'S';
+            } else {
+                return 'E';
+            }
+        }
+    }
+
+    public function actionUserShortList($Id, $ToUserId, $MailType)
+    {
+        $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
+        $Temp = 0;
+        $Model->scenario = UserRequestOp::SCENARIO_SHORTLIST_INTEREST;
+        if ($Model->id) {
+            if ($Id == $Model->from_user_id) {
+                if ($Model->short_list_status_from_to == 'No') {
+                    $Temp = 1;
+                    $Model->short_list_status_from_to = 'Yes';
+                } else if ($Model->short_list_status_from_to == 'Yes') {
+                    return 'UB';
+                } else {
+                    return 'W';
+                }
+
+            } else if ($Id == $Model->to_user_id) {
+                if ($Model->short_list_status_to_from == 'No') {
+                    $Temp = 1;
+                    $Model->short_list_status_to_from = 'Yes';
+                } else if ($Model->short_list_status_to_from == 'Yes') {
+                    return 'UB';
+                } else {
+                    return 'W';
+                }
+            }
+        } else {
+            return 'W';
+        }
+        if ($Temp) {
+            if ($Model->save()) {
+                //$this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['cancelInterestMessage'], 'CancelInterest');
                 $this->actionMailSendRequest($Id, $ToUserId, $MailType);
                 return 'S';
             } else {

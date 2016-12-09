@@ -88,7 +88,7 @@ use yii\widgets\Pjax;
                                         </div>
                                         <?php Pjax::begin(['id' => 'my_index', 'enablePushState' => false]); ?>
                                         <div class="profile-control requests">
-                                            Loading...
+                                            <i class="fa fa-spinner fa-spin pink"></i> Loading...
                                             <!--<button type="button" class="btn active sendInterest" data-target="#sendInterest"
                                                     data-toggle="modal"> Send Interest <i class="fa fa-heart-o"></i>
                                             </button>
@@ -887,6 +887,13 @@ $(document).on("click",".send_email",function(e){
     $(document).on("click",".send_request",function(e){
         loaderStart();
         formData.append("Action", "SEND_INTEREST");
+        sendRequest("' . Url::to(['user/user-request']) . '",".requests",formData);
+    });
+    $(document).on("click",".shortlistUser",function(e){
+        loaderStart();
+        formData.append("Action", "SHORTLIST_USER");
+        formData.append("Page",  "PROFILE");
+        formData.append("Name", $(this).data("name"));
         sendRequest("' . Url::to(['user/user-request']) . '",".requests",formData);
     });
     $(document).on("click",".a_b_d",function(e){

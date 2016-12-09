@@ -39,6 +39,7 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
     const SCENARIO_ACCEPT_INTEREST = 'Accept Interest Request';
     const SCENARIO_DECLINE_INTEREST = 'Decline Interest Request';
     const SCENARIO_CANCEL_INTEREST = 'Cancel Interest Request';
+    const SCENARIO_SHORTLIST_INTEREST = 'Short List User Request';
     /**
      * @inheritdoc
      */
@@ -160,6 +161,7 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
             self::SCENARIO_ACCEPT_INTEREST => ['from_user_id', 'to_user_id', 'send_request_status_from_to', 'date_accept_request_from_to', 'send_request_status_to_from', 'date_accept_request_to_from'],
             self::SCENARIO_DECLINE_INTEREST => ['from_user_id', 'to_user_id', 'send_request_status_from_to', 'date_decline_request_from_to', 'send_request_status_to_from', 'date_decline_request_to_from'],
             self::SCENARIO_CANCEL_INTEREST => ['from_user_id', 'to_user_id', 'send_request_status_from_to', 'send_request_status_to_from'],
+            self::SCENARIO_SHORTLIST_INTEREST => ['from_user_id', 'to_user_id', 'short_list_status_from_to', 'short_list_status_to_from'],
 
         ];
 
