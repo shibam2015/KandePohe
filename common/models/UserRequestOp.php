@@ -78,7 +78,7 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
         if ($Limit != '') {
             $WhereLimit = ' LIMIT ' . $Limit;
         }
-        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.to_user_id = " . $id . " OR user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.from_user_id = " . $id . " OR user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC " . $WhereLimit;
+        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.to_user_id = " . $id . " AND user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.from_user_id = " . $id . " AND user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC " . $WhereLimit;
         return Static::findBySql($sql)->all();
         /*$sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.to_user_id = " . $id . " AND user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.from_user_id = " . $id . " AND user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC LIMIT " . $Limit;*/
 
@@ -95,7 +95,7 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
 
     public static function getSendBoxList($id, $Limit)
     {
-        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $id . " OR  user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.to_user_id = " . $id . " OR  user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC LIMIT " . $Limit;
+        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $id . " AND  user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.to_user_id = " . $id . " AND  user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC LIMIT " . $Limit;
         return Static::findBySql($sql)->all();
         /*$sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $id . " AND user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.to_user_id = " . $id . " AND user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC LIMIT " . $Limit;*/
 
@@ -105,6 +105,17 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
     {
         $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $Id . " AND user_request_op.to_user_id = " . $ToUserId . " AND user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.to_user_id = " . $Id . " AND user_request_op.from_user_id = " . $ToUserId . " AND user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC ";
         return Static::findBySql($sql)->one();
+
+    }
+
+    public static function getShortList($id, $Limit = '', $Offset = '')
+    {
+        $WhereLimit = '';
+        if ($Limit != '') {
+            $WhereLimit = ' LIMIT ' . $Limit;
+        }
+        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.to_user_id = " . $id . " OR user_request_op.short_list_status_from_to != 'No' ) OR (user_request_op.from_user_id = " . $id . " OR user_request_op.short_list_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC " . $WhereLimit;
+        return Static::findBySql($sql)->offset($Offset)->limit($Limit)->all();
 
     }
 

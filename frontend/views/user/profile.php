@@ -699,7 +699,7 @@ use yii\widgets\Pjax;
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-sm-12">
-                                    <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $model->propic, 140), ['width' => '', 'height' => '120', 'alt' => 'Profile', 'class' => '']); ?>
+                                    <?= Html::img(CommonHelper::getPhotos('USER', $model->id, '120' . $model->propic, 120, '', 'Yes'), ['width' => '', 'height' => '120', 'alt' => 'Profile', 'class' => '']); ?>
                                 </div>
                                 <div class="col-md-12 col-sm-12">
                                     <h6 class="mrg-bt-30 mrg-tp-20 font-15 text-dark"><strong>Request the member to add

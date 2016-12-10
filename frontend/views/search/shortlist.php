@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -8,21 +7,7 @@ use common\components\MessageHelper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
-$id = 0;
-$PROFILE_COMPLETENESS = 50;
-
-if (!Yii::$app->user->isGuest) {
-    $Id = Yii::$app->user->identity->id;
-}
-
-$HOME_URL = Yii::getAlias('@web') . "/";
-$HOME_URL_SITE = Yii::getAlias('@web') . "/site/";
-$UPLOAD_DIR = Yii::getAlias('@frontend') . '/web/uploads/';
-$IMG_DIR = Yii::getAlias('@frontend') . '/web/';
-
-$M1 = array();
 ?>
-
 <div class="main-section">
     <?php
     if (!Yii::$app->user->isGuest) {
@@ -38,218 +23,15 @@ $M1 = array();
                     <div class="col-md-12">
                         <div class="sidebar1">
                             <div class="mrg-tp-20">
-                                <div class="dropdown drp-lg">
-                                    <button class="btn gray-filter dropdown-toggle" id="filter-toggle" type="button"
-                                            aria-haspopup="true" aria-expanded="true"> Filters <i
-                                            class="fa indicator fa-angle-down"></i></button>
-                                    <div class="open-div">
-                                        <?php
-                                        $form = ActiveForm::begin([
-                                            'id' => 'formsearch',
-                                            'action' => ['search/basic-search'],
-                                            'options' => ['data-pjax' => true],
-                                            'layout' => 'horizontal',
-                                            'validateOnChange' => false,
-                                            'validateOnSubmit' => true,
-                                            'fieldConfig' => [
-                                                'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
-                                                'horizontalCssClasses' => [
-                                                    'label' => 'col-sm-3 col-xs-3',
-                                                    'offset' => '',
-                                                    'wrapper' => 'col-sm-8 col-xs-8',
-                                                    'error' => '',
-                                                    'hint' => '',
-                                                ]
-                                            ]
-                                        ]);
-                                        ?>
-
-
-                                        <div class="row">
-                                            <?php
-                                            $heightrange = range(134, 204);
-                                            $range = range(18, 100);
-                                            ?>
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                            <?= $form->field($TempModel, 'AgeFrom')->dropDownList(
-                                                                array_combine($range, $range),
-                                                                ['class' => 'cs-select cs-skin-border',
-                                                                    'prompt' => 'From']
-                                                            )->label(true)->error(false); ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                            <?= $form->field($TempModel, 'AgeTo')->dropDownList(
-                                                                array_combine($range, $range),
-                                                                ['class' => 'cs-select cs-skin-border',
-                                                                    'prompt' => 'To']
-                                                            )->label(true)->error(false); ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                            <?= $form->field($TempModel, 'iCommunity_ID')->dropDownList(
-                                                                ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
-                                                                ['class' => 'cs-select cs-skin-border',
-                                                                    'prompt' => 'Community'
-                                                                ]
-                                                            )->label(true)->error(false); ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                            <?= $form->field($TempModel, 'iSubCommunity_ID')->dropDownList(
-                                                                ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
-                                                                ['class' => 'cs-select cs-skin-border',
-                                                                    'prompt' => 'Sub Community']
-                                                            )->label(true)->error(false); ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                            <?= $form->field($TempModel, 'iReligion_ID')->dropDownList(
-                                                                ArrayHelper::map(CommonHelper::getReligion(), 'iReligion_ID', 'vName'),
-                                                                ['class' => 'cs-select cs-skin-border',
-                                                                    'prompt' => 'Religion']
-                                                            )->label(true)->error(false); ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                            <?= $form->field($TempModel, 'Marital_Status')->dropDownList(
-                                                                ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
-                                                                ['class' => 'cs-select cs-skin-border',
-                                                                    'prompt' => 'Maritial Status',
-                                                                ]
-                                                            )->label(true)->error(false); ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                            <?= $form->field($TempModel, 'iHeightID')->dropDownList(
-                                                                ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
-                                                                ['class' => 'cs-select cs-skin-border',
-                                                                    'prompt' => 'Height']
-                                                            )->label(true)->error(false); ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                            <?= $form->field($TempModel, 'Profile_for')->dropDownList(
-                                                                ['FEMALE' => 'BRIDE', 'MALE' => 'GROOM'],
-                                                                ['class' => 'cs-select cs-skin-border',
-                                                                    'prompt' => 'Looking For'
-                                                                ]
-                                                            )->label(true); ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--<div class="row">
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                            <label for="amount">Area:</label>
-
-                                                            <div id="slider-range"></div>
-                                                            <input type="text" class="cs-select cs-skin-border"
-                                                                   id="amount" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>-->
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                            <?= Html::submitButton('search', ['class' => 'btn btn-primary', 'name' => 'button']) ?>
-                                                            <?= Html::resetButton('Reset', ['class' => 'btn btn-primary']) ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                            <?= html::a('<i class="ti-power-off m-r-5"></i> Advanced Search</a>', ['search/advanced-search'], ['data-method' => 'post']) ?>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <?php ActiveForm::end(); ?>
-
-
-                                    </div>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        <li><a href="#">Test 1</a></li>
-                                        <li><a href="#">Test 2</a></li>
-                                        <li><a href="#">Test 3</a></li>
-                                    </ul>
-                                </div>
                                 <div class="gray-bg mrg-tp-5">
-                                    <div class="matches pull-left padd-10"><span> Matches Found: <span
+                                    <div class="matches pull-left padd-10"><span> Total : <span
                                                 class="orange-text"><?= $TotalRecords ?></span> </span></div>
                                     <div class="pull-right filter-small padd-10">
-                                        <ul class="list-inline">
+                                        <!--<ul class="list-inline">
                                             <li><a href="#">Search By ID</a></li>
                                             <li><a href="#">Save Search</a></li>
                                             <li><a href="#">Modify Search</a></li>
-                                        </ul>
+                                        </ul>-->
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -259,7 +41,7 @@ $M1 = array();
                                     <div class="row mrg-tp-10">
                                         <div class="col-md-12">
                                             <div class="notice kp_info">
-                                                <p><?= Yii::$app->params['noRecordsFoundInSearchList'] ?></p>
+                                                <p><?= Yii::$app->params['noRecordsFoundInShortList'] ?></p>
                                             </div>
                                             <div class="clearfix"></div>
                                 <span class="pull-right"><a href="<?= Yii::$app->homeUrl ?>" class="text-right">Back To
@@ -268,9 +50,12 @@ $M1 = array();
                                     </div>
                                 </div>
                             <?php } else { ?>
-                                <?php
-
-                                foreach ($Model as $SK => $SV) {
+                                <?php foreach ($Model as $SK => $SV) {
+                                    if ($SV->from_user_id == $Id) {
+                                        $SV = $SV->toUserInfo;
+                                    } else {
+                                        $SV = $SV->fromUserInfo;
+                                    }
                                     ?>
                                     <div
                                         class="white-section <?= ($SK == 0) ? 'listing' : ''; ?> border-sharp mrg-tp-10">
@@ -294,46 +79,17 @@ $M1 = array();
                                                              data-ride="carousel">
                                                             <!-- Wrapper for slides -->
                                                             <div class="carousel-inner">
-                                                                <?php
-                                                                if (is_array($Photos[$SV->id])) {
-                                                                    foreach ($Photos[$SV->id] as $K => $V) {
-                                                                        #CommonHelper::pr($V);
-                                                                        $SELECTED = '';
-                                                                        $Photo = Yii::$app->params['thumbnailPrefix'] . '120_' . $V->File_Name;
-                                                                        $Yes = 'No';
-                                                                        if ($V['Is_Profile_Photo'] == 'YES') {
-                                                                            $SELECTED = "active";
-                                                                            $Photo = '120' . $SV->propic;
-                                                                            $Yes = 'Yes';
-                                                                        } ?>
-                                                                        <div
-                                                                            class="item <?= ($K == 0) ? 'active' : ''; ?>">
-                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, $Photo, 120, '', $Yes), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
-                                                                        </div>
-                                                                    <?php
-                                                                    }
-                                                                } else { ?>
-                                                                    <div class="item active">
-                                                                        <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, $Photos[$SV->id], 120), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive item']); ?>
-                                                                    </div>
-                                                                <?php }
-                                                                ?>
+
+                                                                <div class="item active">
+                                                                    <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, '120' . $SV->propic, 120, '', 'Yes'), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive item']); ?>
+                                                                </div>
+
                                                             </div>
                                                             <!-- Controls -->
-                                                            <a class="left carousel-control"
-                                                               href="#carousel-example-generic" data-slide="prev"> <span
-                                                                    class="glyphicon glyphicon-chevron-left"></span>
-                                                            </a> <a class="right carousel-control"
-                                                                    href="#carousel-example-generic" data-slide="next">
-                                                                <span class="glyphicon glyphicon-chevron-right"></span>
-                                                            </a></div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <?php if (count($SV) > 0) { ?>
-                                                    <p class="text-right"><a href="#" data-toggle="modal"
-                                                                             data-target="#photo">View
-                                                            Album <i class="fa fa-angle-right"></i></a></p>
-                                                <?php } ?>
+
                                             </div>
                                             <div class="col-sm-9">
                                                 <div class="name-panel">
@@ -401,8 +157,7 @@ $M1 = array();
                                                     <div class="col-sm-12">
                                                         <div class="profile-control-vertical">
                                                             <ul class="list-unstyled pull-right">
-                                                                <li><a href="#">Shortlist <i class="fa fa-list-ul"></i></a>
-                                                                </li>
+                                                                <!--<li><a href="javascript:void(0)">Shortlisted <i class="fa fa-list-ul"></i></a></li>-->
                                                                 <li class="s__<?= $SV->id ?>">
                                                                     <?php
 
@@ -529,12 +284,12 @@ $M1 = array();
                                                 <div class="col-sm-12">
                                                     <div class="profile-control-vertical">
                                                         <ul class="list-unstyled pull-right">
-                                                            <li>
+                                                            <!--<li>
                                                                 <a href="javascript:void(0)" class="send_email"
                                                                    role="button"
                                                                    data-target="#sendMail" data-toggle="modal"
-                                                                    >Shortlist <i class="fa fa-list-ul"></i></a>
-                                                            </li>
+                                                                    >Shortlisted <i class="fa fa-list-ul"></i></a>
+                                                            </li>-->
                                                             <li class="s__<?= $SV->id ?>">
                                                                 <a href="javascript:void(0)" class="send_email"
                                                                    role="button"

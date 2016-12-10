@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use common\models\Mailbox;
 use common\models\UserPhotos;
 use common\models\UserRequest;
+use common\models\UserRequestOp;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -313,4 +314,42 @@ class SearchController extends Controller
             'temp' => $temp,
         ]);
     }
+
+    public function actionShortList()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $Id = Yii::$app->user->identity->id;
+        $Limit = Yii::$app->params['searchingLimit'];
+        $Offset = (Yii::$app->request->get('Offset') == 0) ? 0 : Yii::$app->request->get('Offset');
+        $Page = (Yii::$app->request->get('page') == 0 || Yii::$app->request->get('page') == '') ? 0 : Yii::$app->request->get('page');
+        if ($Page) {
+            $Page = $Page - 1;
+            $Offset = $Limit * $Page;
+        } else {
+            $Page = 0;
+            $Offset = 0;
+        }
+        $ShortList = UserRequestOp::getShortList($Id, $Offset, $Limit);
+        foreach ($ShortList as $Key => $Value) {
+            #CommonHelper::pr($Value);exit;
+            if ($Value->from_user_id == $Id) {
+                $ModelInfo[$Key] = $Value->toUserInfo;
+            } else {
+                $ModelInfo[$Key] = $Value->fromUserInfo;
+            }
+        }
+        #CommonHelper::pr($ModelInfo);
+        #CommonHelper::pr($ShortList);exit;
+        return $this->render('shortlist', [
+            'Model' => $ShortList,
+            'Id' => $Id,
+            'TotalRecords' => count($ShortList),
+            'Offset' => $Offset,
+            'Limit' => $Limit,
+            'Page' => $Page,
+        ]);
     }
+}

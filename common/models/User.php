@@ -77,7 +77,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public $Community;
     public $SubCommunity;
-    public $height;
+    #public $height;
 
     // public $captcha;
     /**

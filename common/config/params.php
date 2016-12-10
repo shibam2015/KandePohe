@@ -43,6 +43,6 @@ return [
     'fileUploadSize' => 'You are trying to upload photos more than limit.',
     'fileUnsoupportedType' => 'You are trying to upload unsupported file type.',
     'profilePhotoFolder' => 'profile',
-
+    'noRecordsFoundInShortList' => 'There are no record found in your short list.',
 ];
 

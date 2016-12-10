@@ -1581,7 +1581,8 @@ class UserController extends Controller
         $PHOTO = CommonHelper::getPhotos('USER', $id, "200" . $Model->propic, 200, '', 'Yes');
         $LINK = CommonHelper::getSiteUrl('FRONTEND', 1) . 'user/profile?uk=' . $Model->Registration_Number;
         $PHOTO = '<img src="' . $PHOTO . '" width="200"  alt="Profile Photo">';
-        $MAIL_DATA = array("EMAIL_TO" => $UserModel->email, "NAME" => $UserModel->First_Name . " " . $UserModel->Last_Name, "USER_NAME" => $Model->First_Name . " " . $Model->Last_Name, "TODAY_DATE" => date('d-m-Y'), "AGE" => CommonHelper::getAge($Model->DOB), "HEIGHT" => CommonHelper::setInputVal($Model->height->vName, 'text'), "RELIGION" => CommonHelper::setInputVal($Model->religionName->vName, 'text'), "MOTHER_TONGUE" => CommonHelper::setInputVal($Model->motherTongue->Name, 'text'), "COMMUNITY" => CommonHelper::setInputVal($Model->communityName->vName, 'text'), "LOCATION" => CommonHelper::setInputVal($Model->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($Model->countryName->vCountryName, 'text'), "EDUCATION" => CommonHelper::setInputVal($Model->educationLevelName->vEducationLevelName, 'text'), "PROFESSION" => CommonHelper::setInputVal($Model->workingAsName->vWorkingAsName, 'text'), "ABOUT_ME" => CommonHelper::truncate($Model->tYourSelf, 100), 'LINK' => $LINK, 'PHOTO' => $PHOTO);
+        $MAIL_DATA = array("EMAIL_TO" => $UserModel->email, "NAME" => $UserModel->FullName, "USER_NAME" => $Model->FullName, "TODAY_DATE" => date('d-m-Y'), "AGE" => CommonHelper::getAge($Model->DOB), "HEIGHT" => CommonHelper::setInputVal($Model->height->vName, 'text'), "RELIGION" => CommonHelper::setInputVal($Model->religionName->vName, 'text'), "MOTHER_TONGUE" => CommonHelper::setInputVal($Model->motherTongue->Name, 'text'), "COMMUNITY" => CommonHelper::setInputVal($Model->communityName->vName, 'text'), "LOCATION" => CommonHelper::setInputVal($Model->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($Model->countryName->vCountryName, 'text'), "EDUCATION" => CommonHelper::setInputVal($Model->educationLevelName->vEducationLevelName, 'text'), "PROFESSION" => CommonHelper::setInputVal($Model->workingAsName->vWorkingAsName, 'text'), "ABOUT_ME" => CommonHelper::truncate($Model->tYourSelf, 100), 'LINK' => $LINK, 'PHOTO' => $PHOTO);
+        #echo "<pre>";print_r($MAIL_DATA);#exit;
         if ($Model->Gender == 'MALE') {
             $MAIL_STATUS = MailHelper::SendMail($MailType . '_GROOM', $MAIL_DATA);
         } else {
@@ -1592,7 +1593,9 @@ class UserController extends Controller
 
     public function actionSendEmailProfile()
     {
-        $UserId = Yii::$app->request->post('UserId');
+        #echo "<pre>";print_r($_REQUEST);exit;
+
+        $UserId = Yii::$app->request->post('ToUserId');
         $id = Yii::$app->user->identity->id;
         $MAIL_STATUS = $this->actionMailSendRequest($id, $UserId, 'PROFILE_OF');
         if ($MAIL_STATUS) {
