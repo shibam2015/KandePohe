@@ -246,41 +246,52 @@ class UserController extends Controller
     {
         $id = Yii::$app->user->identity->id;
         if ($model = User::findOne($id)) {
-            $model->scenario = User::SCENARIO_REGISTER6;
             $FILE_COUNT = count($_FILES);
-            if ($FILE_COUNT != 0) {
-                $CM_HELPER = new CommonHelper();
-                $PATH = $CM_HELPER->getUserUploadFolder(1) . $id . "/";
-                $URL = $CM_HELPER->getUserUploadFolder(2) . $id . "/";
-                $USER_SIZE_ARRAY = $CM_HELPER->getUserResizeRatio();
-                $PHOTO_ARRAY = CommonHelper::photoUploads($id, $_FILES["__files"], $PATH, $URL, $USER_SIZE_ARRAY, '');
-                if ($PHOTO_ARRAY['STATUS']) {
-                    if (is_array($PHOTO_ARRAY['PhotoArray'])) {
-                        foreach ($PHOTO_ARRAY['PhotoArray']['images'] as $PhotoKey => $PhotoValue) {
-                            $PG = new UserPhotos();
-                            $PG->iUser_ID = $id;
-                            $PG->Is_Profile_Photo = 'NO';
-                            $PG->dtCreated = CommonHelper::getTime();
-                            $PG->dtModified = CommonHelper::getTime();
-                            $PG->File_Name = $PhotoValue;
-                            $ACTION_FLAG = $PG->save();
+            $UserPhotos = new UserPhotos();
+            $MaximumPhotoLimit = Yii::$app->params['total_files_allowed'];
+            $TotalUploadPhotos = $UserPhotos->totalUploadPhotos($id);
+            $TotalUploads = $TotalUploadPhotos + count($_FILES["__files"]['name']);
+            $RemainingLimit = $MaximumPhotoLimit - $TotalUploadPhotos;
+            if ($TotalUploads <= $MaximumPhotoLimit) {
+                $model->scenario = User::SCENARIO_REGISTER6;
+                if ($FILE_COUNT != 0) {
+                    $CM_HELPER = new CommonHelper();
+                    $PATH = $CM_HELPER->getUserUploadFolder(1) . $id . "/";
+                    $URL = $CM_HELPER->getUserUploadFolder(2) . $id . "/";
+                    $USER_SIZE_ARRAY = $CM_HELPER->getUserResizeRatio();
+                    $PHOTO_ARRAY = CommonHelper::photoUploads($id, $_FILES["__files"], $PATH, $URL, $USER_SIZE_ARRAY, '');
+                    if ($PHOTO_ARRAY['STATUS']) {
+                        if (is_array($PHOTO_ARRAY['PhotoArray'])) {
+                            foreach ($PHOTO_ARRAY['PhotoArray']['images'] as $PhotoKey => $PhotoValue) {
+                                $PG = new UserPhotos();
+                                $PG->iUser_ID = $id;
+                                $PG->Is_Profile_Photo = 'NO';
+                                $PG->dtCreated = CommonHelper::getTime();
+                                $PG->dtModified = CommonHelper::getTime();
+                                $PG->File_Name = $PhotoValue;
+                                $ACTION_FLAG = $PG->save();
+                            }
                         }
-                    }
-                    if ($ACTION_FLAG) {
-                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHOTO_UPLOAD');
+                        if ($ACTION_FLAG) {
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHOTO_UPLOAD');
+                        } else {
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHOTO_UPLOAD');
+                        }
                     } else {
                         list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHOTO_UPLOAD');
+                        $MESSAGE = $PHOTO_ARRAY['MESSAGE'];
                     }
-                } else {
-                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHOTO_UPLOAD');
-                    $MESSAGE = $PHOTO_ARRAY['MESSAGE'];
                 }
+                $USER_PHOTOS_LIST = $UserPhotos->findByUserId($id);
+                $myModel = [
+                    'model' => $USER_PHOTOS_LIST,
+                ];
+                $HtmlOutput = $this->renderAjax('_photolist', $myModel);
+            } else {
+                $STATUS = 'E';
+                $MESSAGE = CommonHelper::replaceNotificationMessage(Yii::$app->params['uploadLimitError'], array('LIMIT' => $RemainingLimit));
+                $TITLE = Yii::$app->params['titleWarrning'];
             }
-            $USER_PHOTOS_LIST = $PG->findByUserId($id);
-            $myModel = [
-                'model' => $USER_PHOTOS_LIST,
-            ];
-            $HtmlOutput = $this->renderAjax('_photolist', $myModel);
             $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE, 'HtmlOutput' => $HtmlOutput);
             Yii::$app->response->format = Response::FORMAT_JSON;
             return $return;

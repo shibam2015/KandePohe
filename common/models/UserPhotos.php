@@ -61,6 +61,11 @@ class UserPhotos extends \common\models\base\baseUserPhotos
         return static::find()->where(['iUser_ID' => $iUser_ID])->orderBy(['iPhoto_ID' => SORT_DESC])->all();
     }
 
+    public function totalUploadPhotos($iUser_ID)
+    {
+        return static::find()->where(['iUser_ID' => $iUser_ID])->count();
+    }
+
     public function findByPhotoId($iUser_ID, $P_ID)
     {
         return static::findOne(['iUser_ID' => $iUser_ID, 'iPhoto_ID' => $P_ID]);

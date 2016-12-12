@@ -648,7 +648,7 @@ class CommonHelper {
 
     public static function replaceNotificationMessage($Message, $ParamArray)
     {
-        $MesssageArray = array('#TSF#', '#TFA#');
+        $MesssageArray = array('#TSF#', '#TFA#', '#LIMIT#');
         foreach ($MesssageArray as $Key => $Value) {
             $ArrayKey = str_replace('#', '', $Value);
             if (array_key_exists($ArrayKey, $ParamArray)) {

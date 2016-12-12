@@ -19,134 +19,136 @@ if (!Yii::$app->user->isGuest) {
 //die();
 use yii\jui\DatePicker;
 ?>
-<div class="video">
-    <div class="drop-effect"></div>
-    <video autoplay data-preload="auto" poster="images/poster.jpg" id="bgvid" loop>
-        <source src="https://demosthenes.info/assets/videos/polina.webm" type="video/webm">
-        <source src="https://demosthenes.info/assets/videos/polina.mp4" type="video/mp4">
-    </video>
-</div>
-<header aria-label="video-header2" role="banner">
-    <!-- Video -->
-    <!-- over-header -->
-    <div class="over-header">
-        <div class="header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6 col-xs-12">
-                        <div class="logo"><a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>" title="logo"> <img
-                                    src="images/logo1.png" width="250" height="88" alt="logo" class="img1"
-                                    title="Kande Pohe"> </a>
-                            <a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>" title="logo"> <img
-                                    src="images/logo2.png"
-                                    width="214" height="78"
-                                    alt="logo" class="img2"
-                                    title="Kande Pohe"> </a>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xs-12">
-                        <div class="menu pull-right">
-
-                            <ul class="list-inline">
-                                <?php if ($id) { ?>
-                                    <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', ['site/logout'], ['data-method' => 'post']) ?></li>
-                                    <li><a href="user/my-profile" title="Profile">Profile</a></li>
-                                <?php } else { ?>
-                                    <li><a href="#" title="Login" data-toggle="modal" data-target="#login"
-                                           id="login_button">Login</a>
-                                    </li>
-                                    <li><a href="#" title="Sign up Free" data-toggle="modal" data-target="#myModalNorm"
-                                           id="suf">Sign up
-                                            Free</a></li>
-                                <?php } ?>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="welcome-content">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h1 class="welcome-line">Etiam pellentesque sapien felis<br>
-                            <span>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</span></h1>
-                        <!--<input type="button" name="button" value="button label" class="btn btn-primary mrg-tp-10">
-                        <p class="play visible-lg visible-md"><a href="#"><img src="images/play.png" width="48" height="48" alt="play"></a></p>-->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="search-filter">
-            <div class="container">
-                <div class="row filter">
-                    <?php
-                    $form = ActiveForm::begin([
-                        'id' => 'form-search',
-                        'action' => ['search/basic-search'],
-                        'enableClientValidation' => true,
-                        'enableAjaxValidation' => true,
-                        'validateOnSubmit' => true,
-                        'validateOnChange' => true,
-                    ]);
-                    ?>
-                    <div class="col-sm-4 col-md-2">
-                        <?= $form->field($model, 'Profile_for')->dropDownList(
-                            ['FEMALE' => 'BRIDE', 'MALE' => 'GROOM'],
-                            ['class' => 'cs-select cs-skin-border',
-                                'prompt' => 'Looking For'
-                            ]
-                        )->label(false); ?>
-                    </div>
-                    <div class="col-sm-4 col-md-2">
-
-                        <?= $form->field($model, 'iCommunity_ID')->dropDownList(
-                            ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
-                            ['class' => 'cs-select cs-skin-border',
-                                'prompt' => 'Community'
-                            ]
-
-                        )->label(false)->error(false); ?>
-
-                    </div>
-                    <div class="col-sm-4 col-md-2">
-                        <?= $form->field($model, 'iSubCommunity_ID')->dropDownList(
-                            ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
-                            ['class' => 'cs-select cs-skin-border',
-                                'prompt' => 'Sub Caste'
-                            ]
-
-                        )->label(false)->error(false); ?>
-                    </div>
-                    <div class="col-sm-4 col-md-2">
-                        <?php
-                        $range = range(18, 100);
-                        ?>
-                        <?= $form->field($model, 'Agerange')->dropDownList(
-                        //array_combine($range, $range),
-                            ['18-21' => '18 To 21', '22-28' => '22 To 28', '29-35' => '29 To 35', '36-45' => '36 To 45', '46-60' => '46 To 60', '61-80' => '61 To 80', '81-100' => '81 To 100'],
-                            ['prompt' => 'Age Group',
-                                'class' => 'cs-select cs-skin-border']
-                        )->label(false)->error(false); ?>
-                    </div>
-                    <div class="col-sm-4 col-md-2">
-                        <?= $form->field($model, 'iHeightID')->dropDownList(
-                            ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
-                            ['class' => 'cs-select cs-skin-border',
-                                'prompt' => 'Height'
-                            ]
-                        )->label(false)->error(false); ?>
-                    </div>
-                    <div class="col-sm-4 col-md-2">
-                        <?= Html::submitButton('SEARCH', ['class' => 'btn btn-primary mrg-tp-10 ', 'name' => 'button']) ?>
-                    </div>
-                    <?php ActiveForm::end(); ?>
-                </div>
-            </div>
-        </div>
+    <div class="video">
+        <div class="drop-effect"></div>
+        <video autoplay data-preload="auto" poster="images/poster.jpg" id="bgvid" loop>
+            <source src="https://demosthenes.info/assets/videos/polina.webm" type="video/webm">
+            <source src="https://demosthenes.info/assets/videos/polina.mp4" type="video/mp4">
+        </video>
     </div>
-</header>
-<!--featured-member-->
+    <header aria-label="video-header2" role="banner">
+        <!-- Video -->
+        <!-- over-header -->
+        <div class="over-header">
+            <div class="header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="logo"><a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>" title="logo">
+                                    <img
+                                        src="images/logo1.png" width="250" height="88" alt="logo" class="img1"
+                                        title="Kande Pohe"> </a>
+                                <a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>" title="logo"> <img
+                                        src="images/logo2.png"
+                                        width="214" height="78"
+                                        alt="logo" class="img2"
+                                        title="Kande Pohe"> </a>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="menu pull-right">
+
+                                <ul class="list-inline">
+                                    <?php if ($id) { ?>
+                                        <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', ['site/logout'], ['data-method' => 'post']) ?></li>
+                                        <li><a href="user/my-profile" title="Profile">Profile</a></li>
+                                    <?php } else { ?>
+                                        <li><a href="#" title="Login" data-toggle="modal" data-target="#login"
+                                               id="login_button">Login</a>
+                                        </li>
+                                        <li><a href="#" title="Sign up Free" data-toggle="modal"
+                                               data-target="#myModalNorm"
+                                               id="suf">Sign up
+                                                Free</a></li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="welcome-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1 class="welcome-line">Etiam pellentesque sapien felis<br>
+                                <span>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</span></h1>
+                            <!--<input type="button" name="button" value="button label" class="btn btn-primary mrg-tp-10">
+                            <p class="play visible-lg visible-md"><a href="#"><img src="images/play.png" width="48" height="48" alt="play"></a></p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="search-filter">
+                <div class="container">
+                    <div class="row filter">
+                        <?php
+                        $form = ActiveForm::begin([
+                            'id' => 'form-search',
+                            'action' => ['search/basic-search'],
+                            'enableClientValidation' => true,
+                            'enableAjaxValidation' => true,
+                            'validateOnSubmit' => true,
+                            'validateOnChange' => true,
+                        ]);
+                        ?>
+                        <div class="col-sm-4 col-md-2">
+                            <?= $form->field($model, 'Profile_for')->dropDownList(
+                                ['FEMALE' => 'BRIDE', 'MALE' => 'GROOM'],
+                                ['class' => 'cs-select cs-skin-border',
+                                    'prompt' => 'Looking For'
+                                ]
+                            )->label(false); ?>
+                        </div>
+                        <div class="col-sm-4 col-md-2">
+
+                            <?= $form->field($model, 'iCommunity_ID')->dropDownList(
+                                ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
+                                ['class' => 'cs-select cs-skin-border',
+                                    'prompt' => 'Community'
+                                ]
+
+                            )->label(false)->error(false); ?>
+
+                        </div>
+                        <div class="col-sm-4 col-md-2">
+                            <?= $form->field($model, 'iSubCommunity_ID')->dropDownList(
+                                ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
+                                ['class' => 'cs-select cs-skin-border',
+                                    'prompt' => 'Sub Caste'
+                                ]
+
+                            )->label(false)->error(false); ?>
+                        </div>
+                        <div class="col-sm-4 col-md-2">
+                            <?php
+                            $range = range(18, 100);
+                            ?>
+                            <?= $form->field($model, 'Agerange')->dropDownList(
+                            //array_combine($range, $range),
+                                ['18-21' => '18 To 21', '22-28' => '22 To 28', '29-35' => '29 To 35', '36-45' => '36 To 45', '46-60' => '46 To 60', '61-80' => '61 To 80', '81-100' => '81 To 100'],
+                                ['prompt' => 'Age Group',
+                                    'class' => 'cs-select cs-skin-border']
+                            )->label(false)->error(false); ?>
+                        </div>
+                        <div class="col-sm-4 col-md-2">
+                            <?= $form->field($model, 'iHeightID')->dropDownList(
+                                ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
+                                ['class' => 'cs-select cs-skin-border',
+                                    'prompt' => 'Height'
+                                ]
+                            )->label(false)->error(false); ?>
+                        </div>
+                        <div class="col-sm-4 col-md-2">
+                            <?= Html::submitButton('SEARCH', ['class' => 'btn btn-primary mrg-tp-10 ', 'name' => 'button']) ?>
+                        </div>
+                        <?php ActiveForm::end(); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--featured-member-->
 <?php if (count($FeaturedMembers) > 0) {
     ?>
     <section class="featured-member">
@@ -188,7 +190,7 @@ use yii\jui\DatePicker;
                                         City: <?= CommonHelper::setInputVal($FV->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($FV->countryName->vCountryName, 'text') ?></p>
                                 </div>
                             </div>
-                            <?= Html::img(CommonHelper::getPhotos('USER', $FV->id, $FV->propic, 200, 1), ['alt' => $FV->FullName]); ?>
+                            <?= Html::img(CommonHelper::getPhotos('USER', $FV->id, '260' . $FV->propic, 260, '', 'Yes'), ['alt' => $FV->FullName]); ?>
                         </div>
                         <figcaption>
                             <a href="<?= CommonHelper::getUserUrl($FV->Registration_Number) ?>&source=recently_joined">
@@ -222,127 +224,130 @@ use yii\jui\DatePicker;
 <?php }
 ?>
 
-<!--Success Stories-->
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 text-center">
-                <h2 class="heading-md">Success Stories</h2>
+    <!--Success Stories-->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h2 class="heading-md">Success Stories</h2>
 
-                <p class="tagline">Read the success stories of these lovely couples</p>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="block"><img src="images/pic1.jpg" width="503" height="243" class="img-responsive">
-
-                    <div class="black-strap">
-                        <div class="name">Divya and Rajdeep Abhyankar</div>
-                        <div class="inter"><i class="fa fa-map-marker"></i> Nashik</div>
-                        <div class="inter"><i class="fa fa-calendar"></i> Married Since: March 2015</div>
-                    </div>
-                </div>
-                <div class="block"><img src="images/pattern_bg.jpg" width="507" height="474" class="img-responsive">
-                    <summary>
-                        <p>Our meeting was planned after the families met . After my parents met Mahima they really
-                            thought her to be a good match for me. Some days later when i visited India and met her
-                            things worked up and finally we got engaged and married.</p>
-
-                        <p class="aut text-danger font20 mrg-tp-10"><strong>Rani and Swapnil Samant</strong> (Ahmedabad)
-                        </p>
-                    </summary>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="block"><img src="images/pic5.jpg" width="510" height="494" class="img-responsive">
-
-                    <div class="black-strap">
-                        <div class="name">Divya and Rajdeep Abhyankar</div>
-                        <div class="inter"><i class="fa fa-map-marker"></i> Nashik</div>
-                        <div class="inter"><i class="fa fa-calendar"></i> Married Since: March 2015</div>
-                    </div>
-                </div>
-                <div class="block"><img src="images/pic3.jpg" width="510" height="226" class="img-responsive">
-
-                    <div class="black-strap">
-                        <div class="name">Divya and Rajdeep Abhyankar</div>
-                        <div class="inter"><i class="fa fa-map-marker"></i> Nashik</div>
-                        <div class="inter"><i class="fa fa-calendar"></i> Married Since: March 2015</div>
-                    </div>
+                    <p class="tagline">Read the success stories of these lovely couples</p>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="block"><img src="images/pic4.jpg" width="510" height="247" class="img-responsive">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="block"><img src="images/pic1.jpg" width="503" height="243" class="img-responsive">
 
-                    <div class="black-strap">
-                        <div class="name">Divya and Rajdeep Abhyankar</div>
-                        <div class="inter"><i class="fa fa-map-marker"></i> Nashik</div>
-                        <div class="inter"><i class="fa fa-calendar"></i> Married Since: March 2015</div>
+                        <div class="black-strap">
+                            <div class="name">Divya and Rajdeep Abhyankar</div>
+                            <div class="inter"><i class="fa fa-map-marker"></i> Nashik</div>
+                            <div class="inter"><i class="fa fa-calendar"></i> Married Since: March 2015</div>
+                        </div>
+                    </div>
+                    <div class="block"><img src="images/pattern_bg.jpg" width="507" height="474" class="img-responsive">
+                        <summary>
+                            <p>Our meeting was planned after the families met . After my parents met Mahima they really
+                                thought her to be a good match for me. Some days later when i visited India and met her
+                                things worked up and finally we got engaged and married.</p>
+
+                            <p class="aut text-danger font20 mrg-tp-10"><strong>Rani and Swapnil Samant</strong>
+                                (Ahmedabad)
+                            </p>
+                        </summary>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="block"><img src="images/pic5.jpg" width="510" height="494" class="img-responsive">
+
+                        <div class="black-strap">
+                            <div class="name">Divya and Rajdeep Abhyankar</div>
+                            <div class="inter"><i class="fa fa-map-marker"></i> Nashik</div>
+                            <div class="inter"><i class="fa fa-calendar"></i> Married Since: March 2015</div>
+                        </div>
+                    </div>
+                    <div class="block"><img src="images/pic3.jpg" width="510" height="226" class="img-responsive">
+
+                        <div class="black-strap">
+                            <div class="name">Divya and Rajdeep Abhyankar</div>
+                            <div class="inter"><i class="fa fa-map-marker"></i> Nashik</div>
+                            <div class="inter"><i class="fa fa-calendar"></i> Married Since: March 2015</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="block"><img src="images/pattern_yellow.jpg" width="510" height="251" class="img-responsive">
-                    <summary>
-                        <p>“We have been married for almost a year now. Things are great; We are so happy. </p>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="block"><img src="images/pic4.jpg" width="510" height="247" class="img-responsive">
 
-                        <p class="aut font20 mrg-tp-10"><strong>Preeti and Sandeep Prabhu </strong> (Nashik))</p>
-                    </summary>
+                        <div class="black-strap">
+                            <div class="name">Divya and Rajdeep Abhyankar</div>
+                            <div class="inter"><i class="fa fa-map-marker"></i> Nashik</div>
+                            <div class="inter"><i class="fa fa-calendar"></i> Married Since: March 2015</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="block"><img src="images/pattern_yellow.jpg" width="510" height="251"
+                                            class="img-responsive">
+                        <summary>
+                            <p>“We have been married for almost a year now. Things are great; We are so happy. </p>
+
+                            <p class="aut font20 mrg-tp-10"><strong>Preeti and Sandeep Prabhu </strong> (Nashik))</p>
+                        </summary>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!--What Sets us Apart-->
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 text-center">
-                <h2 class="heading-md">What Sets us Apart</h2>
+    </section>
+    <!--What Sets us Apart-->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h2 class="heading-md">What Sets us Apart</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="promo">
+                        <figure><img src="images/vector_icon1.png" width="119" height="102" alt="Safe and Secure">
+                        </figure>
+                        <figcaption>
+                            <h3>Safe and Secure</h3>
+
+                            <p>sed tincidunt mi rhoncus. Nam eget nulla risus. Etiam aliqttricies maximus. Vivamus risus
+                                velit, cursus at aliquam eu, vehicula vel risus. </p>
+                        </figcaption>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="promo">
+                        <figure><img src="images/vector_icon2.png" width="119" height="102" alt="Maximum Responses">
+                        </figure>
+                        <figcaption>
+                            <h3>Maximum Responses</h3>
+
+                            <p>sed tincidunt mi rhoncus. Nam eget nulla risus. Etiam aliqttricies maximus. Vivamus risus
+                                velit, cursus at aliquam eu, vehicula vel risus. </p>
+                        </figcaption>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="promo">
+                        <figure><img src="images/vector_icon3.png" width="119" height="102" alt="Best Matches"></figure>
+                        <figcaption>
+                            <h3>Best Matches</h3>
+
+                            <p>sed tincidunt mi rhoncus. Nam eget nulla risus. Etiam aliqttricies maximus. Vivamus risus
+                                velit, cursus at aliquam eu, vehicula vel risus. </p>
+                        </figcaption>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="promo">
-                    <figure><img src="images/vector_icon1.png" width="119" height="102" alt="Safe and Secure"></figure>
-                    <figcaption>
-                        <h3>Safe and Secure</h3>
-
-                        <p>sed tincidunt mi rhoncus. Nam eget nulla risus. Etiam aliqttricies maximus. Vivamus risus
-                            velit, cursus at aliquam eu, vehicula vel risus. </p>
-                    </figcaption>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="promo">
-                    <figure><img src="images/vector_icon2.png" width="119" height="102" alt="Maximum Responses">
-                    </figure>
-                    <figcaption>
-                        <h3>Maximum Responses</h3>
-
-                        <p>sed tincidunt mi rhoncus. Nam eget nulla risus. Etiam aliqttricies maximus. Vivamus risus
-                            velit, cursus at aliquam eu, vehicula vel risus. </p>
-                    </figcaption>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="promo">
-                    <figure><img src="images/vector_icon3.png" width="119" height="102" alt="Best Matches"></figure>
-                    <figcaption>
-                        <h3>Best Matches</h3>
-
-                        <p>sed tincidunt mi rhoncus. Nam eget nulla risus. Etiam aliqttricies maximus. Vivamus risus
-                            velit, cursus at aliquam eu, vehicula vel risus. </p>
-                    </figcaption>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 <?php if (Yii::$app->user->isGuest) { ?>
     <!-- Modal Signup -->
     <div class="modal fade" id="myModalNorm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -676,36 +681,36 @@ FREE" data-toggle="modal"
 
 <?php } ?>
 
-<style type="text/css">
-    .ui-datepicker {
-        z-index: 1200 !important;
-    }
+    <style type="text/css">
+        .ui-datepicker {
+            z-index: 1200 !important;
+        }
 
-    .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-        background: #ee1845;
-        color: #fff;
-        border-radius: 0%;
-        -moz-border-radius: 0%;
-        -webkit-border-radius: 0%;
-    }
+        .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+            background: #ee1845;
+            color: #fff;
+            border-radius: 0%;
+            -moz-border-radius: 0%;
+            -webkit-border-radius: 0%;
+        }
 
-    .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
-        border: 1px solid #ee1845;
-        background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
-        font-weight: normal;
-        color: #ee1845;
+        .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+            border: 1px solid #ee1845;
+            background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
+            font-weight: normal;
+            color: #ee1845;
 
-    }
+        }
 
-    .btn-primary.disabled, .btn-primary.disabled.active, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled].active, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary.active, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
-        background-color: #ee1845;
-        border-color: #ee1845;
-    }
+        .btn-primary.disabled, .btn-primary.disabled.active, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled].active, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary.active, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
+            background-color: #ee1845;
+            border-color: #ee1845;
+        }
 
-    .loginerror {
-        top: 0;
-    }
-</style>
+        .loginerror {
+            top: 0;
+        }
+    </style>
 <?php if (Yii::$app->user->isGuest) { ?>
     <?php # Popup Open
     if ($ref == 'login') {
@@ -831,3 +836,24 @@ FREE" data-toggle="modal"
     ?>
 
 <?php } ?>
+
+<?php
+$this->registerJs("
+$('#user-icommunity_id').keyup(function(e){
+var k = e.which;
+    //if(k==13){alert('enter was pressed');}
+
+});
+
+$('.nice-select').bind('keyup',function(e) {
+/*console.log('=> '+e.which);
+var k = e.which;
+var input_val = e.which;//String($(this).val());
+   var sel = $('select[name=platform]');
+console.log('IP => '+input_val);
+    $(  this).trigger('change');*/
+});
+
+
+");
+?>

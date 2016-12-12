@@ -33,8 +33,8 @@ return [
     'photoCropAreaSelection' => 'Please first select photo portion !',
 
 
-    'total_files_allowed' => 10,
-    'max_file_size' => 2048576,
+    'total_files_allowed' => 12,
+    'max_file_size' => 104857600, // 100 MB (1 MB = 1048576 Bytes)
     'maxWidth' => 500,
     'thumbnailPrefix' => 'thumb_',
     'profilePrefix' => '_profile',
@@ -44,5 +44,13 @@ return [
     'fileUnsoupportedType' => 'You are trying to upload unsupported file type.',
     'profilePhotoFolder' => 'profile',
     'noRecordsFoundInShortList' => 'There are no record found in your short list.',
+
+
+    'uploadPhotoListWait' => 'Uploading Photos... Please Wait !',
+    'uploadPhotoLimit' => 5, // At a time user can upload maximum 5 photos
+    'titleInforamtion' => 'Information',
+    'titleWarrning' => 'Warrning',
+    'uploadLimitError' => 'You can not upload photos more than total upload photo limit.<br> Your remaining photo upload limit is : #LIMIT#',
+
 ];
 

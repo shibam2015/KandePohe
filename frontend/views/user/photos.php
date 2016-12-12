@@ -156,25 +156,31 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                 </div>
                                             </div>
                                             <?php } ?>
+                                            <div class="privacy-promo">
+                                                <div class="row">
+                                                    <div class="col-sm-6 bord">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <?php
+                                                                if ($model_user->eEmailVerifiedStatus != 'Yes' && $model_user->ePhoneVerifiedStatus != 'Yes') {
+                                                                    $form = ActiveForm::begin([
+                                                                        'id' => 'form-register6',
+                                                                    ]);
+                                                                    ?>
+                                                                    <?= Html::submitButton('CONTINUE', ['class' => 'btn btn-primary mrg-bt-10  pull-left', 'name' => 'CONTINUE']) ?>
+
+                                                                    <?php ActiveForm::end();
+                                                                } ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                         </div>
                                         <div class="col-sm-1"></div>
                                         <div class="col-sm-5">
-                                            <?php
-                                            if ($model_user->eEmailVerifiedStatus != 'Yes') {
-                                                $form = ActiveForm::begin([
-                                                    'id' => 'form-register6',
-                                                ]);
-                                                ?>
-                                                <?= Html::submitButton('CONTINUE', ['class' => 'btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right', 'name' => 'CONTINUE']) ?>
 
-                                                <?php ActiveForm::end();
-                                            } else { ?>
-                                                <a href="<?= $HOME_URL ?>user/my-profile"
-                                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right">
-                                                    My Profile
-                                                </a>
-                                            <?php } ?>
                                             <h4 class="mrg-left-mins">Profile Photo Guidelines</h4>
                                             <div class="faces-pic">
                                                 <div class="row no-gutter mrg-tp-30">

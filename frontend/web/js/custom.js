@@ -456,9 +456,9 @@ function showNotification(type, msg, flag) {
         $('.kp_notify').removeClass('green').removeClass('red').addClass('yellow');
         $('.kp_notification').html(msg);
     }
-    setTimeout(function () {
+    /*setTimeout(function () {
         $('.kp_notify').slideUp();
-    }, 5000);
+     }, 5000);*/
     $('.kp_notify').slideDown();
 }
 /* Notification END  */

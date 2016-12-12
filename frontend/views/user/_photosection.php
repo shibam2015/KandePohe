@@ -139,7 +139,7 @@ use yii\helpers\Url;
                 <!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
                     <span class="sr-only">Close</span>
                 </button>-->
-                <h2 class="text-center">Photo List</h2>
+                <h2 class="text-center"><?= Yii::$app->params['uploadPhotoListWait'] ?></h2>
             </div>
             <div class="modal-body" id="photoListDiv" style="margin-top: -35px;">
             </div>
@@ -156,12 +156,12 @@ $("#file_browse_wrapper").click(function() {
 });
 
   $(function () {
-        var max_file_size 		= 2048576; //allowed file size. (1 MB = 1048576)
+        var max_file_size 		= ' . Yii::$app->params['max_file_size'] . '; //allowed file size. (1 MB = 1048576 Bytes)
         //var allowed_file_types 		= ["image/png", "image/gif", "image/jpeg", "image/pjpeg"]; //allowed file types
         var allowed_file_types 		= ["image/jpeg", "image/pjpeg"]; //allowed file types
         var result_output 		= "#output"; //ID of an element for response output
         var my_form_id 			= "#upload_form"; //ID of an element for response output
-        var total_files_allowed 	= 3; //Number files allowed to upload
+        var total_files_allowed 	= ' . Yii::$app->params['uploadPhotoLimit'] . '; //Number files allowed to upload at a time
 
 //on form submit
 $(".fileupload").change(function () {
@@ -195,7 +195,10 @@ $(my_form_id).on( "submit", function(event) {
             }
         });
 		if(total_files_size > max_file_size){
-            showNotification("E", "You have "+total_selected_files+" file(s) with total size "+total_files_size+", Allowed size is " + max_file_size +", Try smaller file!", "Error");
+            var temp_max_file_size = (max_file_size/1048576)+" MB";
+            var temp_total_files_size = (total_files_size/1048576).toFixed(2)+" MB";
+            //showNotification("E", "You have "+total_selected_files+" file(s) with total size "+total_files_size+", Allowed size is " + max_file_size +", Try smaller file!", "Error");
+            showNotification("E", "You have "+total_selected_files+" file(s) with total size "+temp_total_files_size+", Allowed size is " + temp_max_file_size+", Try smaller file!", "Error");
             proceed = false; //set proceed flag to false
         }
 
@@ -214,8 +217,6 @@ $(my_form_id).on( "submit", function(event) {
                 keyboard: false
             });
             $("#photoListDiv").html(htmlPhotoList);
-            //$("#photoList").modal();
-            //return false;
             var form_data = new FormData(this); //Creates new FormData object
             //var post_url = $(this).attr("action"); //get action URL of form
             var uid = userid;
