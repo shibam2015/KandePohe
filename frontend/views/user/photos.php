@@ -25,7 +25,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                         <div class="col-sm-12">
                             <div class="white-section">
                                 <h3>Add Profile Photo
-                                    <?php if ($model_user->eEmailVerifiedStatus != 'Yes') { ?>
+                                    <?php if ($model_user->eEmailVerifiedStatus != 'Yes' || $model_user->ePhoneVerifiedStatus != 'Yes') { ?>
                                         <a href="<?= $HOME_URL_SITE ?>verification" class="pull-right"><span
                                                 class="link_small">( I will do this later )</span></a>
                                     <?php } ?>
@@ -162,7 +162,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                         <div class="row">
                                                             <div class="col-sm-12">
                                                                 <?php
-                                                                if ($model_user->eEmailVerifiedStatus != 'Yes' && $model_user->ePhoneVerifiedStatus != 'Yes') {
+                                                                if ($model_user->eEmailVerifiedStatus != 'Yes' || $model_user->ePhoneVerifiedStatus != 'Yes') {
                                                                     $form = ActiveForm::begin([
                                                                         'id' => 'form-register6',
                                                                     ]);

@@ -9,7 +9,11 @@ use common\components\CommonHelper;
       <div class="container">
         <div class="row">
           <div class="col-xs-4">
-            <div class="logo"> <a href="<?=Yii::$app->getUrlManager()->getBaseUrl()?>" title="logo"> <?= Html::img('@web/images/logo-inner.png', ['width' => '202','height' => 83,'alt' => 'logo']); ?> </a> </div>
+            <div class="logo">
+              <a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/user/dashboard" title="logo">
+                <?= Html::img('@web/images/logo-inner.png', ['width' => '202', 'height' => 83, 'alt' => 'logo']); ?>
+              </a>
+            </div>
           </div>
           <div class="col-xs-8">
             <div class="primary-menu">
@@ -18,7 +22,8 @@ use common\components\CommonHelper;
                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                   <div class="navbar-collapse collapse sidebar-navbar-collapse">
                     <ul class="nav navbar-nav">
-
+                      <?php #if (Yii::$app->user->identity->eEmailVerifiedStatus == 'Yes' && Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes') {
+                      if (1) { ?>
                     <!-- <li><a href="#">Matches <span class="badge">1</span></a></li>-->
                       <!--<li><a href="<? /*= CommonHelper::getMailBoxUrl() */ ?>">Search </a></li>-->
                       <li><?= html::a('<i class="ti-power-off m-r-5"></i> Search</a>', ['search/basic-search'], ['data-method' => 'post']) ?></li>
@@ -46,6 +51,10 @@ use common\components\CommonHelper;
                           <li><a href="#">Report a Problem</a></li>
                         </ul>
                       </li>
+                      <?php } else { ?>
+                        <!--<li><? /*= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', Yii::$app->homeUrl . 'site/logout', ['data-method' => 'post']) */
+                        ?></li>-->
+                      <?php } ?>
                     </ul>
                   </div>
                   <!--/.nav-collapse -->
