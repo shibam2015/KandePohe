@@ -90,31 +90,58 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                             if ($V->Is_Profile_Photo == 'YES') {
                                                                 $SELECTED = "selected";
                                                             } ?>
-                                                            <div class="col-md-3 col-sm-3 col-xs-6"
+                                                            <div
+                                                                class="col-md-3 col-sm-3 col-xs-6 <?= ($V->eStatus == 'Approve' || $V->eStatus == 'Disapprove') ? '' : '   text-center' ?>"
                                                                  id="img_<?= $V['iPhoto_ID'] ?>">
-                                                                <div class="gallery">
+                                                                <div
+                                                                    class="<?= ($V->eStatus == 'Approve') ? 'gallery ' : 'img-blur' ?>">
                                                                     <a class="<?= $SELECTED ?>"
-                                                                       href="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
                                                                        data-toggle="tooltip" data-placement="top"
-                                                                       data-original-title="Click for full view">
+                                                                        <?php if ($V->eStatus == 'Approve') { ?>
+                                                                            href="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
+                                                                            data-original-title="Click for full view"
+                                                                        <?php } else { ?>
+                                                                            href="javascript:void(0)"
+                                                                            data-original-title="<?= ($V->eStatus == 'Pending') ? 'Awaiting Approval' : 'Please Remove this Photo.' ?>"
+                                                                        <?php } ?>>
                                                                         <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->params['thumbnailPrefix'] . "110_" . $V['File_Name'], 110), ['class' => 'img-responsive ' . $SELECTED, 'width' => '140', 'alt' => 'Photo' . $K]); ?>
                                                                     </a>
                                                                 </div>
+                                                                <?php if ($V->eStatus == 'Approve') { ?>
+                                                                    <a href="javascript:void(0)"
+                                                                       class="pull-left profile_set_kp set_profile_photo"
+                                                                       data-id="<?= $V['iPhoto_ID'] ?>"
+                                                                       data-target="#profilecrop" data-toggle="modal"
+                                                                       data-item="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
+                                                                       data-name="<?= $V['File_Name'] ?>">
+                                                                        Profile pic
+                                                                    </a>
+                                                                    <a href="javascript:void(0)"
+                                                                       class="pull-right profile_delete"
+                                                                       data-id="<?= $V['iPhoto_ID'] ?>"
+                                                                       data-target="#photodelete" data-toggle="modal">
+                                                                        <i aria-hidden="true" class="fa fa-trash-o"></i>
+                                                                    </a>
+                                                                <?php } else { ?>
+                                                                    <a href="javascript:void(0)"
+                                                                       class=""
+                                                                       data-id="<?= $V['iPhoto_ID'] ?>"
+                                                                       data-item="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
+                                                                       data-name="<?= $V['File_Name'] ?>">
+                                                                        <?= ($V->eStatus == 'Pending') ? 'Pending' : 'Disapproved' ?>
+                                                                    </a>
+                                                                    <?php if ($V->eStatus == 'Disapprove') { ?>
+                                                                        <a href="javascript:void(0)"
+                                                                           class="pull-right profile_delete"
+                                                                           data-id="<?= $V['iPhoto_ID'] ?>"
+                                                                           data-target="#photodelete"
+                                                                           data-toggle="modal">
+                                                                            <i aria-hidden="true"
+                                                                               class="fa fa-trash-o"></i>
+                                                                        </a>
+                                                                    <?php } ?>
+                                                                <?php } ?>
 
-                                                                <a href="javascript:void(0)"
-                                                                   class="pull-left profile_set_kp set_profile_photo"
-                                                                   data-id="<?= $V['iPhoto_ID'] ?>"
-                                                                   data-target="#profilecrop" data-toggle="modal"
-                                                                   data-item="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
-                                                                   data-name="<?= $V['File_Name'] ?>">
-                                                                    Profile pic
-                                                                </a>
-                                                                <a href="javascript:void(0)"
-                                                                   class="pull-right profile_delete"
-                                                                   data-id="<?= $V['iPhoto_ID'] ?>"
-                                                                   data-target="#photodelete" data-toggle="modal">
-                                                                    <i aria-hidden="true" class="fa fa-trash-o"></i>
-                                                                </a>
                                                             </div>
                                                         <?php }
                                                     } else {
@@ -127,7 +154,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                     <?php } ?>
                                                 </div>
                                             </div>
-                                            <?php if (count($model) > 0) { ?>
+
                                             <div class="privacy-promo">
                                                 <div class="row">
                                                     <div class="col-sm-12">
@@ -155,7 +182,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                     </div>
                                                 </div>
                                             </div>
-                                            <?php } ?>
+
                                             <div class="privacy-promo">
                                                 <div class="row">
                                                     <div class="col-sm-6 bord">
