@@ -231,7 +231,8 @@ class UserController extends Controller
 
                 return $this->render('photos', [
                     'model' => $USER_PHOTOS_LIST,
-                    'model_user' => $model
+                    'model_user' => $model,
+                    'USER_APPROVED' => \common\models\User::weightedCheck(10),
                 ]);
             } else {
                 return $this->redirect(Yii::getAlias('@web'));
@@ -1399,7 +1400,6 @@ class UserController extends Controller
             $PIN = $model->pin_email_vaerification;
             $EmailPin = Yii::$app->request->post('User')['email_pin'];
             $model->email_pin = $EmailPin;
-            #echo $model->scenario ;
             if ($model->validate()) {
                 if ($PIN == $EmailPin) {
                     $model->completed_step = $model->setCompletedStep('9');
@@ -2164,3 +2164,4 @@ class UserController extends Controller
         return json_encode($return);
     }
 }
+
