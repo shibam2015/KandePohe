@@ -12,12 +12,7 @@ $this->title = $model->First_Name." ".$model->Last_Name;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 //echo Yii::$app->urlManagerFrontend->baseUrl;
-if($model->propic !='') {
-    //$PROPIC = "../../../../frontend/web/uploads/" . $model->propic;
-    $PROPIC = "../../../../frontend/web/uploads/users/" . $model->id . "/140_" . $model->propic;
-}else{
-    $PROPIC = "../../../../frontend/web/images/placeholder.jpg";
-}
+$PROPIC = CommonHelper::getPhotosBackend('USER', $model->id, "200" . $model->propic, 200, '', 'Yes', 1);
 ?>
 
 
@@ -78,11 +73,15 @@ if($model->propic !='') {
                                 <div class="col-md-12">
                                     <div class="col-md-6">
                                         <div class="col-md-3">
-                                            <?= Html::img(CommonHelper::getPhotosBackend('USER', $model->id, $V['File_Name'], 140), ['class' => 'img-responsive ', 'height' => '140', 'alt' => 'Photo' . $K]); ?>
+                                            <?php //$PROPIC = CommonHelper::getPhotosBackend('USER', $model->id, "200" . $model->propic, 200, '', 'Yes',1);?>
+
                                             <?php if ($V['Is_Profile_Photo'] == 'YES') { ?>
+                                                <?= Html::img(CommonHelper::getPhotosBackend('USER', $model->id, "200" . $model->propic, 200, '', 'Yes', 1), ['class' => 'img-responsive ', 'height' => '140', 'alt' => 'Photo' . $K]); ?>
                                                 <span class="btn btn-block btn-success">
                                             Profile Photo
-                                        </span>
+                                            </span>
+                                            <?php } else { ?>
+                                                <?= Html::img(CommonHelper::getPhotosBackend('USER', $model->id, Yii::$app->params['thumbnailPrefix'] . "200_" . $V['File_Name'], 200, '', 'No', 1), ['class' => 'img-responsive ', 'height' => '140', 'alt' => 'Photo' . $K]); ?>
                                             <?php } ?>
 
                                         </div>

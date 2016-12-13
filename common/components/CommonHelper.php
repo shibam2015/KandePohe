@@ -502,23 +502,54 @@ class CommonHelper {
         return $token;
     }
 
-    public static function getPhotosBackend($TYPE = 'USER', $ID, $PHOTO, $SIZE = '') // GET USER PHOTO (Profile)
+    public static function getPhotosBackend($TYPE = 'USER', $ID, $PHOTO, $SIZE = '', $DefaultStatus = '', $Profile = 'No', $dir = 0) // GET USER PHOTO (Profile)
     {
         if ($TYPE == 'USER') {
             $U_PATH = $ID . "/";
-
-            if ($SIZE != '') {
-                $PHOTO_WITH_SIZE = $SIZE . "_" . $PHOTO;
+            $PHOTO_WITH_SIZE = $PHOTO;
+            if ($Profile == 'No') {
+                $MAIN_URL = CommonHelper::getUserUploadFolderBackend(2, $ID, $dir);
+                $PATH = CommonHelper::getUserUploadFolderBackend(1) . $U_PATH;
+                $URL = $MAIN_URL . $U_PATH;
             } else {
-                $PHOTO_WITH_SIZE = $PHOTO;
+                $MAIN_URL = CommonHelper::getUserUploadFolderBackend(4, $ID, $dir);
+                $PATH = CommonHelper::getUserUploadFolderBackend(3, $ID, $dir);
+                $URL = $MAIN_URL;
             }
+            $DefaultPhotoURL = CommonHelper::getUserUploadFolderBackend(2);
 
-            $MAIN_URL = '../../../../frontend/web/uploads/users/' . $U_PATH;
-            $PATH = CommonHelper::getUserUploadFolder(1) . $U_PATH;
-            $URL = $MAIN_URL . $U_PATH;
-            $PHOTO_USER = $MAIN_URL . $PHOTO_WITH_SIZE;
+            if ($DefaultStatus == '')
+                $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $DefaultPhotoURL . 'no-user-img.jpg';
+            else
+                $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $DefaultPhotoURL . $SIZE . '_no-user-img.jpg';
             return $PHOTO_USER;
         }
+    }
+
+    public static function getUserUploadFolderBackend($TYPE = 1, $UserId = '', $dir = 0)
+    {
+        if ($TYPE == 1) {
+            $USER_UPLOAD = Yii::getAlias('@frontend') . '/web/uploads/users/';
+        } else if ($TYPE == 2) {
+            if ($dir == 0)
+                $USER_UPLOAD = '../../../frontend/web/uploads/users/';
+            else
+                $USER_UPLOAD = '../../../../frontend/web/uploads/users/';
+        } else if ($TYPE == 3) { //Profile Photo Path
+            $USER_UPLOAD = Yii::getAlias('@frontend') . '/web/uploads/users/' . $UserId . '/profile/';
+        } else if ($TYPE == 4) { //Profile Photo URL
+            #$USER_UPLOAD =  '../../../frontend/web/uploads/users/' . $UserId . '/profile/';
+            if ($dir == 0)
+                $USER_UPLOAD = '../../../frontend/web/uploads/users/' . $UserId . '/profile/';
+            else
+                $USER_UPLOAD = '../../../../frontend/web/uploads/users/' . $UserId . '/profile/';
+        } else {
+            if ($dir == 0)
+                $USER_UPLOAD = '../../../frontend/web/uploads/users/';
+            else
+                $USER_UPLOAD = '../../../../frontend/web/uploads/users/';
+        }
+        return $USER_UPLOAD;
     }
 
     public static function unsetStep($OriginalString, $UnsetString)
