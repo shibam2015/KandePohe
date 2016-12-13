@@ -253,6 +253,7 @@ $(my_form_id).on( "submit", function(event) {
                                 //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                                 lightBox();
                                 profile_photo();
+
                             } else {
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
@@ -329,6 +330,7 @@ $this->registerJs('
                                    notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                             profile_photo();
+                            lightBox();
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                         loaderStop();

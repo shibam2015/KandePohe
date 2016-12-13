@@ -512,8 +512,22 @@ function lightBox() {
     if ($(".gallery a").length) {
         var gallery = $('.gallery a').simpleLightbox();
     }
+    //$('.lightgallery').lightGallery();
+    $('.lightgallery').lightGallery({
+        selector: '.kp_gallery'
+    });
 }
 lightBox();
+
+$(document).on("click", ".kp_not_gallery", function (e) {
+    var $lg = $('.lightgallery');
+    $lg.lightGallery();
+    $lg.data('lightGallery').destroy(true);
+});
+$(document).on("mouseover", ".kp_gallery", function (e) {
+    lightBox();
+    //$('.lightgallery').lightGallery();
+});
 
 function commonRequest(url, htmlId, dataArr) {
     $.ajax({
@@ -526,6 +540,7 @@ function commonRequest(url, htmlId, dataArr) {
         success: function (res) {
             var dataObj = JSON.parse(res);
             $(htmlId).html(dataObj.HtmlOutput);
+            lightBox();
         }
     });
 }

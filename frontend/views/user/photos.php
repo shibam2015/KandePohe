@@ -82,7 +82,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                 </div>
                                             </div>
                                             <div class="choose-photo">
-                                                <div class="row" id="photo_list">
+                                                <div class="row lightgallery" id="photo_list">
                                                     <?php
                                                     if (count($model) > 0) {
                                                         foreach ($model as $K => $V) {
@@ -90,19 +90,35 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                             <?php $SELECTED = '';
                                                             if ($V->Is_Profile_Photo == 'YES') {
                                                                 $SELECTED = "selected";
-                                                            } ?>
+                                                            }
+                                                            $PhotoHeading = '';
+                                                            $PhotoMessage = '';
+                                                            if ($V->eStatus == 'Approve') {
+                                                                $PhotoHeading = 'Approved';
+                                                                $PhotoMessage = Yii::$app->params['photoApprovedMode'];
+                                                            } else if ($V->eStatus == 'Pending') {
+                                                                $PhotoHeading = 'Pending';
+                                                                $PhotoMessage = Yii::$app->params['photoPendingMode'];
+                                                            } else {
+                                                                $PhotoHeading = 'Disapproved';
+                                                                $PhotoMessage = Yii::$app->params['photoDisapprovedMode'];
+                                                            }
+
+                                                            ?>
                                                             <div
-                                                                class="col-md-3 col-sm-3 col-xs-6 <?= ($V->eStatus == 'Approve' || $V->eStatus == 'Disapprove') ? '' : '   text-center' ?>"
+                                                                data-src="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
+                                                                data-sub-html="<h4><?= $PhotoHeading ?></h4><p><?= $PhotoMessage ?></p>"
+                                                                class="kp_gallery col-md-3 col-sm-3 col-xs-6 <?= ($V->eStatus == 'Approve' || $V->eStatus == 'Disapprove') ? '' : '   text-center' ?>"
                                                                  id="img_<?= $V['iPhoto_ID'] ?>">
                                                                 <div
-                                                                    class="<?= ($V->eStatus == 'Approve') ? 'gallery ' : 'img-blur' ?>">
-                                                                    <a class="<?= $SELECTED ?>"
+                                                                    class=" <?= ($V->eStatus == 'Approve') ? 'gallery1 ' : 'img-blur' ?>">
+                                                                    <a class="<?= $SELECTED ?> "
                                                                        data-toggle="tooltip" data-placement="top"
                                                                         <?php if ($V->eStatus == 'Approve') { ?>
                                                                             href="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
                                                                             data-original-title="Click for full view"
                                                                         <?php } else { ?>
-                                                                            href="javascript:void(0)"
+                                                                            href="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
                                                                             data-original-title="<?= ($V->eStatus == 'Pending') ? 'Awaiting Approval' : 'Please Remove this Photo.' ?>"
                                                                         <?php } ?>>
                                                                         <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->params['thumbnailPrefix'] . "110_" . $V['File_Name'], 110), ['class' => 'img-responsive ' . $SELECTED, 'width' => '140', 'alt' => 'Photo' . $K]); ?>
@@ -110,7 +126,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                 </div>
                                                                 <?php if ($V->eStatus == 'Approve') { ?>
                                                                     <a href="javascript:void(0)"
-                                                                       class="pull-left profile_set_kp set_profile_photo"
+                                                                       class="pull-left profile_set_kp set_profile_photo kp_not_gallery"
                                                                        data-id="<?= $V['iPhoto_ID'] ?>"
                                                                        data-target="#profilecrop" data-toggle="modal"
                                                                        data-item="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
@@ -118,14 +134,14 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                         Profile pic
                                                                     </a>
                                                                     <a href="javascript:void(0)"
-                                                                       class="pull-right profile_delete"
+                                                                       class="pull-right profile_delete kp_not_gallery"
                                                                        data-id="<?= $V['iPhoto_ID'] ?>"
                                                                        data-target="#photodelete" data-toggle="modal">
                                                                         <i aria-hidden="true" class="fa fa-trash-o"></i>
                                                                     </a>
                                                                 <?php } else { ?>
                                                                     <a href="javascript:void(0)"
-                                                                       class=""
+                                                                       class="kp_not_gallery"
                                                                        data-id="<?= $V['iPhoto_ID'] ?>"
                                                                        data-item="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
                                                                        data-name="<?= $V['File_Name'] ?>">
@@ -133,7 +149,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                     </a>
                                                                     <?php if ($V->eStatus == 'Disapprove') { ?>
                                                                         <a href="javascript:void(0)"
-                                                                           class="pull-right profile_delete"
+                                                                           class="pull-right profile_delete kp_not_gallery"
                                                                            data-id="<?= $V['iPhoto_ID'] ?>"
                                                                            data-target="#photodelete"
                                                                            data-toggle="modal">
@@ -299,9 +315,29 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 <?php
 require_once __DIR__ . '/_photosection.php';
 ?>
-<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/simplelightbox/simple-lightbox.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
-<link href='<?= Yii::$app->request->baseUrl ?>/plugings/simplelightbox/simplelightbox.min.css' rel='stylesheet'
-      type='text/css'>
+<link href='<?= Yii::$app->request->baseUrl ?>/plugings/gallery/css/lightgallery.css' rel='stylesheet' type='text/css'>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lightgallery.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-fullscreen.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-thumbnail.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-video.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-autoplay.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-zoom.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-hash.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-pager.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+
+<?php /*$this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/simplelightbox/simple-lightbox.js', ['depends' => [\yii\web\JqueryAsset::className()]]); */ ?><!--
+<link href='<? /*= Yii::$app->request->baseUrl */ ?>/plugings/simplelightbox/simplelightbox.min.css' rel='stylesheet'
+      type='text/css'>-->
 <link href='<?= Yii::$app->request->baseUrl ?>/plugings/cropping/imgareaselect.css' rel='stylesheet' type='text/css'>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.imgareaselect.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.form.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+
+<!--
+<script src="js/lightgallery.js"></script>
+<script src="js/lg-fullscreen.js"></script>
+<script src="js/lg-thumbnail.js"></script>
+<script src="js/lg-video.js"></script>
+<script src="js/lg-autoplay.js"></script>
+<script src="js/lg-zoom.js"></script>
+<script src="js/lg-hash.js"></script>
+<script src="js/lg-pager.js"></script>-->
