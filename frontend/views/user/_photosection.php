@@ -375,8 +375,8 @@ $this->registerJs("
                             $('#image_id').val(imageid);
                             $('.crop_save').show();
                             $('img#photov').imgAreaSelect({
-                                //x1 : 0, y1 : 0, x2 : 200, y2: 200,
-                                //handles: true,
+                                x1 : 0, y1 : 0, x2 : 150, y2: 150,
+                                handles: true,
                                 //fadeSpeed: 200,
                                 //show : true,
                                 //maxWidth: 200, maxHeight: 200,
