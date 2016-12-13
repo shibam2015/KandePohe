@@ -151,10 +151,10 @@ use yii\helpers\Url;
 </script>
 <?php
 $this->registerJs('
-$("#file_browse_wrapper").click(function() {
-    $("#file_browse").click();
-});
-
+        $(document).on("click",".file_browse_wrapper",function(e){
+            $(".modal").modal("hide");
+            $("#file_browse").click();
+        });
   $(function () {
         var max_file_size 		= ' . Yii::$app->params['max_file_size'] . '; //allowed file size. (1 MB = 1048576 Bytes)
         //var allowed_file_types 		= ["image/png", "image/gif", "image/jpeg", "image/pjpeg"]; //allowed file types
@@ -344,6 +344,7 @@ $this->registerJs("
     $(function () {
     $(document).on('click','.set_profile_photo',function(e){
         //$('.set_profile_photo').click(function(){e
+        $('#photo').modal('hide');
         $('#profilecrop').modal({
                 backdrop: 'static',
                 keyboard: false
@@ -482,5 +483,8 @@ $this->registerJs("
             });
         }
     })
+    $(document).on('mouseover','.hovertool',function(e){
+            $('[data-toggle=\'tooltip\']').tooltip();
+        });
 ");
 ?>

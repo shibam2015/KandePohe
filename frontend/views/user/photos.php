@@ -58,7 +58,8 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                         <div>
                                                             <form action="" method="post" enctype="multipart/form-data"
                                                                   id="upload_form">
-                                                                <div id="file_browse_wrapper" data-toggle="tooltip"
+                                                                <div class="file_browse_wrapper"
+                                                                     id="file_browse_wrapper" data-toggle="tooltip"
                                                                      data-placement="top"
                                                                      data-original-title="Click here to upload photos from your PC’s /Laptop’s local drive ">
                                                                     Upload photo from computer
