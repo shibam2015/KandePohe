@@ -201,7 +201,27 @@ $(my_form_id).on( "submit", function(event) {
             showNotification("E", "You have "+total_selected_files+" file(s) with total size "+temp_total_files_size+", Allowed size is " + temp_max_file_size+", Try smaller file!", "Error");
             proceed = false; //set proceed flag to false
         }
-
+        /*
+        var _URL = window.URL || window.webkitURL;
+        var temp_wh = 0;
+        var msg_hw = "";
+		$(this.elements["__files[]"].files).each(function(i, ifile){
+                    var image, file1;
+            if(ifile.value !== ""){
+                    if ((file1 = ifile)) {
+                        image = new Image();
+                        image.onload = function() {
+                           if(this.width <300 && this.height < 300){
+                                showNotification("E", "<b>"+ ifile.name + "</b> is smaller by height or Width! Please select large photo.", "Error");
+                                //msg_hw += "<b>"+ ifile.name + "</b> is smaller by height or Width! Please select large photo.<br>";
+                                proceed = false; //set proceed flag to false
+                                console.log(msg_hw);
+                            }
+                        };
+                        image.src = _URL.createObjectURL(file1);
+                    }
+            }
+        });*/
 		var submit_btn  = $("#file_browse_wrapper"); //form submit button
 		//var submit_btn  = $(this).find("input[type=submit]"); //form submit button
 		//if everything looks good, proceed with jQuery Ajax
