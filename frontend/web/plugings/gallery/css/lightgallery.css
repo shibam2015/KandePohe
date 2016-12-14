@@ -292,7 +292,9 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
     background-color: #0D0A0A;
     bottom: 0;
     position: absolute;
-    width: 100%;
+    width: 55%;
+    left: 25%;
+    overflow: hidden;
     z-index: 1080;
     max-height: 350px;
     -webkit-transform: translate3d(0, 100%, 0);
@@ -334,6 +336,8 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
     padding: 10px 0;
     height: 100%;
     margin-bottom: -5px;
+    margin-left: 7px;
+    transform: translate3d(10%, 0px, 60%) !important;
 }
 
 .lg-outer .lg-thumb-item {
@@ -386,16 +390,16 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 .lg-outer .lg-toogle-thumb {
     background-color: #0D0A0A;
     border-radius: 2px 2px 0 0;
-    color: #999;
+    color: #fff;
     cursor: pointer;
     font-size: 24px;
     height: 39px;
     line-height: 27px;
     padding: 5px 0;
     position: absolute;
-    right: 20px;
+    right: 0;
     text-align: center;
-    top: -39px;
+    top: 0px;
     width: 50px;
 }
 
@@ -405,6 +409,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 
 .lg-outer .lg-toogle-thumb:hover {
     color: #FFF;
+    background: #ea0b44;
 }
 
 .lg-outer .lg-video-cont {
@@ -1102,4 +1107,9 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
     -moz-transition: left 1s cubic-bezier(0, 0, 0.25, 1) 0s, opacity 0.1s ease 0s;
     -o-transition: left 1s cubic-bezier(0, 0, 0.25, 1) 0s, opacity 0.1s ease 0s;
     transition: left 1s cubic-bezier(0, 0, 0.25, 1) 0s, opacity 0.1s ease 0s;
+}
+
+/* Custom Changes */
+.lg-thumb-outer .lg-grab {
+    left: 20%;
 }
