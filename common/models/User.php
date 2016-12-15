@@ -86,6 +86,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $vCityName;
     #public $height;
 
+
     // public $captcha;
     /**
      * @inheritdoc
