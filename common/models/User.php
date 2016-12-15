@@ -72,12 +72,19 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $Profile_for;
     public $AgeFrom;
     public $AgeTo;
-    // public $NobM;
-    //public $NosM;
-
+    public $vName;
+    public $Name;
+    public $vEducationFieldName;
+    public $iWorkingWithID;
+    public $vWorkingAsName;
+    public $vAnnualIncome;
+    public $vEducationLevelName;
     public $Community;
     public $SubCommunity;
     public $height;
+    public $vCountryName;
+    public $vStateName;
+    public $vCityName;
 
     // public $captcha;
     /**

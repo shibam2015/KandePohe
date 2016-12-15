@@ -155,13 +155,13 @@ $form = ActiveForm::begin([
                                                         <div class="clearfix"></div>
                                                         <div class="multiselect-wrapper">
                                                             <label for="select4">Marital Status</label>
-                                                            <?= $form->field($TempModel, 'iMaritalStatusID')->dropDownList(
-    ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
-    ['class' => 'multiselect select4 tag-select-box',
-        //'id' => 'activate_selectator4',
-        'multiple' => 'multiple',
-    ]
-)->label(false)->error(false); ?>
+                                                            <?= $form->field($TempModel, 'vName')->dropDownList(
+                                                                ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
+                                                                ['class' => 'multiselect select4 tag-select-box',
+                                                                    //'id' => 'activate_selectator4',
+                                                                    'multiple' => 'multiple',
+                                                                ]
+                                                            )->label(false)->error(false); ?>
                                                                                                                                 <input value="activate selectator" id="activate_selectator4" type="hidden">
                                                         </div>
                                                         <div class="multiselect-wrapper">
@@ -178,36 +178,40 @@ $form = ActiveForm::begin([
                                                         </div>
                                                         <div class="multiselect-wrapper">
                                                             <label for="select4">Mother Tongue</label>
-                                                            <?= $form->field($TempModel, 'mother_tongue')->dropDownList(
-    ArrayHelper::map(CommonHelper::getMotherTongue(), 'ID', 'Name'),
-    ['class' => 'multiselect select4 tag-select-box',
-        //'id' => 'activate_selectator4',
-        'multiple' => 'multiple',
-    ]
+                                                            <?= $form->field($TempModel, 'Name')->dropDownList(
+                                                                ArrayHelper::map(CommonHelper::getMotherTongue(), 'ID', 'Name'),
+                                                                ['class' => 'multiselect select4 tag-select-box',
+                                                                    'multiple' => 'multiple',
+                                                                ]
 
-)->label(false)->error(false); ?>
+                                                            )->label(false)->error(false); ?>
                                                             <input value="activate selectator" id="activate_selectator4" type="hidden">
                                                         </div>
                                                         <div class="multiselect-wrapper">
                                                             <label for="select4">Community</label>
                                                             <?= $form->field($TempModel, 'iCommunity_ID')->dropDownList(
-    ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
-    ['class' => 'multiselect select4 tag-select-box',
-        //'id' => 'activate_selectator4',
-        'multiple' => 'multiple',
-    ]
-)->label(false)->error(false); ?>
+                                                                ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
+                                                                ['class' => 'multiselect select4 tag-select-box',
+                                                                    //'id' => 'activate_selectator4',
+                                                                    'multiple' => 'multiple',
+                                                                ]
+                                                            )->label(false)->error(false); ?>
                                                             <input value="activate selectator" id="activate_selectator4" type="hidden">
                                                         </div>
                                                         <div class="radio-wrapper mrg-bt-30">
 
                                                             <div class="radio dl" id="IVA">
                                                                 <dd>
-                                                                    <input id="cast" type="radio" checked="checked" name="cast" value="Very Fair">
+                                                                    <input id="cast" type="radio" name="cast"
+                                                                           value="cast">
                                                                     <label for="cast">Select from list</label>
-                                                                    <input id="cast2" type="radio" name="cast2" value="Fair">
+                                                                    <input id="cast" type="radio" name="cast2"
+                                                                           value="cast2">
                                                                     <label for="fair">Only Members who selected Cast Not Bar</label>
-                                                                    <a href="#" data-toggle="tooltip"  data-placement="right" title="This is where the help text will appear when the mouse hovers over the help icon"> <img src="images/tooltip.jpg" width="21" height="21"> </a> </dd>
+                                                                    <a href="#" data-toggle="tooltip"
+                                                                       data-placement="right"
+                                                                       title="This is where the help text will appear when the mouse hovers over the help icon"> <?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?> </a>
+                                                                </dd>
                                                             </div>
 
                                                         </div>
@@ -223,9 +227,8 @@ $form = ActiveForm::begin([
                                                                     <label for="Only Mangaliks">Only Mangaliks</label>
                                                                     <input id="No Mangaliks" type="radio" name="manglik" value="No Mangaliks">
                                                                     <label for="No Mangaliks">No Mangaliks</label>
-                                                                    <input id="Donot include my Gothra" type="radio" name="manglik" value="Donot include my Gothra">
-                                                                    <label for="Does not matter2" class="mrg-bt-10">Does not matter</label>
-                                                                    <input id="Does not matter2" type="radio" name="manglik" value="Does not matter2">
+                                                                    <input id="Gothra" type="radio" name="manglik"
+                                                                           value="Gothra">
                                                                     <label for="Donot include my Gothra" class="mrg-bt-10">Donot include my Gothra</label>
                                                                 </dd>
 
@@ -241,7 +244,61 @@ $form = ActiveForm::begin([
                                                 </div>
                                                 <div id="collapseTwo" class="panel-collapse collapse">
                                                     <div class="panel-body">
-                                                        <p>Under Construction...</p>
+                                                        <div class="multiselect-wrapper">
+                                                            <label for="select4">Country</label>
+                                                            <?= $form->field($TempModel, 'vCountryName')->dropDownList(
+                                                                ArrayHelper::map(CommonHelper::getCountry(), 'iCountryId', 'vCountryName'),
+                                                                ['class' => 'multiselect select4 tag-select-box',
+                                                                    'prompt' => 'Country',
+                                                                    'onchange' => '
+                                                                    $.post( "' . Yii::$app->urlManager->createUrl('ajax/getstate?id=') . '"+$(this).val(), function( data ) {
+                                                                      $( "select#iStateId" ).html( data );
+                                                                      $("select#iStateId").niceSelect("update");
+                                                                    });'
+                                                                ]
+
+                                                            )->label(false)->error(false); ?>
+                                                        </div>
+                                                        <div class="multiselect-wrapper">
+                                                            <label for="select4">State</label>
+                                                            <?php
+                                                            $stateList = [];
+                                                            if ($TempModel->iCountryId != "") {
+                                                                $stateList = ArrayHelper::map(CommonHelper::getState($TempModel->iCountryId), 'iStateId', 'vStateName');
+                                                            }
+                                                            ?>
+                                                            <?= $form->field($TempModel, 'vStateName')->dropDownList(
+                                                                $stateList,
+                                                                ['class' => 'multiselect select4 tag-select-box',
+                                                                    'id' => 'iStateId',
+                                                                    'prompt' => 'State',
+                                                                    'onchange' => '
+                                                                    $.post( "' . Yii::$app->urlManager->createUrl('ajax/getcity?id=') . '"+$(this).val(), function( data ) {
+                                                                      $( "select#iCityId" ).html( data );
+                                                                      $("select#iCityId").niceSelect("update");
+                                                                    });']
+                                                            )->label(false)->error(false); ?>
+                                                        </div>
+                                                        <div class="multiselect-wrapper">
+                                                            <label for="select4">City</label>
+                                                            <?php
+                                                            $cityList = [];
+                                                            if ($TempModel->iStateId != "") {
+                                                                $cityList = ArrayHelper::map(CommonHelper::getCity($TempModel->iStateId), 'iCityId', 'vCityName');
+                                                            }
+                                                            ?>
+                                                            <?= $form->field($TempModel, 'vCityName')->dropDownList(
+                                                                $cityList,
+                                                                ['class' => 'multiselect select4 tag-select-box',
+                                                                    'id' => 'iCityId',
+                                                                    'prompt' => 'City'
+                                                                ]
+
+                                                            )->label(false)->error(false); ?>
+                                                        </div>
+
+                                                        <input value="activate selectator" id="activate_selectator4"
+                                                               type="hidden">
                                                     </div>
                                                 </div>
                                             </div>
@@ -254,7 +311,7 @@ $form = ActiveForm::begin([
 
                                                         <div class="multiselect-wrapper">
                                                             <label for="select4">Education Level</label>
-                                                            <?= $form->field($TempModel, 'iEducationLevelID')->dropDownList(
+                                                            <?= $form->field($TempModel, 'vEducationLevelName')->dropDownList(
     ArrayHelper::map(CommonHelper::getEducationLevel(), 'iEducationLevelID', 'vEducationLevelName'),
     ['class' => 'multiselect select4 tag-select-box',
         'multiple' => 'multiple',
@@ -264,12 +321,12 @@ $form = ActiveForm::begin([
                                                         </div>
                                                         <div class="multiselect-wrapper">
                                                             <label for="select4">Education Name</label>
-                                                            <?= $form->field($TempModel, 'iEducationFieldID')->dropDownList(
-    ArrayHelper::map(CommonHelper::getEducationField(), 'iEducationFieldID', 'vEducationFieldName'),
-    ['class' => 'multiselect select4 tag-select-box',
-        'multiple' => 'multiple',
-    ]
-)->label(false)->error(false); ?>
+                                                            <?= $form->field($TempModel, 'vEducationFieldName')->dropDownList(
+                                                                ArrayHelper::map(CommonHelper::getEducationField(), 'iEducationFieldID', 'vEducationFieldName'),
+                                                                ['class' => 'multiselect select4 tag-select-box',
+                                                                    'multiple' => 'multiple',
+                                                                ]
+                                                            )->label(false)->error(false); ?>
                                                             <input value="activate selectator" id="activate_selectator4" type="hidden">
                                                         </div>
                                                         <div class="multiselect-wrapper">
@@ -284,7 +341,7 @@ $form = ActiveForm::begin([
                                                         </div>
                                                         <div class="multiselect-wrapper">
                                                             <label for="select4">Working As</label>
-                                                            <?= $form->field($TempModel, 'iWorkingAsID')->dropDownList(
+                                                            <?= $form->field($TempModel, 'vWorkingAsName')->dropDownList(
     ArrayHelper::map(CommonHelper::getWorkingAS(), 'iWorkingAsID', 'vWorkingAsName'),
     ['class' => 'multiselect select4 tag-select-box',
         'multiple' => 'multiple',
@@ -294,7 +351,7 @@ $form = ActiveForm::begin([
                                                         </div>
                                                         <div class="multiselect-wrapper">
                                                             <label for="select4">Annual Income</label>
-                                                             <?= $form->field($TempModel, 'iAnnualIncomeID')->dropDownList(
+                                                            <?= $form->field($TempModel, 'vAnnualIncome')->dropDownList(
     ArrayHelper::map(CommonHelper::getAnnualIncome(), 'iAnnualIncomeID', 'vAnnualIncome'),
     ['class' => 'multiselect select4 tag-select-box',
         'multiple' => 'multiple',
@@ -314,7 +371,7 @@ $form = ActiveForm::begin([
                                                     <div class="panel-body">
                                                         <div class="multiselect-wrapper">
                                                             <label for="select4">Height</label>
-                                                            <?= $form->field($TempModel, 'iHeightID')->dropDownList(
+                                                            <?= $form->field($TempModel, 'vName')->dropDownList(
     ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
     ['class' => 'multiselect select4 tag-select-box',
         'multiple' => 'multiple',
@@ -344,16 +401,16 @@ $form = ActiveForm::begin([
                                                                 <dt>Body Type: </dt>
                                                                 <dd>
                                                                      <?= $form->field($TempModel, 'vBodyType')->RadioList(
-    ArrayHelper::map(CommonHelper::getBodyType(), 'ID', 'Name'),
-    [
-        'item' => function ($index, $label, $name, $checked, $value) {
-            $checked = ($checked) ? 'checked' : '';
-            $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-            $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
-            return $return;
-        }
-    ]
-)->label(false)->error(false); ?>
+                                                                         ArrayHelper::map(CommonHelper::getBodyType(), 'ID', 'Name'),
+                                                                         [
+                                                                             'item' => function ($index, $label, $name, $checked, $value) {
+                                                                                 $checked = ($checked) ? 'checked' : '';
+                                                                                 $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
+                                                                                 $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
+                                                                                 return $return;
+                                                                             }
+                                                                         ]
+                                                                     )->label(false)->error(false); ?>
                                                                 </dd>
                                                             </div>
                                                         </div>
@@ -362,17 +419,17 @@ $form = ActiveForm::begin([
                                                                 <dt>Smoke: </dt>
                                                                 <dd>
                                                                      <?= $form->field($TempModel, 'vSmoke')->RadioList(
-    ['Smoke_Yes' => 'Yes', 'Smoke_No' => 'No', 'Smoke_Occasionally' => 'Occasionally'],
-    [
-        'item' => function ($index, $label, $name, $checked, $value) {
-            $checked = ($checked) ? 'checked' : '';
-            $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-            $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
-            return $return;
-        }
+                                                                         ['Smoke_Yes' => 'Yes', 'Smoke_No' => 'No', 'Smoke_Occasionally' => 'Occasionally'],
+                                                                         [
+                                                                             'item' => function ($index, $label, $name, $checked, $value) {
+                                                                                 $checked = ($checked) ? 'checked' : '';
+                                                                                 $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
+                                                                                 $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
+                                                                                 return $return;
+                                                                             }
 
-    ]
-)->label(false)->error(false); ?>
+                                                                         ]
+                                                                     )->label(false)->error(false); ?>
                                                                 </dd>
                                                             </div>
                                                         </div>
@@ -416,21 +473,22 @@ $form = ActiveForm::begin([
                                                         <div class="multiselect-wrapper">
                                                             <label for="select4">Diet</label>
                                                             <?= $form->field($TempModel, 'vDiet')->dropDownList(
-    ArrayHelper::map(CommonHelper::getDiet(), 'iDietID', 'vName'),
-    ['class' => 'multiselect select4 tag-select-box',
-        'multiple' => 'multiple',
-    ]
-)->label(false)->error(false); ?>
+                                                                ArrayHelper::map(CommonHelper::getDiet(), 'iDietID', 'vName'),
+                                                                ['class' => 'multiselect select4 tag-select-box',
+                                                                    'multiple' => 'multiple',
+                                                                ]
+                                                            )->label(false)->error(false); ?>
                                                                                                                                 <input value="activate selectator" id="activate_selectator4" type="hidden">
                                                         </div>
                                                         <div class="multiselect-wrapper">
+                                                            <div class="mid-col"><!--error-field-->
+                                                                <div class="form-cont">
                                                             <label for="select4">Weight</label>
-                                                            <?= $form->field($TempModel, 'weight')->input('number',
-    ['class' => 'multiselect select4 tag-select-box',
-        // 'multiple'=>'multiple',
-    ]
-)->label(false)->error(false); ?>
+                                                                    <?= $form->field($TempModel, 'weight', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Weight</span> </label></span>'])->input('number', ['class' => 'input__field input__field--akira form-control']
+                                                                    )->label(false)->error(false); ?>
                                                                                                                                 <input value="activate selectator" id="activate_selectator4" type="hidden">
+                                                        </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -459,7 +517,10 @@ $form = ActiveForm::begin([
                                                                     <label for="Remember" class="control-label">Visible to All</label>
                                                                     <input id="Photo" type="checkbox" name="Photo" value="check1">
                                                                     <label for="Photo" class="control-label">Protected Photo</label>
-                                                                    <a href="#" data-toggle="tooltip"  data-placement="right" title="This is where the help text will appear when the mouse hovers over the help icon"> <img src="images/tooltip.jpg" width="21" height="21"> </a> </dd>
+                                                                    <a href="#" data-toggle="tooltip"
+                                                                       data-placement="right"
+                                                                       title="This is where the help text will appear when the mouse hovers over the help icon"> <?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?> </a>
+                                                                </dd>
                                                             </div>
                                                             <div class="checkbox">
                                                                 <dt class="xs-col">Photo Created by</dt>
@@ -488,7 +549,7 @@ $form = ActiveForm::begin([
 
                                                             </div>
                                                             <div class="checkbox">
-                                                                <dt class="xs-col">Donot Show</dt>
+                                                                <dt class="xs-col">Donot Show:</dt>
                                                                 <dd>
                                                                     <input id="Remember" type="checkbox" name="Remember" value="check1">
                                                                     <label for="Remember" class="control-label">Profiles that have filtered me out</label>
@@ -561,7 +622,9 @@ $form = ActiveForm::begin([
                                     </div>
                                     <div class="col-sm-4">
                                         <ul class="list-unstyled ad-prof">
-                                            <li> <span class="imgarea"><img alt="Profile" src="images/profile1.jpg"></span> <span class="img-desc">
+                                            <li><span
+                                                    class="imgarea"><?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?></span> <span
+                                                    class="img-desc">
                   <p class="name"><strong>Ishita J</strong></p>
                   <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                   </span>
@@ -571,7 +634,9 @@ $form = ActiveForm::begin([
                                     </div>
                                     <div class="col-sm-4">
                                         <ul class="list-unstyled ad-prof">
-                                            <li> <span class="imgarea"><img alt="Profile" src="images/profile1.jpg"></span> <span class="img-desc">
+                                            <li><span
+                                                    class="imgarea"><?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?></span> <span
+                                                    class="img-desc">
                   <p class="name"><strong>Ishita J</strong></p>
                   <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                   </span>
@@ -581,7 +646,9 @@ $form = ActiveForm::begin([
                                     </div>
                                     <div class="col-sm-4">
                                         <ul class="list-unstyled ad-prof">
-                                            <li> <span class="imgarea"><img alt="Profile" src="images/profile1.jpg"></span> <span class="img-desc">
+                                            <li><span
+                                                    class="imgarea"><?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?></span> <span
+                                                    class="img-desc">
                   <p class="name"><strong>Ishita J</strong></p>
                   <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                   </span>
@@ -613,3 +680,18 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/cover/jquery-ui.min.js'
 $this->registerJsFile(Yii::$app->request->baseUrl . '/js/fm.selectator.jquery.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 
 ?>
+<style>
+    .form-horizontal .control-label {
+        padding-top: 0px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 0px;
+    }
+
+    .mid-col {
+        max-width: 600px;
+        margin-left: 0px;
+    }
+</style>
