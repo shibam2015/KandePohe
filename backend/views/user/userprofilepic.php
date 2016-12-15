@@ -57,13 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=>'raw',
                 'value' => function($model, $key, $index)
                 {
-                    if($model->propic !='') {
-                        //$PROPIC = "../../../frontend/web/uploads/" . $model->propic;
-                        $PROPIC = "../../../frontend/web/uploads/users/" . $model->id . "/140_" . $model->propic;
-                    }else{
-                        $PROPIC = "../../../frontend/web/images/placeholder.jpg";
-                    }
-
+                    $PROPIC = CommonHelper::getPhotosBackend('USER', $model->id, "200" . $model->propic, 200, '', 'Yes');
                     return '<img class="profile-user-img img-responsive img-circle" src="'.$PROPIC.'" alt="User profile picture">';
                 },
             ],

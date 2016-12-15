@@ -1,7 +1,6 @@
 <?php
 use yii\widgets\Pjax;
 use yii\helpers\Url;
-
 ?>
 <!-- Modal Photo -->
 <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -62,9 +61,10 @@ use yii\helpers\Url;
         <!-- Modal Footer -->
     </div>
 </div>
-<div class="modal fade photo-kp-crop" id="profilecrop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog "><!--modal-lg -->
+<div class="modal fade photo-kp-crop1 profilecropmodal" id="profilecrop" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog"><!--modal-lg -->
         <p class="text-center mrg-bt-10">
             <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
 
@@ -76,8 +76,11 @@ use yii\helpers\Url;
                 <h2 class="text-center" id="model_heading"> Set Profile Photo</h2>
             </div>
             <!-- Modal Body -->
-            <div class="modal-body ">
+            <div class="modal-body">
                 <div class="choose-photo">
+                    <div class="text-center " id="crop_loader">
+                        <i class="fa fa-spinner fa-spin pink"></i> Loading...
+                    </div>
                     <!--<div class="row">
                         <div class="col-sm-2">
                             <img class="img-circle" id="avatar-edit-img" height="128" data-src="default.jpg"  data-holder-rendered="true" style="width: 140px; height: 140px;" src="default.jpg"/>
@@ -96,11 +99,11 @@ use yii\helpers\Url;
                                     <input type="hidden" name="hdn-thumb-height" id="hdn-thumb-height" value=""/>
                                     <input type="hidden" name="action" value="" id="action"/>
                                     <input type="hidden" name="image_name" value="" id="image_name"/>
+                                    <input type="hidden" name="image_id" value="" id="image_id"/>
 
-                                    <div id='preview-avatar-profile' class="">
-                                        <img class="img-responsive preview" id='photov' width="" alt="Photo1">
+                                    <div id='preview-avatar-profile' class="photo-kp-crop">
+                                        <img class="img-responsive preview" id='photov' width="" alt="">
                                     </div>
-                                    <!--<div id="thumbs" style="padding:5px; width:600p"></div>-->
                                 </form>
                             </div>
                         </div>
@@ -108,14 +111,15 @@ use yii\helpers\Url;
                     <!-- Modal Footer -->
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer crop_save" style="display: none;">
                 <div class="row">
                     <div class="col-md-4 col-sm-10 col-sm-offset-1">
                         <button type="button" class="btn btn-primary mrg-tp-10 col-xs-12" data-dismiss="modal">Back
                         </button>
                     </div>
-                    <div class="col-md-4  col-sm-10 col-sm-offset-1">
-                        <button type="button" id="btn-crop" class="btn btn-primary mrg-tp-10 col-xs-12">Crop & Save
+                    <div class="col-md-4  col-sm-10 col-sm-offset-1 ">
+                        <button type="button" id="btn-crop" class="btn btn-primary mrg-tp-10 col-xs-12 crop-save-btn"
+                                disabled>Crop & Save
                         </button>
                     </div>
                 </div>
@@ -124,19 +128,40 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
+<div class="modal fade" id="photoList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <p class="text-center mrg-bt-10">
+            <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+        </p>
 
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>-->
+                <h2 class="text-center"><?= Yii::$app->params['uploadPhotoListWait'] ?></h2>
+            </div>
+            <div class="modal-body" id="photoListDiv" style="margin-top: -35px;">
+            </div>
+        </div>
+    </div>
+</div>
 <script language="javascript" type="text/javascript">
     var userid = "<?=base64_encode(Yii::$app->user->identity->id)?>";
 </script>
 <?php
-
 $this->registerJs('
+        $(document).on("click",".file_browse_wrapper",function(e){
+            $(".modal").modal("hide");
+            $("#file_browse").click();
+        });
   $(function () {
-        var max_file_size 		= 2048576; //allowed file size. (1 MB = 1048576)
-        var allowed_file_types 		= ["image/png", "image/gif", "image/jpeg", "image/pjpeg"]; //allowed file types
+        var max_file_size 		= ' . Yii::$app->params['max_file_size'] . '; //allowed file size. (1 MB = 1048576 Bytes)
+        //var allowed_file_types 		= ["image/png", "image/gif", "image/jpeg", "image/pjpeg"]; //allowed file types
+        var allowed_file_types 		= ["image/jpeg", "image/pjpeg"]; //allowed file types
         var result_output 		= "#output"; //ID of an element for response output
         var my_form_id 			= "#upload_form"; //ID of an element for response output
-        var total_files_allowed 	= 3; //Number files allowed to upload
+        var total_files_allowed 	= ' . Yii::$app->params['uploadPhotoLimit'] . '; //Number files allowed to upload at a time
 
 //on form submit
 $(".fileupload").change(function () {
@@ -146,6 +171,7 @@ $(my_form_id).on( "submit", function(event) {
     event.preventDefault();
     var proceed = true; //set proceed flag
     var error = [];	//errors
+    var names_photo = [];	//photo list
     var total_files_size = 0;
 
     if(!window.File && window.FileReader && window.FileList && window.Blob){ //if browser doesn"t supports File API
@@ -164,20 +190,53 @@ $(my_form_id).on( "submit", function(event) {
                     showNotification("E", "<b>"+ ifile.name + "</b> is unsupported file type!", "Error");
                     proceed = false; //set proceed flag to false
                 }
+                names_photo.push(ifile.name);
                 total_files_size = total_files_size + ifile.size; //add file size to total size
             }
         });
 		if(total_files_size > max_file_size){
-            showNotification("E", "You have "+total_selected_files+" file(s) with total size "+total_files_size+", Allowed size is " + max_file_size +", Try smaller file!", "Error");
+            var temp_max_file_size = (max_file_size/1048576)+" MB";
+            var temp_total_files_size = (total_files_size/1048576).toFixed(2)+" MB";
+            //showNotification("E", "You have "+total_selected_files+" file(s) with total size "+total_files_size+", Allowed size is " + max_file_size +", Try smaller file!", "Error");
+            showNotification("E", "You have "+total_selected_files+" file(s) with total size "+temp_total_files_size+", Allowed size is " + temp_max_file_size+", Try smaller file!", "Error");
             proceed = false; //set proceed flag to false
         }
-
+        /*
+        var _URL = window.URL || window.webkitURL;
+        var temp_wh = 0;
+        var msg_hw = "";
+		$(this.elements["__files[]"].files).each(function(i, ifile){
+                    var image, file1;
+            if(ifile.value !== ""){
+                    if ((file1 = ifile)) {
+                        image = new Image();
+                        image.onload = function() {
+                           if(this.width <300 && this.height < 300){
+                                showNotification("E", "<b>"+ ifile.name + "</b> is smaller by height or Width! Please select large photo.", "Error");
+                                //msg_hw += "<b>"+ ifile.name + "</b> is smaller by height or Width! Please select large photo.<br>";
+                                proceed = false; //set proceed flag to false
+                                console.log(msg_hw);
+                            }
+                        };
+                        image.src = _URL.createObjectURL(file1);
+                    }
+            }
+        });*/
 		var submit_btn  = $("#file_browse_wrapper"); //form submit button
 		//var submit_btn  = $(this).find("input[type=submit]"); //form submit button
 		//if everything looks good, proceed with jQuery Ajax
 		if(proceed){
 		    submit_btn.html("Please Wait...").prop( "disabled", true); //disable submit button
-		    loaderStart();
+		    //loaderStart();
+		    var htmlPhotoList = "";
+		    for (ctri = 0; ctri < names_photo.length; ctri++) {
+		        htmlPhotoList += "<div class=\"notice kp_warningv\" id=\"photolists_"+ctri+"\"><span>"+names_photo[ctri]+"</span> </div>";
+            }
+            $("#photoList").modal({
+                backdrop: "static",
+                keyboard: false
+            });
+            $("#photoListDiv").html(htmlPhotoList);
             var form_data = new FormData(this); //Creates new FormData object
             //var post_url = $(this).attr("action"); //get action URL of form
             var uid = userid;
@@ -195,12 +254,26 @@ $(my_form_id).on( "submit", function(event) {
                 $(my_form_id)[0].reset(); //reset form
                 //$(result_output).html(res); //output response from server
                 var DataObject = JSON.parse(res);
-                            loaderStop();
                             if (DataObject.STATUS == "S") {
+                                $("#photoList").modal();
                                 $("#photo_list").html(DataObject.HtmlOutput);
-                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                setTimeout(function(){
+                                       setTimeout(function(){
+                                          var Total = names_photo.length - 1;
+                                          for (tempi = 0; tempi < names_photo.length; tempi++) {
+                                              $("#photolists_"+tempi).addClass("kp_success").removeClass("kp_warningv");
+                                              if(tempi == Total){
+                                                setTimeout(function(){
+                                                    notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                                                }, 1500);
+                                              }
+                                          }
+                                       }, 1000);
+                                }, 3000);
+                                //notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                                 lightBox();
                                 profile_photo();
+
                             } else {
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
@@ -277,6 +350,7 @@ $this->registerJs('
                                    notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }
                             profile_photo();
+                            lightBox();
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                         loaderStop();
@@ -290,30 +364,67 @@ $this->registerJs('
 #CROPPING
 $this->registerJs("
     $(function () {
-        $('.set_profile_photo').click(function(){
-            var item= $(this).data('item');
-            $('#photov').attr('src',item);
-            $('#image_name').val($(this).data('name'));
-            $('img#photov').imgAreaSelect({
-                maxWidth: 200, maxHeight: 200,
-                minWidth: 200, minHeight: 200,
-                //handles: true,
-                fadeSpeed: 200,
-                onSelectEnd: getSizes,
-                parent: '.photo-kp-crop'
+    $(document).on('click','.set_profile_photo',function(e){
+        //$('.set_profile_photo').click(function(){e
+        $('#photo').modal('hide');
+        $('#profilecrop').modal({
+                backdrop: 'static',
+                keyboard: false
             });
-        })
+            $('#crop_loader').show();
+            $('.crop_save').hide();
+            $('#photov').attr('src','');
+            $('#image_name').val('');
+            $('#image_id').val('');
+            var imageid = $(this).data('id');
+            $('.crop-save-btn').html('Crop & Save').prop( 'disabled', true); //disable submit button
+            $.ajax({
+                        url: 'photo-cropping',
+                        type: 'POST',
+                        data: {
+                            imageid: imageid,
+                            image_name : $(this).data('name'),
+                        },
+                        cache: false,
+                        //processData: false,
+                        success: function (data, textStatus, jqXHR) {
+                            var DataObject = JSON.parse(data);
+                            $('#crop_loader').hide();
+                            $('#photov').attr('src',DataObject.PhotoCrop);
+                            $('#image_name').val(DataObject.ImageName);
+                            $('#image_id').val(imageid);
+                            $('.crop_save').show();
+                            $('img#photov').imgAreaSelect({
+                                x1 : 0, y1 : 0, x2 : 150, y2: 150,
+                                handles: true,
+                                //fadeSpeed: 200,
+                                //show : true,
+                                //maxWidth: 200, maxHeight: 200,
+                                minWidth: 200, minHeight: 200,
+                                aspectRatio: '1:1',
+                                onSelectEnd: getSizes,
+                               // parent: '.photo-kp-crop'
+                               'Close': function() {
+                                $('.imgareaselect-selection').parent().remove();
+                                  $('.imgareaselect-outer').remove();
+                                  $(this).dialog('close');
+                                },
+                            });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            notificationPopup('E', 'Something went wrong. Please try again !', 'Error');
+                        }
+            });
+        }
+    )
+    $('#profilecrop').on('hide.bs.modal', function () {
+    $('img#photov').imgAreaSelect({remove:true});
+            $('.imgareaselect-selection,.imgareaselect-border1,.imgareaselect-border2,.imgareaselect-border3,.imgareaselect-border4,.imgareaselect-border2,.imgareaselect-outer').css('display', 'none');
 
-        $('#profilecrop').on('hide.bs.modal', function () {
-          /*$(this).find('.modal-dialog').css({width:'80%',
-                height:'auto',
-                'max-height':'100%'
-            });*/
+    });
 
-            //$('.imgareaselect-border1,.imgareaselect-border2,.imgareaselect-border3,.imgareaselect-border4,.imgareaselect-border2,.imgareaselect-outer').css('display', 'none');
-        });
-
-        $('#btn-crop').on('click', function(e){
+        $(document).on('click','#btn-crop',function(e){
+        //$('#btn-crop').on('click', function(e){
             e.preventDefault();
             params = {
                 targetUrl: 'set-profile-photo',
@@ -323,12 +434,11 @@ $this->registerJs("
                 x2_axis: $('#hdn-x2-axis').val(),
                 y2_axis : $('#hdn-y2-axis').val(),
                 thumb_width : $('#hdn-thumb-width').val(),
-                thumb_height:$('#hdn-thumb-height').val()
+                thumb_height:$('#hdn-thumb-height').val(),
+                image_id:$('#image_id').val()
             };
             saveCropImage(params);
         });
-
-
 
         function getSizes(img, obj)
         {
@@ -346,19 +456,23 @@ $this->registerJs("
                 $('#hdn-y2-axis').val(y2_axis);
                 $('#hdn-thumb-width').val(thumb_width);
                 $('#hdn-thumb-height').val(thumb_height);
+                $('.crop-save-btn').prop( 'disabled', false);
+                $('.crop-save-btn').html('Crop & Save').prop( 'disabled', false);
             }
-            else
-                alert('Please select portion..!');
+            else{
+                $('.crop-save-btn').prop( 'disabled', true);
+                showNotification('E', '" . Yii::$app->params['photoCropAreaSelection'] . "', 'P');
+            }
         }
 
         function saveCropImage(params) {
+            $('.crop-save-btn').html('Please Wait..').prop( 'disabled', true); //disable submit button
             $.ajax({
                 url: params['targetUrl'],
                 cache: false,
                 dataType: 'html',
                 data: {
                     action: params['action'],
-                    id: $('#hdn-profile-id').val(),
                     t: 'ajax',
                     w1:params['thumb_width'],
                     x1:params['x_axis'],
@@ -366,39 +480,33 @@ $this->registerJs("
                     y1:params['y_axis'],
                     x2:params['x2_axis'],
                     y2:params['y2_axis'],
+                    image_id:params['image_id'],
                     image_name :$('#image_name').val()
                 },
                 type: 'Post',
                 // async:false,
                 success: function (response) {
                        var DataObject = JSON.parse(response);
-                       console.log(DataObject);
                          if (DataObject.STATUS == 'S') {
-                                //$('#photo_list').html(DataObject.HtmlOutput);
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
-                                //profile_photo();
-                                //lightBox();
-$('.mainpropic').attr('src', '');
-                                setTimeout(function(){
-
+                $('.mainpropic').attr('src', '');
                                     $('.mainpropic').attr('src', DataObject.ProfilePhoto);
                                     $('.profile_photo_one').attr('src', DataObject.ProfilePhotoThumb);
-                                }, 3000);
-
+                                    //$('#photo_list a').remove
+                                    $('#photo_list a').find('img').removeClass('selected');
+                                    $('#img_'+params['image_id']+' a').find('img').addClass('selected');
                          } else {
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                          }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    alert('status Code:' + xhr.status + 'Error Message :' + thrownError);
+                    notificationPopup('E', 'status Code:' + xhr.status + 'Error Message :' + thrownError, 'Error');
                 }
             });
         }
     })
+    $(document).on('mouseover','.hovertool',function(e){
+            $('[data-toggle=\'tooltip\']').tooltip();
+        });
 ");
-
 ?>
-<script>
-    /*$('#thumbnail').imgAreaSelect({  x1 : 0, y1 : 0, x2 : 180, y2: 180, aspectRatio: '1:1', handles: true  , onSelectChange: preview });*/
-
-</script>

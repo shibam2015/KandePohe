@@ -103,6 +103,11 @@ class UserController extends Controller
         return $PERCENTAGE;
     }
 
+    public function beforeAction($action) {
+        //$this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+
     /**
      * @inheritdoc
      */
@@ -226,7 +231,8 @@ class UserController extends Controller
 
                 return $this->render('photos', [
                     'model' => $USER_PHOTOS_LIST,
-                    'model_user' => $model
+                    'model_user' => $model,
+                    'USER_APPROVED' => \common\models\User::weightedCheck(10),
                 ]);
             } else {
                 return $this->redirect(Yii::getAlias('@web'));
@@ -241,41 +247,52 @@ class UserController extends Controller
     {
         $id = Yii::$app->user->identity->id;
         if ($model = User::findOne($id)) {
-            $model->scenario = User::SCENARIO_REGISTER6;
             $FILE_COUNT = count($_FILES);
-            if ($FILE_COUNT != 0) {
-                $CM_HELPER = new CommonHelper();
-                $PATH = $CM_HELPER->getUserUploadFolder(1) . $id . "/";
-                $URL = $CM_HELPER->getUserUploadFolder(2) . $id . "/";
-                $USER_SIZE_ARRAY = $CM_HELPER->getUserResizeRatio();
-                $PHOTO_ARRAY = CommonHelper::photoUploads($id, $_FILES["__files"], $PATH, $URL, $USER_SIZE_ARRAY, '');
-                if ($PHOTO_ARRAY['STATUS']) {
-                    if (is_array($PHOTO_ARRAY['PhotoArray'])) {
-                        foreach ($PHOTO_ARRAY['PhotoArray']['images'] as $PhotoKey => $PhotoValue) {
-                            $PG = new UserPhotos();
-                            $PG->iUser_ID = $id;
-                            $PG->Is_Profile_Photo = 'NO';
-                            $PG->dtCreated = CommonHelper::getTime();
-                            $PG->dtModified = CommonHelper::getTime();
-                            $PG->File_Name = $PhotoValue;
-                            $ACTION_FLAG = $PG->save();
+            $UserPhotos = new UserPhotos();
+            $MaximumPhotoLimit = Yii::$app->params['total_files_allowed'];
+            $TotalUploadPhotos = $UserPhotos->totalUploadPhotos($id);
+            $TotalUploads = $TotalUploadPhotos + count($_FILES["__files"]['name']);
+            $RemainingLimit = $MaximumPhotoLimit - $TotalUploadPhotos;
+            if ($TotalUploads <= $MaximumPhotoLimit) {
+                $model->scenario = User::SCENARIO_REGISTER6;
+                if ($FILE_COUNT != 0) {
+                    $CM_HELPER = new CommonHelper();
+                    $PATH = $CM_HELPER->getUserUploadFolder(1) . $id . "/";
+                    $URL = $CM_HELPER->getUserUploadFolder(2) . $id . "/";
+                    $USER_SIZE_ARRAY = $CM_HELPER->getUserResizeRatio();
+                    $PHOTO_ARRAY = CommonHelper::photoUploads($id, $_FILES["__files"], $PATH, $URL, $USER_SIZE_ARRAY, '');
+                    if ($PHOTO_ARRAY['STATUS']) {
+                        if (is_array($PHOTO_ARRAY['PhotoArray'])) {
+                            foreach ($PHOTO_ARRAY['PhotoArray']['images'] as $PhotoKey => $PhotoValue) {
+                                $PG = new UserPhotos();
+                                $PG->iUser_ID = $id;
+                                $PG->Is_Profile_Photo = 'NO';
+                                $PG->dtCreated = CommonHelper::getTime();
+                                $PG->dtModified = CommonHelper::getTime();
+                                $PG->File_Name = $PhotoValue;
+                                $ACTION_FLAG = $PG->save();
+                            }
                         }
-                    }
-                    if ($ACTION_FLAG) {
-                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHOTO_UPLOAD');
+                        if ($ACTION_FLAG) {
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHOTO_UPLOAD');
+                        } else {
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHOTO_UPLOAD');
+                        }
                     } else {
                         list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHOTO_UPLOAD');
+                        $MESSAGE = $PHOTO_ARRAY['MESSAGE'];
                     }
-                } else {
-                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHOTO_UPLOAD');
-                    $MESSAGE = $PHOTO_ARRAY['MESSAGE'];
                 }
+                $USER_PHOTOS_LIST = $UserPhotos->findByUserId($id);
+                $myModel = [
+                    'model' => $USER_PHOTOS_LIST,
+                ];
+                $HtmlOutput = $this->renderAjax('_photolist', $myModel);
+            } else {
+                $STATUS = 'E';
+                $MESSAGE = CommonHelper::replaceNotificationMessage(Yii::$app->params['uploadLimitError'], array('LIMIT' => $RemainingLimit));
+                $TITLE = Yii::$app->params['titleWarrning'];
             }
-            $USER_PHOTOS_LIST = $PG->findByUserId($id);
-            $myModel = [
-                'model' => $USER_PHOTOS_LIST,
-            ];
-            $HtmlOutput = $this->renderAjax('_photolist', $myModel);
             $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE, 'HtmlOutput' => $HtmlOutput);
             Yii::$app->response->format = Response::FORMAT_JSON;
             return $return;
@@ -1383,7 +1400,6 @@ class UserController extends Controller
             $PIN = $model->pin_email_vaerification;
             $EmailPin = Yii::$app->request->post('User')['email_pin'];
             $model->email_pin = $EmailPin;
-            #echo $model->scenario ;
             if ($model->validate()) {
                 if ($PIN == $EmailPin) {
                     $model->completed_step = $model->setCompletedStep('9');
@@ -1532,7 +1548,6 @@ class UserController extends Controller
     public function actionProfileViewedBy($Id, $ToUserId)
     {
         $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
-        #CommonHelper::pr($Model);//exit;
         $Temp = 0;
         $Model->scenario = UserRequest::SCENARIO_PROFILE_VIEWED_BY;
         if ($Model->id) {
@@ -1569,14 +1584,16 @@ class UserController extends Controller
         $UserModel = User::findOne($ToUserId);
         $PG = new UserPhotos();
         $USER_PHOTOS_LIST = $PG->findByProfilePhoto($id);
-        if (count($USER_PHOTOS_LIST) != 0) {
-            $PHOTO = CommonHelper::getPhotos('USER', $id, $USER_PHOTOS_LIST->File_Name, 200);
+        /*if (count($USER_PHOTOS_LIST) != 0) {
+            $PHOTO = CommonHelper::getPhotos('USER', $id, "200" . $USER_PHOTOS_LIST->File_Name, 200, '', 'Yes');
         } else {
             $PHOTO = CommonHelper::getUserDefaultPhoto();
-        }
+        }*/
+        $PHOTO = CommonHelper::getPhotos('USER', $id, "200" . $Model->propic, 200, '', 'Yes');
         $LINK = CommonHelper::getSiteUrl('FRONTEND', 1) . 'user/profile?uk=' . $Model->Registration_Number;
         $PHOTO = '<img src="' . $PHOTO . '" width="200"  alt="Profile Photo">';
-        $MAIL_DATA = array("EMAIL_TO" => $UserModel->email, "NAME" => $UserModel->First_Name . " " . $UserModel->Last_Name, "USER_NAME" => $Model->First_Name . " " . $Model->Last_Name, "TODAY_DATE" => date('d-m-Y'), "AGE" => CommonHelper::getAge($Model->DOB), "HEIGHT" => CommonHelper::setInputVal($Model->height->vName, 'text'), "RELIGION" => CommonHelper::setInputVal($Model->religionName->vName, 'text'), "MOTHER_TONGUE" => CommonHelper::setInputVal($Model->motherTongue->Name, 'text'), "COMMUNITY" => CommonHelper::setInputVal($Model->communityName->vName, 'text'), "LOCATION" => CommonHelper::setInputVal($Model->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($Model->countryName->vCountryName, 'text'), "EDUCATION" => CommonHelper::setInputVal($Model->educationLevelName->vEducationLevelName, 'text'), "PROFESSION" => CommonHelper::setInputVal($Model->workingAsName->vWorkingAsName, 'text'), "ABOUT_ME" => CommonHelper::truncate($Model->tYourSelf, 100), 'LINK' => $LINK, 'PHOTO' => $PHOTO);
+        $MAIL_DATA = array("EMAIL_TO" => $UserModel->email, "NAME" => $UserModel->FullName, "USER_NAME" => $Model->FullName, "TODAY_DATE" => date('d-m-Y'), "AGE" => CommonHelper::getAge($Model->DOB), "HEIGHT" => CommonHelper::setInputVal($Model->height->vName, 'text'), "RELIGION" => CommonHelper::setInputVal($Model->religionName->vName, 'text'), "MOTHER_TONGUE" => CommonHelper::setInputVal($Model->motherTongue->Name, 'text'), "COMMUNITY" => CommonHelper::setInputVal($Model->communityName->vName, 'text'), "LOCATION" => CommonHelper::setInputVal($Model->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($Model->countryName->vCountryName, 'text'), "EDUCATION" => CommonHelper::setInputVal($Model->educationLevelName->vEducationLevelName, 'text'), "PROFESSION" => CommonHelper::setInputVal($Model->workingAsName->vWorkingAsName, 'text'), "ABOUT_ME" => CommonHelper::truncate($Model->tYourSelf, 100), 'LINK' => $LINK, 'PHOTO' => $PHOTO);
+        #echo "<pre>";print_r($MAIL_DATA);#exit;
         if ($Model->Gender == 'MALE') {
             $MAIL_STATUS = MailHelper::SendMail($MailType . '_GROOM', $MAIL_DATA);
         } else {
@@ -1587,7 +1604,9 @@ class UserController extends Controller
 
     public function actionSendEmailProfile()
     {
-        $UserId = Yii::$app->request->post('UserId');
+        #echo "<pre>";print_r($_REQUEST);exit;
+
+        $UserId = Yii::$app->request->post('ToUserId');
         $id = Yii::$app->user->identity->id;
         $MAIL_STATUS = $this->actionMailSendRequest($id, $UserId, 'PROFILE_OF');
         if ($MAIL_STATUS) {
@@ -1638,6 +1657,27 @@ class UserController extends Controller
                 $temp['STATUS'] = $this->actionCancelInterest($Id, $ToUserId, 'CANCEL_INTEREST_OF');
                 list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification($temp['STATUS'], 'CANCEL_INTEREST');
                 $temp['MESSAGE'] = $MESSAGE;
+                if ($Page != 'PROFILE') {
+                    return json_encode($temp);
+                    exit;
+                }
+            } else if ($RequestAction == 'Block User') {
+                $temp['Action'] = 'BLOCK_USER';
+                $temp['STATUS'] = $this->actionUserBlock($Id, $ToUserId, 'BLOCK_USER_OF');
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification($temp['STATUS'], 'BLOCK_USER');
+                $temp['MESSAGE'] = $MESSAGE;
+                $temp['TITLE'] = $TITLE;
+                if ($Page != 'PROFILE') {
+                    return json_encode($temp);
+                    exit;
+                }
+            } else if ($RequestAction == 'SHORTLIST_USER') {
+                $temp['Action'] = 'SHORTLIST_USER';
+                $temp['STATUS'] = $this->actionUserShortList($Id, $ToUserId, 'SHORTLIST_USER_OF');
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification($temp['STATUS'], 'SHORTLIST_USER', array("NAME" => Yii::$app->request->post('Name')));
+                $temp['STATUS'] = $STATUS;
+                $temp['MESSAGE'] = $MESSAGE;
+                $temp['TITLE'] = $TITLE;
                 if ($Page != 'PROFILE') {
                     return json_encode($temp);
                     exit;
@@ -1868,6 +1908,94 @@ class UserController extends Controller
         }
     }
 
+    public function actionUserBlock($Id, $ToUserId, $MailType)
+    {
+        $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
+        $Temp = 0;
+        $Model->scenario = UserRequestOp::SCENARIO_CANCEL_INTEREST;
+        if ($Model->id) {
+            if ($Id == $Model->from_user_id) {
+                if ($Model->send_request_status_from_to == 'Yes') {
+                    $Temp = 1;
+                    $Model->send_request_status_from_to = 'No';
+                } else if ($Model->send_request_status_from_to == 'No') {
+                    return 'IN';
+                } else if ($Model->send_request_status_from_to == 'Rejected') {
+                    return 'IR';
+                } else if ($Model->send_request_status_from_to == 'Accepted') {
+                    return 'IA';
+                } else {
+                    return 'W';
+                }
+
+            } else if ($Id == $Model->to_user_id) {
+                if ($Model->send_request_status_to_from == 'Yes') {
+                    $Temp = 1;
+                    $Model->send_request_status_to_from = 'No';
+                } else if ($Model->send_request_status_to_from == 'No') {
+                    return 'IN';
+                } else if ($Model->send_request_status_to_from == 'Rejected') {
+                    return 'IR';
+                } else if ($Model->send_request_status_to_from == 'Accepted') {
+                    return 'IA';
+                } else {
+                    return 'W';
+                }
+            }
+        } else {
+            return 'W';
+        }
+        if ($Temp) {
+            if ($Model->save()) {
+                $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['cancelInterestMessage'], 'CancelInterest');
+                //$this->actionMailSendRequest($Id, $ToUserId, $MailType);
+                return 'S';
+            } else {
+                return 'E';
+            }
+        }
+    }
+
+    public function actionUserShortList($Id, $ToUserId, $MailType)
+    {
+        $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
+        $Temp = 0;
+        $Model->scenario = UserRequestOp::SCENARIO_SHORTLIST_INTEREST;
+        if ($Model->id) {
+            if ($Id == $Model->from_user_id) {
+                if ($Model->short_list_status_from_to == 'No') {
+                    $Temp = 1;
+                    $Model->short_list_status_from_to = 'Yes';
+                } else if ($Model->short_list_status_from_to == 'Yes') {
+                    return 'UB';
+                } else {
+                    return 'W';
+                }
+
+            } else if ($Id == $Model->to_user_id) {
+                if ($Model->short_list_status_to_from == 'No') {
+                    $Temp = 1;
+                    $Model->short_list_status_to_from = 'Yes';
+                } else if ($Model->short_list_status_to_from == 'Yes') {
+                    return 'UB';
+                } else {
+                    return 'W';
+                }
+            }
+        } else {
+            return 'W';
+        }
+        if ($Temp) {
+            if ($Model->save()) {
+                //$this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['cancelInterestMessage'], 'CancelInterest');
+                $this->actionMailSendRequest($Id, $ToUserId, $MailType);
+                return 'S';
+            } else {
+                return 'E';
+            }
+        }
+    }
+
     public function actionSendIntDashboard()
     {
         $Id = Yii::$app->user->identity->id;
@@ -1919,32 +2047,19 @@ class UserController extends Controller
 
 
     /****
-     *  Set Profil Photo with Cropping
+     *  Set Profil Photo set with Cropping Size
      * */
     public function actionSetProfilePhoto()
     {
         $Id = Yii::$app->user->identity->id;
         $ProfilePhotoPath = CommonHelper::getUserUploadFolder(3, $Id);
-        $MaxWidth = Yii::$app->params['maxWidth'];
-        $PHOTO = Yii::$app->request->post('image_name');
-        if ($PHOTO != '') {
-            $ActualImagePATH = CommonHelper::getUserUploadFolder(1) . $Id . "/";
-            if (!is_dir($ProfilePhotoPath)) {
-                mkdir($ProfilePhotoPath, 0777);
-            }
-            list($txt, $ext) = explode(".", $PHOTO);
-            $ActualImageName = Yii::$app->params['profilePrefix'] . '.' . $ext;
-            $PhotoWithPath = $ActualImagePATH . $ActualImageName;
-            if (copy($ActualImagePATH . $PHOTO, $ProfilePhotoPath . $ActualImageName)) {
-                $width = CommonHelper::getPhotoWidth($PhotoWithPath);
-                $height = CommonHelper::getPhotoHeight($PhotoWithPath);
-                if ($width > $MaxWidth) {
-                    $scale = $MaxWidth / $width;
-                    CommonHelper::resizeImage($PhotoWithPath, $width, $height, $scale);
-                } else {
-                    $scale = 1;
-                    CommonHelper::resizeImage($PhotoWithPath, $width, $height, $scale);
-                }
+        $Photo = Yii::$app->request->post('image_name');
+        $PhotoId = Yii::$app->request->post('image_id');
+        $PID = Yii::$app->request->post('image_id');
+        if ($Photo != '' && $PhotoId = !'') {
+            list($txt, $ext) = explode(".", $Photo);
+            $ActualImageName = $Photo;
+            if (1) {
                 $ProfilePhotoSize = CommonHelper::getUserResizeRatio();
                 if (isset($_POST['t']) and $_POST['t'] == "ajax") {
                     extract(Yii::$app->request->post());
@@ -1961,11 +2076,37 @@ class UserController extends Controller
                         imagecopyresampled($nimg, $im_src, 0, 0, $x1, $y1, $nw, $nh, $w1, $h1);
                         imagejpeg($nimg, $NewImagePath, 90);
                     }
-                    $ProfilePhotoURL = CommonHelper::getUserUploadFolder(4, $Id);
-                    $ProfilePhoto = $ProfilePhotoURL . "200" . $ActualImageName;
-                    $ProfilePhotoThumb = $ProfilePhotoURL . "30" . $ActualImageName;
+
+                    /* Set Profile photo Name into database Store */
+                    $PG = new UserPhotos();
+                    $PG->updateIsProfilePhoto($Id);
+                    $UserPhotosModel = $PG->findByPhotoId($Id, $PID);
+                    if (count($UserPhotosModel) != 0) {
+                        CommonHelper::ProfilePhotoDeleteFromFolder($ProfilePhotoPath, $ProfilePhotoSize, Yii::$app->user->identity->propic); # Delete Photos from Directory.
+                        $UserModel = User::findOne($Id);
+                        $UserModel->propic = $ActualImageName;
+                        $UserModel->eStatusPhotoModify = 'Pending';
+                        $UserModel->completed_step = $UserModel->setCompletedStep('7');
+
+                        $ACTION_FLAG = $UserModel->save();
+                        $UserPhotosModel->Is_Profile_Photo = 'YES';
+                        $UserPhotosModel->eStatus = 'Pending';
+                        $UserPhotosModel->save();
+                        $ProfilePhotoURL = CommonHelper::getUserUploadFolder(4, $Id);
+                        if ($ACTION_FLAG) {
+                            $ProfilePhoto = $ProfilePhotoURL . "200" . $ActualImageName . '?' . time();
+                            $ProfilePhotoThumb = $ProfilePhotoURL . "30" . $ActualImageName . '?' . time();
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PROFILE_PHOTO_SET');
+                        } else {
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PROFILE_PHOTO_SET');
+                        }
+                    }
+                    /* Set Profile photo Name into database  END */
+                    #$ProfilePhotoURL = CommonHelper::getUserUploadFolder(4, $Id);
+                    #$ProfilePhoto = $ProfilePhotoURL . "200" .Yii::$app->params['profilePrefix'].  $ActualImageName.'?'.time();
+                    #$ProfilePhotoThumb = $ProfilePhotoURL . "30" .Yii::$app->params['profilePrefix']. $ActualImageName.'?'.time();
+                    #list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PROFILE_PHOTO_SET');
                     unlink($MainImagePath);
-                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PROFILE_PHOTO_SET');
                 }
             } else {
                 $MESSAGE = Yii::$app->params['photoCopyError'];
@@ -1980,4 +2121,47 @@ class UserController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
         return $return;
     }
+
+    /**
+     * @For Photo Move to Profile Directory with Resize.
+     * @return string
+     */
+    public function actionPhotoCropping()
+    {
+        $Id = Yii::$app->user->identity->id;
+        $ProfilePhotoPath = CommonHelper::getUserUploadFolder(3, $Id);
+        $ActualImagePATH = CommonHelper::getUserUploadFolder(1) . $Id . "/";
+        $MaxWidth = Yii::$app->params['maxWidth'];
+        $PHOTO = Yii::$app->request->post('image_name');
+        $FileName = $ActualImagePATH . $PHOTO;
+        list($orig_width, $orig_height) = getimagesize($FileName);
+        if (!is_dir($ProfilePhotoPath)) {
+            mkdir($ProfilePhotoPath, 0777);
+        }
+        $width = $orig_width;
+        $height = $orig_height;
+        $max_width = 500;
+        $max_height = 350;
+        # taller
+        if ($height > $max_height) {
+            $width = ($max_height / $height) * $width;
+            $height = $max_height;
+        }
+        # wider
+        if ($width > $max_width) {
+            $height = ($max_width / $width) * $height;
+            $width = $max_width;
+        }
+        list($txt, $ext) = explode(".", $PHOTO);
+        $ActualImageName = Yii::$app->params['profilePrefix'] . "_" . $txt . '.' . $ext;
+        $image_p = imagecreatetruecolor($width, $height);
+        $image = imagecreatefromjpeg($FileName);
+        imagecopyresampled($image_p, $image, 0, 0, 0, 0,
+            $width, $height, $orig_width, $orig_height);
+        imagejpeg($image_p, $ProfilePhotoPath . $ActualImageName, 90);
+        $ProfilePhotoURL = CommonHelper::getUserUploadFolder(4, $Id);
+        $return = array('PhotoCrop' => $ProfilePhotoURL . $ActualImageName . '?' . time(), 'ImageName' => $ActualImageName);
+        return json_encode($return);
+    }
 }
+

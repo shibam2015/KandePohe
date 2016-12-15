@@ -34,6 +34,7 @@ class AppAsset extends AssetBundle
         'plugings/loader/pace.min.js',
         #'js/cover/jquery-ui.min.js', //Cover Photo
         'js/cover/jquery.wallform.js', //Cover Photo
-        'plugings/l1/waitMe.js' // Loader
+        'plugings/l1/waitMe.js', // Loader
+        'js/angular/controller/commonController.js' // Angular Controller
     ];
 }

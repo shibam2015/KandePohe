@@ -19,6 +19,7 @@ use common\components\CommonHelper;
 use common\components\MessageHelper;
 use common\components\SmsHelper;
 use frontend\controllers\UserController;
+
 /**
  * Site controller
  */
@@ -309,12 +310,12 @@ class MailboxController extends Controller
             ->all();
         $MailArray[$Model->id]['LastMsg'] = str_replace("#NAME#", $Model->fromUserInfo->fullName, $LastMail->MailContent);
         $MailArray[$Model->id]['MsgCount'] = $MailCount;*/
-            $myModel = [
-                'LastMail' => $LastMail,
-                'Id' => $Id,
-                'FromUserId' => $FromUserId,
-                'MailArray' => $MailArray
-            ];
+        $myModel = [
+            'LastMail' => $LastMail,
+            'Id' => $Id,
+            'FromUserId' => $FromUserId,
+            'MailArray' => $MailArray
+        ];
         $HtmlOutput = $this->renderAjax('_last_msg_section', $myModel);
         $Output = array("HtmlOutput" => $HtmlOutput, "Notification" => array());
         return json_encode($Output);

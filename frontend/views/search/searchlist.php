@@ -1,4 +1,4 @@
-sea<?php
+<?php
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -268,7 +268,10 @@ $M1 = array();
                                     </div>
                                 </div>
                             <?php } else { ?>
-                                <?php foreach ($Model as $SK => $SV) { ?>
+                                <?php
+
+                                foreach ($Model as $SK => $SV) {
+                                    ?>
                                     <div
                                         class="white-section <?= ($SK == 0) ? 'listing' : ''; ?> border-sharp mrg-tp-10">
                                         <div class="row mrg-bt-20">
@@ -295,20 +298,23 @@ $M1 = array();
                                                                 if (is_array($Photos[$SV->id])) {
                                                                     foreach ($Photos[$SV->id] as $K => $V) {
                                                                         #CommonHelper::pr($V);
-                                                                        #echo "<br> PHOTOT => ".CommonHelper::getPhotos('USER', $SV->id, $V['File_Name'], 140);
                                                                         $SELECTED = '';
+                                                                        $Photo = Yii::$app->params['thumbnailPrefix'] . '120_' . $V->File_Name;
+                                                                        $Yes = 'No';
                                                                         if ($V['Is_Profile_Photo'] == 'YES') {
                                                                             $SELECTED = "active";
+                                                                            $Photo = '120' . $SV->propic;
+                                                                            $Yes = 'Yes';
                                                                         } ?>
                                                                         <div
                                                                             class="item <?= ($K == 0) ? 'active' : ''; ?>">
-                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, $V['File_Name'], 140), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
+                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, $Photo, 120, '', $Yes), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
                                                                         </div>
                                                                     <?php
                                                                     }
                                                                 } else { ?>
                                                                     <div class="item active">
-                                                                        <?= Html::img($Photos[$SV->id], ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive item']); ?>
+                                                                        <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, $Photos[$SV->id], 120), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive item']); ?>
                                                                     </div>
                                                                 <?php }
                                                                 ?>

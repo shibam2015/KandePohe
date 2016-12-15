@@ -91,7 +91,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     <div class="im-pc">
                                                         <div class="image">
                                                             <div class="placeholder text-center">
-                                                                <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->user->identity->propic, 200), ['class' => 'img-responsive mainpropic', 'width' => '200', 'height' => '200', 'alt' => 'Profile Pic']); ?>
+                                                                <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes'), ['class' => 'img-responsive mainpropic', 'width' => '200', 'height' => '200', 'alt' => 'Profile Pic']); ?>
                                                                 <div class="add-photo" data-toggle="modal"
                                                                      data-target="#photo"><span
                                                                         class="file-input btn-file"> <i

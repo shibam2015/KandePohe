@@ -442,8 +442,10 @@ $(document).on("click", ".kp_notification_close", function (e) {
     $('.kp_notify').slideUp();
 });
 
-function showNotification(type, msg) {
-    $(".modal").modal("hide");
+function showNotification(type, msg, flag) {
+    if (flag != 'P') {
+        $(".modal").modal("hide");
+    }
     if (type == 'S') {
         $('.kp_notify').removeClass('red').addClass('green');
         $('.kp_notification').html(msg);
@@ -456,7 +458,7 @@ function showNotification(type, msg) {
     }
     setTimeout(function () {
         $('.kp_notify').slideUp();
-    }, 4000);
+    }, 10000);
     $('.kp_notify').slideDown();
 }
 /* Notification END  */
@@ -510,8 +512,24 @@ function lightBox() {
     if ($(".gallery a").length) {
         var gallery = $('.gallery a').simpleLightbox();
     }
+    //$('.lightgallery').lightGallery();
+    $('.lightgallery').lightGallery({
+        selector: '.kp_gallery'
+    });
 }
 lightBox();
+
+$(document).on("click", ".kp_not_gallery", function (e) {
+    var $lg = $('.lightgallery');
+    $lg.lightGallery();
+    $lg.data('lightGallery').destroy(true);
+});
+$(document).on("mouseover", ".kp_gallery", function (e) {
+    $('.lightgallery').lightGallery({
+        selector: '.kp_gallery'
+    });
+    lightBox();
+});
 
 function commonRequest(url, htmlId, dataArr) {
     $.ajax({
@@ -524,6 +542,7 @@ function commonRequest(url, htmlId, dataArr) {
         success: function (res) {
             var dataObj = JSON.parse(res);
             $(htmlId).html(dataObj.HtmlOutput);
+            lightBox();
         }
     });
 }

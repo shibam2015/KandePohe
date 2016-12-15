@@ -35,15 +35,19 @@ use yii\widgets\Pjax;
                                                     <!-- Wrapper for slides -->
                                                     <div class="carousel-inner">
                                                         <?php if (count($PhotoList) > 0) {
-                                                            #CommonHelper::pr($PhotoList);exit;
                                                             foreach ($PhotoList as $K => $V) {
                                                                 $SELECTED = '';
+                                                                $Photo = Yii::$app->params['thumbnailPrefix'] . '120_' . $V->File_Name;
+                                                                $Yes = 'No';
                                                                 if ($V['Is_Profile_Photo'] == 'YES') {
                                                                     $SELECTED = "active";
-                                                                } ?>
-                                                                <!--<div class="item <?/*= $SELECTED */ ?>">-->
+                                                                    $Photo = '120' . $model->propic;
+                                                                    $Yes = 'Yes';
+                                                                }
+                                                                ?>
                                                                 <div class="item <?= ($K == 0) ? 'active' : ''; ?>">
-                                                                    <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $V['File_Name'], 140), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
+                                                                    <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $Photo, 120, '', $Yes), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
+
                                                                 </div>
                                                             <?php }
                                                         } else { ?>
@@ -68,8 +72,8 @@ use yii\widgets\Pjax;
                                             </div>
                                         </div>
                                         <?php if (count($PhotoList) > 0) { ?>
-                                            <p class="text-right"><a href="#" data-toggle="modal" data-target="#photo">View
-                                                    Album <i class="fa fa-angle-right"></i></a></p>
+                                            <!--<p class="text-right"><a href="#" data-toggle="modal" data-target="#photo">View
+                                                    Album <i class="fa fa-angle-right"></i></a></p>-->
                                         <?php } ?>
                                     </div>
                                     <div class="col-sm-9">
@@ -84,7 +88,7 @@ use yii\widgets\Pjax;
                                         </div>
                                         <?php Pjax::begin(['id' => 'my_index', 'enablePushState' => false]); ?>
                                         <div class="profile-control requests">
-                                            Loading...
+                                            <i class="fa fa-spinner fa-spin pink"></i> Loading...
                                             <!--<button type="button" class="btn active sendInterest" data-target="#sendInterest"
                                                     data-toggle="modal"> Send Interest <i class="fa fa-heart-o"></i>
                                             </button>
@@ -695,7 +699,7 @@ use yii\widgets\Pjax;
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-sm-12">
-                                    <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $model->propic, 140), ['width' => '', 'height' => '120', 'alt' => 'Profile', 'class' => '']); ?>
+                                    <?= Html::img(CommonHelper::getPhotos('USER', $model->id, '120' . $model->propic, 120, '', 'Yes'), ['width' => '', 'height' => '120', 'alt' => 'Profile', 'class' => '']); ?>
                                 </div>
                                 <div class="col-md-12 col-sm-12">
                                     <h6 class="mrg-bt-30 mrg-tp-20 font-15 text-dark"><strong>Request the member to add
@@ -883,6 +887,13 @@ $(document).on("click",".send_email",function(e){
     $(document).on("click",".send_request",function(e){
         loaderStart();
         formData.append("Action", "SEND_INTEREST");
+        sendRequest("' . Url::to(['user/user-request']) . '",".requests",formData);
+    });
+    $(document).on("click",".shortlistUser",function(e){
+        loaderStart();
+        formData.append("Action", "SHORTLIST_USER");
+        formData.append("Page",  "PROFILE");
+        formData.append("Name", $(this).data("name"));
         sendRequest("' . Url::to(['user/user-request']) . '",".requests",formData);
     });
     $(document).on("click",".a_b_d",function(e){

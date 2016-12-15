@@ -193,6 +193,7 @@ use yii\helpers\Url;
     </div>
     <script src="<?= Yii::$app->homeUrl ?>js/jquery.js" type="text/javascript"></script>
     <script src="<?= Yii::$app->homeUrl ?>js/selectFx.js"></script>
+
 <?php
 $this->registerJs('
 $(document).on("click",".sendmail",function(e){

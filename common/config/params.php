@@ -28,12 +28,13 @@ return [
     'mailBoxSendInterestSender' => 'You sent #GENDER# interest request.',
     'mailBoxSendInterestReceiver' => '#GENDER# sent you interest request.',
     'smsGetwayError' => 'Something wrong with SMS sending Process. Please contact to site admin.',
-    'photoMissingError' => 'Photo Name has issue. Please try again !',
+    'photoMissingError' => 'Photo has issue. Please try again !',
     'photoCopyError' => 'Photo saving has issue. Please try again !',
+    'photoCropAreaSelection' => 'Please first select photo portion !',
 
 
-    'total_files_allowed' => 10,
-    'max_file_size' => 2048576,
+    'total_files_allowed' => 12,
+    'max_file_size' => 104857600, // 100 MB (1 MB = 1048576 Bytes)
     'maxWidth' => 500,
     'thumbnailPrefix' => 'thumb_',
     'profilePrefix' => '_profile',
@@ -42,6 +43,17 @@ return [
     'fileUploadSize' => 'You are trying to upload photos more than limit.',
     'fileUnsoupportedType' => 'You are trying to upload unsupported file type.',
     'profilePhotoFolder' => 'profile',
+    'noRecordsFoundInShortList' => 'There are no record found in your short list.',
+
+
+    'uploadPhotoListWait' => 'Uploading Photos... Please Wait !',
+    'uploadPhotoLimit' => 5, // At a time user can upload maximum 5 photos
+    'titleInforamtion' => 'Information',
+    'titleWarrning' => 'Warrning',
+    'uploadLimitError' => 'You can not upload photos more than total upload photo limit.<br> Your remaining photo upload limit is : #LIMIT#',
+    'photoPendingMode' => 'Please Wait ! Photos will be screened and make live within 4-6 hours.',
+    'photoApprovedMode' => 'Photo is Approved.',
+    'photoDisapprovedMode' => 'Irrelevant photo. We Request you to upload another photo.',
 
 ];
 

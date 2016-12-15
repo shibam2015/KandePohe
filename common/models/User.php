@@ -81,10 +81,10 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $vEducationLevelName;
     public $Community;
     public $SubCommunity;
-    public $height;
     public $vCountryName;
     public $vStateName;
     public $vCityName;
+    #public $height;
 
     // public $captcha;
     /**
