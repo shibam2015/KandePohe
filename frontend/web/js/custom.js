@@ -525,8 +525,10 @@ $(document).on("click", ".kp_not_gallery", function (e) {
     $lg.data('lightGallery').destroy(true);
 });
 $(document).on("mouseover", ".kp_gallery", function (e) {
+    $('.lightgallery').lightGallery({
+        selector: '.kp_gallery'
+    });
     lightBox();
-    //$('.lightgallery').lightGallery();
 });
 
 function commonRequest(url, htmlId, dataArr) {
