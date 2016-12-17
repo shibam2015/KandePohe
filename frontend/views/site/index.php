@@ -720,6 +720,7 @@ FREE">[Register FREE]</a>
             }, 500);
         });
     ');
+
     if ($ref == 'login') {
         $this->registerJs('
               $("#login").modal("toggle");
