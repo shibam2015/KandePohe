@@ -23,7 +23,7 @@ if (count($model) > 0) {
         ?>
         <div data-src="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
              data-sub-html="<h4><?= $PhotoHeading ?></h4><p><?= $PhotoMessage ?></p>"
-             class="kp_gallery col-md-3 col-sm-3 col-xs-6 <?= ($V->eStatus == 'Approve' || $V->eStatus == 'Disapprove') ? '' : '   text-center' ?>">
+             class="kp_gallery col-md-3 col-sm-3 col-xs-6">
             <div class="<?= ($V->eStatus == 'Approve') ? 'gallery1 ' : 'img-blur' ?>">
                 <a class="<?= $SELECTED ?>"
                    data-toggle="tooltip" data-placement="top"
@@ -45,12 +45,12 @@ if (count($model) > 0) {
                    data-name="<?= $V['File_Name'] ?>">
                     Profile pic
                 </a>
-                <a href="javascript:void(0)"
+                <!--<a href="javascript:void(0)"
                    class="pull-right profile_delete kp_not_gallery"
-                   data-id="<?= $V['iPhoto_ID'] ?>"
+                   data-id="<? /*= $V['iPhoto_ID'] */ ?>"
                    data-target="#photodelete" data-toggle="modal">
                     <i aria-hidden="true" class="fa fa-trash-o"></i>
-                </a>
+                </a>-->
             <?php } else { ?>
                 <a href="javascript:void(0)"
                    class="kp_not_gallery"
@@ -60,16 +60,22 @@ if (count($model) > 0) {
                     <?= ($V->eStatus == 'Pending') ? 'Pending' : 'Disapproved' ?>
                 </a>
                 <?php if ($V->eStatus == 'Disapprove') { ?>
-                    <a href="javascript:void(0)"
+                    <!--<a href="javascript:void(0)"
                        class="pull-right profile_delete kp_not_gallery"
-                       data-id="<?= $V['iPhoto_ID'] ?>"
+                       data-id="<? /*= $V['iPhoto_ID'] */ ?>"
                        data-target="#photodelete"
                        data-toggle="modal">
                         <i aria-hidden="true"
                            class="fa fa-trash-o"></i>
-                    </a>
+                    </a>-->
                 <?php } ?>
             <?php } ?>
+            <a href="javascript:void(0)"
+               class="pull-right profile_delete kp_not_gallery"
+               data-id="<?= $V['iPhoto_ID'] ?>"
+               data-target="#photodelete" data-toggle="modal">
+                <i aria-hidden="true" class="fa fa-trash-o"></i>
+            </a>
         </div>
     <?php }
 } else {

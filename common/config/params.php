@@ -52,7 +52,7 @@ return [
     'titleWarrning' => 'Warrning',
     'uploadLimitError' => 'You can not upload photos more than total upload photo limit.<br> Your remaining photo upload limit is : #LIMIT#',
     'photoPendingMode' => 'Please Wait ! Photos will be screened and make live within 4-6 hours.',
-    'photoApprovedMode' => 'Photo is Approved.',
+    'photoApprovedMode' => 'Photo has been Approved.',
     'photoDisapprovedMode' => 'Irrelevant photo. We Request you to upload another photo.',
 
 ];
