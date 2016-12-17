@@ -37,7 +37,7 @@ return [
     'max_file_size' => 104857600, // 100 MB (1 MB = 1048576 Bytes)
     'maxWidth' => 500,
     'thumbnailPrefix' => 'thumb_',
-    'profilePrefix' => '_profile',
+    'profilePrefix' => '_profile_',
     'allowed_file_types' => "'image/png', 'image/gif', 'image/jpeg', 'image/pjpeg'",
     'browserFileSupportError' => 'Your browser does not support new File API! Please upgrade.',
     'fileUploadSize' => 'You are trying to upload photos more than limit.',
@@ -54,6 +54,6 @@ return [
     'photoPendingMode' => 'Please Wait ! Photos will be screened and make live within 4-6 hours.',
     'photoApprovedMode' => 'Photo has been Approved.',
     'photoDisapprovedMode' => 'Irrelevant photo. We Request you to upload another photo.',
-
+    'cropSize' => 200
 ];
 

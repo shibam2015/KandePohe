@@ -513,9 +513,12 @@ function lightBox() {
         var gallery = $('.gallery a').simpleLightbox();
     }
     //$('.lightgallery').lightGallery();
-    $('.lightgallery').lightGallery({
-        selector: '.kp_gallery'
-    });
+    if ($(".lightgallery").length) {
+        $('.lightgallery').lightGallery({
+            selector: '.kp_gallery'
+        });
+    }
+
 }
 lightBox();
 
@@ -546,3 +549,6 @@ function commonRequest(url, htmlId, dataArr) {
         }
     });
 }
+$(document).on('mouseover', '.hovertool', function (e) {
+    $('[data-toggle=\'tooltip\']').tooltip();
+});

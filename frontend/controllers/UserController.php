@@ -2122,6 +2122,86 @@ class UserController extends Controller
         return $return;
     }
 
+    public function actionSetProfilePhotoOne()
+    {
+        $Id = Yii::$app->user->identity->id;
+        $ProfilePhotoPath = CommonHelper::getUserUploadFolder(3, $Id);
+        $Photo = Yii::$app->request->post('imgName');
+        $PhotoId = Yii::$app->request->post('imgId');
+        $PID = Yii::$app->request->post('imgId');
+        if ($Photo != '' && $PhotoId = !'') {
+            list($txt, $ext) = explode(".", $Photo);
+            $ActualImageName = $Photo;
+            if ($ActualImageName != '') {
+                $Data = $_REQUEST;
+                $ProfilePhotoSize = CommonHelper::getUserResizeRatio();
+                $TempImageName = Yii::$app->params['profilePrefix'] . rand();
+                $Data['ImageName'] = $TempImageName;
+                $NewFileName = $ProfilePhotoPath . $TempImageName;
+                $TempArray = CommonHelper::commonCroppingUpload($Data, $NewFileName);
+                //CommonHelper::pr($TempArray);
+                $NewProfilePhotoName = $TempArray['picname'];
+                if (1) {
+                    $MainImagePath = $ProfilePhotoPath . $NewProfilePhotoName;
+                    foreach ($ProfilePhotoSize as $KeySize => $ValueSize) {
+                        $w1 = $h1 = Yii::$app->params['cropSize'];
+                        $t_width = $ValueSize;     // Maximum thumbnail width
+                        $t_height = $ValueSize;    // Maximum thumbnail height
+                        $NewImagePath = $ProfilePhotoPath . $ValueSize . $NewProfilePhotoName;
+                        $ratio = ($t_width / $w1);
+                        $nw = ceil($w1 * $ratio);
+                        $nh = ceil($h1 * $ratio);
+                        $nimg = imagecreatetruecolor($nw, $nh);
+                        $im_src = imagecreatefromjpeg($MainImagePath);
+                        //imagecopyresampled($nimg, $im_src, 0, 0 , 0, 200, $nw, $nh, $w1, $h1);
+                        imagecopyresampled($nimg, $im_src, 0, 0, 0, 0, $nw, $nh, $w1, $h1);
+                        imagejpeg($nimg, $NewImagePath, 100);
+                    }
+                    /* Set Profile photo Name into database Store */
+                    $PG = new UserPhotos();
+                    $PG->updateIsProfilePhoto($Id);
+                    $UserPhotosModel = $PG->findByPhotoId($Id, $PID);
+
+                    if (count($UserPhotosModel) != 0) {
+                        CommonHelper::ProfilePhotoDeleteFromFolder($ProfilePhotoPath, $ProfilePhotoSize, Yii::$app->user->identity->propic); # Delete Photos from Directory.
+                        $UserModel = User::findOne($Id);
+                        $UserModel->propic = $NewProfilePhotoName;
+                        $UserModel->eStatusPhotoModify = 'Pending';
+                        $UserModel->completed_step = $UserModel->setCompletedStep('7');
+
+                        $ACTION_FLAG = $UserModel->save();
+                        $UserPhotosModel->Is_Profile_Photo = 'YES';
+                        //$UserPhotosModel->eStatus = 'Pending';
+                        $UserPhotosModel->save();
+                        $ProfilePhotoURL = CommonHelper::getUserUploadFolder(4, $Id);
+                        if ($ACTION_FLAG) {
+                            $ProfilePhoto = $ProfilePhotoURL . "200" . $NewProfilePhotoName . '?' . time();
+                            $ProfilePhotoThumb = $ProfilePhotoURL . "30" . $NewProfilePhotoName . '?' . time();
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PROFILE_PHOTO_SET');
+                        } else {
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PROFILE_PHOTO_SET');
+                        }
+                    }
+                    /* Set Profile photo Name into database  END */
+                    #$ProfilePhotoURL = CommonHelper::getUserUploadFolder(4, $Id);
+                    #$ProfilePhoto = $ProfilePhotoURL . "200" .Yii::$app->params['profilePrefix'].  $ActualImageName.'?'.time();
+                    #$ProfilePhotoThumb = $ProfilePhotoURL . "30" .Yii::$app->params['profilePrefix']. $ActualImageName.'?'.time();
+                    #list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PROFILE_PHOTO_SET');
+                    unlink($MainImagePath);
+                }
+            } else {
+                $MESSAGE = Yii::$app->params['photoCopyError'];
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PROFILE_PHOTO_SET');
+            }
+        } else {
+            $STATUS = 'E';
+            $MESSAGE = Yii::$app->params['photoMissingError'];
+        }
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => 'Profile Photo', 'ProfilePhoto' => $ProfilePhoto, 'ProfilePhotoThumb' => $ProfilePhotoThumb);
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return $return;
+    }
+
     /**
      * @For Photo Move to Profile Directory with Resize.
      * @return string

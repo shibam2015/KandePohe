@@ -68,7 +68,7 @@ AppAsset::register($this);
       <div class="kp_notification"></div>
       <span class="kp_notification_close">&times;</span>
   </div>
-
+  <!--<span class="kp_crop_close">Close</span>-->
 
   </div>
   </div>
