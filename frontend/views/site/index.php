@@ -432,7 +432,7 @@ use yii\jui\DatePicker;
                                             'dateFormat' => 'php:Y-m-d',
                                             'options' => [
                                                 'class' => 'input__field input__field--akira form-control',
-                                                'id' => 'DOB',
+                                                'id' => 'user-dob',
                                                 'onchange' => ' $(".dobcl").addClass("input--filled");',
                                                 'onkeyup' => ' $(".hasDatepicker").val("");',
 
@@ -818,12 +818,12 @@ FREE">[Register FREE]</a>
                 $(".genderV").on("change",function(e){
                   var genderVal = $(this).val();
                   if(genderVal == "FEMALE") {
-                    $("#DOB").datepicker("option","maxDate","' . date('Y-m-d', strtotime('-18 year')) . '");
-                    $("#DOB").datepicker("option","yearRange","-70:-18");
+                    $("user-dob").datepicker("option","maxDate","' . date('Y-m-d', strtotime('-18 year')) . '");
+                    $("user-dob").datepicker("option","yearRange","-70:-18");
                   }
                   else {
-                    $("#DOB").datepicker("option","maxDate","' . date('Y-m-d', strtotime('-21 year')) . '");
-                    $("#DOB").datepicker("option","yearRange","-70:-21");
+                    $("user-dob").datepicker("option","maxDate","' . date('Y-m-d', strtotime('-21 year')) . '");
+                    $("user-dob").datepicker("option","yearRange","-70:-21");
                   }
                 });
 
