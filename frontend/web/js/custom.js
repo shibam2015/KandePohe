@@ -512,7 +512,7 @@ function lightBox() {
     if ($(".gallery a").length) {
         var gallery = $('.gallery a').simpleLightbox();
     }
-    //$('.lightgallery').lightGallery();
+    
     if ($(".lightgallery").length) {
         $('.lightgallery').lightGallery({
             selector: '.kp_gallery'

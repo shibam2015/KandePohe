@@ -426,7 +426,6 @@ use yii\jui\DatePicker;
                                 </div>
                             </div>
                             <div class="form-cont">
-
                                 <?= $form->field($model, 'DOB', ["template" => '<span class="input input--akira dobcl ">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Date Of Birth</span> </label></span>{error}'])->input('text')
                                     ->widget(\yii\jui\DatePicker::classname(),
                                         [
@@ -435,7 +434,7 @@ use yii\jui\DatePicker;
                                                 'class' => 'input__field input__field--akira form-control',
                                                 'id' => 'DOB',
                                                 'onchange' => ' $(".dobcl").addClass("input--filled");',
-                                                'onkeydown' => ' $(".hasDatepicker").val("");',
+                                                'onkeyup' => ' $(".hasDatepicker").val("");',
 
                                             ],
                                             'clientOptions' => [
@@ -550,10 +549,10 @@ Policy]</a> and <a href="#" title="[T&C]">[T&C]</a></label>';
                             <!-- <a href="dash-board.html" class="">Login</a> -->
                             <?= Html::submitButton('Login', ['class' => 'btn btn-primary mrg-tp-10 col-xs-12 login-btn', 'id' => '#loginbtn', 'name' => 'login-button', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Login...']) ?>
                             <div class="checkbox">
-                                <a href="#" class="pull-right freeacc" title="Register
-FREE" data-toggle="modal"
-                                   data-target="#myModalNorm">[Register
-                                    FREE]</a><span class="pull-right freeacc">Don’t have an
+                                <a href="javascript:void(0)" class="pull-right freeacc register_link" title="Register
+FREE">[Register FREE]</a>
+
+                                <span class="pull-right freeacc">Don’t have an
                     account?</span></div>
                             <div class="bar-devider"><span>OR</span></div>
 
@@ -713,6 +712,15 @@ FREE" data-toggle="modal"
     </style>
 <?php if (Yii::$app->user->isGuest) { ?>
     <?php # Popup Open
+    $this->registerJs('
+       $(document).on("click",".register_link",function(e){
+            $("#login").modal("toggle");
+            setTimeout(function(){
+                $("#myModalNorm").modal("toggle");
+            }, 500);
+        });
+    ');
+
     if ($ref == 'login') {
         $this->registerJs('
               $("#login").modal("toggle");
