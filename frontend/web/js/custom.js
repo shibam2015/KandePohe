@@ -513,9 +513,12 @@ function lightBox() {
         var gallery = $('.gallery a').simpleLightbox();
     }
     //$('.lightgallery').lightGallery();
-    $('.lightgallery').lightGallery({
-        selector: '.kp_gallery'
-    });
+    if ($(".lightgallery").length) {
+        alert("Asdasd");
+        $('.lightgallery').lightGallery({
+            selector: '.kp_gallery'
+        });
+    }
 }
 lightBox();
 
