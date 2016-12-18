@@ -472,7 +472,8 @@ class CommonHelper {
 
     public static function getSiteUrlLogo()
     {
-        $site_url_logo = "http://" . $_SERVER["HTTP_HOST"] . Yii::getAlias('@web') . "/frontend/web/images/logo.png";
+        //$site_url_logo = "http://" . $_SERVER["HTTP_HOST"] . Yii::getAlias('@web') . "/frontend/web/images/logo.png";
+        $site_url_logo = "http://" . $_SERVER["HTTP_HOST"] . Yii::getAlias('@web') . "/images/logo.png";
         return $site_url_logo;
     }
 

@@ -8,6 +8,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use common\models\UserRequest;
+
 /**
  * User model
  *
@@ -22,7 +23,6 @@ use common\models\UserRequest;
  * @property integer $updated_at
  * @property string $password write-only password
  */
-
 class User extends \common\models\base\baseUser implements IdentityInterface
 {
     const STATUS_DELETED = 0;
@@ -188,6 +188,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             return 0;
         }
     }
+
     public static function findRecentJoinedUserList($Gender, $Limit = 4) # Get user list Gender Wise with limit
     {
         return static::find()->where(['Gender' => $Gender, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->limit($Limit)->all();
@@ -251,7 +252,7 @@ Privacy Policy and T&C to register on this site.'],
 '],
             [['status', 'created_at', 'updated_at', 'Age', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID'], 'integer'],
             [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus'], 'string'],
-            [['Time_of_Birth', 'cnb', 'iSubCommunity_ID', 'iGotraID', 'pin_email_time', 'pin_phone_time'], 'safe'],
+            [['Time_of_Birth', 'cnb', 'iSubCommunity_ID', 'iGotraID'], 'safe'],
             [['c'], 'checkDobYear'],
             [['noc', 'nob', 'nos', 'NosM', 'NobM', 'weight'], 'integer', 'integerOnly' => true, 'min' => 0],
             [['auth_key'], 'string', 'max' => 32],
@@ -320,13 +321,13 @@ characters are allowed.'
             self::SCENARIO_EDIT_MY_INFO => ['tYourSelf'],
             self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'completed_step', 'Age'],
 
-            self::SCENARIO_VERIFY_PIN_FOR_PHONE => ['phone_pin', 'completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification', 'pin_phone_time'], # FOR PHONE VERIFICATION PROCESS
-            self::SCENARIO_PHONE_NUMBER_CHANGE => ['completed_step', 'county_code', 'Mobile', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'pin_phone_time'], # FOR PHONE Number Change Process
-            self::SCENARIO_RESEND_PIN_FOR_PHONE => ['completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification', 'pin_phone_time'], # FOR Resend Phone PIN PROCESS
+            self::SCENARIO_VERIFY_PIN_FOR_PHONE => ['phone_pin', 'completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification'], # FOR PHONE VERIFICATION PROCESS
+            self::SCENARIO_PHONE_NUMBER_CHANGE => ['completed_step', 'county_code', 'Mobile', 'pin_phone_vaerification', 'ePhoneVerifiedStatus'], # FOR PHONE Number Change Process
+            self::SCENARIO_RESEND_PIN_FOR_PHONE => ['completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification'], # FOR Resend Phone PIN PROCESS
 
-            self::SCENARIO_VERIFY_PIN_FOR_EMAIL => ['email_pin', 'completed_step', 'eEmailVerifiedStatus', 'pin_email_vaerification', 'pin_email_time'], # FOR EMAIL VERIFICATION PROCESS
-            self::SCENARIO_EMAIL_ID_CHANGE => ['completed_step', 'email', 'eEmailVerifiedStatus', 'pin_email_vaerification', 'pin_email_time'], # FOR Email Id Change Process
-            self::SCENARIO_RESEND_PIN_FOR_EMAIL => ['completed_step', 'eEmailVerifiedStatus', 'pin_email_vaerification', 'pin_email_time'], # FOR Resend Email PIN PROCESS
+            self::SCENARIO_VERIFY_PIN_FOR_EMAIL => ['email_pin', 'completed_step', 'eEmailVerifiedStatus', 'pin_email_vaerification'], # FOR EMAIL VERIFICATION PROCESS
+            self::SCENARIO_EMAIL_ID_CHANGE => ['completed_step', 'email', 'eEmailVerifiedStatus', 'pin_email_vaerification'], # FOR Email Id Change Process
+            self::SCENARIO_RESEND_PIN_FOR_EMAIL => ['completed_step', 'eEmailVerifiedStatus', 'pin_email_vaerification'], # FOR Resend Email PIN PROCESS
 
         ];
 
@@ -352,19 +353,18 @@ characters are allowed.'
     /**
      * @inheritdoc
      */
-    public function checkDobYear($attribute,$params)
+    public function checkDobYear($attribute, $params)
     {
         $date1 = date('Y-m-d');
         $date2 = $this->DOB;
         $diff = abs(strtotime($date2) - strtotime($date1));
-        $years = floor($diff / (365*60*60*24));
+        $years = floor($diff / (365 * 60 * 60 * 24));
 
-        if($this->Gender == 'FEMALE'){
-            if($years < 18)
+        if ($this->Gender == 'FEMALE') {
+            if ($years < 18)
                 $this->addError('DOB', 'Your age should be grater than 18 Years');
-        }
-        else {
-            if($years < 21)
+        } else {
+            if ($years < 21)
                 $this->addError('DOB', 'Your age should be grater than 21 Years');
         }
 
@@ -543,7 +543,8 @@ characters are allowed.'
         $this->password_reset_token = null;
     }
 
-    public function getFullName(){
+    public function getFullName()
+    {
         return ucwords($this->First_Name . ' ' . $this->Last_Name);
     }
 
@@ -594,7 +595,7 @@ characters are allowed.'
 
     public function getCityName()
     {
-        return $this->hasOne(Cities ::className(), ['iCityId' => 'iCityId']);
+        return $this->hasOne(Cities::className(), ['iCityId' => 'iCityId']);
     }
 
     public function getCountryNameCA()
@@ -609,7 +610,7 @@ characters are allowed.'
 
     public function getCityNameCA()
     {
-        return $this->hasOne(Cities ::className(), ['iCityId' => 'iCityCAId']);
+        return $this->hasOne(Cities::className(), ['iCityId' => 'iCityCAId']);
     }
 
     public function getDistrictNameCA()
@@ -629,61 +630,61 @@ characters are allowed.'
 
     public function getEducationLevelName()
     {
-        return $this->hasOne(EducationLevel ::className(), ['iEducationLevelID' => 'iEducationLevelID']);
+        return $this->hasOne(EducationLevel::className(), ['iEducationLevelID' => 'iEducationLevelID']);
     }
 
     public function getEducationFieldName()
     {
-        return $this->hasOne(EducationField ::className(), ['iEducationFieldID' => 'iEducationFieldID']);
+        return $this->hasOne(EducationField::className(), ['iEducationFieldID' => 'iEducationFieldID']);
     }
 
     public function getWorkingWithName()
     {
-        return $this->hasOne(WorkingWith ::className(), ['iWorkingWithID' => 'iWorkingWithID']);
+        return $this->hasOne(WorkingWith::className(), ['iWorkingWithID' => 'iWorkingWithID']);
     }
 
     public function getWorkingAsName()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iWorkingAsID']);
+        return $this->hasOne(WorkingAS::className(), ['iWorkingAsID' => 'iWorkingAsID']);
     }
 
     public function getAnnualIncome()
     {
-        return $this->hasOne(AnnualIncome ::className(), ['iAnnualIncomeID' => 'iAnnualIncomeID']);
+        return $this->hasOne(AnnualIncome::className(), ['iAnnualIncomeID' => 'iAnnualIncomeID']);
     }
 
     public function getHeight()
     {
-        return $this->hasOne(MasterHeight ::className(), ['iHeightID' => 'iHeightID']);
+        return $this->hasOne(MasterHeight::className(), ['iHeightID' => 'iHeightID']);
     }
 
     public function getDietName()
     {
-        return $this->hasOne(MasterDiet ::className(), ['iDietID' => 'vDiet']);
+        return $this->hasOne(MasterDiet::className(), ['iDietID' => 'vDiet']);
     }
 
     public function getFatherStatus()
     {
-        $ABC = $this->hasOne(MasterFmStatus ::className(), ['iFMStatusID' => 'iFatherStatusID']);
+        $ABC = $this->hasOne(MasterFmStatus::className(), ['iFMStatusID' => 'iFatherStatusID']);
 
         return $ABC;
     }
 
     public function getFatherStatusId()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iFatherWorkingAsID']);
+        return $this->hasOne(WorkingAS::className(), ['iWorkingAsID' => 'iFatherWorkingAsID']);
     }
 
     public function getMotherStatus()
     {
-        $ABC = $this->hasOne(MasterFmStatus ::className(), ['iFMStatusID' => 'iMotherStatusID']);
+        $ABC = $this->hasOne(MasterFmStatus::className(), ['iFMStatusID' => 'iMotherStatusID']);
 
         return $ABC;
     }
 
     public function getMotherStatusId()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iMotherWorkingAsID']);
+        return $this->hasOne(WorkingAS::className(), ['iWorkingAsID' => 'iMotherWorkingAsID']);
     }
 
     /**
@@ -740,7 +741,6 @@ characters are allowed.'
     }
 
 
-
     /*public function generateUniqueRandomNumber($length = 9) {
         $PREFIX = CommonHelper::generatePrefix();
         $RANDOM_USER_NUMBER = $PREFIX.CommonHelper::generateNumericUniqueToken($length);
@@ -781,19 +781,20 @@ characters are allowed.'
         return $this->vAreaNameCA . ", " . $this->talukaNameCA->vName . ", " . $this->districtNameCA->vName . ", " . $this->cityNameCA->vCityName . ", " . $this->stateNameCA->vStateName . ", " . $this->countryNameCA->vCountryName;
     }
 
-    public function getDisplayMobile(){
+    public function getDisplayMobile()
+    {
         return ($this->county_code != '') ? $this->county_code . " " . $this->Mobile : $this->Mobile;
     }
 
-    public function setCompletedStep($step) {
+    public function setCompletedStep($step)
+    {
         $returnVal = $this->completed_step;
-        if($returnVal==""){
+        if ($returnVal == "") {
             $returnVal = $step;
-        }
-        else {
+        } else {
             $arrStep = explode(',', $returnVal);
-            if(!in_array($step, $arrStep)){
-                $returnVal = $returnVal.','.$step;
+            if (!in_array($step, $arrStep)) {
+                $returnVal = $returnVal . ',' . $step;
             }
         }
         return $returnVal;

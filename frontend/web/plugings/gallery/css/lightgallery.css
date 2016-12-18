@@ -199,6 +199,7 @@
 
 .lg-toolbar .lg-icon:hover {
     color: #FFF;
+    background-color: #ea0b44;
 }
 
 .lg-toolbar .lg-close:after {
@@ -409,7 +410,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 
 .lg-outer .lg-toogle-thumb:hover {
     color: #FFF;
-    background: #ea0b44;
+    background-color: #ea0b44;
 }
 
 .lg-outer .lg-video-cont {

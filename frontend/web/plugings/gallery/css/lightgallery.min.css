@@ -178,7 +178,8 @@
 }
 
 .lg-toolbar .lg-icon:hover {
-    color: #FFF
+    color: #FFF;
+    background-color: #ea0b44;
 }
 
 .lg-toolbar .lg-close:after {

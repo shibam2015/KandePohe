@@ -53,7 +53,7 @@ return [
     'uploadLimitError' => 'You can not upload photos more than total upload photo limit.<br> Your remaining photo upload limit is : #LIMIT#',
     'photoPendingMode' => 'Please Wait ! Photos will be screened and make live within 4-6 hours.',
     'photoApprovedMode' => 'Photo has been Approved.',
-    'photoDisapprovedMode' => 'Irrelevant photo. We Request you to upload another photo.',
+    'photoDisapprovedMode' => 'Photo is not appropriate as per our policy and is not available on portal. We Request you to upload another photo.', //Irrelevant photo
     'cropSize' => 200
 ];
 
