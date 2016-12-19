@@ -181,5 +181,4 @@ $this->registerJs('
     });
     setDesign();
 ');
-
 ?>

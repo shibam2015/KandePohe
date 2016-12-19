@@ -39,7 +39,7 @@ use yii\widgets\Pjax;
             </div>
 
             <div class="row">
-                <div class="col-sm-4 col-xs-6">
+                <div class="col-md-4 ">
                     <div class="form-cont">
                         <div class="form-cont">
                             <!-- <?= $form->errorSummary($model, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?> -->
@@ -47,8 +47,12 @@ use yii\widgets\Pjax;
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-xs-6">
+                <div class="col-md-2">
+                    <div class="form-cont">
+                        <div class="form-cont">
                     <?= Html::submitButton('Verify', ['class' => 'btn btn-primary email_verify_btn', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Verifying', 'name' => 'verify', 'value' => 'EMAIL_VERIFY']) ?>
+                        </div>
+                    </div>
                 </div>
             </div>
             <?php ActiveForm::end(); ?>

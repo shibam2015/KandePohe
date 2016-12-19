@@ -799,4 +799,3 @@ characters are allowed.'
         return $returnVal;
     }
 }
-

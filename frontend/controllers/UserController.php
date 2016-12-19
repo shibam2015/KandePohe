@@ -1337,7 +1337,6 @@ class UserController extends Controller
         list($temp['StartTime'],$temp['RemainingTime']) = CommonHelper::getTimeDifference($model->pin_phone_time);
         return $this->actionRenderAjax($model, '_verificationphone', $show, $popup,$flag,$temp);
     }
-
     public function actionPhoneNumberChange() # For Phone Number Change : VS
     {
         $id = Yii::$app->user->identity->id;
