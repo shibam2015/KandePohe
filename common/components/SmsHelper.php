@@ -33,13 +33,14 @@ class SmsHelper
             //http://103.16.101.52:8080/sendsms/bulksms?username=kotp-parsley&password=kaptrans&type=0&dlr=1&destination=8000255245&source=KPMATR&message=test
             $SMSResponse = SmsHelper::openurl($sms_url);
             $TempArray = explode("|", $SMSResponse);
+            #CommonHelper::pr($SMSResponse);exit;
             if ($TempArray[0] == 1701) {
                 return array('S', '');
             } else {
                 return array('E', Yii::$app->params['smsGetwayError']);
             }
         } else {
-            return array('E', '');
+            return array('E', Yii::$app->params['smsGetwayError']);
         }
     }
 

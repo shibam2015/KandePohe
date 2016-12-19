@@ -27,7 +27,7 @@ use yii\helpers\Url;
             </div>
         </div>-->
         <div class="row">
-            <div class="col-sm-2 col-xs-2">
+            <div class="col-md-2">
                 <div class="form-cont">
                     <div class="form-cont">
                         <?= $form->field($model, 'county_code')->dropDownList(
@@ -37,17 +37,26 @@ use yii\helpers\Url;
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3 col-xs-3">
+            <div class="col-md-3">
                 <div class="form-cont">
                     <div class="form-cont">
                         <?= $form->field($model, 'Mobile', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Mobile No#</span> </label></span>{error}'])->input('number', ['class' => 'input__field input__field--akira form-control']) ?>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4 col-xs-4">
+            <div class="col-md-3">
+                <div class="form-cont">
+                    <div class="form-cont">
                 <?= Html::submitButton('Save', ['class' => 'btn btn-primary phone_submit', 'name' => 'save', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Saving', 'value' => 'PHONE_NUMBER_CHANGE']) ?>
+            </div>
+        </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-cont">
+                    <div class="form-cont">
                 <?= Html::Button('Cancel', ['class' => 'btn btn-primary', 'id' => 'cancel_change_phone', 'name' => 'cancel',]) ?>
-
+                    </div>
+                </div>
             </div>
 
         </div>

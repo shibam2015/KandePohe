@@ -208,21 +208,29 @@ class UserController extends Controller
                 $model->scenario = User::SCENARIO_REGISTER6;
                 $target_dir = Yii::getAlias('@web') . '/uploads/';
                 if (Yii::$app->request->post()) {
+                    #echo "<br> *** 1 ***";
+                    $TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
                     if ($model->eEmailVerifiedStatus == 'No' && $model->pin_email_vaerification == '') {
+                        #echo "<br> *** 2 ***";
                         $PIN = CommonHelper::generateNumericUniqueToken(4);
                         $model->pin_email_vaerification = $PIN;
-                        $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN);
+                        $model->pin_email_time = $TimeOut;
+                        $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->FullName, "PIN" => $PIN,'MINUTES'=> Yii::$app->params['timePinValidate']);
                         MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
                     }
                     if ($model->ePhoneVerifiedStatus == 'No' && $model->pin_phone_vaerification == 0) {
+                        #echo "<br> *** 3 ***";
                         $PIN_P = CommonHelper::generateNumericUniqueToken(4);
                         $model->pin_phone_vaerification = $PIN_P;
+                        $model->pin_phone_time = $TimeOut;
                         if ($model->Mobile != 0 && strlen($model->Mobile) == 10) {
                             $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
                         }
                     }
+                    #echo "<br> *** 4 ***";
                     $model->completed_step = $model->setCompletedStep('7');
                     if ($model->save($model)) {
+                      #  echo "<br> *** 5 ***";exit;
                         $this->redirect(['site/verification']);
                     }
                 }
@@ -1294,20 +1302,29 @@ class UserController extends Controller
         $model->scenario = User::SCENARIO_VERIFY_PIN_FOR_PHONE;
         $show = false;
         $popup = false;
+        $flag = false;
+        $temp = array();
         if (Yii::$app->request->post() && (Yii::$app->request->post('verify') == 'PHONE_VERIFY')) {
             $show = true;
             $PIN = $model->pin_phone_vaerification;
             $PhonePin = Yii::$app->request->post('User')['phone_pin'];
             $model->phone_pin = $PhonePin;
             #echo $model->scenario ;
+            #var_dump($model->validate());
             if ($model->validate()) {
                 if ($PIN == $PhonePin) {
-                    $model->completed_step = $model->setCompletedStep('8');
-                    $model->ePhoneVerifiedStatus = 'Yes';
-                    $model->pin_phone_vaerification = 0;
-                    $model->save();
-                    $model->phone_pin = '';
-                    $show = false;
+                    $Difference = CommonHelper::getTimeDifference($model->pin_phone_time);
+                    if($Difference > 0 && $Difference <=  Yii::$app->params['timePinValidate']){
+                        $model->completed_step = $model->setCompletedStep('8');
+                        $model->ePhoneVerifiedStatus = 'Yes';
+                        $model->pin_phone_vaerification = 0;
+                        $model->pin_phone_time = 0;
+                        $model->save();
+                        $model->phone_pin = '';
+                        $show = false;
+                    }else{
+                        $temp['Error'] = 1;
+                    }
                 }
                 $popup = true;
             } else {
@@ -1315,8 +1332,10 @@ class UserController extends Controller
                 #$popup = true;
             }
         }
-
-        return $this->actionRenderAjax($model, '_verificationphone', $show, $popup);
+        $model = User::findOne($id);
+        //echo CommonHelper::getDateTimeToString(CommonHelper::getTime());
+        list($temp['StartTime'],$temp['RemainingTime']) = CommonHelper::getTimeDifference($model->pin_phone_time);
+        return $this->actionRenderAjax($model, '_verificationphone', $show, $popup,$flag,$temp);
     }
 
     public function actionPhoneNumberChange() # For Phone Number Change : VS
@@ -1326,6 +1345,7 @@ class UserController extends Controller
         $model->scenario = User::SCENARIO_PHONE_NUMBER_CHANGE;
         $show = false;
         $popup = false;
+        $temp = array();
         if (Yii::$app->request->post() && (Yii::$app->request->post('save') == 'PHONE_NUMBER_CHANGE')) {
             $show = true;
             $OldNumber = $model->county_code . $model->Mobile;
@@ -1336,14 +1356,26 @@ class UserController extends Controller
             $model->Mobile = $NewPhoneNumber;
             if ($model->validate()) {
                 if ($OldNumber != $NewNumber) {
+                    $TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
                     $PIN_P = CommonHelper::generateNumericUniqueToken(4);
                     $model->pin_phone_vaerification = $PIN_P;
                     $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
                     $model->ePhoneVerifiedStatus = 'No';
+                    $model->pin_phone_time = $TimeOut;
                     if ($model->save()) {
                         $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
                         $flag = true;
                         $show = false;
+                        /*list($Status, $Message) = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                        $flag = true;
+                        $show = false;
+                        if($Status!=''){
+                            $Difference = CommonHelper::getTimeDifference($model->pin_phone_time,1);
+                            if($Difference >= 0 && $Difference <=Yii::$app->params['timePinValidate']){
+                                $temp['Time']= $Difference;
+                                $temp['StartTIme']= $Difference;
+                            }
+                        }*/
                     } else {
                         $flag = false;
                     }
@@ -1372,8 +1404,10 @@ class UserController extends Controller
         $temp = array();
         if (isset($_REQUEST['type']) && $_REQUEST['type'] == 10) { # For Resend PIN
             $flag = true;
+            $TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
             $PIN_P = CommonHelper::generateNumericUniqueToken(4);
             $model->pin_phone_vaerification = $PIN_P;
+            $model->pin_phone_time = $TimeOut;
             $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
             $model->ePhoneVerifiedStatus = 'No';
             if ($model->save()) {
@@ -1381,6 +1415,16 @@ class UserController extends Controller
                 $temp['Status'] = $Status;
                 $temp['Message'] = $Message;
                 $popup = true;
+                if($Status!=''){
+                    $model = User::findOne($id);
+                    //echo CommonHelper::getDateTimeToString(CommonHelper::getTime());
+                    list($temp['StartTime'],$temp['RemainingTime']) = CommonHelper::getTimeDifference($model->pin_phone_time);
+                    /*$Difference = CommonHelper::getTimeDifference($model->pin_phone_time,1);
+                    if($Difference >= 0 && $Difference <=Yii::$app->params['timePinValidate']){
+                        $temp['Time']= $Difference;
+                        $temp['StartTIme']= $Difference;
+                    }*/
+                }
             } else {
                 $popup = false;
             }

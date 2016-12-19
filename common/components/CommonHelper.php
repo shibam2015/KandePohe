@@ -47,12 +47,6 @@ class CommonHelper {
         echo "</pre>";
     }
 
-    public static function getTime()
-    {
-        date_default_timezone_set('Asia/Kolkata');
-        return date('Y-m-d H:i:s');
-    }
-
     public static function getCurrentDate()
     {
         date_default_timezone_set('Asia/Kolkata');
@@ -494,7 +488,7 @@ class CommonHelper {
 
     public static function generateNumericUniqueToken($number)
     {
-        $arr = array('1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
+        $arr = array('1', '2', '3', '4', '5', '6', '7', '8', '9');
         $token = "";
         for ($i = 0; $i < $number; $i++) {
             $index = rand(0, count($arr) - 1);
@@ -825,6 +819,42 @@ class CommonHelper {
         }
         #print json_encode($response);
         return $response;
+    }
+
+    public static function getTimeDifference($Time,$Type=0){
+        $Difference = $RemainingTime = 0;
+        $TimePinExpired = Yii::$app->params['timePinValidate'];
+            $CurrentTime = CommonHelper::getDateTimeToString(CommonHelper::getTime());
+            $TimeDifference = round(abs($CurrentTime - $Time) / 60,0);
+            $TempDiff[0]=$TimeDifference;
+            if($TimeDifference>0){
+                 $TempDiff = explode(".",$TimeDifference);
+             }
+
+            $Seconds = abs($CurrentTime - $Time) % 60;
+            //if($TimeDifference>=0 && $TimeDifference<=$TimePinExpired){
+            if($TempDiff[0]>=0 && $TempDiff[0]<=$TimePinExpired){
+                $Minutes = $TimePinExpired - $TempDiff[0];
+                if($TempDiff[0]==$TimePinExpired || $TimeDifference == 0){
+                    $TimeDifference = $Minutes = $TimePinExpired-1;
+                }
+                $Seconds = 60 - $Seconds;
+                $RemainingTime = $Minutes.":".$Seconds;
+                #echo "<br> IN If";echo "<br> MIn =>".$Minutes;
+                #echo "<br> SEC =>".$Seconds;echo "<br> REM T  =>".$RemainingTime;
+            }
+        return array($TimeDifference,$RemainingTime);
+    }
+
+    public static function getDateTimeToString($DateTime)
+    {
+        return strtotime($DateTime);
+    }
+
+    public static function getTime()
+    {
+        date_default_timezone_set('Asia/Kolkata');
+        return date('Y-m-d H:i:s');
     }
 
     public function getReligion()

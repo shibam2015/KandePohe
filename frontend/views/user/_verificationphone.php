@@ -13,7 +13,7 @@ use yii\widgets\Pjax;
         if ($model->ePhoneVerifiedStatus == 'No') {
             $form = ActiveForm::begin([
                 'id' => 'form',
-                'action' => ['phone-verification'],
+                'action' =>     ['phone-verification'],
                 'options' => ['data-pjax' => true],
                 #'layout' => 'horizontal',
                 'validateOnChange' => false,
@@ -31,17 +31,35 @@ use yii\widgets\Pjax;
             ]);
             ?>
             <div class="row">
-                <div class="col-sm-4 col-xs-6">
+                <div class="col-md-4">
                     <div class="form-cont">
                         <div class="form-cont">
                             <!-- <?= $form->errorSummary($model, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?> -->
                             <?= $form->field($model, 'phone_pin', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Enter Mobile PIN number</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control'], ['maxlength' => 4]) ?>
                         </div>
+                        <?php
+                        #echo "<br> 1nd => ".$temp['StartTime']."<br> 3rd => ".Yii::$app->params['timePinValidate'];
+                        if($temp['StartTime']>0 && $temp['StartTime'] < Yii::$app->params['timePinValidate']){
+                            ?>
+                        <!--<div class="phonetime"> <strong> Expires in : </strong><span id="timeoutphone"> <?/*=$temp['RemainingTime'];*/?> </span></div>-->
+                        <?php }?>
                     </div>
                 </div>
-                <div class="col-sm-6 col-xs-6">
-                    <?= Html::submitButton('Verify', ['class' => 'btn btn-primary', 'name' => 'verify', 'value' => 'PHONE_VERIFY']) ?>
+                <div class="col-md-2">
+                    <div class="form-cont">
+                        <div class="form-cont">
+                            <?= Html::submitButton('Verify', ['class' => 'btn btn-primary', 'name' => 'verify', 'value' => 'PHONE_VERIFY']) ?>
+                        </div>
+                    </div>
                 </div>
+                <div class="col-md-2 ">
+                    <div class="form-cont">
+                        <div class="form-cont">
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <?php ActiveForm::end(); ?>
             <div class="mrg-tp-20 mrg-bt-10">
@@ -52,10 +70,37 @@ use yii\widgets\Pjax;
                     <a href="javascript:void(0)" class="btn btn-default btn-xs edit_phone"><span
                             class="glyphicon glyphicon-pencil"></span> Edit</a></p>
             </div>
-
             <?php
-
             if ($model->ePhoneVerifiedStatus == 'No') {
+                #if($temp['Time']>=0 && $temp['StartTIme'] <= Yii::$app->params['timePinValidate']){
+                if($temp['StartTime']>0 && $temp['StartTime'] < Yii::$app->params['timePinValidate']){
+                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_EXPIRED_FOR_PHONE');
+                    $this->registerJs('
+                     var $worked = $("#timeoutphone");
+                     function update() {
+                        var myTime = $worked.html();
+                        var ss = myTime.split(":");
+                        var dt = new Date();
+                        dt.setHours(15);
+                        dt.setMinutes(ss[0]);
+                        dt.setSeconds(ss[1]);
+                        var dt2 = new Date(dt.valueOf() - 1000);
+                        var temp = dt2.toTimeString().split(" ");
+                        var ts = temp[0].split(":");
+                        $worked.html(ts[1]+":"+ts[2]);
+                        if(ts[1]=="00"){
+                                if(ts[2]=="00"){
+                                    $(".phonetime").remove();
+                                    showNotification("W", "'.$MESSAGE.'");
+                                }
+                        }
+                        if(ts[1]!="59"){
+                            setTimeout(update, 1000);
+                        }
+                    }
+                    //setTimeout(update, 1000);
+                            ');
+                }
                 if ($flag) {
                     if ($popup) {
                         if ($temp['Status'] == 'S') {
@@ -63,7 +108,7 @@ use yii\widgets\Pjax;
                         } else {
                             $STATUS = $temp['Status'];
                             $MESSAGE = $temp['Message'];
-                            $TITLE = 'Information';
+                            $TITLE = Yii::$app->params['titleInformation'] ;
                         }
                     } else {
                         list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_RESEND_FOR_PHONE');
@@ -74,7 +119,12 @@ use yii\widgets\Pjax;
                 ');
                 } else {
                     if ($popup) {
-                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_INCORRECT_FOR_PHONE');
+                        if($temp['Error']){
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_EXPIRED_FOR_PHONE');
+                        }else{
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_INCORRECT_FOR_PHONE');
+                        }
+
                         $this->registerJs(' 
                     notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
                 ');
