@@ -1332,7 +1332,7 @@ class UserController extends Controller
                 #$popup = true;
             }
         }
-        $model = User::findOne($id);
+        //$model = User::findOne($id);
         //echo CommonHelper::getDateTimeToString(CommonHelper::getTime());
         list($temp['StartTime'],$temp['RemainingTime']) = CommonHelper::getTimeDifference($model->pin_phone_time);
         return $this->actionRenderAjax($model, '_verificationphone', $show, $popup,$flag,$temp);
