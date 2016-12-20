@@ -31,18 +31,29 @@ use yii\helpers\Url;
         ]);
         ?>
         <div class="row">
-            <div class="col-sm-4 col-xs-4">
+            <div class="col-md-5">
                 <div class="form-cont">
                     <div class="form-cont">
                         <?= $form->field($model, 'email', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Email</span> </label></span>{error}'])->input('email', ['class' => 'input__field input__field--akira form-control']) ?>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4 col-xs-4">
-                <input type="hidden" name="save" value="EMAIL_ID_CHANGE">
-                <?= Html::submitButton('Save', ['class' => 'btn btn-primary email_submit', 'name' => 'save', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Saving', 'value' => 'EMAIL_ID_CHANGE']) ?>
-                <?= Html::Button('Cancel', ['class' => 'btn btn-primary', 'id' => 'cancel_change_email', 'name' => 'cancel',]) ?>
+            <div class="col-md-3">
+                <div class="form-cont">
+                    <div class="form-cont">
+                        <input type="hidden" name="save" value="EMAIL_ID_CHANGE">
+                        <?= Html::submitButton('Save', ['class' => 'btn btn-primary email_submit', 'name' => 'save', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Saving', 'value' => 'EMAIL_ID_CHANGE']) ?>
+                    </div>
+                </div>
             </div>
+            <div class="col-md-3">
+                <div class="form-cont">
+                    <div class="form-cont">
+                        <?= Html::Button('Cancel', ['class' => 'btn btn-primary', 'id' => 'cancel_change_email', 'name' => 'cancel',]) ?>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <?php ActiveForm::end(); ?>
         <?php

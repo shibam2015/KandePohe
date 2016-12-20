@@ -1415,7 +1415,7 @@ class UserController extends Controller
                 $temp['Message'] = $Message;
                 $popup = true;
                 if($Status!=''){
-                    $model = User::findOne($id);
+                    #$model = User::findOne($id);
                     //echo CommonHelper::getDateTimeToString(CommonHelper::getTime());
                     list($temp['StartTime'],$temp['RemainingTime']) = CommonHelper::getTimeDifference($model->pin_phone_time);
                     /*$Difference = CommonHelper::getTimeDifference($model->pin_phone_time,1);
@@ -1438,6 +1438,8 @@ class UserController extends Controller
         $model->scenario = User::SCENARIO_VERIFY_PIN_FOR_EMAIL;
         $show = false;
         $popup = false;
+        $flag = false;
+        $temp = array();
         if (Yii::$app->request->post() && (Yii::$app->request->post('verify') == 'EMAIL_VERIFY')) {
             $show = true;
             $PIN = $model->pin_email_vaerification;
@@ -1445,12 +1447,18 @@ class UserController extends Controller
             $model->email_pin = $EmailPin;
             if ($model->validate()) {
                 if ($PIN == $EmailPin) {
-                    $model->completed_step = $model->setCompletedStep('9');
-                    $model->eEmailVerifiedStatus = 'Yes';
-                    $model->pin_email_vaerification = '';
-                    $model->save();
-                    $model->email_pin = '';
-                    $show = false;
+                    $Difference = CommonHelper::getTimeDifference($model->pin_email_time);
+                    if ($Difference > 0 && $Difference <= Yii::$app->params['timePinValidate']) {
+                        $model->completed_step = $model->setCompletedStep('9');
+                        $model->eEmailVerifiedStatus = 'Yes';
+                        $model->pin_email_vaerification = '0';
+                        $model->pin_email_time = 0;
+                        $model->save();
+                        $model->email_pin = '';
+                        $show = false;
+                    } else {
+                        $temp['Error'] = 1;
+                    }
                 }
                 $popup = true;
             } else {
@@ -1458,7 +1466,8 @@ class UserController extends Controller
                 #$popup = true;
             }
         }
-        return $this->actionRenderAjax($model, '_verificationemail', $show, $popup);
+        list($temp['StartTime'], $temp['RemainingTime']) = CommonHelper::getTimeDifference($model->pin_email_time);
+        return $this->actionRenderAjax($model, '_verificationemail', $show, $popup, $flag, $temp);
     }
 
     public function actionEmailIdChange() # For Email ID Change : VS
@@ -1468,6 +1477,7 @@ class UserController extends Controller
         $model->scenario = User::SCENARIO_EMAIL_ID_CHANGE;
         $show = false;
         $popup = false;
+        $temp = array();
         if (Yii::$app->request->post() && (Yii::$app->request->post('save') == 'EMAIL_ID_CHANGE')) {
             $show = true;
             $OldEmailId = $model->email;
@@ -1475,10 +1485,12 @@ class UserController extends Controller
             $model->email = $NewEmailID;
             if ($model->validate()) {
                 if ($OldEmailId != $NewEmailID) {
+                    $TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
                     $PIN_P = CommonHelper::generateNumericUniqueToken(4);
                     $model->pin_email_vaerification = $PIN_P;
                     $model->completed_step = CommonHelper::unsetStep($model->completed_step, 9);
                     $model->eEmailVerifiedStatus = 'No';
+                    $model->pin_email_time = $TimeOut;
                     if ($model->save()) {
                         $MAIL_DATA = array("EMAIL" => $NewEmailID, "EMAIL_TO" => $NewEmailID, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN_P);
                         $MAIL_STATUS = MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
@@ -1510,21 +1522,27 @@ class UserController extends Controller
         $model->scenario = User::SCENARIO_RESEND_PIN_FOR_EMAIL;
         $show = false;
         $popup = false;
+        $temp = array();
         if (isset($_REQUEST['type']) && $_REQUEST['type'] == 10) { # For Resend PIN
             $flag = true;
+            $TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
             $PIN_P = CommonHelper::generateNumericUniqueToken(4);
             $model->pin_email_vaerification = $PIN_P;
+            $model->pin_email_time = $TimeOut;
             $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
             $model->eEmailVerifiedStatus = 'No';
             if ($model->save()) {
                 $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN_P);
                 $MAIL_STATUS = MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
                 $popup = true;
+                #$model = User::findOne($id);
+                //echo CommonHelper::getDateTimeToString(CommonHelper::getTime());
+                list($temp['StartTime'], $temp['RemainingTime']) = CommonHelper::getTimeDifference($model->pin_email_time);
             } else {
                 $popup = false;
             }
         }
-        return $this->actionRenderAjax($model, '_verificationemail', $show, $popup, $flag);
+        return $this->actionRenderAjax($model, '_verificationemail', $show, $popup, $flag, $temp);
     }
 
     public function actionProfile($uk = '', $source = '') #Other User Profile View : VS

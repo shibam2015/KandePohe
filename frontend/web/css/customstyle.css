@@ -387,3 +387,7 @@ img.selected {
 .photo-kp-crop1 {
     position: fixed !important;
 }
+
+.phonetime, .emailtime {
+    display: none;
+}

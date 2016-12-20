@@ -31,26 +31,27 @@ use yii\widgets\Pjax;
             ]);
             ?>
             <div class="row">
-                <div class="col-sm-3 col-xs-3">
-                    <div class="form-cont center ew" style="display:none">
-                        <p> Please wait...</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4 ">
+                <div class="col-md-4">
                     <div class="form-cont">
                         <div class="form-cont">
                             <!-- <?= $form->errorSummary($model, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?> -->
                             <?= $form->field($model, 'email_pin', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Enter Email PIN number</span> </label></span>{error}'])->input('text', ['class' => 'input__field input__field--akira form-control'], ['maxlength' => 4]) ?>
                         </div>
+                        <?php
+                        if ($temp['StartTime'] > 0 && $temp['StartTime'] < Yii::$app->params['timePinValidate']) {
+                            ?>
+                            <div class="emailtime"><strong> Expires in : </strong><span
+                                    id="timeoutemail"> <?= $temp['RemainingTime']; ?> </span></div>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-cont">
                         <div class="form-cont">
-                    <?= Html::submitButton('Verify', ['class' => 'btn btn-primary email_verify_btn', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Verifying', 'name' => 'verify', 'value' => 'EMAIL_VERIFY']) ?>
+                            <!-- <?= Html::submitButton('Verify', ['class' => 'btn btn-primary email_verify_btn', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Verifying', 'name' => 'verify', 'value' => 'EMAIL_VERIFY']) ?> -->
+                            <input type="hidden" name="verify" value="EMAIL_VERIFY">
+                            <?= Html::submitButton('Verify', ['class' => 'btn btn-primary', 'name' => 'verify', 'value' => 'EMAIL_VERIFY']) ?>
+
                         </div>
                     </div>
                 </div>
@@ -68,6 +69,35 @@ use yii\widgets\Pjax;
             <?php
 
             if ($model->eEmailVerifiedStatus == 'No') {
+                #if($temp['Time']>=0 && $temp['StartTIme'] <= Yii::$app->params['timePinValidate']){
+                if ($temp['StartTime'] > 0 && $temp['StartTime'] < Yii::$app->params['timePinValidate']) {
+                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_EXPIRED_FOR_EMAIL');
+                    $this->registerJs('
+                     var $worked = $("#timeoutemail");
+                     function update() {
+                        var myTime = $worked.html();
+                        var ss = myTime.split(":");
+                        var dt = new Date();
+                        dt.setHours(15);
+                        dt.setMinutes(ss[0]);
+                        dt.setSeconds(ss[1]);
+                        var dt2 = new Date(dt.valueOf() - 1000);
+                        var temp = dt2.toTimeString().split(" ");
+                        var ts = temp[0].split(":");
+                        $worked.html(ts[1]+":"+ts[2]);
+                        if(ts[1]=="00"){
+                                if(ts[2]=="00"){
+                                    $(".emailtime").remove();
+                                    showNotification("W", "' . $MESSAGE . '");
+                                }
+                        }
+                        if(ts[1]!="59"){
+                            setTimeout(update, 1000);
+                        }
+                    }
+                    //setTimeout(update, 1000);
+                            ');
+                }
                 if ($flag) {
                     if ($popup) {
                         list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PIN_RESEND_FOR_EMAIL');
@@ -80,7 +110,11 @@ use yii\widgets\Pjax;
                 ');
                 } else {
                     if ($popup) {
-                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_INCORRECT_FOR_EMAIL');
+                        if ($temp['Error']) {
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_EXPIRED_FOR_EMAIL');
+                        } else {
+                            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_INCORRECT_FOR_EMAIL');
+                        }
                         $this->registerJs(' 
                     notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
                 ');

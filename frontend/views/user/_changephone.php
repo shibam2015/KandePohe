@@ -47,14 +47,14 @@ use yii\helpers\Url;
             <div class="col-md-3">
                 <div class="form-cont">
                     <div class="form-cont">
-                <?= Html::submitButton('Save', ['class' => 'btn btn-primary phone_submit', 'name' => 'save', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Saving', 'value' => 'PHONE_NUMBER_CHANGE']) ?>
-            </div>
-        </div>
+                        <?= Html::submitButton('Save', ['class' => 'btn btn-primary phone_submit', 'name' => 'save', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Saving', 'value' => 'PHONE_NUMBER_CHANGE']) ?>
+                    </div>
+                </div>
             </div>
             <div class="col-md-3">
                 <div class="form-cont">
                     <div class="form-cont">
-                <?= Html::Button('Cancel', ['class' => 'btn btn-primary', 'id' => 'cancel_change_phone', 'name' => 'cancel',]) ?>
+                        <?= Html::Button('Cancel', ['class' => 'btn btn-primary', 'id' => 'cancel_change_phone', 'name' => 'cancel',]) ?>
                     </div>
                 </div>
             </div>

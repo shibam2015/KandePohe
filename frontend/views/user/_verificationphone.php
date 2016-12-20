@@ -41,7 +41,8 @@ use yii\widgets\Pjax;
                         #echo "<br> 1nd => ".$temp['StartTime']."<br> 3rd => ".Yii::$app->params['timePinValidate'];
                         if($temp['StartTime']>0 && $temp['StartTime'] < Yii::$app->params['timePinValidate']){
                             ?>
-                        <!--<div class="phonetime"> <strong> Expires in : </strong><span id="timeoutphone"> <?/*=$temp['RemainingTime'];*/?> </span></div>-->
+                            <div class="phonetime"><strong> Expires in : </strong><span
+                                    id="timeoutphone"> <?= $temp['RemainingTime']; ?> </span></div>
                         <?php }?>
                     </div>
                 </div>
