@@ -4,7 +4,6 @@ use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use common\components\MailHelper;
 use yii\helpers\ArrayHelper;
-
 $HOME_URL = Yii::getAlias('@web') . "/";
 $HOME_URL_SITE = Yii::getAlias('@web') . "/site/";
 $HOME_PAGE_URL = Yii::getAlias('@web') . "/";
@@ -31,7 +30,6 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                 class="link_small">( I will do this later )</span></a>
                                     --><?php /*} */ ?>
                                 </h3>
-
                                 <div class="two-column">
                                     <div class="row">
                                         <div class="col-sm-6 bord">
@@ -45,7 +43,10 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                 <div class="col-sm-5">
                                                     <div class="image gallery-popup">
                                                         <div class="placeholder text-center">
-                                                            <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes'), ['class' => 'img-responsive mainpropic ', 'width' => '200', 'alt' => 'Profile Photo']); ?>
+                                                            <!--<?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes'), ['class' => 'img-responsive mainpropic ', 'width' => '200', 'alt' => 'Profile Photo']); ?>-->
+                                                            <div id="cropContainerPreload">
+                                                                <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes'), ['class' => 'img-responsive mainpropic ', 'width' => '200', 'alt' => 'Profile Photo']); ?>
+                                                            </div>
                                                             <div class="add-photo" data-toggle="modal"
                                                                  data-target="#photo"><span class="file-input btn-file"> <i
                                                                         class="fa fa-plus-circle"></i> Add a photo </span>
@@ -128,9 +129,9 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                 </div>
                                                                 <?php if ($V->eStatus == 'Approve') { ?>
                                                                     <a href="javascript:void(0)"
-                                                                       class="pull-left profile_set_kp set_profile_photo kp_not_gallery"
+                                                                       class="pull-left profile_set_kp1 set_profile_photo1 kp_not_gallery"
                                                                        data-id="<?= $V['iPhoto_ID'] ?>"
-                                                                       data-target="#profilecrop" data-toggle="modal"
+
                                                                        data-item="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
                                                                        data-name="<?= $V['File_Name'] ?>">
                                                                         Profile pic
@@ -233,21 +234,18 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                         <div class="col-sm-5">
 
                                             <h4 class="mrg-left-mins">Profile Photo Guidelines</h4>
-
                                             <div class="faces-pic">
                                                 <div class="row no-gutter mrg-tp-30">
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face1.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Close up">
-
                                                         <div class="title right">Close up</div>
                                                     </div>
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face2.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Full view">
-
                                                         <div class="title right">Full View</div>
                                                     </div>
                                                 </div>
@@ -256,34 +254,29 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face2.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Side Face">
-
                                                         <div class="title wrong">Side Face</div>
                                                     </div>
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face4.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Blur Image">
-
                                                         <div class="title wrong">Blur Image</div>
                                                     </div>
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face5.jpg"
                                                             width="113" height="97" class="img-responsive" alt="Group ">
-
                                                         <div class="title wrong">Group</div>
                                                     </div>
                                                     <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
                                                             src="<?= $HOME_PAGE_URL ?>images/faces/face6.jpg"
                                                             width="113" height="97" class="img-responsive"
                                                             alt="Watermark">
-
                                                         <div class="title wrong">Watermark</div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="privacy-promo">
                                                 <h4 class="mrg-tp-30">Other ways to upload photo</h4>
-
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="promo">
@@ -295,7 +288,6 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 
                                                             <figcaption>
                                                                 <h4>Upload from Mobile</h4>
-
                                                                 <p>Click <a href="#">Click here</a> to upload photo from
                                                                     your mobile. We will send you upload instructions
                                                                     via SMS</p>
@@ -310,7 +302,6 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                             </figure>
                                                             <figcaption>
                                                                 <h4>Send via Email</h4>
-
                                                                 <p>Email your photo to <a href="mailto:photos@kp.com">photos@kp.com</a>
                                                                     along with your profile id (KP245454567)</p>
                                                             </figcaption>
@@ -342,19 +333,18 @@ require_once __DIR__ . '/_photosection.php';
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-hash.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-pager.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 
+
+
+<!--<link href='<? /*= Yii::$app->request->baseUrl */ ?>/plugings/croppic/css/main.css' rel='stylesheet' type='text/css'>-->
+<link href='<?= Yii::$app->request->baseUrl ?>/plugings/croppic/css/croppic.css' rel='stylesheet' type='text/css'>
+
+<?php //$this->registerJsFile('https://code.jquery.com/jquery-2.1.3.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/croppic/js/jquery.mousewheel.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/croppic/croppic.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/croppic/js/main.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+
+
 <?php /*$this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/simplelightbox/simple-lightbox.js', ['depends' => [\yii\web\JqueryAsset::className()]]); */ ?><!--
 <link href='<? /*= Yii::$app->request->baseUrl */ ?>/plugings/simplelightbox/simplelightbox.min.css' rel='stylesheet'
       type='text/css'>-->
-<link href='<?= Yii::$app->request->baseUrl ?>/plugings/cropping/imgareaselect.css' rel='stylesheet' type='text/css'>
-<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.imgareaselect.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
-<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.form.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
-
-<!--
-<script src="js/lightgallery.js"></script>
-<script src="js/lg-fullscreen.js"></script>
-<script src="js/lg-thumbnail.js"></script>
-<script src="js/lg-video.js"></script>
-<script src="js/lg-autoplay.js"></script>
-<script src="js/lg-zoom.js"></script>
-<script src="js/lg-hash.js"></script>
-<script src="js/lg-pager.js"></script>-->

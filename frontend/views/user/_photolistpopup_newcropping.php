@@ -2,7 +2,6 @@
 use yii\widgets\Pjax;
 use yii\helpers\Html;
 use common\components\CommonHelper;
-
 ?>
 <div class="modal-body photo-gallery">
     <div class="profile-control photo-btn">
@@ -22,13 +21,12 @@ use common\components\CommonHelper;
                             $SELECTED = "selected";
                         } ?>
                         <div class="hovertool<?= ($V->eStatus == 'Approve') ? '' : ' img-blur' ?>">
-                            <a class="<?= $SELECTED ?><?= ($V->eStatus == 'Approve') ? ' profile_set_kp set_profile_photo' : '' ?>"
+                            <a class="<?= $SELECTED ?><?= ($V->eStatus == 'Approve') ? ' profile_set_kp1 set_profile_photo1' : '' ?>"
                                data-toggle="tooltip" data-placement="top"
                                href="javascript:void(0)"
                                 <?php if ($V->eStatus == 'Approve') { ?>
                                     data-original-title="Click for select Photo as Profile Photo"
                                     data-id="<?= $V['iPhoto_ID'] ?>"
-                                    data-target="#profilecrop" data-toggle="modal"
                                     data-item="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
                                     data-name="<?= $V['File_Name'] ?>"
                                 <?php } else { ?>

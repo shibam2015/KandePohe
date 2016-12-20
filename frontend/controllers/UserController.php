@@ -2133,7 +2133,7 @@ class UserController extends Controller
 
                         $ACTION_FLAG = $UserModel->save();
                         $UserPhotosModel->Is_Profile_Photo = 'YES';
-                        $UserPhotosModel->eStatus = 'Pending';
+                        #$UserPhotosModel->eStatus = 'Pending';
                         $UserPhotosModel->save();
                         $ProfilePhotoURL = CommonHelper::getUserUploadFolder(4, $Id);
                         if ($ACTION_FLAG) {
