@@ -165,9 +165,12 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $timestamp + $expire >= time();
     }
 
-    public static function weightedCheck($type)
+    public static function weightedCheck($type, $iUserId = '')
     {
-        $iUserId = Yii::$app->user->identity->id;
+        if ($iUserId == '')
+            $iUserId = Yii::$app->user->identity->id;
+
+
         $USER = User::findOne($iUserId);
 
         $completed_step = $USER->completed_step;
@@ -188,9 +191,14 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             return 0;
         }
     }
-    public static function findRecentJoinedUserList($Gender, $Limit = 4) # Get user list Gender Wise with limit
+
+    public static function findRecentJoinedUserList($Gender, $Id, $Limit = 4) # Get user list Gender Wise with limit
     {
-        return static::find()->where(['Gender' => $Gender, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->limit($Limit)->all();
+        #return static::find()->where(['Gender' => $Gender, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->limit($Limit)->all();
+        return static::find()->where(['Gender' => $Gender])
+            ->andWhere(['!=', 'id', $Id])
+            ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
+            ->limit($Limit)->all();
     }
 
     public static function findRecentJoinedUserLists($Id, $Gender, $Limit = 4) # Get user list Gender Wise with limit
@@ -221,6 +229,12 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public static function getUserInfroamtion($Id)
     {
         return static::find()->select('id, First_Name, Last_Name, Registration_Number,DOB,Age,user.iCountryId,user.iHeightID, propic')->joinWith([countryName, stateName, cityName, height, maritalStatusName])->where(['id' => $Id])->one();
+    }
+
+    public static function getIdNo($Registration_Number)
+    {
+        $UserInfo = User::find()->select('id')->where(['Registration_Number' => $Registration_Number])->one();
+        return $UserInfo->id;
     }
 
     /**
@@ -734,11 +748,6 @@ characters are allowed.'
         return $this->hasOne(FavouriteMusic::className(), ['ID' => 'FaviouriteMusicID']);
     }
 
-    public function getFavouriteCousinesName()
-    {
-        return $this->hasOne(FavouriteCousines::className(), ['ID' => 'FavouriteCousinesID']);
-    }
-
 
 
     /*public function generateUniqueRandomNumber($length = 9) {
@@ -750,6 +759,11 @@ characters are allowed.'
             return $this->generateUniqueRandomNumber($length);
 
     }*/
+
+    public function getFavouriteCousinesName()
+    {
+        return $this->hasOne(FavouriteCousines::className(), ['ID' => 'FavouriteCousinesID']);
+    }
 
     public function getSportsFitnActivitiesName()
     {
@@ -798,4 +812,5 @@ characters are allowed.'
         }
         return $returnVal;
     }
+
 }

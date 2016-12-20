@@ -924,7 +924,7 @@ $this->registerJs('
     });
     getInlineDetail("' . Url::to(['user/edit-preferences-profession']) . '","#my_profession","1");
     $(document).on("click","#cancel_edit_profession",function(e){
-        getInlineDetail("' . Url::to(['user/edit-profession']) . '","#my_profession","1");
+        getInlineDetail("' . Url::to(['user/edit-preferences-profession']) . '","#my_profession","1");
     });
     $(".edit_location").click(function(e){
         getInlineDetail("' . Url::to(['user/edit-preferences-location']) . '","#my_location","0");
