@@ -37,7 +37,6 @@ use yii\helpers\ArrayHelper;
                     <?= $form->field($UPP, 'LookingFor', ["template" => '<span class="input input--akira input--filled input-textarea">{input}<label class="input__label input__label--akira" for="input-22"><span class="input__label-content input__label-content--akira">Looking for</span> </label></span>'])->textArea(['rows' => '5', 'cols' => '50', 'class' => "input__field input__field--akira", 'id' => 'tYourSelf'])->error(false) ?>
                 </div>
             </div>
-
         </div>
         <div class="row">
             <div class="col-md-4 col-md-offset-2">
