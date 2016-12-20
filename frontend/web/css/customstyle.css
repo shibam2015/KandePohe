@@ -383,3 +383,7 @@ img.selected {
 .btn-primary{
     width: 100%;
 }
+
+.photo-kp-crop1 {
+    position: fixed !important;
+}

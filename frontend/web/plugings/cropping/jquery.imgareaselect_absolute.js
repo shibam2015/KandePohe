@@ -288,7 +288,7 @@
              * Workaround for jQuery 1.3.2 incorrect offset calculation, originally
              * observed in Safari 3. Firefox 2 is also affected.
              */
-            if ($().jquery == '1.3.2' && position == 'fixed' && !docElem['getBoundingClientRect']) {
+            if ($().jquery == '1.3.2' && position == 'absolute' && !docElem['getBoundingClientRect']) {
                 imgOfs.top += max(document.body.scrollTop, docElem.scrollTop);
                 imgOfs.left += max(document.body.scrollLeft, docElem.scrollLeft);
             }
@@ -299,7 +299,7 @@
                 left: round($parent.offset().left) - $parent.scrollLeft(),
                 top: round($parent.offset().top) - $parent.scrollTop()
             } :
-                position == 'fixed' ?
+                position == 'absolute' ?
                 {left: $(document).scrollLeft(), top: $(document).scrollTop()} :
                 {left: 0, top: 0};
 
@@ -1130,8 +1130,8 @@
             zIndex = max(zIndex,
                 !isNaN($p.css('z-index')) ? $p.css('z-index') : zIndex);
             /* Also check if any of the ancestor elements has absolute position */
-            if ($p.css('position') == 'fixed')
-                position = 'fixed';
+            if ($p.css('position') == 'absolute')
+                position = 'absolute';
 
             $p = $p.parent(':not(body)');
         }
