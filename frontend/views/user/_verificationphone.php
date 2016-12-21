@@ -67,7 +67,8 @@ use yii\widgets\Pjax;
                 <span class="phone_status"></span>
                 <p>Didn't get PIN? <a href="javascript:void(0)" class="phone_verification"
                                       data-name="phone"> Resend PIN </a>to my mobile number
-                    <strong><?= $model->DisplayMobile ?></strong>
+                    <!--<strong><? /*= $model->DisplayMobile */ ?></strong>-->
+                    <strong><?= $model->getDisplayMobile("Temp"); ?></strong>
                     <a href="javascript:void(0)" class="btn btn-default btn-xs edit_phone"><span
                             class="glyphicon glyphicon-pencil"></span> Edit</a></p>
             </div>

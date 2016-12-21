@@ -265,7 +265,7 @@ Privacy Policy and T&C to register on this site.'],
 '],
             [['status', 'created_at', 'updated_at', 'Age', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID'], 'integer'],
             [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus'], 'string'],
-            [['Time_of_Birth', 'cnb', 'iSubCommunity_ID', 'iGotraID', 'pin_email_time', 'pin_phone_time'], 'safe'],
+            [['Time_of_Birth', 'cnb', 'iSubCommunity_ID', 'iGotraID', 'pin_email_time', 'pin_phone_time', 'new_phone_no', 'new_email_id', 'new_county_code'], 'safe'],
             [['c'], 'checkDobYear'],
             [['noc', 'nob', 'nos', 'NosM', 'NobM', 'weight'], 'integer', 'integerOnly' => true, 'min' => 0],
             [['auth_key'], 'string', 'max' => 32],
@@ -332,10 +332,10 @@ characters are allowed.'
             self::SCENARIO_FP => ['email', 'password_hash', 'password_reset_token'],
             self::SCENARIO_SFP => ['email', 'password_reset_token'],
             self::SCENARIO_EDIT_MY_INFO => ['tYourSelf'],
-            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'completed_step', 'Age'],
+            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'pin_phone_time', 'completed_step', 'Age', 'new_phone_no', 'new_county_code'],
 
             self::SCENARIO_VERIFY_PIN_FOR_PHONE => ['phone_pin', 'completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification', 'pin_phone_time'], # FOR PHONE VERIFICATION PROCESS
-            self::SCENARIO_PHONE_NUMBER_CHANGE => ['completed_step', 'county_code', 'Mobile', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'pin_phone_time'], # FOR PHONE Number Change Process
+            self::SCENARIO_PHONE_NUMBER_CHANGE => ['completed_step', 'county_code', 'Mobile', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'pin_phone_time', 'new_county_code', 'new_phone_no'], # FOR PHONE Number Change Process
             self::SCENARIO_RESEND_PIN_FOR_PHONE => ['completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification', 'pin_phone_time'], # FOR Resend Phone PIN PROCESS
 
             self::SCENARIO_VERIFY_PIN_FOR_EMAIL => ['email_pin', 'completed_step', 'eEmailVerifiedStatus', 'pin_email_vaerification', 'pin_email_time'], # FOR EMAIL VERIFICATION PROCESS
@@ -795,8 +795,14 @@ characters are allowed.'
         return $this->vAreaNameCA . ", " . $this->talukaNameCA->vName . ", " . $this->districtNameCA->vName . ", " . $this->cityNameCA->vCityName . ", " . $this->stateNameCA->vStateName . ", " . $this->countryNameCA->vCountryName;
     }
 
-    public function getDisplayMobile(){
-        return ($this->county_code != '') ? $this->county_code . " " . $this->Mobile : $this->Mobile;
+    public function getDisplayMobile($Type = '')
+    {
+        if ($Type == 'Temp') {
+            return ($this->new_county_code != '') ? $this->new_county_code . " " . $this->new_phone_no : $this->new_phone_no;
+        } else {
+            return ($this->county_code != '') ? $this->county_code . " " . $this->Mobile : $this->Mobile;
+        }
+
     }
 
     public function setCompletedStep($step) {

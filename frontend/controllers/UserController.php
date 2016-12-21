@@ -224,7 +224,8 @@ class UserController extends Controller
                         $model->pin_phone_vaerification = $PIN_P;
                         $model->pin_phone_time = $TimeOut;
                         if ($model->Mobile != 0 && strlen($model->Mobile) == 10) {
-                            $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                            #$SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                            $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->new_phone_no);
                         }
                     }
                     #echo "<br> *** 4 ***";
@@ -436,13 +437,19 @@ class UserController extends Controller
                 $model->mother_tongue = Yii::$app->request->post('User')['mother_tongue'];
                 if($model->validate()){
                     if ($NewMobileNo != $OldMobileNo) {
+                        $TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
                         $PIN_P = CommonHelper::generateNumericUniqueToken(4);
+                        //new_phone_no
+                        $model->new_phone_no = $NewMobileNo;
                         $model->pin_phone_vaerification = $PIN_P;
                         $model->ePhoneVerifiedStatus = 'No';
+                        $model->pin_phone_time = $TimeOut;
                         $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
-                        $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                        $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $NewMobileNo);
+                        #$SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
                         $popup = true;
                     }
+                    $model->Mobile = $OldMobileNo;
                     $model->save();
                     $show = false;
                 }
@@ -1315,10 +1322,14 @@ class UserController extends Controller
                 if ($PIN == $PhonePin) {
                     $Difference = CommonHelper::getTimeDifference($model->pin_phone_time);
                     if($Difference > 0 && $Difference <=  Yii::$app->params['timePinValidate']){
+                        #$model->new_phone_no = $model->new_phone_no;
                         $model->completed_step = $model->setCompletedStep('8');
                         $model->ePhoneVerifiedStatus = 'Yes';
                         $model->pin_phone_vaerification = 0;
                         $model->pin_phone_time = 0;
+                        $model->county_code = $model->new_county_code;
+                        $model->Mobile = $model->new_phone_no;
+
                         $model->save();
                         $model->phone_pin = '';
                         $show = false;
@@ -1348,6 +1359,8 @@ class UserController extends Controller
         if (Yii::$app->request->post() && (Yii::$app->request->post('save') == 'PHONE_NUMBER_CHANGE')) {
             $show = true;
             $OldNumber = $model->county_code . $model->Mobile;
+            $OldCountryCode = $model->county_code;
+            $OldMobileNo = $model->Mobile;
             $NewCountryCode = Yii::$app->request->post('User')['county_code'];
             $NewPhoneNumber = Yii::$app->request->post('User')['Mobile'];
             $NewNumber = $NewCountryCode . $NewPhoneNumber;
@@ -1358,11 +1371,17 @@ class UserController extends Controller
                     $TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
                     $PIN_P = CommonHelper::generateNumericUniqueToken(4);
                     $model->pin_phone_vaerification = $PIN_P;
+                    $model->new_county_code = $NewCountryCode;
+                    $model->new_phone_no = $NewPhoneNumber;
                     $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
                     $model->ePhoneVerifiedStatus = 'No';
                     $model->pin_phone_time = $TimeOut;
+
+                    $model->county_code = $OldCountryCode;
+                    $model->Mobile = $OldMobileNo;
                     if ($model->save()) {
-                        $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                        #$SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                        $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $NewPhoneNumber);
                         $flag = true;
                         $show = false;
                         /*list($Status, $Message) = SmsHelper::SendSMS($PIN_P, $model->Mobile);
@@ -1410,7 +1429,8 @@ class UserController extends Controller
             $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
             $model->ePhoneVerifiedStatus = 'No';
             if ($model->save()) {
-                list($Status, $Message) = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                //list($Status, $Message) = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                list($Status, $Message) = SmsHelper::SendSMS($PIN_P, $model->new_phone_no);
                 $temp['Status'] = $Status;
                 $temp['Message'] = $Message;
                 $popup = true;
