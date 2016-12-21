@@ -33,7 +33,7 @@ class MasterMaritalStatus extends \common\models\base\baseMasterMaritalStatus
     {
         return [
             'iMaritalStatusID' => 'Marital Status ID',
-            'vName' => 'Marital Status Name',
+            'vName' => 'Marital Status',
             'eStatus' => 'Marital Status Status',
         ];
     }

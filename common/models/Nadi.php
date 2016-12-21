@@ -42,7 +42,7 @@ class Nadi extends \common\models\base\baseNadi
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Nadi',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

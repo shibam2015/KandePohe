@@ -42,7 +42,7 @@ class Nakshtra extends \common\models\base\baseNakshtra
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Nakshtra',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

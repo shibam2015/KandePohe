@@ -253,7 +253,7 @@ Privacy Policy and T&C to register on this site.'],
             [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus'], 'string'],
             [['Time_of_Birth', 'cnb', 'iSubCommunity_ID', 'iGotraID', 'pin_email_time', 'pin_phone_time'], 'safe'],
             [['c'], 'checkDobYear'],
-            [['noc', 'nob', 'nos', 'NosM', 'NobM', 'weight'], 'integer', 'integerOnly' => true, 'min' => 0],
+            [['noc', 'nob', 'nos', 'NosM', 'NobM', 'NosM', 'weight'], 'integer', 'integerOnly' => true, 'min' => 0],
             [['auth_key'], 'string', 'max' => 32],
             [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['Registration_Number', 'Birth_Place'], 'string', 'max' => 250],
@@ -737,6 +737,30 @@ characters are allowed.'
     public function getFavouriteCousinesName()
     {
         return $this->hasOne(FavouriteCousines::className(), ['ID' => 'FavouriteCousinesID']);
+    }
+
+    public function getFamilyAffluenceLevelName()
+    {
+        return $this->hasOne(FamilyAffluenceLevel::className(), ['ID' => 'vFamilyAffluenceLevel']);
+    }
+
+    public function getFamilyPropertyName()
+    {
+        return $this->hasOne(PropertyDetails::className(), ['ID' => 'vFamilyProperty']);
+    }
+
+    public function getSportsFittnessName()
+    {
+        return $this->hasOne(SportsFitnActivities::className(), ['ID' => 'SportsFittnessID']);
+    }
+
+    public function getPropertyDetails()
+    {
+        $Property = [];
+        foreach ($this->familyPropertyName as $descr) {
+            $Property[] = $descr->text;
+        }
+        return implode(",", $Property);
     }
 
 

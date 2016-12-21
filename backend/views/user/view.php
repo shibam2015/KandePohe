@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\components\CommonHelper;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
@@ -36,109 +37,16 @@ if($model->propic !='') {
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            #    'id',
-            #    'auth_key',
-            #    'password_hash',
-            #    'password_reset_token',
             'First_Name',
             'Last_Name',
             'email:email',
-            #'status',
-
-            #'created_at',
-            #'updated_at',
-            #    'Registration_Number',
             'Mobile',
             'Profile_created_for',
-
             'Gender',
+            'Age',
+            'motherTongue.Name',
             'DOB',
             'Time_of_Birth',
-            #'Age',
-            #'Birth_Place',
-            #'Marital_Status',
-            #'iReligion_ID',
-            #'iEducationLevelID',
-            #'iEducationFieldID',
-            #'iWorkingWithID',
-            #'iWorkingAsID',
-            #'iAnnualIncomeID',
-
-            #'religionName.vName',
-            #'educationLevelName.vEducationLevelName',
-            #'educationFieldName.vEducationFieldName',
-            #'workingWithName.vWorkingWithName',
-            #'workingAsName.vWorkingAsName',
-            #'annualIncome.vAnnualIncome',
-
-            #'county_code',
-            #'iCommunity_ID',
-            #'iSubCommunity_ID',
-            #'iDistrictID',
-            #'iGotraID',
-            #'iMaritalStatusID',
-            #'iTalukaID',
-            #'iCountryId',
-            #'iStateId',
-            #'iCityId',
-
-            #'communityName.vName',
-            #'subCommunityName.vName',
-            #'districtName.vName',
-            #'gotraName.vName',
-            #'maritalStatusName.vName',
-            #'talukaName.vName',
-
-
-            #'countryName.vCountryName',
-            #'stateName.vStateName',
-            #'cityName.vCityName',
-            #'noc',
-            #'vAreaName:ntext',
-            #'cnb',
-            #'iHeightID',
-            #'height.vName',
-            #'vSkinTone:ntext',
-            #'vBodyType:ntext',
-            #'vSmoke:ntext',
-            #'vDrink:ntext',
-            #'vSpectaclesLens:ntext',
-            #'vDiet:ntext',
-            #'dietName.vName',
-            #'tYourSelf:ntext',
-            #'vDisability:ntext',
-
-            #'propic:ntext',
-
-            #'pin_email_vaerification:ntext',
-            #'iFatherStatusID',
-            ###'iMotherStatusID',
-            ###'iFatherWorkingAsID',
-            ####'iMotherWorkingAsID',
-            ###'nob',
-            ##'nos',
-            #'eSameAddress',
-            #'countryNameCA.vCountryName',
-            #'stateNameCA.vStateName',
-            #'cityNameCA.vCityName',
-            #'cityNameCA.vCityName',
-            ##'districtNameCA.vName',
-            #'talukaNameCA.vName',
-            #'vAreaNameCA:ntext',
-            #'iDistrictCAID',
-            #'iTalukaCAID',
-
-            #'iCityCAId',
-            #'vNativePlaceCA:ntext',
-            ##'vParentsResiding:ntext',
-            #'vFamilyAffluenceLevel:ntext',
-            #'vFamilyType:ntext',
-            #'vFamilyProperty:ntext',
-            #'vDetailRelative:ntext',
-            ##'eEmailVerifiedStatus:email',
-            #'ePhoneVerifiedStatus',
-            #'eFirstVerificationMailStatus',
-            #'toc',
         ],
     ]) ?>
     <p>
@@ -169,7 +77,7 @@ if($model->propic !='') {
                                 'communityName.vName',
                                 'subCommunityName.vName',
                                 'maritalStatusName.vName',
-                                'gotraName.vName',
+
                                 'countryName.vCountryName',
                                 'stateName.vStateName',
                                 'cityName.vCityName',
@@ -194,6 +102,10 @@ if($model->propic !='') {
                     <p class="text-muted">
                         <?= DetailView::widget([
                             'model' => $model,
+                            'formatter' => [
+                                'class' => 'yii\i18n\Formatter',
+                                'nullDisplay' => '-',
+                            ],
                             'attributes' => [
                                 'educationLevelName.vEducationLevelName',
                                 'educationFieldName.vEducationFieldName',
@@ -221,13 +133,19 @@ if($model->propic !='') {
                     <p class="text-muted">
                         <?= DetailView::widget([
                             'model' => $model,
+                            'formatter' => [
+                                'class' => 'yii\i18n\Formatter',
+                                'nullDisplay' => '-',
+                            ],
                             'attributes' => [
-                                #'iFatherStatusID',
-                                #'iMotherStatusID',
-                                #'iFatherWorkingAsID',
-                                #'iMotherWorkingAsID',
+                                //'fatherStatus.vName',
+                                //'fatherStatusId.vWorkingAsName',
+                                //'motherStatus.vName',
+                                //'motherStatusId.vWorkingAsName',
                                 'nob',
+                                'NobM',
                                 'nos',
+                                'NosM',
                                 'eSameAddress',
                                 'countryNameCA.vCountryName',
                                 'stateNameCA.vStateName',
@@ -235,15 +153,14 @@ if($model->propic !='') {
                                 'districtNameCA.vName',
                                 'talukaNameCA.vName',
                                 'vAreaNameCA:ntext',
-                                #'iDistrictCAID',
-                                #'iTalukaCAID',
-
-                                #'iCityCAId',
-                                #'vNativePlaceCA:ntext',
+                                'vNativePlaceCA:ntext',
                                 'vParentsResiding:ntext',
-                                'vFamilyAffluenceLevel:ntext',
+                                'familyAffluenceLevelName.Name',
                                 'vFamilyType:ntext',
-                                'vFamilyProperty:ntext',
+                                [
+                                    'attribute' => 'familyPropertyName',
+                                    'value' => CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue(\common\models\PropertyDetails::getPropertyDetails(CommonHelper::removeComma($model->vFamilyProperty)), 'Name'), 'text')
+                                ],
                                 'vDetailRelative:ntext',
                             ],
                         ]) ?>
@@ -264,6 +181,10 @@ if($model->propic !='') {
                     <p class="text-muted">
                         <?= DetailView::widget([
                             'model' => $model,
+                            'formatter' => [
+                                'class' => 'yii\i18n\Formatter',
+                                'nullDisplay' => '-',
+                            ],
                             'attributes' => [
                                 'height.vName',
                                 'vSkinTone:ntext',
@@ -271,8 +192,8 @@ if($model->propic !='') {
                                 'vSmoke:ntext',
                                 'vDrink:ntext',
                                 'vSpectaclesLens:ntext',
-
                                 'dietName.vName',
+                                'weight'
                             ],
                         ]) ?>
                     </p>
@@ -280,6 +201,94 @@ if($model->propic !='') {
                 <!-- /.box-body -->
             </div>
         </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Horoscope Detail</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <p class="text-muted">
+                        <?= DetailView::widget([
+                            'model' => $model,
+                            'formatter' => [
+                                'class' => 'yii\i18n\Formatter',
+                                'nullDisplay' => '-',
+                            ],
+                            'attributes' => [
+                                'raashiName.Name',
+                                'nakshtraName.Name',
+                                'gotraName.vName',
+                                'charanName.Name',
+                                'nadiName.Name',
+                                'ganName.Name',
+                                'Mangalik:ntext'
+                            ],
+                        ]) ?>
+                    </p>
+
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Hobby/Interest</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <p class="text-muted">
+                        <?= DetailView::widget([
+                            'model' => $model,
+                            'formatter' => [
+                                'class' => 'yii\i18n\Formatter',
+                                'nullDisplay' => '-',
+                            ],
+                            'attributes' => [
+                                //'interestName.Name',
+                                [
+                                    'attribute' => 'interestName',
+                                    'value' => CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue(\common\models\Interests::getInterestNames(CommonHelper::removeComma($model->InterestID)), 'Name'), 'text')
+                                ],
+                                [                      //  the owner name of the model
+                                    'attribute' => 'favouriteReadsName',
+                                    'value' => CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue(\common\models\FavouriteReads::getReadsNames(CommonHelper::removeComma($model->FavioriteReadID)), 'Name'), 'text')
+                                ],
+                                [                      //  the owner name of the model
+                                    'attribute' => 'favouriteMusicName',
+                                    'value' => CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue(\common\models\FavouriteMusic::getMusicNames(CommonHelper::removeComma($model->FaviouriteMusicID)), 'Name'), 'text')
+                                ],
+                                [                      //  the owner name of the model
+                                    'attribute' => 'favouriteCousinesName',
+                                    'value' => CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue(\common\models\FavouriteCousines::getCousinesNames(CommonHelper::removeComma($model->FavouriteCousinesID)), 'Name'), 'text')
+                                ],
+                                [                      //  the owner name of the model
+                                    'attribute' => 'sportsFittnessName',
+                                    'value' => CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue(\common\models\SportsFitnActivities::getSportsNames(CommonHelper::removeComma($model->SportsFittnessID)), 'Name'), 'text')
+                                ],
+                                [                      //  the owner name of the model
+                                    'attribute' => 'preferredDressStyleName',
+                                    'value' => CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue(\common\models\PreferredDressStyle::getDressNames(CommonHelper::removeComma($model->PreferredDressID)), 'Name'), 'text')
+                                ],
+                                [                      //  the owner name of the model
+                                    'attribute' => 'preferredMoviesName',
+                                    'value' => CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue(\common\models\PreferredMovies::getMovieNames(CommonHelper::removeComma($model->PreferredMovieID)), 'Name'), 'text')
+                                ],
+                            ],
+                        ]) ?>
+                    </p>
+
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+
 
     </div>
 

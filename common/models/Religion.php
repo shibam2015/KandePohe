@@ -26,7 +26,7 @@ class Religion extends \common\models\base\baseReligion
     {
         return [
             'iReligion_ID' => 'Religion  ID',
-            'vName' => 'Religion Name',
+            'vName' => 'Religion',
             'eStatus' => 'Religion Status',
         ];
     }

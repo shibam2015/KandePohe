@@ -47,7 +47,7 @@ class FavouriteMusic extends \common\models\base\baseCharan
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Favourite Music',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

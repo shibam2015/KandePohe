@@ -42,7 +42,7 @@ class Raashi extends \common\models\base\baseRaashi
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Raashi',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

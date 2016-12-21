@@ -47,7 +47,7 @@ class PreferredDressStyle extends \common\models\base\basePreferredDressStyle
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Preferred Dress Style',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

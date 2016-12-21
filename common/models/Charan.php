@@ -45,7 +45,7 @@ class Charan extends \common\models\base\baseCharan
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Charan',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

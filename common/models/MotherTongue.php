@@ -42,7 +42,7 @@ class MotherTongue extends \common\models\base\baseMotherTongue
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Mother Tongue',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

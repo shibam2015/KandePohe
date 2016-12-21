@@ -25,7 +25,7 @@ class MasterCommunity extends \common\models\base\baseMasterCommunity
     {
         return [
             'iCommunity_ID' => 'Community ID',
-            'vName' => 'Community Name',
+            'vName' => 'Community',
             'eStatus' => 'Community Status',
         ];
     }

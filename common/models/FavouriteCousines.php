@@ -47,7 +47,7 @@ class FavouriteCousines extends \common\models\base\baseFavouriteCousines
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Favourite Cousines',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

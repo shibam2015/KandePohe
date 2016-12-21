@@ -47,7 +47,7 @@ class SportsFitnActivities extends \common\models\base\baseSportsFitnActivities
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Sports Fitness Activities',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

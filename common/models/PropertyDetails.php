@@ -23,6 +23,11 @@ class PropertyDetails extends \common\models\base\basePropertyDetails
         return 'property_details';
     }
 
+    public static function getPropertyDetails($InterestString)
+    {
+        return static::find()->select('Name')->where('ID In (' . $InterestString . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */
@@ -42,7 +47,7 @@ class PropertyDetails extends \common\models\base\basePropertyDetails
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Property Details',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

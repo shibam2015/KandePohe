@@ -47,7 +47,7 @@ class PreferredMovies extends \common\models\base\basePreferredMovies
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Preferred Movies',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

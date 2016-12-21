@@ -48,7 +48,7 @@ class Interests extends \common\models\base\baseInterests
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Interests',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

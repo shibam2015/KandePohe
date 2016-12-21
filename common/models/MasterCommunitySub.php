@@ -40,7 +40,7 @@ class MasterCommunitySub extends \common\models\base\baseMasterCommunitySub
     {
         return [
             'iSubCommunity_ID' => 'Sub Community ID',
-            'vName' => 'Sub Community Name',
+            'vName' => 'Sub Community',
             'eStatus' => 'Sub Community Status',
         ];
     }

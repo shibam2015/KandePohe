@@ -42,7 +42,7 @@ class FamilyAffluenceLevel extends \common\models\base\baseCharan
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'FamilyAffluenceLevel',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

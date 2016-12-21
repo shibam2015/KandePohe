@@ -47,7 +47,7 @@ class FavouriteReads extends \common\models\base\baseFavouriteReads
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Favourite Reads',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];

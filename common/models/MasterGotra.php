@@ -40,7 +40,7 @@ class MasterGotra extends \common\models\base\baseMasterGotra
     {
         return [
             'iGotraID' => 'Gotra ID',
-            'vName' => 'Gotra Name',
+            'vName' => 'Gotra',
             'eStatus' => 'Gotra Status',
         ];
     }

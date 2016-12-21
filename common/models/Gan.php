@@ -42,7 +42,7 @@ class Gan extends \common\models\base\baseGan
     {
         return [
             'ID' => 'ID',
-            'Name' => 'Name',
+            'Name' => 'Gan',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
         ];
