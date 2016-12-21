@@ -618,9 +618,6 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                         <dl class="dl-horizontal">
 
                                                             <dt>Interest</dt>
-                                                            <h2> <?php echo $model->InterestID;
-                                                                echo " ==> " . CommonHelper::removeComma($model->InterestID);
-                                                                exit ?></h2>
                                                             <?php $InterestArray = \common\models\Interests::getInterestNames(CommonHelper::removeComma($model->InterestID)); ?>
                                                             <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($InterestArray, 'Name'), 'text') ?></dd>
                                                             <dt>Favorite Reads</dt>
