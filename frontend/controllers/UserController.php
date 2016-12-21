@@ -1320,8 +1320,9 @@ class UserController extends Controller
             #var_dump($model->validate());
             if ($model->validate()) {
                 if ($PIN == $PhonePin) {
-                    $Difference = CommonHelper::getTimeDifference($model->pin_phone_time);
-                    if($Difference > 0 && $Difference <=  Yii::$app->params['timePinValidate']){
+                    list($temp['StartTime'], $temp['RemainingTime']) = CommonHelper::getTimeDifference($model->pin_phone_time);
+                    //if($Difference > 0 && $Difference <=  Yii::$app->params['timePinValidate']){
+                    if ($temp['StartTime'] > 0 && $temp['StartTime'] <= Yii::$app->params['timePinValidate']) {
                         #$model->new_phone_no = $model->new_phone_no;
                         $model->completed_step = $model->setCompletedStep('8');
                         $model->ePhoneVerifiedStatus = 'Yes';
@@ -1467,8 +1468,10 @@ class UserController extends Controller
             $model->email_pin = $EmailPin;
             if ($model->validate()) {
                 if ($PIN == $EmailPin) {
-                    $Difference = CommonHelper::getTimeDifference($model->pin_email_time);
-                    if ($Difference > 0 && $Difference <= Yii::$app->params['timePinValidate']) {
+                    #$Difference = CommonHelper::getTimeDifference($model->pin_email_time);
+                    list($temp['StartTime'], $temp['RemainingTime']) = CommonHelper::getTimeDifference($model->pin_email_time);
+                    #if ($Difference > 0 && $Difference <= Yii::$app->params['timePinValidate']) {
+                    if ($temp['StartTime'] > 0 && $temp['StartTime'] <= Yii::$app->params['timePinValidate']) {
                         $model->completed_step = $model->setCompletedStep('9');
                         $model->eEmailVerifiedStatus = 'Yes';
                         $model->pin_email_vaerification = '0';
