@@ -226,6 +226,7 @@ if($model->propic !='') {
                                 'nadiName.Name',
                                 'ganName.Name',
                                 'Mangalik:ntext'
+
                             ],
                         ]) ?>
                     </p>
