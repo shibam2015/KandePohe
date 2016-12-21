@@ -220,7 +220,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     <i class="fa fa-spinner fa-spin pink"></i>
                                                 </a>
                                                 <h3 class="panel-title text-muted mrg-bt-10">Add Tags</h3>
-                                                <a href="javascript:void(0)" class="text-muted">Add more tags</a></div>
+                                                <!--<a href="javascript:void(0)" class="text-muted">Add more tags</a>-->
+                                            </div>
                                             <div class="panel-body no-padd text-center">
                                                 <?php Pjax::begin(['id' => 'my_index111', 'enablePushState' => false]); ?>
                                                 <div class="bootstrap-tagsinput" id="user_tag_list">

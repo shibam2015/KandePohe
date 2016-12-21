@@ -1269,7 +1269,7 @@ class UserController extends Controller
     }
 
     public function actionTagSuggestionList()
-    { //tag-suggestion-list
+    {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $show = false;
@@ -2380,11 +2380,9 @@ class UserController extends Controller
             } else if ($model->status == User::STATUS_BLOCK || $model->status == User::STATUS_INACTIVE || $model->status == User::STATUS_PENDING) {
                 list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'USER_BLOCK_INACTIVE_PENDING');
                 $Flag = 2;
-                #echo "USER_BLOCK_INACTIVE_PENDING;";exit;
             } else if ($model->status == User::STATUS_DELETED || $model->status == User::STATUS_DISAPPROVE) {
                 list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'USER_DELETED_DISAPPROVE');
                 $Flag = 3;
-                #echo "USER_DELETED_DISAPPROVE;";exit;
             }
             return $this->render('user-profile',
                 ['flag' => $Flag, 'STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE]
