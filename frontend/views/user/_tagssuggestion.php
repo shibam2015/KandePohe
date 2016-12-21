@@ -6,7 +6,9 @@ use yii\helpers\Url;
 
 ?>
 <div class="panel-heading" id="add_all_tag">
+    <?php if (count($model) != count($TAG_LIST_USER)) { ?>
     <a href="javascript:void(0)" class="pull-right suggest_tag_all">Add All</a>
+    <?php } ?>
     <h3 class="panel-title text-muted">Tag Suggestions</h3>
 </div>
 <div class="panel-body no-padd text-center">

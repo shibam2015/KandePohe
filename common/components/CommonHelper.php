@@ -596,10 +596,15 @@ class CommonHelper {
 
     public static function removeComma($MainArray)
     {
-        if (strlen($MainArray) > 0)
-            return implode(",", array_filter(explode(",", $MainArray)));
+        if (strlen($MainArray) > 0) {
+            if (strlen($MainArray) == 1 && $MainArray == 0) {
+                return 0;
+            } else {
+                return implode(",", array_filter(explode(",", $MainArray)));
+            }
+        }
         else
-            return '0';
+            return 0;
     }
 
     public static function setInputVal($val, $type = "text")

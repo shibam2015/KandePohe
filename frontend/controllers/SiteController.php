@@ -234,6 +234,9 @@ class SiteController extends Controller
             $model->Registration_Number = $U_R_ID;
             $model->completed_step = $model->setCompletedStep('1');
             $model->Age = CommonHelper::ageCalculator($model->DOB);
+            CommonHelper::pr(Yii::$app->request->post());
+            $model->new_county_code = Yii::$app->request->post('User')['county_code'];
+            $model->new_phone_no = Yii::$app->request->post('User')['Mobile'];
             #CommonHelper::pr(Yii::$app->request->post());exit;
             /*$model->save();
             var_dump($model->errors);

@@ -391,3 +391,17 @@ img.selected {
 .phonetime, .emailtime {
     display: none;
 }
+
+.tempclass {
+    min-height: 235px;
+}
+
+.middlebox {
+    height: 235px;
+}
+
+.my-profile-sc-button {
+    padding: 5px;
+    font-size: 14px;
+    margin-right: 10px;
+}

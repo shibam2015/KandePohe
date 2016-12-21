@@ -165,9 +165,12 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $timestamp + $expire >= time();
     }
 
-    public static function weightedCheck($type)
+    public static function weightedCheck($type, $iUserId = '')
     {
-        $iUserId = Yii::$app->user->identity->id;
+        if ($iUserId == '')
+            $iUserId = Yii::$app->user->identity->id;
+
+
         $USER = User::findOne($iUserId);
 
         $completed_step = $USER->completed_step;
@@ -188,9 +191,14 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             return 0;
         }
     }
-    public static function findRecentJoinedUserList($Gender, $Limit = 4) # Get user list Gender Wise with limit
+
+    public static function findRecentJoinedUserList($Gender, $Id, $Limit = 4) # Get user list Gender Wise with limit
     {
-        return static::find()->where(['Gender' => $Gender, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->limit($Limit)->all();
+        #return static::find()->where(['Gender' => $Gender, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->limit($Limit)->all();
+        return static::find()->where(['Gender' => $Gender])
+            ->andWhere(['!=', 'id', $Id])
+            ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
+            ->limit($Limit)->all();
     }
 
     public static function findRecentJoinedUserLists($Id, $Gender, $Limit = 4) # Get user list Gender Wise with limit
@@ -223,6 +231,12 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return static::find()->select('id, First_Name, Last_Name, Registration_Number,DOB,Age,user.iCountryId,user.iHeightID, propic')->joinWith([countryName, stateName, cityName, height, maritalStatusName])->where(['id' => $Id])->one();
     }
 
+    public static function getIdNo($Registration_Number)
+    {
+        $UserInfo = User::find()->select('id')->where(['Registration_Number' => $Registration_Number])->one();
+        return $UserInfo->id;
+    }
+
     /**
      * @inheritdoc
      */
@@ -251,7 +265,7 @@ Privacy Policy and T&C to register on this site.'],
 '],
             [['status', 'created_at', 'updated_at', 'Age', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID'], 'integer'],
             [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus'], 'string'],
-            [['Time_of_Birth', 'cnb', 'iSubCommunity_ID', 'iGotraID', 'pin_email_time', 'pin_phone_time'], 'safe'],
+            [['Time_of_Birth', 'cnb', 'iSubCommunity_ID', 'iGotraID', 'pin_email_time', 'pin_phone_time', 'new_phone_no', 'new_email_id', 'new_county_code'], 'safe'],
             [['c'], 'checkDobYear'],
             [['noc', 'nob', 'nos', 'NosM', 'NobM', 'NosM', 'weight'], 'integer', 'integerOnly' => true, 'min' => 0],
             [['auth_key'], 'string', 'max' => 32],
@@ -297,7 +311,7 @@ characters are allowed.'
     {
         return [
             self::SCENARIO_LOGIN => ['email', 'password'],
-            self::SCENARIO_REGISTER => ['email', 'password_hash', 'repeat_password', 'First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'toc', 'Registration_Number', 'Age'],
+            self::SCENARIO_REGISTER => ['email', 'password_hash', 'repeat_password', 'First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'toc', 'Registration_Number', 'Age', 'new_phone_no', 'new_county_code'],
             self::SCENARIO_REGISTER1 => ['iReligion_ID', 'First_Name', 'Last_Name', 'iCommunity_ID', 'iSubCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'noc', 'vAreaName', 'cnb'],
             self::SCENARIO_REGISTER2 => ['First_Name', 'Last_Name', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID'],
             self::SCENARIO_REGISTER3 => ['iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet'],
@@ -318,10 +332,10 @@ characters are allowed.'
             self::SCENARIO_FP => ['email', 'password_hash', 'password_reset_token'],
             self::SCENARIO_SFP => ['email', 'password_reset_token'],
             self::SCENARIO_EDIT_MY_INFO => ['tYourSelf'],
-            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'completed_step', 'Age'],
+            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'pin_phone_time', 'completed_step', 'Age', 'new_phone_no', 'new_county_code'],
 
             self::SCENARIO_VERIFY_PIN_FOR_PHONE => ['phone_pin', 'completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification', 'pin_phone_time'], # FOR PHONE VERIFICATION PROCESS
-            self::SCENARIO_PHONE_NUMBER_CHANGE => ['completed_step', 'county_code', 'Mobile', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'pin_phone_time'], # FOR PHONE Number Change Process
+            self::SCENARIO_PHONE_NUMBER_CHANGE => ['completed_step', 'county_code', 'Mobile', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'pin_phone_time', 'new_county_code', 'new_phone_no'], # FOR PHONE Number Change Process
             self::SCENARIO_RESEND_PIN_FOR_PHONE => ['completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification', 'pin_phone_time'], # FOR Resend Phone PIN PROCESS
 
             self::SCENARIO_VERIFY_PIN_FOR_EMAIL => ['email_pin', 'completed_step', 'eEmailVerifiedStatus', 'pin_email_vaerification', 'pin_email_time'], # FOR EMAIL VERIFICATION PROCESS
@@ -764,7 +778,6 @@ characters are allowed.'
     }
 
 
-
     /*public function generateUniqueRandomNumber($length = 9) {
         $PREFIX = CommonHelper::generatePrefix();
         $RANDOM_USER_NUMBER = $PREFIX.CommonHelper::generateNumericUniqueToken($length);
@@ -774,6 +787,11 @@ characters are allowed.'
             return $this->generateUniqueRandomNumber($length);
 
     }*/
+
+    public function getFavouriteCousinesName()
+    {
+        return $this->hasOne(FavouriteCousines::className(), ['ID' => 'FavouriteCousinesID']);
+    }
 
     public function getSportsFitnActivitiesName()
     {
@@ -805,8 +823,14 @@ characters are allowed.'
         return $this->vAreaNameCA . ", " . $this->talukaNameCA->vName . ", " . $this->districtNameCA->vName . ", " . $this->cityNameCA->vCityName . ", " . $this->stateNameCA->vStateName . ", " . $this->countryNameCA->vCountryName;
     }
 
-    public function getDisplayMobile(){
-        return ($this->county_code != '') ? $this->county_code . " " . $this->Mobile : $this->Mobile;
+    public function getDisplayMobile($Type = '')
+    {
+        if ($Type == 'Temp') {
+            return ($this->new_county_code != '') ? $this->new_county_code . " " . $this->new_phone_no : $this->new_phone_no;
+        } else {
+            return ($this->county_code != '') ? $this->county_code . " " . $this->Mobile : $this->Mobile;
+        }
+
     }
 
     public function setCompletedStep($step) {
@@ -822,4 +846,5 @@ characters are allowed.'
         }
         return $returnVal;
     }
+
 }

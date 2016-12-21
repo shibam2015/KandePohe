@@ -149,16 +149,16 @@ class UserController extends Controller
         $TAG_LIST = Tags::find()->orderBy('rand()')->all();   //orderBy(['rand()' => SORT_DESC]);
         $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
         $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
-        list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, 3);
+        list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, $id, 3);
         return $this->render('my-profile',
             ['model' => $model, 'photo_model' => $USER_PHOTOS_LIST, 'COVER_PHOTO' => $COVER_PHOTO, 'TAG_LIST' => $TAG_LIST, 'TAG_LIST_USER' => $TAG_LIST_USER, 'SimilarProfile' => $SimilarProfile, 'tab' => $tab]
 
         );
     }
 
-    public function actionRightSideBar($Gender, $Limit = 3)
+    public function actionRightSideBar($Gender, $Id, $Limit = 3)
     {
-        $SimilarProfile = User::findRecentJoinedUserList($Gender, $Limit); #TODO : Change recent joined user list with Similer Profile.
+        $SimilarProfile = User::findRecentJoinedUserList($Gender, $Id, $Limit); #TODO : Change recent joined user list with Similer Profile.
         return array($SimilarProfile, 'Success Stories');
     }
 
@@ -175,7 +175,7 @@ class UserController extends Controller
                 //$RecentlyJoinedMembers = User::findRecentJoinedUserLists($id,$Gender, 4);
                 $RecentlyJoinedMembers = User::findRecentJoinedUserList($Gender, 4);
                 //echo $RecentlyJoinedMembers->createCommand()->sql;exit;
-                list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, 3);
+                list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, $id, 3);
                 return $this->render('dashboard',[
                     'model' => $model,
                     'VER_ARRAY' => $VER_ARRAY,
@@ -224,7 +224,8 @@ class UserController extends Controller
                         $model->pin_phone_vaerification = $PIN_P;
                         $model->pin_phone_time = $TimeOut;
                         if ($model->Mobile != 0 && strlen($model->Mobile) == 10) {
-                            $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                            #$SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                            $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->new_phone_no);
                         }
                     }
                     #echo "<br> *** 4 ***";
@@ -436,13 +437,19 @@ class UserController extends Controller
                 $model->mother_tongue = Yii::$app->request->post('User')['mother_tongue'];
                 if($model->validate()){
                     if ($NewMobileNo != $OldMobileNo) {
+                        $TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
                         $PIN_P = CommonHelper::generateNumericUniqueToken(4);
+                        //new_phone_no
+                        $model->new_phone_no = $NewMobileNo;
                         $model->pin_phone_vaerification = $PIN_P;
                         $model->ePhoneVerifiedStatus = 'No';
+                        $model->pin_phone_time = $TimeOut;
                         $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
-                        $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                        $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $NewMobileNo);
+                        #$SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
                         $popup = true;
                     }
+                    $model->Mobile = $OldMobileNo;
                     $model->save();
                     $show = false;
                 }
@@ -1269,7 +1276,7 @@ class UserController extends Controller
     }
 
     public function actionTagSuggestionList()
-    { //tag-suggestion-list
+    {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $show = false;
@@ -1315,10 +1322,14 @@ class UserController extends Controller
                 if ($PIN == $PhonePin) {
                     $Difference = CommonHelper::getTimeDifference($model->pin_phone_time);
                     if($Difference > 0 && $Difference <=  Yii::$app->params['timePinValidate']){
+                        #$model->new_phone_no = $model->new_phone_no;
                         $model->completed_step = $model->setCompletedStep('8');
                         $model->ePhoneVerifiedStatus = 'Yes';
                         $model->pin_phone_vaerification = 0;
                         $model->pin_phone_time = 0;
+                        $model->county_code = $model->new_county_code;
+                        $model->Mobile = $model->new_phone_no;
+
                         $model->save();
                         $model->phone_pin = '';
                         $show = false;
@@ -1348,6 +1359,8 @@ class UserController extends Controller
         if (Yii::$app->request->post() && (Yii::$app->request->post('save') == 'PHONE_NUMBER_CHANGE')) {
             $show = true;
             $OldNumber = $model->county_code . $model->Mobile;
+            $OldCountryCode = $model->county_code;
+            $OldMobileNo = $model->Mobile;
             $NewCountryCode = Yii::$app->request->post('User')['county_code'];
             $NewPhoneNumber = Yii::$app->request->post('User')['Mobile'];
             $NewNumber = $NewCountryCode . $NewPhoneNumber;
@@ -1358,11 +1371,17 @@ class UserController extends Controller
                     $TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
                     $PIN_P = CommonHelper::generateNumericUniqueToken(4);
                     $model->pin_phone_vaerification = $PIN_P;
+                    $model->new_county_code = $NewCountryCode;
+                    $model->new_phone_no = $NewPhoneNumber;
                     $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
                     $model->ePhoneVerifiedStatus = 'No';
                     $model->pin_phone_time = $TimeOut;
+
+                    $model->county_code = $OldCountryCode;
+                    $model->Mobile = $OldMobileNo;
                     if ($model->save()) {
-                        $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                        #$SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                        $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $NewPhoneNumber);
                         $flag = true;
                         $show = false;
                         /*list($Status, $Message) = SmsHelper::SendSMS($PIN_P, $model->Mobile);
@@ -1410,7 +1429,8 @@ class UserController extends Controller
             $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
             $model->ePhoneVerifiedStatus = 'No';
             if ($model->save()) {
-                list($Status, $Message) = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                //list($Status, $Message) = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                list($Status, $Message) = SmsHelper::SendSMS($PIN_P, $model->new_phone_no);
                 $temp['Status'] = $Status;
                 $temp['Message'] = $Message;
                 $popup = true;
@@ -1586,7 +1606,7 @@ class UserController extends Controller
             $Message = Yii::$app->params['accessDeniedInvalid'];
         }
         $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
-        list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, 3);
+        list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, $id, 3);
         return $this->render('profile', [
             'model' => $model,
             'MatchCompatibility' => $MatchCompatibility,
@@ -2303,6 +2323,96 @@ class UserController extends Controller
         $ProfilePhotoURL = CommonHelper::getUserUploadFolder(4, $Id);
         $return = array('PhotoCrop' => $ProfilePhotoURL . $ActualImageName . '?' . time(), 'ImageName' => $ActualImageName);
         return json_encode($return);
+    }
+
+    public function actionUserProfile($uk = '')
+    {
+        /*if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }*/
+        if (!isset($uk) || $uk == '') {
+            if (Yii::$app->user->isGuest) {
+                return $this->goHome();
+            } else {
+                return $this->redirect(['user/dashboard']);
+            }
+        }
+        #$id = Yii::$app->user->identity->id;
+        $UserId = User::getIdNo($uk);
+        if ($UserId) {
+            if (!Yii::$app->user->isGuest) {
+                if ($UserId == Yii::$app->user->identity->id) {
+                    return $this->redirect(['user/my-profile']);
+                }
+            }
+            $model = User::find()->joinWith([countryName, stateName, cityName, height, maritalStatusName, talukaName, districtName, gotraName, subCommunityName, communityName, religionName, educationLevelName, communityName, workingWithName, workingAsName, dietName, fatherStatus])->where(['id' => $UserId])->one();
+            if ($model->status == User::STATUS_ACTIVE || $model->status == User::STATUS_APPROVE) {
+                $USER_PHOTO_MODEL = new  UserPhotos();
+                $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($UserId);
+                $COVER_PHOTO = CommonHelper::getCoverPhotos($TYPE = 'USER', $UserId, $model->cover_photo);
+
+                $Gender = ($model->Gender == 'MALE') ? 'MALE' : 'FEMALE';
+                list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, $UserId, 3);
+                #Preferences
+                $PartenersReligion = PartenersReligion::findByUserId($UserId) == NULL ? new PartenersReligion() : PartenersReligion::findByUserId($UserId);
+                $UPP = UserPartnerPreference::findByUserId($UserId) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($UserId);
+                $PartnersMaritalStatus = PartnersMaritalStatus::findByUserId($UserId) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findByUserId($UserId);
+                $PartnersGotra = PartnersGotra::findByUserId($UserId) == NULL ? new PartnersGotra() : PartnersGotra::findByUserId($UserId);
+                $PartnersMothertongue = PartnersMothertongue::findByUserId($UserId) == NULL ? new PartnersMothertongue() : PartnersMothertongue::findByUserId($UserId);
+                //$MasterHeight = MasterHe`ight::findByUserId($UserId) == NULL ? new MasterHeight() : MasterHeight::findByUserId($UserId);
+                $PartnersCommunity = PartnersCommunity::findByUserId($UserId) == NULL ? new PartnersCommunity() : PartnersCommunity::findByUserId($UserId);
+                $PartnersSubCommunity = PartnersSubcommunity::findByUserId($UserId) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findByUserId($UserId);
+
+                $PartnersEducationalLevel = PartnersEducationalLevel::findByUserId($UserId) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findByUserId($UserId);
+                $PartnersEducationField = PartnersEducationField::findByUserId($UserId) == NULL ? new PartnersEducationField() : PartnersEducationField::findByUserId($UserId);
+                $PW = PartnerWorkingAs::findByUserId($UserId) == NULL ? new PartnerWorkingAs() : PartnerWorkingAs::findByUserId($UserId);
+                $WorkingW = PartnerWorkingWith::findByUserId($UserId) == NULL ? new PartnerWorkingWith() : PartnerWorkingWith::findByUserId($UserId);
+                $AI = PartnersAnnualIncome::findByUserId($UserId) == NULL ? new PartnersAnnualIncome() : PartnersAnnualIncome::findByUserId($UserId);
+
+
+                $PC = PartnersCities::findByUserId($UserId) == NULL ? new PartnersCities() : PartnersCities::findByUserId($UserId);
+                $PS = PartnersStates::findByUserId($UserId) == NULL ? new PartnersStates() : PartnersStates::findByUserId($UserId);
+                $PCS = PartnersCountries::findByUserId($UserId) == NULL ? new PartnersCountries() : PartnersCountries::findByUserId($UserId);
+                $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $UserId])->orderBy(['Name' => SORT_ASC])->all();
+                $Flag = 1;
+                return $this->render('user-profile',
+                    ['model' => $model, 'photo_model' => $USER_PHOTOS_LIST, 'COVER_PHOTO' => $COVER_PHOTO, 'TAG_LIST' => $TAG_LIST, 'TAG_LIST_USER' => $TAG_LIST_USER, 'SimilarProfile' => $SimilarProfile, 'flag' => $Flag,
+                        'PartenersReligion' => $PartenersReligion,
+                        'UPP' => $UPP,
+                        'PartnersMaritalStatus' => $PartnersMaritalStatus,
+                        'PartnersGotra' => $PartnersGotra,
+                        'PartnersMothertongue' => $PartnersMothertongue,
+                        'PartnersCommunity' => $PartnersCommunity,
+                        'PartnersSubCommunity' => $PartnersSubCommunity,
+                        'PartnersEducationalLevel' => $PartnersEducationalLevel,
+                        'PartnersEducationField' => $PartnersEducationField,
+                        'PW' => $PW,
+                        'WorkingW' => $WorkingW,
+                        'AI' => $AI,
+                        'PC' => $PC,
+                        'PS' => $PS,
+                        'PCS' => $PCS,
+                        'TAG_LIST_USER' => $TAG_LIST_USER,
+                    ]
+                );
+            } else if ($model->status == User::STATUS_BLOCK || $model->status == User::STATUS_INACTIVE || $model->status == User::STATUS_PENDING) {
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'USER_BLOCK_INACTIVE_PENDING');
+                $Flag = 2;
+            } else if ($model->status == User::STATUS_DELETED || $model->status == User::STATUS_DISAPPROVE) {
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'USER_DELETED_DISAPPROVE');
+                $Flag = 3;
+            }
+            return $this->render('user-profile',
+                ['flag' => $Flag, 'STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE]
+            );
+        } else {
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'USER_NOT_EXIST');
+            return $this->render('user-profile',
+                ['flag' => 0, 'STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE]
+            );
+        }
+
+
     }
 }
 

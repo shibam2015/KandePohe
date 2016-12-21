@@ -57,7 +57,6 @@ use Yii;
  * @property string $tYourSelf
  * @property string $vDisability
  * @property string $propic
- * @property string $pin_email_vaerification
  * @property integer $iFatherStatusID
  * @property integer $iMotherStatusID
  * @property integer $iFatherWorkingAsID
@@ -78,6 +77,10 @@ use Yii;
  * @property string $vFamilyProperty
  * @property string $vDetailRelative
  * @property string $completed_step
+ * @property string $pin_email_vaerification
+ * @property integer $pin_phone_vaerification
+ * @property string $pin_email_time
+ * @property string $pin_phone_time
  * @property string $eEmailVerifiedStatus
  * @property string $ePhoneVerifiedStatus
  * @property string $eStatusPhotoModify
@@ -87,7 +90,6 @@ use Yii;
  * @property string $cover_photo
  * @property string $user_privacy_option
  * @property string $hide_profile
- * @property integer $pin_phone_vaerification
  * @property integer $mother_tongue
  * @property string $LastLoginTime
  * @property integer $RaashiId
@@ -103,8 +105,12 @@ use Yii;
  * @property string $SportsFittnessID
  * @property string $PreferredDressID
  * @property string $PreferredMovieID
- * @property string $pin_phone_time
- * @property string $pin_email_time
+ * @property string $vDisabilityDescription
+ * @property integer $NobM
+ * @property integer $NosM
+ * @property string $new_phone_no
+ * @property string $new_email_id
+ * @property string $new_county_code
  */
 class baseUser extends \yii\db\ActiveRecord
 {
@@ -122,18 +128,18 @@ class baseUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['auth_key', 'password_hash', 'email', 'created_at', 'updated_at', 'Registration_Number', 'Mobile', 'First_Name', 'Last_Name', 'DOB', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'county_code', 'iSubCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'noc', 'vAreaName', 'iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet', 'tYourSelf', 'vDisability', 'propic', 'pin_email_vaerification', 'iFatherStatusID', 'iMotherStatusID', 'iFatherWorkingAsID', 'iMotherWorkingAsID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'vAreaNameCA', 'iCityCAId', 'vNativePlaceCA', 'vParentsResiding', 'vFamilyAffluenceLevel', 'vFamilyType', 'vFamilyProperty', 'vDetailRelative', 'completed_step', 'weight', 'cover_background_position', 'cover_photo', 'pin_phone_vaerification', 'mother_tongue', 'LastLoginTime', 'RaashiId', 'NakshtraId', 'GanId', 'CharanId', 'NadiId', 'InterestID', 'FavioriteReadID', 'FaviouriteMusicID', 'FavouriteCousinesID', 'SportsFittnessID', 'PreferredDressID', 'PreferredMovieID'], 'required'],
-            [['status', 'created_at', 'updated_at', 'Age', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iSubCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'noc', 'iHeightID', 'iFatherStatusID', 'iMotherStatusID', 'iFatherWorkingAsID', 'iMotherWorkingAsID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'iCityCAId', 'pin_phone_vaerification', 'mother_tongue', 'RaashiId', 'NakshtraId', 'GanId', 'CharanId', 'NadiId', 'pin_phone_time', 'pin_email_time'], 'integer'],
-            [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus', 'toc', 'vAreaName', 'cnb', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet', 'tYourSelf', 'vDisability', 'propic', 'pin_email_vaerification', 'eSameAddress', 'vAreaNameCA', 'vNativePlaceCA', 'vParentsResiding', 'vFamilyAffluenceLevel', 'vFamilyType', 'vFamilyProperty', 'vDetailRelative', 'eEmailVerifiedStatus', 'ePhoneVerifiedStatus', 'eStatusPhotoModify', 'eStatusInOwnWord', 'user_privacy_option', 'hide_profile', 'Mangalik', 'InterestID', 'FavioriteReadID', 'FaviouriteMusicID', 'FavouriteCousinesID', 'SportsFittnessID', 'PreferredDressID', 'PreferredMovieID'], 'string'],
+            [['auth_key', 'password_hash', 'email', 'created_at', 'updated_at', 'Registration_Number', 'Mobile', 'First_Name', 'Last_Name', 'DOB', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'county_code', 'iSubCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'noc', 'vAreaName', 'iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet', 'tYourSelf', 'vDisability', 'propic', 'iFatherStatusID', 'iMotherStatusID', 'iFatherWorkingAsID', 'iMotherWorkingAsID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'vAreaNameCA', 'iCityCAId', 'vNativePlaceCA', 'vParentsResiding', 'vFamilyAffluenceLevel', 'vFamilyType', 'vFamilyProperty', 'vDetailRelative', 'completed_step', 'pin_email_vaerification', 'pin_phone_vaerification', 'weight', 'cover_background_position', 'cover_photo', 'mother_tongue', 'LastLoginTime', 'RaashiId', 'NakshtraId', 'GanId', 'CharanId', 'NadiId', 'InterestID', 'FavioriteReadID', 'FaviouriteMusicID', 'FavouriteCousinesID', 'SportsFittnessID', 'PreferredDressID', 'PreferredMovieID', 'vDisabilityDescription', 'NobM', 'NosM', 'new_phone_no', 'new_email_id', 'new_county_code'], 'required'],
+            [['status', 'created_at', 'updated_at', 'Age', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iSubCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'noc', 'iHeightID', 'iFatherStatusID', 'iMotherStatusID', 'iFatherWorkingAsID', 'iMotherWorkingAsID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'iCityCAId', 'pin_phone_vaerification', 'pin_email_time', 'pin_phone_time', 'mother_tongue', 'RaashiId', 'NakshtraId', 'GanId', 'CharanId', 'NadiId', 'NobM', 'NosM'], 'integer'],
+            [['Profile_created_for', 'Gender', 'eFirstVerificationMailStatus', 'toc', 'vAreaName', 'cnb', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet', 'tYourSelf', 'vDisability', 'propic', 'eSameAddress', 'vAreaNameCA', 'vNativePlaceCA', 'vParentsResiding', 'vFamilyAffluenceLevel', 'vFamilyType', 'vFamilyProperty', 'vDetailRelative', 'pin_email_vaerification', 'eEmailVerifiedStatus', 'ePhoneVerifiedStatus', 'eStatusPhotoModify', 'eStatusInOwnWord', 'user_privacy_option', 'hide_profile', 'Mangalik', 'InterestID', 'FavioriteReadID', 'FaviouriteMusicID', 'FavouriteCousinesID', 'SportsFittnessID', 'PreferredDressID', 'PreferredMovieID', 'vDisabilityDescription'], 'string'],
             [['DOB', 'Time_of_Birth', 'LastLoginTime'], 'safe'],
             [['auth_key'], 'string', 'max' => 32],
             [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['Registration_Number', 'Birth_Place'], 'string', 'max' => 250],
-            [['Mobile'], 'string', 'max' => 20],
+            [['Mobile', 'new_email_id'], 'string', 'max' => 20],
             [['First_Name', 'Last_Name', 'completed_step'], 'string', 'max' => 100],
-            [['county_code'], 'string', 'max' => 5],
+            [['county_code', 'new_county_code'], 'string', 'max' => 5],
             [['weight', 'cover_background_position'], 'string', 'max' => 50],
-            [['cover_photo'], 'string', 'max' => 200],
+            [['cover_photo', 'new_phone_no'], 'string', 'max' => 200],
             [['password_reset_token'], 'unique'],
         ];
     }
@@ -194,7 +200,6 @@ class baseUser extends \yii\db\ActiveRecord
             'tYourSelf' => 'T Your Self',
             'vDisability' => 'V Disability',
             'propic' => 'Propic',
-            'pin_email_vaerification' => 'Pin Email Vaerification',
             'iFatherStatusID' => 'I Father Status ID',
             'iMotherStatusID' => 'I Mother Status ID',
             'iFatherWorkingAsID' => 'I Father Working As ID',
@@ -215,6 +220,10 @@ class baseUser extends \yii\db\ActiveRecord
             'vFamilyProperty' => 'V Family Property',
             'vDetailRelative' => 'V Detail Relative',
             'completed_step' => 'Completed Step',
+            'pin_email_vaerification' => 'Pin Email Vaerification',
+            'pin_phone_vaerification' => 'Pin Phone Vaerification',
+            'pin_email_time' => 'Pin Email Time',
+            'pin_phone_time' => 'Pin Phone Time',
             'eEmailVerifiedStatus' => 'E Email Verified Status',
             'ePhoneVerifiedStatus' => 'E Phone Verified Status',
             'eStatusPhotoModify' => 'E Status Photo Modify',
@@ -224,7 +233,6 @@ class baseUser extends \yii\db\ActiveRecord
             'cover_photo' => 'Cover Photo',
             'user_privacy_option' => 'User Privacy Option',
             'hide_profile' => 'Hide Profile',
-            'pin_phone_vaerification' => 'Pin Phone Vaerification',
             'mother_tongue' => 'Mother Tongue',
             'LastLoginTime' => 'Last Login Time',
             'RaashiId' => 'Raashi ID',
@@ -240,8 +248,12 @@ class baseUser extends \yii\db\ActiveRecord
             'SportsFittnessID' => 'Sports Fittness ID',
             'PreferredDressID' => 'Preferred Dress ID',
             'PreferredMovieID' => 'Preferred Movie ID',
-            'pin_phone_time' => 'Pin Phone Time',
-            'pin_email_time' => 'Pin Email Time',
+            'vDisabilityDescription' => 'V Disability Description',
+            'NobM' => 'Nob M',
+            'NosM' => 'Nos M',
+            'new_phone_no' => 'New Phone No',
+            'new_email_id' => 'New Email ID',
+            'new_county_code' => 'New County Code',
         ];
     }
 }

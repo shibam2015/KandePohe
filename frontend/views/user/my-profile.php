@@ -220,7 +220,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     <i class="fa fa-spinner fa-spin pink"></i>
                                                 </a>
                                                 <h3 class="panel-title text-muted mrg-bt-10">Add Tags</h3>
-                                                <a href="javascript:void(0)" class="text-muted">Add more tags</a></div>
+                                                <!--<a href="javascript:void(0)" class="text-muted">Add more tags</a>-->
+                                            </div>
                                             <div class="panel-body no-padd text-center">
                                                 <?php Pjax::begin(['id' => 'my_index111', 'enablePushState' => false]); ?>
                                                 <div class="bootstrap-tagsinput" id="user_tag_list">
@@ -924,7 +925,7 @@ $this->registerJs('
     });
     getInlineDetail("' . Url::to(['user/edit-preferences-profession']) . '","#my_profession","1");
     $(document).on("click","#cancel_edit_profession",function(e){
-        getInlineDetail("' . Url::to(['user/edit-profession']) . '","#my_profession","1");
+        getInlineDetail("' . Url::to(['user/edit-preferences-profession']) . '","#my_profession","1");
     });
     $(".edit_location").click(function(e){
         getInlineDetail("' . Url::to(['user/edit-preferences-location']) . '","#my_location","0");

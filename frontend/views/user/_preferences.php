@@ -126,10 +126,20 @@ if ($show) {
     )
     ?>
     <div class="row">
-        <div class="">
-            <input type="hidden" name="save" value="1">
-            <?= Html::submitButton('save', ['class' => 'btn btn-primary pull-right preferences_submit', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Saving', 'name' => 'register5', 'style' => 'padding:5px;font-size:14px;']) ?>
-            <?= Html::Button('Cancel', ['class' => 'btn btn-primary pull-right', 'id' => 'cancel_edit_preferences', 'name' => 'cancel', 'style' => 'padding:5px;font-size:14px;margin-right:10px;']) ?>
+        <div class="col-md-4 col-md-offset-2">
+            <div class="form-cont">
+                <div class="form-cont">
+                    <input type="hidden" name="save" value="1">
+                    <?= Html::submitButton('save', ['class' => 'btn btn-primary my-profile-sc-button preferences_submit', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Saving', 'name' => 'register5']) ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-cont">
+                <div class="form-cont">
+                    <?= Html::Button('Cancel', ['class' => 'btn btn-primary my-profile-sc-button', 'id' => 'cancel_edit_preferences', 'name' => 'cancel']) ?>
+                </div>
+            </div>
         </div>
     </div>
     <?php ActiveForm::end();
