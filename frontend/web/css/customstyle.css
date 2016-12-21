@@ -389,7 +389,7 @@ img.selected {
 }
 
 .phonetime, .emailtime {
-    /*display: none;*/
+    display: none;
 }
 
 .tempclass {

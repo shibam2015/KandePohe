@@ -100,7 +100,7 @@ use yii\widgets\Pjax;
                             setTimeout(update, 1000);
                         }
                     }
-                    setTimeout(update, 1000);
+                    #setTimeout(update, 1000);
                             ');
                 }
                 if ($flag) {
