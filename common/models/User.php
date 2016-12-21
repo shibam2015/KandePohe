@@ -311,7 +311,7 @@ characters are allowed.'
     {
         return [
             self::SCENARIO_LOGIN => ['email', 'password'],
-            self::SCENARIO_REGISTER => ['email', 'password_hash', 'repeat_password', 'First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'toc', 'Registration_Number', 'Age'],
+            self::SCENARIO_REGISTER => ['email', 'password_hash', 'repeat_password', 'First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'toc', 'Registration_Number', 'Age', 'new_phone_no', 'new_county_code'],
             self::SCENARIO_REGISTER1 => ['iReligion_ID', 'First_Name', 'Last_Name', 'iCommunity_ID', 'iSubCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'noc', 'vAreaName', 'cnb'],
             self::SCENARIO_REGISTER2 => ['First_Name', 'Last_Name', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID'],
             self::SCENARIO_REGISTER3 => ['iHeightID', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vSpectaclesLens', 'vDiet'],
