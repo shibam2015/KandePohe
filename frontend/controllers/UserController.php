@@ -2307,9 +2307,9 @@ class UserController extends Controller
 
     public function actionUserProfile($uk = '')
     {
-        if (Yii::$app->user->isGuest) {
+        /*if (Yii::$app->user->isGuest) {
             return $this->goHome();
-        }
+        }*/
         if (!isset($uk) || $uk == '') {
             if (Yii::$app->user->isGuest) {
                 return $this->goHome();
@@ -2333,7 +2333,6 @@ class UserController extends Controller
 
                 $Gender = ($model->Gender == 'MALE') ? 'MALE' : 'FEMALE';
                 list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, $UserId, 3);
-
                 #Preferences
                 $PartenersReligion = PartenersReligion::findByUserId($UserId) == NULL ? new PartenersReligion() : PartenersReligion::findByUserId($UserId);
                 $UPP = UserPartnerPreference::findByUserId($UserId) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($UserId);
@@ -2343,7 +2342,6 @@ class UserController extends Controller
                 //$MasterHeight = MasterHe`ight::findByUserId($UserId) == NULL ? new MasterHeight() : MasterHeight::findByUserId($UserId);
                 $PartnersCommunity = PartnersCommunity::findByUserId($UserId) == NULL ? new PartnersCommunity() : PartnersCommunity::findByUserId($UserId);
                 $PartnersSubCommunity = PartnersSubcommunity::findByUserId($UserId) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findByUserId($UserId);
-
 
                 $PartnersEducationalLevel = PartnersEducationalLevel::findByUserId($UserId) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findByUserId($UserId);
                 $PartnersEducationField = PartnersEducationField::findByUserId($UserId) == NULL ? new PartnersEducationField() : PartnersEducationField::findByUserId($UserId);

@@ -15,11 +15,7 @@ use yii\widgets\Pjax;
 $community_data = CommonHelper::getCommunity();*/
 $id = 0;
 $PROFILE_COMPLETENESS = 0;
-if (!Yii::$app->user->isGuest) {
-    $id = Yii::$app->user->identity->id;
-    $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
-}
-
+$PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
 $HOME_URL = Yii::getAlias('@web') . "/";
 $HOME_URL_SITE = Yii::getAlias('@web') . "/site/";
 $UPLOAD_DIR = Yii::getAlias('@frontend') . '/web/uploads/';
