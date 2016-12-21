@@ -788,10 +788,6 @@ characters are allowed.'
 
     }*/
 
-    public function getFavouriteCousinesName()
-    {
-        return $this->hasOne(FavouriteCousines::className(), ['ID' => 'FavouriteCousinesID']);
-    }
 
     public function getSportsFitnActivitiesName()
     {
