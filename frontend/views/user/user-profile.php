@@ -618,13 +618,16 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                         <dl class="dl-horizontal">
 
                                                             <dt>Interest</dt>
+                                                            <h2> <?php echo $model->InterestID;
+                                                                echo " ==> " . CommonHelper::removeComma($model->InterestID);
+                                                                exit ?></h2>
                                                             <?php $InterestArray = \common\models\Interests::getInterestNames(CommonHelper::removeComma($model->InterestID)); ?>
                                                             <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($InterestArray, 'Name'), 'text') ?></dd>
                                                             <dt>Favorite Reads</dt>
                                                             <?php $ReadsArray = \common\models\FavouriteReads::getReadsNames(CommonHelper::removeComma($model->FavioriteReadID)); ?>
                                                             <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($ReadsArray, 'Name'), 'text') ?></dd>
                                                             <dt>Favorite Music</dt>
-                                                            <?php $MusicArray = \com    mon\models\FavouriteMusic::getMusicNames(CommonHelper::removeComma($model->FaviouriteMusicID)); ?>
+                                                            <?php $MusicArray = \common\models\FavouriteMusic::getMusicNames(CommonHelper::removeComma($model->FaviouriteMusicID)); ?>
                                                             <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($MusicArray, 'Name'), 'text') ?></dd>
                                                             <dt>Favorite Cousines</dt>
                                                             <?php $CousinesArray = \common\models\FavouriteCousines::getCousinesNames(CommonHelper::removeComma($model->FavouriteCousinesID)); ?>
