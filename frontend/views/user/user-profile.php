@@ -32,7 +32,11 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
     <link href="css/style-responsive.css" rel="stylesheet"> -->
     <!--<div class="wrapper">-->
     <div class="main-section">
-        <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
+        <?php if (!Yii::$app->user->isGuest) { ?>
+            <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
+        <?php } else { ?>
+            <?= $this->render('/layouts/parts/_headerregister'); ?>
+        <?php } ?>
         <main>
             <section>
                 <div class="container">
