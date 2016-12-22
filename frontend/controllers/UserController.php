@@ -2151,6 +2151,7 @@ class UserController extends Controller
                     foreach ($ProfilePhotoSize as $KeySize => $ValueSize) {
                         $t_width = $ValueSize;     // Maximum thumbnail width
                         $t_height = $ValueSize;    // Maximum thumbnail height
+                        #rand()."_"
                         $NewImagePath = $ProfilePhotoPath . $ValueSize . $ActualImageName;
                         $ratio = ($t_width / $w1);
                         $nw = ceil($w1 * $ratio);
@@ -2317,7 +2318,8 @@ class UserController extends Controller
             $width = $max_width;
         }
         list($txt, $ext) = explode(".", $PHOTO);
-        $ActualImageName = Yii::$app->params['profilePrefix'] . "_" . $txt . '.' . $ext;
+        #$ActualImageName = Yii::$app->params['profilePrefix'] . "_" . $txt . '.' . $ext;
+        $ActualImageName = $TempImageName = Yii::$app->params['profilePrefix'] . rand() . "_" . $txt . '.' . $ext;
         $image_p = imagecreatetruecolor($width, $height);
         $image = imagecreatefromjpeg($FileName);
         imagecopyresampled($image_p, $image, 0, 0, 0, 0,
