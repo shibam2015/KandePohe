@@ -217,7 +217,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public static function searchBasic($WHERE = '', $Offset = 0, $Limit = '') # Get user list Gender Wise with limit
     {
-        $Records = User::find()->select(' * ')->where((" 1=1  AND user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "') $WHERE "))->offset($Offset)->limit($Limit)->all();
+        $Records = User::find()->select(' * ')->where((" 1=1  AND user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "') $WHERE "))->orderBy(['LastLoginTime' => SORT_DESC])->offset($Offset)->limit($Limit)->all();
         return $Records;
     }
 
