@@ -161,8 +161,6 @@ class SearchController extends Controller
 
         $TotalRecords = count(User::searchBasic($WHERE, 0));
         $Model = User::searchBasic($WHERE, $Offset, $Limit);
-        CommonHelper::pr($Model);
-        exit;
         $UserPhotoModel = new UserPhotos();
         $Photos = array();
         if (count($Model)) {
