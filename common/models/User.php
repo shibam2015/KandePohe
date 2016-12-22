@@ -85,6 +85,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $vStateName;
     public $vCityName;
     #public $height;
+    public $tag_id;
 
 
     // public $captcha;
@@ -484,6 +485,7 @@ characters are allowed.'
             'SportsFittnessID' => 'Sports Fitness Activities',
             'PreferredDressID' => 'Preferred Dress Style',
             'PreferredMovieID' => 'Preferred Movie',
+            'tag_id' => 'Tag List'
 
         ];
     }
@@ -808,6 +810,7 @@ characters are allowed.'
     {
         return $this->hasOne(MotherTongue::className(), ['ID' => 'mother_tongue']);
     }
+s
 
     public function getPermentAddress()
     {

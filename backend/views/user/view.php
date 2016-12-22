@@ -225,7 +225,8 @@ if($model->propic !='') {
                                 'charanName.Name',
                                 'nadiName.Name',
                                 'ganName.Name',
-                                'Mangalik:ntext'
+                                'Mangalik:ntext',
+                                //'tagList.tag_id'
 
                             ],
                         ]) ?>
