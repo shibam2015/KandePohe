@@ -48,6 +48,11 @@ class Tags extends \common\models\base\baseTags
         ];
     }
 
+    public function getTagName()
+    {
+        #echo " hello "; print_r($this->hasOne(Countries::className(), ['iCountryId' => 'iCountryId']));exit;
+        return $this->hasOne(UserTag::className(), ['ID' => 'tag_id']);
+    }
     public function scenarios()
     {
         return [
