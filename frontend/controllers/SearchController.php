@@ -145,8 +145,8 @@ class SearchController extends Controller
         $WHERE .= ($Height != '') ? ' AND user.iHeightID = "' . $Height . '" ' : '';
         $WHERE .= ($ReligionID != '') ? ' AND user.iReligion_ID = "' . $ReligionID . '" ' : '';
         $WHERE .= ($MaritalStatusID != '') ? ' AND user.Marital_Status = "' . $MaritalStatusID . '" ' : '';
-        $WHERE .= ($AgeFrom != '') ? ' AND user.Age >= "' . $AgeFrom . '" ' : '';
-        $WHERE .= ($AgeTo != '') ? ' AND user.Age <= "' . $AgeTo . '" ' : '';
+        $WHERE .= ($AgeFrom != '') ? ' AND ( (user.Age >= "' . $AgeFrom . '") OR (TIMESTAMPDIFF(YEAR, user.DOB, CURDATE()) >= "' . $AgeFrom . '"))' : '';
+        $WHERE .= ($AgeTo != '') ? ' AND ((user.Age <= "' . $AgeTo . '") OR (TIMESTAMPDIFF(YEAR, user.DOB, CURDATE()) <= "' . $AgeTo . '")) ' : '';
         $WHERE .= $WhereId;
         $Limit = Yii::$app->params['searchingLimit'];
         $Offset = (Yii::$app->request->get('Offset') == 0) ? 0 : Yii::$app->request->get('Offset');
@@ -161,7 +161,8 @@ class SearchController extends Controller
 
         $TotalRecords = count(User::searchBasic($WHERE, 0));
         $Model = User::searchBasic($WHERE, $Offset, $Limit);
-
+        CommonHelper::pr($Model);
+        exit;
         $UserPhotoModel = new UserPhotos();
         $Photos = array();
         if (count($Model)) {

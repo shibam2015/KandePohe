@@ -209,31 +209,36 @@ $M1 = array();
                                         </div>-->
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                            <?= Html::submitButton('search', ['class' => 'btn btn-primary', 'name' => 'button']) ?>
-                                                            <?= Html::resetButton('Reset', ['class' => 'btn btn-primary']) ?>
+                                                <div class="col-md-3 col-md-offset-2">
+                                                    <div class="box">
+                                                        <div class="mid-col">
+                                                            <div class="form-cont bs">
+                                                                <?= Html::submitButton('search', ['class' => 'btn btn-primary', 'name' => 'button']) ?>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="mid-col">
-                                                        <div class="form-cont bs">
-                                                            <?= html::a('<i class="ti-power-off m-r-5"></i> Advanced Search</a>', ['search/advanced-search'], ['data-method' => 'post']) ?>
+                                                <div class="col-md-3">
+                                                    <div class="box">
+                                                        <div class="mid-col">
+                                                            <div class="form-cont bs">
+                                                                <?= Html::resetButton('Reset', ['class' => 'btn btn-primary']) ?>
+                                                            </div>
                                                         </div>
-
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="box">
+                                                        <div class="mid-col">
+                                                            <div class="form-cont bs">
+                                                                <?= html::a('<i class="ti-power-off m-r-5"></i> Advanced Search</a>', ['search/advanced-search'], ['data-method' => 'post']) ?>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
-
                                         <?php ActiveForm::end(); ?>
-
-
                                     </div>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                         <li><a href="#">Test 1</a></li>
