@@ -32,7 +32,11 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
     <link href="css/style-responsive.css" rel="stylesheet"> -->
     <!--<div class="wrapper">-->
     <div class="main-section">
-        <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
+        <?php if (!Yii::$app->user->isGuest) { ?>
+            <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
+        <?php } else { ?>
+            <?= $this->render('/layouts/parts/_headerregister'); ?>
+        <?php } ?>
         <main>
             <section>
                 <div class="container">
@@ -624,7 +628,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                             <?php $ReadsArray = \common\models\FavouriteReads::getReadsNames(CommonHelper::removeComma($model->FavioriteReadID)); ?>
                                                             <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($ReadsArray, 'Name'), 'text') ?></dd>
                                                             <dt>Favorite Music</dt>
-                                                            <?php $MusicArray = \com    mon\models\FavouriteMusic::getMusicNames(CommonHelper::removeComma($model->FaviouriteMusicID)); ?>
+                                                            <?php $MusicArray = \common\models\FavouriteMusic::getMusicNames(CommonHelper::removeComma($model->FaviouriteMusicID)); ?>
                                                             <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($MusicArray, 'Name'), 'text') ?></dd>
                                                             <dt>Favorite Cousines</dt>
                                                             <?php $CousinesArray = \common\models\FavouriteCousines::getCousinesNames(CommonHelper::removeComma($model->FavouriteCousinesID)); ?>
