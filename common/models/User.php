@@ -198,6 +198,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return static::find()->where(['Gender' => $Gender])
             ->andWhere(['!=', 'id', $Id])
             ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
+            ->orderBy(['LastLoginTime' => SORT_DESC])
             ->limit($Limit)->all();
     }
 
