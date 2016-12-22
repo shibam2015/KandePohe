@@ -810,7 +810,7 @@ characters are allowed.'
     {
         return $this->hasOne(MotherTongue::className(), ['ID' => 'mother_tongue']);
     }
-s
+
 
     public function getPermentAddress()
     {
