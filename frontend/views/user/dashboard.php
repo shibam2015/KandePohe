@@ -324,7 +324,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 
                                 <div class="bg-white">
                                     <?php if ($PROFILE_COMPLETENESS < 100) { ?>
-                                        <!--<div class="radial-progress pull-right" data-progress="0">
+                                        <div class="radial-progress pull-right" data-progress="0">
                                             <div class="circle">
                                                 <div class="mask full">
                                                     <div class="fill"></div>
@@ -346,7 +346,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>-->
+                                        </div>
                                     <?php } ?>
                                     <div class="fb-profile-text">
                                         <h1 class="user-name"><?= $model->First_Name . ' ' . $model->Last_Name; ?>
