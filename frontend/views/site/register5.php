@@ -30,7 +30,7 @@ use yii\helpers\ArrayHelper;
       </div>
       <div class="col-sm-9">
         <div class="right-column"> <span class="welcome-note">
-          <p><strong>Welcome <?= $model->First_Name; ?> !</strong> About yourself details will help us find you the best matches</p>
+          <p><strong><?= $model->First_Name; ?> !</strong> One last thing… describe your self.</p>
           </span>
           <div class="row no-gutter">
             <div class="col-lg-8 col-md-12 col-sm-12">

@@ -33,12 +33,12 @@ use yii\helpers\ArrayHelper;
       <div class="col-sm-9">
         <div class="right-column"> <span class="welcome-note">
           <?php
-          if ($model->Profile_created_for !== "Self") {
+          if ($model->Profile_created_for !== "SELF") {
               ?>
-              <p>Add<strong> </strong> Some details about <?= $model->First_Name; ?>'s family …</p>
+              <p>Some details about <strong><?= $model->First_Name; ?>'s</strong> family …</p>
           <?php } else {
               ?>
-              <p><strong><?= $model->First_Name; ?> ,</strong> Add Some details about your family …</p>
+              <p><strong><?= $model->First_Name; ?> ,</strong> Some details about your family …</p>
 
           <?php
           }
