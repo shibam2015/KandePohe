@@ -28,7 +28,7 @@ class PasswordResetRequestForm extends Model
                 'targetClass' => '\common\models\User',
                 #'filter' => ['status' => User::STATUS_ACTIVE],
                 'filter' => ['status' => [User::STATUS_ACTIVE, User::STATUS_APPROVE]],
-                'message' => 'There is no user with such email.'
+                'message' => Yii::$app->params['resetPasswordWrongEmailIdMessage'],//'There is no user with such email.'
             ],
         ];
     }
