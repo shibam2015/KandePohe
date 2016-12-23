@@ -34,9 +34,9 @@ use yii\helpers\ArrayHelper;
       <div class="col-sm-9">
         <div class="right-column"> <span class="welcome-note">
             <?php
-            if ($model->Profile_created_for !== "Self") {
+            if ($model->Profile_created_for !== "SELF") {
               ?>
-              <p>Add<strong><?= $model->First_Name; ?>'s ,</strong> educational and occupational details to help us
+              <p>Add <strong><?= $model->First_Name; ?>'s,</strong> educational and occupational details to help us
                 build a good profile…</p>
             <?php } else {
               ?>

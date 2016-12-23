@@ -31,9 +31,9 @@ use yii\helpers\ArrayHelper;
       <div class="col-sm-9">
         <div class="right-column"> <span class="welcome-note">
           <?php
-          if ($model->Profile_created_for !== "Self") {
+          if ($model->Profile_created_for !== "SELF") {
             ?>
-            <p>Add<strong><?= $model->First_Name; ?>'s </strong> lifestyle details will help us find the best matches
+            <p>Add <strong><?= $model->First_Name; ?>'s </strong> lifestyle details will help us find the best matches
               for <?= $model->First_Name; ?> …</p>
           <?php } else {
             ?>
