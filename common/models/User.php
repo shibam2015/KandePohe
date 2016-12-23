@@ -299,7 +299,7 @@ characters are allowed.'
             [['email'], 'email', 'message' => "Please enter valid email address."],
             [['password_hash'], 'string', 'length' => [6, 255]],
             [['repassword'], 'string', 'length' => [6, 255]],
-            [['tYourSelf'], 'string', 'max' => '2000'],
+            [['tYourSelf'], 'string', 'max' => '5000'],
             [['tYourSelf'], 'required', 'on' => self::SCENARIO_EDIT_MY_INFO],
             [['repeat_password'], 'compare', 'compareAttribute' => 'password_hash', 'message' => "Password and Retype Password is not matching. Please try again."],
             [['repassword'], 'compare', 'compareAttribute' => 'password_hash', 'message' => "Password and Retype Password is not matching. Please try again."],
