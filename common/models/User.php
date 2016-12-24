@@ -217,6 +217,18 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $RegisterNo->Registration_Number;
     }
 
+    public static function getMobileNo($Id)
+    {
+        $MobileNo = User::find()->select('Mobile')->where(['id' => $Id])->one();
+        return $MobileNo->Mobile;
+    }
+
+    public static function getSMSUserInformation($Id)
+    {
+        $SMSUserInformation = User::find()->select('id,Mobile,Gender,First_Name, Last_Name, Registration_Number,ePhoneVerifiedStatus')->where(['id' => $Id])->one();
+        return $SMSUserInformation;
+    }
+
     public static function searchBasic($WHERE = '', $Offset = 0, $Limit = '') # Get user list Gender Wise with limit
     {
         $Records = User::find()->select(' * ')->where((" 1=1  AND user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "') $WHERE "))->orderBy(['LastLoginTime' => SORT_DESC])->offset($Offset)->limit($Limit)->all();
@@ -238,6 +250,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         $UserInfo = User::find()->select('id')->where(['Registration_Number' => $Registration_Number])->one();
         return $UserInfo->id;
     }
+
 
     /**
      * @inheritdoc
@@ -299,7 +312,7 @@ characters are allowed.'
             [['email'], 'email', 'message' => "Please enter valid email address."],
             [['password_hash'], 'string', 'length' => [6, 255]],
             [['repassword'], 'string', 'length' => [6, 255]],
-            [['tYourSelf'], 'string', 'max' => '2000'],
+            [['tYourSelf'], 'string', 'max' => '5000'],
             [['tYourSelf'], 'required', 'on' => self::SCENARIO_EDIT_MY_INFO],
             [['repeat_password'], 'compare', 'compareAttribute' => 'password_hash', 'message' => "Password and Retype Password is not matching. Please try again."],
             [['repassword'], 'compare', 'compareAttribute' => 'password_hash', 'message' => "Password and Retype Password is not matching. Please try again."],

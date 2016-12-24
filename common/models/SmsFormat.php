@@ -60,4 +60,11 @@ class SmsFormat extends \common\models\base\baseSmsFormat
         ];
 
     }
+            'iSmsFormatId' => 'I Sms Format ID',
+            'vSmsFormatType' => 'V Sms Format Type',
+            'vSmsInformation' => 'V Sms Information',
+            'vSmsMessage' => 'V Sms Message',
+            'vComment' => 'V Comment',
+        ];
+    }
 }

@@ -56,6 +56,6 @@ return [
     'photoDisapprovedMode' => 'Photo is not appropriate as per our policy and is not available on portal. We Request you to upload another photo.', //Irrelevant photo
     'cropSize' => 200,
     'timePinValidate' => 15,
-
+    'resetPasswordWrongEmailIdMessage' => 'This email ID is not registered at Kande-Pohe.com. Please contact administrator to reset your password',
 ];
 
