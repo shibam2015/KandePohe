@@ -79,10 +79,10 @@ class SearchController extends Controller
      */
     public function actionIndex()
     {
-        return $this->redirect(['search/basic-search']);
+
     }
 
-    public function actionBasicSearch($ref = '')
+    public function actionBasicSearch()
     {
         $request = Yii::$app->request;
         $session = Yii::$app->session;
@@ -96,6 +96,7 @@ class SearchController extends Controller
             $TempModel = User::findOne($id);
             $WhereId = " AND user.id != " . $id;
         }
+
         if ($TempModel->load(Yii::$app->request->post())) {
             $Gender = $params['User']['Profile_for'];
             $Community = $params['User']['iCommunity_ID'];
@@ -106,9 +107,11 @@ class SearchController extends Controller
             if ($params['User']['Agerange'] != '') {
                 list($AgeFrom, $AgeTo) = explode("-", $params['User']['Agerange']);
             } else {
+
                 $AgeFrom = $params['User']['AgeFrom'];
                 $AgeTo = $params['User']['AgeTo'];
             }
+
             $session->set('Profile_for', $Gender);
             $session->set('iCommunity_ID', $Community);
             $session->set('iSubCommunity_ID', $SubCommunity);
@@ -118,33 +121,14 @@ class SearchController extends Controller
             $session->set('AgeFrom', $AgeFrom);
             $session->set('AgeTo', $AgeTo);
         } else {
-            if ($ref != '') {
-                $ReffArray = Yii::$app->params['ref'];
-                if (array_key_exists($ref, $ReffArray)) {
-                    if ($TempModel->Gender == 'MALE') {
-                        $Gender = "FEMALE";
-                    } else if ($TempModel->Gender == 'FEMALE') {
-                        $Gender = "MALE";
-                    }
-                    $session->set('Profile_for', $Gender);
-                } else {
-                    return $this->render('searchlist',
-                        [
-                            'ErrorStatus' => 1,
-                            'ErrorMessage' => Yii::$app->params['searchListInCorrectErrorMessage']
-                        ]
-                    );
-                }
-            } else {
-                $Gender = $session->get('Profile_for');
-                $Community = $session->get('iCommunity_ID');
-                $SubCommunity = $session->get('iSubCommunity_ID');
-                $Height = $session->get('iHeightID');
-                $ReligionID = $session->get('iReligion_ID');
-                $MaritalStatusID = $session->get('Marital_Status');
-                $AgeFrom = $session->get('AgeFrom');
-                $AgeTo = $session->get('AgeTo');
-            }
+            $Gender = $session->get('Profile_for');
+            $Community = $session->get('iCommunity_ID');
+            $SubCommunity = $session->get('iSubCommunity_ID');
+            $Height = $session->get('iHeightID');
+            $ReligionID = $session->get('iReligion_ID');
+            $MaritalStatusID = $session->get('Marital_Status');
+            $AgeFrom = $session->get('AgeFrom');
+            $AgeTo = $session->get('AgeTo');
         }
         $WHERE = '';
         if ($Gender == '') {
@@ -201,7 +185,6 @@ class SearchController extends Controller
         $TempModel->AgeTo = $AgeTo;
         return $this->render('searchlist',
             [
-                'ErrorStatus' => 0,
                 'Model' => $Model,
                 'TotalRecords' => $TotalRecords,
                 'Photos' => $Photos,

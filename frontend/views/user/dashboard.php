@@ -499,9 +499,9 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 
                                 <!-- recent member -->
                                 <?php if (count($RecentlyJoinedMembers)) { ?>
-                                    <div class="bg-white mrg-tp-20"><a href="#" title="View All" class="pull-right">View
-                                            All &gt;</a>
-
+                                    <div class="bg-white mrg-tp-20">
+                                        <!--<a href="#" title="View All" class="pull-right">View All &gt;</a>-->
+                                        <?= html::a('View All &gt;', ['search/basic-search', 'ref' => Yii::$app->params['ref']['recently_joined']], ['data-method' => 'post', 'class' => 'pull-right', 'title' => 'View All']) ?>
                                         <h3 class="heading-xs">Recently Joined Members</h3>
 
                                         <div class="user-list">
