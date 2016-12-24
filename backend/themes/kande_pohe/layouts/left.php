@@ -137,6 +137,7 @@ $ADMIN_NAME = ucwords(strtolower(Yii::$app->user->identity->vFirstName. ' ' .Yii
                         'url' => '#',
                         'items' => [
                             ['label' => 'Email Template', 'icon' => 'fa fa-envelope', 'url' => ['/email-format'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'SMS Template', 'icon' => 'fa fa-envelope', 'url' => ['/sms-format'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'Site Message', 'icon' => 'fa fa-envelope', 'url' => ['/site-messages'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'SMS Setting', 'icon' => 'fa fa-cog', 'url' => ['/setting'], 'visible' => !Yii::$app->user->isGuest],
 
