@@ -217,6 +217,18 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $RegisterNo->Registration_Number;
     }
 
+    public static function getMobileNo($Id)
+    {
+        $MobileNo = User::find()->select('Mobile')->where(['id' => $Id])->one();
+        return $MobileNo->Mobile;
+    }
+
+    public static function getSMSUserInformation($Id)
+    {
+        $SMSUserInformation = User::find()->select('id,Mobile,Gender,First_Name, Last_Name, Registration_Number,ePhoneVerifiedStatus')->where(['id' => $Id])->one();
+        return $SMSUserInformation;
+    }
+
     public static function searchBasic($WHERE = '', $Offset = 0, $Limit = '') # Get user list Gender Wise with limit
     {
         $Records = User::find()->select(' * ')->where((" 1=1  AND user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "') $WHERE "))->orderBy(['LastLoginTime' => SORT_DESC])->offset($Offset)->limit($Limit)->all();
@@ -238,6 +250,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         $UserInfo = User::find()->select('id')->where(['Registration_Number' => $Registration_Number])->one();
         return $UserInfo->id;
     }
+
 
     /**
      * @inheritdoc

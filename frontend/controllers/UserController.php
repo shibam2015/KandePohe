@@ -224,8 +224,10 @@ class UserController extends Controller
                         $model->pin_phone_vaerification = $PIN_P;
                         $model->pin_phone_time = $TimeOut;
                         if ($model->Mobile != 0 && strlen($model->Mobile) == 10) {
-                            #$SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
-                            $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->new_phone_no);
+                            #$SMSFlag = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                            $SMSArray = array("OTP" => $PIN_P);
+                            $SMSFlag = SmsHelper::SendSMS($model->new_phone_no, 'PHONE_OTP', $SMSArray);
+                            #$SMSFlag = SmsHelper::SendSMS($PIN_P, $model->new_phone_no);
                         }
                     }
                     #echo "<br> *** 4 ***";
@@ -445,8 +447,9 @@ class UserController extends Controller
                         $model->ePhoneVerifiedStatus = 'No';
                         $model->pin_phone_time = $TimeOut;
                         $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
-                        $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $NewMobileNo);
-                        #$SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
+                        $SMSArray = array("OTP" => $PIN_P);
+                        $SMSFlag = SmsHelper::SendSMS($NewMobileNo, 'PHONE_OTP', $SMSArray);
+                        #$SMSFlag = SmsHelper::SendSMS($PIN_P, $NewMobileNo);
                         $popup = true;
                     }
                     $model->Mobile = $OldMobileNo;
@@ -1381,20 +1384,11 @@ class UserController extends Controller
                     $model->county_code = $OldCountryCode;
                     $model->Mobile = $OldMobileNo;
                     if ($model->save()) {
-                        #$SMS_FLAG = SmsHelper::SendSMS($PIN_P, $model->Mobile);
-                        $SMS_FLAG = SmsHelper::SendSMS($PIN_P, $NewPhoneNumber);
+                        $SMSArray = array("OTP" => $PIN_P);
+                        $SMSFlag = SmsHelper::SendSMS($NewPhoneNumber, 'PHONE_OTP', $SMSArray);
+                        #$SMSFlag = SmsHelper::SendSMS($PIN_P, $NewPhoneNumber);
                         $flag = true;
                         $show = false;
-                        /*list($Status, $Message) = SmsHelper::SendSMS($PIN_P, $model->Mobile);
-                        $flag = true;
-                        $show = false;
-                        if($Status!=''){
-                            $Difference = CommonHelper::getTimeDifference($model->pin_phone_time,1);
-                            if($Difference >= 0 && $Difference <=Yii::$app->params['timePinValidate']){
-                                $temp['Time']= $Difference;
-                                $temp['StartTIme']= $Difference;
-                            }
-                        }*/
                     } else {
                         $flag = false;
                     }
@@ -1430,20 +1424,14 @@ class UserController extends Controller
             $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
             $model->ePhoneVerifiedStatus = 'No';
             if ($model->save()) {
-                //list($Status, $Message) = SmsHelper::SendSMS($PIN_P, $model->Mobile);
-                list($Status, $Message) = SmsHelper::SendSMS($PIN_P, $model->new_phone_no);
+                $SMSArray = array("OTP" => $PIN_P);
+                list($Status, $Message) = SmsHelper::SendSMS($model->new_phone_no, 'PHONE_OTP', $SMSArray);
+                #list($Status, $Message) = SmsHelper::SendSMS($PIN_P, $model->new_phone_no);
                 $temp['Status'] = $Status;
                 $temp['Message'] = $Message;
                 $popup = true;
                 if($Status!=''){
-                    #$model = User::findOne($id);
-                    //echo CommonHelper::getDateTimeToString(CommonHelper::getTime());
                     list($temp['StartTime'],$temp['RemainingTime']) = CommonHelper::getTimeDifference($model->pin_phone_time);
-                    /*$Difference = CommonHelper::getTimeDifference($model->pin_phone_time,1);
-                    if($Difference >= 0 && $Difference <=Yii::$app->params['timePinValidate']){
-                        $temp['Time']= $Difference;
-                        $temp['StartTIme']= $Difference;
-                    }*/
                 }
             } else {
                 $popup = false;
@@ -1825,6 +1813,12 @@ class UserController extends Controller
             if ($Model->save()) {
                 $this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['sendInterestMessage'], 'SendInterest');
                 $this->actionMailSendRequest($Id, $ToUserId, $MailType);
+                $SMSUSerInformation = User::getSMSUserInformation($ToUserId);
+                if ($SMSUSerInformation->ePhoneVerifiedStatus == 'Yes') {
+                    $Gender = ($SMSUSerInformation->Gender == 'MALE') ? 'his' : 'her';
+                    $SMSArray = array("NAME" => $SMSUSerInformation->FullName, "LINK" => 'Kandepohe.com', "GENDER" => $Gender);
+                    $SMSFlag = SmsHelper::SendSMS($SMSUSerInformation->Mobile, 'INTEREST_SEND', $SMSArray);
+                }
                 return 'S';
             } else {
                 return 'E';

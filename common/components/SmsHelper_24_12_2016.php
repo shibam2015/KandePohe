@@ -4,29 +4,19 @@
  */
 namespace common\components;
 
-use common\models\SmsFormat;
 use Yii;
 
 class SmsHelper
 {
-    public static function SendSMS($MOBILE_NO, $Type, $DBInfo = '')
+    public static function SendSMS($CODE, $MOBILE_NO)
     {
         #$CODE = 8485;
         #$MOBILE_NO = '8000255245';
-        if ($MOBILE_NO != '' && $Type != '') {
-            $SMSFormate = SmsFormat::findOne(['vSmsFormatType' => $Type]);
-            $SMSContentArray = array('#OTP#', '#NAME#', '#LINK#', '#GENDER#');
-            $SMSMessage = $SMSFormate->vSmsMessage;
-            foreach ($SMSContentArray as $Key => $Value) {
-                $Array_Key = str_replace('#', '', $Value);
-                if (array_key_exists($Array_Key, $DBInfo)) {
-                    $SMSMessage = str_replace($Value, $DBInfo[$Array_Key], $SMSMessage);
-                }
-            }
+        if ($CODE != '' && $MOBILE_NO != '') {
             $UserName = "kotp-parsley"; //use your sms api username
             $Password = "kaptrans";  //enter your password
             $DestinationMobileNo = $MOBILE_NO;//reciever 10 digit number (use comma (,) for multiple users. eg: 9999999999,8888888888,7777777777)
-            #$Message = "Your OTP is " . $CODE . " for  completing your registration on Kande-Pohe.com. Code is valid only for 15 minutes. Team Kande Pohe Marathi Matrimony.";//sms content
+            $Message = "Your OTP is " . $CODE . " for  completing your registration on Kande-Pohe.com. Code is valid only for 15 minutes. Team Kande Pohe Marathi Matrimony.";//sms content
             $SenderId = 'KPMATR';//use your sms api sender id
             #$sms_url = sprintf("http://123.63.33.43/blank/sms/user/urlsmstemp.php?username=XXXXXX&pass=XXXXX&senderid=XXXXX&dest_mobileno=XXXXX&message=XXXXXX&mtype=UNI&response=Y", $username, $pass , $senderid, $dest_mobileno, $message, urlencode($sms) );
             $sms_url = '';
@@ -38,7 +28,7 @@ class SmsHelper
             $sms_url .= "&dlr=1";
             $sms_url .= "&destination=" . $DestinationMobileNo;
             $sms_url .= "&source=" . $SenderId;
-            $sms_url .= "&message=" . urlencode($SMSMessage);
+            $sms_url .= "&message=" . urlencode($Message);
             #echo $sms_url;
             //http://103.16.101.52:8080/sendsms/bulksms?username=kotp-parsley&password=kaptrans&type=0&dlr=1&destination=8000255245&source=KPMATR&message=test
             $SMSResponse = SmsHelper::openurl($sms_url);
