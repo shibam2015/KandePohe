@@ -176,6 +176,20 @@ class UserController extends Controller
                 $RecentlyJoinedMembers = User::findRecentJoinedUserList($Gender, 4);
                 //echo $RecentlyJoinedMembers->createCommand()->sql;exit;
                 list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, $id, 3);
+
+                #Shortlist User
+                $ShortList = UserRequestOp::getShortList($id, 0, 3);
+                foreach ($ShortList as $Key => $Value) {
+                    #CommonHelper::pr($Value);exit;
+                    if ($Value->from_user_id == $id) {
+                        $ShortListInfo[$Key] = $Value->toUserInfo;
+                    } else {
+                        $ShortListInfo[$Key] = $Value->fromUserInfo;
+                    }
+                }
+                #CommonHelper::pr($ModelInfo);
+                #CommonHelper::pr($ShortList);exit;
+
                 return $this->render('dashboard',[
                     'model' => $model,
                     'VER_ARRAY' => $VER_ARRAY,
@@ -183,6 +197,7 @@ class UserController extends Controller
                     'RecentlyJoinedMembers' => $RecentlyJoinedMembers,
                     'ProfileViedByMembers' => $ProfileViedByMembers,
                     'SimilarProfile' => $SimilarProfile,
+                    'ShortListUser' => $ShortListInfo,
                 ]);
             }else{
                 return $this->redirect(Yii::getAlias('@web'));

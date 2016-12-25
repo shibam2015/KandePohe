@@ -637,38 +637,30 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 <?php } ?>
                                 <!-- Short list block -->
                                 <div class="row">
+                                    <?php if (count($ShortListUser) > 0) { ?>
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                                         <div class="bg-white mrg-tp-20">
                                             <h3 class="heading-xs">Your Profile Shortlisted By</h3>
                                             <ul class="list-unstyled ad-prof mrg-tp-20">
-                                                <li><span
-                                                        class="imgarea"><?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?></span> <span
-                                                        class="img-desc"> <a title="KP123WERT" class="name" href="#">KP123WERT</a>
-                        <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                        </span>
+                                                <?php foreach ($ShortListUser as $KeyShort => $ValueShort) { ?>
+                                                    <li>
+                                                    <span class="imgarea">
+                                                        <?= Html::img(CommonHelper::getPhotos('USER', $ValueShort->id, "75" . $ValueShort->propic, 120, '', 'Yes'), ['alt' => $ValueShort->FullName, 'style' => '    width: 65px !important;']); ?>
+                                                    </span>
+                                                    <span class="img-desc">
+                                                        <a title="KP123WERT" class="name"
+                                                           href="#"><?= $ValueShort['Registration_Number'] ?></a>
+                                                        <p><?= CommonHelper::getAge($ValueShort->DOB); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->height->vName, 'text')); ?> <?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->religionName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->communityName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->workingAsName->vWorkingAsName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->cityName->vCityName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->countryName->vCountryName, 'text')); ?></p>
+                                                    </span>
 
-                                                    <div class="clearfix"></div>
-                                                </li>
-                                                <li><span
-                                                        class="imgarea"><?= Html::img('@web/images/profile2.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?></span> <span
-                                                        class="img-desc"> <a title="KP123WERT" class="name" href="#">KP123WERT</a>
-                        <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                        </span>
-
-                                                    <div class="clearfix"></div>
-                                                </li>
-                                                <li><span
-                                                        class="imgarea"><?= Html::img('@web/images/profile3.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?></span> <span
-                                                        class="img-desc"> <a title="KP123WERT" class="name" href="#">KP123WERT</a>
-                        <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                        </span>
-
-                                                    <div class="clearfix"></div>
-                                                </li>
+                                                        <div class="clearfix"></div>
+                                                    </li>
+                                                <?php } ?>
                                             </ul>
                                             <div class="text-right"><a title="View All" href="#">View All &gt;</a></div>
                                         </div>
                                     </div>
+                                    <?php } ?>
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                                         <div class="bg-white mrg-tp-20">
                                             <h3 class="heading-xs">Your Phone No. Viewed By</h3>
