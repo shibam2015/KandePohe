@@ -58,6 +58,7 @@ return [
     'timePinValidate' => 15,
     'resetPasswordWrongEmailIdMessage' => 'This email ID is not registered at Kande-Pohe.com. Please contact administrator to reset your password',
     'ref' => ['recently_joined' => 'recently_joined', 'you_shortlisted_by' => 'you_shortlisted_by'],
+    'pageArray' => [1 => 'site/basic-details', 2 => 'site/education-occupation', 3 => 'site/life-style', 4 => 'site/about-family', 5 => 'site/about-yourself', 6 => 'user/photos', 7 => 'site/verification'],
     'searchListInCorrectErrorMessage' => 'You are trying to access invalid URL.',
     'firstPhotoPagePopup' => '<strong><h3 class="text-success">Congratulations!</h3> <br>Your profile has been created.</strong><br><br> Now upload photos and get more visitors to your profile.',
 ];

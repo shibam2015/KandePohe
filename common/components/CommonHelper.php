@@ -8,6 +8,7 @@ use common\models\otherlibraries\Compressimage;
 use common\models\otherlibraries\Getextension;
 use common\models\otherlibraries\ImageResize;
 use common\models\User;
+use yii\helpers\Url;
 use Yii;
 class CommonHelper {
 
@@ -862,6 +863,19 @@ class CommonHelper {
         return date('Y-m-d H:i:s');
     }
 
+    public static function checkVerification()
+    {
+        if (Yii::$app->user->identity->eEmailVerifiedStatus != 'Yes' && Yii::$app->user->identity->ePhoneVerifiedStatus != 'Yes') {
+            $TempArray = explode(",", Yii::$app->user->identity->completed_step);
+            if ((max($TempArray)) <= 7) {
+                $URLPage = Yii::$app->params['pageArray'][(max($TempArray))];
+                return Yii::$app->response->redirect(Url::to([$URLPage]));
+            } else {
+                return Yii::$app->response->redirect(Url::to(['site/verification']));
+            }
+        }
+    }
+
     public function getReligion()
     {
         $religion = \common\models\Religion::find()->all();
@@ -1117,7 +1131,6 @@ class CommonHelper {
 
         return $string;
     }
-
 
     /**
      * Function Name: getLatLong()

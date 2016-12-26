@@ -141,6 +141,7 @@ class UserController extends Controller
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+        CommonHelper::checkVerification();
         $id = Yii::$app->user->identity->id;
         $model = User::find()->joinWith([countryName, stateName, cityName, height, maritalStatusName, talukaName, districtName, gotraName, subCommunityName, communityName, religionName, educationLevelName, communityName, workingWithName, workingAsName, dietName, fatherStatus])->where(['id' => $id])->one();
         $USER_PHOTO_MODEL = new  UserPhotos();
@@ -167,6 +168,7 @@ class UserController extends Controller
         if (!Yii::$app->user->isGuest) {
             $id = Yii::$app->user->identity->id;
             if($model = User::findOne($id)){
+                CommonHelper::checkVerification();
                 $model->scenario = User::SCENARIO_REGISTER6;
                 $VER_ARRAY = array();
                 $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
