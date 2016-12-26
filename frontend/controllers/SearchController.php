@@ -151,7 +151,7 @@ class SearchController extends Controller
                         $TotalRecords = count(UserRequestOp::getShortList($id, 0));
                         $ShortList = UserRequestOp::getShortList($id, $Offset, $Limit);
                         #CommonHelper::pr($Model);exit;
-                        $UserPhotoModel = new UserPhotos();
+                        #$UserPhotoModel = new UserPhotos();
                         $Photos = array();
                         if (count($TotalRecords)) {
                             foreach ($ShortList as $Key => $Value) {
@@ -162,29 +162,17 @@ class SearchController extends Controller
                                     $UserTempId = $Value->from_user_id;
                                     $Model[$Key] = $Value->fromUserInfo;
                                 }
-                                $PhotoList = $UserPhotoModel->findByUserId($UserTempId);
-                                #CommonHelper::pr($PhotoList);exit;
-                                if (count($PhotoList)) {
-                                    $Photos[$UserTempId] = $PhotoList;
-                                } else {
-                                    $Photos[$UserTempId] = CommonHelper::getUserDefaultPhoto();
-                                }
+                                $Photos[$UserTempId] = $this->getPhotoList($UserTempId);
                             }
                         }
                     } else {
                         $SearchStatus = 1;
                         $TotalRecords = count(User::searchBasic($WHERE, 0));
                         $Model = User::searchBasic($WHERE, $Offset, $Limit);
-                        $UserPhotoModel = new UserPhotos();
-                        $Photos = array();
+                        #$Photos = array();
                         if (count($Model)) {
                             foreach ($Model as $SK => $SV) {
-                                $PhotoList = $UserPhotoModel->findByUserId($SV->id);
-                                if (count($PhotoList)) {
-                                    $Photos[$SV->id] = $PhotoList;
-                                } else {
-                                    $Photos[$SV->id] = CommonHelper::getUserDefaultPhoto();
-                                }
+                                $Photos[$SV->id] = $this->getPhotoList($SV->id);
                             }
                         }
                     }
@@ -238,19 +226,12 @@ class SearchController extends Controller
                 $Page = 0;
                 $Offset = 0;
             }
-
             $TotalRecords = count(User::searchBasic($WHERE, 0));
             $Model = User::searchBasic($WHERE, $Offset, $Limit);
-            $UserPhotoModel = new UserPhotos();
             $Photos = array();
             if (count($Model)) {
                 foreach ($Model as $SK => $SV) {
-                    $PhotoList = $UserPhotoModel->findByUserId($SV->id);
-                    if (count($PhotoList)) {
-                        $Photos[$SV->id] = $PhotoList;
-                    } else {
-                        $Photos[$SV->id] = CommonHelper::getUserDefaultPhoto();
-                    }
+                    $Photos[$SV->id] = $this->getPhotoList($SV->id);
                 }
             }
             #$id = Yii::$app->user->identity->id;
@@ -278,6 +259,18 @@ class SearchController extends Controller
 
             ]
         );
+    }
+
+    public function getPhotoList($Id)
+    {
+        $UserPhotoModel = new UserPhotos();
+        $PhotoList = $UserPhotoModel->findByUserId($Id);
+        if (count($PhotoList)) {
+            $Photos = $PhotoList;
+        } else {
+            $Photos = CommonHelper::getUserDefaultPhoto();
+        }
+        return $Photos;
     }
 
     public function actionAdvancedSearch()
