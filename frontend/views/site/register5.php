@@ -9,7 +9,10 @@ use yii\helpers\ArrayHelper;
 <main>
   <div class="container-fluid">
     <div class="row no-gutter bg-dark">
-      <div class="col-md-3 col-sm-12">
+      <?php
+      echo $this->render('/layouts/parts/_leftsidebarregister.php', ['CurrentStep' => $CurrentStep]);
+      ?>
+      <!--<div class="col-md-3 col-sm-12">
         <div class="sidebar-nav">
           <div class="navbar navbar-default" role="navigation">
             <div class="navbar-header">
@@ -17,17 +20,16 @@ use yii\helpers\ArrayHelper;
               <span class="visible-xs navbar-brand">Sidebar menu</span> </div>
             <div class="navbar-collapse collapse sidebar-navbar-collapse">
               <ul class="nav navbar-nav">
-                <li class="step_done"><a href="<?=$HOME_URL_SITE?>basic-details">Basic Details</a></li>
-                <li class="step_done"><a href="<?=$HOME_URL_SITE?>education-occupation">Education &amp; Occupation</a></li>
-                <li class="step_done"><a href="<?=$HOME_URL_SITE?>life-style">Lifestyle &amp; Appearance</a></li>
-                <li class="step_done"><a href="<?=$HOME_URL_SITE?>about-family">Family</a></li>
+                <li class="step_done"><a href="<? /*=$HOME_URL_SITE*/ ?>basic-details">Basic Details</a></li>
+                <li class="step_done"><a href="<? /*=$HOME_URL_SITE*/ ?>education-occupation">Education &amp; Occupation</a></li>
+                <li class="step_done"><a href="<? /*=$HOME_URL_SITE*/ ?>life-style">Lifestyle &amp; Appearance</a></li>
+                <li class="step_done"><a href="<? /*=$HOME_URL_SITE*/ ?>about-family">Family</a></li>
                 <li class="active"><a href="javascript:void();">About Yourself</a></li>
               </ul>
             </div>
-            <!--/.nav-collapse -->
           </div>
         </div>
-      </div>
+      </div>-->
       <div class="col-sm-9">
         <div class="right-column"> <span class="welcome-note">
           <p><strong><?= $model->First_Name; ?> !</strong> One last thing… describe your self.</p>
@@ -137,11 +139,16 @@ use yii\helpers\ArrayHelper;
                        title="Mention Your Disability"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
                   </div>
                 </div>
-
                 <div class="row">
-                  <div class="col-sm-10 col-sm-offset-2">
-                    <?= Html::submitButton('create my profile', ['class' => 'btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left', 'name' => 'register5']) ?>
-                    <!--<a href="<?/*=$HOME_URL_SITE*/?>about-yourself" class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right">Skip</a>-->
+                  <div class="small-col">
+                    <div class="required1"></div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="form-cont">
+                      <div class="form-cont">
+                        <?= Html::submitButton('create my profile', ['class' => 'btn btn-primary mrg-tp-10', 'name' => 'register5']) ?>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <?php ActiveForm::end(); ?>

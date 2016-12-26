@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
   <div class="container-fluid">
     <div class="row no-gutter bg-dark">
     <?php
-      echo $this->render('/layouts/parts/_leftsidebarregister.php');
+    echo $this->render('/layouts/parts/_leftsidebarregister.php', ['CurrentStep' => $CurrentStep]);
     ?>
       <div class="col-md-9 col-sm-12">
         <div class="right-column"> <span class="welcome-note">
@@ -314,20 +314,22 @@ Koregaon Park',
                     <a href="#" data-toggle="tooltip" data-placement="right" title="Mention Your Area Name"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21','height' => 21,'alt' => 'help']); ?></a>
                   </div>
                 </div>
-
-
                 <div class="checkbox mrg-lt-30">
                   <input id="Remember" type="checkbox" name="User[cnb]" value="YES" <?php echo($model->cnb == 'YES') ? 'checked': '';?>>
                   <label for="Remember" class="control-label">Not particular about my partner’s community (Caste No Bar) </label>
                 </div>
-
                 <div class="row">
-                  <div class="col-sm-10 col-sm-offset-1">
-                    <?= Html::submitButton('CONTINUE', ['class' => 'btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left', 'name' => 'register1']) ?>
-                    <!-- <a href="<?/*=$HOME_URL_SITE*/?>life-style" class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right">Skip</a>-->
-                  </div>
+                    <div class="small-col">
+                        <div class="required1"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-cont">
+                            <div class="form-cont">
+                                <?= Html::submitButton('CONTINUE', ['class' => 'btn btn-primary mrg-tp-10 ', 'name' => 'register1']) ?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
                 <?php ActiveForm::end(); ?>
               </div>
             </div>

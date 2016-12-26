@@ -207,15 +207,9 @@ class UserController extends Controller
         }
     }
 
-    public function actionPhotos()
+    public function actionPhotos($ref = '')
     {
         if (!Yii::$app->user->isGuest) {
-            /*$id = Yii::$app->user->identity->id;
-            $USER_PHOTO_MODEL = new UserPhotos();
-            $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
-            return $this->render('photos', [
-                'model' => $USER_PHOTOS_LIST
-            ]);*/
             $id = Yii::$app->user->identity->id;
             $USER_PHOTO_MODEL = new UserPhotos();
             $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
@@ -223,10 +217,8 @@ class UserController extends Controller
                 $model->scenario = User::SCENARIO_REGISTER6;
                 $target_dir = Yii::getAlias('@web') . '/uploads/';
                 if (Yii::$app->request->post()) {
-                    #echo "<br> *** 1 ***";
                     $TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
                     if ($model->eEmailVerifiedStatus == 'No' && $model->pin_email_vaerification == '') {
-                        #echo "<br> *** 2 ***";
                         $PIN = CommonHelper::generateNumericUniqueToken(4);
                         $model->pin_email_vaerification = $PIN;
                         $model->pin_email_time = $TimeOut;
@@ -234,7 +226,6 @@ class UserController extends Controller
                         MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
                     }
                     if ($model->ePhoneVerifiedStatus == 'No' && $model->pin_phone_vaerification == 0) {
-                        #echo "<br> *** 3 ***";
                         $PIN_P = CommonHelper::generateNumericUniqueToken(4);
                         $model->pin_phone_vaerification = $PIN_P;
                         $model->pin_phone_time = $TimeOut;
@@ -254,11 +245,11 @@ class UserController extends Controller
                 }
                 if ($model->propic != '')
                     $model->propic = $target_dir . $model->propic;
-
                 return $this->render('photos', [
                     'model' => $USER_PHOTOS_LIST,
                     'model_user' => $model,
                     'USER_APPROVED' => \common\models\User::weightedCheck(10),
+                    'ref' => $ref
                 ]);
             } else {
                 return $this->redirect(Yii::getAlias('@web'));

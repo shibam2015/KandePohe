@@ -59,5 +59,6 @@ return [
     'resetPasswordWrongEmailIdMessage' => 'This email ID is not registered at Kande-Pohe.com. Please contact administrator to reset your password',
     'ref' => ['recently_joined' => 'recently_joined', 'you_shortlisted_by' => 'you_shortlisted_by'],
     'searchListInCorrectErrorMessage' => 'You are trying to access invalid URL.',
+    'firstPhotoPagePopup' => '<strong><h3 class="text-success">Congratulations!</h3> <br>Your profile has been created.</strong><br><br> Now upload photos and get more visitors to your profile.',
 ];
 

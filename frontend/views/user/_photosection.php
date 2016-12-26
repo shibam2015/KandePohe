@@ -3,153 +3,159 @@ use yii\widgets\Pjax;
 use yii\helpers\Url;
 
 ?>
-<!-- Modal Photo -->
-<div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <p class="text-center mrg-bt-10">
-            <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
-        </p>
+    <!-- Modal Photo -->
+    <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <p class="text-center mrg-bt-10">
+                <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+            </p>
 
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
-                </button>
-                <h2 class="text-center">My Photo Gallery</h2>
-            </div>
-            <div class="modal-body photo-gallery" id="photo-gallery">
-                <div>
-                    <?php Pjax::begin(['id' => 'my_gallery', 'enablePushState' => false]); ?>
-                    <div class="choose-photo mrg-tp-20 text-center">
-                        <div class="row" id="profile_list_popup">
-                            <i class="fa fa-spinner fa-spin pink"></i> Loading...
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h2 class="text-center">My Photo Gallery</h2>
+                </div>
+                <div class="modal-body photo-gallery" id="photo-gallery">
+                    <div>
+                        <?php Pjax::begin(['id' => 'my_gallery', 'enablePushState' => false]); ?>
+                        <div class="choose-photo mrg-tp-20 text-center">
+                            <div class="row" id="profile_list_popup">
+                                <i class="fa fa-spinner fa-spin pink"></i> Loading...
+                            </div>
                         </div>
+                        <?php Pjax::end(); ?>
                     </div>
-                    <?php Pjax::end(); ?>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="photodelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <p class="text-center mrg-bt-10">
-            <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
+    <div class="modal fade" id="photodelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <p class="text-center mrg-bt-10">
+                <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
 
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
-                        class="sr-only">Close</span></button>
-                <h2 class="text-center" id="model_heading"></h2>
-            </div>
-            <!-- Modal Body -->
-            <div class="modal-body photo-gallery">
-                <div class="choose-photo">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6 col-xs-6">
-                            <a href="javascript:void(0)"
-                               class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right yes"> Yes </a>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-6 ">
-                            <a href="javascript:void(0)" class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left"
-                               data-dismiss="modal"> No </a>
-                        </div>
-                    </div>
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span> <span
+                            class="sr-only">Close</span></button>
+                    <h2 class="text-center" id="model_heading"></h2>
                 </div>
-            </div>
-        </div>
-        <!-- Modal Footer -->
-    </div>
-</div>
-<div class="modal fade photo-kp-crop1 profilecropmodal" id="profilecrop" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel"
-     aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog"><!--modal-lg -->
-        <p class="text-center mrg-bt-10">
-            <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
-
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
-                        class="sr-only">Close</span></button>
-                <h2 class="text-center" id="model_heading"> Set Profile Photo</h2>
-            </div>
-            <!-- Modal Body -->
-            <div class="modal-body">
-                <div class="choose-photo">
-                    <div class="text-center " id="crop_loader">
-                        <i class="fa fa-spinner fa-spin pink"></i> Loading...
-                    </div>
-                    <!--<div class="row">
-                        <div class="col-sm-2">
-                            <img class="img-circle" id="avatar-edit-img" height="128" data-src="default.jpg"  data-holder-rendered="true" style="width: 140px; height: 140px;" src="default.jpg"/>
-                        </div>
-                    </div>-->
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div id="changePic" class="" style="">
-                                <form id="cropimage" method="post" enctype="multipart/form-data">
-                                    <!--<label>Photo For Cropping</label>-->
-                                    <input type="hidden" name="hdn-x1-axis" id="hdn-x1-axis" value=""/>
-                                    <input type="hidden" name="hdn-y1-axis" id="hdn-y1-axis" value=""/>
-                                    <input type="hidden" name="hdn-x2-axis" value="" id="hdn-x2-axis"/>
-                                    <input type="hidden" name="hdn-y2-axis" value="" id="hdn-y2-axis"/>
-                                    <input type="hidden" name="hdn-thumb-width" id="hdn-thumb-width" value=""/>
-                                    <input type="hidden" name="hdn-thumb-height" id="hdn-thumb-height" value=""/>
-                                    <input type="hidden" name="action" value="" id="action"/>
-                                    <input type="hidden" name="image_name" value="" id="image_name"/>
-                                    <input type="hidden" name="image_id" value="" id="image_id"/>
-
-                                    <div id='preview-avatar-profile' class="photo-kp-crop">
-                                        <img class="img-responsive preview" id='photov' width="" alt="">
-                                    </div>
-                                </form>
+                <!-- Modal Body -->
+                <div class="modal-body photo-gallery">
+                    <div class="choose-photo">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <a href="javascript:void(0)"
+                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right yes"> Yes </a>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 ">
+                                <a href="javascript:void(0)"
+                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left"
+                                   data-dismiss="modal"> No </a>
                             </div>
                         </div>
                     </div>
-                    <!-- Modal Footer -->
                 </div>
             </div>
-            <div class="modal-footer crop_save" style="display: none;">
-                <div class="row">
-                    <div class="col-md-4 col-sm-10 col-sm-offset-1">
-                        <button type="button" class="btn btn-primary mrg-tp-10 col-xs-12" data-dismiss="modal">Back
-                        </button>
-                    </div>
-                    <div class="col-md-4  col-sm-10 col-sm-offset-1 ">
-                        <button type="button" id="btn-crop" class="btn btn-primary mrg-tp-10 col-xs-12 crop-save-btn"
-                                disabled>Crop & Save
-                        </button>
+            <!-- Modal Footer -->
+        </div>
+    </div>
+    <div class="modal fade photo-kp-crop1 profilecropmodal" id="profilecrop" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel"
+         aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog"><!--modal-lg -->
+            <p class="text-center mrg-bt-10">
+                <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
+
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span> <span
+                            class="sr-only">Close</span></button>
+                    <h2 class="text-center" id="model_heading"> Set Profile Photo</h2>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <div class="choose-photo">
+                        <div class="text-center " id="crop_loader">
+                            <i class="fa fa-spinner fa-spin pink"></i> Loading...
+                        </div>
+                        <!--<div class="row">
+                            <div class="col-sm-2">
+                                <img class="img-circle" id="avatar-edit-img" height="128" data-src="default.jpg"  data-holder-rendered="true" style="width: 140px; height: 140px;" src="default.jpg"/>
+                            </div>
+                        </div>-->
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div id="changePic" class="" style="">
+                                    <form id="cropimage" method="post" enctype="multipart/form-data">
+                                        <!--<label>Photo For Cropping</label>-->
+                                        <input type="hidden" name="hdn-x1-axis" id="hdn-x1-axis" value=""/>
+                                        <input type="hidden" name="hdn-y1-axis" id="hdn-y1-axis" value=""/>
+                                        <input type="hidden" name="hdn-x2-axis" value="" id="hdn-x2-axis"/>
+                                        <input type="hidden" name="hdn-y2-axis" value="" id="hdn-y2-axis"/>
+                                        <input type="hidden" name="hdn-thumb-width" id="hdn-thumb-width" value=""/>
+                                        <input type="hidden" name="hdn-thumb-height" id="hdn-thumb-height" value=""/>
+                                        <input type="hidden" name="action" value="" id="action"/>
+                                        <input type="hidden" name="image_name" value="" id="image_name"/>
+                                        <input type="hidden" name="image_id" value="" id="image_id"/>
+
+                                        <div id='preview-avatar-profile' class="photo-kp-crop">
+                                            <img class="img-responsive preview" id='photov' width="" alt="">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal Footer -->
                     </div>
                 </div>
+                <div class="modal-footer crop_save" style="display: none;">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-10 col-sm-offset-1">
+                            <button type="button" class="btn btn-primary mrg-tp-10 col-xs-12" data-dismiss="modal">Back
+                            </button>
+                        </div>
+                        <div class="col-md-4  col-sm-10 col-sm-offset-1 ">
+                            <button type="button" id="btn-crop"
+                                    class="btn btn-primary mrg-tp-10 col-xs-12 crop-save-btn"
+                                    disabled>Crop & Save
+                            </button>
+                        </div>
+                    </div>
 
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="photoList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <p class="text-center mrg-bt-10">
-            <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
-        </p>
+    <div class="modal fade" id="photoList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <p class="text-center mrg-bt-10">
+                <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+            </p>
 
-        <div class="modal-content">
-            <div class="modal-header">
-                <!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
-                </button>-->
-                <h2 class="text-center"><?= Yii::$app->params['uploadPhotoListWait'] ?></h2>
-            </div>
-            <div class="modal-body" id="photoListDiv" style="margin-top: -35px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>-->
+                    <h2 class="text-center"><?= Yii::$app->params['uploadPhotoListWait'] ?></h2>
+                </div>
+                <div class="modal-body" id="photoListDiv" style="margin-top: -35px;">
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script language="javascript" type="text/javascript">
-    var userid = "<?=base64_encode(Yii::$app->user->identity->id)?>";
-</script>
+    <script language="javascript" type="text/javascript">
+        var userid = "<?=base64_encode(Yii::$app->user->identity->id)?>";
+    </script>
 <?php
 $this->registerJs('
         $(document).on("click",".file_browse_wrapper",function(e){
@@ -511,3 +517,43 @@ $this->registerJs("
         });
 ");
 ?>
+
+
+<?php
+if ($ref == 'first') { ?>
+    <div class="modal fade" id="first" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <p class="text-center mrg-bt-10">
+                <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+            </p>
+
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h2 class="text-center"><?= Yii::$app->params['titleInformation'] ?></h2>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="row">
+                        <?= Yii::$app->params['firstPhotoPagePopup'] ?>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <a href="javascript:void(0)" class="btn btn-primary mrg-tp-10"
+                               data-dismiss="modal"> Continue </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+    $this->registerJs('
+            $("#first").modal("toggle");
+            $("#first").on("hide.bs.modal", function () {
+                window.history.pushState("", "", "photos");
+            });
+    ');
+} ?>

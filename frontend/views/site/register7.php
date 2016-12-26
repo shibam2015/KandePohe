@@ -28,13 +28,13 @@ echo $this->render('/layouts/parts/_headerregister.php');
                             </h3>
                             <?php Pjax::begin(['id' => 'my_index_phone', 'enablePushState' => false]); ?>
                             <div id="phone_verification">
-                                Phone Verification Information Loading...
+                                <i class="fa fa-spinner fa-spin pink"></i> Phone Verification Information Loading...
                             </div>
                             <?php Pjax::end(); ?>
                             <p class="font20 mrg-tp-30"><strong>OR</strong></p>
                             <?php Pjax::begin(['id' => 'my_index_email', 'enablePushState' => false]); ?>
                             <div class="mrg-tp-30 mrg-bt-10" id="email_verification">
-                                Email Verification Information Loading...
+                                <i class="fa fa-spinner fa-spin pink"></i> Email Verification Information Loading...
                             </div>
                             <?php Pjax::end(); ?>
                             <div class="mrg-tp-30 mrg-bt-10">

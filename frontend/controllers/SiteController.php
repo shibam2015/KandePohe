@@ -374,7 +374,6 @@ class SiteController extends Controller
             }else{
                 #$this->redirect('index.php');
             }
-
         }else{
             #$this->redirect('index.php');
         }
@@ -383,22 +382,18 @@ class SiteController extends Controller
     public function actionBasicDetails($id='')
     {
         if (!Yii::$app->user->isGuest) {
-            #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
-            #   $id = base64_decode($id);
-
             if($model = User::findOne($id)){
-
                 $model->scenario = User::SCENARIO_REGISTER1;
                 if($model->load(Yii::$app->request->post())){
-                    //$model->save();
                     $model->completed_step = $model->setCompletedStep('2');
                     if($model->save()){
                         $this->redirect(['site/education-occupation']);
                     }
                 }
                 return $this->render('register1',[
-                    'model' => $model
+                    'model' => $model,
+                    'CurrentStep' => 2,
                 ]);
             }else{
                 return $this->redirect(Yii::getAlias('@web'));
@@ -412,22 +407,18 @@ class SiteController extends Controller
     public function actionEducationOccupation($id='')
     {
         if (!Yii::$app->user->isGuest) {
-            #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
-            #   $id = base64_decode($id);
-
             if($model = User::findOne($id)){
-
                 $model->scenario = User::SCENARIO_REGISTER2;
                 if($model->load(Yii::$app->request->post())){
                     $model->completed_step = $model->setCompletedStep('3');
                     if($model->save()){
-
                         $this->redirect(['site/life-style']);
                     }
                 }
                 return $this->render('register2',[
-                    'model' => $model
+                    'model' => $model,
+                    'CurrentStep' => 3,
                 ]);
 
             }else{
@@ -453,12 +444,12 @@ class SiteController extends Controller
                     #echo "<pre>"; print_r($model->scenario);exit;
                     $model->completed_step = $model->setCompletedStep('4');
                     if($model->save()){
-
                         $this->redirect(['site/about-family']);
                     }
                 }
                 return $this->render('register3',[
-                    'model' => $model
+                    'model' => $model,
+                    'CurrentStep' => 4,
                 ]);
 
             }else{
@@ -493,7 +484,8 @@ class SiteController extends Controller
                     }
                 }
                 return $this->render('register4',[
-                    'model' => $model
+                    'model' => $model,
+                    'CurrentStep' => 5,
                 ]);
 
             }else{
@@ -518,11 +510,17 @@ class SiteController extends Controller
                         $model->eStatusInOwnWord = 'Pending';
                     }
                     if($model->save()){
-                        $this->redirect(['user/photos']);
+                        $PhotoSection = \common\models\User::weightedCheck(7);
+                        if ($PhotoSection || Yii::$app->user->identity->propic != '') {
+                            $this->redirect(['user/photos']);
+                        } else {
+                            $this->redirect(['user/photos', 'ref' => 'first']);
+                        }
                     }
                 }
                 return $this->render('register5',[
-                    'model' => $model
+                    'model' => $model,
+                    'CurrentStep' => 6,
                 ]);
             }else{
                 return $this->redirect(Yii::getAlias('@web'));
