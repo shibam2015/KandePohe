@@ -661,7 +661,9 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                 <?php } ?>
                                             </ul>
                                             <div class="text-right">
+                                                <?php if (count($ShortListUser) > 2) { ?>
                                                 <?= html::a('View All &gt;', ['search/basic-search', 'ref' => Yii::$app->params['ref']['you_shortlisted_by']], ['data-method' => 'post', 'class' => 'pull-right', 'title' => 'View All']) ?>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                     </div>
