@@ -5,7 +5,6 @@ $LifeStyleInfo = \common\models\User::weightedCheck(4);
 $FamilyInfo = \common\models\User::weightedCheck(5);
 $AboutYourSelfInfo = \common\models\User::weightedCheck(6);
 
-#echo "==".$CurrentStep;exit;
 ?>
 <div class="col-md-3  col-sm-12">
   <div class="sidebar-nav">
@@ -16,21 +15,29 @@ $AboutYourSelfInfo = \common\models\User::weightedCheck(6);
       <div class="navbar-collapse collapse sidebar-navbar-collapse">
         <ul class="nav navbar-nav">
           <li class="<?= ($CurrentStep == 2) ? 'active' : '' ?> <?= ($BasicInfo) ? 'step_done' : '' ?>">
-            <a href="javascript:void()">
+            <a href="<?= ($CurrentStep > 2) ? 'basic-details' : 'javascript:void()' ?>">
               Basic Details
             </a>
           </li>
           <li class="<?= ($CurrentStep == 3) ? 'active' : '' ?> <?= ($EducationInfo) ? 'step_done' : '' ?>">
-            <a href="javascript:void()">Education &amp; Occupation</a>
+            <a href="<?= ($CurrentStep > 3) ? 'education-occupation' : 'javascript:void()' ?>">
+              Education &amp; Occupation
+            </a>
           </li>
           <li class="<?= ($CurrentStep == 4) ? 'active' : '' ?> <?= ($LifeStyleInfo) ? 'step_done' : '' ?>">
-            <a href="javascript:void()">Lifestyle &amp; Appearance</a>
+            <a href="<?= ($CurrentStep > 4) ? 'life-style' : 'javascript:void()' ?>">
+              Lifestyle &amp; Appearance
+            </a>
           </li>
           <li class="<?= ($CurrentStep == 5) ? 'active' : '' ?> <?= ($FamilyInfo) ? 'step_done' : '' ?>">
-            <a href="javascript:void()">Family</a>
+            <a href="<?= ($CurrentStep > 5) ? 'about-family' : 'javascript:void()' ?>">
+              Family
+            </a>
           </li>
           <li class="<?= ($CurrentStep == 6) ? 'active' : '' ?> <?= ($AboutYourSelfInfo) ? 'step_done' : '' ?>">
-            <a href="javascript:void()">About Yourself</a>
+            <a href="<?= ($CurrentStep > 6) ? 'about-yourself' : 'javascript:void()' ?>">
+              About Yourself
+            </a>
           </li>
         </ul>
       </div>
