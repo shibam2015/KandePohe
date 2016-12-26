@@ -89,6 +89,7 @@ class SearchController extends Controller
         $params = $request->bodyParams;
         #CommonHelper::pr($params);exit;
         //http://localhost/KandePohe/search/basic-search?search-type=basic&profile-for=FEMALE&Community=1&sub-community=1&agerange=19&height=2
+        $WHERE = '';
         if (Yii::$app->user->isGuest) {
             $TempModel = new User();
         } else {
@@ -127,6 +128,66 @@ class SearchController extends Controller
                         $Gender = "MALE";
                     }
                     $session->set('Profile_for', $Gender);
+                    if ($Gender == '') {
+                        if ($TempModel->Gender == 'MALE') {
+                            $WHERE .= " AND user.Gender = 'FEMALE'";
+                        } else if ($TempModel->Gender == 'FEMALE') {
+                            $WHERE .= " AND user.Gender = 'MALE'";
+                        }
+                    }
+                    $WHERE .= ($Gender != '') ? ' AND user.Gender = "' . $Gender . '" ' : '';
+                    $Limit = Yii::$app->params['searchingLimit'];
+                    $Offset = (Yii::$app->request->get('Offset') == 0) ? 0 : Yii::$app->request->get('Offset');
+                    $Page = (Yii::$app->request->get('page') == 0 || Yii::$app->request->get('page') == '') ? 0 : Yii::$app->request->get('page');
+                    if ($Page) {
+                        $Page = $Page - 1;
+                        $Offset = $Limit * $Page;
+                    } else {
+                        $Page = 0;
+                        $Offset = 0;
+                    }
+                    if ($ref != 'recently_joined') {
+                        $SearchStatus = 0;
+                        $TotalRecords = count(UserRequestOp::getShortList($id, 0));
+                        $ShortList = UserRequestOp::getShortList($id, $Offset, $Limit);
+                        #CommonHelper::pr($Model);exit;
+                        $UserPhotoModel = new UserPhotos();
+                        $Photos = array();
+                        if (count($TotalRecords)) {
+                            foreach ($ShortList as $Key => $Value) {
+                                if ($Value->from_user_id == $id) {
+                                    $Model[$Key] = $Value->toUserInfo;
+                                    $UserTempId = $Value->to_user_id;
+                                } else {
+                                    $UserTempId = $Value->from_user_id;
+                                    $Model[$Key] = $Value->fromUserInfo;
+                                }
+                                $PhotoList = $UserPhotoModel->findByUserId($UserTempId);
+                                #CommonHelper::pr($PhotoList);exit;
+                                if (count($PhotoList)) {
+                                    $Photos[$UserTempId] = $PhotoList;
+                                } else {
+                                    $Photos[$UserTempId] = CommonHelper::getUserDefaultPhoto();
+                                }
+                            }
+                        }
+                    } else {
+                        $SearchStatus = 1;
+                        $TotalRecords = count(User::searchBasic($WHERE, 0));
+                        $Model = User::searchBasic($WHERE, $Offset, $Limit);
+                        $UserPhotoModel = new UserPhotos();
+                        $Photos = array();
+                        if (count($Model)) {
+                            foreach ($Model as $SK => $SV) {
+                                $PhotoList = $UserPhotoModel->findByUserId($SV->id);
+                                if (count($PhotoList)) {
+                                    $Photos[$SV->id] = $PhotoList;
+                                } else {
+                                    $Photos[$SV->id] = CommonHelper::getUserDefaultPhoto();
+                                }
+                            }
+                        }
+                    }
                 } else {
                     return $this->render('searchlist',
                         [
@@ -146,62 +207,67 @@ class SearchController extends Controller
                 $AgeTo = $session->get('AgeTo');
             }
         }
-        $WHERE = '';
-        if ($Gender == '') {
-            if ($TempModel->Gender == 'MALE') {
-                $WHERE .= " AND user.Gender = 'FEMALE'";
-            } else if ($TempModel->Gender == 'FEMALE') {
-                $WHERE .= " AND user.Gender = 'MALE'";
-            }
-        }
-        $WHERE .= ($Gender != '') ? ' AND user.Gender = "' . $Gender . '" ' : '';
+        if ($ref == '') {
 
-        $WHERE .= ($Community != '') ? ' AND user.iCommunity_ID = "' . $Community . '" ' : '';
-        $WHERE .= ($SubCommunity != '') ? ' AND user.iSubCommunity_ID = "' . $SubCommunity . '" ' : '';
-        $WHERE .= ($Height != '') ? ' AND user.iHeightID = "' . $Height . '" ' : '';
-        $WHERE .= ($ReligionID != '') ? ' AND user.iReligion_ID = "' . $ReligionID . '" ' : '';
-        $WHERE .= ($MaritalStatusID != '') ? ' AND user.Marital_Status = "' . $MaritalStatusID . '" ' : '';
-        $WHERE .= ($AgeFrom != '') ? ' AND ( (user.Age >= "' . $AgeFrom . '") OR (TIMESTAMPDIFF(YEAR, user.DOB, CURDATE()) >= "' . $AgeFrom . '"))' : '';
-        $WHERE .= ($AgeTo != '') ? ' AND ((user.Age <= "' . $AgeTo . '") OR (TIMESTAMPDIFF(YEAR, user.DOB, CURDATE()) <= "' . $AgeTo . '")) ' : '';
-        $WHERE .= $WhereId;
-        $Limit = Yii::$app->params['searchingLimit'];
-        $Offset = (Yii::$app->request->get('Offset') == 0) ? 0 : Yii::$app->request->get('Offset');
-        $Page = (Yii::$app->request->get('page') == 0 || Yii::$app->request->get('page') == '') ? 0 : Yii::$app->request->get('page');
-        if ($Page) {
-            $Page = $Page - 1;
-            $Offset = $Limit * $Page;
-        } else {
-            $Page = 0;
-            $Offset = 0;
-        }
-
-        $TotalRecords = count(User::searchBasic($WHERE, 0));
-        $Model = User::searchBasic($WHERE, $Offset, $Limit);
-        $UserPhotoModel = new UserPhotos();
-        $Photos = array();
-        if (count($Model)) {
-            foreach ($Model as $SK => $SV) {
-                $PhotoList = $UserPhotoModel->findByUserId($SV->id);
-                if (count($PhotoList)) {
-                    $Photos[$SV->id] = $PhotoList;
-                } else {
-                    $Photos[$SV->id] = CommonHelper::getUserDefaultPhoto();
+            $SearchStatus = 1;
+            #$WHERE = '';
+            if ($Gender == '') {
+                if ($TempModel->Gender == 'MALE') {
+                    $WHERE .= " AND user.Gender = 'FEMALE'";
+                } else if ($TempModel->Gender == 'FEMALE') {
+                    $WHERE .= " AND user.Gender = 'MALE'";
                 }
             }
+            $WHERE .= ($Gender != '') ? ' AND user.Gender = "' . $Gender . '" ' : '';
+
+            $WHERE .= ($Community != '') ? ' AND user.iCommunity_ID = "' . $Community . '" ' : '';
+            $WHERE .= ($SubCommunity != '') ? ' AND user.iSubCommunity_ID = "' . $SubCommunity . '" ' : '';
+            $WHERE .= ($Height != '') ? ' AND user.iHeightID = "' . $Height . '" ' : '';
+            $WHERE .= ($ReligionID != '') ? ' AND user.iReligion_ID = "' . $ReligionID . '" ' : '';
+            $WHERE .= ($MaritalStatusID != '') ? ' AND user.Marital_Status = "' . $MaritalStatusID . '" ' : '';
+            $WHERE .= ($AgeFrom != '') ? ' AND ( (user.Age >= "' . $AgeFrom . '") OR (TIMESTAMPDIFF(YEAR, user.DOB, CURDATE()) >= "' . $AgeFrom . '"))' : '';
+            $WHERE .= ($AgeTo != '') ? ' AND ((user.Age <= "' . $AgeTo . '") OR (TIMESTAMPDIFF(YEAR, user.DOB, CURDATE()) <= "' . $AgeTo . '")) ' : '';
+            $WHERE .= $WhereId;
+            $Limit = Yii::$app->params['searchingLimit'];
+            $Offset = (Yii::$app->request->get('Offset') == 0) ? 0 : Yii::$app->request->get('Offset');
+            $Page = (Yii::$app->request->get('page') == 0 || Yii::$app->request->get('page') == '') ? 0 : Yii::$app->request->get('page');
+            if ($Page) {
+                $Page = $Page - 1;
+                $Offset = $Limit * $Page;
+            } else {
+                $Page = 0;
+                $Offset = 0;
+            }
+
+            $TotalRecords = count(User::searchBasic($WHERE, 0));
+            $Model = User::searchBasic($WHERE, $Offset, $Limit);
+            $UserPhotoModel = new UserPhotos();
+            $Photos = array();
+            if (count($Model)) {
+                foreach ($Model as $SK => $SV) {
+                    $PhotoList = $UserPhotoModel->findByUserId($SV->id);
+                    if (count($PhotoList)) {
+                        $Photos[$SV->id] = $PhotoList;
+                    } else {
+                        $Photos[$SV->id] = CommonHelper::getUserDefaultPhoto();
+                    }
+                }
+            }
+            #$id = Yii::$app->user->identity->id;
+            #$TempModel = ($id != null) ? User::findOne($id) : array();
+            $TempModel->iCommunity_ID = $Community;
+            $TempModel->iSubCommunity_ID = $SubCommunity;
+            $TempModel->iReligion_ID = $ReligionID;
+            $TempModel->Marital_Status = $MaritalStatusID;
+            $TempModel->iHeightID = $Height;
+            $TempModel->Profile_for = $Gender;
+            $TempModel->AgeFrom = $AgeFrom;
+            $TempModel->AgeTo = $AgeTo;
         }
-        #$id = Yii::$app->user->identity->id;
-        #$TempModel = ($id != null) ? User::findOne($id) : array();
-        $TempModel->iCommunity_ID = $Community;
-        $TempModel->iSubCommunity_ID = $SubCommunity;
-        $TempModel->iReligion_ID = $ReligionID;
-        $TempModel->Marital_Status = $MaritalStatusID;
-        $TempModel->iHeightID = $Height;
-        $TempModel->Profile_for = $Gender;
-        $TempModel->AgeFrom = $AgeFrom;
-        $TempModel->AgeTo = $AgeTo;
         return $this->render('searchlist',
             [
                 'ErrorStatus' => 0,
+                'SearchStatus' => $SearchStatus,
                 'Model' => $Model,
                 'TotalRecords' => $TotalRecords,
                 'Photos' => $Photos,
@@ -348,7 +414,8 @@ class SearchController extends Controller
             $Page = 0;
             $Offset = 0;
         }
-        $ShortList = UserRequestOp::getShortList($Id, $Offset, $Limit);
+        $ShortList = UserRequestOp::getMyShortListed($Id, $Offset, $Limit);
+        #$ShortList = UserRequestOp::getShortList($Id, $Offset, $Limit);
         foreach ($ShortList as $Key => $Value) {
             #CommonHelper::pr($Value);exit;
             if ($Value->from_user_id == $Id) {

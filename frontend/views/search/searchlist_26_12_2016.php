@@ -53,7 +53,6 @@ $M1 = array();
                         <div class="col-md-12">
                             <div class="sidebar1">
                                 <div class="mrg-tp-20">
-                                    <?php if ($SearchStatus) { ?>
                                     <div class="dropdown drp-lg">
                                         <button class="btn gray-filter dropdown-toggle" id="filter-toggle" type="button"
                                                 aria-haspopup="true" aria-expanded="true"> Filters <i
@@ -274,7 +273,6 @@ $M1 = array();
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
-                                    <?php } ?>
                                 </div>
                                 <?php if ($TotalRecords == 0) { ?>
                                     <div class="white-section listing border-sharp mrg-tp-10">
@@ -320,6 +318,7 @@ $M1 = array();
                                                                     <?php
                                                                     if (is_array($Photos[$SV->id])) {
                                                                         foreach ($Photos[$SV->id] as $K => $V) {
+                                                                            #CommonHelper::pr($V);
                                                                             $SELECTED = '';
                                                                             $Photo = Yii::$app->params['thumbnailPrefix'] . '120_' . $V->File_Name;
                                                                             $Yes = 'No';

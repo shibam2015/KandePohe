@@ -648,8 +648,11 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                         <?= Html::img(CommonHelper::getPhotos('USER', $ValueShort->id, "75" . $ValueShort->propic, 120, '', 'Yes'), ['alt' => $ValueShort->FullName, 'style' => '    width: 65px !important;']); ?>
                                                     </span>
                                                     <span class="img-desc">
-                                                        <a title="KP123WERT" class="name"
-                                                           href="#"><?= $ValueShort['Registration_Number'] ?></a>
+                                                        <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $ValueShort->Registration_Number ?>&source=shortlisted_by"
+                                                           class="name"
+                                                           title="<?= $ValueShort->Registration_Number ?>">
+                                                            <?= $ValueShort->Registration_Number ?>
+                                                        </a>
                                                         <p><?= CommonHelper::getAge($ValueShort->DOB); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->height->vName, 'text')); ?> <?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->religionName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->communityName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->workingAsName->vWorkingAsName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->cityName->vCityName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->countryName->vCountryName, 'text')); ?></p>
                                                     </span>
 
@@ -657,7 +660,9 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     </li>
                                                 <?php } ?>
                                             </ul>
-                                            <div class="text-right"><a title="View All" href="#">View All &gt;</a></div>
+                                            <div class="text-right">
+                                                <?= html::a('View All &gt;', ['search/basic-search', 'ref' => Yii::$app->params['ref']['you_shortlisted_by']], ['data-method' => 'post', 'class' => 'pull-right', 'title' => 'View All']) ?>
+                                            </div>
                                         </div>
                                     </div>
                                     <?php } ?>
