@@ -1511,7 +1511,7 @@ class UserController extends Controller
                     $model->eEmailVerifiedStatus = 'No';
                     $model->pin_email_time = $TimeOut;
                     if ($model->save()) {
-                        $MAIL_DATA = array("EMAIL" => $NewEmailID, "EMAIL_TO" => $NewEmailID, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN_P);
+                        $MAIL_DATA = array("EMAIL" => $NewEmailID, "EMAIL_TO" => $NewEmailID, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN_P, "MINUTES" => Yii::$app->params['timePinValidate']);
                         $MAIL_STATUS = MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
                         $flag = true;
                         $show = false;
@@ -1551,7 +1551,7 @@ class UserController extends Controller
             $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
             $model->eEmailVerifiedStatus = 'No';
             if ($model->save()) {
-                $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN_P);
+                $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN_P, "MINUTES" => Yii::$app->params['timePinValidate']);
                 $MAIL_STATUS = MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
                 $popup = true;
                 #$model = User::findOne($id);
