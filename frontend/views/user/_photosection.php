@@ -106,9 +106,9 @@ use yii\helpers\Url;
                                         <input type="hidden" name="image_name" value="" id="image_name"/>
                                         <input type="hidden" name="image_id" value="" id="image_id"/>
 
-                                        <div id='preview-avatar-profile' class="photo-kp-crop">
-                                            <img class="img-responsive preview" id='photov' width="" alt="">
-                                        </div>
+                                        <!--<div id='preview-avatar-profile' class="photo-kp-crop">-->
+                                        <img class="img-responsive preview" id='photov' width="" alt="">
+                                        <!--</div>-->
                                     </form>
                                 </div>
                             </div>
@@ -370,6 +370,7 @@ $this->registerJs('
 
 #CROPPING
 $this->registerJs("
+var ImagePath ='';
     $(function () {
     $(document).on('click','.set_profile_photo',function(e){
         //$('.set_profile_photo').click(function(){e
@@ -378,6 +379,7 @@ $this->registerJs("
                 backdrop: 'static',
                 keyboard: false
             });
+            $('#crop_loader').show();
             $('#crop_loader').show();
             $('.crop_save').hide();
             $('#photov').attr('src','');
@@ -399,6 +401,7 @@ $this->registerJs("
                             $('#crop_loader').hide();
                             $('#photov').attr('src',DataObject.PhotoCrop);
                             $('#image_name').val(DataObject.ImageName);
+                            ImagePath = DataObject.ImagePath;
                             $('#image_id').val(imageid);
                             $('.crop_save').show();
                             $('img#photov').imgAreaSelect({
@@ -407,7 +410,7 @@ $this->registerJs("
                                 fadeSpeed: 200,
                                 show : true,
                                 maxWidth: 250, maxHeight: 250,
-                                minWidth: 200, minHeight: 200,
+                                minWidth: 150, minHeight: 150,
                                 aspectRatio: '1:1',
                                 onSelectEnd: getSizes,
                                // parent: '.photo-kp-crop'
@@ -425,9 +428,21 @@ $this->registerJs("
         }
     )
     $('#profilecrop').on('hide.bs.modal', function () {
-    $('img#photov').imgAreaSelect({remove:true});
-            $('.imgareaselect-selection,.imgareaselect-border1,.imgareaselect-border2,.imgareaselect-border3,.imgareaselect-border4,.imgareaselect-border2,.imgareaselect-outer').css('display', 'none');
-
+        $('img#photov').imgAreaSelect({remove:true});
+        $('.imgareaselect-selection,.imgareaselect-border1,.imgareaselect-border2,.imgareaselect-border3,.imgareaselect-border4,.imgareaselect-border2,.imgareaselect-outer').css('display', 'none');
+        $.ajax({
+                        url: 'photo-delete',
+                        type: 'POST',
+                        data: {
+                            ImagePath : ImagePath,
+                        },
+                        cache: false,
+                        success: function (data, textStatus, jqXHR) {
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            notificationPopup('E', 'Something went wrong. Please try again !', 'Error');
+                        }
+            });
     });
 
         $(document).on('click','#btn-crop',function(e){

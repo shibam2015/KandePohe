@@ -2328,7 +2328,7 @@ class UserController extends Controller
             $width, $height, $orig_width, $orig_height);
         imagejpeg($image_p, $ProfilePhotoPath . $ActualImageName, 90);
         $ProfilePhotoURL = CommonHelper::getUserUploadFolder(4, $Id);
-        $return = array('PhotoCrop' => $ProfilePhotoURL . $ActualImageName . '?' . time(), 'ImageName' => $ActualImageName);
+        $return = array('PhotoCrop' => $ProfilePhotoURL . $ActualImageName . '?' . time(), 'ImageName' => $ActualImageName, 'ImagePath' => $ProfilePhotoPath . $ActualImageName);
         return json_encode($return);
     }
 
@@ -2425,6 +2425,11 @@ class UserController extends Controller
         return $this->render('vphoto',
             ['model' => 11]
         );
+    }
+
+    public function actionPhotoDelete()
+    {
+        unlink(Yii::$app->request->post('ImagePath'));
     }
 }
 
