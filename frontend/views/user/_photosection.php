@@ -404,6 +404,7 @@ var ImagePath ='';
                             ImagePath = DataObject.ImagePath;
                             $('#image_id').val(imageid);
                             $('.crop_save').show();
+                            setTimeout(function(){
                             $('img#photov').imgAreaSelect({
                                 x1 : 0, y1 : 0, x2 : 150, y2: 150,
                                 handles: true,
@@ -420,6 +421,7 @@ var ImagePath ='';
                                   $(this).dialog('close');
                                 },
                             });
+                            }, 1000);
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             notificationPopup('E', 'Something went wrong. Please try again !', 'Error');
