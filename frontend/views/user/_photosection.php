@@ -404,9 +404,9 @@ $this->registerJs("
                             $('img#photov').imgAreaSelect({
                                 x1 : 0, y1 : 0, x2 : 150, y2: 150,
                                 handles: true,
-                                //fadeSpeed: 200,
-                                //show : true,
-                                //maxWidth: 200, maxHeight: 200,
+                                fadeSpeed: 200,
+                                show : true,
+                                maxWidth: 250, maxHeight: 250,
                                 minWidth: 200, minHeight: 200,
                                 aspectRatio: '1:1',
                                 onSelectEnd: getSizes,

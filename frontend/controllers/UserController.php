@@ -2418,8 +2418,13 @@ class UserController extends Controller
                 ['flag' => 0, 'STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE]
             );
         }
+    }
 
-
+    public function actionVphoto()
+    {
+        return $this->render('vphoto',
+            ['model' => 11]
+        );
     }
 }
 
