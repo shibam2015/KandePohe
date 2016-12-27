@@ -421,7 +421,7 @@ var ImagePath ='';
                                   $(this).dialog('close');
                                 },
                             });
-                            }, 1000);
+                            }, 800);
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             notificationPopup('E', 'Something went wrong. Please try again !', 'Error');
