@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\components\MessageHelper;
 use common\components\SmsHelper;
+use common\models\Cities;
 use common\models\otherlibraries\Compressimage;
 use Yii;
 use yii\base\InvalidParamException;
@@ -387,6 +388,14 @@ class SiteController extends Controller
                 $model->scenario = User::SCENARIO_REGISTER1;
                 if($model->load(Yii::$app->request->post())){
                     $model->completed_step = $model->setCompletedStep('2');
+                    $AreaName = Yii::$app->request->post('User')['vAreaName'];
+                    $CityName = $model->cityName->vCityName;
+                    $StateName = $model->stateName->vStateName;
+                    $CountryName = $model->countryName->vCountryName;
+                    $Address = $AreaName . " " . $CityName . " " . $StateName . " " . $CountryName;
+                    $LatLongArray = CommonHelper::getLatLong($Address);
+                    $model->latitude = $LatLongArray['latitude'];
+                    $model->longitude = $LatLongArray['longitude'];
                     if($model->save()){
                         $this->redirect(['site/education-occupation']);
                     }

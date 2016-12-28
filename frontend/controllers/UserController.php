@@ -492,6 +492,15 @@ class UserController extends Controller
                 $model->iDistrictID = Yii::$app->request->post('User')['iDistrictID'];
                 $model->iTalukaID = Yii::$app->request->post('User')['iTalukaID'];
                 $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
+
+                $CityName = $model->cityName->vCityName;
+                $StateName = $model->stateName->vStateName;
+                $CountryName = $model->countryName->vCountryName;
+                $Address = $model->vAreaName . " " . $CityName . " " . $StateName . " " . $CountryName;
+                $LatLongArray = CommonHelper::getLatLong($Address);
+                $model->latitude = $LatLongArray['latitude'];
+                $model->longitude = $LatLongArray['longitude'];
+
                 if ($model->validate()) {
                     $model->completed_step = $model->setCompletedStep('2');
                     $model->save();
