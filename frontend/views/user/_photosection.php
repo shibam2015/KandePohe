@@ -81,7 +81,7 @@ use yii\helpers\Url;
                     <h2 class="text-center" id="model_heading"> Set Profile Photo</h2>
                 </div>
                 <!-- Modal Body -->
-                <div class="modal-body">
+                <div class="modal-body cropmodelbody">
                     <div class="choose-photo">
                         <div class="text-center " id="crop_loader">
                             <i class="fa fa-spinner fa-spin pink"></i> Loading...
@@ -106,9 +106,9 @@ use yii\helpers\Url;
                                         <input type="hidden" name="image_name" value="" id="image_name"/>
                                         <input type="hidden" name="image_id" value="" id="image_id"/>
 
-                                        <!--<div id='preview-avatar-profile' class="photo-kp-crop">-->
+                                        <div id='preview-avatar-profile' class="photo-kp-crop">
                                         <img class="img-responsive preview" id='photov' width="" alt="">
-                                        <!--</div>-->
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -398,13 +398,29 @@ var ImagePath ='';
                         //processData: false,
                         success: function (data, textStatus, jqXHR) {
                             var DataObject = JSON.parse(data);
-                            $('#crop_loader').hide();
+                            $('#photov').hide();
                             $('#photov').attr('src',DataObject.PhotoCrop);
                             $('#image_name').val(DataObject.ImageName);
                             ImagePath = DataObject.ImagePath;
                             $('#image_id').val(imageid);
-                            $('.crop_save').show();
+                            //$('.crop_save').show();
+                            $('#crop_loader').hide();
                             setTimeout(function(){
+                            var container = $('.cropmodelbody');
+	                        var content = $('#photov');
+	                        if(content.width()<=300){
+	                            container.css('left', '25%');
+	                            //container.css('left', (container.width()-content.width())/2);
+	                        }else if(content.width()<=400 && content.width()>300){
+	                                container.css('left', '15%');
+	                        }else if(content.width()<=450 && content.width()>400){
+	                                container.css('left', '10%');
+	                        }
+	                        else{
+	                            container.css('left', '5%');
+	                        }
+                                $('#photov').show();
+                                $('.crop_save').show();
                             $('img#photov').imgAreaSelect({
                                 x1 : 0, y1 : 0, x2 : 150, y2: 150,
                                 handles: true,
@@ -430,6 +446,7 @@ var ImagePath ='';
         }
     )
     $('#profilecrop').on('hide.bs.modal', function () {
+    $('.modal-body').css('left', '0');
         $('img#photov').imgAreaSelect({remove:true});
         $('.imgareaselect-selection,.imgareaselect-border1,.imgareaselect-border2,.imgareaselect-border3,.imgareaselect-border4,.imgareaselect-border2,.imgareaselect-outer').css('display', 'none');
         $.ajax({
