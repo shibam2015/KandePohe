@@ -117,7 +117,9 @@ $M1 = array();
                                                 <div class="col-md-6">
                                                     <div class="box">
                                                         <div class="mid-col">
-                                                            <div class="form-cont bs">
+                                                            <div class="form-cont bs hovertool" data-toggle="tooltip"
+                                                                 data-placement="top"
+                                                                 data-original-title="<?= Yii::$app->params['messageCommunitieBS'] ?>">
                                                                 <?= $form->field($TempModel, 'iCommunity_ID')->dropDownList(
                                                                     ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
                                                                     ['class' => 'cs-select cs-skin-border',
@@ -131,7 +133,9 @@ $M1 = array();
                                                 <div class="col-md-6">
                                                     <div class="box">
                                                         <div class="mid-col">
-                                                            <div class="form-cont bs">
+                                                            <div class="form-cont bs hovertool" data-toggle="tooltip"
+                                                                 data-placement="top"
+                                                                 data-original-title="<?= Yii::$app->params['messageSubCommunitieBS'] ?>">
                                                                 <?= $form->field($TempModel, 'iSubCommunity_ID')->dropDownList(
                                                                     ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
                                                                     ['class' => 'cs-select cs-skin-border',
@@ -146,7 +150,9 @@ $M1 = array();
                                                 <div class="col-md-6">
                                                     <div class="box">
                                                         <div class="mid-col">
-                                                            <div class="form-cont bs">
+                                                            <div class="form-cont bs hovertool" data-toggle="tooltip"
+                                                                 data-placement="top"
+                                                                 data-original-title="<?= Yii::$app->params['messageReligionBS'] ?>">
                                                                 <?= $form->field($TempModel, 'iReligion_ID')->dropDownList(
                                                                     ArrayHelper::map(CommonHelper::getReligion(), 'iReligion_ID', 'vName'),
                                                                     ['class' => 'cs-select cs-skin-border',

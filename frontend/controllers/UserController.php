@@ -2420,13 +2420,6 @@ class UserController extends Controller
         }
     }
 
-    public function actionVphoto()
-    {
-        return $this->render('vphoto',
-            ['model' => 11]
-        );
-    }
-
     public function actionPhotoDelete()
     {
         unlink(Yii::$app->request->post('ImagePath'));

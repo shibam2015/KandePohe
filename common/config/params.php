@@ -61,5 +61,8 @@ return [
     'pageArray' => [1 => 'site/basic-details', 2 => 'site/education-occupation', 3 => 'site/life-style', 4 => 'site/about-family', 5 => 'site/about-yourself', 6 => 'user/photos', 7 => 'site/verification'],
     'searchListInCorrectErrorMessage' => 'You are trying to access invalid URL.',
     'firstPhotoPagePopup' => '<strong><h3 class="text-success">Congratulations!</h3> <br>Your profile has been created.</strong><br><br> Now upload photos and get more visitors to your profile.',
+    'messageCommunitieBS' => 'To include more communities, please use Advance Search.',
+    'messageSubCommunitieBS' => 'To include more sub communities, please use Advance Search.',
+    'messageReligionBS' => 'To include more Religion, please use Advance Search.',
 ];
 
