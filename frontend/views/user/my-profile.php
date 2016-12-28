@@ -268,7 +268,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                     <ul class="nav nav-tabs bg-white my-profile" role="tablist">
                                         <li role="presentation" <?= ($tab == '') ? 'class="active"' : ''; ?> ><a
                                                 href="#tab1" aria-controls="home"
-                                                                                  role="tab" data-toggle="tab">Home</a>
+                                                role="tab" data-toggle="tab">Personal Information</a>
                                         </li>
                                         <li role="presentation" <?= ($tab == 'EP') ? 'class="active"' : ''; ?> ><a
                                                 href="#tab2" aria-controls="profile" role="tab"
@@ -315,7 +315,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <h3><span class="heading-icons icon2"></span> Personal information</h3>
+                                                <h3><span class="heading-icons icon2"></span> Basic Details</h3>
                                                 <?php Pjax::begin(['id' => 'my_index1', 'enablePushState' => false]); ?>
                                                 <div class="div_personal_info">
                                                     <i class="fa fa-spinner fa-spin pink"></i>

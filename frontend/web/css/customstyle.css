@@ -405,3 +405,8 @@ img.selected {
     font-size: 14px;
     margin-right: 10px;
 }
+
+.nav-tabs[role=tablist] {
+    /*font-size: 12px;*/
+}
+
