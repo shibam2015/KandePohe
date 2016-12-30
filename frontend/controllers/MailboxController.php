@@ -206,6 +206,44 @@ class MailboxController extends Controller
 
     }
 
+    public function actionAll($Type = 'Inbox')
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $Id = Yii::$app->user->identity->id;
+        if ($Type == 'Inbox') {
+            $ModelBox = UserRequestOp::getInboxList($Id, 10);
+        } else {
+            $ModelBox = UserRequestOp::getSendBoxList($Id, 10);
+        }
+        #CommonHelper::pr($ModelBox);exit;
+        #$Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->limit(10)->all();
+        #$MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
+        $OtherInformationArray = array();
+        foreach ($ModelBox as $Key => $Value) {
+            if ($Id == $Value->from_user_id) {
+                $ToUserId = $Value->to_user_id;
+            } else {
+                $ToUserId = $Value->from_user_id;
+            }
+            list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
+            $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
+            $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
+            $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
+        }
+        #CommonHelper::pr($OtherInformationArray);exit;
+        return $this->render('all',
+            [
+                'Id' => $Id,
+                'ModelBox' => $ModelBox,
+                'OtherInformationArray' => $OtherInformationArray,
+                'MailUnreadCount' => 10,//$MailUnreadCount
+                'Type' => $Type,
+            ]
+        );
+    }
+
     public function actionNew($Type = 'Inbox')
     {
         if (Yii::$app->user->isGuest) {
@@ -240,20 +278,17 @@ class MailboxController extends Controller
         );
     }
 
-    public function actionAll($Type = 'Inbox')
+    public function actionAccepted($Type = 'Inbox')
     {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         $Id = Yii::$app->user->identity->id;
         if ($Type == 'Inbox') {
-            $ModelBox = UserRequestOp::getInboxList($Id, 10);
+            $ModelBox = UserRequestOp::getInboxAcceptedList($Id, 10);
         } else {
-            $ModelBox = UserRequestOp::getSendBoxList($Id, 10);
+            #$ModelBox = UserRequestOp::getSendBoxNweList($Id, 10);
         }
-        #CommonHelper::pr($ModelBox);exit;
-        #$Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->limit(10)->all();
-        #$MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
         $OtherInformationArray = array();
         foreach ($ModelBox as $Key => $Value) {
             if ($Id == $Value->from_user_id) {
@@ -266,8 +301,7 @@ class MailboxController extends Controller
             $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
             $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
         }
-        #CommonHelper::pr($OtherInformationArray);exit;
-        return $this->render('all',
+        return $this->render('inboxlist',
             [
                 'Id' => $Id,
                 'ModelBox' => $ModelBox,
