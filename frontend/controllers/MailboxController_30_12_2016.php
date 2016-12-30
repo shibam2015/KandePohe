@@ -88,10 +88,22 @@ class MailboxController extends Controller
             return $this->goHome();
         }
         $Id = Yii::$app->user->identity->id;
+        /*$Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->limit(10)->all();
+        $MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
+        #CommonHelper::pr($Model);exit;
+        $MailArray = array();
+        foreach ($Model as $Key => $Value) {
+            #CommonHelper::pr($Value->id);exit;
+            $LastMail = Mailbox::find()->where(['from_user_id' => $Value->from_user_id, 'to_user_id' => $Id])->orderBy('MailId')->one();
+            $MailCount = Mailbox::find()->where(['from_user_id' => $Value->from_user_id, 'to_user_id' => $Id])->count();
+            $MailCount += Mailbox::find()->where(['from_user_id' => $Id, 'to_user_id' => $Value->from_user_id])->count();
+            $MailArray[$Value->id]['LastMsg'] = str_replace("#NAME#", $Value->fromUserInfo->fullName, $LastMail->MailContent);
+            $MailArray[$Value->id]['MsgCount'] = $MailCount;
+        }*/
+        #CommonHelper::pr($MailArray);exit;
         return $this->render('inbox',
             [
-                'Id' => $Id,
-                'Model' => '',
+                'Model' => $Model,
                 'MailArray' => 10,
                 'MailUnreadCount' => 20
             ]
@@ -153,7 +165,6 @@ class MailboxController extends Controller
         }
         $Id = Yii::$app->user->identity->id;
         list($Model, $OtherInformationArray, $MailUnreadCount, $HandleArray) = $this->actionMoreConversationCommon($Id, $uk);
-        #CommonHelper::pr($Model);exit;
         return $this->render('moreconversation',
             [
                 'Id' => $Id,
@@ -164,16 +175,14 @@ class MailboxController extends Controller
         );
     }
 
-    public function actionMoreConversationCommon($Id, $uk, $Type = 'Inbox')
+    public function actionMoreConversationCommon($Id, $uk = '', $Type = 'Inbox')
     {
         $FromUserId = User::find()->select('id')->where(['Registration_Number' => $uk])->one();
-        //$FromUserId = User::getIdNo($uk);
         #CommonHelper::pr($FromUserId);exit;
         if (Yii::$app->user->isGuest || $uk == '' || $FromUserId == null) {
             return $this->redirect(['inbox']);
         }
         if ($Type == 'Inbox') {
-            Mailbox::updateFromToReadStatus($FromUserId->id, $Id);
             $Model = UserRequestOp::getMoreConversationInbox($Id, $FromUserId->id);
         } else {
             $Model = UserRequestOp::getMoreConversationSentBox($Id, $FromUserId->id);
@@ -183,7 +192,7 @@ class MailboxController extends Controller
             list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $FromUserId->id);
             $OtherInformationArray[0]['MailTotalCount'] = $TotalMailCount;
             $OtherInformationArray[0]['LastMailDate'] = $LastMail->dtadded;
-            $OtherInformationArray[0]['LastMailReadStatus'] = $LastMail->read_status;
+            $OtherInformationArray[0]['ReadUnreadStatus'] = $LastMail->read_status;
             return array(
                 $Model,
                 $OtherInformationArray
@@ -201,41 +210,21 @@ class MailboxController extends Controller
     public function getLastMailInfoAndUnreadMailCount($Id, $ToUserId)
     {
         $LastMail = Mailbox::getLastMail($Id, $ToUserId);
+        #CommonHelper::pr($LastMail);
         $TotalMailCount = Mailbox::getMailListCount($Id, $ToUserId);
         return array($TotalMailCount, $LastMail);
 
     }
 
-    public function actionNew($Type = 'Inbox')
+    public function actionNew()
     {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         $Id = Yii::$app->user->identity->id;
-        if ($Type == 'Inbox') {
-            $ModelBox = UserRequestOp::getInboxNewList($Id, 10);
-        } else {
-            #$ModelBox = UserRequestOp::getSendBoxNweList($Id, 10);
-        }
-        $OtherInformationArray = array();
-        foreach ($ModelBox as $Key => $Value) {
-            if ($Id == $Value->from_user_id) {
-                $ToUserId = $Value->to_user_id;
-            } else {
-                $ToUserId = $Value->from_user_id;
-            }
-            list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
-            $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
-            $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
-            $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
-        }
-        return $this->render('inboxlist',
+        return $this->render('new',
             [
-                'Id' => $Id,
-                'ModelBox' => $ModelBox,
-                'OtherInformationArray' => $OtherInformationArray,
-                'MailUnreadCount' => 10,//$MailUnreadCount
-                'Type' => $Type,
+                'model' => $Id
             ]
         );
     }
@@ -264,9 +253,8 @@ class MailboxController extends Controller
             list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
             $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
             $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
-            $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
+            $OtherInformationArray[$ToUserId]['ReadUnreadStatus'] = $LastMail->read_status;
         }
-        #CommonHelper::pr($OtherInformationArray);exit;
         return $this->render('all',
             [
                 'Id' => $Id,

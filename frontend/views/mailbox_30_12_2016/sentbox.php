@@ -14,7 +14,7 @@ use yii\helpers\Url;
         <main>
             <section class="inbox">
                 <div class="container">
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="col-sm-3 col-md-2">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"> Mail
@@ -26,7 +26,7 @@ use yii\helpers\Url;
                                 </ul>
                             </div>
                         </div>
-                        <!--<div class="col-sm-9 col-md-10">
+                        <div class="col-sm-9 col-md-10">
                             <div class="pull-left">
                                 <div class="checkbox mrg-tp-0">
                                     <input id="Remember" type="checkbox" name="Remember" value="check1">
@@ -58,34 +58,15 @@ use yii\helpers\Url;
                                 </div>
                             </div>
                             <div class="clearfix"></div>
-                        </div>-->
-                    </div>
+                        </div>
+                    </div>-->
                     <div class="divider"></div>
                     <div class="row">
                         <?php require_once __DIR__ . '/_sidebar.php'; ?>
-                        <!--<div class="col-sm-3 col-md-2">
-                            <a href="#" class="btn btn-danger btn-sm btn-block"
-                                                          role="button">COMPOSE</a>
-                            <hr/>
-                            <ul class="nav nav-pills nav-stacked">
-                                <li class="active"><a href="#"><span
-                                            class="badge pull-right"><? /*= $MailUnreadCount */ ?></span> Inbox </a></li>
-                                <li><a href="#">Starred</a></li>
-                                <li><a href="#">Important</a></li>
-                                <li><a href="#">Sent Mail</a></li>
-                                <li><a href="#"><span class="badge pull-right">3</span>Drafts</a></li>
-                            </ul>
-                        </div>-->
                         <div class="col-sm-9 col-md-10">
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs">
                                 <li class="active nav-tabs-menu all"><a href="#all" data-toggle="tab">All</a></li>
-                                <li class="nav-tabs-menu new"><a href="#new" data-toggle="tab">New</a></li>
-                                <li class="nav-tabs-menu read"><a href="#read" data-toggle="tab"> Read &amp; Not
-                                        Replied</a></li>
-                                <li><a href="#accepted" data-toggle="tab">Accepted</a></li>
-                                <li><a href="#replied" data-toggle="tab">Replied</a></li>
-                                <li><a href="#notinterested" data-toggle="tab">Not Interested</a></li>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-page">
@@ -93,39 +74,6 @@ use yii\helpers\Url;
                                     <div class="tab-pane fade in active page-wrap-tab" id="all">
                                         <div class="text-center mrg-tp-20 mrg-lt-20"><p><i
                                                     class="fa fa-spinner fa-spin pink"></i> Loading...</p></div>
-                                    </div>
-
-                                    <div class="tab-pane fade in" id="read">
-                                        <div class="list-group">
-                                            <div class="list-group-item">
-                                                <div class="notice kp_info"><p>There are no conversations with this
-                                                        label.</p></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade in" id="accepted">
-                                        <div class="list-group">
-                                            <div class="list-group-item">
-                                                <div class="notice kp_info"><p>There are no conversations with this
-                                                        label.</p></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade in" id="replied">
-                                        <div class="list-group">
-                                            <div class="list-group-item">
-                                                <div class="notice kp_info"><p>There are no conversations with this
-                                                        label.</p></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade in" id="notinterested">
-                                        <div class="list-group">
-                                            <div class="list-group-item">
-                                                <div class="notice kp_info"><p>There are no conversations with this
-                                                        label.</p></div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -194,17 +142,7 @@ use yii\helpers\Url;
     </div>
     <script src="<?= Yii::$app->homeUrl ?>js/jquery.js" type="text/javascript"></script>
     <script src="<?= Yii::$app->homeUrl ?>js/selectFx.js"></script>
-
 <?php
-$this->registerJs('
-$(document).on("click",".sendmail",function(e){
-      var formData = new FormData();
-      formData.append("ToUserId", $(this).data("id"));
-      sendRequest("' . Url::to(['mailbox/inbox-send-message']) . '",".send_message",formData);;
-    });
-
-  ');
-
 $this->registerJs('
     $(function() {
     var newHash      = "",
@@ -220,16 +158,16 @@ $this->registerJs('
     });
     $(window).bind("hashchange", function(e){
         newHash = window.location.hash.substring(1);
-        console.log(newHash);
         if(newHash==""){
-         newHash = "all";
+        newHash = "all";
         }
         if (newHash) {
             $mainContent
                 .find(".page-wrap-tab")
                 .fadeOut(1, function() {
                  $mainContent.html(loaderTab());
-                    $mainContent.show().load(newHash + " .page-wrap-tab", function(response, status, xhr) {
+                    var sentboxurl = newHash+"?Type=Sentbox";
+                    $mainContent.show().load(sentboxurl + " .page-wrap-tab", function(response, status, xhr) {
                     if ( status == "error" ) {
                         var msgSt = "' . Yii::$app->params['pageError'] . ' "+ xhr.status + " " + xhr.statusText;
                         $mainContent.html( pageError("E",msgSt));

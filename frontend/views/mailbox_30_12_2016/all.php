@@ -21,7 +21,7 @@ $model = $model['model'];*/
             }
             ?>
             <ul class="list-group" id="list_all_<?= $ModelInfo->id ?>">
-                <li class="list-group-item <?= ($OtherInformationArray[$ModelInfo->id]['LastMailReadStatus'] == 'No') ? 'kp_ur' : ''; ?>">
+                <li class="list-group-item <?= ($OtherInformationArray[$Value->id]['ReadUnreadStatus'] == 'No') ? 'mailread' : ''; ?>">
                     <div class="thread-control">
                         <p class="text-muted">
                             <?php /*if ($Value->send_request_status_from_to == 'Yes') { */ ?><!--
@@ -44,6 +44,7 @@ $model = $model['model'];*/
                         </div>
                         <div class="box-inbox pull-left">
                             <?= Html::img(CommonHelper::getPhotos('USER', $ModelInfo->id, "75" . $ModelInfo->propic, 75, '', 'Yes'), ['width' => '65', 'height' => '', 'alt' => 'Profile Pic', 'class' => '']); ?>
+
                         </div>
                         <div class="box-inbox3 pull-right">
                             <p class="name">

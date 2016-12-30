@@ -78,27 +78,63 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
         if ($Limit != '') {
             $WhereLimit = ' LIMIT ' . $Limit;
         }
-        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.to_user_id = " . $id . " AND user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.from_user_id = " . $id . " AND user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC " . $WhereLimit;
+        /*$sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.to_user_id = " . $id . " AND user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.from_user_id = " . $id . " AND user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC " . $WhereLimit;*/
+        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID
+                  FROM user_request_op
+                  LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')
+                  JOIN mailbox on 1=1
+                    WHERE
+                         (
+                           (user_request_op.to_user_id = " . $id . " AND user_request_op.send_request_status_from_to != 'No' )
+                            OR
+                            (user_request_op.from_user_id = " . $id . " AND user_request_op.send_request_status_to_from != 'No')
+                         )
+                         OR (mailbox.to_user_id = $id )
+                    GROUP BY user_request_op.id
+                    ORDER BY user_request_op.id DESC " . $WhereLimit;
         return Static::findBySql($sql)->all();
-        /*$sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.to_user_id = " . $id . " AND user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.from_user_id = " . $id . " AND user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC LIMIT " . $Limit;*/
+    }
 
-
+    public static function getInboxNewList($id, $Limit = '')
+    {
+        $WhereLimit = '';
+        if ($Limit != '') {
+            $WhereLimit = ' LIMIT ' . $Limit;
+        }
+        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID
+                  FROM user_request_op
+                  LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')
+                  JOIN  mailbox ON mailbox.read_status ='No'
+                  WHERE
+                   (
+                           (user_request_op.to_user_id = " . $id . " AND user_request_op.send_request_status_from_to != 'No' )
+                            OR
+                            (user_request_op.from_user_id = " . $id . " AND user_request_op.send_request_status_to_from != 'No')
+                         )
+                         OR (mailbox.to_user_id = $id )
+                  GROUP BY user_request_op.id
+                  ORDER BY user_request_op.id DESC " . $WhereLimit;
+        #CommonHelper::pr(Static::findBySql($sql)->all());exit;
+        return Static::findBySql($sql)->all();
     }
 
     public static function getMoreConversationInbox($Id, $ToUserId)
     {
         $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $ToUserId . " AND user_request_op.to_user_id = " . $Id . " OR user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.to_user_id = " . $ToUserId . " AND user_request_op.from_user_id = " . $Id . " OR user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC ";
         return Static::findBySql($sql)->one();
-        /*$sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $ToUserId . " AND user_request_op.to_user_id = " . $Id . " AND user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.to_user_id = " . $ToUserId . " AND user_request_op.from_user_id = " . $Id . " AND user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC ";*/
-
     }
 
     public static function getSendBoxList($id, $Limit)
     {
-        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $id . " AND  user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.to_user_id = " . $id . " AND  user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC LIMIT " . $Limit;
+        /*$sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $id . " AND  user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.to_user_id = " . $id . " AND  user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC LIMIT " . $Limit;*/
+        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID
+                  FROM user_request_op
+                  LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')
+                  WHERE
+                       (user_request_op.from_user_id = " . $id . " AND  user_request_op.send_request_status_from_to != 'No' )
+                    OR (user_request_op.to_user_id = " . $id . " AND  user_request_op.send_request_status_to_from != 'No')
+                  GROUP BY user_request_op.id ORDER BY user_request_op.id DESC LIMIT " . $Limit;
         return Static::findBySql($sql)->all();
-        /*$sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $id . " AND user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.to_user_id = " . $id . " AND user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC LIMIT " . $Limit;*/
-
     }
 
     public static function getMoreConversationSentBox($Id, $ToUserId)

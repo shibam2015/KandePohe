@@ -410,3 +410,10 @@ img.selected {
     /*font-size: 12px;*/
 }
 
+.kp_ur {
+    background-color: #f9f9f9;
+}
+
+.send-mail-btn {
+    width: 100% !important;
+}

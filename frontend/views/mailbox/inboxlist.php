@@ -44,6 +44,7 @@ $model = $model['model'];*/
                         </div>
                         <div class="box-inbox pull-left">
                             <?= Html::img(CommonHelper::getPhotos('USER', $ModelInfo->id, "75" . $ModelInfo->propic, 75, '', 'Yes'), ['width' => '65', 'height' => '', 'alt' => 'Profile Pic', 'class' => '']); ?>
+
                         </div>
                         <div class="box-inbox3 pull-right">
                             <p class="name">

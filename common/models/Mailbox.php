@@ -52,6 +52,11 @@ class Mailbox extends \common\models\base\baseMailbox
 
     }
 
+    public static function updateFromToReadStatus($FromUserId, $ToUserId)
+    {
+        return static::updateAll(array('read_status' => 'Yes'), 'from_user_id="' . $FromUserId . '" AND to_user_id="' . $ToUserId . '"');
+    }
+
     /**
      * @inheritdoc
      */

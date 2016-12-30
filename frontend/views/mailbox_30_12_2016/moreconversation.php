@@ -44,7 +44,7 @@ use yii\helpers\Url;
                                         <div class="clearfix"></div>
                                         <div class="inbox-thread">
                                             <div class="box-inbox pull-left">
-                                                <?= Html::img(CommonHelper::getPhotos('USER', $ModelInfo->id, "75" . $ModelInfo->propic, 75, '', 'Yes'), ['width' => '60', 'height' => '60', 'alt' => 'Profile', 'class' => '']); ?>
+                                                <?= Html::img(CommonHelper::getPhotos('USER', $ModelInfo->id, $ModelInfo->propic, 75), ['width' => '60', 'height' => '60', 'alt' => 'Profile', 'class' => '']); ?>
                                             </div>
                                             <div class="box-inbox3 conv pull-right">
                                                 <p class="name">

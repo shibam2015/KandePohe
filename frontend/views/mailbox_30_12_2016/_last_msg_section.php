@@ -37,19 +37,9 @@ use yii\helpers\Url;
                     data-rgnumber="<?= $FromUserId->Registration_Number ?>"
                     data-type="Decline Interest">No
             </button>
-        <?php } else { ?>
-            <?php if ($LastMail->msg_type != 'DeclineInterest' && $LastMail->msg_type != 'CancelInterest') { ?>
-                <div class="row ">
-                    <span class="col-md-4">
-                        <button class="btn btn-primary sendmail" data-target="#sendMail"
-                                data-id="<?= $LastMail->MailId ?>"
-                                data-toggle="modal">Send Mail
-                        </button>
-                    </span>
-                </div>
-            <?php } ?>
         <?php } ?>
     </div>
+
 <?php } elseif ($Id == $LastMail->from_user_id) { ?>
     <p><strong><?= $MailArray->FullName ?></strong></p>
     <div class="desc-mail">
@@ -60,16 +50,10 @@ use yii\helpers\Url;
             $TextMsg = Yii::$app->params['sendInterestMessageInbox'];
         } ?>
         <span><?= $TextMsg ?></span>
-        <?php if ($LastMail->msg_type != 'DeclineInterest' && $LastMail->msg_type != 'CancelInterest') { ?>
-            <div class="row">
-                    <span class="col-md-4">
-                        <button class="btn btn-primary sendmail" data-target="#sendMail"
-                                data-id="<?= $LastMail->MailId ?>"
-                                data-toggle="modal">Send Mail
-                        </button>
-                    </span>
-            </div>
-        <?php } ?>
+        <button class="btn btn-primary sendmail" data-target="#sendMail"
+                data-id="<?= $LastMail->MailId ?>"
+                data-toggle="modal">Send Mail
+        </button>
     </div>
 <?php } else { ?>
     <p><?= $LastMail->MailContent ?></p>

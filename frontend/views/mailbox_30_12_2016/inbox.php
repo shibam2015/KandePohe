@@ -81,8 +81,7 @@ use yii\helpers\Url;
                             <ul class="nav nav-tabs">
                                 <li class="active nav-tabs-menu all"><a href="#all" data-toggle="tab">All</a></li>
                                 <li class="nav-tabs-menu new"><a href="#new" data-toggle="tab">New</a></li>
-                                <li class="nav-tabs-menu read"><a href="#read" data-toggle="tab"> Read &amp; Not
-                                        Replied</a></li>
+                                <li><a href="#read" data-toggle="tab"> Read &amp; Not Replied</a></li>
                                 <li><a href="#accepted" data-toggle="tab">Accepted</a></li>
                                 <li><a href="#replied" data-toggle="tab">Replied</a></li>
                                 <li><a href="#notinterested" data-toggle="tab">Not Interested</a></li>
