@@ -80,7 +80,6 @@ class Mailbox extends \common\models\base\baseMailbox
             ->all();
         #->orderBy(['MailId' => SORT_DESC])->all();
     }
-
     public static function getInboxNewList($Id, $Limit = '')
     {
         $WhereLimit = '';
@@ -95,7 +94,6 @@ class Mailbox extends \common\models\base\baseMailbox
             ->groupBy(['to_user_id', 'from_user_id'])
             ->all();
     }
-
     public static function getInboxAcceptedList($Id, $Limit = '')
     {
         $WhereLimit = '';
@@ -105,6 +103,20 @@ class Mailbox extends \common\models\base\baseMailbox
         return Static::find()
             ->where(['from_user_id' => $Id])
             ->andwhere(['msg_type' => 'AcceptInterest'])
+            ->limit($Limit)
+            ->groupBy(['to_user_id', 'from_user_id'])
+            ->all();
+    }
+
+    public static function getInboxDeclinedList($Id, $Limit = '')
+    {
+        $WhereLimit = '';
+        if ($Limit == '') {
+            $Limit = 0;
+        }
+        return Static::find()
+            ->where(['from_user_id' => $Id])
+            ->andwhere(['msg_type' => 'DeclineInterest'])
             ->limit($Limit)
             ->groupBy(['to_user_id', 'from_user_id'])
             ->all();
