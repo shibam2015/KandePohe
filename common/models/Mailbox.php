@@ -17,6 +17,11 @@ class Mailbox extends \common\models\base\baseMailbox
     const SCENARIO_ADD = 'ADD';
     const SCENARIO_UPDATE = 'Update';
     const SCENARIO_SEND_MESSAGE = 'Send Message';
+    const SEND_INTEREST = 'SendInterest';
+    const ACCEPT_INTEREST = 'AcceptInterest';
+    const DECLINE_INTEREST = 'DeclineInterest';
+    const CANCEL_INTEREST = 'CancelInterest';
+    const CUSTOM_MESSAGE = 'Custom';
 
     public static function tableName()
     {
@@ -80,6 +85,7 @@ class Mailbox extends \common\models\base\baseMailbox
             ->all();
         #->orderBy(['MailId' => SORT_DESC])->all();
     }
+
     public static function getInboxNewList($Id, $Limit = '')
     {
         $WhereLimit = '';
@@ -94,6 +100,7 @@ class Mailbox extends \common\models\base\baseMailbox
             ->groupBy(['to_user_id', 'from_user_id'])
             ->all();
     }
+
     public static function getInboxAcceptedList($Id, $Limit = '')
     {
         $WhereLimit = '';
@@ -102,7 +109,7 @@ class Mailbox extends \common\models\base\baseMailbox
         }
         return Static::find()
             ->where(['from_user_id' => $Id])
-            ->andwhere(['msg_type' => 'AcceptInterest'])
+            ->andwhere(['msg_type' => self::ACCEPT_INTEREST])
             ->limit($Limit)
             ->groupBy(['to_user_id', 'from_user_id'])
             ->all();
@@ -116,10 +123,28 @@ class Mailbox extends \common\models\base\baseMailbox
         }
         return Static::find()
             ->where(['from_user_id' => $Id])
-            ->andwhere(['msg_type' => 'DeclineInterest'])
+            ->andwhere(['msg_type' => self::DECLINE_INTEREST])
             ->limit($Limit)
             ->groupBy(['to_user_id', 'from_user_id'])
             ->all();
+    }
+
+    public static function getInboxRepliedList($Id, $Limit = '')
+    {
+        $WhereLimit = '';
+        if ($Limit == '') {
+            $Limit = 0;
+        }
+        $Sql = "SELECT * FROM
+                  (SELECT *
+                      FROM mailbox
+                      WHERE
+                          from_user_id = $Id
+		              GROUP BY from_user_id, to_user_id
+                  )AS records
+                ORDER BY dtadded  ";
+        $Data = Static::findBySql($Sql)->all();
+        return $Data;
     }
 
     /**

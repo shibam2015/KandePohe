@@ -154,7 +154,7 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
         if ($Limit != '') {
             $WhereLimit = ' LIMIT ' . $Limit;
         }
-        echo $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID
+        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID
                   FROM user_request_op
                   LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')
                   JOIN mailbox ON 1=1
@@ -167,8 +167,6 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
                     OR (mailbox.to_user_id = $id )
                   GROUP BY user_request_op.id
                   ORDER BY user_request_op.id DESC " . $WhereLimit;
-        exit;
-        #CommonHelper::pr(Static::findBySql($sql)->all());exit;
         return Static::findBySql($sql)->all();
     }
 
