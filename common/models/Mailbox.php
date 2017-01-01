@@ -72,6 +72,11 @@ class Mailbox extends \common\models\base\baseMailbox
         #return Static::findBySql($sql)->all();
     }
 
+    public static function getMoreConversation()
+    {
+
+    }
+
     /**
      * @inheritdoc
      */
@@ -128,4 +133,5 @@ class Mailbox extends \common\models\base\baseMailbox
     {
         return $this->hasOne(User::className(), ['id' => 'to_user_id']);
     }
+
 }

@@ -18,24 +18,13 @@ use yii\helpers\Url;
                 <div class="container">
                     <div class="row">
                         <?php require_once __DIR__ . '/_sidebar.php'; ?>
-                        <?php if (count($Model) && count($HandleArray) == 0) {
-                            if ($Model->from_user_id == $Id) {
-                                $ModelInfo = $Model->toUserInfo;
-                            } else {
-                                $ModelInfo = $Model->fromUserInfo;
-                            }
-                            ?>
+                        <?php if (count($UserModel) && count($HandleErrors) == 0) { ?>
                             <div class="col-sm-9 col-md-10">
                                 <ul class="list-group">
                                     <li class="list-group-item">
                                         <div class="pull-right">
                                             <p class="text-muted">
-                                                <?php /*if ($Model->send_request_status_from_to == 'Yes') { */ ?><!--
-                                                <? /*= CommonHelper::DateTime($Model->date_send_request_from_to, 26); */ ?>
-                                            <?php /*} else { */ ?>
-                                                <? /*= CommonHelper::DateTime($Model->date_send_request_to_from, 26); */ ?>
-                                            --><?php /*} */ ?>
-                                                <?= CommonHelper::DateTime($OtherInformationArray[0]['LastMailDate'], 26); ?>
+                                                <?= CommonHelper::DateTime($OtherInformation['LastMailDate'], 26); ?>
                                                 <a href="#" data-toggle="modal" data-target="#del"><i
                                                         class="fa fa-trash"
                                                         aria-hidden="true"></i></a>
@@ -44,33 +33,33 @@ use yii\helpers\Url;
                                         <div class="clearfix"></div>
                                         <div class="inbox-thread">
                                             <div class="box-inbox pull-left">
-                                                <?= Html::img(CommonHelper::getPhotos('USER', $ModelInfo->id, "75" . $ModelInfo->propic, 75, '', 'Yes'), ['width' => '60', 'height' => '60', 'alt' => 'Profile', 'class' => '']); ?>
+                                                <?= Html::img(CommonHelper::getPhotos('USER', $UserModel->id, "75" . $UserModel->propic, 75, '', 'Yes'), ['width' => '60', 'height' => '60', 'alt' => 'Profile', 'class' => '']); ?>
                                             </div>
                                             <div class="box-inbox3 conv pull-right">
                                                 <p class="name">
-                                                    <a href="<?= CommonHelper::getUserUrl($ModelInfo->Registration_Number); ?>">
-                                                        <strong><?= $ModelInfo->fullName; ?></strong>
+                                                    <a href="<?= CommonHelper::getUserUrl($UserModel->Registration_Number); ?>">
+                                                        <strong><?= $UserModel->fullName; ?></strong>
                                                     </a>
                                                     (Last online
-                                                    : <?= CommonHelper::DateTime($ModelInfo->LastLoginTime, 7); ?>
+                                                    : <?= CommonHelper::DateTime($UserModel->LastLoginTime, 7); ?>
                                                     )</p>
                                                 <ul class="list-inline pull-left">
-                                                    <li><?= CommonHelper::getAge($ModelInfo->DOB); ?> YRS
-                                                        <?= ($ModelInfo->height->vName != '') ? "," . $ModelInfo->height->vName : ''; ?></li>
+                                                    <li><?= CommonHelper::getAge($UserModel->DOB); ?> YRS
+                                                        <?= ($UserModel->height->vName != '') ? "," . $UserModel->height->vName : ''; ?></li>
                                                     <li>
-                                                        <strong>Religion:</strong> <?= $ModelInfo->religionName->vName; ?>
-                                                        , Caste : <?= $ModelInfo->communityName->vName; ?>
+                                                        <strong>Religion:</strong> <?= $UserModel->religionName->vName; ?>
+                                                        , Caste : <?= $UserModel->communityName->vName; ?>
                                                     </li>
                                                     <li>
-                                                        <strong>Location:</strong> <?= $ModelInfo->cityName->vCityName; ?>
-                                                        <?= ($ModelInfo->stateName->vStateName != '') ? "," . $ModelInfo->stateName->vStateName : ''; ?>
-                                                        <?= ($ModelInfo->countryName->vCountryName != '') ? "," . $ModelInfo->countryName->vCountryName : ''; ?>
+                                                        <strong>Location:</strong> <?= $UserModel->cityName->vCityName; ?>
+                                                        <?= ($UserModel->stateName->vStateName != '') ? "," . $UserModel->stateName->vStateName : ''; ?>
+                                                        <?= ($UserModel->countryName->vCountryName != '') ? "," . $UserModel->countryName->vCountryName : ''; ?>
                                                     </li>
                                                     <li>
-                                                        <strong>Education:</strong> <?= $ModelInfo->educationLevelName->vEducationLevelName; ?>
+                                                        <strong>Education:</strong> <?= $UserModel->educationLevelName->vEducationLevelName; ?>
                                                     </li>
                                                     <li>
-                                                        <strong>Occupation:</strong> <?= $ModelInfo->educationFieldName->vEducationFieldName; ?>
+                                                        <strong>Occupation:</strong> <?= $UserModel->educationFieldName->vEducationFieldName; ?>
                                                     </li>
                                                 </ul>
                                                 <div class="clearfix"></div>
@@ -220,8 +209,8 @@ use yii\helpers\Url;
     <script src="<?= Yii::$app->homeUrl ?>js/selectFx.js"></script>
 <?php
 //  CommonHelper::pr($Model);
-
-if (count($Model) && count($HandleArray) == 0) {
+#if (count($Model) && count($HandleArray) == 0) {
+if (count($UserModel) && count($HandleErrors) == 0) {
     $this->registerJs('
 $(document).on("click",".sendmail",function(e){
       var formData = new FormData();
@@ -231,7 +220,7 @@ $(document).on("click",".sendmail",function(e){
   ');
     $this->registerJs('
         var formDataRequest = new FormData();
-        formDataRequest.append("uk", "' . $ModelInfo->Registration_Number . '");
+        formDataRequest.append("uk", "' . $UserModel->Registration_Number . '");
         sendRequest("' . Url::to(['mailbox/last-msg']) . '","#last_message_section",formDataRequest);
         sendRequest("' . Url::to(['mailbox/more-coversation-all']) . '","#other_convo",formDataRequest);
     ');

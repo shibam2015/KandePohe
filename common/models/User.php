@@ -251,6 +251,10 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return $UserInfo->id;
     }
 
+    public static function getUserFullInfromation($Id)
+    {
+        return static::find()->select('*')->joinWith([countryName, stateName, cityName, height, maritalStatusName])->where(['id' => $Id])->one();
+    }
 
     /**
      * @inheritdoc
@@ -784,15 +788,6 @@ characters are allowed.'
         return $this->hasOne(SportsFitnActivities::className(), ['ID' => 'SportsFittnessID']);
     }
 
-    public function getPropertyDetails()
-    {
-        $Property = [];
-        foreach ($this->familyPropertyName as $descr) {
-            $Property[] = $descr->text;
-        }
-        return implode(",", $Property);
-    }
-
 
     /*public function generateUniqueRandomNumber($length = 9) {
         $PREFIX = CommonHelper::generatePrefix();
@@ -804,6 +799,14 @@ characters are allowed.'
 
     }*/
 
+    public function getPropertyDetails()
+    {
+        $Property = [];
+        foreach ($this->familyPropertyName as $descr) {
+            $Property[] = $descr->text;
+        }
+        return implode(",", $Property);
+    }
 
     public function getSportsFitnActivitiesName()
     {
@@ -824,7 +827,6 @@ characters are allowed.'
     {
         return $this->hasOne(MotherTongue::className(), ['ID' => 'mother_tongue']);
     }
-
 
     public function getPermentAddress()
     {
@@ -859,5 +861,4 @@ characters are allowed.'
         }
         return $returnVal;
     }
-
 }

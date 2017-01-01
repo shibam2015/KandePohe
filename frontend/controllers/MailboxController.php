@@ -146,56 +146,61 @@ class MailboxController extends Controller
         ]);
     }
 
-    public function actionMoreConversation($uk = '')
+    public function actionMoreConversation($uk = '') # VS
     {
         if (Yii::$app->user->isGuest || $uk == '') {
             return $this->redirect(['inbox']);
         }
         $Id = Yii::$app->user->identity->id;
-        list($Model, $OtherInformationArray, $MailUnreadCount, $HandleArray) = $this->actionMoreConversationCommon($Id, $uk);
-        #CommonHelper::pr($Model);exit;
-        return $this->render('moreconversation',
-            [
-                'Id' => $Id,
-                'Model' => $Model,
-                'OtherInformationArray' => $OtherInformationArray,
-                #   'MailUnreadCount' => $OtherInformationArray[];
-            ]
-        );
+        list($UserModel, $MessageModel, $OtherInformation, $HandleErrors) = $this->actionMoreConversationCommon($Id, $uk);
+        if ($UserModel) {
+            return $this->render('moreconversation',
+                [
+                    'Id' => $Id,
+                    'UserModel' => $UserModel,
+                    'MessageModel' => $MessageModel,
+                    'OtherInformation' => $OtherInformation[0],
+                    'HandleErrors' => $HandleErrors,
+                ]
+            );
+        } else {
+            return $this->redirect(['inbox']);
+        }
     }
 
     public function actionMoreConversationCommon($Id, $uk, $Type = 'Inbox')
     {
-        $FromUserId = User::find()->select('id')->where(['Registration_Number' => $uk])->one();
-        //$FromUserId = User::getIdNo($uk);
-        #CommonHelper::pr($FromUserId);exit;
-        if (Yii::$app->user->isGuest || $uk == '' || $FromUserId == null) {
-            return $this->redirect(['inbox']);
-        }
-        if ($Type == 'Inbox') {
-            Mailbox::updateFromToReadStatus($FromUserId->id, $Id);
-            $Model = UserRequestOp::getMoreConversationInbox($Id, $FromUserId->id);
-        } else {
-            $Model = UserRequestOp::getMoreConversationSentBox($Id, $FromUserId->id);
-        }
-        if (count($Model)) {
+        $OtherUserId = User::getIdNo($uk); # Get User Using Registration_Number.
+        #var_dump($OtherUserId);
+        #CommonHelper::pr($OtherUserId);exit;
+        if (!Yii::$app->user->isGuest && $OtherUserId != NULL) {
+            if ($Type == 'Inbox') {
+                Mailbox::updateFromToReadStatus($OtherUserId, $Id); # Update Read Stats 'Yes'.
+                $MessageModel = UserRequestOp::getMoreConversationInbox($Id, $OtherUserId);
+            } else {
+                $MessageModel = UserRequestOp::getMoreConversationSentBox($Id, $OtherUserId);
+            }
+            $UserModel = User::getUserFullInfromation($OtherUserId);
             $OtherInformationArray = array();
-            list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $FromUserId->id);
-            $OtherInformationArray[0]['MailTotalCount'] = $TotalMailCount;
-            $OtherInformationArray[0]['LastMailDate'] = $LastMail->dtadded;
-            $OtherInformationArray[0]['LastMailReadStatus'] = $LastMail->read_status;
+            if (count($MessageModel)) {
+                list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $OtherUserId);
+                $OtherInformationArray[0]['MailTotalCount'] = $TotalMailCount;
+                $OtherInformationArray[0]['LastMailDate'] = $LastMail->dtadded;
+                $OtherInformationArray[0]['LastMailReadStatus'] = $LastMail->read_status;
+            } else {
+                $HandleErrors = array('NoDataFound');
+            }
             return array(
-                $Model,
-                $OtherInformationArray
+                $UserModel, # User Information
+                $MessageModel, # Message Information
+                $OtherInformationArray, # Last Message Information
+                $HandleErrors, # Handel Errors
             );
         } else {
-            $HandleArray = array('NoDataFound');
             return array(
-                $Model,
-                $HandleArray,
+                false
             );
         }
-
     }
 
     public function getLastMailInfoAndUnreadMailCount($Id, $ToUserId)
