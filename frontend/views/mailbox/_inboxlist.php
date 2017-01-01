@@ -12,24 +12,15 @@ $model = $model['model'];*/
 ?>
 <div class="tab-pane fade in active page-wrap-tab" id="all">
     <?php if (count($ModelBox) && $Type == 'Inbox') {
-
-        foreach ($ModelBox as $Key => $Value) {
-            if ($Value->from_user_id == $Id) {
-                $ModelInfo = $Value->toUserInfo;
-            } else {
-                $ModelInfo = $Value->fromUserInfo;
-            }
+        foreach ($OtherInformationArray as $Key => $Value) {
+            $ModelInfo = $Value['ModelInfo'];
+            $FId = $Value['ModelInfo']->id;
             ?>
-            <ul class="list-group" id="list_all_<?= $ModelInfo->id ?>">
-                <li class="list-group-item <?= ($OtherInformationArray[$ModelInfo->id]['LastMailReadStatus'] == 'No') ? 'kp_ur' : ''; ?>">
+            <ul class="list-group" id="list_all_">
+                <li class="list-group-item <?= ($Value['LastMailReadStatus'] == 'No') ? 'kp_ur' : ''; ?>">
                     <div class="thread-control">
                         <p class="text-muted">
-                            <?php /*if ($Value->send_request_status_from_to == 'Yes') { */ ?><!--
-                                <?/*= CommonHelper::DateTime($Value->date_send_request_from_to, 26); */ ?>
-                            <?php /*} else { */ ?>
-                                <?/*= CommonHelper::DateTime($Value->date_send_request_to_from, 26); */ ?>
-                            --><?php /*} */ ?>
-                            <?= CommonHelper::DateTime($OtherInformationArray[$ModelInfo->id]['LastMailDate'], 26); ?>
+                            <?= CommonHelper::DateTime($Value['LastMailDate'], 26); ?>
                             <a href="#" data-toggle="modal"
                                data-target="#del"><i
                                     class="fa fa-trash" aria-hidden="true"></i></a></p>
@@ -43,8 +34,7 @@ $model = $model['model'];*/
                             </div>
                         </div>
                         <div class="box-inbox pull-left">
-                            <?= Html::img(CommonHelper::getPhotos('USER', $ModelInfo->id, "75" . $ModelInfo->propic, 75, '', 'Yes'), ['width' => '65', 'height' => '', 'alt' => 'Profile Pic', 'class' => '']); ?>
-
+                            <?= Html::img(CommonHelper::getPhotos('USER', $FId, "75" . $ModelInfo->propic, 75, '', 'Yes'), ['width' => '65', 'height' => '', 'alt' => 'Profile Pic', 'class' => '']); ?>
                         </div>
                         <div class="box-inbox3 pull-right">
                             <p class="name">
@@ -86,12 +76,10 @@ $model = $model['model'];*/
                                     data-toggle="modal">Send Mail
                             </button>
                             --><?php /*} */ ?>
-                            <?php if ($NotInterest != 'NOT-INTERESTED') { ?>
-                                <a href="<?= CommonHelper::getMailBoxUrl($ModelInfo->Registration_Number, 1) ?>"
-                                   class="btn btn-info pull-right">
-                                    <?= ($OtherInformationArray[$ModelInfo->id]['MailTotalCount'] == 1) ? 'View conversation' : '+' . $OtherInformationArray[$ModelInfo->id]['MailTotalCount'] . ' more conversation'; ?>
-                                </a>
-                            <?php } ?>
+                            <a href="<?= CommonHelper::getMailBoxUrl($ModelInfo->Registration_Number, 1) ?>"
+                               class="btn btn-info pull-right">
+                                <?= ($Value['MailTotalCount'] == 1) ? 'View conversation' : '+' . $Value['MailTotalCount'] . ' more conversation'; ?>
+                            </a>
                         </div>
                         <div class="clearfix"></div>
                         <div></div>

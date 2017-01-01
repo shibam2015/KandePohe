@@ -283,8 +283,7 @@ class MailboxController extends Controller
                 }
             }
         }
-        #CommonHelper::pr($OtherInformationArray);exit;
-        return $this->render('all',
+        return $this->render('_inboxlist',
             [
                 'Id' => $Id,
                 'ModelBox' => $ModelBox,
@@ -302,7 +301,7 @@ class MailboxController extends Controller
         }
         $Id = Yii::$app->user->identity->id;
         if ($Type == 'Inbox') {
-            $ModelBox = UserRequestOp::getInboxAcceptedList($Id, 10);
+            $ModelBox = Mailbox::getInboxAcceptedList($Id, 10);
         } else {
             #$ModelBox = UserRequestOp::getSendBoxNweList($Id, 10);
         }
@@ -317,8 +316,15 @@ class MailboxController extends Controller
             $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
             $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
             $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
+            if ($Type == 'Inbox') {
+                if ($Value->from_user_id == $Id) {
+                    $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->toUserInfo;
+                } else {
+                    $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->fromUserInfo;
+                }
+            }
         }
-        return $this->render('inboxlist',
+        return $this->render('_inboxlist',
             [
                 'Id' => $Id,
                 'ModelBox' => $ModelBox,

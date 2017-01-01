@@ -73,13 +73,12 @@ class Mailbox extends \common\models\base\baseMailbox
         if ($Limit == '') {
             $Limit = 0;
         }
-        return $LastMessage = Static::find()
+        return Static::find()
             ->where(['to_user_id' => $Id])
             ->limit($Limit)
             ->groupBy(['to_user_id', 'from_user_id'])
             ->all();
         #->orderBy(['MailId' => SORT_DESC])->all();
-        #return Static::findBySql($sql)->all();
     }
 
     public static function getInboxNewList($Id, $Limit = '')
@@ -88,13 +87,27 @@ class Mailbox extends \common\models\base\baseMailbox
         if ($Limit == '') {
             $Limit = 0;
         }
-        return $LastMessage = Static::find()
+        return Static::find()
             ->where(['to_user_id' => $Id])
+            ->andWhere(['!=', 'from_user_id', $Id])
+            ->andwhere(['read_status' => 'NO'])
             ->limit($Limit)
             ->groupBy(['to_user_id', 'from_user_id'])
             ->all();
-        #->orderBy(['MailId' => SORT_DESC])->all();
-        #return Static::findBySql($sql)->all();
+    }
+
+    public static function getInboxAcceptedList($Id, $Limit = '')
+    {
+        $WhereLimit = '';
+        if ($Limit == '') {
+            $Limit = 0;
+        }
+        return Static::find()
+            ->where(['from_user_id' => $Id])
+            ->andwhere(['msg_type' => 'AcceptInterest'])
+            ->limit($Limit)
+            ->groupBy(['to_user_id', 'from_user_id'])
+            ->all();
     }
 
     /**
