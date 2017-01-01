@@ -85,8 +85,9 @@ use yii\helpers\Url;
                                         Replied</a></li>
                                 <li class="nav-tabs-menu accepted"><a href="#accepted" data-toggle="tab">Accepted</a>
                                 </li>
-                                <li><a href="#replied" data-toggle="tab">Replied</a></li>
-                                <li><a href="#notinterested" data-toggle="tab">Not Interested</a></li>
+                                <li class="nav-tabs-menu replied"><a href="#replied" data-toggle="tab">Replied</a></li>
+                                <li class="nav-tabs-menu notinterested"><a href="#notinterested" data-toggle="tab">Not
+                                        Interested</a></li>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-page">

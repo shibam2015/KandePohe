@@ -57,6 +57,21 @@ class Mailbox extends \common\models\base\baseMailbox
         return static::updateAll(array('read_status' => 'Yes'), 'from_user_id="' . $FromUserId . '" AND to_user_id="' . $ToUserId . '"');
     }
 
+    public static function getInboxList($Id, $Limit = '')
+    {
+        $WhereLimit = '';
+        if ($Limit == '') {
+            $Limit = 0;
+        }
+        return $LastMessage = Static::find()
+            ->where(['to_user_id' => $Id])
+            ->limit($Limit)
+            ->groupBy(['to_user_id', 'from_user_id'])
+            ->all();
+        #->orderBy(['MailId' => SORT_DESC])->all();
+        #return Static::findBySql($sql)->all();
+    }
+
     /**
      * @inheritdoc
      */
@@ -102,5 +117,15 @@ class Mailbox extends \common\models\base\baseMailbox
     public function getMailBox()
     {
         return $this->hasOne(Mailbox::className(), ['ID' => 'RaashiId']);
+    }
+
+    public function getFromUserInfo()
+    {
+        return $this->hasOne(User::className(), ['id' => 'from_user_id']);
+    }
+
+    public function getToUserInfo()
+    {
+        return $this->hasOne(User::className(), ['id' => 'to_user_id']);
     }
 }

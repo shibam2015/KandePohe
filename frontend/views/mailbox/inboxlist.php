@@ -86,10 +86,12 @@ $model = $model['model'];*/
                                     data-toggle="modal">Send Mail
                             </button>
                             --><?php /*} */ ?>
-                            <a href="<?= CommonHelper::getMailBoxUrl($ModelInfo->Registration_Number, 1) ?>"
-                               class="btn btn-info pull-right">
-                                <?= ($OtherInformationArray[$ModelInfo->id]['MailTotalCount'] == 1) ? 'View conversation' : '+' . $OtherInformationArray[$ModelInfo->id]['MailTotalCount'] . ' more conversation'; ?>
-                            </a>
+                            <?php if ($NotInterest != 'NOT-INTERESTED') { ?>
+                                <a href="<?= CommonHelper::getMailBoxUrl($ModelInfo->Registration_Number, 1) ?>"
+                                   class="btn btn-info pull-right">
+                                    <?= ($OtherInformationArray[$ModelInfo->id]['MailTotalCount'] == 1) ? 'View conversation' : '+' . $OtherInformationArray[$ModelInfo->id]['MailTotalCount'] . ' more conversation'; ?>
+                                </a>
+                            <?php } ?>
                         </div>
                         <div class="clearfix"></div>
                         <div></div>

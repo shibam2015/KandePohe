@@ -17,6 +17,7 @@ use Yii;
  * @property string $to_reg_no
  * @property string $status
  * @property string $msg_type
+ * @property string $read_status
  */
 class baseMailbox extends \yii\db\ActiveRecord
 {
@@ -36,8 +37,8 @@ class baseMailbox extends \yii\db\ActiveRecord
         return [
             [['from_user_id', 'to_user_id', 'MailContent', 'subject', 'dtadded', 'from_reg_no', 'to_reg_no'], 'required'],
             [['from_user_id', 'to_user_id'], 'integer'],
-            [['MailContent', 'subject', 'status', 'msg_type'], 'string'],
-            [['dtadded', 'msg_type'], 'safe'],
+            [['MailContent', 'subject', 'status', 'msg_type', 'read_status'], 'string'],
+            [['dtadded'], 'safe'],
             [['from_reg_no', 'to_reg_no'], 'string', 'max' => 15],
         ];
     }
@@ -53,11 +54,12 @@ class baseMailbox extends \yii\db\ActiveRecord
             'to_user_id' => 'To User ID',
             'MailContent' => 'Mail Content',
             'subject' => 'Subject',
-            'dtadded' => 'added',
+            'dtadded' => 'Dtadded',
             'from_reg_no' => 'From Reg No',
             'to_reg_no' => 'To Reg No',
             'status' => 'Status',
-            'msg_type' => 'Message Type',
+            'msg_type' => 'Msg Type',
+            'read_status' => 'Read Status',
         ];
     }
 }

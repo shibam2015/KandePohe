@@ -213,7 +213,7 @@ class MailboxController extends Controller
         }
         $Id = Yii::$app->user->identity->id;
         if ($Type == 'Inbox') {
-            $ModelBox = UserRequestOp::getInboxList($Id, 10);
+            $ModelBox = Mailbox::getInboxList($Id, 10);
         } else {
             $ModelBox = UserRequestOp::getSendBoxList($Id, 10);
         }
@@ -231,6 +231,13 @@ class MailboxController extends Controller
             $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
             $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
             $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
+            if ($Type == 'Inbox') {
+                if ($Value->from_user_id == $Id) {
+                    $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->toUserInfo;
+                } else {
+                    $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->fromUserInfo;
+                }
+            }
         }
         #CommonHelper::pr($OtherInformationArray);exit;
         return $this->render('all',
@@ -308,6 +315,76 @@ class MailboxController extends Controller
                 'OtherInformationArray' => $OtherInformationArray,
                 'MailUnreadCount' => 10,//$MailUnreadCount
                 'Type' => $Type,
+            ]
+        );
+    }
+
+    public function actionNotinterested($Type = 'Inbox')
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $Id = Yii::$app->user->identity->id;
+        if ($Type == 'Inbox') {
+            $ModelBox = UserRequestOp::getInboxDeclinedList($Id, 10);
+        } else {
+            #$ModelBox = UserRequestOp::getSendBoxNweList($Id, 10);
+        }
+        $OtherInformationArray = array();
+        foreach ($ModelBox as $Key => $Value) {
+            if ($Id == $Value->from_user_id) {
+                $ToUserId = $Value->to_user_id;
+            } else {
+                $ToUserId = $Value->from_user_id;
+            }
+            list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
+            $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
+            $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
+            $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
+        }
+        return $this->render('inboxlist',
+            [
+                'Id' => $Id,
+                'ModelBox' => $ModelBox,
+                'OtherInformationArray' => $OtherInformationArray,
+                'MailUnreadCount' => 10,//$MailUnreadCount
+                'Type' => $Type,
+                'NotInterest' => "NOT-INTERESTED"
+            ]
+        );
+    }
+
+    public function actionReplied($Type = 'Inbox')
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $Id = Yii::$app->user->identity->id;
+        if ($Type == 'Inbox') {
+            $ModelBox = UserRequestOp::getInboxRepliedList($Id, 10);
+        } else {
+            #$ModelBox = UserRequestOp::getSendBoxNweList($Id, 10);
+        }
+        $OtherInformationArray = array();
+        foreach ($ModelBox as $Key => $Value) {
+            if ($Id == $Value->from_user_id) {
+                $ToUserId = $Value->to_user_id;
+            } else {
+                $ToUserId = $Value->from_user_id;
+            }
+            list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
+            $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
+            $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
+            $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
+        }
+        return $this->render('inboxlist',
+            [
+                'Id' => $Id,
+                'ModelBox' => $ModelBox,
+                'OtherInformationArray' => $OtherInformationArray,
+                'MailUnreadCount' => 10,//$MailUnreadCount
+                'Type' => $Type,
+                'NotInterest' => "NOT-INTERESTED"
             ]
         );
     }

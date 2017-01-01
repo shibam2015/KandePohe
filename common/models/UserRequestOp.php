@@ -72,14 +72,16 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
             ->one();
     }
 
-    public static function getInboxList($id, $Limit = '')
+    public static function getInboxList($Id, $Limit = '')
     {
         $WhereLimit = '';
         if ($Limit != '') {
             $WhereLimit = ' LIMIT ' . $Limit;
+        } else {
+            $Limit = 0;
         }
         /*$sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.to_user_id = " . $id . " AND user_request_op.send_request_status_from_to != 'No' ) OR (user_request_op.from_user_id = " . $id . " AND user_request_op.send_request_status_to_from != 'No') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC " . $WhereLimit;*/
-        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID
+        /*$sql = "SELECT user_request_op.*, user.DOB, user.iHeightID
                   FROM user_request_op
                   LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')
                   JOIN mailbox on 1=1
@@ -91,8 +93,14 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
                          )
                          OR (mailbox.to_user_id = $id )
                     GROUP BY user_request_op.id
-                    ORDER BY user_request_op.id DESC " . $WhereLimit;
-        return Static::findBySql($sql)->all();
+                    ORDER BY user_request_op.id DESC " . $WhereLimit;*/
+        return $LastMessage = Static::find()
+            ->where(['to_user_id' => $Id])
+            ->limit($Limit)
+            ->all();
+
+        //->orderBy(['MailId' => SORT_DESC])->all();
+        #return Static::findBySql($sql)->all();
     }
 
     public static function getInboxNewList($id, $Limit = '')
@@ -139,6 +147,53 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
         #CommonHelper::pr(Static::findBySql($sql)->all());exit;
         return Static::findBySql($sql)->all();
     }
+
+    public static function getInboxRepliedList($id, $Limit = '')
+    {
+        $WhereLimit = '';
+        if ($Limit != '') {
+            $WhereLimit = ' LIMIT ' . $Limit;
+        }
+        echo $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID
+                  FROM user_request_op
+                  LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')
+                  JOIN mailbox ON 1=1
+                  WHERE
+                   (
+                           (user_request_op.to_user_id = " . $id . " AND user_request_op.send_request_status_from_to NOT IN ('No','Rejected'))
+                            OR
+                            (user_request_op.from_user_id = " . $id . " AND user_request_op.send_request_status_to_from NOT IN ('No','Rejected'))
+                         )
+                    OR (mailbox.to_user_id = $id )
+                  GROUP BY user_request_op.id
+                  ORDER BY user_request_op.id DESC " . $WhereLimit;
+        exit;
+        #CommonHelper::pr(Static::findBySql($sql)->all());exit;
+        return Static::findBySql($sql)->all();
+    }
+
+    public static function getInboxDeclinedList($id, $Limit = '')
+    {
+        $WhereLimit = '';
+        if ($Limit != '') {
+            $WhereLimit = ' LIMIT ' . $Limit;
+        }
+        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID
+                  FROM user_request_op
+                  LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')
+                  WHERE
+                   (
+                           (user_request_op.to_user_id = " . $id . " AND user_request_op.send_request_status_from_to = 'Rejected' )
+                            OR
+                            (user_request_op.from_user_id = " . $id . " AND user_request_op.send_request_status_to_from = 'Rejected')
+                         )
+
+                  GROUP BY user_request_op.id
+                  ORDER BY user_request_op.id DESC " . $WhereLimit;
+        #CommonHelper::pr(Static::findBySql($sql)->all());exit;
+        return Static::findBySql($sql)->all();
+    }
+
 
     public static function getMoreConversationInbox($Id, $ToUserId)
     {
