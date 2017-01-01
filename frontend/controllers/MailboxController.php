@@ -205,9 +205,10 @@ class MailboxController extends Controller
 
     public function getLastMailInfoAndUnreadMailCount($Id, $ToUserId)
     {
-        $LastMail = Mailbox::getLastMail($Id, $ToUserId);
+        #$LastMessageDetails = Mailbox::getLastMail($Id, $ToUserId);
+        $LastMessageDetails = Mailbox::getLastMailDetails($Id, $ToUserId);
         $TotalMailCount = Mailbox::getMailListCount($Id, $ToUserId);
-        return array($TotalMailCount, $LastMail);
+        return array($TotalMailCount, $LastMessageDetails);
 
     }
 
@@ -222,9 +223,47 @@ class MailboxController extends Controller
         } else {
             $ModelBox = UserRequestOp::getSendBoxList($Id, 10);
         }
-        #CommonHelper::pr($ModelBox);exit;
-        #$Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->limit(10)->all();
-        #$MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
+        $OtherInformationArray = array();
+        foreach ($ModelBox as $Key => $Value) {
+            if ($Id == $Value->from_user_id) {
+                $ToUserId = $Value->to_user_id;
+            } else {
+                $ToUserId = $Value->from_user_id;
+            }
+            list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
+            $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
+            $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
+            $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
+            if ($Type == 'Inbox') {
+                if ($Value->from_user_id == $Id) {
+                    $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->toUserInfo;
+                } else {
+                    $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->fromUserInfo;
+                }
+            }
+        }
+        return $this->render('all',
+            [
+                'Id' => $Id,
+                'ModelBox' => $ModelBox,
+                'OtherInformationArray' => $OtherInformationArray,
+                'MailUnreadCount' => 10,//$MailUnreadCount
+                'Type' => $Type,
+            ]
+        );
+    }
+
+    public function actionNew($Type = 'Inbox')
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $Id = Yii::$app->user->identity->id;
+        if ($Type == 'Inbox') {
+            $ModelBox = Mailbox::getInboxNewList($Id, 10);
+        } else {
+            #$ModelBox = UserRequestOp::getSendBoxNweList($Id, 10);
+        }
         $OtherInformationArray = array();
         foreach ($ModelBox as $Key => $Value) {
             if ($Id == $Value->from_user_id) {
@@ -246,40 +285,6 @@ class MailboxController extends Controller
         }
         #CommonHelper::pr($OtherInformationArray);exit;
         return $this->render('all',
-            [
-                'Id' => $Id,
-                'ModelBox' => $ModelBox,
-                'OtherInformationArray' => $OtherInformationArray,
-                'MailUnreadCount' => 10,//$MailUnreadCount
-                'Type' => $Type,
-            ]
-        );
-    }
-
-    public function actionNew($Type = 'Inbox')
-    {
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-        $Id = Yii::$app->user->identity->id;
-        if ($Type == 'Inbox') {
-            $ModelBox = UserRequestOp::getInboxNewList($Id, 10);
-        } else {
-            #$ModelBox = UserRequestOp::getSendBoxNweList($Id, 10);
-        }
-        $OtherInformationArray = array();
-        foreach ($ModelBox as $Key => $Value) {
-            if ($Id == $Value->from_user_id) {
-                $ToUserId = $Value->to_user_id;
-            } else {
-                $ToUserId = $Value->from_user_id;
-            }
-            list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
-            $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
-            $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
-            $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
-        }
-        return $this->render('inboxlist',
             [
                 'Id' => $Id,
                 'ModelBox' => $ModelBox,

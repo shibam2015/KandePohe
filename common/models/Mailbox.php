@@ -33,6 +33,16 @@ class Mailbox extends \common\models\base\baseMailbox
 
     }
 
+    public static function getLastMailDetails($Id, $ToUserId)
+    {
+        $LastMessageDetails = Static::find()
+            ->where(['from_user_id' => $ToUserId, 'to_user_id' => $Id])
+            #->orWhere(['from_user_id' => $Id, 'to_user_id' => $ToUserId])
+            ->orderBy(['MailId' => SORT_DESC])->one();
+        return $LastMessageDetails;
+
+    }
+
     public static function getMailList($Id, $ToUserId)
     {
         $LastMessage = Static::find()
@@ -72,9 +82,19 @@ class Mailbox extends \common\models\base\baseMailbox
         #return Static::findBySql($sql)->all();
     }
 
-    public static function getMoreConversation()
+    public static function getInboxNewList($Id, $Limit = '')
     {
-
+        $WhereLimit = '';
+        if ($Limit == '') {
+            $Limit = 0;
+        }
+        return $LastMessage = Static::find()
+            ->where(['to_user_id' => $Id])
+            ->limit($Limit)
+            ->groupBy(['to_user_id', 'from_user_id'])
+            ->all();
+        #->orderBy(['MailId' => SORT_DESC])->all();
+        #return Static::findBySql($sql)->all();
     }
 
     /**
