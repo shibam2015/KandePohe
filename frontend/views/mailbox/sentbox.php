@@ -66,14 +66,75 @@ use yii\helpers\Url;
                         <div class="col-sm-9 col-md-10">
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs">
-                                <li class="active nav-tabs-menu all"><a href="#all" data-toggle="tab">All</a></li>
+                                <li class="active nav-tabs-menu sentbox-all"><a href="#sentbox-all" data-toggle="tab">All</a>
+                                </li>
+                                <li class="active nav-tabs-menu sentbox-unread"><a href="#sentbox-unread"
+                                                                                   data-toggle="tab">Unread</a></li>
+                                <li class="active nav-tabs-menu readnotreolied"><a href="#readnotreolied"
+                                                                                   data-toggle="tab">Read and Not
+                                        Replied</a></li>
+                                <li class="active nav-tabs-menu sentbox-accepted"><a href="#sentbox-accepted"
+                                                                                     data-toggle="tab">Accepted</a></li>
+                                <li class="active nav-tabs-menu replied"><a href="#replied"
+                                                                            data-toggle="tab">Replied</a></li>
+                                <li class="active nav-tabs-menu notinterested"><a href="#notinterested"
+                                                                                  data-toggle="tab">Not Interested</a>
+                                </li>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-page">
                                 <div class="tab-content" id="tab-content">
-                                    <div class="tab-pane fade in active page-wrap-tab" id="all">
+                                    <div class="tab-pane fade in active page-wrap-tab" id="sentbox-all">
                                         <div class="text-center mrg-tp-20 mrg-lt-20"><p><i
                                                     class="fa fa-spinner fa-spin pink"></i> Loading...</p></div>
+                                    </div>
+                                    <div class="tab-pane fade in" id="unread">
+                                        <div class="list-group">
+                                            <div class="list-group-item">
+                                                <div class="notice kp_info"><p>There are no conversations with this
+                                                        label.</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade in" id="readnotreolied">
+                                        <div class="list-group">
+                                            <div class="list-group-item">
+                                                <div class="notice kp_info"><p>There are no conversations with this
+                                                        label.</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade in" id="sentbox-accepted">
+                                        <div class="list-group">
+                                            <div class="list-group-item">
+                                                <div class="notice kp_info"><p>There are no conversations with this
+                                                        label.</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade in" id="notinterested">
+                                        <div class="list-group">
+                                            <div class="list-group-item">
+                                                <div class="notice kp_info"><p>There are no conversations with this
+                                                        label.</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade in" id="replied">
+                                        <div class="list-group">
+                                            <div class="list-group-item">
+                                                <div class="notice kp_info"><p>There are no conversations with this
+                                                        label.</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade in" id="notinterested">
+                                        <div class="list-group">
+                                            <div class="list-group-item">
+                                                <div class="notice kp_info"><p>There are no conversations with this
+                                                        label.</p></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -159,14 +220,14 @@ $this->registerJs('
     $(window).bind("hashchange", function(e){
         newHash = window.location.hash.substring(1);
         if(newHash==""){
-        newHash = "all";
+        newHash = "sentbox-all";
         }
         if (newHash) {
             $mainContent
                 .find(".page-wrap-tab")
                 .fadeOut(1, function() {
                  $mainContent.html(loaderTab());
-                    var sentboxurl = newHash+"?Type=Sentbox";
+                    var sentboxurl = newHash;//+"?Type=Sentbox";
                     $mainContent.show().load(sentboxurl + " .page-wrap-tab", function(response, status, xhr) {
                     if ( status == "error" ) {
                         var msgSt = "' . Yii::$app->params['pageError'] . ' "+ xhr.status + " " + xhr.statusText;

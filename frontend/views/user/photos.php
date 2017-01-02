@@ -225,6 +225,8 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                     <?= Html::submitButton('CONTINUE', ['class' => 'btn btn-primary mrg-bt-10  pull-left', 'name' => 'CONTINUE']) ?>
 
                                                                     <?php ActiveForm::end();
+                                                                } else {
+                                                                    echo html::a('CONTINUE', ['user/dashboard'], ['data-method' => 'post', 'class' => 'btn btn-primary mrg-bt-10  pull-left']);
                                                                 } ?>
                                                             </div>
                                                         </div>

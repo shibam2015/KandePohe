@@ -212,6 +212,7 @@ class MailboxController extends Controller
 
     }
 
+    /* INBOX TAB Start */
     public function actionAll($Type = 'Inbox') #VS Inbox ALL Tab
     {
         if (Yii::$app->user->isGuest) {
@@ -416,6 +417,9 @@ class MailboxController extends Controller
             ]
         );
     }
+
+    /* INBOX TAB END */
+
 
     public function actionLastMsg($uk = '')
     {
@@ -630,62 +634,133 @@ class MailboxController extends Controller
 
     }
 
-    public function actionSentbox()
+
+    /* SENT BOX TAB Start */
+    public function actionSentbox() #VS SentBox
     {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         $Id = Yii::$app->user->identity->id;
-        #$Model = UserRequestOp::getSendBoxList($Id, 10);
-        #CommonHelper::pr($Model);exit;
-        #$Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->limit(10)->all();
-        #$MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
-
-        $MailArray = array();
-        /*foreach ($Model as $Key => $Value) {
-            #CommonHelper::pr($Value->id);exit;
-            $LastMail = Mailbox::find()->where(['from_user_id' => $Value->from_user_id, 'to_user_id' => $Id])->orderBy('MailId')->one();
-            $MailCount = Mailbox::find()->where(['from_user_id' => $Value->from_user_id, 'to_user_id' => $Id])->count();
-            $MailCount += Mailbox::find()->where(['from_user_id' => $Id, 'to_user_id' => $Value->from_user_id])->count();
-            $MailArray[$Value->id]['LastMsg'] = str_replace("#NAME#", $Value->fromUserInfo->fullName, $LastMail->MailContent);
-            $MailArray[$Value->id]['MsgCount'] = $MailCount;
-        }*/
         return $this->render('sentbox',
             [
-                #'Model' => $Model,
-                #'MailArray' => $MailArray,
+                'Id' => $Id,
+                'Model' => '',
+                'MailArray' => 10,
+                'MailUnreadCount' => 20,
+                'MainMenu' => 'SentBox'
+            ]
+        );
+    }
+
+    public function actionSentboxAll()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $Id = Yii::$app->user->identity->id;
+        $ModelBox = Mailbox::getSentboxAll($Id, 10);
+        #CommonHelper::pr($ModelBox);exit;
+        $OtherInformationArray = array();
+        foreach ($ModelBox as $Key => $Value) {
+            if ($Id == $Value->from_user_id) {
+                $ToUserId = $Value->to_user_id;
+            } else {
+                $ToUserId = $Value->from_user_id;
+            }
+            list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
+            $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
+            $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
+            $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
+            if ($Value->from_user_id == $Id) {
+                $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->toUserInfo;
+            } else {
+                $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->fromUserInfo;
+            }
+        }
+        return $this->render('_sentboxtab',
+            [
+                'Id' => $Id,
+                'ModelBox' => $ModelBox,
+                'OtherInformationArray' => $OtherInformationArray,
                 'MailUnreadCount' => 10,//$MailUnreadCount
                 'MainMenu' => 'SentBox'
             ]
         );
     }
 
-    public function actionAllSentBox()
+    public function actionSentboxUnread()
     {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         $Id = Yii::$app->user->identity->id;
-        $Model = UserRequestOp::getSendBoxList($Id, 10);
-        #CommonHelper::pr($Model);exit;
-        #$Model = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->limit(10)->all();
-        #$MailUnreadCount = UserRequest::find()->joinWith([fromUserInfo])->where(['to_user_id' => $Id, 'send_request_status' => 'Yes'])->count();
-
-        $MailArray = array();
-        /*foreach ($Model as $Key => $Value) {
-            #CommonHelper::pr($Value->id);exit;
-            $LastMail = Mailbox::find()->where(['from_user_id' => $Value->from_user_id, 'to_user_id' => $Id])->orderBy('MailId')->one();
-            $MailCount = Mailbox::find()->where(['from_user_id' => $Value->from_user_id, 'to_user_id' => $Id])->count();
-            $MailCount += Mailbox::find()->where(['from_user_id' => $Id, 'to_user_id' => $Value->from_user_id])->count();
-            $MailArray[$Value->id]['LastMsg'] = str_replace("#NAME#", $Value->fromUserInfo->fullName, $LastMail->MailContent);
-            $MailArray[$Value->id]['MsgCount'] = $MailCount;
-        }*/
-        return $this->render('all',
+        $ModelBox = Mailbox::getSentboxUnread($Id, 10);
+        #CommonHelper::pr($ModelBox);exit;
+        $OtherInformationArray = array();
+        foreach ($ModelBox as $Key => $Value) {
+            if ($Id == $Value->from_user_id) {
+                $ToUserId = $Value->to_user_id;
+            } else {
+                $ToUserId = $Value->from_user_id;
+            }
+            list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
+            $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
+            $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
+            $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
+            if ($Value->from_user_id == $Id) {
+                $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->toUserInfo;
+            } else {
+                $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->fromUserInfo;
+            }
+        }
+        return $this->render('_sentboxtab',
             [
-                'Model' => $Model,
-                'MailArray' => $MailArray,
+                'Id' => $Id,
+                'ModelBox' => $ModelBox,
+                'OtherInformationArray' => $OtherInformationArray,
+                'MailUnreadCount' => 10,//$MailUnreadCount
+                'MainMenu' => 'SentBox'
             ]
         );
     }
+
+    public function actionSentboxAccepted()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $Id = Yii::$app->user->identity->id;
+        $ModelBox = Mailbox::getSentboxAccepted($Id, 10);
+        #CommonHelper::pr($ModelBox);exit;
+        $OtherInformationArray = array();
+        foreach ($ModelBox as $Key => $Value) {
+            if ($Id == $Value->from_user_id) {
+                $ToUserId = $Value->to_user_id;
+            } else {
+                $ToUserId = $Value->from_user_id;
+            }
+            list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
+            $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
+            $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
+            $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
+            if ($Value->from_user_id == $Id) {
+                $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->toUserInfo;
+            } else {
+                $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->fromUserInfo;
+            }
+        }
+        return $this->render('_sentboxtab',
+            [
+                'Id' => $Id,
+                'ModelBox' => $ModelBox,
+                'OtherInformationArray' => $OtherInformationArray,
+                'MailUnreadCount' => 10,//$MailUnreadCount
+                'MainMenu' => 'SentBox'
+            ]
+        );
+    }
+
+    /* SENT BOX TAB END */
 
 }

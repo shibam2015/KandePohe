@@ -72,6 +72,7 @@ class Mailbox extends \common\models\base\baseMailbox
         return static::updateAll(array('read_status' => 'Yes'), 'from_user_id="' . $FromUserId . '" AND to_user_id="' . $ToUserId . '"');
     }
 
+    /* INBOX TAB START */
     public static function getInboxList($Id, $Limit = '')
     {
         $WhereLimit = '';
@@ -146,7 +147,60 @@ class Mailbox extends \common\models\base\baseMailbox
         $Data = Static::findBySql($Sql)->all();
         return $Data;
     }
+    /* INBOX TAB END  */
 
+    /* SENT TAB START */
+    public static function getSentboxAll($Id, $Limit = '')
+    {
+        $WhereLimit = '';
+        if ($Limit == '') {
+            $Limit = 0;
+        }
+        $Sql = "SELECT * FROM
+                  (SELECT *
+                      FROM mailbox
+                      WHERE
+                          from_user_id = $Id
+		              GROUP BY from_user_id, to_user_id
+                  )AS records
+                ORDER BY dtadded DESC";
+        $Data = Static::findBySql($Sql)->all();
+        return $Data;
+    }
+
+    public static function getSentboxUnread($Id, $Limit = '')
+    {
+        $WhereLimit = '';
+        if ($Limit == '') {
+            $Limit = 0;
+        }
+        $Sql = "SELECT * FROM
+                  (SELECT *
+                      FROM mailbox
+                      WHERE
+                          from_user_id = $Id AND read_status = 'No'
+		              GROUP BY from_user_id, to_user_id
+                  )AS records
+                ORDER BY dtadded DESC";
+        $Data = Static::findBySql($Sql)->all();
+        return $Data;
+    }
+
+    public static function getSentboxAccepted($Id, $Limit = '')
+    {
+        $WhereLimit = '';
+        if ($Limit == '') {
+            $Limit = 0;
+        }
+        $Data = Static::find()
+            ->where(['to_user_id' => $Id])
+            ->andwhere(['msg_type' => self::ACCEPT_INTEREST])
+            ->limit($Limit)
+            ->groupBy(['to_user_id', 'from_user_id'])
+            ->all();
+        return $Data;
+    }
+    /* SENT TAB END */
     /**
      * @inheritdoc
      */
