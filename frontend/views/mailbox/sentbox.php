@@ -75,7 +75,7 @@ use yii\helpers\Url;
                                         Replied</a></li>
                                 <li class="active nav-tabs-menu sentbox-accepted"><a href="#sentbox-accepted"
                                                                                      data-toggle="tab">Accepted</a></li>
-                                <li class="active nav-tabs-menu replied"><a href="#replied"
+                                <li class="active nav-tabs-menu sentbox-replied"><a href="#sentbox-replied"
                                                                             data-toggle="tab">Replied</a></li>
                                 <li class="active nav-tabs-menu sentbox-declined"><a href="#sentbox-declined"
                                                                                   data-toggle="tab">Not Interested</a>
@@ -120,7 +120,7 @@ use yii\helpers\Url;
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade in" id="replied">
+                                    <div class="tab-pane fade in" id="sentbox-replied">
                                         <div class="list-group">
                                             <div class="list-group-item">
                                                 <div class="notice kp_info"><p>There are no conversations with this

@@ -215,6 +215,21 @@ class Mailbox extends \common\models\base\baseMailbox
             ->all();
         return $Data;
     }
+
+    public static function getSentboxReplied($Id, $Limit = '')
+    {
+        $WhereLimit = '';
+        if ($Limit == '') {
+            $Limit = 0;
+        }
+        $Data = Static::find()
+            ->where(['to_user_id' => $Id])
+            #->andwhere(['read_status' => 'Yes'])
+            ->limit($Limit)
+            ->groupBy(['to_user_id', 'from_user_id'])
+            ->all();
+        return $Data;
+    }
     /* SENT TAB END */
     /**
      * @inheritdoc

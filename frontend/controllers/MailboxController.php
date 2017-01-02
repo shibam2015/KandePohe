@@ -653,7 +653,7 @@ class MailboxController extends Controller
         );
     }
 
-    public function actionSentboxAll()
+    public function actionSentboxAll() #VS Send Box All Tab
     {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -689,7 +689,7 @@ class MailboxController extends Controller
         );
     }
 
-    public function actionSentboxUnread()
+    public function actionSentboxUnread() #VS Send Box Unread Tab
     {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -725,7 +725,7 @@ class MailboxController extends Controller
         );
     }
 
-    public function actionSentboxAccepted()
+    public function actionSentboxAccepted() #VS Send Box Accepted Tab
     {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -761,7 +761,7 @@ class MailboxController extends Controller
         );
     }
 
-    public function actionSentboxDeclined()
+    public function actionSentboxDeclined() #VS Send Box Declined Tab
     {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -769,6 +769,41 @@ class MailboxController extends Controller
         $Id = Yii::$app->user->identity->id;
         $ModelBox = Mailbox::getSentboxDeclined($Id, 10);
         #CommonHelper::pr($ModelBox);exit;
+        $OtherInformationArray = array();
+        foreach ($ModelBox as $Key => $Value) {
+            if ($Id == $Value->from_user_id) {
+                $ToUserId = $Value->to_user_id;
+            } else {
+                $ToUserId = $Value->from_user_id;
+            }
+            list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
+            $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
+            $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
+            $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
+            if ($Value->from_user_id == $Id) {
+                $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->toUserInfo;
+            } else {
+                $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->fromUserInfo;
+            }
+        }
+        return $this->render('_sentboxtab',
+            [
+                'Id' => $Id,
+                'ModelBox' => $ModelBox,
+                'OtherInformationArray' => $OtherInformationArray,
+                'MailUnreadCount' => 10,//$MailUnreadCount
+                'MainMenu' => 'SentBox'
+            ]
+        );
+    }
+
+    public function actionSentboxReplied() #VS Send Box Repliedd Tab
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $Id = Yii::$app->user->identity->id;
+        $ModelBox = Mailbox::getSentboxReplied($Id, 10);
         $OtherInformationArray = array();
         foreach ($ModelBox as $Key => $Value) {
             if ($Id == $Value->from_user_id) {
