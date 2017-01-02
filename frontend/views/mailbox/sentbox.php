@@ -77,7 +77,7 @@ use yii\helpers\Url;
                                                                                      data-toggle="tab">Accepted</a></li>
                                 <li class="active nav-tabs-menu replied"><a href="#replied"
                                                                             data-toggle="tab">Replied</a></li>
-                                <li class="active nav-tabs-menu notinterested"><a href="#notinterested"
+                                <li class="active nav-tabs-menu sentbox-declined"><a href="#sentbox-declined"
                                                                                   data-toggle="tab">Not Interested</a>
                                 </li>
                             </ul>
@@ -128,7 +128,7 @@ use yii\helpers\Url;
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade in" id="notinterested">
+                                    <div class="tab-pane fade in" id="sentbox-declined">
                                         <div class="list-group">
                                             <div class="list-group-item">
                                                 <div class="notice kp_info"><p>There are no conversations with this

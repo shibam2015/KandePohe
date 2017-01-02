@@ -200,6 +200,21 @@ class Mailbox extends \common\models\base\baseMailbox
             ->all();
         return $Data;
     }
+
+    public static function getSentboxDeclined($Id, $Limit = '')
+    {
+        $WhereLimit = '';
+        if ($Limit == '') {
+            $Limit = 0;
+        }
+        $Data = Static::find()
+            ->where(['to_user_id' => $Id])
+            ->andwhere(['msg_type' => self::DECLINE_INTEREST])
+            ->limit($Limit)
+            ->groupBy(['to_user_id', 'from_user_id'])
+            ->all();
+        return $Data;
+    }
     /* SENT TAB END */
     /**
      * @inheritdoc
