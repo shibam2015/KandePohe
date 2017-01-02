@@ -418,6 +418,45 @@ class MailboxController extends Controller
         );
     }
 
+    public function actionRead($Type = 'Inbox')#VS Inbox REPLIED Tab
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $Id = Yii::$app->user->identity->id;
+
+        $ModelBox = array();//Mailbox::getInboxRepliedList($Id, 10);
+
+        $OtherInformationArray = array();
+        /*foreach ($ModelBox as $Key => $Value) {
+            if ($Id == $Value->from_user_id) {
+                $ToUserId = $Value->to_user_id;
+            } else {
+                $ToUserId = $Value->from_user_id;
+            }
+            list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
+            $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
+            $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
+            $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
+            if ($Type == 'Inbox') {
+                if ($Value->from_user_id == $Id) {
+                    $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->toUserInfo;
+                } else {
+                    $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->fromUserInfo;
+                }
+            }
+        }*/
+        return $this->render('_inboxlist',
+            [
+                'Id' => $Id,
+                'ModelBox' => $ModelBox,
+                'OtherInformationArray' => $OtherInformationArray,
+                'MailUnreadCount' => 10,//$MailUnreadCount
+                'Type' => $Type,
+            ]
+        );
+    }
+
     /* INBOX TAB END */
 
 
