@@ -222,12 +222,33 @@ class Mailbox extends \common\models\base\baseMailbox
         if ($Limit == '') {
             $Limit = 0;
         }
-        $Data = Static::find()
-            ->where(['to_user_id' => $Id])
-            #->andwhere(['read_status' => 'Yes'])
-            ->limit($Limit)
-            ->groupBy(['to_user_id', 'from_user_id'])
-            ->all();
+        $Sql = "SELECT * FROM
+                  (SELECT *
+                      FROM mailbox
+                      WHERE
+                          to_user_id = $Id
+		              GROUP BY from_user_id, to_user_id
+                  )AS records
+                ORDER BY dtadded DESC";
+        $Data = Static::findBySql($Sql)->all();
+        return $Data;
+    }
+
+    public static function getSentboxReadNotReplied($Id, $Limit = '')
+    {
+        $WhereLimit = '';
+        if ($Limit == '') {
+            $Limit = 0;
+        }
+        $Sql = "SELECT * FROM
+                  (SELECT *
+                      FROM mailbox
+                      WHERE
+                          to_user_id = $Id AND read_status = 'Yes'
+		              GROUP BY from_user_id, to_user_id
+                  )AS records
+                ORDER BY dtadded DESC";
+        $Data = Static::findBySql($Sql)->all();
         return $Data;
     }
     /* SENT TAB END */

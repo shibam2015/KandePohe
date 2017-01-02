@@ -797,13 +797,48 @@ class MailboxController extends Controller
         );
     }
 
-    public function actionSentboxReplied() #VS Send Box Repliedd Tab
+    public function actionSentboxReplied() #VS Send Box Replied Tab
     {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         $Id = Yii::$app->user->identity->id;
         $ModelBox = Mailbox::getSentboxReplied($Id, 10);
+        $OtherInformationArray = array();
+        foreach ($ModelBox as $Key => $Value) {
+            if ($Id == $Value->from_user_id) {
+                $ToUserId = $Value->to_user_id;
+            } else {
+                $ToUserId = $Value->from_user_id;
+            }
+            list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
+            $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
+            $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
+            $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;
+            if ($Value->from_user_id == $Id) {
+                $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->toUserInfo;
+            } else {
+                $OtherInformationArray[$ToUserId]['ModelInfo'] = $Value->fromUserInfo;
+            }
+        }
+        return $this->render('_sentboxtab',
+            [
+                'Id' => $Id,
+                'ModelBox' => $ModelBox,
+                'OtherInformationArray' => $OtherInformationArray,
+                'MailUnreadCount' => 10,//$MailUnreadCount
+                'MainMenu' => 'SentBox'
+            ]
+        );
+    }
+
+    public function actionSentboxReadNotReplied() #VS Send Box Read-not-replied Tab
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $Id = Yii::$app->user->identity->id;
+        $ModelBox = Mailbox::getSentboxReadNotReplied($Id, 10);
         $OtherInformationArray = array();
         foreach ($ModelBox as $Key => $Value) {
             if ($Id == $Value->from_user_id) {

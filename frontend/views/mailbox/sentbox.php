@@ -70,7 +70,8 @@ use yii\helpers\Url;
                                 </li>
                                 <li class="active nav-tabs-menu sentbox-unread"><a href="#sentbox-unread"
                                                                                    data-toggle="tab">Unread</a></li>
-                                <li class="active nav-tabs-menu readnotreolied"><a href="#readnotreolied"
+                                <li class="active nav-tabs-menu sentbox-read-not-replied"><a
+                                        href="#sentbox-read-not-replied"
                                                                                    data-toggle="tab">Read and Not
                                         Replied</a></li>
                                 <li class="active nav-tabs-menu sentbox-accepted"><a href="#sentbox-accepted"
