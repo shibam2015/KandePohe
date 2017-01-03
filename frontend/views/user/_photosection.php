@@ -332,9 +332,11 @@ $(my_form_id).on( "submit", function(event) {
         $(document).on("click",".gallery-popup",function(e){
             $("#photo-gallery").html("");
             $(".photo-popup-loader").show();
+            setTimeout(function(){
             var formData = new FormData();
             formData.append( "PhotoSetType", $(this).data("item"));
             commonRequest("' . Url::to(['user/photo-pop-up']) . '","#photo-gallery",formData);
+            }, 500);
         });
    ');
 
