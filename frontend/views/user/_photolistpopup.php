@@ -42,7 +42,7 @@ use common\components\CommonHelper;
                         </div>
                         <?php } else { ?>
                             <div class="hovertool<?= ($V->eStatus == 'Approve') ? '' : ' img-blur' ?>">
-                                <a class="<?= $SELECTED ?><?= ($V->eStatus == 'Approve') ? 'cover_profile_set' : '' ?>"
+                                <a class="<?= $SELECTED ?> <?= ($V->eStatus == 'Approve') ? 'cover_profile_set' : '' ?>"
                                    data-toggle="tooltip" data-placement="top"
                                    href="javascript:void(0)"
                                     <?php if ($V->eStatus == 'Approve') { ?>
