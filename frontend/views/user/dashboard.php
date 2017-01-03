@@ -30,19 +30,19 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-4 col-md-3">
+                            <div class="browse-photo">
+                                <form action="" method="post" enctype="multipart/form-data"
+                                      id="upload_form">
+                                    <input name="__files[]" id="file_browse" type="file"
+                                           multiple class="fileupload"/>
+                                </form>
+                            </div>
                             <div class="bg-white">
                                 <div class="radical-progress-wrapper">
                                     <div class="panel-body">
                                         <div class="profile-header-container">
                                             <div class="profile-header-img">
                                                 <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes'), ['width' => '200', 'height' => '200', 'alt' => 'Profile Photo', 'class' => 'img-circle mainpropic']); ?>
-                                                <div>
-                                                    <form action="" method="post" enctype="multipart/form-data"
-                                                          id="upload_form">
-                                                        <input name="__files[]" id="file_browse" type="file"
-                                                               multiple class="fileupload"/>
-                                                    </form>
-                                                </div>
                                                 <!-- badge -->
                                                 <div class="rank-label-container img-circle">
                                                     <div class="dropdown">
@@ -55,7 +55,8 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                    class="gallery-popup"
                                                                    data-target="#photo">Choose from My Photos</a></li>
                                                             <li><a href="javascript:void(0)"
-                                                                   class="file_browse_wrapper">Upload Photo</a></li>
+                                                                   class="file_browse_wrapper">Upload Photo</a>
+                                                            </li>
                                                             <li><a href="javascript:void(0)">Reposition</a></li>
                                                             <li><a href="javascript:void(0)"
                                                                    class="_profile-photo-remove">Delete Photo</a></li>

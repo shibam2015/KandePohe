@@ -417,3 +417,14 @@ img.selected {
 .send-mail-btn {
     width: 100% !important;
 }
+
+.browse-photo {
+    display: none;
+    margin-top: 53px;
+    width: 0;
+    position: absolute;
+}
+
+.fileupload {
+    width: 0px;
+}
