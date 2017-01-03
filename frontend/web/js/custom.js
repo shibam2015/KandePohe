@@ -543,9 +543,11 @@ function commonRequest(url, htmlId, dataArr) {
         cache: false,
         processData: false,
         success: function (res) {
+            $(".photo-popup-loader").hide();
             var dataObj = JSON.parse(res);
             $(htmlId).html(dataObj.HtmlOutput);
             lightBox();
+
         }
     });
 }

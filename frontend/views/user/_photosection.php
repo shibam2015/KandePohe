@@ -17,12 +17,17 @@ use yii\helpers\Url;
                     </button>
                     <h2 class="text-center">My Photo Gallery</h2>
                 </div>
-                <div class="modal-body photo-gallery" id="photo-gallery">
-                    <div>
+                <div class="modal-body photo-gallery">
+                    <div class="mrg-tp-20 text-center photo-popup-loader">
+                        <div class="row">
+                            <i class="fa fa-spinner fa-spin pink"></i> Loading...
+                        </div>
+                    </div>
+                    <div id="photo-gallery">
                         <?php Pjax::begin(['id' => 'my_gallery', 'enablePushState' => false]); ?>
                         <div class="choose-photo mrg-tp-20 text-center">
                             <div class="row" id="profile_list_popup">
-                                <i class="fa fa-spinner fa-spin pink"></i> Loading...
+
                             </div>
                         </div>
                         <?php Pjax::end(); ?>
@@ -325,10 +330,11 @@ $(my_form_id).on( "submit", function(event) {
     });
 
         $(document).on("click",".gallery-popup",function(e){
+            $("#photo-gallery").html("");
+            $(".photo-popup-loader").show();
             var formData = new FormData();
             formData.append( "PhotoSetType", $(this).data("item"));
             commonRequest("' . Url::to(['user/photo-pop-up']) . '","#photo-gallery",formData);
-            //commonRequest("' . Url::to(['user/photo-pop-up']) . '","#photo-gallery","1");
         });
    ');
 
