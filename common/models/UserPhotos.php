@@ -56,9 +56,10 @@ class UserPhotos extends \common\models\base\baseUserPhotos
         ];
     }
 
-    public function findByUserId($iUser_ID)
+    public function findByUserId($iUser_ID, $Limit = 0)
     {
-        return static::find()->where(['iUser_ID' => $iUser_ID])->orderBy(['iPhoto_ID' => SORT_DESC])->all();
+        if ($Limit == 0) $Limit = Yii::$app->params['total_files_allowed'];
+        return static::find()->where(['iUser_ID' => $iUser_ID])->limit($Limit)->orderBy(['iPhoto_ID' => SORT_DESC])->all();
     }
 
     public function totalUploadPhotos($iUser_ID)

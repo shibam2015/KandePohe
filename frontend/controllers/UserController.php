@@ -145,14 +145,15 @@ class UserController extends Controller
         $id = Yii::$app->user->identity->id;
         $model = User::find()->joinWith([countryName, stateName, cityName, height, maritalStatusName, talukaName, districtName, gotraName, subCommunityName, communityName, religionName, educationLevelName, communityName, workingWithName, workingAsName, dietName, fatherStatus])->where(['id' => $id])->one();
         $USER_PHOTO_MODEL = new  UserPhotos();
-        $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
+        $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id, 6);
+        $UserTotalPhotoCount = $USER_PHOTO_MODEL->findByUserId($id);
         $COVER_PHOTO = CommonHelper::getCoverPhotos($TYPE = 'USER', $id, $model->cover_photo);
         $TAG_LIST = Tags::find()->orderBy('rand()')->all();   //orderBy(['rand()' => SORT_DESC]);
         $TAG_LIST_USER = UserTag::find()->joinWith([tagName])->where(['iUser_Id' => $id])->orderBy(['Name' => SORT_ASC])->all();
         $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
         list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, $id, 3);
         return $this->render('my-profile',
-            ['model' => $model, 'photo_model' => $USER_PHOTOS_LIST, 'COVER_PHOTO' => $COVER_PHOTO, 'TAG_LIST' => $TAG_LIST, 'TAG_LIST_USER' => $TAG_LIST_USER, 'SimilarProfile' => $SimilarProfile, 'tab' => $tab]
+            ['model' => $model, 'UserTotalPhotoCount' => $UserTotalPhotoCount, 'photo_model' => $USER_PHOTOS_LIST, 'COVER_PHOTO' => $COVER_PHOTO, 'TAG_LIST' => $TAG_LIST, 'TAG_LIST_USER' => $TAG_LIST_USER, 'SimilarProfile' => $SimilarProfile, 'tab' => $tab]
 
         );
     }

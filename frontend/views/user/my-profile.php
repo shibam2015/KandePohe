@@ -243,22 +243,28 @@ if (!Yii::$app->user->isGuest) {
                                             </div>
                                         </div>
                                         <div class="divider"></div>
-                                        <?php if (count($photo_model) > 1) { ?>
+                                        <?php if (count($UserTotalPhotoCount) > 1) { ?>
                                             <div class="panel no-border panel-default panel-friends">
                                                 <div class="panel-heading">
                                                     <h3 class="heading-xs"> Photos <span
-                                                            class="text-danger">(<?= count($photo_model) ?>)</span></h3>
+                                                            class="text-danger">(<?= count($UserTotalPhotoCount) ?>
+                                                            )</span></h3>
                                                 </div>
                                                 <div class="panel-body text-center">
                                                     <ul class="friends">
                                                         <?php foreach ($photo_model as $K => $V) { ?>
-                                                            <li><a href="javascript:void(0)">
+                                                            <li class="hovertool<?= ($V->eStatus == 'Approve') ? '' : ' img-blur' ?>">
+                                                                <a <?= ($V->eStatus == 'Approve') ? ' profile_set_kp set_profile_photo' : '' ?>
+                                                                    href="javascript:void(0)">
                                                                     <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 75), ['width' => 75, 'height' => 75, 'class' => 'img-responsive tip', 'alt' => $V['File_Name'] . $K, 'style' => 'height: 75px;']); ?>
-                                                                </a></li>
+                                                                </a>
+                                                            </li>
                                                         <?php } ?>
                                                     </ul>
                                                     <span class="pull-right"><a href="#" data-toggle="modal"
-                                                                                data-target="#photo">View all photos</a></span>
+                                                                                data-target="#photo"
+                                                                                class="gallery-popup">View all
+                                                            photos</a></span>
                                                 </div>
                                             </div>
                                         <?php } ?>
