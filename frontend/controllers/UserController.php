@@ -2134,6 +2134,7 @@ class UserController extends Controller
         $UserPhotoList = $UserPhoto->findByUserId($Id);
         $myModel = [
             'model' => $UserPhotoList,
+            'PhotoSetType' => Yii::$app->request->post('PhotoSetType'),
         ];
         $HtmlOutput = $this->renderAjax('_photolistpopup', $myModel);
         $Output = array("HtmlOutput" => $HtmlOutput);

@@ -107,7 +107,7 @@ use yii\helpers\Url;
                                         <input type="hidden" name="image_id" value="" id="image_id"/>
 
                                         <div id='preview-avatar-profile' class="photo-kp-crop">
-                                        <img class="img-responsive preview" id='photov' width="" alt="">
+                                            <img class="img-responsive preview" id='photov' width="" alt="">
                                         </div>
                                     </form>
                                 </div>
@@ -325,10 +325,7 @@ $(my_form_id).on( "submit", function(event) {
     });
 
         $(document).on("click",".gallery-popup",function(e){
-            var formData = new FormData();
-            formData.append( "PhotoSetType", $(this).data("item"));
-            commonRequest("' . Url::to(['user/photo-pop-up']) . '","#photo-gallery",formData);
-            //commonRequest("' . Url::to(['user/photo-pop-up']) . '","#photo-gallery","1");
+            commonRequest("' . Url::to(['user/photo-pop-up']) . '","#photo-gallery","1");
         });
    ');
 

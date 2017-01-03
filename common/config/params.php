@@ -33,29 +33,13 @@ return [
     'photoCropAreaSelection' => 'Please first select photo portion !',
 
 
-    'total_files_allowed' => 12,
-    'max_file_size' => 104857600, // 100 MB (1 MB = 1048576 Bytes)
-    'maxWidth' => 500,
-    'thumbnailPrefix' => 'thumb_',
-    'profilePrefix' => '_profile_',
-    'allowed_file_types' => "'image/png', 'image/gif', 'image/jpeg', 'image/pjpeg'",
-    'browserFileSupportError' => 'Your browser does not support new File API! Please upgrade.',
-    'fileUploadSize' => 'You are trying to upload photos more than limit.',
-    'fileUnsoupportedType' => 'You are trying to upload unsupported file type.',
-    'profilePhotoFolder' => 'profile',
+
     'noRecordsFoundInShortList' => 'There are no record found in your short list.',
 
 
-    'uploadPhotoListWait' => 'Uploading Photos... Please Wait !',
-    'uploadPhotoLimit' => 5, // At a time user can upload maximum 5 photos
     'titleInformation' => 'Information',
     'titleWarrning' => 'Warrning',
-    'uploadLimitError' => 'You can not upload photos more than total upload photo limit.<br> Your remaining photo upload limit is : #LIMIT#',
-    'photoPendingMode' => 'Please Wait ! Photos will be screened and make live within 4-6 hours.',
-    'photoApprovedMode' => 'Photo has been Approved.',
-    'photoDisapprovedMode' => 'Photo is not appropriate as per our policy and is not available on portal. We Request you to upload another photo.', //Irrelevant photo
-    'cropSize' => 200,
-    'timePinValidate' => 15,
+
     'resetPasswordWrongEmailIdMessage' => 'This email ID is not registered at Kande-Pohe.com. Please contact administrator to reset your password',
     'ref' => ['recently_joined' => 'recently_joined', 'you_shortlisted_by' => 'you_shortlisted_by'],
     'pageArray' => [1 => 'site/basic-details', 2 => 'site/education-occupation', 3 => 'site/life-style', 4 => 'site/about-family', 5 => 'site/about-yourself', 6 => 'user/photos', 7 => 'site/verification'],
@@ -65,6 +49,35 @@ return [
     'messageSubCommunitieBS' => 'To include more sub communities, please use Advance Search.',
     'messageReligionBS' => 'To include more Religion, please use Advance Search.',
     'messageJsCall' => 'Something went wrong. Please try again !',
+
+    /* Photo Section Start */
     'sizeUserPhoto' => array(30, 63, 75, 110, 120, 155, 180, 200, 260),
+    'cropSize' => 200,
+    'timePinValidate' => 15,
+    'total_files_allowed' => 12,
+    'max_file_size' => 104857600, // 100 MB (1 MB = 1048576 Bytes)
+    'maxWidth' => 500,
+    'thumbnailPrefix' => 'thumb_',
+    'profilePrefix' => '_profile_',
+    'allowed_file_types' => "'image/png', 'image/gif', 'image/jpeg', 'image/pjpeg'",
+    'profilePhotoFolder' => 'profile',
+    'noPhotoAvailable' => 'No Photos Available',
+    'cover' => 'COVER',
+    'photoSetAsCover' => 'Click for select Photo as Cover Photo',
+    'photoSetAsProfile' => 'Click for select Photo as Profile Photo',
+    'photoDisapproveMessage' => 'Please Remove this Photo',
+    'photoPendingMessage' => 'Awaiting Approval',
+
+    'uploadPhotoListWait' => 'Uploading Photos... Please Wait !',
+    'uploadPhotoLimit' => 5, // At a time user can upload maximum 5 photos
+    'uploadLimitError' => 'You can not upload photos more than total upload photo limit.<br> Your remaining photo upload limit is : #LIMIT#',
+    'photoPendingMode' => 'Please Wait ! Photos will be screened and make live within 4-6 hours.',
+    'photoApprovedMode' => 'Photo has been Approved.',
+    'photoDisapprovedMode' => 'Photo is not appropriate as per our policy and is not available on portal. We Request you to upload another photo.', //Irrelevant photo
+    'browserFileSupportError' => 'Your browser does not support new File API! Please upgrade.',
+    'fileUploadSize' => 'You are trying to upload photos more than limit.',
+    'fileUnsoupportedType' => 'You are trying to upload unsupported file type.',
+    'coverPhotoSetConfirmation' => 'Are you sure want to set this photo as cover photo?',
+    /* Photo Section End */
 ];
 

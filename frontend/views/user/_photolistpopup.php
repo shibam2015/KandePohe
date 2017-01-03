@@ -20,38 +20,50 @@ use common\components\CommonHelper;
                         <?php $SELECTED = '';
                         if ($V['Is_Profile_Photo'] == 'YES') {
                             $SELECTED = "selected";
-                        } ?>
+                        }
+                        if ($PhotoSetType != Yii::$app->params['cover']) {
+                            ?>
+
                         <div class="hovertool<?= ($V->eStatus == 'Approve') ? '' : ' img-blur' ?>">
                             <a class="<?= $SELECTED ?><?= ($V->eStatus == 'Approve') ? ' profile_set_kp set_profile_photo' : '' ?>"
                                data-toggle="tooltip" data-placement="top"
                                href="javascript:void(0)"
                                 <?php if ($V->eStatus == 'Approve') { ?>
-                                    data-original-title="Click for select Photo as Profile Photo"
+                                    data-original-title="<?= Yii::$app->params['photoSetAsCover'] ?>"
                                     data-id="<?= $V['iPhoto_ID'] ?>"
                                     data-target="#profilecrop" data-toggle="modal"
                                     data-item="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
                                     data-name="<?= $V['File_Name'] ?>"
                                 <?php } else { ?>
-                                    data-original-title="<?= ($V->eStatus == 'Pending') ? 'Awaiting Approval' : 'Please Remove this Photo.' ?>"
+                                    data-original-title="<?= ($V->eStatus == 'Pending') ? Yii::$app->params['photoPendingMessage'] : Yii::$app->params['photoDisapproveMessage'] ?>"
                                 <?php } ?>>
                                 <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->params['thumbnailPrefix'] . "120_" . $V['File_Name'], 120), ['class' => 'img-responsive ' . $SELECTED, 'width' => '140', 'alt' => 'Photo' . $K]); ?>
                             </a>
                         </div>
-
-                        <!--<a href="javascript:void(0)"
-                           class="pull-left profile_set_kp set_profile_photo"
-                           data-id="<?/*= $V['iPhoto_ID'] */ ?>"
-                           data-target="#profilecrop" data-toggle="modal"
-                           data-item="<?/*= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) */ ?>"
-                           data-name="<?/*= $V['File_Name'] */ ?>">
-                            <?/*= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->params['thumbnailPrefix'] . "120_" . $V['File_Name'], 120), ['class' => 'img-responsive ' . $SELECTED, 'height' => '', 'alt' => 'Photo' . $K]); */ ?>
-                        </a>-->
+                        <?php } else { ?>
+                            <div class="hovertool<?= ($V->eStatus == 'Approve') ? '' : ' img-blur' ?>">
+                                <a class="<?= $SELECTED ?><?= ($V->eStatus == 'Approve') ? 'cover_profile_set' : '' ?>"
+                                   data-toggle="tooltip" data-placement="top"
+                                   href="javascript:void(0)"
+                                    <?php if ($V->eStatus == 'Approve') { ?>
+                                        data-original-title="<?= Yii::$app->params['photoSetAsCover'] ?>"
+                                        data-id="<?= $V['iPhoto_ID'] ?>"
+                                        data-target="#photocovermodel" data-toggle="modal"
+                                        data-item="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
+                                        data-name="<?= $V['File_Name'] ?>"
+                                    <?php } else { ?>
+                                        data-original-title="<?= ($V->eStatus == 'Pending') ? Yii::$app->params['photoPendingMessage'] : Yii::$app->params['photoDisapproveMessage'] ?>"
+                                    <?php } ?>>
+                                    <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->params['thumbnailPrefix'] . "120_" . $V['File_Name'], 120), ['class' => 'img-responsive ' . $SELECTED, 'width' => '140', 'alt' => 'Photo' . $K]); ?>
+                                </a>
+                            </div>
+                        <?php } ?>
                     </div>
                 <?php }
             } else {
                 ?>
                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                    <p> No Photos Available</p>
+                    <p> <?= Yii::$app->params['noPhotoAvailable'] ?></p>
                 </div>
             <?php } ?>
         </div>

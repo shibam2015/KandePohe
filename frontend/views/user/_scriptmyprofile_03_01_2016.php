@@ -265,15 +265,14 @@ $this->registerJs("
          
     });
     var PP_ID ='';
-     $(document).on('click','.cover_profile_set',function(e){
-            var targetd  = $(this).data('target');
-            if(targetd == '#photocovermodel'){
-                PP_ID = $(this).data('id');
-                $('#model_heading_cover').html('" . Yii::$app->params['coverPhotoSetConfirmation'] . "');
-                $('#photo').modal('hide');
-                $('#photocovermodel').modal();
-            }
-     });
+    $('.cover_profile_set').click(function(){
+                        var targetd  = $(this).data('target');
+                        if(targetd == '#photocovermodel'){
+                            PP_ID = $(this).data('id');
+                                $('#model_heading_cover').html('Are you sure want to set this photo as cover photo?');
+                        }
+    })
+    
     $('.yescover').click(function(){
             Pace.restart();
             loaderStart();

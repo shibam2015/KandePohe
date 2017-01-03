@@ -10,24 +10,15 @@ use yii\bootstrap\Alert;   // For Alert Notification
 use yii\web\View;
 use kartik\editable\Editable;
 use yii\widgets\Pjax;
-/*$religion_data = CommonHelper::getReligion();
-$community_data = CommonHelper::getCommunity();*/
 $id = 0;
 $PROFILE_COMPLETENESS = 0;
 if (!Yii::$app->user->isGuest) {
     $id = Yii::$app->user->identity->id;
     $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
 }
-
-$HOME_URL = Yii::getAlias('@web')."/";
-$HOME_URL_SITE = Yii::getAlias('@web')."/site/";
-$UPLOAD_DIR = Yii::getAlias('@frontend') .'/web/uploads/';
-$IMG_DIR = Yii::getAlias('@frontend') .'/web/';
-#$ARR = array("NAME"=>"abc","EMAIL_TO"=>'abc@abc.com',"EMAIL"=>'abc1@abc.com',"ACTIVATION_LINK"=>"http://google.com");
-#\common\components\MailHelper::SendMail('VERIFY_ACCOUNT',$ARR);
 ?>
 
-    <link rel="stylesheet" type="text/css" href="<?= $HOME_URL ?>css/radical-progress.css"/>
+    <link rel="stylesheet" type="text/css" href="<?= Yii::$app->request->baseUrl ?>/css/radical-progress.css"/>
     <!-- Custom styles for this template -->
     <!-- <link rel="stylesheet" type="text/css" href="css/cs-select.css" />
     <link rel="stylesheet" type="text/css" href="css/radical-progress.css" />
@@ -51,7 +42,9 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                         data-toggle="dropdown"><i class="fa fa-pencil"></i></button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                                     <li><a href="javascript:void(0)" data-toggle="modal"
-                                                           data-target="#photo" id="choosecoverphoto">Choose from My
+                                                           class="gallery-popup"
+                                                           data-target="#photo"
+                                                           data-item="<?= Yii::$app->params['cover'] ?>">Choose from My
                                                             Photos</a></li>
                                                     <li>
                                                         <a href="javascript:void(0)" id="coverphotoupload">Upload
@@ -85,11 +78,18 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 
                                             <div id="timelineNav"></div>
                                         </div>
+                                        <div class="browse-photo">
+                                            <form action="" method="post" enctype="multipart/form-data"
+                                                  id="upload_form">
+                                                <input name="__files[]" id="file_browse" type="file"
+                                                       multiple class="fileupload"/>
+                                            </form>
+                                        </div>
                                         <div class="pr-inner">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="im-pc">
-                                                        <div class="image">
+                                                        <div class="image gallery-popup">
                                                             <div class="placeholder text-center">
                                                                 <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes'), ['class' => 'img-responsive mainpropic', 'width' => '200', 'height' => '200', 'alt' => 'Profile Pic']); ?>
                                                                 <div class="add-photo" data-toggle="modal"
@@ -642,56 +642,6 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
         </div>
     </div>
     <!-- Modal Photo -->
-    <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61"
-                                                  alt="logo"></p>
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
-                        <span
-                            class="sr-only">Close</span></button>
-                    <h2 class="text-center">My Photo Gallery</h2>
-                    <div class="profile-control photo-btn">
-                        <button class="btn " type="button"> Upload Video or Photo</button>
-                        <button class="btn active" type="button"> Choose from Photos</button>
-                        <button class="btn" type="button"> Albums</button>
-                    </div>
-                </div>
-                <!-- Modal Body -->
-                <div class="modal-body photo-gallery">
-                    <div class="choose-photo">
-                        <div class="row" id="profile_list_popup">
-                            <?php
-                            if (count($photo_model) > 0) {
-                                foreach ($photo_model as $K => $V) {
-                                    ?>
-                                    <div class="col-md-3 col-sm-3 col-xs-6">
-                                        <?php $SELECTED = '';
-                                        if ($V['Is_Profile_Photo'] == 'YES') {
-                                            $SELECTED = "selected";
-                                        } ?>
-                                        <a href="javascript:void(0)" class="pull-left profile_set cover_profile_set"
-                                           data-id="<?= $V['iPhoto_ID'] ?>"
-                                           data-target="#photodelete" data-toggle="modal">
-                                            <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive ' . $SELECTED, 'height' => '140', 'alt' => 'Photo' . $K, 'style' => "height:140px;"]); ?>
-                                        </a>
-                                    </div>
-                                <?php }
-                            } else {
-                                ?>
-                                <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                    <p> No Photos Available</p>
-                                </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal Footer -->
-        </div>
-    </div>
     <div class="modal fade" id="photodelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -758,7 +708,6 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
             <!-- Modal Footer -->
         </div>
     </div>
-
     <div class="modal fade" id="hideProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -825,7 +774,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
     <script type="text/javascript">
         var PRO_COMP = <?=$PROFILE_COMPLETENESS?>;
     </script>
-    <script src="<?= $HOME_URL ?>js/selectFx.js"></script>
+    <script src="<?= Yii::$app->request->baseUrl ?>/js/selectFx.js"></script>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/js/cover/jquery-ui.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <?php
 $this->registerJs('
@@ -1017,3 +966,12 @@ $this->registerJs('
 ?>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
 <?= $this->render('_scriptmyprofile'); ?>
+
+<?php #For Profile Photo Start
+require_once __DIR__ . '/_photosection.php';
+?>
+    <link href='<?= Yii::$app->request->baseUrl ?>/plugings/cropping/imgareaselect.css' rel='stylesheet'
+          type='text/css'>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.imgareaselect.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.form.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php #For Profile Photo END ?>
