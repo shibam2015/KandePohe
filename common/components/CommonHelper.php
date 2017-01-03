@@ -674,8 +674,9 @@ class CommonHelper {
     public static function getUserResizeRatio()
     {//For User photo resize
         #$USER_SIZE_ARRAY = array('', 30, 75, 140, 200, 350, 500, 900);
-        $USER_SIZE_ARRAY = array(30, 63, 75, 110, 120, 155, 180, 200, 260);
-        return $USER_SIZE_ARRAY;
+        #$USER_SIZE_ARRAY = array(30, 63, 75, 110, 120, 155, 180, 200, 260);
+        $UserPhotoSizeArray = Yii::$app->params['sizeUserPhoto'];
+        return $UserPhotoSizeArray;
     }
 
     public static function replaceNotificationMessage($Message, $ParamArray)

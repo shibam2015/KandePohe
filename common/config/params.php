@@ -64,5 +64,7 @@ return [
     'messageCommunitieBS' => 'To include more communities, please use Advance Search.',
     'messageSubCommunitieBS' => 'To include more sub communities, please use Advance Search.',
     'messageReligionBS' => 'To include more Religion, please use Advance Search.',
+    'messageJsCall' => 'Something went wrong. Please try again !',
+    'sizeUserPhoto' => array(30, 63, 75, 110, 120, 155, 180, 200, 260),
 ];
 

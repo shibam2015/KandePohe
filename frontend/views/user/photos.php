@@ -49,7 +49,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                 <div class="col-sm-5">
                                                     <div class="image gallery-popup">
                                                         <div class="placeholder text-center">
-                                                            <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes'), ['class' => 'img-responsive mainpropic ', 'width' => '200', 'alt' => 'Profile Photo']); ?>
+                                                            <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes'), ['class' => 'img-responsive photo-main mainpropic ', 'width' => '200', 'alt' => 'Profile Photo']); ?>
                                                             <div class="add-photo" data-toggle="modal"
                                                                  data-target="#photo"><span class="file-input btn-file"> <i
                                                                         class="fa fa-plus-circle"></i> Add a photo </span>

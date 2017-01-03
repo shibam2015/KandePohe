@@ -162,6 +162,32 @@ $this->registerJs('
             $(".modal").modal("hide");
             $("#file_browse").click();
         });
+        $(document).on("click","._profile-photo-remove",function(e){
+            loaderStart();
+            $.ajax({
+                        url: "profile-photo-remove",
+                        type: "POST",
+                        data: {
+                            PhotoDelete : 1,
+                        },
+                        cache: false,
+                        success: function (data, textStatus, jqXHR) {
+                            loaderStop();
+                            var DataObject = JSON.parse(data);
+                            $(".mainpropic").attr("src", DataObject.ProfilePhoto);
+                            $(".profile_photo_one").attr("src", DataObject.ProfilePhotoThumb);
+                            showNotification(DataObject.STATUS, DataObject.MESSAGE);
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            loaderStop();
+                            showNotification("E", "' . Yii::$app->params['messageJsCall'] . '");
+                        }
+            });
+        });
+
+
+
   $(function () {
         var max_file_size 		= ' . Yii::$app->params['max_file_size'] . '; //allowed file size. (1 MB = 1048576 Bytes)
         //var allowed_file_types 		= ["image/png", "image/gif", "image/jpeg", "image/pjpeg"]; //allowed file types
@@ -361,7 +387,7 @@ $this->registerJs('
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                         loaderStop();
-                        notificationPopup(\'ERROR\', \'Something went wrong. Please try again !\', \'Error\');
+                        notificationPopup(\'ERROR\', "' . Yii::$app->params['messageJsCall'] . '", \'Error\');
                         }
                     });
         })
@@ -440,7 +466,7 @@ var ImagePath ='';
                             }, 500);
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            notificationPopup('E', 'Something went wrong. Please try again !', 'Error');
+                            notificationPopup('E', '" . Yii::$app->params['messageJsCall'] . "', 'Error');
                         }
             });
         }
@@ -459,9 +485,9 @@ var ImagePath ='';
                         success: function (data, textStatus, jqXHR) {
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            notificationPopup('E', 'Something went wrong. Please try again !', 'Error');
+                            notificationPopup('E', '" . Yii::$app->params['messageJsCall'] . "', 'Error');
                         }
-            });
+        });
     });
 
         $(document).on('click','#btn-crop',function(e){

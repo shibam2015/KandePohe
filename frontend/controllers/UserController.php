@@ -2353,7 +2353,7 @@ class UserController extends Controller
                 return $this->redirect(['user/dashboard']);
             }
         }
-        #$id = Yii::$app->user->identity->id;
+        #$id = Yii::$app->user->identity->id-;
         $UserId = User::getIdNo($uk);
         if ($UserId) {
             if (!Yii::$app->user->isGuest) {
@@ -2432,6 +2432,44 @@ class UserController extends Controller
     public function actionPhotoDelete()
     {
         unlink(Yii::$app->request->post('ImagePath'));
+    }
+    public function actionProfilePhotoRemove()
+    {
+        $Id = Yii::$app->user->identity->id;
+        $UserModel = User::findOne($Id);
+        $ProPic = $UserModel->propic;
+        if($ProPic!=''){
+            $UserPhotoSizeArray = Yii::$app->params['sizeUserPhoto'];
+            $ProfilePhotoPath = CommonHelper::getUserUploadFolder(3, $Id);
+            $DeletePhotoFromFolder = 1;
+            #list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PROFILE_PHOTO_DELETE');
+            foreach($UserPhotoSizeArray as $SizeKey=>$SizeValue){
+                if(!unlink($ProfilePhotoPath.$SizeValue.$ProPic)){
+                    $DeletePhotoFromFolder = 0;
+                }
+            }
+            if($DeletePhotoFromFolder){
+                $UserModel->propic = '';
+                if ($UserModel->save()) {
+                    $PG = new UserPhotos();
+                    $PG->updateIsProfilePhoto($Id);
+                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PROFILE_PHOTO_DELETE');
+                }else{
+                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PROFILE_PHOTO_DELETE');
+                }
+            }else{
+                $DeletePhotoFromFolder = 0;
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PROFILE_PHOTO_DELETE');
+            }
+        }else{
+            $DeletePhotoFromFolder = 0;
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('W', 'PROFILE_PHOTO_DELETE');
+        }
+        $ProfilePhoto = CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . '', 200, '', 'Yes');
+        $ProfilePhotoThumb = CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "30" . '', 200, '', 'Yes');
+        $return = array('DeletePhototStatus'=>$DeletePhotoFromFolder,'STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'ProfilePhoto' => $ProfilePhoto, 'ProfilePhotoThumb' => $ProfilePhotoThumb);
+        return json_encode($return);
+
     }
 }
 

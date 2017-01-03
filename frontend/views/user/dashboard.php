@@ -35,7 +35,14 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                     <div class="panel-body">
                                         <div class="profile-header-container">
                                             <div class="profile-header-img">
-                                                <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes'), ['width' => '200', 'height' => '200', 'alt' => 'Profile Photo', 'class' => 'img-circle']); ?>
+                                                <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes'), ['width' => '200', 'height' => '200', 'alt' => 'Profile Photo', 'class' => 'img-circle mainpropic']); ?>
+                                                <div>
+                                                    <form action="" method="post" enctype="multipart/form-data"
+                                                          id="upload_form">
+                                                        <input name="__files[]" id="file_browse" type="file"
+                                                               multiple class="fileupload"/>
+                                                    </form>
+                                                </div>
                                                 <!-- badge -->
                                                 <div class="rank-label-container img-circle">
                                                     <div class="dropdown">
@@ -44,10 +51,14 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                 aria-haspopup="true" aria-expanded="true"><i
                                                                 class="fa fa-pencil"></i></button>
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                            <li><a href="#">Choose from My Photos</a></li>
-                                                            <li><a href="#">Upload Photo</a></li>
-                                                            <li><a href="#">Reposition</a></li>
-                                                            <li><a href="#">Delete Photo</a></li>
+                                                            <li><a href="javascript:void(0)" data-toggle="modal"
+                                                                   class="gallery-popup"
+                                                                   data-target="#photo">Choose from My Photos</a></li>
+                                                            <li><a href="javascript:void(0)"
+                                                                   class="file_browse_wrapper">Upload Photo</a></li>
+                                                            <li><a href="javascript:void(0)">Reposition</a></li>
+                                                            <li><a href="javascript:void(0)"
+                                                                   class="_profile-photo-remove">Delete Photo</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -148,180 +159,11 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                     </div>
                                 </div>
                                 <div class="divider no-mrg"></div>
-                                <!--<div class="panel no-border padd-hr-10 panel-default panel-friends">
-                  <div class="panel-heading">
-                    <h3 class="panel-title text-muted">My Preferences</h3>
-                  </div>
-                  <div class="refe-accord">
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                      <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingOne">
-                          <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion"
-                                                     href="#collapseOnes" aria-expanded="true"
-                                                     aria-controls="collapseOnes"> Location <span
-                                  class="blue">(669)</span> <span class="badge">10</span> <i
-                                  class="fa indicator fa-angle-up"></i> </a></h4>
-                        </div>
-                        <div id="collapseOnes" class="panel-collapse collapse in" role="tabpanel"
-                             aria-labelledby="headingOne">
-                          <div class="panel-body">
-                            <ul class="list-unstyled ad-prof">
-                              <li> <span class="imgarea"><a href="#" class="name" title="KP123WERT">
-                                    <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?>
-                                  </a></span> <span class="img-desc">
-                                <a href="#" class="name" title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
-
-                                <div class="clearfix"></div>
-                              </li>
-                              <li> <span class="imgarea"><a href="#" class="name" title="KP123WERT">
-                                    <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?>
-                                  </a></span> <span class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
-
-                                <div class="clearfix"></div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingTwo">
-                          <h4 class="panel-title"><a class="collapsed" role="button" data-toggle="collapse"
-                                                     data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
-                                                     aria-controls="collapseTwo"> Profession <span
-                                  class="blue">(669)</span> <span class="badge">10</span> <i
-                                  class="fa indicator fa-angle-down"></i> </a></h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
-                             aria-labelledby="headingTwo">
-                          <div class="panel-body">
-                            <ul class="list-unstyled ad-prof">
-                              <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
-                                    class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
-
-                                <div class="clearfix"></div>
-                              </li>
-                              <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
-                                    class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
-
-                                <div class="clearfix"></div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingThree">
-                          <h4 class="panel-title"><a class="collapsed" role="button" data-toggle="collapse"
-                                                     data-parent="#accordion" href="#collapseThree"
-                                                     aria-expanded="false" aria-controls="collapseThree"> Education
-                              <span class="blue">(669)</span> <span class="badge">10</span> <i
-                                  class="fa indicator fa-angle-down"></i> </a></h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
-                             aria-labelledby="headingThree">
-                          <div class="panel-body">
-                            <ul class="list-unstyled ad-prof">
-                              <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
-                                    class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
-
-                                <div class="clearfix"></div>
-                              </li>
-                              <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
-                                    class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
-
-                                <div class="clearfix"></div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingfour">
-                          <h4 class="panel-title"><a class="collapsed" role="button" data-toggle="collapse"
-                                                     data-parent="#accordion" href="#collapsefour" aria-expanded="false"
-                                                     aria-controls="collapsefour"> Compatible Stars <span class="blue">(669)</span>
-                              <span class="badge">10</span> <i class="fa indicator fa-angle-down"></i> </a></h4>
-                        </div>
-                        <div id="collapsefour" class="panel-collapse collapse" role="tabpanel"
-                             aria-labelledby="headingfour">
-                          <div class="panel-body">
-                            <ul class="list-unstyled ad-prof">
-                              <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
-                                    class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
-
-                                <div class="clearfix"></div>
-                              </li>
-                              <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
-                                    class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
-
-                                <div class="clearfix"></div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingfive">
-                          <h4 class="panel-title"><a class="collapsed" role="button" data-toggle="collapse"
-                                                     data-parent="#accordion" href="#collapsefive" aria-expanded="false"
-                                                     aria-controls="collapsefive"> Family values <span class="blue">(669)</span>
-                              <span class="badge">10</span> <i class="fa fa-angle-down"></i> </a></h4>
-                        </div>
-                        <div id="collapsefive" class="panel-collapse collapse" role="tabpanel"
-                             aria-labelledby="headingfive">
-                          <div class="panel-body">
-                            <ul class="list-unstyled ad-prof">
-                              <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
-                                    class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
-
-                                <div class="clearfix"></div>
-                              </li>
-                              <li><span class="imgarea"><a href="#" class="name"
-                                                           title="KP123WERT"> <? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); */ ?></a></span> <span
-                                    class="img-desc"> <a href="#" class="name" title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
-
-                                <div class="clearfix"></div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>-->
                             </div>
                         </div>
                         <div class="col-sm-8 col-md-6">
                             <div class="dashboard-wrapper">
                                 <!-- profile status -->
-
                                 <div class="bg-white">
                                     <?php if ($PROFILE_COMPLETENESS < 100) { ?>
                                         <div class="radial-progress pull-right" data-progress="0">
@@ -771,61 +613,6 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
     </div>
         </main>
     </div>
-    <!-- Modal Photo -->
-    <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <p class="text-center mrg-bt-10"><img src="images/logo.png" width="157" height="61" alt="logo"></p>
-
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span> <span
-                            class="sr-only">Close</span></button>
-                    <h2 class="text-center">My Photo Gallery</h2>
-
-                    <div class="profile-control photo-btn">
-                        <button class="btn active" type="button"> Upload Video or Photo</button>
-                        <button class="btn " type="button"> Choose from Photos</button>
-                        <button class="btn" type="button"> Albums</button>
-                    </div>
-                </div>
-                <!-- Modal Body -->
-                <div class="modal-body photo-gallery">
-                    <div class="choose-photo">
-                        <div class="row">
-                            <div class="col-md-3 col-sm-3 col-xs-6"><a href="#"
-                                                                       class="selected"><?= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); ?></a>
-                            </div>
-                            <div class="col-md-3 col-sm-3 col-xs-6"><a
-                                    href="#"><?= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); ?></a>
-                            </div>
-                            <div class="col-md-3 col-sm-3 col-xs-6"><a
-                                    href="#"><?= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); ?></a>
-                            </div>
-                            <div class="col-md-3 col-sm-3 col-xs-6"><a
-                                    href="#"><?= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); ?></a>
-                            </div>
-                            <div class="col-md-3 col-sm-3 col-xs-6"><a
-                                    href="#"><?= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); ?></a>
-                            </div>
-                            <div class="col-md-3 col-sm-3 col-xs-6"><a
-                                    href="#"><?= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); ?></a>
-                            </div>
-                            <div class="col-md-3 col-sm-3 col-xs-6"><a
-                                    href="#"><?= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); ?></a>
-                            </div>
-                            <div class="col-md-3 col-sm-3 col-xs-6"><a
-                                    href="#"><?= Html::img('@web/images/placeholder.jpg', ['width' => '200', 'height' => '200', 'alt' => 'placeholder', 'class' => 'img-responsive']); ?></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal Footer -->
-        </div>
-    </div>
-    
     <div class="modal fade" id="sendInterest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -883,14 +670,9 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
     </div>
 
 <?=$this->registerJsFile(Yii::$app->request->baseUrl.'/js/angular/controller/dashboardController.js', ['depends' => [\frontend\assets\AppAsset::className()],'position' => \yii\web\View::POS_END]);?>
-
-
     <script type="text/javascript">
         var PRO_COMP = <?=$PROFILE_COMPLETENESS?>;
-        //var AcceptInterest = "<?=Yii::$app->params['acceptInterest']?>";
-        //var DeclineInterest = "<?=Yii::$app->params['declineInterest']?>";
     </script>
-    
 
 <?php
 if ($type != '' && base64_decode($type) == "VERIFICATION-DONE") {
@@ -926,3 +708,12 @@ $(document).on("click",".a_b_d",function(e){
 
 
 <?php require_once __DIR__ . '/_useroperation.php'; ?>
+
+<?php #For Profile Photo Start
+require_once __DIR__ . '/_photosection.php';
+?>
+    <link href='<?= Yii::$app->request->baseUrl ?>/plugings/cropping/imgareaselect.css' rel='stylesheet'
+          type='text/css'>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.imgareaselect.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.form.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php #For Profile Photo END ?>
