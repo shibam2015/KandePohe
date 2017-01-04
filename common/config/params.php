@@ -79,5 +79,8 @@ return [
     'fileUnsoupportedType' => 'You are trying to upload unsupported file type.',
     'coverPhotoSetConfirmation' => 'Are you sure want to set this photo as cover photo?',
     /* Photo Section End */
+    'smokeArray' => ['Yes' => 'Smoke_Yes', 'No' => 'Smoke_No', 'Occasionally' => 'Smoke_Occasionally'],
+    'drinkArray' => ['Yes' => 'Drink_Yes', 'No' => 'Drink_No', 'Occasionally' => 'Drink_Occasionally'],
+    'eyesArray' => ['Spectacles' => 'SpectaclesLens_Spectacles', 'Lens' => 'SpectaclesLens_Lens'],
 ];
 

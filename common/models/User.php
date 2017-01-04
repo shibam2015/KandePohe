@@ -688,11 +688,6 @@ characters are allowed.'
 
     public function getHeight()
     {
-        return $this->hasOne(MasterHeight ::className(), ['iHeightID' => 'iHeightID']);
-    }
-
-    public function getHeights()
-    {
         return $this->hasOne(MasterHeights::className(), ['iHeightID' => 'iHeightID']);
     }
 

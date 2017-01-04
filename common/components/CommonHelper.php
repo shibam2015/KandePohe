@@ -1011,12 +1011,6 @@ class CommonHelper {
             return \common\models\Cities::find()->where(['iStateId' => $id])->all();
 
     }
-
-    public function getHeight()
-    {
-        return \common\models\MasterHeight::find()->all();
-    }
-
     public function getDiet()
     {
         return \common\models\MasterDiet::find()->all();
@@ -1161,7 +1155,7 @@ class CommonHelper {
         return $string;
     }
 
-    public function getHeights()
+    public function getHeight()
     {
         return \common\models\MasterHeights::find()->all();
     }

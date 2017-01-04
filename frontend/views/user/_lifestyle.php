@@ -41,40 +41,35 @@ if ($show) {
         ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
         ['prompt' => 'Height']
     ); ?>
-
     <?= $form->field($model, 'vSkinTone')->RadioList(
-        ['Very Fair' => 'Very Fair', 'Fair' => 'Fair', 'Wheatish' => 'Wheatish', 'Dark' => 'Dark'],
-        [
-            'item' => function ($index, $label, $name, $checked, $value) {
-                $checked = ($checked) ? 'checked' : '';
-                $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
-                return $return;
-            }
-
+        ArrayHelper::map(CommonHelper::getSkinTone(), 'ID', 'Name'),
+        ['item' => function ($index, $label, $name, $checked, $value) {
+            $checked = ($checked) ? 'checked' : '';
+            $return = '<input type="radio" id="vSkinTone_' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
+            $return .= '<label for="vSkinTone_' . $value . '">' . ucwords($label) . '</label>';
+            return $return;
+        }
         ]
-    ) ?>
+    ); ?>
 
     <?= $form->field($model, 'vBodyType')->RadioList(
-        ['Slim' => 'Slim', 'Athletic' => 'Athletic', 'Average' => 'Average', 'Heavy' => 'Heavy'],
-        [
-            'item' => function ($index, $label, $name, $checked, $value) {
-                $checked = ($checked) ? 'checked' : '';
-                $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
-                return $return;
-            }
-
+        ArrayHelper::map(CommonHelper::getBodyType(), 'ID', 'Name'),
+        ['item' => function ($index, $label, $name, $checked, $value) {
+            $checked = ($checked) ? 'checked' : '';
+            $return = '<input type="radio" id="vBodyType_' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
+            $return .= '<label for="vBodyType_' . $value . '">' . ucwords($label) . '</label>';
+            return $return;
+        }
         ]
     ); ?>
 
     <?= $form->field($model, 'vSmoke')->RadioList(
-        ['Smoke_Yes' => 'Yes', 'Smoke_No' => 'No', 'Smoke_Occasionally' => 'Occasionally'],
+        Yii::$app->params['smokeArray'],
         [
             'item' => function ($index, $label, $name, $checked, $value) {
                 $checked = ($checked) ? 'checked' : '';
-                $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
+                $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . ucwords($value) . '" ' . $checked . '>';
+                $return .= '<label for="' . $value . '">' . ucwords($value) . '</label>';
                 return $return;
             }
 
@@ -82,12 +77,12 @@ if ($show) {
     ); ?>
 
     <?= $form->field($model, 'vDrink')->RadioList(
-        ['Drink_Yes' => 'Yes', 'Drink_No' => 'No', 'Drink_Occasionally' => 'Occasionally'],
+        Yii::$app->params['drinkArray'],
         [
             'item' => function ($index, $label, $name, $checked, $value) {
                 $checked = ($checked) ? 'checked' : '';
-                $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
+                $return = '<input type="radio" id="' . $label . '" name="' . $name . '" value="' . ucwords($value) . '" ' . $checked . '>';
+                $return .= '<label for="' . $label . '">' . ucwords($value) . '</label>';
                 return $return;
             }
 
@@ -95,12 +90,12 @@ if ($show) {
     ); ?>
 
     <?= $form->field($model, 'vSpectaclesLens')->RadioList(
-        ['SpectaclesLens_Spectacles' => 'Spectacles', 'SpectaclesLens_Lens' => 'Lens'],
+        Yii::$app->params['eyesArray'],
         [
             'item' => function ($index, $label, $name, $checked, $value) {
                 $checked = ($checked) ? 'checked' : '';
-                $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
+                $return = '<input type="radio" id="' . $label . '" name="' . $name . '" value="' . ucwords($value) . '" ' . $checked . '>';
+                $return .= '<label for="' . $label . '">' . ucwords($value) . '</label>';
                 return $return;
             }
 

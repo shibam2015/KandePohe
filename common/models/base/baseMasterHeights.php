@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "master_heights".
  *
  * @property integer $iHeightID
- * @property string $name
+ * @property string $vName
  * @property double $Centimeters
  * @property string $eStatus
  */
@@ -28,10 +28,10 @@ class baseMasterHeights extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'Centimeters'], 'required'],
+            [['vName', 'Centimeters'], 'required'],
             [['Centimeters'], 'number'],
             [['eStatus'], 'string'],
-            [['name'], 'string', 'max' => 20],
+            [['vName'], 'string', 'max' => 20],
         ];
     }
 
@@ -42,7 +42,7 @@ class baseMasterHeights extends \yii\db\ActiveRecord
     {
         return [
             'iHeightID' => 'I Height ID',
-            'name' => 'Name',
+            'vName' => 'V Name',
             'Centimeters' => 'Centimeters',
             'eStatus' => 'E Status',
         ];

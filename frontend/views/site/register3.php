@@ -45,7 +45,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                     <div class="mid-col">
                       <div class="form-cont">
                         <?= $form->field($model, 'iHeightID')->dropDownList(
-                            ArrayHelper::map(CommonHelper::getHeights(), 'iHeightID', 'name'),
+                            ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
                             ['class' => 'cs-select cs-skin-border',
                                 'prompt' => 'Height'
                             ]
@@ -122,12 +122,12 @@ echo $this->render('/layouts/parts/_headerregister.php');
                           <dt>Smoke: </dt>
                           <dd>
                             <?= $form->field($model, 'vSmoke')->RadioList(
-                                ['Smoke_Yes'=>'Yes','Smoke_No'=>'No','Smoke_Occasionally'=>'Occasionally'],
+                                Yii::$app->params['smokeArray'],
                                 [
                                     'item' => function($index, $label, $name, $checked, $value) {
                                       $checked = ($checked) ? 'checked' : '';
-                                      $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                                      $return .= '<label for="'.$value.'">' . ucwords($label) . '</label>';
+                                      $return = '<input type="radio" id="' . $label . '" name="' . $name . '" value="' . ucwords($value) . '" ' . $checked . '>';
+                                      $return .= '<label for="' . $label . '">' . ucwords($value) . '</label>';
                                       return $return;
                                     }
                                 ]
@@ -150,12 +150,12 @@ echo $this->render('/layouts/parts/_headerregister.php');
                           <dt>Drink: </dt>
                           <dd>
                             <?= $form->field($model, 'vDrink')->RadioList(
-                                ['Drink_Yes'=>'Yes','Drink_No'=>'No','Drink_Occasionally'=>'Occasionally'],
+                                Yii::$app->params['drinkArray'],
                                 [
                                     'item' => function($index, $label, $name, $checked, $value) {
                                       $checked = ($checked) ? 'checked' : '';
-                                      $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                                      $return .= '<label for="'.$value.'">' . ucwords($label) . '</label>';
+                                      $return = '<input type="radio" id="' . $label . '" name="' . $name . '" value="' . ucwords($value) . '" ' . $checked . '>';
+                                      $return .= '<label for="' . $label . '">' . ucwords($value) . '</label>';
                                       return $return;
                                     }
                                 ]
@@ -178,12 +178,12 @@ echo $this->render('/layouts/parts/_headerregister.php');
                           <dt>Spectacles/ Lens: </dt>
                           <dd>
                             <?= $form->field($model, 'vSpectaclesLens')->RadioList(
-                                ['SpectaclesLens_Spectacles'=>'Spectacles','SpectaclesLens_Lens'=>'Lens'],
+                                Yii::$app->params['eyesArray'],
                                 [
                                     'item' => function($index, $label, $name, $checked, $value) {
                                       $checked = ($checked) ? 'checked' : '';
-                                      $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                                      $return .= '<label for="'.$value.'">' . ucwords($label) . '</label>';
+                                      $return = '<input type="radio" id="' . $label . '" name="' . $name . '" value="' . ucwords($value) . '" ' . $checked . '>';
+                                      $return .= '<label for="' . $label . '">' . ucwords($value) . '</label>';
                                       return $return;
                                     }
                                 ]
