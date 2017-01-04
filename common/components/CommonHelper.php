@@ -1160,6 +1160,11 @@ class CommonHelper {
 
         return $string;
     }
+
+    public function getHeights()
+    {
+        return \common\models\MasterHeights::find()->all();
+    }
 }
 ?>
 

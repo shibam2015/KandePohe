@@ -15,22 +15,21 @@ echo $this->render('/layouts/parts/_headerregister.php');
                 echo $this->render('/layouts/parts/_leftsidebarregister.php', ['CurrentStep' => $CurrentStep]);
                 ?>
                 <div class="col-sm-9">
-                    <div class="right-column"> <span class="welcome-note">
-          <?php
-          if ($model->Profile_created_for !== "SELF") {
-              ?>
-              <p>Some details about <strong><?= $model->First_Name; ?>'s</strong> family …</p>
-          <?php } else {
-              ?>
-              <p><strong><?= $model->First_Name; ?> ,</strong> Some details about your family …</p>
-          <?php } ?>
-          </span>
-
+                    <div class="right-column">
+                        <span class="welcome-note">
+                              <?php
+                              if ($model->Profile_created_for !== "SELF") {
+                                  ?>
+                                  <p>Some details about <strong><?= $model->First_Name; ?>'s</strong> family …</p>
+                              <?php } else {
+                                  ?>
+                                  <p><strong><?= $model->First_Name; ?> ,</strong> Some details about your family …</p>
+                              <?php } ?>
+                        </span>
                         <div class="row no-gutter">
                             <div class="col-lg-8 col-md-12 col-sm-12">
                                 <div class="white-section mrg-tp-20 mrg-bt-10">
                                     <h3>Family</h3>
-
                                     <p><span class="text-danger">*</span> marked fields are mandatory</p>
                                     <?php
                                     $form = ActiveForm::begin([

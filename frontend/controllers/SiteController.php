@@ -441,16 +441,10 @@ class SiteController extends Controller
     public function actionLifeStyle($id='')
     {
         if (!Yii::$app->user->isGuest) {
-            #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
-            #   $id = base64_decode($id);
-
             if($model = User::findOne($id)){
-
                 $model->scenario = User::SCENARIO_REGISTER3;
-
                 if($model->load(Yii::$app->request->post())){
-                    #echo "<pre>"; print_r($model->scenario);exit;
                     $model->completed_step = $model->setCompletedStep('4');
                     if($model->save()){
                         $this->redirect(['site/about-family']);
@@ -460,14 +454,12 @@ class SiteController extends Controller
                     'model' => $model,
                     'CurrentStep' => 4,
                 ]);
-
             }else{
                 return $this->redirect(Yii::getAlias('@web'));
             }
         }else{
             return $this->redirect(Yii::getAlias('@web'));
         }
-
     }
     public function actionAboutFamily($id='')
     {

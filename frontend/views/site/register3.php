@@ -30,7 +30,6 @@ echo $this->render('/layouts/parts/_headerregister.php');
               <div class="col-lg-8 col-md-12 col-sm-12">
                 <div class="white-section mrg-tp-20 mrg-bt-10">
                   <h3>Lifestyle &amp; Appearance</h3>
-
                   <p><span class="text-danger">*</span> marked fields are mandatory</p>
                   <?php
                   $form = ActiveForm::begin([
@@ -46,7 +45,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                     <div class="mid-col">
                       <div class="form-cont">
                         <?= $form->field($model, 'iHeightID')->dropDownList(
-                            ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
+                            ArrayHelper::map(CommonHelper::getHeights(), 'iHeightID', 'name'),
                             ['class' => 'cs-select cs-skin-border',
                                 'prompt' => 'Height'
                             ]

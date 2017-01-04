@@ -263,7 +263,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     {
         return [
             [['auth_key', 'created_at', 'updated_at', 'Registration_Number', 'Time_of_Birth', 'Age', 'Birth_Place', 'Marital_Status', 'iReligion_ID', 'iEducationLevelID', 'iEducationFieldID', 'iWorkingWithID', 'iWorkingAsID', 'iAnnualIncomeID', 'iCommunity_ID', 'iDistrictID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', '
-            ', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vDiet', 'iFatherStatusID', 'iMotherStatusID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'iCityCAId', 'vParentsResiding', 'mother_tongue', 'weight', 'phone_pin', 'email_pin'], 'required'],
+            ', 'vSkinTone', 'vBodyType', 'vSmoke', 'vDrink', 'vDiet', 'iFatherStatusID', 'iMotherStatusID', 'nob', 'nos', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'iCityCAId', 'vParentsResiding', 'mother_tongue', 'weight', 'phone_pin', 'email_pin', 'iHeightID'], 'required'],
 
             ['email', 'required', 'message' => 'Please enter your email address.'],
             ['First_Name', 'required', 'message' => 'Please enter first name.'],
@@ -456,7 +456,7 @@ characters are allowed.'
             'vSmoke' => 'Smoke',
             'vDrink' => 'Drink',
             'vSpectaclesLens' => 'Spectacles Lens',
-            'vDiet' => 'vDiet',
+            'vDiet' => 'Diet',
             'tYourSelf' => 'About Yourself',
             'propic' => 'Profile Pic',
             'vDisability' => 'Disability',
@@ -689,6 +689,11 @@ characters are allowed.'
     public function getHeight()
     {
         return $this->hasOne(MasterHeight ::className(), ['iHeightID' => 'iHeightID']);
+    }
+
+    public function getHeights()
+    {
+        return $this->hasOne(MasterHeights::className(), ['iHeightID' => 'iHeightID']);
     }
 
     public function getDietName()
