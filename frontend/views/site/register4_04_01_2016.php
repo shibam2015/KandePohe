@@ -14,6 +14,24 @@ echo $this->render('/layouts/parts/_headerregister.php');
                 <?php
                 echo $this->render('/layouts/parts/_leftsidebarregister.php', ['CurrentStep' => $CurrentStep]);
                 ?>
+                <!--<div class="col-md-3 col-sm-12">
+        <div class="sidebar-nav">
+          <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+              <span class="visible-xs navbar-brand">Sidebar menu</span> </div>
+            <div class="navbar-collapse collapse sidebar-navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li class="step_done"><a href="<? /*=$HOME_URL_SITE*/ ?>basic-details">Basic Details</a></li>
+                <li class="step_done"><a href="<? /*=$HOME_URL_SITE*/ ?>education-occupation">Education &amp; Occupation</a></li>
+                <li class="step_done"><a href="<? /*=$HOME_URL_SITE*/ ?>life-style">Lifestyle &amp; Appearance</a></li>
+                <li class="active"><a href="javascript:void()">Family</a></li>
+                <li><a href="javascript:void()">About Yourself</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>-->
                 <div class="col-sm-9">
                     <div class="right-column"> <span class="welcome-note">
           <?php
@@ -23,7 +41,10 @@ echo $this->render('/layouts/parts/_headerregister.php');
           <?php } else {
               ?>
               <p><strong><?= $model->First_Name; ?> ,</strong> Some details about your family …</p>
-          <?php } ?>
+
+          <?php
+          }
+          ?>
           </span>
 
                         <div class="row no-gutter">
@@ -116,6 +137,20 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                                title="Mention Your Mother Working AS"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
                                         </div>
                                     </div>
+
+                                    <!-- <div class="box">
+                  <div class="small-col">
+                    <div class="required1"><span class="text-danger">*</span></div>
+                  </div>
+                  <div class="mid-col">
+                    <div class="form-cont">
+                      <?= $form->field($model, 'nob', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">No of Brothers</span> </label></span>'])->input('number', ['class' => 'input__field input__field--akira form-control']) ?>
+                    </div>
+                  </div>
+                  <div class="small-col tp ">
+                    <a href="#" data-toggle="tooltip" data-placement="right" title="Mention Your No of Brothers"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
+                  </div>
+                </div>-->
                                     <div class="box">
                                         <div class="small-col">
                                             <div class="required1"><span class="text-danger">*</span></div>
@@ -124,15 +159,15 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                             <div class="form-cont">
                                                 <?= $form->field($model, 'nob', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">No of Brothers</span> </label></span>'])->input('number', ['class' => 'input__field input__field--akira form-control', 'min' => '0',
                                                         'onchange' => '
-                                                            var nob = $(this).val();
-                                                            if(nob == 0){
-                                                            $("#nobmDiv").hide();
-                                                             // $("#NobM").val("0");
-                                                            }
-                                                            else {
-                                                              $("#nobmDiv").show();
-                                                            }
-                                                            '
+                            var nob = $(this).val();
+                            if(nob == 0){
+                            $("#nobmDiv").hide();
+                             // $("#NobM").val("0");
+                            }
+                            else {
+                              $("#nobmDiv").show();
+                            }
+                            '
                                                     ]
                                                 )->label(false)->error(false); ?>
                                             </div>
@@ -173,15 +208,15 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                         <div class="mid-col">
                                             <div class="form-cont">
                                                 <?= $form->field($model, 'nos', ["template" => '<span class="input input--akira">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">No of Sisters</span> </label></span>'])->input('number', ['class' => 'input__field input__field--akira form-control', 'min' => '0', 'onchange' => '
-                                                    var nos = $(this).val();
-                                                    if(nos == 0){
-                                                    $("#nosmDiv").hide();
-                                                      $("#NosM").val("0");
-                                                    }
-                                                    else {
-                                                      $("#nosmDiv").show();
-                                                    }
-                                                     '
+                            var nos = $(this).val();
+                            if(nos == 0){
+                            $("#nosmDiv").hide();
+                              $("#NosM").val("0");
+                            }
+                            else {
+                              $("#nosmDiv").show();
+                            }
+                            '
                                                 ]);
                                                 ?>
                                             </div>
@@ -192,6 +227,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                         </div>
                                     </div>
                                     <?php
+
                                     if ($model->nos == '0') {
                                         $style = "display:none";
                                     } else {
@@ -224,6 +260,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                                    value="Yes" <?php echo ($model->eSameAddress == 'Yes') ? 'checked' : ''; ?>>
                                             <label for="sameaddress" class="control-label">Same as my Current Address
                                                 mentioned above</label>
+
                                         </div>
                                     </div>
                                     <div class="box">
@@ -238,11 +275,12 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                                     ['class' => 'cs-select cs-skin-border',
                                                         'prompt' => 'Country',
                                                         'onchange' => '
-                                                        $.post( "' . Yii::$app->urlManager->createUrl('ajax/getstate?id=') . '"+$(this).val(), function( data ) {
-                                                          $( "select#iStateCAId" ).html( data );
-                                                          $("select#iStateCAId").niceSelect("update");
-                                                        });'
+                                $.post( "' . Yii::$app->urlManager->createUrl('ajax/getstate?id=') . '"+$(this).val(), function( data ) {
+                                  $( "select#iStateCAId" ).html( data );
+                                  $("select#iStateCAId").niceSelect("update");
+                                });'
                                                     ]
+
                                                 )->label(false)->error(false); ?>
                                             </div>
                                         </div>
@@ -269,11 +307,12 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                                         'id' => 'iStateCAId',
                                                         'prompt' => 'State',
                                                         'onchange' => '
-                                                        $.post( "' . Yii::$app->urlManager->createUrl('ajax/getcity?id=') . '"+$(this).val(), function( data ) {
-                                                          $( "select#iCityCAId" ).html( data );
-                                                          $("select#iCityCAId").niceSelect("update");
-                                                        });'
+                                $.post( "' . Yii::$app->urlManager->createUrl('ajax/getcity?id=') . '"+$(this).val(), function( data ) {
+                                  $( "select#iCityCAId" ).html( data );
+                                  $("select#iCityCAId").niceSelect("update");
+                                });'
                                                     ]
+
                                                 )->label(false)->error(false); ?>
                                             </div>
                                         </div>
@@ -288,6 +327,8 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                         </div>
                                         <div class="mid-col">
                                             <div class="form-cont">
+
+
                                                 <?php
                                                 $cityList = [];
                                                 if ($model->iStateCAId != "") {
@@ -300,6 +341,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                                         'id' => 'iCityCAId',
                                                         'prompt' => 'City'
                                                     ]
+
                                                 )->label(false)->error(false); ?>
                                             </div>
                                         </div>
@@ -513,6 +555,18 @@ Koregaon Park']) ?>
                                                     )->label(false)->error(false); ?>
                                                 </div>
                                             </div>
+                                            <!--<div class="form-cont">
+                                              <div class="checkbox mrg-lt-30">
+                                                <input id="Property1" type="checkbox" name="property[]" value="Property_1" >
+                                                <label for="Property1" class="control-label">Property 1</label>
+                                              </div>
+                                            </div>
+                                            <div class="form-cont">
+                                              <div class="checkbox mrg-lt-30">
+                                                <input id="Property2" type="checkbox" name="property[]" value="Property_2" >
+                                                <label for="Property2" class="control-label">Property 2</label>
+                                              </div>
+                                            </div>-->
                                         </div>
                                         <div class="small-col tp ">
                                             <a href="#" data-toggle="tooltip" data-placement="right"
@@ -531,7 +585,8 @@ Koregaon Park']) ?>
                                                 <div class=""></div>
 
 					<span class="input input--akira input--filled input-textarea mrg-tp-10">
-                          <textarea class="input__field input__field--akira" cols="50" rows="5" name="User[vDetailRelative]" ><?= ($model->vDetailRelative)?></textarea>
+                          <textarea class="input__field input__field--akira" cols="50" rows="5"
+                                    name="User[vDetailRelative]"><?= ($model->vDetailRelative) ?></textarea>
                           <label class="input__label input__label--akira" for="input-22">
                               <span class="input__label-content input__label-content--akira">You can enter your relative surnames etc...</span>
                           </label>
@@ -576,6 +631,9 @@ Koregaon Park']) ?>
             </div>
         </div>
     </main>
+    <style>
+        /*.radio_step4{width : 200%;}*/
+    </style>
 
 <?php
 $this->registerJs('
@@ -592,16 +650,16 @@ $this->registerJs('
             $(".Paddress").fadeOut("fast");
     });
   function sameAsAboveAddress(){
-      var iCountryId = "'.$model->iCountryId.'";
-      var iStateId = "'.$model->iStateId .'";
-      var iCityId = "'.$model->iCityId .'";
-      var iDistrictID = "'.$model->iDistrictID .'";
-      var iTalukaID = "'.$model->iTalukaID .'";
-      var vAreaName = "'.$model->vAreaName .'";
+      var iCountryId = "' . $model->iCountryId . '";
+      var iStateId = "' . $model->iStateId . '";
+      var iCityId = "' . $model->iCityId . '";
+      var iDistrictID = "' . $model->iDistrictID . '";
+      var iTalukaID = "' . $model->iTalukaID . '";
+      var vAreaName = "' . $model->vAreaName . '";
 
 
       $.ajax({
-        url:"'.Url::to(['ajax/sameasaboveaddress']).'", 
+        url:"' . Url::to(['ajax/sameasaboveaddress']) . '",
         type: "post",
         dataType: "JSON",
         data: {

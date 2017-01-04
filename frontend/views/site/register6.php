@@ -8,173 +8,92 @@ use common\components\CommonHelper;
 
 use yii\helpers\ArrayHelper;
 
-
 $HOME_URL = Yii::getAlias('@web')."/";
 $HOME_URL_SITE = Yii::getAlias('@web')."/site/";
 
 $HOME_PAGE_URL = Yii::getAlias('@web')."/";
 $UPLOAD_DIR = Yii::getAlias('@frontend') .'/web/uploads/';
 $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
-
 ?>
 <?php
-  echo $this->render('/layouts/parts/_headerregister.php');
+echo $this->render('/layouts/parts/_headerregister.php');
 ?>
-
 <main>
-
   <div class="main-section">
-
     <section>
-
       <div class="container">
-
-
         <div class="row">
-
           <div class="col-sm-12">
-
             <div class="white-section">
               <div class="col-md-9 col-sm-12">
                 <div class="right-column"> <span class="welcome-note">
-            <?php
-            if ($model->Profile_created_for !== "Self") {
-              ?>
+            <?php if ($model->Profile_created_for !== "Self") { ?>
               <p><strong>Welcome ,</strong> please give us few details about
                 <strong><?= $model->First_Name; ?> </strong>.</p>
-            <?php } else {
-              ?>
+            <?php } else { ?>
               <p><strong>Welcome <?= $model->First_Name; ?> ,</strong> please give us few details about yourself.</p>
-
-            <?php
-            }
-            ?>
-
+            <?php } ?>
               </span>
                 </div>
               </div>
-
-
               <h3>Add Profile Photo <a href="<?=$HOME_URL_SITE?>verification" class="pull-right"><span class="link_small">( I will do this later )</span></a>
-
               </h3>
-
-
-
               <div class="two-column">
-
                 <div class="row">
-
                   <div class="col-sm-6 bord">
-
                     <div class="row">
-
                       <div class="col-sm-12">
-
                         <p class="mrg-bt-10"><i class="fa fa-lock text-danger"></i> 100% Privacy Settings</p>
-
                       </div>
-
                     </div>
-
                     <div class="row">
-
                       <div class="col-sm-5">
-
                         <div class="image">
-
-
-
                           <div class="placeholder text-center">
-
-                            <!--<img src="<? /*=($model->propic!='') ? $model->propic : $HOME_PAGE_URL.'images/placeholder.jpg';*/ ?>" width="200" height="200" alt="placeholder" class="img-responsive mainpropic">-->
-
                             <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->user->identity->propic, 200), ['class' => 'img-responsive mainpropic', 'width' => '200', 'height' => '200', 'alt' => 'Profile Pic']); ?>
-
                             <div class="add-photo" data-toggle="modal" data-target="#photo"> <span class="file-input btn-file"> <i class="fa fa-plus-circle"></i> Add a photo </span> </div>
-
                           </div>
-
                           <p class="mrg-tp-10">Upload a photo and get 12 times more response</p>
-
                         </div>
-
                       </div>
-
                       <div class="col-sm-7">
-
                         <div class="upload">
-
                           <div>
-
                             <?php
-
                             $form = ActiveForm::begin([
-
                                 'id' => 'form-register6',
-
                             ]);
-
                             ?>
-
-                            <!--<form method="POST" name="propicform" id="propicform" enctype="multipart/form-data">-->
-
                             <input type="hidden" name="id" id="id" value="<?=base64_encode($model->id)?>">
-
                             <div id="file_browse_wrapper">Upload photo from computer
-
                               <input type="file" id="file_browse" name="file_browse" class="fileupload">
-
                             </div>
-
-                            <!--</form>-->
-
                             <?php ActiveForm::end(); ?>
-
                           </div>
-
                           <div class="bar-devider"> <span>OR</span> </div>
-
                           <a class="btn btn-block btn-social btn-facebook"> <i class="fa fa-facebook"></i> Sign in with Facebook </a> </div>
-
                       </div>
-
                     </div>
-
                     <div class="choose-photo">
-
                       <div class="row">
-
                         <div class="col-md-3 col-sm-3 col-xs-6">
-
                           <a class="selected" href="#">
                             <?= Html::img('@web/images/placeholder.jpg', ['width' => '200','height' => '200','alt' => 'placeholder','class' => 'img-responsive']); ?>
                           </a>
-
                           <a href="#" class="pull-left"> Profile pic </a>
-
                           <a href="#" class="pull-right"> <i aria-hidden="true" class="fa fa-trash-o"></i> </a>
-
                         </div>
-
                         <div class="col-md-3 col-sm-3 col-xs-6">
-
                           <a class="selected" href="#">
                             <?= Html::img('@web/images/placeholder.jpg', ['width' => '200','height' => '200','alt' => 'placeholder','class' => 'img-responsive']); ?>
                           </a>
-
                           <a href="#" class="pull-left"> Profile pic </a>
-
                           <a href="#" class="pull-right"> <i aria-hidden="true" class="fa fa-trash-o"></i> </a>
-
                         </div>
-
                         <div class="col-md-3 col-sm-3 col-xs-6">
-
                           <a class="selected" href="#">
                             <?= Html::img('@web/images/placeholder.jpg', ['width' => '200','height' => '200','alt' => 'placeholder','class' => 'img-responsive']); ?>
                           </a>
-
                           <a href="#" class="pull-left"> Profile pic </a>
 
                           <a href="#" class="pull-right"> <i aria-hidden="true" class="fa fa-trash-o"></i> </a>

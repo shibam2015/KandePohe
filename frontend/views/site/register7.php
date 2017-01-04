@@ -1,5 +1,4 @@
 <?php
-# NEW
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\models\User;
@@ -8,9 +7,6 @@ use yii\helpers\ArrayHelper;
 use common\components\CommonHelper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
-$HOME_PAGE_URL = Yii::getAlias('@web') . "/";
-$UPLOAD_DIR = Yii::getAlias('@frontend') . '/web/uploads/';
-$IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 ?>
 <?php if (Yii::$app->user->identity->eEmailVerifiedStatus == 'Yes' && Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes') { ?>
     <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
