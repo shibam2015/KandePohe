@@ -101,8 +101,7 @@ class SearchController extends Controller
             $Gender = $params['User']['Profile_for'];
             $Community = $params['User']['iCommunity_ID'];
             $SubCommunity = $params['User']['iSubCommunity_ID'];
-            $HeightFrom = $params['User']['HeightFrom'];
-            $HeightTo = $params['User']['HeightTo'];
+            $Height = $params['User']['iHeightID'];
             $ReligionID = $params['User']['iReligion_ID'];
             $MaritalStatusID = $params['User']['Marital_Status'];
             if ($params['User']['Agerange'] != '') {
@@ -114,8 +113,7 @@ class SearchController extends Controller
             $session->set('Profile_for', $Gender);
             $session->set('iCommunity_ID', $Community);
             $session->set('iSubCommunity_ID', $SubCommunity);
-            $session->set('HeightFrom', $HeightFrom);
-            $session->set('HeightTo', $HeightTo);
+            $session->set('iHeightID', $Height);
             $session->set('iReligion_ID', $ReligionID);
             $session->set('Marital_Status', $MaritalStatusID);
             $session->set('AgeFrom', $AgeFrom);
@@ -190,8 +188,7 @@ class SearchController extends Controller
                 $Gender = $session->get('Profile_for');
                 $Community = $session->get('iCommunity_ID');
                 $SubCommunity = $session->get('iSubCommunity_ID');
-                $HeightFrom = $session->get('HeightFrom');
-                $HeightTo = $session->get('HeightTo');
+                $Height = $session->get('iHeightID');
                 $ReligionID = $session->get('iReligion_ID');
                 $MaritalStatusID = $session->get('Marital_Status');
                 $AgeFrom = $session->get('AgeFrom');
@@ -213,17 +210,12 @@ class SearchController extends Controller
 
             $WHERE .= ($Community != '') ? ' AND user.iCommunity_ID = "' . $Community . '" ' : '';
             $WHERE .= ($SubCommunity != '') ? ' AND user.iSubCommunity_ID = "' . $SubCommunity . '" ' : '';
-            #$WHERE .= ($HeightFrom != '') ? ' AND user.iHeightID = "' . $HeightFrom . '" ' : '';
+            $WHERE .= ($Height != '') ? ' AND user.iHeightID = "' . $Height . '" ' : '';
             $WHERE .= ($ReligionID != '') ? ' AND user.iReligion_ID = "' . $ReligionID . '" ' : '';
             $WHERE .= ($MaritalStatusID != '') ? ' AND user.Marital_Status = "' . $MaritalStatusID . '" ' : '';
             $WHERE .= ($AgeFrom != '') ? ' AND ( (user.Age >= "' . $AgeFrom . '") OR (TIMESTAMPDIFF(YEAR, user.DOB, CURDATE()) >= "' . $AgeFrom . '"))' : '';
             $WHERE .= ($AgeTo != '') ? ' AND ((user.Age <= "' . $AgeTo . '") OR (TIMESTAMPDIFF(YEAR, user.DOB, CURDATE()) <= "' . $AgeTo . '")) ' : '';
-
-            $WHERE .= ($HeightFrom != '') ? ' AND master_heights.Centimeters >= "' . $HeightFrom . '" ' : '';
-            $WHERE .= ($HeightTo != '') ? ' AND master_heights.Centimeters <= "' . $HeightTo . '" ' : '';
-
             $WHERE .= $WhereId;
-            #echo $WHERE;exit;
             $Limit = Yii::$app->params['searchingLimit'];
             $Offset = (Yii::$app->request->get('Offset') == 0) ? 0 : Yii::$app->request->get('Offset');
             $Page = (Yii::$app->request->get('page') == 0 || Yii::$app->request->get('page') == '') ? 0 : Yii::$app->request->get('page');
@@ -248,8 +240,7 @@ class SearchController extends Controller
             $TempModel->iSubCommunity_ID = $SubCommunity;
             $TempModel->iReligion_ID = $ReligionID;
             $TempModel->Marital_Status = $MaritalStatusID;
-            $TempModel->HeightFrom = $HeightFrom;
-            $TempModel->HeightTo = $HeightTo;
+            $TempModel->iHeightID = $Height;
             $TempModel->Profile_for = $Gender;
             $TempModel->AgeFrom = $AgeFrom;
             $TempModel->AgeTo = $AgeTo;

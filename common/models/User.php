@@ -86,6 +86,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $vCityName;
     #public $height;
     public $tag_id;
+    public $HeightFrom;
+    public $HeightTo;
 
 
     // public $captcha;
@@ -231,8 +233,14 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public static function searchBasic($WHERE = '', $Offset = 0, $Limit = '') # Get user list Gender Wise with limit
     {
-        $Records = User::find()->select(' * ')->where((" 1=1  AND user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "') $WHERE "))->orderBy(['LastLoginTime' => SORT_DESC])->offset($Offset)->limit($Limit)->all();
+        // LEFT JOIN master_heights ON user.iHeightID = master_heights.iHeightID
+        $Records = User::find()->select(' * ')
+            ->leftJoin('master_heights', '`user`.`iHeightID` = `master_heights`.`iHeightID`')
+            ->where((" 1=1  AND user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "') $WHERE "))->orderBy(['LastLoginTime' => SORT_DESC])->offset($Offset)->limit($Limit)->all();
         return $Records;
+
+        /*$Records = User::find()->select(' * ')->where((" 1=1  AND user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "') $WHERE "))->orderBy(['LastLoginTime' => SORT_DESC])->offset($Offset)->limit($Limit)->all();
+        return $Records;*/
     }
 
     public static function findFeaturedMembers($Limit = 4) # Get Featured Members list with limit

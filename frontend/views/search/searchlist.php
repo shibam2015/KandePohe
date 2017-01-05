@@ -7,19 +7,12 @@ use common\components\CommonHelper;
 use common\components\MessageHelper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
-
 $id = 0;
-$PROFILE_COMPLETENESS = 50;
+$PROFILE_COMPLETENESS = 0;
 
 if (!Yii::$app->user->isGuest) {
     $Id = Yii::$app->user->identity->id;
 }
-
-$HOME_URL = Yii::getAlias('@web') . "/";
-$HOME_URL_SITE = Yii::getAlias('@web') . "/site/";
-$UPLOAD_DIR = Yii::getAlias('@frontend') . '/web/uploads/';
-$IMG_DIR = Yii::getAlias('@frontend') . '/web/';
-
 $M1 = array();
 ?>
 
@@ -79,8 +72,6 @@ $M1 = array();
                                                 ]
                                             ]);
                                             ?>
-
-
                                             <div class="row">
                                                 <?php
                                                 $heightrange = range(134, 204);
@@ -108,6 +99,56 @@ $M1 = array();
                                                                     ['class' => 'cs-select cs-skin-border',
                                                                         'prompt' => 'To']
                                                                 )->label(true)->error(false); ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="box">
+                                                        <div class="mid-col">
+                                                            <div class="form-cont bs">
+                                                                <div class="form-group field-user-heightto">
+                                                                    <label class="control-label col-sm-3 col-xs-3"
+                                                                           for="user-heightfrom">Height From </label>
+
+                                                                    <div class="col-sm-8 col-xs-8">
+                                                                        <select id="user-heightfrom"
+                                                                                class="cs-select cs-skin-border"
+                                                                                name="User[HeightFrom]">
+                                                                            <option value="">Height From</option>
+                                                                            <?php foreach (CommonHelper::getHeight() as $K => $V) { ?>
+                                                                                <option
+                                                                                    value="<?= $V['Centimeters'] ?>" <?= ($V['Centimeters'] == $TempModel->HeightFrom) ? 'selected' : '' ?>><?= $V['vName'] ?></option>
+                                                                            <?php } ?>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="box">
+                                                        <div class="mid-col">
+                                                            <div class="form-cont bs">
+                                                                <div class="form-group field-user-heightto">
+                                                                    <label class="control-label col-sm-3 col-xs-3"
+                                                                           for="user-heightto">Height To </label>
+
+                                                                    <div class="col-sm-8 col-xs-8">
+                                                                        <select id="user-heightto"
+                                                                                class="cs-select cs-skin-border"
+                                                                                name="User[HeightTo]">
+                                                                            <option value="">Height To</option>
+                                                                            <?php foreach (CommonHelper::getHeight() as $K => $V) { ?>
+                                                                                <option
+                                                                                    value="<?= $V['Centimeters'] ?>" <?= ($V['Centimeters'] == $TempModel->HeightTo) ? 'selected' : '' ?>><?= $V['vName'] ?></option>
+                                                                            <?php } ?>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -182,11 +223,11 @@ $M1 = array();
                                                     <div class="box">
                                                         <div class="mid-col">
                                                             <div class="form-cont bs">
-                                                                <?= $form->field($TempModel, 'iHeightID')->dropDownList(
+                                                                <!--  <?= $form->field($TempModel, 'iHeightID')->dropDownList(
                                                                     ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
                                                                     ['class' => 'cs-select cs-skin-border',
                                                                         'prompt' => 'Height']
-                                                                )->label(true)->error(false); ?>
+                                                                )->label(true)->error(false); ?> -->
                                                             </div>
                                                         </div>
                                                     </div>
