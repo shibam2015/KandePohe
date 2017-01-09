@@ -481,12 +481,12 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 <!-- Short list block -->
                                 <div class="row">
                                     <?php if (count($ShortListUser) > 0) { ?>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                                        <div class="bg-white mrg-tp-20">
-                                            <h3 class="heading-xs">Your Profile Shortlisted By</h3>
-                                            <ul class="list-unstyled ad-prof mrg-tp-20">
-                                                <?php foreach ($ShortListUser as $KeyShort => $ValueShort) { ?>
-                                                    <li>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                            <div class="bg-white mrg-tp-20">
+                                                <h3 class="heading-xs">Your Profile Shortlisted By</h3>
+                                                <ul class="list-unstyled ad-prof mrg-tp-20">
+                                                    <?php foreach ($ShortListUser as $KeyShort => $ValueShort) { ?>
+                                                        <li>
                                                     <span class="imgarea">
                                                         <?= Html::img(CommonHelper::getPhotos('USER', $ValueShort->id, "75" . $ValueShort->propic, 120, '', 'Yes'), ['alt' => $ValueShort->FullName, 'style' => '    width: 65px !important;']); ?>
                                                     </span>
@@ -499,17 +499,17 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                         <p><?= CommonHelper::getAge($ValueShort->DOB); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->height->vName, 'text')); ?> <?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->religionName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->communityName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->workingAsName->vWorkingAsName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->cityName->vCityName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->countryName->vCountryName, 'text')); ?></p>
                                                     </span>
 
-                                                        <div class="clearfix"></div>
-                                                    </li>
-                                                <?php } ?>
-                                            </ul>
-                                            <div class="text-right">
-                                                <?php if (count($ShortListUser) > 2) { ?>
-                                                <?= html::a('View All &gt;', ['search/basic-search', 'ref' => Yii::$app->params['ref']['you_shortlisted_by']], ['data-method' => 'post', 'class' => 'pull-right', 'title' => 'View All']) ?>
-                                                <?php } ?>
+                                                            <div class="clearfix"></div>
+                                                        </li>
+                                                    <?php } ?>
+                                                </ul>
+                                                <div class="text-right">
+                                                    <?php if (count($ShortListUser) > 2) { ?>
+                                                        <?= html::a('View All &gt;', ['search/basic-search', 'ref' => Yii::$app->params['ref']['you_shortlisted_by']], ['data-method' => 'post', 'class' => 'pull-right', 'title' => 'View All']) ?>
+                                                    <?php } ?>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                     <?php } ?>
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                                         <div class="bg-white mrg-tp-20">
@@ -551,67 +551,60 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                 </div>
             </section>
             <div class="modal fade" id="privacyoption" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <p class="text-center mrg-bt-10">
-                <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <p class="text-center mrg-bt-10">
+                        <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
 
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span> <span
-                            class="sr-only">Close</span></button>
-                    <h2 class="text-center" id="model_heading">Set Privacy Options For Your Profile</h2>
-                </div>
-                <!-- Modal Body -->
-                <div class="modal-body photo-gallery">
-                    <div class="choose-photo">
-                        <?php $form = ActiveForm::begin(); ?>
-                        <div class="form-cont">
-                            <div class="radio dl" id="IVA">
-                                <dt></dt>
-                                <dd data-ng-init="user_privacy_option=<?=$model->user_privacy_option?>">
-                                    <?= $form->field($model, 'user_privacy_option')->RadioList(
-                                        ['0' => 'Visible to all', '1' => 'Visible only to members whom I had contacted / responded'],
-                                        [
-                                            'item' => function ($index, $label, $name, $checked, $value) {
-                                                $checked = ($checked) ? 'checked' : '';
-                                                $return = '<input data-ng-model="user_privacy_option" type="radio" id="user_privacy_option_' . $value . '" name="' . $name . '" value="' . $value . '" ngValue="' . $checked . '">';
-                                                $return .= '<label for="user_privacy_option_' . $value . '">' . ucwords($label) . '</label>';
-                                                return $return;
-                                            }
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">&times;</span> <span
+                                    class="sr-only">Close</span></button>
+                            <h2 class="text-center" id="model_heading">Set Privacy Options For Your Profile</h2>
+                        </div>
+                        <div class="modal-body">
+                            <div class="choose-photo">
+                                <?php $form = ActiveForm::begin(); ?>
+                                <div class="form-cont">
+                                    <div class="radio dl" id="IVA">
+                                        <dt></dt>
+                                        <dd data-ng-init="user_privacy_option=<?= $model->user_privacy_option ?>">
+                                            <?= $form->field($model, 'user_privacy_option')->RadioList(
+                                                ['0' => 'Visible to all', '1' => 'Visible only to members whom I had contacted / responded'],
+                                                [
+                                                    'item' => function ($index, $label, $name, $checked, $value) {
+                                                        $checked = ($checked) ? 'checked' : '';
+                                                        $return = '<input data-ng-model="user_privacy_option" type="radio" id="user_privacy_option_' . $value . '" name="' . $name . '" value="' . $value . '" ngValue="' . $checked . '">';
+                                                        $return .= '<label for="user_privacy_option_' . $value . '">' . ucwords($label) . '</label>';
+                                                        return $return;
+                                                    }
 
-                                        ]
-                                    )->label(false); ?>
-
-
-                                </dd>
-
-
+                                                ]
+                                            )->label(false); ?>
+                                        </dd>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                        <a href="javascript:void(0)"
+                                           class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right "
+                                           id="privacysetting" data-ng-click="changePrivacy()">
+                                            Save </a>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6 ">
+                                        <a href="javascript:void(0)"
+                                           class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left"
+                                           data-dismiss="modal"> Back </a>
+                                    </div>
+                                </div>
+                                <?php ActiveForm::end(); ?>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-6">
-                                <a href="javascript:void(0)"
-                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-right " id="privacysetting" data-ng-click="changePrivacy()">
-                                    Save </a>
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-6 ">
-                                <a href="javascript:void(0)"
-                                   class="btn btn-primary mrg-tp-10 col-xs-5 col-xs-5 pull-left"
-                                   data-dismiss="modal"> Back </a>
-                            </div>
-                        </div>
-                        <?php ActiveForm::end(); ?>
-
-
                     </div>
+                    <!-- Modal Footer -->
                 </div>
             </div>
-            <!-- Modal Footer -->
-        </div>
-    </div>
         </main>
     </div>
     <div class="modal fade" id="sendInterest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

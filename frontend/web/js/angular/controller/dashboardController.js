@@ -8,7 +8,7 @@ app.config(['$httpProvider', function ($httpProvider) {
 
 //run...........
 app.run(function run($http) {
-    $http.defaults.headers.post['X-CSRF-Token'] = document.querySelector('meta[name=csrf-token]').content;
+	// $http.defaults.headers.post['X-CSRF-Token'] = document.querySelector('meta[name=csrf-token]').content;
 });
 
 //Controller............
@@ -31,7 +31,7 @@ app.controller('dashboardController', function ($scope, vService, $http) {
 
 	function changePrivacy() {
 		var user_privacy_option = $scope.user_privacy_option;
-		vService.ajaxWithnotification({
+		vService.ajaxWithNotificationFlash({
 			url:'saveprivacy-setting',
 			data:{'user_privacy_option': user_privacy_option,'ACTION': 'Save'}
 		});

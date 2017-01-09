@@ -482,8 +482,8 @@ var ImagePath ='';
             });
         }
     )
-    $('#profilecrop').on('hide.bs.modal', function () {
-    $('.modal-body').css('left', '0');
+    $('.profilecropmodal').on('hide.bs.modal', function () {
+        $('.modal-body').css('left', '0');
         $('img#photov').imgAreaSelect({remove:true});
         $('.imgareaselect-selection,.imgareaselect-border1,.imgareaselect-border2,.imgareaselect-border3,.imgareaselect-border4,.imgareaselect-border2,.imgareaselect-outer').css('display', 'none');
         $.ajax({

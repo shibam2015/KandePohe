@@ -82,5 +82,9 @@ return [
     'smokeArray' => ['Yes' => 'Smoke_Yes', 'No' => 'Smoke_No', 'Occasionally' => 'Smoke_Occasionally'],
     'drinkArray' => ['Yes' => 'Drink_Yes', 'No' => 'Drink_No', 'Occasionally' => 'Drink_Occasionally'],
     'eyesArray' => ['Spectacles' => 'SpectaclesLens_Spectacles', 'Lens' => 'SpectaclesLens_Lens'],
+    'deleteProfileTitle' => 'Delete profile',
+    'deleteProfileMessage' => 'Are you sure you want to delete your profile?',
+    'deleteProfileNote' => 'Deleting your account will disable your Profile. Some information may still be visible to others,
+                        such as your name in their Inbox list and messages that you\'ve sent.',
 ];
 

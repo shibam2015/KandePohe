@@ -20,6 +20,17 @@ commonApp.factory('vService', ['$http', function($http) {
 	            notificationPopup('ERROR', 'Something went wrong. Please try again !');
 	        });
 		},
+		ajaxWithNotificationFlash: function (commonObj) {
+			$http({
+				method: "POST",
+				url: commonObj.url,
+				data: commonObj.data,
+			}).then(function mySucces(response) {
+				showNotification(response.data.STATUS, response.data.MESSAGE);
+			}, function myError(response) {
+				showNotification('ERROR', 'Something went wrong. Please try again !');
+			});
+		},
 		ajaxWithOutNotification: function (commonObj) {
 			$http({
 				method: "POST",
