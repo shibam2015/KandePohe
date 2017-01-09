@@ -167,24 +167,24 @@ class UserController extends Controller
     public function actionDashboard($type = '')
     {
         if (!Yii::$app->user->isGuest) {
-            $id = Yii::$app->user->identity->id;
-            if($model = User::findOne($id)){
+            $Id = Yii::$app->user->identity->id;
+            if ($model = User::findOne($Id)) {
                 CommonHelper::checkVerification();
                 $model->scenario = User::SCENARIO_REGISTER6;
                 $VER_ARRAY = array();
                 $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
-                #$ProfileViedByMembers = UserRequest::findProfileViewedByUserList($id, 4);
-                $ProfileViedByMembers = UserRequestOp::findProfileViewedByUserList($id, 4);
-                //$RecentlyJoinedMembers = User::findRecentJoinedUserLists($id,$Gender, 4);
+                #$ProfileViedByMembers = UserRequest::findProfileViewedByUserList($Id, 4);
+                $ProfileViedByMembers = UserRequestOp::findProfileViewedByUserList($Id, 4);
+                //$RecentlyJoinedMembers = User::findRecentJoinedUserLists($Id,$Gender, 4);
                 $RecentlyJoinedMembers = User::findRecentJoinedUserList($Gender, 4);
                 //echo $RecentlyJoinedMembers->createCommand()->sql;exit;
-                list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, $id, 3);
+                list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, $Id, 3);
 
                 #Shortlist User
-                $ShortList = UserRequestOp::getShortList($id, 0, 3);
+                $ShortList = UserRequestOp::getShortList($Id, 0, 3);
                 foreach ($ShortList as $Key => $Value) {
                     #CommonHelper::pr($Value);exit;
-                    if ($Value->from_user_id == $id) {
+                    if ($Value->from_user_id == $Id) {
                         $ShortListInfo[$Key] = $Value->toUserInfo;
                     } else {
                         $ShortListInfo[$Key] = $Value->fromUserInfo;
@@ -192,6 +192,17 @@ class UserController extends Controller
                 }
                 #CommonHelper::pr($ModelInfo);
                 #CommonHelper::pr($ShortList);exit;
+
+
+                # My Preferences Start
+                # Location Wise
+                $PC = PartnersCities::findByUserId($Id);
+                $PS = PartnersStates::findByUserId($Id);
+                $PCS = PartnersCountries::findByUserId($Id);
+                $PreferencesLocation = User::getPreferencesLocation($Gender, $Id, $PC->city_id, $PS->state_id, $PCS->country_id);
+                #CommonHelper::pr($PreferencesLocation);exit;
+
+                # My Preferences End
 
                 return $this->render('dashboard',[
                     'model' => $model,
@@ -201,6 +212,8 @@ class UserController extends Controller
                     'ProfileViedByMembers' => $ProfileViedByMembers,
                     'SimilarProfile' => $SimilarProfile,
                     'ShortListUser' => $ShortListInfo,
+
+                    'PreferencesLocation' => $PreferencesLocation,
                 ]);
             }else{
                 return $this->redirect(Yii::getAlias('@web'));

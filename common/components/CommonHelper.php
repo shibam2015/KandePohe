@@ -567,18 +567,24 @@ class CommonHelper {
         }
     }
 
-    public static function getMailBoxUrl($RNo = '', $Type = '')
+    public static function getMailBoxUrl($Type = '', $RNo = '')
     {
         $MailBoxUrl = 'mailbox/';
         switch ($Type) {
             case "1"://more-conversation
                 return Yii::$app->homeUrl . $MailBoxUrl . 'more-conversation?uk=' . $RNo;
                 break;
+            case "1.2": //Inbox : Read & Not Replied
+                return Yii::$app->homeUrl . $MailBoxUrl . 'inbox#read';
+                break;
+            case "1.3": //Inbox : Accepted
+                return Yii::$app->homeUrl . $MailBoxUrl . 'inbox#accepted';
+                break;
             case "2":
                 //SentBox
                 return Yii::$app->homeUrl . $MailBoxUrl . 'sentbox';
                 break;
-            default :
+            default : # Inbox
                 return Yii::$app->homeUrl . $MailBoxUrl;
 
         }

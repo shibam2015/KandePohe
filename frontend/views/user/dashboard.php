@@ -151,15 +151,227 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                             <li><a href="<?= CommonHelper::getMailBoxUrl() ?>"
                                                    title="Inbox">Inbox</a> <span
                                                     class="badge">10</span></li>
-                                            <li><a href="#" title="Accepted">Accepted Interest</a> <span
+                                            <li><a href="<?= CommonHelper::getMailBoxUrl(1.3) ?>" title="Accepted">Accepted
+                                                    Interest</a> <span
                                                     class="badge">2</span></li>
-                                            <li><a href="#" title="Not Replied"> Not Replied </a> <span
+                                            <li><a href="<?= CommonHelper::getMailBoxUrl() ?>" title="Not Replied"> Not
+                                                    Replied </a> <span
                                                     class="badge">1</span></li>
-                                            <li><a href="#" title="Sent"> Sent </a> <span class="badge">1</span></li>
+                                            <li><a href="<?= CommonHelper::getMailBoxUrl(2) ?>" title="Sent"> Sent </a>
+                                                <span class="badge">1</span></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="divider no-mrg"></div>
+                                <div class="panel no-border padd-hr-10 panel-default panel-friends">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title text-muted">My Preferences</h3>
+                                    </div>
+                                    <div class="refe-accord">
+                                        <div class="panel-group" id="accordion" role="tablist"
+                                             aria-multiselectable="true">
+                                            <?php if (count($PreferencesLocation)) { ?>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading" role="tab" id="headingOne">
+                                                        <h4 class="panel-title">
+                                                            <a role="button" data-toggle="collapse"
+                                                               data-parent="#accordion" href="#collapseOnes"
+                                                               aria-expanded="true" aria-controls="collapseOnes">
+                                                                Location
+                                                                <!--<span class="blue">(669)</span>-->
+                                                                <span
+                                                                    class="badge"><?= count($PreferencesLocation) ?></span>
+                                                                <i class="fa indicator fa-angle-up"></i>
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+
+                                                    <div id="collapseOnes" class="panel-collapse collapse in"
+                                                         role="tabpanel" aria-labelledby="headingOne">
+                                                        <div class="panel-body">
+                                                            <ul class="list-unstyled ad-prof">
+                                                                <?php
+                                                                #$LPMax = count($PreferencesLocation)  >= 2 ? 2 : 1;
+                                                                for ($LP = 0; $LP < (count($PreferencesLocation) >= 2 ? 2 : 1); $LP++) { ?>
+                                                                    <li> <span class="imgarea">
+                                                                        <a href="#" class="name" title="KP123WERT">
+                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesLocation[$LP]->id, "75" . $PreferencesLocation[$LP]->propic, 120, '', 'Yes'), ['alt' => $PreferencesLocation[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
+                                                                        </a></span> <span class="img-desc"> <a href="#"
+                                                                                                               class="name"
+                                                                                                               title="<?= $PreferencesLocation[$LP]->Registration_Number ?>"><?= $PreferencesLocation[$LP]->Registration_Number ?></a>
+                              <p><?= CommonHelper::getAge($PreferencesLocation[$LP]->DOB); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesLocation[$LP]->height->vName, 'text')); ?> <?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesLocation[$LP]->religionName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesLocation[$LP]->communityName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesLocation[$LP]->workingAsName->vWorkingAsName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesLocation[$LP]->cityName->vCityName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesLocation[$LP]->countryName->vCountryName, 'text')); ?></p>
+                                                                </span>
+
+                                                                        <div class="clearfix"></div>
+                                                                    </li>
+
+                                                                <?php } ?>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php } ?>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingTwo">
+                                                    <h4 class="panel-title"><a class="collapsed" role="button"
+                                                                               data-toggle="collapse"
+                                                                               data-parent="#accordion"
+                                                                               href="#collapseTwo" aria-expanded="false"
+                                                                               aria-controls="collapseTwo"> Profession
+                                                            <span class="blue">(669)</span> <span
+                                                                class="badge">11</span> <i
+                                                                class="fa indicator fa-angle-down"></i> </a></h4>
+                                                </div>
+                                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
+                                                     aria-labelledby="headingTwo">
+                                                    <div class="panel-body">
+                                                        <ul class="list-unstyled ad-prof">
+                                                            <li><span class="imgarea"><a href="#" class="name"
+                                                                                         title="KP123WERT"><img
+                                                                            src="images/profile1.jpg" alt="Profile"></a></span> <span
+                                                                    class="img-desc"> <a href="#" class="name"
+                                                                                         title="KP123WERT">KP123WERT</a>
+                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
+                              </span>
+
+                                                                <div class="clearfix"></div>
+                                                            </li>
+                                                            <li><span class="imgarea"><a href="#" class="name"
+                                                                                         title="KP123WERT"><img
+                                                                            src="images/profile1.jpg" alt="Profile"></a></span> <span
+                                                                    class="img-desc"> <a href="#" class="name"
+                                                                                         title="KP123WERT">KP123WERT</a>
+                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
+                              </span>
+
+                                                                <div class="clearfix"></div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingThree">
+                                                    <h4 class="panel-title"><a class="collapsed" role="button"
+                                                                               data-toggle="collapse"
+                                                                               data-parent="#accordion"
+                                                                               href="#collapseThree"
+                                                                               aria-expanded="false"
+                                                                               aria-controls="collapseThree"> Education
+                                                            <span class="blue">(669)</span> <span
+                                                                class="badge">10</span> <i
+                                                                class="fa indicator fa-angle-down"></i> </a></h4>
+                                                </div>
+                                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
+                                                     aria-labelledby="headingThree">
+                                                    <div class="panel-body">
+                                                        <ul class="list-unstyled ad-prof">
+                                                            <li><span class="imgarea"><a href="#" class="name"
+                                                                                         title="KP123WERT"><img
+                                                                            src="images/profile1.jpg" alt="Profile"></a></span> <span
+                                                                    class="img-desc"> <a href="#" class="name"
+                                                                                         title="KP123WERT">KP123WERT</a>
+                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
+                              </span>
+
+                                                                <div class="clearfix"></div>
+                                                            </li>
+                                                            <li><span class="imgarea"><a href="#" class="name"
+                                                                                         title="KP123WERT"><img
+                                                                            src="images/profile1.jpg" alt="Profile"></a></span> <span
+                                                                    class="img-desc"> <a href="#" class="name"
+                                                                                         title="KP123WERT">KP123WERT</a>
+                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
+                              </span>
+
+                                                                <div class="clearfix"></div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingfour">
+                                                    <h4 class="panel-title"><a class="collapsed" role="button"
+                                                                               data-toggle="collapse"
+                                                                               data-parent="#accordion"
+                                                                               href="#collapsefour"
+                                                                               aria-expanded="false"
+                                                                               aria-controls="collapsefour"> Compatible
+                                                            Stars <span class="blue">(669)</span> <span
+                                                                class="badge">10</span> <i
+                                                                class="fa indicator fa-angle-down"></i> </a></h4>
+                                                </div>
+                                                <div id="collapsefour" class="panel-collapse collapse" role="tabpanel"
+                                                     aria-labelledby="headingfour">
+                                                    <div class="panel-body">
+                                                        <ul class="list-unstyled ad-prof">
+                                                            <li><span class="imgarea"><a href="#" class="name"
+                                                                                         title="KP123WERT"><img
+                                                                            src="images/profile1.jpg" alt="Profile"></a></span> <span
+                                                                    class="img-desc"> <a href="#" class="name"
+                                                                                         title="KP123WERT">KP123WERT</a>
+                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
+                              </span>
+
+                                                                <div class="clearfix"></div>
+                                                            </li>
+                                                            <li><span class="imgarea"><a href="#" class="name"
+                                                                                         title="KP123WERT"><img
+                                                                            src="images/profile1.jpg" alt="Profile"></a></span> <span
+                                                                    class="img-desc"> <a href="#" class="name"
+                                                                                         title="KP123WERT">KP123WERT</a>
+                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
+                              </span>
+
+                                                                <div class="clearfix"></div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingfive">
+                                                    <h4 class="panel-title"><a class="collapsed" role="button"
+                                                                               data-toggle="collapse"
+                                                                               data-parent="#accordion"
+                                                                               href="#collapsefive"
+                                                                               aria-expanded="false"
+                                                                               aria-controls="collapsefive"> Family
+                                                            values <span class="blue">(669)</span> <span class="badge">10</span>
+                                                            <i class="fa fa-angle-down"></i> </a></h4>
+                                                </div>
+                                                <div id="collapsefive" class="panel-collapse collapse" role="tabpanel"
+                                                     aria-labelledby="headingfive">
+                                                    <div class="panel-body">
+                                                        <ul class="list-unstyled ad-prof">
+                                                            <li><span class="imgarea"><a href="#" class="name"
+                                                                                         title="KP123WERT"><img
+                                                                            src="images/profile1.jpg" alt="Profile"></a></span> <span
+                                                                    class="img-desc"> <a href="#" class="name"
+                                                                                         title="KP123WERT">KP123WERT</a>
+                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
+                              </span>
+
+                                                                <div class="clearfix"></div>
+                                                            </li>
+                                                            <li><span class="imgarea"><a href="#" class="name"
+                                                                                         title="KP123WERT"><img
+                                                                            src="images/profile1.jpg" alt="Profile"></a></span> <span
+                                                                    class="img-desc"> <a href="#" class="name"
+                                                                                         title="KP123WERT">KP123WERT</a>
+                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
+                              </span>
+
+                                                                <div class="clearfix"></div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-8 col-md-6">
