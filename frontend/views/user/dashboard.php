@@ -168,11 +168,11 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 echo "<br>  2 ==>" . count($PreferencesProfession);
                                 echo "<br>  3 ==>" . count($PreferencesEducation);
                                 echo "<br>  4 ==>" . count($PreferencesPersonal);
-                                if (count($PreferencesLocation) > 0 || count($PreferencesProfession) > 0 || count($PreferencesEducation) > 0 || count($PreferencesPersonal) > 0)
+                                if (count($PreferencesLocation) > 0 || count($PreferencesProfession) > 0 || count($PreferencesEducation) > 0 || count($PreferencesPersonal) > 0) {
                                 ?>
                                 <div class="panel no-border padd-hr-10 panel-default panel-friends">
                                     <div class="panel-heading">
-                                        <h3 class="panel-title text-muted">My Preferences</h3>
+                                        <h3 class="panel-title text-muted">My Preferences Test</h3>
                                     </div>
                                     <div class="refe-accord">
                                         <div class="panel-group" id="accordion" role="tablist"
@@ -341,6 +341,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                         </div>
                                     </div>
                                 </div>
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="col-sm-8 col-md-6">
