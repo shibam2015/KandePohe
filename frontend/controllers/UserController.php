@@ -10,6 +10,7 @@ use common\models\PartnersCities;
 use common\models\PartnersCommunity;
 use common\models\PartnersCountries;
 use common\models\PartnersMothertongue;
+use common\models\PartnersReligion;
 use common\models\PartnersStates;
 use common\models\PartnersSubcommunity;
 use common\models\PartnerWorkingAs;
@@ -211,8 +212,13 @@ class UserController extends Controller
                 $iWorkingAsID = PartnerWorkingAs::findByUserId($Id);
                 $iAnnualIncomeID = PartnersAnnualIncome::findByUserId($Id);
                 $PreferencesProfession = User::getPreferencesProfession($Gender, $Id, $iWorkingWithID->iWorking_With_ID, $iWorkingAsID->iWorking_As_ID, $iAnnualIncomeID->annual_income_id);
-                #CommonHelper::pr($PreferencesProfession);exit;
-                #echo count($PreferencesProfession);exit;
+
+                # Personal ( My Preferences ) Wise
+                $iReligion_ID = PartnersReligion::findByUserId($Id);
+                $iMaritalStatusID = PartnersMaritalStatus::findByUserId($Id);
+                $PreferencesPersonal = User::getPreferencesPersonal($Gender, $Id, $iReligion_ID->iReligion_ID, $iMaritalStatusID->iMarital_Status_ID);
+                #CommonHelper::pr($PreferencesPersonal);exit;
+                #echo count($PreferencesPersonal);exit;
                 # My Preferences End
 
                 return $this->render('dashboard',[
@@ -227,6 +233,7 @@ class UserController extends Controller
                     'PreferencesLocation' => $PreferencesLocation,
                     'PreferencesEducation' => $PreferencesEducation,
                     'PreferencesProfession' => $PreferencesProfession,
+                    'PreferencesPersonal' => $PreferencesPersonal,
                 ]);
             }else{
                 return $this->redirect(Yii::getAlias('@web'));

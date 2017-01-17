@@ -332,6 +332,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     </div>
                                                 </div>
                                             </div>
+                                            <?php if (count($PreferencesPersonal)) { ?>
                                             <div class="panel panel-default">
                                                 <div class="panel-heading" role="tab" id="headingfive">
                                                     <h4 class="panel-title"><a class="collapsed" role="button"
@@ -339,38 +340,37 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                                data-parent="#accordion"
                                                                                href="#collapsefive"
                                                                                aria-expanded="false"
-                                                                               aria-controls="collapsefive"> Family
-                                                            values <span class="blue">(669)</span> <span class="badge">10</span>
+                                                                               aria-controls="collapsefive"> Personal
+                                                            Preferences <!--<span class="blue">(669)</span>-->
+                                                                <span
+                                                                    class="badge"><?= count($PreferencesPersonal) ?></span>
                                                             <i class="fa fa-angle-down"></i> </a></h4>
                                                 </div>
                                                 <div id="collapsefive" class="panel-collapse collapse" role="tabpanel"
                                                      aria-labelledby="headingfive">
                                                     <div class="panel-body">
                                                         <ul class="list-unstyled ad-prof">
-                                                            <li><span class="imgarea"><a href="#" class="name"
-                                                                                         title="KP123WERT"><img
-                                                                            src="images/profile1.jpg" alt="Profile"></a></span> <span
-                                                                    class="img-desc"> <a href="#" class="name"
-                                                                                         title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
+                                                            <?php
+                                                            #$LPMax = count($PreferencesPersonal)  >= 2 ? 2 : 1;
+                                                            for ($LP = 0; $LP < (count($PreferencesPersonal) >= 2 ? 2 : 1); $LP++) { ?>
+                                                                <li> <span class="imgarea">
+                                                                        <a href="#" class="name" title="KP123WERT">
+                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesPersonal[$LP]->id, "75" . $PreferencesPersonal[$LP]->propic, 120, '', 'Yes'), ['alt' => $PreferencesPersonal[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
+                                                                        </a></span> <span class="img-desc"> <a href="#"
+                                                                                                               class="name"
+                                                                                                               title="<?= $PreferencesPersonal[$LP]->Registration_Number ?>"><?= $PreferencesPersonal[$LP]->Registration_Number ?></a>
+                              <p><?= CommonHelper::getAge($PreferencesPersonal[$LP]->DOB); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesPersonal[$LP]->height->vName, 'text')); ?> <?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesPersonal[$LP]->religionName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesPersonal[$LP]->communityName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesPersonal[$LP]->workingAsName->vWorkingAsName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesPersonal[$LP]->cityName->vCityName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesPersonal[$LP]->countryName->vCountryName, 'text')); ?></p>
+                                                                </span>
 
-                                                                <div class="clearfix"></div>
-                                                            </li>
-                                                            <li><span class="imgarea"><a href="#" class="name"
-                                                                                         title="KP123WERT"><img
-                                                                            src="images/profile1.jpg" alt="Profile"></a></span> <span
-                                                                    class="img-desc"> <a href="#" class="name"
-                                                                                         title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
+                                                                    <div class="clearfix"></div>
+                                                                </li>
 
-                                                                <div class="clearfix"></div>
-                                                            </li>
+                                                            <?php } ?>
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
