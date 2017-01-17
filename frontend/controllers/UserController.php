@@ -201,11 +201,18 @@ class UserController extends Controller
                 $PCS = PartnersCountries::findByUserId($Id);
                 $PreferencesLocation = User::getPreferencesLocation($Gender, $Id, $PC->city_id, $PS->state_id, $PCS->country_id);
 
+                # Education Wise
                 $iEducationLevelID = PartnersEducationalLevel::findByUserId($Id);
                 $iEducationFieldID = PartnersEducationField::findByUserId($Id);
                 $PreferencesEducation = User::getPreferencesEducation($Gender, $Id, $iEducationLevelID->iEducation_Level_ID, $iEducationFieldID->iEducation_Field_ID);
-                #CommonHelper::pr($PreferencesEducation);exit;
 
+                # Profession Wise
+                $iWorkingWithID = PartnerWorkingWith::findByUserId($Id);
+                $iWorkingAsID = PartnerWorkingAs::findByUserId($Id);
+                $iAnnualIncomeID = PartnersAnnualIncome::findByUserId($Id);
+                $PreferencesProfession = User::getPreferencesProfession($Gender, $Id, $iWorkingWithID->iWorking_With_ID, $iWorkingAsID->iWorking_As_ID, $iAnnualIncomeID->annual_income_id);
+                #CommonHelper::pr($PreferencesProfession);exit;
+                #echo count($PreferencesProfession);exit;
                 # My Preferences End
 
                 return $this->render('dashboard',[
@@ -219,6 +226,7 @@ class UserController extends Controller
 
                     'PreferencesLocation' => $PreferencesLocation,
                     'PreferencesEducation' => $PreferencesEducation,
+                    'PreferencesProfession' => $PreferencesProfession,
                 ]);
             }else{
                 return $this->redirect(Yii::getAlias('@web'));

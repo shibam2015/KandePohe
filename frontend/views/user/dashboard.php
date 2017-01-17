@@ -211,6 +211,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     </div>
                                                 </div>
                                             <?php } ?>
+                                            <?php if (count($PreferencesProfession)) { ?>
                                             <div class="panel panel-default">
                                                 <div class="panel-heading" role="tab" id="headingTwo">
                                                     <h4 class="panel-title"><a class="collapsed" role="button"
@@ -218,38 +219,37 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                                data-parent="#accordion"
                                                                                href="#collapseTwo" aria-expanded="false"
                                                                                aria-controls="collapseTwo"> Profession
-                                                            <span class="blue">(669)</span> <span
-                                                                class="badge">11</span> <i
+                                                            <!--<span class="blue">(669)</span>-->
+                                                                <span
+                                                                    class="badge"><?= count($PreferencesProfession) ?></span>
+                                                            <i
                                                                 class="fa indicator fa-angle-down"></i> </a></h4>
                                                 </div>
                                                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
                                                      aria-labelledby="headingTwo">
                                                     <div class="panel-body">
                                                         <ul class="list-unstyled ad-prof">
-                                                            <li><span class="imgarea"><a href="#" class="name"
-                                                                                         title="KP123WERT"><img
-                                                                            src="images/profile1.jpg" alt="Profile"></a></span> <span
-                                                                    class="img-desc"> <a href="#" class="name"
-                                                                                         title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
+                                                            <?php
+                                                            #$LPMax = count($PreferencesProfession)  >= 2 ? 2 : 1;
+                                                            for ($LP = 0; $LP < (count($PreferencesProfession) >= 2 ? 2 : 1); $LP++) { ?>
+                                                                <li> <span class="imgarea">
+                                                                        <a href="#" class="name" title="KP123WERT">
+                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesProfession[$LP]->id, "75" . $PreferencesProfession[$LP]->propic, 120, '', 'Yes'), ['alt' => $PreferencesProfession[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
+                                                                        </a></span> <span class="img-desc"> <a href="#"
+                                                                                                               class="name"
+                                                                                                               title="<?= $PreferencesProfession[$LP]->Registration_Number ?>"><?= $PreferencesProfession[$LP]->Registration_Number ?></a>
+                              <p><?= CommonHelper::getAge($PreferencesProfession[$LP]->DOB); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesProfession[$LP]->height->vName, 'text')); ?> <?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesProfession[$LP]->religionName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesProfession[$LP]->communityName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesProfession[$LP]->workingAsName->vWorkingAsName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesProfession[$LP]->cityName->vCityName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesProfession[$LP]->countryName->vCountryName, 'text')); ?></p>
+                                                                </span>
 
-                                                                <div class="clearfix"></div>
-                                                            </li>
-                                                            <li><span class="imgarea"><a href="#" class="name"
-                                                                                         title="KP123WERT"><img
-                                                                            src="images/profile1.jpg" alt="Profile"></a></span> <span
-                                                                    class="img-desc"> <a href="#" class="name"
-                                                                                         title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
+                                                                    <div class="clearfix"></div>
+                                                                </li>
 
-                                                                <div class="clearfix"></div>
-                                                            </li>
+                                                            <?php } ?>
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <?php } ?>
                                             <?php if (count($PreferencesEducation)) { ?>
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading" role="tab" id="headingThree">
