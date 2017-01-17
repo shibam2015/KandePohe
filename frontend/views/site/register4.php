@@ -379,11 +379,12 @@ Koregaon Park']) ?>
                                     <?php
 
                                     if ($model->eSameAddress == 'Yes') {
-                                        $style = "display:none";
+                                        #$style = "display:none";
                                     } else {
-                                        $style = "display:block";
+                                        #$style = "display:block";
                                     }
                                     ?>
+                                    <!--
                                     <div class="row Paddress" style="<?= $style ?>">
                                         <div class="col-sm-10">
                                             <label for="Remember" class="control-label required1"> <span
@@ -396,8 +397,7 @@ Koregaon Park']) ?>
                                         <div class="mid-col">
                                             <div class="form-cont">
                                                 <div class="radio dl radio_step4" id="IVA">
-                                                    <!--<dt></dt>-->
-                                                    <!--<dd>-->
+
                                                     <?= $form->field($model, 'vParentsResiding')->RadioList(
                                                         ['Current_Address' => 'Current Address', 'Permanent_Address' => 'Permanent Address'],
                                                         [
@@ -409,7 +409,7 @@ Koregaon Park']) ?>
                                                             }
                                                         ]
                                                     )->label(false)->error(false); ?>
-                                                    <!--</dd>-->
+
                                                 </div>
                                             </div>
                                         </div>
@@ -418,6 +418,7 @@ Koregaon Park']) ?>
                                                title="Mention Your Parents Residing"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
                                         </div>
                                     </div>
+                                    -->
                                     <div class="row">
                                         <div class="col-sm-10">
                                             <label for="Remember" class="control-label">Family Affluence Level :</label>
@@ -645,7 +646,7 @@ $this->registerJs('
       var italukacaid = $("#user-italukacaid").val();
       var nob = $("#user-nob").val();
       var nos = $("#user-nos").val();
-      var vParentsResiding = $(\'input:radio[name="User[vParentsResiding]"]:checked\').val()
+      //var vParentsResiding = $(\'input:radio[name="User[vParentsResiding]"]:checked\').val()
 
       $(".error-field").removeClass("error-field");
       var error_flag = true;
@@ -693,10 +694,10 @@ $this->registerJs('
         error_flag = false;
       }
 
-      if(vParentsResiding == "" || typeof vParentsResiding === "undefined"){
+      /*if(vParentsResiding == "" || typeof vParentsResiding === "undefined"){
         $(\'input:radio[name="User[vParentsResiding]"]\').closest(".mid-col").addClass("error-field");
         error_flag = false;
-      }
+      }*/
 
       if(!error_flag){
         return false;
