@@ -164,6 +164,10 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 </div>
                                 <div class="divider no-mrg"></div>
                                 <?php
+                                echo "<br>  1 ==>" . count($PreferencesLocation);
+                                echo "<br>  2 ==>" . count($PreferencesProfession);
+                                echo "<br>  3 ==>" . count($PreferencesEducation);
+                                echo "<br>  4 ==>" . count($PreferencesPersonal);
                                 if (count($PreferencesLocation) || count($PreferencesProfession) || count($PreferencesEducation) || count($PreferencesPersonal))
                                 ?>
                                 <div class="panel no-border padd-hr-10 panel-default panel-friends">
