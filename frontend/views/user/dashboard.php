@@ -168,7 +168,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 ?>
                                 <div class="panel no-border padd-hr-10 panel-default panel-friends">
                                     <div class="panel-heading">
-                                        <h3 class="panel-title text-muted">My Preferences </h3>
+                                        <h3 class="panel-title text-muted">My Preferences</h3>
                                     </div>
                                     <div class="refe-accord">
                                         <div class="panel-group" id="accordion" role="tablist"
