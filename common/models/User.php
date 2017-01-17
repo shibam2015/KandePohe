@@ -217,6 +217,16 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             ->all();
     }
 
+    public static function getPreferencesEducation($Gender, $Id, $iEducationLevelID = NULL, $iEducationFieldID = NULL) # Get user list Gender Wise with PreferencesEducation
+    {
+        return static::find()->where(['Gender' => $Gender])
+            ->andWhere(['!=', 'id', $Id])
+            ->andWhere(['=', 'iEducationLevelID', $iEducationLevelID])
+            ->orWhere(['=', 'iEducationFieldID', $iEducationFieldID])
+            ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
+            ->orderBy(['LastLoginTime' => SORT_DESC])
+            ->all();
+    }
     public static function findRecentJoinedUserLists($Id, $Gender, $Limit = 4) # Get user list Gender Wise with limit
     {
         $sql = "select user.id,user.email,user.Registration_Number,user.propic,user.DOB,user.iHeightID, user_request.from_user_id, user_request.to_user_id,user_request.send_request_status from user

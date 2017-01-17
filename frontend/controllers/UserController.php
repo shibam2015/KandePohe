@@ -200,7 +200,11 @@ class UserController extends Controller
                 $PS = PartnersStates::findByUserId($Id);
                 $PCS = PartnersCountries::findByUserId($Id);
                 $PreferencesLocation = User::getPreferencesLocation($Gender, $Id, $PC->city_id, $PS->state_id, $PCS->country_id);
-                #CommonHelper::pr($PreferencesLocation);exit;
+
+                $iEducationLevelID = PartnersEducationalLevel::findByUserId($Id);
+                $iEducationFieldID = PartnersEducationField::findByUserId($Id);
+                $PreferencesEducation = User::getPreferencesEducation($Gender, $Id, $iEducationLevelID->iEducation_Level_ID, $iEducationFieldID->iEducation_Field_ID);
+                #CommonHelper::pr($PreferencesEducation);exit;
 
                 # My Preferences End
 
@@ -214,6 +218,7 @@ class UserController extends Controller
                     'ShortListUser' => $ShortListInfo,
 
                     'PreferencesLocation' => $PreferencesLocation,
+                    'PreferencesEducation' => $PreferencesEducation,
                 ]);
             }else{
                 return $this->redirect(Yii::getAlias('@web'));

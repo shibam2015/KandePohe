@@ -250,46 +250,48 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading" role="tab" id="headingThree">
-                                                    <h4 class="panel-title"><a class="collapsed" role="button"
-                                                                               data-toggle="collapse"
-                                                                               data-parent="#accordion"
-                                                                               href="#collapseThree"
-                                                                               aria-expanded="false"
-                                                                               aria-controls="collapseThree"> Education
-                                                            <span class="blue">(669)</span> <span
-                                                                class="badge">10</span> <i
-                                                                class="fa indicator fa-angle-down"></i> </a></h4>
-                                                </div>
-                                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
-                                                     aria-labelledby="headingThree">
-                                                    <div class="panel-body">
-                                                        <ul class="list-unstyled ad-prof">
-                                                            <li><span class="imgarea"><a href="#" class="name"
-                                                                                         title="KP123WERT"><img
-                                                                            src="images/profile1.jpg" alt="Profile"></a></span> <span
-                                                                    class="img-desc"> <a href="#" class="name"
-                                                                                         title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
+                                            <?php if (count($PreferencesEducation)) { ?>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading" role="tab" id="headingThree">
+                                                        <h4 class="panel-title"><a class="collapsed" role="button"
+                                                                                   data-toggle="collapse"
+                                                                                   data-parent="#accordion"
+                                                                                   href="#collapseThree"
+                                                                                   aria-expanded="false"
+                                                                                   aria-controls="collapseThree">
+                                                                Education
+                                                                <!--<span class="blue">(669)</span>-->
+                                                                <span
+                                                                    class="badge"><?= count($PreferencesEducation) ?></span>
+                                                                <i
+                                                                    class="fa indicator fa-angle-down"></i> </a></h4>
+                                                    </div>
+                                                    <div id="collapseThree" class="panel-collapse collapse"
+                                                         role="tabpanel"
+                                                         aria-labelledby="headingThree">
+                                                        <div class="panel-body">
+                                                            <ul class="list-unstyled ad-prof">
+                                                                <?php
+                                                                #$LPMax = count($PreferencesEducation)  >= 2 ? 2 : 1;
+                                                                for ($LP = 0; $LP < (count($PreferencesEducation) >= 2 ? 2 : 1); $LP++) { ?>
+                                                                    <li> <span class="imgarea">
+                                                                        <a href="#" class="name" title="KP123WERT">
+                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesEducation[$LP]->id, "75" . $PreferencesEducation[$LP]->propic, 120, '', 'Yes'), ['alt' => $PreferencesEducation[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
+                                                                        </a></span> <span class="img-desc"> <a href="#"
+                                                                                                               class="name"
+                                                                                                               title="<?= $PreferencesEducation[$LP]->Registration_Number ?>"><?= $PreferencesEducation[$LP]->Registration_Number ?></a>
+                              <p><?= CommonHelper::getAge($PreferencesEducation[$LP]->DOB); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesEducation[$LP]->height->vName, 'text')); ?> <?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesEducation[$LP]->religionName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesEducation[$LP]->communityName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesEducation[$LP]->workingAsName->vWorkingAsName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesEducation[$LP]->cityName->vCityName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesEducation[$LP]->countryName->vCountryName, 'text')); ?></p>
+                                                                </span>
 
-                                                                <div class="clearfix"></div>
-                                                            </li>
-                                                            <li><span class="imgarea"><a href="#" class="name"
-                                                                                         title="KP123WERT"><img
-                                                                            src="images/profile1.jpg" alt="Profile"></a></span> <span
-                                                                    class="img-desc"> <a href="#" class="name"
-                                                                                         title="KP123WERT">KP123WERT</a>
-                              <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
-                              </span>
+                                                                        <div class="clearfix"></div>
+                                                                    </li>
 
-                                                                <div class="clearfix"></div>
-                                                            </li>
-                                                        </ul>
+                                                                <?php } ?>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            <?php } ?>
                                             <div class="panel panel-default">
                                                 <div class="panel-heading" role="tab" id="headingfour">
                                                     <h4 class="panel-title"><a class="collapsed" role="button"
