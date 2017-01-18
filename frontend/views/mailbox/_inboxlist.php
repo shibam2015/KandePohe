@@ -76,7 +76,7 @@ $model = $model['model'];*/
                                     data-toggle="modal">Send Mail
                             </button>
                             --><?php /*} */ ?>
-                            <a href="<?= CommonHelper::getMailBoxUrl($ModelInfo->Registration_Number, 1) ?>"
+                            <a href="<?= CommonHelper::getMailBoxUrl(1, $ModelInfo->Registration_Number) ?>"
                                class="btn btn-info pull-right">
                                 <?= ($Value['MailTotalCount'] == 1) ? 'View conversation' : '+' . $Value['MailTotalCount'] . ' more conversation'; ?>
                             </a>
