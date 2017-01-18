@@ -82,11 +82,11 @@ class UserPartnerPreference extends \common\models\base\baseUserPartnerPreferenc
 
     public function getHeightFrom()
     {
-        return $this->hasOne(MasterHeight::className(), ['iHeightID' => 'height_from']);
+        return $this->hasOne(MasterHeights::className(), ['iHeightID' => 'height_from']);
     }
 
     public function getHeightTo()
     {
-        return $this->hasOne(MasterHeight::className(), ['iHeightID' => 'height_to']);
+        return $this->hasOne(MasterHeights::className(), ['iHeightID' => 'height_to']);
     }
 }
