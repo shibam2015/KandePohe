@@ -6,10 +6,12 @@ use common\components\MessageHelper;
 use common\components\SmsHelper;
 use common\models\Mailbox;
 use common\models\PartnersAnnualIncome;
+use common\models\PartnersCharan;
 use common\models\PartnersCities;
 use common\models\PartnersCommunity;
 use common\models\PartnersCountries;
 use common\models\PartnersMothertongue;
+use common\models\PartnersRaashi;
 use common\models\PartnersReligion;
 use common\models\PartnersStates;
 use common\models\PartnersSubcommunity;
@@ -666,6 +668,10 @@ class UserController extends Controller
         //$MasterHeight = MasterHeight::findByUserId($id) == NULL ? new MasterHeight() : MasterHeight::findByUserId($id);
         $PartnersCommunity = PartnersCommunity::findByUserId($id) == NULL ? new PartnersCommunity() : PartnersCommunity::findByUserId($id);
         $PartnersSubCommunity = PartnersSubcommunity::findByUserId($id) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findByUserId($id);
+
+        $PartnersRaashi = PartnersRaashi::findByUserId($id) == NULL ? new PartnersRaashi() : PartnersRaashi::findByUserId($id);
+        $PartnersCharan = PartnersCharan::findByUserId($id) == NULL ? new PartnersCharan() : PartnersCharan::findByUserId($id);
+
         $model = User::findOne($id);
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
@@ -706,6 +712,24 @@ class UserController extends Controller
                 }
                 $PartnersMaritalStatus->save();
 
+                $RaashiID = Yii::$app->request->post('PartnersRaashi')['raashi_id'];
+                $PartnersRaashi->user_id = $id;
+                $PartnersRaashi->raashi_id = $RaashiID;
+                $PartnersRaashi->modified_on = $CurrDate;
+                if ($PartnersRaashi->ID == "") {
+                    $PartnersRaashi->created_on = $CurrDate;
+                }
+                $PartnersRaashi->save();
+
+                $CharanID = Yii::$app->request->post('PartnersCharan')['charan_id'];
+                $PartnersCharan->user_id = $id;
+                $PartnersCharan->charan_id = $CharanID;
+                $PartnersCharan->modified_on = $CurrDate;
+                if ($PartnersCharan->ID == "") {
+                    $PartnersCharan->created_on = $CurrDate;
+                }
+                $PartnersCharan->save();
+
                 $GotraID = Yii::$app->request->post('PartnersGotra')['iGotra_ID'];
                 $PartnersGotra->iUser_ID = $id;
                 $PartnersGotra->iGotra_ID = $GotraID;
@@ -714,6 +738,8 @@ class UserController extends Controller
                     $PartnersGotra->dtCreated = $CurrDate;
                 }
                 $PartnersGotra->save();
+
+
                 $show = false;
 
                 $MotherID = Yii::$app->request->post('PartnersMothertongue')['iMothertongue_ID'];
@@ -760,7 +786,10 @@ class UserController extends Controller
             'PartnersMothertongue' => $PartnersMothertongue,
             'PartnersCommunity' => $PartnersCommunity,
             'PartnersSubCommunity' => $PartnersSubCommunity,
-            'show' => $show
+            'show' => $show,
+            'PartnersRaashi' => $PartnersRaashi,
+            'PartnersCharan' => $PartnersCharan,
+
         ];
         return $this->renderAjax('_preferences', $myModel);
     }

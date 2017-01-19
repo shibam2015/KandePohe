@@ -73,14 +73,38 @@ if ($show) {
             ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
             ['prompt' => 'Maritial Status']
         ); ?>
-        <?= $form->field($PartnersGotra, 'iGotra_ID')->dropDownList(
-            ArrayHelper::map(CommonHelper::getGotra(), 'iGotraID', 'vName'),
-            ['prompt' => 'Gotra']
-        ); ?>
+
     <?= $form->field($PartnersMothertongue, 'iMothertongue_ID')->dropDownList(
         ArrayHelper::map(CommonHelper::getMotherTongue(), 'ID', 'Name'),
         ['prompt' => 'Mother Toungue']
         ); ?>
+
+    <?= $form->field($PartnersCommunity, 'iCommunity_ID')->dropDownList(
+        ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
+        ['prompt' => 'Community']
+    ); ?>
+    <?= $form->field($PartnersSubCommunity, 'iSub_Community_ID')->dropDownList(
+        ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
+        ['prompt' => 'Sub Community']
+    ); ?>
+
+    <?= $form->field($PartnersRaashi, 'raashi_id')->dropDownList(
+        ArrayHelper::map(CommonHelper::getRaashi(), 'ID', 'Name'),
+        ['prompt' => 'Raashi']
+    ); ?>
+
+    <?= $form->field($PartnersCharan, 'charan_id')->dropDownList(
+        ArrayHelper::map(CommonHelper::getCharan(), 'ID', 'Name'),
+        ['prompt' => 'Charan']
+    ); ?>
+
+
+    <?= $form->field($PartnersGotra, 'iGotra_ID')->dropDownList(
+        ArrayHelper::map(CommonHelper::getGotra(), 'iGotraID', 'vName'),
+        ['prompt' => 'Gotra']
+    ); ?>
+
+
     <?= $form->field($UPP, 'manglik')->RadioList(
         ['Yes' => 'Yes', 'No' => 'No'],
         [
@@ -93,14 +117,7 @@ if ($show) {
         ]
     )
     ?>
-    <?= $form->field($PartnersCommunity, 'iCommunity_ID')->dropDownList(
-        ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
-        ['prompt' => 'Community']
-        ); ?>
-    <?= $form->field($PartnersSubCommunity, 'iSub_Community_ID')->dropDownList(
-        ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
-        ['prompt' => 'Sub Community']
-        ); ?>
+
     <?= $form->field($UPP, 'drink')->RadioList(
         ['Yes' => 'Yes', 'No' => 'No', 'Occasionally' => 'Occasionally'],
         [
@@ -161,10 +178,18 @@ if ($show) {
             <dd>
             <dt>Marital Status</dt>
             <dd><?= CommonHelper::setInputVal($PartnersMaritalStatus->maritalStatusName->vName,'text') ?><dd>
-            <dt>Gotra</dt>
-            <dd><?= CommonHelper::setInputVal($PartnersGotra->gotraName->vName,'text') ?><dd>
+
             <dt>Mothertoungue</dt>
             <dd><?= CommonHelper::setInputVal($PartnersMothertongue->partnersMothertongueName->Name, 'text') ?>
+            <dd>
+            <dt>Raashi</dt>
+            <dd><?= CommonHelper::setInputVal($PartnersRaashi->raashiName->Name, 'text') ?>
+            <dd>
+            <dt>Charan</dt>
+            <dd><?= CommonHelper::setInputVal($PartnersCharan->charanName->Name, 'text') ?>
+            <dd>
+            <dt>Gotra</dt>
+            <dd><?= CommonHelper::setInputVal($PartnersGotra->gotraName->vName, 'text') ?>
             <dd>
             <dt>Mangalik</dt>
             <dd><?= CommonHelper::setInputVal($UPP->manglik, 'text') ?>
