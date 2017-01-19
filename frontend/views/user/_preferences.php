@@ -97,7 +97,10 @@ if ($show) {
         ArrayHelper::map(CommonHelper::getCharan(), 'ID', 'Name'),
         ['prompt' => 'Charan']
     ); ?>
-
+    <?= $form->field($PartnersNakshtra, 'nakshtra_id')->dropDownList(
+        ArrayHelper::map(CommonHelper::getNaksatra(), 'ID', 'Name'),
+        ['prompt' => 'Nakshtra']
+    ); ?>
 
     <?= $form->field($PartnersGotra, 'iGotra_ID')->dropDownList(
         ArrayHelper::map(CommonHelper::getGotra(), 'iGotraID', 'vName'),
@@ -187,6 +190,8 @@ if ($show) {
             <dd>
             <dt>Charan</dt>
             <dd><?= CommonHelper::setInputVal($PartnersCharan->charanName->Name, 'text') ?>
+            <dt>Nakshtra</dt>
+            <dd><?= CommonHelper::setInputVal($PartnersNakshtra->nakshtraName->Name, 'text') ?>
             <dd>
             <dt>Gotra</dt>
             <dd><?= CommonHelper::setInputVal($PartnersGotra->gotraName->vName, 'text') ?>
@@ -194,6 +199,7 @@ if ($show) {
             <dt>Mangalik</dt>
             <dd><?= CommonHelper::setInputVal($UPP->manglik, 'text') ?>
             <dd>
+
             <dt>Community</dt>
             <dd><?= CommonHelper::setInputVal($PartnersCommunity->communityName->vName, 'text') ?>
             <dd>

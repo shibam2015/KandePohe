@@ -51,7 +51,7 @@ class PartnersCharan extends \common\models\base\basePartnersCharan
         return [
             'ID' => 'ID',
             'user_id' => 'User ID',
-            'charan_id' => 'Charan ID',
+            'charan_id' => 'Charan',
             'is_partner_preference' => 'Is Partner Preference',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
