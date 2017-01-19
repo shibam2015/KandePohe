@@ -92,6 +92,7 @@ use yii\jui\DatePicker;
                             'validateOnChange' => true,
                         ]);
                         ?>
+
                         <div class="col-sm-4 col-md-2">
                             <?= $form->field($model, 'Profile_for')->dropDownList(
                                 ['FEMALE' => 'BRIDE', 'MALE' => 'GROOM'],
