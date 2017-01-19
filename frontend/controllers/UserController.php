@@ -11,6 +11,7 @@ use common\models\PartnersCities;
 use common\models\PartnersCommunity;
 use common\models\PartnersCountries;
 use common\models\PartnersMothertongue;
+use common\models\PartnersNadi;
 use common\models\PartnersNakshtra;
 use common\models\PartnersRaashi;
 use common\models\PartnersReligion;
@@ -673,6 +674,7 @@ class UserController extends Controller
         $PartnersRaashi = PartnersRaashi::findByUserId($id) == NULL ? new PartnersRaashi() : PartnersRaashi::findByUserId($id);
         $PartnersCharan = PartnersCharan::findByUserId($id) == NULL ? new PartnersCharan() : PartnersCharan::findByUserId($id);
         $PartnersNakshtra = PartnersNakshtra::findByUserId($id) == NULL ? new PartnersNakshtra() : PartnersNakshtra::findByUserId($id);
+        $PartnersNadi = PartnersNadi::findByUserId($id) == NULL ? new PartnersNadi() : PartnersNadi::findByUserId($id);
 
         $model = User::findOne($id);
         $show = false;
@@ -741,6 +743,15 @@ class UserController extends Controller
                 }
                 $PartnersNakshtra->save();
 
+                $NadiID = Yii::$app->request->post('PartnersNadi')['nadi_id'];
+                $PartnersNadi->user_id = $id;
+                $PartnersNadi->nadi_id = $NadiID;
+                $PartnersNadi->modified_on = $CurrDate;
+                if ($PartnersNadi->ID == "") {
+                    $PartnersNadi->created_on = $CurrDate;
+                }
+                $PartnersNadi->save();
+
                 $GotraID = Yii::$app->request->post('PartnersGotra')['iGotra_ID'];
                 $PartnersGotra->iUser_ID = $id;
                 $PartnersGotra->iGotra_ID = $GotraID;
@@ -801,6 +812,7 @@ class UserController extends Controller
             'PartnersRaashi' => $PartnersRaashi,
             'PartnersCharan' => $PartnersCharan,
             'PartnersNakshtra' => $PartnersNakshtra,
+            'PartnersNadi' => $PartnersNadi,
 
         ];
         return $this->renderAjax('_preferences', $myModel);

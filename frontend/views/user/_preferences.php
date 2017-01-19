@@ -101,7 +101,10 @@ if ($show) {
         ArrayHelper::map(CommonHelper::getNaksatra(), 'ID', 'Name'),
         ['prompt' => 'Nakshtra']
     ); ?>
-
+    <?= $form->field($PartnersNadi, 'nadi_id')->dropDownList(
+        ArrayHelper::map(CommonHelper::getNadi(), 'ID', 'Name'),
+        ['prompt' => 'Nadi']
+    ); ?>
     <?= $form->field($PartnersGotra, 'iGotra_ID')->dropDownList(
         ArrayHelper::map(CommonHelper::getGotra(), 'iGotraID', 'vName'),
         ['prompt' => 'Gotra']
@@ -192,6 +195,8 @@ if ($show) {
             <dd><?= CommonHelper::setInputVal($PartnersCharan->charanName->Name, 'text') ?>
             <dt>Nakshtra</dt>
             <dd><?= CommonHelper::setInputVal($PartnersNakshtra->nakshtraName->Name, 'text') ?>
+            <dt>Nadi</dt>
+            <dd><?= CommonHelper::setInputVal($PartnersNadi->nadiName->Name, 'text') ?>
             <dd>
             <dt>Gotra</dt>
             <dd><?= CommonHelper::setInputVal($PartnersGotra->gotraName->vName, 'text') ?>
