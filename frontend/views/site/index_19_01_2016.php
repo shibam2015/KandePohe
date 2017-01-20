@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use common\models\LoginForm;
 use yii\captcha\Captcha;
 use frontend\models\PasswordResetRequestForm;
+
 $forgot = new PasswordResetRequestForm();
 /*$religion_data = CommonHelper::getReligion();
 $community_data = CommonHelper::getCommunity();*/
@@ -18,6 +19,7 @@ if (!Yii::$app->user->isGuest) {
 }
 //die();
 use yii\jui\DatePicker;
+
 ?>
     <div class="video">
         <div class="drop-effect"></div>
@@ -96,7 +98,7 @@ use yii\jui\DatePicker;
                         <div class="col-sm-4 col-md-2">
                             <?= $form->field($model, 'Profile_for')->dropDownList(
                                 ['FEMALE' => 'BRIDE', 'MALE' => 'GROOM'],
-                                ['class' => 'demo-default select-beast',
+                                ['class' => 'cs-select cs-skin-border',
                                     'prompt' => 'Looking For'
                                 ]
                             )->label(false); ?>
@@ -105,7 +107,7 @@ use yii\jui\DatePicker;
 
                             <?= $form->field($model, 'iCommunity_ID')->dropDownList(
                                 ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
-                                ['class' => 'demo-default select-beast',
+                                ['class' => 'cs-select cs-skin-border',
                                     'prompt' => 'Community'
                                 ]
 
@@ -115,7 +117,7 @@ use yii\jui\DatePicker;
                         <div class="col-sm-4 col-md-2">
                             <?= $form->field($model, 'iSubCommunity_ID')->dropDownList(
                                 ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
-                                ['class' => 'demo-default select-beast',
+                                ['class' => 'cs-select cs-skin-border',
                                     'prompt' => 'Sub Caste'
                                 ]
 
@@ -129,13 +131,13 @@ use yii\jui\DatePicker;
                             //array_combine($range, $range),
                                 ['18-21' => '18 To 21', '22-28' => '22 To 28', '29-35' => '29 To 35', '36-45' => '36 To 45', '46-60' => '46 To 60', '61-80' => '61 To 80', '81-100' => '81 To 100'],
                                 ['prompt' => 'Age Group',
-                                    'class' => 'demo-default select-beast']
+                                    'class' => 'cs-select cs-skin-border']
                             )->label(false)->error(false); ?>
                         </div>
                         <div class="col-sm-4 col-md-2">
                             <?= $form->field($model, 'iHeightID')->dropDownList(
                                 ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
-                                ['class' => 'demo-default select-beast',
+                                ['class' => 'cs-select cs-skin-border',
                                     'prompt' => 'Height'
                                 ]
                             )->label(false)->error(false); ?>
@@ -349,28 +351,6 @@ use yii\jui\DatePicker;
             </div>
         </div>
     </section>
-
-<!--<link href='<? /*= Yii::$app->request->baseUrl */ ?>/plugings/selectize/css/normalize.css1' rel='stylesheet' type='text/css'>-->
-<!--<link href='<? /*= Yii::$app->request->baseUrl */ ?>/plugings/selectize/css/stylesheet1.css' rel='stylesheet' type='text/css'>-->
-<link href='<?= Yii::$app->request->baseUrl ?>/plugings/selectize/css/stylesheet.css' rel='stylesheet' type='text/css'>
-<link href='<?= Yii::$app->request->baseUrl ?>/plugings/selectize/css/selectize.default.css ' rel='stylesheet'
-      type='text/css'>
-<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/selectize/js/standalone/selectize.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
-<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/selectize/js/index.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
-
-<?php
-$this->registerJs("
-$('.select-beast').selectize({
-					//create: true,
-					sortField: {
-						field: 'text',
-						direction: 'asc'
-					}
-				});
-
-");
-?>
-
 <?php if (Yii::$app->user->isGuest) { ?>
     <!-- Modal Signup -->
     <div class="modal fade" id="myModalNorm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -419,7 +399,7 @@ $('.select-beast').selectize({
                             <div class="form-cont">
                                 <?= $form->field($model, 'Profile_created_for')->dropDownList(
                                     ['' => 'Profile for', 'Self' => 'Self', 'Son' => 'Son', 'Daughter' => 'Daughter', 'Brother' => 'Brother', 'Sister' => 'Sister', 'Friend' => 'Friend'],
-                                    ['class' => 'demo-default select-beast']
+                                    ['class' => 'cs-select cs-skin-border form-control']
                                 )->label(false); ?>
                             </div>
                             <div>
@@ -474,7 +454,7 @@ $('.select-beast').selectize({
                                     <div class="form-cont col-xs-6">
                                         <?= $form->field($model, 'county_code')->dropDownList(
                                             ['+91' => '+91'],
-                                            ['class' => 'demo-default select-beast', 'prompt' => 'Country Code']
+                                            ['class' => 'cs-select cs-skin-border form-control', 'prompt' => 'Country Code']
                                         )->label(false); ?>
                                     </div>
                                     <div class="form-cont col-xs-6">
@@ -554,7 +534,7 @@ Policy]</a> and <a href="#" title="[T&C]">[T&C]</a></label>';
                     ?>
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1 text-left">
-                            <?= $form->errorSummary($model,['header' => '']); ?></div>
+                            <?= $form->errorSummary($model, ['header' => '']); ?></div>
                     </div>
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">
@@ -702,8 +682,36 @@ FREE">[Register FREE]</a>
 
 
 <?php } ?>
-    <style type="text/css">
 
+    <style type="text/css">
+        .ui-datepicker {
+            z-index: 1200 !important;
+        }
+
+        .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+            background: #ee1845;
+            color: #fff;
+            border-radius: 0%;
+            -moz-border-radius: 0%;
+            -webkit-border-radius: 0%;
+        }
+
+        .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+            border: 1px solid #ee1845;
+            background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
+            font-weight: normal;
+            color: #ee1845;
+
+        }
+
+        .btn-primary.disabled, .btn-primary.disabled.active, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled].active, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary.active, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
+            background-color: #ee1845;
+            border-color: #ee1845;
+        }
+
+        .loginerror {
+            top: 0;
+        }
     </style>
 <?php if (Yii::$app->user->isGuest) { ?>
     <?php # Popup Open
@@ -860,5 +868,3 @@ console.log('IP => '+input_val);
 
 ");
 ?>
-
-

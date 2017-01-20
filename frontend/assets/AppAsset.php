@@ -28,7 +28,7 @@ class AppAsset extends AssetBundle
 		'js/custom.js',
 		'js/classie.js',
 		// 'js/selectFx.js',
-		'js/jquery.nice-select.min.js',
+        //'js/jquery.nice-select.min.js',
 		'js/modernizr.js',
         #'js/modernizr.js',
         'plugings/loader/pace.min.js',

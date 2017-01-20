@@ -1,39 +1,43 @@
-$( document ).ready(function() {
+$(document).ready(function () {
 
-    (function() {
+    (function () {
         /*[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
          new SelectFx(el);
          } );*/
-        /* if( $('select').length ){
+        if ($('select').length) {
             $('select').niceSelect();
-         }*/
+        }
         if ($('select.tag-select-box').length) {
             $('select.tag-select-box').niceSelect('destroy');
         }
     })();
 
 
-    jQuery(document).on('click','[data-toggle*=modal]',function(){
-        jQuery('[role*=dialog]').each(function(){
-            switch(jQuery(this).css('display')){
-                case('block'):{jQuery('#'+jQuery(this).attr('id')).modal('hide'); break;}
+    jQuery(document).on('click', '[data-toggle*=modal]', function () {
+        jQuery('[role*=dialog]').each(function () {
+            switch (jQuery(this).css('display')) {
+                case('block'):
+                {
+                    jQuery('#' + jQuery(this).attr('id')).modal('hide');
+                    break;
+                }
             }
         });
     });
 
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         // Dirty fix for jumping scrollbar when modal opens
 
         $('#requestModal').on('show.bs.modal', function (e) {
             if ($(window).width() > 768) {
-                $(".navbar-default").css("padding-right","15px");
+                $(".navbar-default").css("padding-right", "15px");
             }
         });
 
         $('#requestModal').on('hide.bs.modal', function (e) {
             if ($(window).width() > 768) {
-                $(".navbar-default").css("padding-right","0px");
+                $(".navbar-default").css("padding-right", "0px");
             }
         });
 
@@ -45,31 +49,32 @@ $( document ).ready(function() {
             .find("i.indicator")
             .toggleClass('fa-angle-down fa-angle-up');
     }
+
     $('#accordion').on('hidden.bs.collapse', toggleChevron);
     $('#accordion').on('shown.bs.collapse', toggleChevron);
 
     function init() {
-        window.addEventListener('scroll', function(e){
+        window.addEventListener('scroll', function (e) {
             var distanceY = window.pageYOffset || document.documentElement.scrollTop,
                 shrinkOn = 100,
                 header = document.querySelector("header");
             if (distanceY > shrinkOn) {
-                classie.add(header,"smaller");
+                classie.add(header, "smaller");
             } else {
-                if (classie.has(header,"smaller")) {
-                    classie.remove(header,"smaller");
+                if (classie.has(header, "smaller")) {
+                    classie.remove(header, "smaller");
                 }
             }
         });
     }
+
     window.onload = init();
 
-    $("#chatbox").click(function(e){
+    $("#chatbox").click(function (e) {
         e.preventDefault();
         $('body').toggleClass('chat-move');
         $('.chatwe').toggleClass('chat-height');
     });
-
 
 
     $(function () {
@@ -92,32 +97,31 @@ $( document ).ready(function() {
     });
 
 
-    $(document).on('change', '.btn-file :file', function() {
+    $(document).on('change', '.btn-file :file', function () {
         var input = $(this),
             numFiles = input.get(0).files ? input.get(0).files.length : 1,
             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
         input.trigger('fileselect', [numFiles, label]);
     });
 
-    $(document).ready( function() {
-        $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+    $(document).ready(function () {
+        $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
 
             var input = $(this).parents('.input-group').find(':text'),
                 log = numFiles > 1 ? numFiles + ' files selected' : label;
 
-            if( input.length ) {
+            if (input.length) {
                 input.val(log);
             } else {
-                if( log ) alert(log);
+                if (log) alert(log);
             }
 
         });
     });
 
 
-
     $('head style[type="text/css"]');
-    window.randomize = function() {
+    window.randomize = function () {
         if ($(".radial-progress").length) {
             $('.radial-progress').attr('data-progress', PRO_COMP);
         }
@@ -128,84 +132,81 @@ $( document ).ready(function() {
     $('.radial-progress').click(window.randomize);
 
 
+    $(function () {
+        if ($("#slider-range").length) {
 
-
-    $(function() {
-        if( $( "#slider-range" ).length ){
-
-            $( "#slider-range" ).slider({
+            $("#slider-range").slider({
                 range: true,
                 min: 0,
                 max: 500,
-                values: [ 75, 300 ],
-                slide: function( event, ui ) {
-                    $( "#amount" ).val( "km" + ui.values[ 0 ] + " - km" + ui.values[ 1 ] );
+                values: [75, 300],
+                slide: function (event, ui) {
+                    $("#amount").val("km" + ui.values[0] + " - km" + ui.values[1]);
                 }
             });
-            $( "#amount" ).val( "km" + $( "#slider-range" ).slider( "values", 0 ) +
+            $("#amount").val("km" + $("#slider-range").slider("values", 0) +
             " - km" + $("#slider-range").slider("values", 1));
         }
 
     });
 
 
-    $(document).ready(function(){
-        if( $('[data-toggle="tooltip"]').length ){
+    $(document).ready(function () {
+        if ($('[data-toggle="tooltip"]').length) {
             $('[data-toggle="tooltip"]').tooltip();
         }
 
 
-
-        $("#filter-toggle").click(function(){
+        $("#filter-toggle").click(function () {
             $(".open-div").toggle();
         });
-        if( $('#ex18a').length ){
-            $("#ex18a").slider({min  : 0, max  : 10, value: 5, labelledby: 'ex18-label-1'});
+        if ($('#ex18a').length) {
+            $("#ex18a").slider({min: 0, max: 10, value: 5, labelledby: 'ex18-label-1'});
         }
-        if( $('#ex18b').length ){
-            $("#ex18b").slider({min  : 0, max  : 10, value: [3, 6], labelledby: ['ex18-label-2a', 'ex18-label-2b']});
+        if ($('#ex18b').length) {
+            $("#ex18b").slider({min: 0, max: 10, value: [3, 6], labelledby: ['ex18-label-2a', 'ex18-label-2b']});
         }
 
     });
 
 
-    (function() {
+    (function () {
         // trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
         if (!String.prototype.trim) {
-            (function() {
+            (function () {
                 // Make sure we trim BOM and NBSP
                 var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
-                String.prototype.trim = function() {
+                String.prototype.trim = function () {
                     return this.replace(rtrim, '');
                 };
             })();
         }
 
-        [].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+        [].slice.call(document.querySelectorAll('input.input__field')).forEach(function (inputEl) {
             // in case the input is already filled..
-            if( inputEl.value.trim() !== '' ) {
-                classie.add( inputEl.parentNode, 'input--filled' );
+            if (inputEl.value.trim() !== '') {
+                classie.add(inputEl.parentNode, 'input--filled');
             }
 
             // events:
-            inputEl.addEventListener( 'focus', onInputFocus );
-            inputEl.addEventListener( 'blur', onInputBlur );
-        } );
+            inputEl.addEventListener('focus', onInputFocus);
+            inputEl.addEventListener('blur', onInputBlur);
+        });
 
-        function onInputFocus( ev ) {
-            classie.add( ev.target.parentNode, 'input--filled' );
+        function onInputFocus(ev) {
+            classie.add(ev.target.parentNode, 'input--filled');
         }
 
-        function onInputBlur( ev ) {
-            if( ev.target.value.trim() === '' ) {
-                classie.remove( ev.target.parentNode, 'input--filled' );
+        function onInputBlur(ev) {
+            if (ev.target.value.trim() === '') {
+                classie.remove(ev.target.parentNode, 'input--filled');
             }
         }
     })();
 });
 
-$(document).ready(function(){
-    if( $('[data-toggle="tooltip"]').length ){
+$(document).ready(function () {
+    if ($('[data-toggle="tooltip"]').length) {
         $('[data-toggle="tooltip"]').tooltip();
     }
 
@@ -255,7 +256,7 @@ function getInlineDetail(url, htmlId, type) {
 }
 
 function setDesign() {
-    // $('select').niceSelect();
+    $('select').niceSelect();
     (function () {
         // trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
         if (!String.prototype.trim) {
@@ -512,7 +513,7 @@ function lightBox() {
     if ($(".gallery a").length) {
         var gallery = $('.gallery a').simpleLightbox();
     }
-    
+
     if ($(".lightgallery").length) {
         $('.lightgallery').lightGallery({
             selector: '.kp_gallery'
