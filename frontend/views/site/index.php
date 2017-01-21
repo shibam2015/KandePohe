@@ -349,23 +349,6 @@ use yii\jui\DatePicker;
             </div>
         </div>
     </section>
-
-<!--<link href='<? /*= Yii::$app->request->baseUrl */ ?>/plugings/selectize/css/stylesheet.css' rel='stylesheet' type='text/css'>
-<link href='<? /*= Yii::$app->request->baseUrl */ ?>/plugings/selectize/css/selectize.default.css' rel='stylesheet' type='text/css'>-->
-
-<?php
-$this->registerJs("
-$('.select-beast').selectize({
-					//create: true,
-					sortField: {
-						field: 'text',
-						direction: 'asc'
-					}
-				});
-
-");
-?>
-
 <?php if (Yii::$app->user->isGuest) { ?>
     <!-- Modal Signup -->
     <div class="modal fade" id="myModalNorm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
