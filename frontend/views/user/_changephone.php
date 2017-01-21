@@ -36,7 +36,7 @@ use yii\helpers\Url;
                         <div class="form-cont">
                             <?= $form->field($model, 'county_code')->dropDownList(
                                 ['+91' => '+91'],
-                                ['class' => 'cs-select cs-skin-border', 'prompt' => 'Country Code']
+                                ['class' => 'demo-default select-beast', 'prompt' => 'Country Code']
                             )->label(false); ?>
                         </div>
                     </div>
@@ -71,7 +71,7 @@ use yii\helpers\Url;
                         <div class="form-cont">
                             <?= $form->field($model, 'county_code')->dropDownList(
                                 ['+91' => '+91'],
-                                ['class' => 'cs-select cs-skin-border', 'prompt' => 'Country Code']
+                                ['class' => 'demo-default select-beast', 'prompt' => 'Country Code']
                             )->label(false); ?>
                         </div>
                     </div>
@@ -177,6 +177,8 @@ use yii\helpers\Url;
             $this.button("reset");
         }, 4000);
     });
+
+
          ');
 
     }
