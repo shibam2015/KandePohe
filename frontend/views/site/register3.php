@@ -46,7 +46,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                       <div class="form-cont">
                         <?= $form->field($model, 'iHeightID')->dropDownList(
                             ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
-                            ['class' => 'cs-select cs-skin-border',
+                            ['class' => 'demo-default select-beast',
                                 'prompt' => 'Height'
                             ]
                         )->label(false)->error(false); ?>
@@ -205,7 +205,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                         <label for="Diet" class="hide"></label>
                         <?= $form->field($model, 'vDiet')->dropDownList(
                             ArrayHelper::map(CommonHelper::getDiet(), 'iDietID', 'vName'),
-                            ['class' => 'cs-select cs-skin-border',
+                            ['class' => 'demo-default select-beast',
                                 'prompt' => 'Diet'
                             ]
                         )->label(false)->error(false);?>

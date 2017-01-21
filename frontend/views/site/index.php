@@ -350,13 +350,8 @@ use yii\jui\DatePicker;
         </div>
     </section>
 
-<!--<link href='<? /*= Yii::$app->request->baseUrl */ ?>/plugings/selectize/css/normalize.css1' rel='stylesheet' type='text/css'>-->
-<!--<link href='<? /*= Yii::$app->request->baseUrl */ ?>/plugings/selectize/css/stylesheet1.css' rel='stylesheet' type='text/css'>-->
-<link href='<?= Yii::$app->request->baseUrl ?>/plugings/selectize/css/stylesheet.css' rel='stylesheet' type='text/css'>
-<link href='<?= Yii::$app->request->baseUrl ?>/plugings/selectize/css/selectize.default.css ' rel='stylesheet'
-      type='text/css'>
-<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/selectize/js/standalone/selectize.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
-<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/selectize/js/index.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<!--<link href='<? /*= Yii::$app->request->baseUrl */ ?>/plugings/selectize/css/stylesheet.css' rel='stylesheet' type='text/css'>
+<link href='<? /*= Yii::$app->request->baseUrl */ ?>/plugings/selectize/css/selectize.default.css' rel='stylesheet' type='text/css'>-->
 
 <?php
 $this->registerJs("

@@ -46,7 +46,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                             <div class="form-cont">
                                                 <?= $form->field($model, 'iFatherStatusID')->dropDownList(
                                                     ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
-                                                    ['class' => 'cs-select cs-skin-border',
+                                                    ['class' => 'demo-default select-beast',
                                                         'prompt' => 'Father Status'
                                                     ]
 
@@ -66,7 +66,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                             <div class="form-cont">
                                                 <?= $form->field($model, 'iFatherWorkingAsID')->dropDownList(
                                                     ArrayHelper::map(CommonHelper::getWorkingas(), 'iWorkingAsID', 'vWorkingAsName'),
-                                                    ['class' => 'cs-select cs-skin-border',
+                                                    ['class' => 'demo-default select-beast',
                                                         'prompt' => 'Father Working AS'
                                                     ]
                                                 )->label(false)->error(false); ?>
@@ -85,7 +85,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                             <div class="form-cont">
                                                 <?= $form->field($model, 'iMotherStatusID')->dropDownList(
                                                     ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
-                                                    ['class' => 'cs-select cs-skin-border',
+                                                    ['class' => 'demo-default select-beast',
                                                         'prompt' => 'Mother Status'
                                                     ]
                                                 )->label(false)->error(false); ?>
@@ -104,7 +104,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                             <div class="form-cont">
                                                 <?= $form->field($model, 'iMotherWorkingAsID')->dropDownList(
                                                     ArrayHelper::map(CommonHelper::getWorkingAS(), 'iWorkingAsID', 'vWorkingAsName'),
-                                                    ['class' => 'cs-select cs-skin-border',
+                                                    ['class' => 'demo-default select-beast',
                                                         'prompt' => 'Mother Working AS'
                                                     ]
                                                 )->label(false)->error(false); ?>
@@ -234,12 +234,12 @@ echo $this->render('/layouts/parts/_headerregister.php');
 
                                                 <?= $form->field($model, 'iCountryCAId')->dropDownList(
                                                     ArrayHelper::map(CommonHelper::getCountry(), 'iCountryId', 'vCountryName'),
-                                                    ['class' => 'cs-select cs-skin-border',
+                                                    ['class' => 'demo-default select-beast',
                                                         'prompt' => 'Country',
                                                         'onchange' => '
                                                         $.post( "' . Yii::$app->urlManager->createUrl('ajax/getstate?id=') . '"+$(this).val(), function( data ) {
                                                           $( "select#iStateCAId" ).html( data );
-                                                          $("select#iStateCAId").niceSelect("update");
+                                                          //$("select#iStateCAId").niceSelect("update");
                                                         });'
                                                     ]
                                                 )->label(false)->error(false); ?>
@@ -264,13 +264,13 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                                 ?>
                                                 <?= $form->field($model, 'iStateCAId')->dropDownList(
                                                     $stateList,
-                                                    ['class' => 'cs-select cs-skin-border',
+                                                    ['class' => 'demo-default select-beast',
                                                         'id' => 'iStateCAId',
                                                         'prompt' => 'State',
                                                         'onchange' => '
                                                         $.post( "' . Yii::$app->urlManager->createUrl('ajax/getcity?id=') . '"+$(this).val(), function( data ) {
                                                           $( "select#iCityCAId" ).html( data );
-                                                          $("select#iCityCAId").niceSelect("update");
+                                                          //$("select#iCityCAId").niceSelect("update");
                                                         });'
                                                     ]
                                                 )->label(false)->error(false); ?>
@@ -295,7 +295,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                                 ?>
                                                 <?= $form->field($model, 'iCityCAId')->dropDownList(
                                                     $cityList,
-                                                    ['class' => 'cs-select cs-skin-border',
+                                                    ['class' => 'demo-default select-beast',
                                                         'id' => 'iCityCAId',
                                                         'prompt' => 'City'
                                                     ]
@@ -315,7 +315,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                             <div class="form-cont">
                                                 <?= $form->field($model, 'iDistrictCAID')->dropDownList(
                                                     ArrayHelper::map(CommonHelper::getDistrict(), 'iDistrictID', 'vName'),
-                                                    ['class' => 'cs-select cs-skin-border',
+                                                    ['class' => 'demo-default select-beast',
                                                         'prompt' => 'District'
                                                     ]
                                                 )->label(false)->error(false); ?>
@@ -334,7 +334,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                             <div class="form-cont">
                                                 <?= $form->field($model, 'iTalukaCAID')->dropDownList(
                                                     ArrayHelper::map(CommonHelper::getTaluka(), 'iTalukaID', 'vName'),
-                                                    ['class' => 'cs-select cs-skin-border',
+                                                    ['class' => 'demo-default select-beast',
                                                         'prompt' => 'Taluka'
                                                     ]
                                                 )->label(false)->error(false); ?>
@@ -613,20 +613,160 @@ $this->registerJs('
                 vAreaName:vAreaName,
               },
         success: function(res){
-            $( "select#user-icountrycaid" ).html( res.country );
-            $("select#user-icountrycaid").niceSelect("update");
+       // console.log(res.state );
 
+            var $select = $("select#user-icountrycaid").selectize();
+            var control = $select[0].selectize;
+            control.setValue(iCountryId);
+            //control.clear();
+
+            var htmldata = "";
+            jsondata = res.state;
+                    var new_value_options   = "[";
+                    for (var key in jsondata) {
+                    //console.log(jsondata[key].vStateName);
+                        htmldata += "<option value=\'"+jsondata[key].iStateId+"\'>"+jsondata[key].vStateName+"</option>";
+
+                        var keyPlus = parseInt(key) + 1;
+                        if (keyPlus == jsondata.length) {
+                            new_value_options += "{text: \'"+jsondata[key].vStateName+"\', value: "+jsondata[key].iStateId+"}";
+                        } else {
+                            new_value_options += "{text: \'"+jsondata[key].vStateName+"\', value: "+jsondata[key].iStateId+"},";
+                        }
+                    }
+                    new_value_options   += "]";
+
+            new_value_options = eval("(" + new_value_options + ")");
+            if (new_value_options[0] != undefined) {
+                        // re-fill html select option field
+                        $("select#iStateCAId").html(htmldata);
+                        // re-fill/set the selectize values
+                        var selectize = $("select#iStateCAId")[0].selectize;
+                        selectize.clear();
+                        selectize.clearOptions();
+                        selectize.renderCache["option"] = {};
+                        selectize.renderCache["item"] = {};
+
+                        selectize.addOption(new_value_options);
+                        selectize.setValue(iStateId);
+            }
+
+            var htmldata = "";
+            jsondata = res.city;
+                    var new_value_options   = "[";
+                    for (var key in jsondata) {
+                        htmldata += "<option value=\'"+jsondata[key].iCityId+"\'>"+jsondata[key].vCityName+"</option>";
+                        var keyPlus = parseInt(key) + 1;
+                        if (keyPlus == jsondata.length) {
+                            new_value_options += "{text: \'"+jsondata[key].vCityName+"\', value: "+jsondata[key].iCityId+"}";
+                        } else {
+                            new_value_options += "{text: \'"+jsondata[key].vCityName+"\', value: "+jsondata[key].iCityId+"},";
+                        }
+                    }
+                    new_value_options   += "]";
+
+            new_value_options = eval("(" + new_value_options + ")");
+            if (new_value_options[0] != undefined) {
+                        // re-fill html select option field
+                        $("select#iCityCAId").html(htmldata);
+                        // re-fill/set the selectize values
+                        var selectize = $("select#iCityCAId")[0].selectize;
+                        selectize.clear();
+                        selectize.clearOptions();
+                        selectize.renderCache["option"] = {};
+                        selectize.renderCache["item"] = {};
+
+                        selectize.addOption(new_value_options);
+                        selectize.setValue(iCityId);
+            }
+
+            var htmldata = "";
+            jsondata =  res.district;
+                    var new_value_options   = "[";
+                    for (var key in jsondata) {
+                        htmldata += "<option value=\'"+jsondata[key].iDistrictID+"\'>"+jsondata[key].vName+"</option>";
+                        var keyPlus = parseInt(key) + 1;
+                        if (keyPlus == jsondata.length) {
+                            new_value_options += "{text: \'"+jsondata[key].vName+"\', value: "+jsondata[key].iDistrictID+"}";
+                        } else {
+                            new_value_options += "{text: \'"+jsondata[key].vName+"\', value: "+jsondata[key].iDistrictID+"},";
+                        }
+                    }
+                    new_value_options   += "]";
+
+            new_value_options = eval("(" + new_value_options + ")");
+            if (new_value_options[0] != undefined) {
+                        // re-fill html select option field
+                        $("select#user-idistrictcaid").html(htmldata);
+                        // re-fill/set the selectize values
+                        var selectize = $("select#user-idistrictcaid")[0].selectize;
+                        selectize.clear();
+                        selectize.clearOptions();
+                        selectize.renderCache["option"] = {};
+                        selectize.renderCache["item"] = {};
+
+                        selectize.addOption(new_value_options);
+                        selectize.setValue(iDistrictID);
+            }
+            var htmldata = "";
+            jsondata = res.taluka;
+                    var new_value_options   = "[";
+                    for (var key in jsondata) {
+                        htmldata += "<option value=\'"+jsondata[key].iTalukaID+"\'>"+jsondata[key].vName+"</option>";
+                        var keyPlus = parseInt(key) + 1;
+                        if (keyPlus == jsondata.length) {
+                            new_value_options += "{text: \'"+jsondata[key].vName+"\', value: "+jsondata[key].iTalukaID+"}";
+                        } else {
+                            new_value_options += "{text: \'"+jsondata[key].vName+"\', value: "+jsondata[key].iTalukaID+"},";
+                        }
+                    }
+                    new_value_options   += "]";
+
+            new_value_options = eval("(" + new_value_options + ")");
+            if (new_value_options[0] != undefined) {
+                        // re-fill html select option field
+                        $("select#user-italukacaid").html(htmldata);
+                        // re-fill/set the selectize values
+                        var selectize = $("select#user-italukacaid")[0].selectize;
+                        selectize.clear();
+                        selectize.clearOptions();
+                        selectize.renderCache["option"] = {};
+                        selectize.renderCache["item"] = {};
+
+                        selectize.addOption(new_value_options);
+                        selectize.setValue(iTalukaID);
+            }
+
+
+            /*var $select1 = $("select#iStateCAId").selectize();
+            var control1 = $select1[0].selectize;
+            control1.clear();
+            control1.clearOptions();
+                $("select#iStateCAId").selectize(res.state)*/
+            //control1.refreshItems();
+
+            //$("select#user-icountrycaid").clear();
+            //$("select#user-icountrycaid").selectize(res.country);
+            /*$(".select-beast").selectize({
+                 //create: true,
+                 sortField: {
+                     field: "text",
+                     direction: "asc"
+                 }
+             });*/
+            //$("select#user-icountrycaid").niceSelect("update");
+/*
             $( "select#iStateCAId" ).html( res.state );
-            $("select#iStateCAId").niceSelect("update");
+            //$("select#iStateCAId").niceSelect("update");
 
             $( "select#iCityCAId" ).html( res.city );
-            $("select#iCityCAId").niceSelect("update");
+            //$("select#iCityCAId").niceSelect("update");
 
             $( "select#user-idistrictcaid" ).html( res.district );
-            $("select#user-idistrictcaid").niceSelect("update");
+            //$("select#user-idistrictcaid").niceSelect("update");
 
             $( "select#user-italukacaid" ).html( res.taluka );
-            $("select#user-italukacaid").niceSelect("update");
+            //$("select#user-italukacaid").niceSelect("update");*/
 
             $("#user-vareanameca").val(res.areaname );
         }

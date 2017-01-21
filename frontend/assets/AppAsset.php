@@ -20,10 +20,14 @@ class AppAsset extends AssetBundle
 		'css/style-responsive.css',
         'plugings/loader/pace.min.css',
         'css/customstyle.css',
-        'plugings/l1/waitMe.css'
+        'plugings/l1/waitMe.css',
+        'plugings/selectize/css/stylesheet.css',
+        'plugings/selectize/css/selectize.default.css',
     ];
     public $js = [
 		// 'js/jquery.js',
+        'plugings/selectize/js/standalone/selectize.js',
+        'plugings/selectize/js/index.js',
 		'js/bootstrap.min.js',
 		'js/custom.js',
 		'js/classie.js',

@@ -52,7 +52,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                     <div class="form-cont">
                       <?= $form->field($model, 'iEducationLevelID')->dropDownList(
                           ArrayHelper::map(CommonHelper::getEducationLevel(), 'iEducationLevelID', 'vEducationLevelName'),
-                          ['class' => 'cs-select cs-skin-border',
+                          ['class' => 'demo-default select-beast',
                               'prompt' => 'Education Level'
                           ]
 
@@ -72,7 +72,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                     <div class="form-cont">
                       <?= $form->field($model, 'iEducationFieldID')->dropDownList(
                           ArrayHelper::map(CommonHelper::getEducationField(), 'iEducationFieldID', 'vEducationFieldName'),
-                          ['class' => 'cs-select cs-skin-border',
+                          ['class' => 'demo-default select-beast',
                               'prompt' => 'Education Field'
                           ]
 
@@ -92,7 +92,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                     <div class="form-cont">
                       <?= $form->field($model, 'iWorkingWithID')->dropDownList(
                           ArrayHelper::map(CommonHelper::getWorkingWith(), 'iWorkingWithID', 'vWorkingWithName'),
-                          ['class' => 'cs-select cs-skin-border',
+                          ['class' => 'demo-default select-beast',
                               'prompt' => 'Working with'
                           ]
 
@@ -112,7 +112,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                     <div class="form-cont">
                       <?= $form->field($model, 'iWorkingAsID')->dropDownList(
                           ArrayHelper::map(CommonHelper::getWorkingAS(), 'iWorkingAsID', 'vWorkingAsName'),
-                          ['class' => 'cs-select cs-skin-border',
+                          ['class' => 'demo-default select-beast',
                               'prompt' => 'Working As'
                           ]
 
@@ -132,7 +132,7 @@ echo $this->render('/layouts/parts/_headerregister.php');
                     <div class="form-cont">
                       <?= $form->field($model, 'iAnnualIncomeID')->dropDownList(
                           ArrayHelper::map(CommonHelper::getAnnualIncome(), 'iAnnualIncomeID', 'vAnnualIncome'),
-                          ['class' => 'cs-select cs-skin-border',
+                          ['class' => 'demo-default select-beast',
                               'prompt' => 'Annual Income'
                           ]
 

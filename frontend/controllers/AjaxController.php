@@ -73,7 +73,8 @@ class AjaxController extends \yii\web\Controller
                 $state.= "<option ".$selected." value='".$value->iStateId."'>".$value->vStateName."</option>";
             }            
         }
-        $data['state'] = $state;
+        $data['state'] = $states;
+        #$data['state'] = $state;
 
         $city =  "<option value=''>City</option>";
         if($iStateId != ''){
@@ -83,7 +84,8 @@ class AjaxController extends \yii\web\Controller
                 $city.= "<option ".$selected." value='".$value->iCityId."'>".$value->vCityName."</option>";
             }
         }
-        $data['city'] = $city;
+        $data['city'] = $cities;
+        #$data['city'] = $city;
 
         $district =  "<option value=''>District</option>";
         if($iDistrictID != ''){
@@ -93,7 +95,8 @@ class AjaxController extends \yii\web\Controller
                 $district.= "<option ".$selected." value='".$value->iDistrictID."'>".$value->vName."</option>";
             }
         }
-        $data['district'] = $district;
+        $data['district'] = $districts;
+        #$data['district'] = $district;
 
         $taluka =  "<option value=''>Taluka</option>";
         if($iTalukaID != ''){
@@ -103,7 +106,8 @@ class AjaxController extends \yii\web\Controller
                 $taluka.= "<option ".$selected." value='".$value->iTalukaID."'>".$value->vName."</option>";
             }
         }
-        $data['taluka'] = $taluka;
+        $data['taluka'] = $talukas;
+        #$data['taluka'] = $taluka;
         $data['areaname'] = $vAreaName;
 
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;

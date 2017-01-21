@@ -4,9 +4,17 @@ $( document ).ready(function() {
         /*[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
          new SelectFx(el);
          } );*/
-        /* if( $('select').length ){
-            $('select').niceSelect();
-         }*/
+        if ($('select').length) {
+            // $('select').niceSelect();
+            $('.select-beast').selectize({
+                //create: true,
+                sortField: {
+                    field: 'text',
+                    direction: 'asc'
+                }
+            });
+        }
+
         if ($('select.tag-select-box').length) {
             $('select.tag-select-box').niceSelect('destroy');
         }

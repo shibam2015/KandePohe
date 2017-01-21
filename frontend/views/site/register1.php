@@ -54,7 +54,7 @@ use yii\helpers\ArrayHelper;
                     <div class="form-cont">
                       <?= $form->field($model, 'iReligion_ID')->dropDownList(
                           ArrayHelper::map(CommonHelper::getReligion(), 'iReligion_ID', 'vName'),
-                          ['class' => 'cs-select cs-skin-border',
+                          ['class' => 'demo-default select-beast',
                               'prompt' => 'Religion'
                           ]
 
@@ -73,7 +73,7 @@ use yii\helpers\ArrayHelper;
                     <div class="form-cont">
                       <?= $form->field($model, 'iCommunity_ID')->dropDownList(
                           ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
-                          ['class' => 'cs-select cs-skin-border',
+                          ['class' => 'demo-default select-beast',
                               'prompt' => 'Community'
                           ]
 
@@ -92,7 +92,7 @@ use yii\helpers\ArrayHelper;
                     <div class="form-cont">
                       <?= $form->field($model, 'iSubCommunity_ID')->dropDownList(
                           ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
-                          ['class' => 'cs-select cs-skin-border',
+                          ['class' => 'demo-default select-beast',
                               'prompt' => 'Sub Community'
                           ]
 
@@ -112,7 +112,7 @@ use yii\helpers\ArrayHelper;
                     <div class="form-cont">
                       <?= $form->field($model, 'iMaritalStatusID')->dropDownList(
                           ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
-                          ['class' => 'cs-select cs-skin-border',
+                          ['class' => 'demo-default select-beast',
                             'id' => 'iMaritalStatusID',
                               'prompt' => 'Maritial Status',
                             'onchange' => '
@@ -163,7 +163,7 @@ use yii\helpers\ArrayHelper;
                     <div class="form-cont">
                       <?= $form->field($model, 'iGotraID')->dropDownList(
                           ArrayHelper::map(CommonHelper::getGotra(), 'iGotraID', 'vName'),
-                          ['class' => 'cs-select cs-skin-border',
+                          ['class' => 'demo-default select-beast',
                               'prompt' => 'Gotra'
                           ]
 
@@ -184,7 +184,7 @@ use yii\helpers\ArrayHelper;
                     <div class="form-cont">
                       <?= $form->field($model, 'iCountryId')->dropDownList(
                           ArrayHelper::map(CommonHelper::getCountry(), 'iCountryId', 'vCountryName'),
-                          ['class' => 'cs-select cs-skin-border',
+                          ['class' => 'demo-default select-beast',
                               'prompt' => 'Country',
                               'onchange'=>'
                                 $.post( "'.Yii::$app->urlManager->createUrl('ajax/getstate?id=').'"+$(this).val(), function( data ) {
@@ -214,7 +214,7 @@ use yii\helpers\ArrayHelper;
                       ?>
                       <?= $form->field($model, 'iStateId')->dropDownList(
                           $stateList,
-                          ['class' => 'cs-select cs-skin-border',
+                        ['class' => 'demo-default select-beast',
                             'id' => 'iStateId',
                               'prompt' => 'State',
                               'onchange'=>'
@@ -245,7 +245,7 @@ use yii\helpers\ArrayHelper;
                       ?>
                       <?= $form->field($model, 'iCityId')->dropDownList(
                           $cityList,
-                          ['class' => 'cs-select cs-skin-border',
+                          ['class' => 'demo-default select-beast',
                               'id' => 'iCityId',
                               'prompt' => 'City'
                           ]
@@ -265,7 +265,7 @@ use yii\helpers\ArrayHelper;
                     <div class="form-cont">
                       <?= $form->field($model, 'iDistrictID')->dropDownList(
                           ArrayHelper::map(CommonHelper::getDistrict(), 'iDistrictID', 'vName'),
-                          ['class' => 'cs-select cs-skin-border',
+                          ['class' => 'demo-default select-beast',
                               'prompt' => 'District'
                           ]
 
@@ -284,7 +284,7 @@ use yii\helpers\ArrayHelper;
                     <div class="form-cont">
                       <?= $form->field($model, 'iTalukaID')->dropDownList(
                           ArrayHelper::map(CommonHelper::getTaluka(), 'iTalukaID', 'vName'),
-                          ['class' => 'cs-select cs-skin-border',
+                          ['class' => 'demo-default select-beast',
                               'prompt' => 'Taluka'
                           ]
 
