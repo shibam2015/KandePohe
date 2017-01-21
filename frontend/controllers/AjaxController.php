@@ -31,7 +31,6 @@ class AjaxController extends \yii\web\Controller
             }
         //return $city;
     }
-
     public function actionGetstate()
     {
         $id = Yii::$app->request->get('id');
@@ -44,6 +43,24 @@ class AjaxController extends \yii\web\Controller
                 echo "<option value='".$post->iStateId."'>".$post->vStateName."</option>";
             }
         //return $city;
+    }
+
+    public function actionGetstatenew()
+    {
+        $id = Yii::$app->request->get('id');
+        $posts = CommonHelper::getState($id);
+        $data['state'] = $posts;
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return $data;
+    }
+
+    public function actionGetcitynew()
+    {
+        $id = Yii::$app->request->get('id');
+        $posts = CommonHelper::getCity($id);
+        $data['city'] = $posts;
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return $data;
     }
 
     public function actionSameasaboveaddress()

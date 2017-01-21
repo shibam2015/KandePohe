@@ -237,9 +237,38 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                                     ['class' => 'demo-default select-beast',
                                                         'prompt' => 'Country',
                                                         'onchange' => '
-                                                        $.post( "' . Yii::$app->urlManager->createUrl('ajax/getstate?id=') . '"+$(this).val(), function( data ) {
-                                                          $( "select#iStateCAId" ).html( data );
-                                                          //$("select#iStateCAId").niceSelect("update");
+                                                        $.post( "' . Yii::$app->urlManager->createUrl('ajax/getstatenew?id=') . '"+$(this).val(), function( data ) {
+                                                           var htmldata = "";
+                                                            jsondata = data.state;
+                                                                    var new_value_options   = "[";
+                                                                    for (var key in jsondata) {
+                                                                    //console.log(jsondata[key].vStateName);
+                                                                        htmldata += "<option value=\'"+jsondata[key].iStateId+"\'>"+jsondata[key].vStateName+"</option>";
+
+                                                                        var keyPlus = parseInt(key) + 1;
+                                                                        if (keyPlus == jsondata.length) {
+                                                                            new_value_options += "{text: \'"+jsondata[key].vStateName+"\', value: "+jsondata[key].iStateId+"}";
+                                                                        } else {
+                                                                            new_value_options += "{text: \'"+jsondata[key].vStateName+"\', value: "+jsondata[key].iStateId+"},";
+                                                                        }
+                                                                    }
+                                                                    new_value_options   += "]";
+
+                                                            new_value_options = eval("(" + new_value_options + ")");
+                                                            if (new_value_options[0] != undefined) {
+                                                                        // re-fill html select option field
+                                                                        $("select#iStateCAId").html(htmldata);
+                                                                        // re-fill/set the selectize values
+                                                                        var selectize = $("select#iStateCAId")[0].selectize;
+                                                                        selectize.clear();
+                                                                        selectize.clearOptions();
+                                                                        selectize.renderCache["option"] = {};
+                                                                        selectize.renderCache["item"] = {};
+
+                                                                        selectize.addOption(new_value_options);
+                                                                        //selectize.setValue(iStateId);
+                                                            }
+
                                                         });'
                                                     ]
                                                 )->label(false)->error(false); ?>
@@ -268,9 +297,36 @@ echo $this->render('/layouts/parts/_headerregister.php');
                                                         'id' => 'iStateCAId',
                                                         'prompt' => 'State',
                                                         'onchange' => '
-                                                        $.post( "' . Yii::$app->urlManager->createUrl('ajax/getcity?id=') . '"+$(this).val(), function( data ) {
-                                                          $( "select#iCityCAId" ).html( data );
-                                                          //$("select#iCityCAId").niceSelect("update");
+                                                        $.post( "' . Yii::$app->urlManager->createUrl('ajax/getcitynew?id=') . '"+$(this).val(), function( data ) {
+                                                          var htmldata = "";
+                                                            jsondata = data.city;
+                                                                    var new_value_options   = "[";
+                                                                    for (var key in jsondata) {
+                                                                        htmldata += "<option value=\'"+jsondata[key].iCityId+"\'>"+jsondata[key].vCityName+"</option>";
+                                                                        var keyPlus = parseInt(key) + 1;
+                                                                        if (keyPlus == jsondata.length) {
+                                                                            new_value_options += "{text: \'"+jsondata[key].vCityName+"\', value: "+jsondata[key].iCityId+"}";
+                                                                        } else {
+                                                                            new_value_options += "{text: \'"+jsondata[key].vCityName+"\', value: "+jsondata[key].iCityId+"},";
+                                                                        }
+                                                                    }
+                                                                    new_value_options   += "]";
+
+                                                            new_value_options = eval("(" + new_value_options + ")");
+                                                            if (new_value_options[0] != undefined) {
+                                                                        // re-fill html select option field
+                                                                        $("select#iCityCAId").html(htmldata);
+                                                                        // re-fill/set the selectize values
+                                                                        var selectize = $("select#iCityCAId")[0].selectize;
+                                                                        selectize.clear();
+                                                                        selectize.clearOptions();
+                                                                        selectize.renderCache["option"] = {};
+                                                                        selectize.renderCache["item"] = {};
+
+                                                                        selectize.addOption(new_value_options);
+                                                                       // selectize.setValue(iCityId);
+                                                            }
+
                                                         });'
                                                     ]
                                                 )->label(false)->error(false); ?>
