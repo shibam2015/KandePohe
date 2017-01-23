@@ -460,3 +460,22 @@ img.selected {
 }
 
 /*Home Page End*/
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+    background-color: #ff517d;
+    font-weight: bold;
+}
+
+.mp-left {
+    margin-left: -25px;
+}
+
+.tab-width {
+    width: 108.90% !important;
+}
+
+.nav > li > a {
+    color: #000;
+    padding: 10px 14px;
+    /*font-weight: bold ;*/
+}

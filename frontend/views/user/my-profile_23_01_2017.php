@@ -10,6 +10,7 @@ use yii\bootstrap\Alert;   // For Alert Notification
 use yii\web\View;
 use kartik\editable\Editable;
 use yii\widgets\Pjax;
+
 $id = 0;
 $PROFILE_COMPLETENESS = 0;
 if (!Yii::$app->user->isGuest) {
@@ -219,6 +220,7 @@ if (!Yii::$app->user->isGuest) {
                                                    id="tag_count">
                                                     <i class="fa fa-spinner fa-spin pink"></i>
                                                 </a>
+
                                                 <h3 class="panel-title text-muted mrg-bt-10">Add Tags</h3>
                                                 <!--<a href="javascript:void(0)" class="text-muted">Add more tags</a>-->
                                             </div>
@@ -271,15 +273,15 @@ if (!Yii::$app->user->isGuest) {
                                         <?php } ?>
                                     </div>
                                 </div>
-                                <div class="col-sm-8 mp-left">
-                                    <ul class="nav nav-pills bg-white my-profile tab-width" role="tablist">
+                                <div class="col-sm-8">
+                                    <ul class="nav nav-tabs bg-white my-profile" role="tablist">
                                         <li role="presentation" <?= ($tab == '') ? 'class="active"' : ''; ?> ><a
                                                 href="#tab1" aria-controls="home"
                                                 role="tab" data-toggle="tab">Personal Information</a>
                                         </li>
                                         <li role="presentation" <?= ($tab == 'EP') ? 'class="active"' : ''; ?> ><a
                                                 href="#tab2" aria-controls="profile" role="tab"
-                                                                   data-toggle="tab">Partner Preferences</a></li>
+                                                data-toggle="tab">Partner Preferences</a></li>
                                         <li role="presentation"><a href="#tab3" aria-controls="profile" role="tab"
                                                                    data-toggle="tab"> Contact Details</a></li>
                                         <li role="presentation"><a href="#tab4" aria-controls="profile" role="tab"
@@ -289,7 +291,7 @@ if (!Yii::$app->user->isGuest) {
                                     <?php Pjax::begin(['id' => 'refresh_index']); ?>
                                     <?= Html::a("Refresh", ['user/my-profile'], ['class' => 'btn btn-lg btn-primary hidden']) ?>
                                     <?php Pjax::end(); ?>
-                                    <div class="tab-content my-profile tab-width">
+                                    <div class="tab-content my-profile">
                                         <div role="tabpanel" class="tab-pane <?= ($tab == '') ? 'active' : ''; ?> "
                                              id="tab1">
 
@@ -577,57 +579,57 @@ if (!Yii::$app->user->isGuest) {
                                 class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li class="active"><span
                                 class="imgarea"><?= Html::img('@web/images/profile2.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="online"></span> </li>
+            </span> <span class="online"></span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile3.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile1.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile2.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile3.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                         <li><span
                                 class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                     </ul>
                 </div>
                 <div class="panel-footer">
@@ -638,13 +640,14 @@ if (!Yii::$app->user->isGuest) {
                                placeholder="Type your message here..."/>
                         <span class="input-group-btn dropup">
           <button class="btn btn-default btn-sm" id="btn-chat"><i class="fa fa-pencil-square-o"></i></button>
-          <button class="btn btn-default btn-sm" id="btn-chat" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-cog"></i> </button>
+          <button class="btn btn-default btn-sm" id="btn-chat" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false"><i class="fa fa-cog"></i></button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
               <li><a href="#">Action</a></li>
               <li><a href="#">Another action</a></li>
               <li><a href="#">Something else here</a></li>
           </ul>
-          </span> </div>
+          </span></div>
                 </div>
             </div>
         </div>
@@ -655,6 +658,7 @@ if (!Yii::$app->user->isGuest) {
         <div class="modal-dialog">
             <p class="text-center mrg-bt-10">
                 <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
+
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
@@ -688,6 +692,7 @@ if (!Yii::$app->user->isGuest) {
         <div class="modal-dialog">
             <p class="text-center mrg-bt-10">
                 <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
+
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
@@ -721,6 +726,7 @@ if (!Yii::$app->user->isGuest) {
         <div class="modal-dialog">
             <p class="text-center mrg-bt-10">
                 <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
+
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
@@ -767,6 +773,7 @@ if (!Yii::$app->user->isGuest) {
                     <p><strong><?= Yii::$app->params['deleteProfileMessage'] ?></strong></p>
 
                     <p><?= Yii::$app->params['deleteProfileNote'] ?></p>
+
                     <p></p><br>
 
                     <div class="row">
@@ -806,60 +813,60 @@ $this->registerJs('
     getInlineDetail("' . Url::to(['user/tag-count']) . '","#tag_count","1");
     
     $(".edit_btn").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-myinfo']).'",".dis_my_info","0");
+        getInlineDetail("' . Url::to(['user/edit-myinfo']) . '",".dis_my_info","0");
     });
-    getInlineDetail("'.Url::to(['user/edit-myinfo']).'",".dis_my_info","1");
+    getInlineDetail("' . Url::to(['user/edit-myinfo']) . '",".dis_my_info","1");
     $(document).on("click","#cancel_edit_info",function(e){
-        getInlineDetail("'.Url::to(['user/edit-myinfo']).'",".dis_my_info","1");
+        getInlineDetail("' . Url::to(['user/edit-myinfo']) . '",".dis_my_info","1");
     });
 
     $(".edit_personal_btn").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","0");
+        getInlineDetail("' . Url::to(['user/edit-personal-info']) . '",".div_personal_info","0");
     });
-    getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","1");
+    getInlineDetail("' . Url::to(['user/edit-personal-info']) . '",".div_personal_info","1");
     
     $(document).on("click","#cancel_edit_personalinfo",function(e){
-        getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","1");
+        getInlineDetail("' . Url::to(['user/edit-personal-info']) . '",".div_personal_info","1");
     });
 
     $(".edit_basic_information").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-basic-info']).'",".div_basic_info","0");
+        getInlineDetail("' . Url::to(['user/edit-basic-info']) . '",".div_basic_info","0");
     });
-    getInlineDetail("'.Url::to(['user/edit-basic-info']).'",".div_basic_info","1");
+    getInlineDetail("' . Url::to(['user/edit-basic-info']) . '",".div_basic_info","1");
     $(document).on("click","#cancel_edit_basicinfo",function(e){
-        getInlineDetail("'.Url::to(['user/edit-basic-info']).'",".div_basic_info","1");
+        getInlineDetail("' . Url::to(['user/edit-basic-info']) . '",".div_basic_info","1");
     });
     
     $(".edit_education").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-education']).'",".div_education","0");
+        getInlineDetail("' . Url::to(['user/edit-education']) . '",".div_education","0");
     });
-    getInlineDetail("'.Url::to(['user/edit-education']).'",".div_education","1");
+    getInlineDetail("' . Url::to(['user/edit-education']) . '",".div_education","1");
     $(document).on("click","#cancel_edit_education",function(e){
-        getInlineDetail("'.Url::to(['user/edit-education']).'",".div_education","1");
+        getInlineDetail("' . Url::to(['user/edit-education']) . '",".div_education","1");
     });
     
     $(".edit_lifestyle").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-lifestyle']).'",".div_lifestyle","0");
+        getInlineDetail("' . Url::to(['user/edit-lifestyle']) . '",".div_lifestyle","0");
     });
-    getInlineDetail("'.Url::to(['user/edit-lifestyle']).'",".div_lifestyle","1");
+    getInlineDetail("' . Url::to(['user/edit-lifestyle']) . '",".div_lifestyle","1");
     $(document).on("click","#cancel_edit_lifestyle",function(e){
-        getInlineDetail("'.Url::to(['user/edit-lifestyle']).'",".div_lifestyle","1");
+        getInlineDetail("' . Url::to(['user/edit-lifestyle']) . '",".div_lifestyle","1");
     });
     
     $(".edit_family").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-family']).'",".div_family","0");
+        getInlineDetail("' . Url::to(['user/edit-family']) . '",".div_family","0");
     });
-    getInlineDetail("'.Url::to(['user/edit-family']).'",".div_family","1");
+    getInlineDetail("' . Url::to(['user/edit-family']) . '",".div_family","1");
     $(document).on("click","#cancel_edit_family",function(e){
-        getInlineDetail("'.Url::to(['user/edit-family']).'",".div_family","1");
+        getInlineDetail("' . Url::to(['user/edit-family']) . '",".div_family","1");
     });
 
     $(".edit_preferences").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-preferences']).'","#my_preferences","0");
+        getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","0");
     });
-    getInlineDetail("'.Url::to(['user/edit-preferences']).'","#my_preferences","1");
+    getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","1");
     $(document).on("click","#cancel_edit_preferences",function(e){
-        getInlineDetail("'.Url::to(['user/edit-preferences']).'","#my_preferences","1");
+        getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","1");
     });
 
     $(".edit_horoscope").click(function(e){

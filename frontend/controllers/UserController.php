@@ -88,8 +88,6 @@ class UserController extends Controller
 
     public static function profileCompleteness($x)
     {
-        #$id = Yii::$app->user->identity->id;
-        #$USER = User::findOne($id);
         $PERCENTAGE = 0;
         $STEP_ARRAY = explode(",", $x);
         foreach ($STEP_ARRAY as $k => $v) {
@@ -102,9 +100,9 @@ class UserController extends Controller
             }
         }
 
-        if ($PERCENTAGE <= 50) $PERCENTAGE -= 1;
-        if ($PERCENTAGE != 0) $PERCENTAGE += 5;
-
+        //if ($PERCENTAGE <= 50) $PERCENTAGE -= 1;
+//        if ($PERCENTAGE != 0) $PERCENTAGE += 5;
+//#echo $PERCENTAGE;exit;
         return $PERCENTAGE;
     }
 
