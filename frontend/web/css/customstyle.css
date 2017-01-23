@@ -483,3 +483,7 @@ img.selected {
 .has-error .selectize-input {
     border-color: #cf0d0d !important;
 }
+
+textarea {
+    resize: none;
+}

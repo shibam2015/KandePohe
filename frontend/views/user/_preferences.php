@@ -170,7 +170,6 @@ use yii\helpers\ArrayHelper;
          ');
     } else {
         ?>
-
         <dl class="dl-horizontal">
             <dt>Religion</dt>
             <dd><?= CommonHelper::setInputVal($PartenersReligion->religionName->vName,'text') ?><dd>
@@ -220,7 +219,6 @@ use yii\helpers\ArrayHelper;
             <dd><?= CommonHelper::setInputVal($UPP->smoke, 'text') ?>
             <dd>
         </dl>
-
     <?php
     }
     ?>

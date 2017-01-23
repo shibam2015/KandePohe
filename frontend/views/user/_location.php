@@ -13,7 +13,7 @@ use yii\helpers\ArrayHelper;
             'action' => ['edit-preferences-location'],
             'options' => ['data-pjax' => true],
             'layout' => 'horizontal',
-            'validateOnChange' => false,
+            'validateOnChange' => true,
             'validateOnSubmit' => true,
             'fieldConfig' => [
                 'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
@@ -31,7 +31,7 @@ use yii\helpers\ArrayHelper;
 
         <?= $form->field($PCS, 'country_id')->dropDownList(
             ArrayHelper::map(CommonHelper::getCountry(), 'iCountryId', 'vCountryName'),
-            ['prompt' => 'Country',
+            ['class' => 'demo-default select-beast', 'prompt' => 'Country',
                 'onchange' => '
                                 $.post( "' . Yii::$app->urlManager->createUrl('ajax/getstate?id=') . '"+$(this).val(), function( data ) {
                                   $( "select#state_id" ).html( data );
@@ -49,6 +49,7 @@ use yii\helpers\ArrayHelper;
         <?= $form->field($PS, 'state_id')->dropDownList(
             $stateList,
             ['id' => 'state_id',
+                'class' => 'demo-default select-beast',
                 'prompt' => 'State',
                 'onchange' => '
                                 $.post( "' . Yii::$app->urlManager->createUrl('ajax/getcity?id=') . '"+$(this).val(), function( data ) {
@@ -66,7 +67,7 @@ use yii\helpers\ArrayHelper;
         ?>
         <?= $form->field($PC, 'city_id')->dropDownList(
             $cityList,
-            ['id' => 'city_id', 'prompt' => 'City']
+            ['id' => 'city_id', 'class' => 'demo-default select-beast', 'prompt' => 'City']
         ); ?>
 
 
@@ -88,6 +89,9 @@ use yii\helpers\ArrayHelper;
             </div>
         </div>
         <?php ActiveForm::end();
+        $this->registerJs('
+          selectbox();
+         ');
     } else {
         ?>
 
