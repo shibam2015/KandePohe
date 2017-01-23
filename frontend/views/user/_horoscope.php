@@ -3,13 +3,11 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
-
 ?>
 <style>
     input[type="radio"], input[type="checkbox"] {
         display: inline-block;
     }
-
     input[type="radio"]:checked + label::before {
         content: "";
     }
