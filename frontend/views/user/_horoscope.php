@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
         content: "";
     }
 </style>
-<div class="div_horoscope">
+<div class="div_personal_info">
     <?php
     if ($show) {
         $form = ActiveForm::begin([
@@ -39,23 +39,23 @@ use yii\helpers\ArrayHelper;
         <?= $form->errorSummary($model, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
         <?= $form->field($model, 'RaashiId')->dropDownList(
             ArrayHelper::map(CommonHelper::getRaashi(), 'ID', 'Name'),
-            ['prompt' => 'Raashi']
+            ['class' => 'demo-default select-beast', 'prompt' => 'Raashi']
         ); ?>
         <?= $form->field($model, 'NakshtraId')->dropDownList(
             ArrayHelper::map(CommonHelper::getNaksatra(), 'ID', 'Name'),
-            ['prompt' => 'Nakshtra']
+            ['class' => 'demo-default select-beast', 'prompt' => 'Nakshtra']
         ); ?>
         <?= $form->field($model, 'CharanId')->dropDownList(
             ArrayHelper::map(CommonHelper::getCharan(), 'ID', 'Name'),
-            ['prompt' => 'Charan']
+            ['class' => 'demo-default select-beast', 'prompt' => 'Charan']
         ); ?>
         <?= $form->field($model, 'NadiId')->dropDownList(
             ArrayHelper::map(CommonHelper::getNadi(), 'ID', 'Name'),
-            ['prompt' => 'Nadi']
+            ['class' => 'demo-default select-beast', 'prompt' => 'Nadi']
         ); ?>
         <?= $form->field($model, 'iGotraID')->dropDownList(
             ArrayHelper::map(CommonHelper::getMasterGotra(), 'iGotraID', 'vName'),
-            ['prompt' => 'Gotra']
+            ['class' => 'demo-default select-beast', 'prompt' => 'Gotra']
         ); ?>
         <?= $form->field($model, 'Mangalik')->RadioList(
             ['Yes' => 'Yes', 'No' => 'No'],
@@ -88,6 +88,9 @@ use yii\helpers\ArrayHelper;
 
         </div>
         <?php ActiveForm::end();
+        $this->registerJs('
+          selectbox();
+         ');
     } else {
         ?>
 
