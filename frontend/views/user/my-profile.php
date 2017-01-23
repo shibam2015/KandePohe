@@ -325,7 +325,7 @@ if (!Yii::$app->user->isGuest) {
                                                 </div>
                                                 <h3><span class="heading-icons icon2"></span> Basic Details</h3>
                                                 <?php Pjax::begin(['id' => 'my_index1', 'enablePushState' => false]); ?>
-                                                <div class="div_personal_info">
+                                                <div class="div_personal_info1">
                                                     <i class="fa fa-spinner fa-spin pink"></i>
                                                     Personal Information Loading...
                                                 </div>
@@ -814,12 +814,12 @@ $this->registerJs('
     });
 
     $(".edit_personal_btn").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","0");
+        getInlineDetail("' . Url::to(['user/edit-personal-info']) . '",".div_personal_info1","0");
     });
-    getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","1");
+    getInlineDetail("' . Url::to(['user/edit-personal-info']) . '",".div_personal_info1","1");
 
     $(document).on("click","#cancel_edit_personalinfo",function(e){
-        getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","1");
+        getInlineDetail("' . Url::to(['user/edit-personal-info']) . '",".div_personal_info1","1");
     });
 
     $(".edit_basic_information").click(function(e){

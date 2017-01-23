@@ -7,7 +7,7 @@ use common\components\MessageHelper;
 use yii\helpers\Url;
 
 ?>
-<div id="div_personal_info">
+<div id="div_personal_info1">
     <?php
     if ($show) {
         $form = ActiveForm::begin([
