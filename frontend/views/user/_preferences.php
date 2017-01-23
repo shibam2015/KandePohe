@@ -21,7 +21,7 @@ use yii\helpers\ArrayHelper;
             'action' => ['edit-preferences'],
             'options' => ['data-pjax' => true],
             'layout' => 'horizontal',
-            'validateOnChange' => false,
+            'validateOnChange' => true,
             'validateOnSubmit' => true,
             'fieldConfig' => [
                 'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
