@@ -117,7 +117,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                 class="kp_gallery col-md-3 col-sm-3 col-xs-6    "
                                                                 id="img_<?= $V['iPhoto_ID'] ?>">
                                                                 <div
-                                                                    class=" <?= ($V->eStatus == 'Approve') ? 'gallery1 ' : 'img-blur1' ?>">
+                                                                    class=" <?= ($V->eStatus == 'Approve') ? 'gallery1 ' : 'img-blur' ?>">
                                                                     <a class="<?= $SELECTED ?> "
                                                                        data-toggle="tooltip" data-placement="top"
                                                                         <?php if ($V->eStatus == 'Approve') { ?>
@@ -130,7 +130,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                         <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->params['thumbnailPrefix'] . "110_" . $V['File_Name'], 110), ['class' => 'img-responsive ' . $SELECTED, 'width' => '140', 'alt' => 'Photo' . $K]); ?>
                                                                     </a>
                                                                 </div>
-                                                                <?php if ($V->eStatus == 'Approve' || $V->eStatus == 'Pending') { ?>
+                                                                <?php if ($V->eStatus == 'Approve') { ?>
                                                                     <a href="javascript:void(0)"
                                                                        class="pull-left profile_set_kp set_profile_photo kp_not_gallery"
                                                                        data-id="<?= $V['iPhoto_ID'] ?>"
@@ -139,6 +139,12 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                                        data-name="<?= $V['File_Name'] ?>">
                                                                         Profile pic
                                                                     </a>
+                                                                    <!--<a href="javascript:void(0)"
+                                                                       class="pull-right profile_delete kp_not_gallery"
+                                                                       data-id="<? /*= $V['iPhoto_ID'] */ ?>"
+                                                                       data-target="#photodelete" data-toggle="modal">
+                                                                        <i aria-hidden="true" class="fa fa-trash-o"></i>
+                                                                    </a>-->
                                                                 <?php } else { ?>
                                                                     <a href="javascript:void(0)"
                                                                        class="kp_not_gallery"

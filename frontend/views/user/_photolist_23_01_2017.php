@@ -1,6 +1,7 @@
 <?php
 use common\components\CommonHelper;
 use yii\bootstrap\Html;
+
 if (count($model) > 0) {
     foreach ($model as $K => $V) {
         ?>
@@ -24,7 +25,7 @@ if (count($model) > 0) {
         <div data-src="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
              data-sub-html="<h4><?= $PhotoHeading ?></h4><p><?= $PhotoMessage ?></p>"
              class="kp_gallery col-md-3 col-sm-3 col-xs-6">
-            <div class="<?= ($V->eStatus == 'Approve') ? 'gallery1 ' : 'img-blur1' ?>">
+            <div class="<?= ($V->eStatus == 'Approve') ? 'gallery1 ' : 'img-blur' ?>">
                 <a class="<?= $SELECTED ?>"
                    data-toggle="tooltip" data-placement="top"
                    href="<?= CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name']) ?>"
@@ -36,7 +37,7 @@ if (count($model) > 0) {
                     <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->params['thumbnailPrefix'] . "110_" . $V['File_Name'], 110), ['class' => 'img-responsive ' . $SELECTED, 'width' => '140', 'alt' => 'Photo' . $K]); ?>
                 </a>
             </div>
-            <?php if ($V->eStatus == 'Approve' || $V->eStatus == 'Pending') { ?>
+            <?php if ($V->eStatus == 'Approve') { ?>
                 <a href="javascript:void(0)"
                    class="pull-left profile_set_kp set_profile_photo kp_not_gallery"
                    data-id="<?= $V['iPhoto_ID'] ?>"

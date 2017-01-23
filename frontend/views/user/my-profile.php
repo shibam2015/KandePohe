@@ -253,10 +253,11 @@ if (!Yii::$app->user->isGuest) {
                                                 <div class="panel-body text-center">
                                                     <ul class="friends">
                                                         <?php foreach ($photo_model as $K => $V) { ?>
-                                                            <li class="hovertool<?= ($V->eStatus == 'Approve') ? '' : ' img-blur' ?>">
-                                                                <a <?= ($V->eStatus == 'Approve') ? ' profile_set_kp set_profile_photo' : '' ?>
+                                                            <li class="hovertool<?= ($V->eStatus == 'Approve') ? '' : ' img-blur1' ?>">
+                                                                <a <?= ($V->eStatus == 'Approve') ? ' profile_set_kp set_profile_photo' : ' profile_set_kp set_profile_photo' ?>
                                                                     href="javascript:void(0)">
-                                                                    <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 75), ['width' => 75, 'height' => 75, 'class' => 'img-responsive tip', 'alt' => $V['File_Name'] . $K, 'style' => 'height: 75px;']); ?>
+                                                                    <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, Yii::$app->params['thumbnailPrefix'] . "75_" . $V['File_Name'], 75), ['width' => 75, 'height' => 75, 'class' => 'img-responsive tip', 'alt' => $V['File_Name'] . $K, 'style' => 'height: 75px;']); ?>
+
                                                                 </a>
                                                             </li>
                                                         <?php } ?>
