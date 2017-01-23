@@ -569,3 +569,12 @@ function commonRequest(url, htmlId, dataArr) {
 $(document).on('mouseover', '.hovertool', function (e) {
     $('[data-toggle=\'tooltip\']').tooltip();
 });
+
+function selectbox() {
+    $(".select-beast").selectize({
+        sortField: {
+            field: "text",
+            direction: "asc"
+        }
+    });
+}

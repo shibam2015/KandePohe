@@ -479,3 +479,7 @@ img.selected {
     padding: 10px 14px;
     /*font-weight: bold ;*/
 }
+
+.has-error .selectize-input {
+    border-color: #cf0d0d !important;
+}

@@ -12,7 +12,7 @@ if ($show) {
         'id' => 'form-register1',
         'action' => ['edit-basic-info'],
         'options' => ['data-pjax' => true],
-        'validateOnChange' => false,
+        'validateOnChange' => true,
         'validateOnSubmit' => true,
         'layout' => 'horizontal',
         'fieldConfig' => [
@@ -30,24 +30,25 @@ if ($show) {
     <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
     <?= $form->field($model, 'iReligion_ID')->dropDownList(
         ArrayHelper::map(CommonHelper::getReligion(), 'iReligion_ID', 'vName'),
-        ['prompt' => 'Religion']
+        ['class' => 'demo-default select-beast', 'prompt' => 'Religion']
     ); ?>
     <?= $form->field($model, 'iCommunity_ID')->dropDownList(
         ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
-        ['prompt' => 'Community']
+        ['class' => 'demo-default select-beast', 'prompt' => 'Community']
     ); ?>
     <?= $form->field($model, 'iSubCommunity_ID')->dropDownList(
         ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
-        ['prompt' => 'Sub Community']
+        ['class' => 'demo-default select-beast', 'prompt' => 'Sub Community']
     ); ?>
     <?= $form->field($model, 'iGotraID')->dropDownList(
         ArrayHelper::map(CommonHelper::getGotra(), 'iGotraID', 'vName'),
-        ['prompt' => 'Gotra']
+        ['class' => 'demo-default select-beast', 'prompt' => 'Gotra']
     ); ?>
     <?= $form->field($model, 'iMaritalStatusID')->dropDownList(
         ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
         ['prompt' => 'Maritial Status',
-        'onchange' => '
+            'class' => 'demo-default select-beast',
+            'onchange' => '
                         var iMaritalStatusID = $(this).val();
                         if(iMaritalStatusID == "4" || iMaritalStatusID == "5"){
                           $("#noc_div").show();
@@ -72,7 +73,7 @@ if ($show) {
     </div>
     <?= $form->field($model, 'iCountryId')->dropDownList(
         ArrayHelper::map(CommonHelper::getCountry(), 'iCountryId', 'vCountryName'),
-        ['prompt' => 'Country',
+        ['prompt' => 'Country', 'class' => 'demo-default select-beast',
             'onchange' => '
                                 $.post( "' . Yii::$app->urlManager->createUrl('ajax/getstate?id=') . '"+$(this).val(), function( data ) {
                                   $( "select#iStateId" ).html( data );
@@ -90,7 +91,7 @@ if ($show) {
     <?= $form->field($model, 'iStateId')->dropDownList(
         $stateList,
         ['id' => 'iStateId',
-            'prompt' => 'State',
+            'prompt' => 'State', 'class' => 'demo-default select-beast',
             'onchange' => '
                                 $.post( "' . Yii::$app->urlManager->createUrl('ajax/getcity?id=') . '"+$(this).val(), function( data ) {
                                   $( "select#iCityId" ).html( data );
@@ -107,17 +108,17 @@ if ($show) {
     ?>
     <?= $form->field($model, 'iCityId')->dropDownList(
         $cityList,
-        ['id' => 'iCityId', 'prompt' => 'City']
+        ['id' => 'iCityId', 'class' => 'demo-default select-beast', 'prompt' => 'City']
     ); ?>
 
     <?= $form->field($model, 'iDistrictID')->dropDownList(
         ArrayHelper::map(CommonHelper::getDistrict(), 'iDistrictID', 'vName'),
-        ['prompt' => 'District']
+        ['class' => 'demo-default select-beast', 'prompt' => 'District']
     ); ?>
 
     <?= $form->field($model, 'iTalukaID')->dropDownList(
         ArrayHelper::map(CommonHelper::getTaluka(), 'iTalukaID', 'vName'),
-        ['prompt' => 'Taluka']
+        ['class' => 'demo-default select-beast', 'prompt' => 'Taluka']
     ); ?>
 
     <?= $form->field($model, 'vAreaName')->textInput() ?>
@@ -139,6 +140,9 @@ if ($show) {
         </div>
     </div>
     <?php ActiveForm::end();
+    $this->registerJs('
+          selectbox();
+         ');
 } else {
     ?>
     

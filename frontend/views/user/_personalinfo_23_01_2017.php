@@ -4,10 +4,9 @@ use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
 use common\components\MessageHelper;
-use yii\helpers\Url;
 
 ?>
-<div id="div_personal_info">
+<div class="div_personal_info">
     <?php
     if ($show) {
         $form = ActiveForm::begin([
@@ -44,6 +43,21 @@ use yii\helpers\Url;
             ]
         )
         ?>
+        <?php
+        $this->registerJs('
+        $(".genderV").on("change",function(e){
+          var genderVal = $(this).val();
+          if(genderVal == "FEMALE") {
+            $("#DOB").datepicker("option","maxDate","' . date('Y-m-d', strtotime('-18 year')) . '");
+            $("#DOB").datepicker("option","yearRange","-70:-18");
+          }
+          else {
+            $("#DOB").datepicker("option","maxDate","' . date('Y-m-d', strtotime('-21 year')) . '");
+            $("#DOB").datepicker("option","yearRange","-70:-21");
+          }
+        });
+      ');
+        ?>
         <?= $form->field($model, 'DOB')->textInput()
             ->widget(\yii\jui\DatePicker::classname(),
                 [
@@ -63,17 +77,17 @@ use yii\helpers\Url;
         ?>
         <?= $form->field($model, 'Profile_created_for')->dropDownList(
             ['BRIDE' => 'BRIDE', 'GROOM' => 'GROOM', 'SELF' => 'SELF'],
-            ['class' => 'demo-default select-beast', 'prompt' => 'Profile For']
+            ['prompt' => 'Profile For']
         ); ?>
         <?= $form->field($model, 'county_code')->dropDownList(
             ['+91' => '+91'],
-            ['class' => 'demo-default select-beast', 'prompt' => 'Country Code']
+            ['prompt' => 'Country Code']
         )
         ?>
         <?= $form->field($model, 'Mobile')->input('text') ?>
         <?= $form->field($model, 'mother_tongue')->dropDownList(
             ArrayHelper::map(CommonHelper::getMotherTongue(), 'ID', 'Name'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Mother Tongue']
+            ['prompt' => 'Mother Tongue']
         ); ?>
         <div class="row">
             <div class="col-md-4 col-md-offset-2">
@@ -93,39 +107,25 @@ use yii\helpers\Url;
             </div>
         </div>
         <?php ActiveForm::end();
-
-        $this->registerJs('
-          setDesign();
-         ');
-        $this->registerJs('
-        $(".genderV").on("change",function(e){
-          var genderVal = $(this).val();
-          if(genderVal == "FEMALE") {
-            $("#DOB").datepicker("option","maxDate","'.date('Y-m-d',strtotime('-18 year')).'");
-            $("#DOB").datepicker("option","yearRange","-70:-18");
-          }
-          else {
-            $("#DOB").datepicker("option","maxDate","'.date('Y-m-d',strtotime('-21 year')).'");
-            $("#DOB").datepicker("option","yearRange","-70:-21");
-          }
-        });
-      ');
     } else {
         ?>
 
         <dl class="dl-horizontal">
             <dt>Name</dt>
-            <dd><?= $model->FullName; ?><dd>
+            <dd><?= $model->FullName; ?>
+            <dd>
             <dt>Profile created by</dt>
             <dd><?= $model->Profile_created_for; ?></dd>
             <dt>Date Of Birth</dt>
-            <dd><?= $model->DOB; ?><dd>
+            <dd><?= $model->DOB; ?>
+            <dd>
             <dt>Age</dt>
-            <dd><?= CommonHelper::getAge($model->DOB);?> years<dd>
+            <dd><?= CommonHelper::getAge($model->DOB); ?> years
+            <dd>
             <dt>Gender</dt>
             <dd><?= $model->Gender ?></dd>
             <dt>Mobile</dt>
-            <dd><?= $model->county_code." ".$model->Mobile; ?></dd>
+            <dd><?= $model->county_code . " " . $model->Mobile; ?></dd>
             <dt>Mother Tongue</dt>
             <dd><?= CommonHelper::setInputVal($model->motherTongue->Name, 'text') ?></dd>
 
@@ -134,14 +134,12 @@ use yii\helpers\Url;
         if ($popup) {
             list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'CHANGE_PHONE_NUMBER');
             $this->registerJs('
-                    notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
-                    $(".modal").on("hidden.bs.modal", function (e) {
-                        window.location.href = "' . Yii::$app->homeUrl . 'site/verification";
-                    })
-                ');
+            notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
+            $(".modal").on("hidden.bs.modal", function (e) {
+                window.location.href = "' . Yii::$app->homeUrl . 'site/verification";      
+            })
+        ');
         }
     }
     ?>
-
-
 </div>
