@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
             content: "";
         }
     </style>
-<div class="div_lifestyle">
+<div class="div_personal_info">
 <?php
 if ($show) {
     $form = ActiveForm::begin([
@@ -22,7 +22,7 @@ if ($show) {
         'action' => ['edit-lifestyle'],
         'options' => ['data-pjax' => true],
         'layout' => 'horizontal',
-        'validateOnChange' => false,
+        'validateOnChange' => true,
         'validateOnSubmit' => true,
         'fieldConfig' => [
             'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
@@ -39,7 +39,7 @@ if ($show) {
     <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
     <?= $form->field($model, 'iHeightID')->dropDownList(
         ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
-        ['prompt' => 'Height']
+        ['class' => 'demo-default select-beast', 'prompt' => 'Height']
     ); ?>
     <?= $form->field($model, 'vSkinTone')->RadioList(
         ArrayHelper::map(CommonHelper::getSkinTone(), 'ID', 'Name'),
@@ -104,7 +104,7 @@ if ($show) {
 
     <?= $form->field($model, 'vDiet')->dropDownList(
         ArrayHelper::map(CommonHelper::getDiet(), 'iDietID', 'vName'),
-        ['prompt' => 'Diet']
+        ['class' => 'demo-default select-beast', 'prompt' => 'Diet']
     ); ?>
 
     <?= $form->field($model, 'weight')->input('number') ?>
@@ -126,6 +126,9 @@ if ($show) {
         </div>
     </div>
     <?php ActiveForm::end();
+    $this->registerJs('
+                  selectbox();
+             ');
 } else {
     ?>
    
