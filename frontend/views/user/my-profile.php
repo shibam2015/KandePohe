@@ -800,11 +800,11 @@ $this->registerJs('
         }
       });
     }
-   
+
     getInlineDetail("' . Url::to(['user/tag-list']) . '","#user_tag_list","1");
     getInlineDetail("' . Url::to(['user/tag-suggestion-list']) . '","#suggest_tag_list","1");
     getInlineDetail("' . Url::to(['user/tag-count']) . '","#tag_count","1");
-    
+
     $(".edit_btn").click(function(e){
         getInlineDetail("'.Url::to(['user/edit-myinfo']).'",".dis_my_info","0");
     });
@@ -817,7 +817,7 @@ $this->registerJs('
         getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","0");
     });
     getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","1");
-    
+
     $(document).on("click","#cancel_edit_personalinfo",function(e){
         getInlineDetail("'.Url::to(['user/edit-personal-info']).'",".div_personal_info","1");
     });
@@ -829,7 +829,7 @@ $this->registerJs('
     $(document).on("click","#cancel_edit_basicinfo",function(e){
         getInlineDetail("'.Url::to(['user/edit-basic-info']).'",".div_basic_info","1");
     });
-    
+
     $(".edit_education").click(function(e){
         getInlineDetail("'.Url::to(['user/edit-education']).'",".div_education","0");
     });

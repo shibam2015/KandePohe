@@ -3,15 +3,16 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
+
 ?>
-    <div class="div_personal_info">
+    <div class="div_education">
         <?php
         if ($show) {
             $form = ActiveForm::begin([
                 'id' => 'form',
                 'action' => ['edit-education'],
                 'options' => ['data-pjax' => true],
-                'validateOnChange' => true,
+                'validateOnChange' => false,
                 'validateOnSubmit' => true,
                 'layout' => 'horizontal',
                 'fieldConfig' => [
@@ -29,26 +30,26 @@ use yii\helpers\ArrayHelper;
             <?= $form->errorSummary($model, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
             <?= $form->field($model, 'iEducationLevelID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getEducationLevel(), 'iEducationLevelID', 'vEducationLevelName'),
-                ['class' => 'demo-default select-beast', 'prompt' => 'Education Level']
+                ['prompt' => 'Education Level']
             ); ?>
 
             <?= $form->field($model, 'iEducationFieldID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getEducationField(), 'iEducationFieldID', 'vEducationFieldName'),
-                ['class' => 'demo-default select-beast', 'prompt' => 'Education Field']
+                ['prompt' => 'Education Field']
             ); ?>
 
             <?= $form->field($model, 'iWorkingWithID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getWorkingWith(), 'iWorkingWithID', 'vWorkingWithName'),
-                ['class' => 'demo-default select-beast', 'prompt' => 'Working with']
+                ['prompt' => 'Working with']
             ); ?>
 
             <?= $form->field($model, 'iWorkingAsID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getWorkingAS(), 'iWorkingAsID', 'vWorkingAsName'),
-                ['class' => 'demo-default select-beast', 'prompt' => 'Working As']
+                ['prompt' => 'Working As']
             ); ?>
             <?= $form->field($model, 'iAnnualIncomeID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getAnnualIncome(), 'iAnnualIncomeID', 'vAnnualIncome'),
-                ['class' => 'demo-default select-beast', 'prompt' => 'Annual Income']
+                ['prompt' => 'Annual Income']
             ); ?>
 
             <div class="row">
@@ -69,11 +70,9 @@ use yii\helpers\ArrayHelper;
                 </div>
             </div>
             <?php ActiveForm::end();
-            $this->registerJs('
-                  selectbox();
-             ');
         } else {
             ?>
+
             <dl class="dl-horizontal">
                 <dt>Education Level</dt>
                 <dd><?= CommonHelper::setInputVal($model->educationLevelName->vEducationLevelName, 'text') ?>
@@ -87,6 +86,7 @@ use yii\helpers\ArrayHelper;
                 <dt>Annual Income</dt>
                 <dd><?= CommonHelper::setInputVal($model->annualIncome->vAnnualIncome, 'text') ?></dd>
             </dl>
+
         <?php
         }
         ?>

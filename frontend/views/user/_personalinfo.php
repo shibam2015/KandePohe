@@ -95,7 +95,7 @@ use yii\helpers\Url;
         <?php ActiveForm::end();
 
         $this->registerJs('
-          setDesign();
+          selectbox();
          ');
         $this->registerJs('
         $(".genderV").on("change",function(e){
