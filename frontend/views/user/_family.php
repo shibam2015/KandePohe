@@ -13,7 +13,7 @@ use yii\helpers\ArrayHelper;
             content: "";
         }
     </style>
-<div class="div_family">
+    <div class="div_personal_info">
 <?php
 if ($show) {
     $form = ActiveForm::begin([
@@ -38,28 +38,28 @@ if ($show) {
     <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
     <?= $form->field($model, 'iFatherStatusID')->dropDownList(
         ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
-        ['prompt' => 'Father Status']
+        ['class' => 'demo-default select-beast', 'prompt' => 'Father Status']
     ); ?>
 
     <?= $form->field($model, 'iFatherWorkingAsID')->dropDownList(
         ArrayHelper::map(CommonHelper::getWorkingas(), 'iWorkingAsID', 'vWorkingAsName'),
-        ['prompt' => 'Father Working AS']
+        ['class' => 'demo-default select-beast', 'prompt' => 'Father Working AS']
     ); ?>
 
     <?= $form->field($model, 'iMotherStatusID')->dropDownList(
         ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
-        ['prompt' => 'Mother Status']
+        ['class' => 'demo-default select-beast', 'class' => 'demo-default select-beast', 'prompt' => 'Mother Status']
     ); ?>
 
     <?= $form->field($model, 'iMotherWorkingAsID')->dropDownList(
         ArrayHelper::map(CommonHelper::getWorkingAS(), 'iWorkingAsID', 'vWorkingAsName'),
-        ['prompt' => 'Mother Working AS']
+        ['class' => 'demo-default select-beast', 'prompt' => 'Mother Working AS']
     ); ?>
     <?= $form->field($model, 'nob')->input('number') ?>
     <?= $form->field($model, 'nos')->input('number') ?>
     <?= $form->field($model, 'iCountryCAId')->dropDownList(
         ArrayHelper::map(CommonHelper::getCountry(), 'iCountryId', 'vCountryName'),
-        [
+        ['class' => 'demo-default select-beast',
             'prompt' => 'Country',
             'onchange' => '
                                 $.post( "' . Yii::$app->urlManager->createUrl('ajax/getstate?id=') . '"+$(this).val(), function( data ) {
@@ -77,7 +77,7 @@ if ($show) {
     ?>
     <?= $form->field($model, 'iStateCAId')->dropDownList(
         $stateList,
-        [
+        ['class' => 'demo-default select-beast',
             'id' => 'iStateCAId',
             'prompt' => 'State',
             'onchange' => '
@@ -95,7 +95,7 @@ if ($show) {
     ?>
     <?= $form->field($model, 'iCityCAId')->dropDownList(
         $cityList,
-        [
+        ['class' => 'demo-default select-beast',
             'id' => 'iCityCAId',
             'prompt' => 'City'
         ]
@@ -103,13 +103,13 @@ if ($show) {
     ); ?>
     <?= $form->field($model, 'iDistrictCAID')->dropDownList(
         ArrayHelper::map(CommonHelper::getDistrict(), 'iDistrictID', 'vName'),
-        [
+        ['class' => 'demo-default select-beast',
             'prompt' => 'District'
         ]
     ); ?>
     <?= $form->field($model, 'iTalukaCAID')->dropDownList(
         ArrayHelper::map(CommonHelper::getTaluka(), 'iTalukaID', 'vName'),
-        [
+        ['class' => 'demo-default select-beast',
             'prompt' => 'Taluka'
         ]
     ); ?>
@@ -178,7 +178,7 @@ if ($show) {
 
           <span class="input input--akira input--filled input-textarea">
 
-            <textarea class="input__field input__field--akira" cols="50" rows="5"
+            <textarea class="input__field input__field--akira" cols="50" rows="5" style="resize:none"
                       name="User[vDetailRelative]"><?= ($model->vDetailRelative) ?></textarea>
             <label class="input__label input__label--akira" for="input-22">
               <span
@@ -206,6 +206,10 @@ if ($show) {
         </div>
     </div>
     <?php ActiveForm::end();
+
+    $this->registerJs('
+          selectbox();
+         ');
 } else {
     ?>
     
