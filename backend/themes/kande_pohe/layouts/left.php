@@ -55,7 +55,8 @@ $ADMIN_NAME = ucwords(strtolower(Yii::$app->user->identity->vFirstName. ' ' .Yii
                         'items' => [
                             ['label' => 'User List (All)', 'icon' => 'fa fa-list', 'url' => ['/user/index'],],
                             ['label' => 'User List (Approved)', 'icon' => 'fa  fa-check-circle', 'url' => ['/user/userapprove']],
-                            ['label' => 'User List (Newly Registered)', 'icon' => 'fa fa-list-alt', 'url' => ['/user/useractive'],],
+                            ['label' => 'User List (In Approval)', 'icon' => 'fa fa-list-alt', 'url' => ['/user/in-approval'],],
+                            ['label' => 'User List (Newly Registered)', 'icon' => 'fa fa-list-alt', 'url' => ['/user/new-registered'],],
                             ['label' => 'User List (In Own Words)', 'icon' => 'fa fa-file-code-o', 'url' => ['/user/user-in-own-words'],],
                             ['label' => 'User List (Profile Pic)', 'icon' => 'fa fa-file-code-o', 'url' => ['/user/user-profile-pic'],],
 

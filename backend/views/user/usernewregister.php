@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Users';
+$this->title = 'New Registered User';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
@@ -15,21 +15,27 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">User List</h3>
+                    <h3 class="box-title">User Newly Registered List</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap"><div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div>
+                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                        <div class="row">
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-6"></div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                <table id="example2" class="table table-bordered table-hover dataTable" role="grid"
+                                       aria-describedby="example2_info">
                                     <thead>
                                     <tr role="row">
 
                                     </thead>
                                     <tbody>
 
-                                    <!--<h1><? /*= Html::encode($this->title) */ ?></h1>-->
+
+                                    <!-- <h1><?= Html::encode($this->title) ?></h1>-->
                                     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
                                     <p>
@@ -40,13 +46,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'filterModel' => $searchModel,
                                         'columns' => [
                                             ['class' => 'yii\grid\SerialColumn'],
+
                                             'First_Name',
                                             'Last_Name',
                                             'email:email',
                                             'Mobile',
                                             [
                                                 'attribute' => 'status',
-                                                'filter' => false,//[1=>'Active', 2=>'Inactive',3=>'Pending',4=>'Disapprove',5=>'Approve'],
+                                                #'filter' => [5=>'Approve'],
+                                                'filter' => false,
                                                 'format' => 'raw',
                                                 'value' => function ($model, $key, $index) {
                                                     if ($model->status == 1) {
@@ -64,9 +72,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     }
                                                 },
                                             ],
-                                            ['class' => 'yii\grid\ActionColumn',
 
-                                                'template' => '{view} {disapprove}',
+                                            #['class' => 'yii\grid\ActionColumn'],
+                                            ['class' => 'yii\grid\ActionColumn',
+                                                'template' => '{view}',
+                                                #'template'=>'{view} {approve}',
                                                 'buttons' => [
                                                     'edit' => function ($model, $key, $index, $instance) {
                                                         $urlConfig = [];
@@ -81,15 +91,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                                             'data-pjax' => '0',
                                                         ]);
                                                     },
-                                                    'disapprove' => function ($url, $model) {
-                                                        return Html::a('<span class="fa   fa-times-circle bg-red" ></span>', $url, [
-                                                            'title' => Yii::t('yii', 'Disapprove'),
-                                                            'data-confirm' => \Yii::t('yii', 'Are you sure to disapprove this user?'),
+                                                    'approve' => function ($url, $model) {
+                                                        return Html::a('<span class="fa  fa-check-circle"></span>', $url, [
+                                                            'title' => Yii::t('yii', 'Approve'),
+                                                            'data-confirm' => \Yii::t('yii', 'Are you sure to Approve this user?'),
                                                             'data-method' => 'post',
                                                             'data-pjax' => '0',
                                                         ]);
 
-                                                    },
+                                                    }
                                                 ]
                                             ],
                                         ],

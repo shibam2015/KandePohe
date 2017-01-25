@@ -235,104 +235,6 @@ class UserSearch extends User
 
         return $dataProvider;
     }
-    public function searchApprove($params)
-    {
-        $query = User::find()->where(['status' => User::STATUS_APPROVE]); // 5 For Approve
-        #echo $query->createCommand()->sql;
-        #print_r($query->createCommand()->getRawSql());
-        // add conditions that should always apply here
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'DOB' => $this->DOB,
-            'Time_of_Birth' => $this->Time_of_Birth,
-            'Age' => $this->Age,
-            'Marital_Status' => $this->Marital_Status,
-            'iReligion_ID' => $this->iReligion_ID,
-            'iEducationLevelID' => $this->iEducationLevelID,
-            'iEducationFieldID' => $this->iEducationFieldID,
-            'iWorkingWithID' => $this->iWorkingWithID,
-            'iWorkingAsID' => $this->iWorkingAsID,
-            'iAnnualIncomeID' => $this->iAnnualIncomeID,
-            'iCommunity_ID' => $this->iCommunity_ID,
-            'iSubCommunity_ID' => $this->iSubCommunity_ID,
-            'iDistrictID' => $this->iDistrictID,
-            'iGotraID' => $this->iGotraID,
-            'iMaritalStatusID' => $this->iMaritalStatusID,
-            'iTalukaID' => $this->iTalukaID,
-            'iCountryId' => $this->iCountryId,
-            'iStateId' => $this->iStateId,
-            'iCityId' => $this->iCityId,
-            'noc' => $this->noc,
-            'iHeightID' => $this->iHeightID,
-            'iFatherStatusID' => $this->iFatherStatusID,
-            'iMotherStatusID' => $this->iMotherStatusID,
-            'iFatherWorkingAsID' => $this->iFatherWorkingAsID,
-            'iMotherWorkingAsID' => $this->iMotherWorkingAsID,
-            'nob' => $this->nob,
-            'nos' => $this->nos,
-            'iCountryCAId' => $this->iCountryCAId,
-            'iStateCAId' => $this->iStateCAId,
-            'iDistrictCAID' => $this->iDistrictCAID,
-            'iTalukaCAID' => $this->iTalukaCAID,
-            'iCityCAId' => $this->iCityCAId,
-            'completed_step' => $this->completed_step,
-        ]);
-
-        $query->andFilterWhere(['like', 'auth_key', $this->auth_key])
-            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
-            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'Registration_Number', $this->Registration_Number])
-            ->andFilterWhere(['like', 'Mobile', $this->Mobile])
-            ->andFilterWhere(['like', 'Profile_created_for', $this->Profile_created_for])
-            ->andFilterWhere(['like', 'First_Name', $this->First_Name])
-            ->andFilterWhere(['like', 'Last_Name', $this->Last_Name])
-            ->andFilterWhere(['like', 'Gender', $this->Gender])
-            ->andFilterWhere(['like', 'Birth_Place', $this->Birth_Place])
-            ->andFilterWhere(['like', 'eFirstVerificationMailStatus', $this->eFirstVerificationMailStatus])
-            ->andFilterWhere(['like', 'toc', $this->toc])
-            ->andFilterWhere(['like', 'county_code', $this->county_code])
-            ->andFilterWhere(['like', 'vAreaName', $this->vAreaName])
-            ->andFilterWhere(['like', 'cnb', $this->cnb])
-            ->andFilterWhere(['like', 'vSkinTone', $this->vSkinTone])
-            ->andFilterWhere(['like', 'vBodyType', $this->vBodyType])
-            ->andFilterWhere(['like', 'vSmoke', $this->vSmoke])
-            ->andFilterWhere(['like', 'vDrink', $this->vDrink])
-            ->andFilterWhere(['like', 'vSpectaclesLens', $this->vSpectaclesLens])
-            ->andFilterWhere(['like', 'vDiet', $this->vDiet])
-            ->andFilterWhere(['like', 'tYourSelf', $this->tYourSelf])
-            ->andFilterWhere(['like', 'vDisability', $this->vDisability])
-            ->andFilterWhere(['like', 'propic', $this->propic])
-            ->andFilterWhere(['like', 'pin_email_vaerification', $this->pin_email_vaerification])
-            ->andFilterWhere(['like', 'eSameAddress', $this->eSameAddress])
-            ->andFilterWhere(['like', 'vAreaNameCA', $this->vAreaNameCA])
-            ->andFilterWhere(['like', 'vNativePlaceCA', $this->vNativePlaceCA])
-            ->andFilterWhere(['like', 'vParentsResiding', $this->vParentsResiding])
-            ->andFilterWhere(['like', 'vFamilyAffluenceLevel', $this->vFamilyAffluenceLevel])
-            ->andFilterWhere(['like', 'vFamilyType', $this->vFamilyType])
-            ->andFilterWhere(['like', 'vFamilyProperty', $this->vFamilyProperty])
-            ->andFilterWhere(['like', 'vDetailRelative', $this->vDetailRelative])
-            ->andFilterWhere(['like', 'eEmailVerifiedStatus', $this->eEmailVerifiedStatus])
-            ->andFilterWhere(['like', 'ePhoneVerifiedStatus', $this->ePhoneVerifiedStatus]);
-
-        return $dataProvider;
-    }
     public function searchInOwnWords($params)
     {
         $query = User::find()->where(['eStatusInOwnWord' => ['Disapprove', 'Pending']])
@@ -443,6 +345,111 @@ class UserSearch extends User
         #print_r($query->createCommand()->getRawSql());
         // add conditions that should always apply here
 
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'status' => $this->status,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'DOB' => $this->DOB,
+            'Time_of_Birth' => $this->Time_of_Birth,
+            'Age' => $this->Age,
+            'Marital_Status' => $this->Marital_Status,
+            'iReligion_ID' => $this->iReligion_ID,
+            'iEducationLevelID' => $this->iEducationLevelID,
+            'iEducationFieldID' => $this->iEducationFieldID,
+            'iWorkingWithID' => $this->iWorkingWithID,
+            'iWorkingAsID' => $this->iWorkingAsID,
+            'iAnnualIncomeID' => $this->iAnnualIncomeID,
+            'iCommunity_ID' => $this->iCommunity_ID,
+            'iSubCommunity_ID' => $this->iSubCommunity_ID,
+            'iDistrictID' => $this->iDistrictID,
+            'iGotraID' => $this->iGotraID,
+            'iMaritalStatusID' => $this->iMaritalStatusID,
+            'iTalukaID' => $this->iTalukaID,
+            'iCountryId' => $this->iCountryId,
+            'iStateId' => $this->iStateId,
+            'iCityId' => $this->iCityId,
+            'noc' => $this->noc,
+            'iHeightID' => $this->iHeightID,
+            'iFatherStatusID' => $this->iFatherStatusID,
+            'iMotherStatusID' => $this->iMotherStatusID,
+            'iFatherWorkingAsID' => $this->iFatherWorkingAsID,
+            'iMotherWorkingAsID' => $this->iMotherWorkingAsID,
+            'nob' => $this->nob,
+            'nos' => $this->nos,
+            'iCountryCAId' => $this->iCountryCAId,
+            'iStateCAId' => $this->iStateCAId,
+            'iDistrictCAID' => $this->iDistrictCAID,
+            'iTalukaCAID' => $this->iTalukaCAID,
+            'iCityCAId' => $this->iCityCAId,
+            'completed_step' => $this->completed_step,
+        ]);
+
+        $query->andFilterWhere(['like', 'auth_key', $this->auth_key])
+            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
+            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'Registration_Number', $this->Registration_Number])
+            ->andFilterWhere(['like', 'Mobile', $this->Mobile])
+            ->andFilterWhere(['like', 'Profile_created_for', $this->Profile_created_for])
+            ->andFilterWhere(['like', 'First_Name', $this->First_Name])
+            ->andFilterWhere(['like', 'Last_Name', $this->Last_Name])
+            ->andFilterWhere(['like', 'Gender', $this->Gender])
+            ->andFilterWhere(['like', 'Birth_Place', $this->Birth_Place])
+            ->andFilterWhere(['like', 'eFirstVerificationMailStatus', $this->eFirstVerificationMailStatus])
+            ->andFilterWhere(['like', 'toc', $this->toc])
+            ->andFilterWhere(['like', 'county_code', $this->county_code])
+            ->andFilterWhere(['like', 'vAreaName', $this->vAreaName])
+            ->andFilterWhere(['like', 'cnb', $this->cnb])
+            ->andFilterWhere(['like', 'vSkinTone', $this->vSkinTone])
+            ->andFilterWhere(['like', 'vBodyType', $this->vBodyType])
+            ->andFilterWhere(['like', 'vSmoke', $this->vSmoke])
+            ->andFilterWhere(['like', 'vDrink', $this->vDrink])
+            ->andFilterWhere(['like', 'vSpectaclesLens', $this->vSpectaclesLens])
+            ->andFilterWhere(['like', 'vDiet', $this->vDiet])
+            ->andFilterWhere(['like', 'tYourSelf', $this->tYourSelf])
+            ->andFilterWhere(['like', 'vDisability', $this->vDisability])
+            ->andFilterWhere(['like', 'propic', $this->propic])
+            ->andFilterWhere(['like', 'pin_email_vaerification', $this->pin_email_vaerification])
+            ->andFilterWhere(['like', 'eSameAddress', $this->eSameAddress])
+            ->andFilterWhere(['like', 'vAreaNameCA', $this->vAreaNameCA])
+            ->andFilterWhere(['like', 'vNativePlaceCA', $this->vNativePlaceCA])
+            ->andFilterWhere(['like', 'vParentsResiding', $this->vParentsResiding])
+            ->andFilterWhere(['like', 'vFamilyAffluenceLevel', $this->vFamilyAffluenceLevel])
+            ->andFilterWhere(['like', 'vFamilyType', $this->vFamilyType])
+            ->andFilterWhere(['like', 'vFamilyProperty', $this->vFamilyProperty])
+            ->andFilterWhere(['like', 'vDetailRelative', $this->vDetailRelative])
+            ->andFilterWhere(['like', 'eEmailVerifiedStatus', $this->eEmailVerifiedStatus])
+            ->andFilterWhere(['like', 'ePhoneVerifiedStatus', $this->ePhoneVerifiedStatus]);
+
+        return $dataProvider;
+    }
+
+    public function getUserList($params, $Type)
+    {
+        if ($Type == User::USER_APRROVED) {
+            $query = User::find()->where(['status' => User::STATUS_APPROVE]); //For Approveed user List
+        } else if ($Type == User::USER_IN_APPROVAL) {
+            $query = User::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK], 'eEmailVerifiedStatus' => 'Yes', 'ePhoneVerifiedStatus' => 'Yes']); // In Approval
+        } else if ($Type == User::USER_NEWLY_REGISTERED) {
+            $query = User::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK], 'eEmailVerifiedStatus' => 'No', 'ePhoneVerifiedStatus' => 'No']); // New Registered user.
+        }
+
+        #echo $query->createCommand()->sql;exit;
+        #print_r($query->createCommand()->getRawSql());
+        // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

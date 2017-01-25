@@ -162,12 +162,24 @@ class UserController extends Controller
      * Lists all User models.
      * @return mixed
      */
-    public function actionUseractive()
+    public function actionNewRegistered()
     {
         $searchModel = new UserSearch();
-        $dataProvider = $searchModel->searchActive(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->getUserList(Yii::$app->request->queryParams, User::USER_NEWLY_REGISTERED);
 
-        return $this->render('useractive', [
+        return $this->render('usernewregister', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'UserType' => User::USER_NEWLY_REGISTERED,
+        ]);
+    }
+
+    public function actionInApproval()
+    {
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->getUserList(Yii::$app->request->queryParams, User::USER_IN_APPROVAL);
+
+        return $this->render('userinapproval', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -179,7 +191,7 @@ class UserController extends Controller
     public function actionUserapprove()
     {
         $searchModel = new UserSearch();
-        $dataProvider = $searchModel->searchApprove(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->getUserList(Yii::$app->request->queryParams, User::USER_APRROVED);
 
         return $this->render('userapprove', [
             'searchModel' => $searchModel,

@@ -33,6 +33,11 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const STATUS_APPROVE = 5;
     const STATUS_BLOCK = 6;
 
+    const USER_APRROVED = 'Approved';
+    const USER_NEWLY_REGISTERED = 'Newly-Registered';
+    const USER_IN_APPROVAL = 'In-Approval';
+
+
     const SCENARIO_LOGIN = 'login';
     const SCENARIO_REGISTER = 'register';
     const SCENARIO_REGISTER1 = 'register1';
