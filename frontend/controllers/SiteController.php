@@ -497,10 +497,10 @@ class SiteController extends Controller
         }
 
     }
-    public function actionAboutYourself($id='')
+
+    public function actionAboutYourself($ref = '')
     {
         if (!Yii::$app->user->isGuest) {
-            #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
             if($model = User::findOne($id)){
                 $tYourSelf_old = $model->tYourSelf;
@@ -515,13 +515,14 @@ class SiteController extends Controller
                         if ($PhotoSection || Yii::$app->user->identity->propic != '') {
                             $this->redirect(['user/photos']);
                         } else {
-                            $this->redirect(['user/photos', 'ref' => 'first']);
+                            $this->redirect(['site/about-yourself', 'ref' => 'first']);
                         }
                     }
                 }
                 return $this->render('register5',[
                     'model' => $model,
                     'CurrentStep' => 6,
+                    'ref' => $ref
                 ]);
             }else{
                 return $this->redirect(Yii::getAlias('@web'));

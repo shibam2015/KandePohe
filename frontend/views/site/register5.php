@@ -140,3 +140,40 @@ echo $this->render('/layouts/parts/_headerregister.php');
     </div>
   </div>
 </main>
+
+
+<?php
+if ($ref == 'first') { ?>
+  <div class="modal fade" id="first" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <p class="text-center mrg-bt-10">
+        <img src="<?= \common\components\CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+      </p>
+
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <h2 class="text-center"><?= Yii::$app->params['titleInformation'] ?></h2>
+        </div>
+        <div class="modal-body text-center">
+          <div class="row">
+            <?= Yii::$app->params['firstPhotoPagePopup'] ?>
+          </div>
+          <div class="row">
+            <div class="col-md-12 ">
+              <?= html::a('Continue ', ['user/dashboard'], ['class' => 'btn btn-primary mrg-tp-10']) ?>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <?php
+  $this->registerJs('
+            $("#first").modal("toggle");
+
+    ');
+} ?>
