@@ -1464,7 +1464,7 @@ class UserController extends Controller
         $temp = array();
         if (Yii::$app->request->post() && (Yii::$app->request->post('save') == 'PHONE_NUMBER_CHANGE')) {
             $show = true;
-            $OldNumber = $model->county_code . $model->Mobile;
+            $OldNumber = $model->new_county_code . $model->new_phone_no;
             $OldCountryCode = $model->county_code;
             $OldMobileNo = $model->Mobile;
             $NewCountryCode = Yii::$app->request->post('User')['county_code'];

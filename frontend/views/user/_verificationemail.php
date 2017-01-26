@@ -131,18 +131,31 @@ use yii\widgets\Pjax;
             <?php
             if ($model->eEmailVerifiedStatus == 'Yes' && $model->email_pin == '') {
                 if ($popup) {
+                    if ($model->eEmailVerifiedStatus == 'Yes' && $model->ePhoneVerifiedStatus == 'Yes') {
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification("S", "VERIFICATION_COMPLETED");
+                        $this->registerJs('
+                            notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
+                            setTimeout(function(){
+                                $(".modal").modal("hide");
+                                }, 4000);
+                            ');
+                    } else {
+
+                    }
                     list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'EMAIL_VERIFICATION');
-                    $this->registerJs(' 
+                    $this->registerJs('
                        notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
-                       setTimeout(function(){ 
-                          $(".modal").modal("hide");                                      
+                       setTimeout(function(){
+                          $(".modal").modal("hide");
                        }, 4000);
 
                     ');
+
                     if ($model->eEmailVerifiedStatus == 'Yes' && $model->ePhoneVerifiedStatus == 'Yes') {
                         $this->registerJs(' 
                                $(".modal").on("hidden.bs.modal", function (e) {
-                                        window.location = "' . Yii::$app->homeUrl . 'user/dashboard?type=' . base64_encode("VERIFICATION-DONE") . '";                         
+                                        //window.location = "' . Yii::$app->homeUrl . 'user/dashboard?type=' . base64_encode("VERIFICATION-DONE") . '";
+                                        window.location = "' . Yii::$app->homeUrl . 'user/dashboard";
                                })
 
                         ');

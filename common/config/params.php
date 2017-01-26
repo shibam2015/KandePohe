@@ -86,5 +86,6 @@ return [
     'deleteProfileMessage' => 'Are you sure you want to delete your profile?',
     'deleteProfileNote' => 'Deleting your account will disable your Profile. Some information may still be visible to others,
                         such as your name in their Inbox list and messages that you\'ve sent.',
+    'validationDone' => 'VERIFICATION-DONE',
 ];
 

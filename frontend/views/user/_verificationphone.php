@@ -143,19 +143,29 @@ use yii\widgets\Pjax;
             <?php
             if ($model->ePhoneVerifiedStatus == 'Yes' && $model->phone_pin == '') {
                 if ($popup) {
-                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHONE_VERIFICATION');
-                    $this->registerJs(' 
-                       notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
-                       setTimeout(function(){ 
-                           $(".modal").modal("hide");                                      
-                       }, 4000);
-                        
-                    ');
-
                     if ($model->eEmailVerifiedStatus == 'Yes' && $model->ePhoneVerifiedStatus == 'Yes') {
-                        $this->registerJs(' 
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification("S", "VERIFICATION_COMPLETED");
+                        $this->registerJs('
+                            notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
+                            setTimeout(function(){
+                                $(".modal").modal("hide");
+                                }, 4000);
+                            ');
+
+                    } else {
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PHONE_VERIFICATION');
+                        $this->registerJs('
+                            notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
+                            setTimeout(function(){
+                                $(".modal").modal("hide");
+                                }, 4000);
+                            ');
+                    }
+                    if ($model->eEmailVerifiedStatus == 'Yes' && $model->ePhoneVerifiedStatus == 'Yes') {
+                        $this->registerJs('
                                $(".modal").on("hidden.bs.modal", function (e) {
-                                        window.location = "' . Yii::$app->homeUrl . 'user/dashboard?type=' . base64_encode("VERIFICATION-DONE") . '";                         
+                                        //window.location = "' . Yii::$app->homeUrl . 'user/dashboard?type=' . base64_encode("'.Yii::$app->params['validationDone'].'") . '";
+                                        window.location = "' . Yii::$app->homeUrl . 'user/dashboard";
                                })
 
                         ');
@@ -168,6 +178,7 @@ use yii\widgets\Pjax;
 <?php
 
 $this->registerJs('
+
     function getInlineDetail(url,htmlId,type){
         $.ajax({
         url : url,
