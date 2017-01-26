@@ -179,8 +179,13 @@ if (!Yii::$app->user->isGuest) {
                                         <div class="radical-progress-wrapper">
                                             <div class="panel-body">
                                                 <h3 class="heading-xs">Profile Status</h3>
+
+                                                <div class="pie_progress mrg-tp-10" role="progressbar" data-goal="33">
+                                                    <div class="pie_progress__number">0%</div>
+                                                    <div class="pie_progress__label">Complete</div>
+                                                </div>
                                                 <?php if ($PROFILE_COMPLETENESS < 100) { ?>
-                                                    <div class="radial-progress" data-progress="0">
+                                                    <!--<div class="radial-progress" data-progress="0">
                                                         <div class="circle">
                                                             <div class="mask full">
                                                                 <div class="fill"></div>
@@ -195,13 +200,13 @@ if (!Yii::$app->user->isGuest) {
                                                             <div class="percentage">
                                                                 <div class="numbers">
                                                                     <span>-</span><span>0% Complete</span>
-                                                                    <?php for ($i = 1; $i <= 100; $i++) { ?>
-                                                                        <span><?= $i ?>% Complete</span>
-                                                                    <?php } ?>
+                                                                    <?php /*for ($i = 1; $i <= 100; $i++) { */ ?>
+                                                                        <span><? /*= $i */ ?>% Complete</span>
+                                                                    <?php /*} */ ?>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div>-->
                                                     <div class="text-center">
                                                         <p>Complete your profile for better search results</p>
                                                     </div>
@@ -980,8 +985,32 @@ $this->registerJs('
 <?php #For Profile Photo Start
 require_once __DIR__ . '/_photosection.php';
 ?>
-    <link href='<?= Yii::$app->request->baseUrl ?>/plugings/cropping/imgareaselect.css' rel='stylesheet'
-          type='text/css'>
+<link href='<?= Yii::$app->request->baseUrl ?>/plugings/cropping/imgareaselect.css' rel='stylesheet' type='text/css'>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.imgareaselect.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.form.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <?php #For Profile Photo END ?>
+
+<link href='<?= Yii::$app->request->baseUrl ?>/plugings/meter/css/asPieProgress.css' rel='stylesheet' type='text/css'>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/meter/js/jquery-asPieProgress.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php
+$this->registerJs("
+$('.pie_progress').asPieProgress({
+        namespace: 'pie_progress'
+      });
+	  $('.pie_progress').asPieProgress('go', PRO_COMP+'%');
+    ");
+?>
+<style type="text/css">
+
+    .pie_progress {
+        width: 160px;
+        margin: 10px auto;
+    }
+
+    @media all and (max-width: 768px) {
+        .pie_progress {
+            width: 80%;
+            max-width: 300px;
+        }
+    }
+</style>

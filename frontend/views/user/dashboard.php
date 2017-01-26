@@ -345,7 +345,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                 <!-- profile status -->
                                 <div class="bg-white">
                                     <?php if ($PROFILE_COMPLETENESS < 100) { ?>
-                                        <div class="radial-progress pull-right" data-progress="0">
+                                        <!--<div class="radial-progress pull-right" data-progress="0">
                                             <div class="circle">
                                                 <div class="mask full">
                                                     <div class="fill"></div>
@@ -361,29 +361,43 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     <div class="numbers">
                                                         <span>-</span>
                                                         <span>0% Complete</span>
-                                                        <?php for ($i = 1; $i <= 100; $i++) { ?>
-                                                            <span><?= $i ?>% Complete</span>
-                                                        <?php } ?>
+                                                        <?php /*for ($i = 1; $i <= 100; $i++) { */ ?>
+                                                            <span><? /*= $i */ ?>% Complete</span>
+                                                        <?php /*} */ ?>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     <?php } ?>
-                                    <div class="fb-profile-text">
-                                        <h1 class="user-name"><?= $model->First_Name . ' ' . $model->Last_Name; ?>
-                                            <span class="sub-text">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="fb-profile-text">
+                                                <h1 class="user-name"><?= $model->First_Name . ' ' . $model->Last_Name; ?>
+                                                    <span class="sub-text">
                           (<?= ($model->Registration_Number != '') ? $model->Registration_Number : '-'; ?>)
                         </span>
-                                        </h1>
-                                        <?php if ($PROFILE_COMPLETENESS < 100) { ?>
-                                            <h5 class="user-line mrg-tp-20">Add more details to get better
-                                                visibility</h5>
-                                            <div class="ad-title mrg-tp-10"><a href="<?= $HOME_URL ?>user/my-profile">Complete
-                                                    your Profile
-                                                    Now!</a></div>
-                                        <?php } else { ?>
-                                            <div class="notice kp_success"><p>Your Profile 100% completed.</p></div>
-                                        <?php } ?>
+                                                </h1>
+                                                <?php if ($PROFILE_COMPLETENESS < 100) { ?>
+                                                    <h5 class="user-line mrg-tp-20">Add more details to get better
+                                                        visibility</h5>
+                                                    <div class="ad-title mrg-tp-10"><a
+                                                            href="<?= $HOME_URL ?>user/my-profile">Complete
+                                                            your Profile
+                                                            Now!</a></div>
+                                                <?php } else { ?>
+                                                    <div class="notice kp_success"><p>Your Profile 100% completed.</p>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="pie_progress" role="progressbar" data-goal="33">
+                                                <div class="pie_progress__number">0%</div>
+                                                <div class="pie_progress__label">Complete</div>
+                                            </div>
+                                            <!--<div class="progress-bar position" data-percent="<? /*=$PROFILE_COMPLETENESS*/ ?>" data-duration="2000" data-color="#ccc,#ff517d"></div>-->
+
+                                        </div>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -877,15 +891,37 @@ $(document).on("click",".a_b_d",function(e){
 
 ');
 ?>
-
-
 <?php require_once __DIR__ . '/_useroperation.php'; ?>
 
 <?php #For Profile Photo Start
 require_once __DIR__ . '/_photosection.php';
 ?>
-    <link href='<?= Yii::$app->request->baseUrl ?>/plugings/cropping/imgareaselect.css' rel='stylesheet'
-          type='text/css'>
+<link href='<?= Yii::$app->request->baseUrl ?>/plugings/cropping/imgareaselect.css' rel='stylesheet' type='text/css'>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.imgareaselect.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.form.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <?php #For Profile Photo END ?>
+
+<link href='<?= Yii::$app->request->baseUrl ?>/plugings/meter/css/asPieProgress.css' rel='stylesheet' type='text/css'>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/meter/js/jquery-asPieProgress.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php
+$this->registerJs("
+$('.pie_progress').asPieProgress({
+        namespace: 'pie_progress'
+      });
+	  $('.pie_progress').asPieProgress('go', PRO_COMP+'%');
+    ");
+?>
+<style type="text/css">
+
+    .pie_progress {
+        width: 160px;
+        margin: 10px auto;
+    }
+
+    @media all and (max-width: 768px) {
+        .pie_progress {
+            width: 80%;
+            max-width: 300px;
+        }
+    }
+</style>
