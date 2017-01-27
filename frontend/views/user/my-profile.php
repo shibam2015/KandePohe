@@ -287,8 +287,8 @@ if (!Yii::$app->user->isGuest) {
                                                                    data-toggle="tab">Partner Preferences</a></li>
                                         <li role="presentation"><a href="#tab3" aria-controls="profile" role="tab"
                                                                    data-toggle="tab"> Contact Details</a></li>
-                                        <li role="presentation"><a href="#tab4" aria-controls="profile" role="tab"
-                                                                   data-toggle="tab"> Hobby / Interest</a></li>
+                                        <!--<li role="presentation"><a href="#tab4" aria-controls="profile" role="tab"
+                                                                   data-toggle="tab"> Hobby / Interest</a></li>-->
                                     </ul>
                                     <!-- Tab panes -->
                                     <?php Pjax::begin(['id' => 'refresh_index']); ?>
@@ -430,6 +430,26 @@ if (!Yii::$app->user->isGuest) {
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
+
+                                            <div class="inner-block">
+                                                <div class="profile-edit pull-right">
+                                                    <ul class="list-inline major-control">
+                                                        <li role="presentation"><a href="javascript:void(0)"
+                                                                                   class="edit_hobby"
+                                                                                   attr-name="my_info"><i
+                                                                    class="fa fa-pencil"></i> Edit</a></li>
+                                                    </ul>
+                                                </div>
+                                                <h3><span class="heading-icons icon2"></span> Hobby/Interest</h3>
+                                                <?php Pjax::begin(['id' => 'my_hobby', 'enablePushState' => false]); ?>
+                                                <div class="div_hobby">
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Hobby/Interest
+                                                    Information Loading...
+                                                </div>
+                                                <?php Pjax::end(); ?>
+                                            </div>
+
+
                                         </div>
 
 
@@ -494,6 +514,7 @@ if (!Yii::$app->user->isGuest) {
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
+
                                             <div class="profile-edit pull-right">
                                                 <ul class="list-inline major-control">
                                                     <li role="presentation"><a href="javascript:void(0)"
@@ -536,7 +557,7 @@ if (!Yii::$app->user->isGuest) {
 
                                             </dl>
                                         </div>
-                                        <div role="tabpanel" class="tab-pane" id="tab4">
+                                        <!--<div role="tabpanel" class="tab-pane" id="tab4">
                                             <div class="profile-edit pull-right">
                                                 <ul class="list-inline major-control">
                                                     <li role="presentation"><a href="javascript:void(0)"
@@ -559,7 +580,7 @@ if (!Yii::$app->user->isGuest) {
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
