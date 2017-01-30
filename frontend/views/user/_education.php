@@ -29,26 +29,26 @@ use yii\helpers\ArrayHelper;
             <?= $form->errorSummary($model, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
             <?= $form->field($model, 'iEducationLevelID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getEducationLevel(), 'iEducationLevelID', 'vEducationLevelName'),
-                ['class' => 'demo-default select-beast', 'prompt' => 'Education Level']
+                ['class' => 'demo-default select-beast clseducation', 'prompt' => 'Education Level']
             ); ?>
 
             <?= $form->field($model, 'iEducationFieldID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getEducationField(), 'iEducationFieldID', 'vEducationFieldName'),
-                ['class' => 'demo-default select-beast', 'prompt' => 'Education Field']
+                ['class' => 'demo-default select-beast clseducation', 'prompt' => 'Education Field']
             ); ?>
 
             <?= $form->field($model, 'iWorkingWithID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getWorkingWith(), 'iWorkingWithID', 'vWorkingWithName'),
-                ['class' => 'demo-default select-beast', 'prompt' => 'Working with']
+                ['class' => 'demo-default select-beast clseducation', 'prompt' => 'Working with']
             ); ?>
 
             <?= $form->field($model, 'iWorkingAsID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getWorkingAS(), 'iWorkingAsID', 'vWorkingAsName'),
-                ['class' => 'demo-default select-beast', 'prompt' => 'Working As']
+                ['class' => 'demo-default select-beast clseducation', 'prompt' => 'Working As']
             ); ?>
             <?= $form->field($model, 'iAnnualIncomeID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getAnnualIncome(), 'iAnnualIncomeID', 'vAnnualIncome'),
-                ['class' => 'demo-default select-beast', 'prompt' => 'Annual Income']
+                ['class' => 'demo-default select-beast clseducation', 'prompt' => 'Annual Income']
             ); ?>
 
             <div class="row">
@@ -70,7 +70,7 @@ use yii\helpers\ArrayHelper;
             </div>
             <?php ActiveForm::end();
             $this->registerJs('
-                  selectbox();
+                  selectboxClassWise("clseducation");
              ');
         } else {
             ?>

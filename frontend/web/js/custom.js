@@ -571,7 +571,6 @@ $(document).on('mouseover', '.hovertool', function (e) {
 });
 
 function selectbox() {
-    //alert("in");
     $(".select-beast").selectize({
         sortField: {
             field: "text",
@@ -579,7 +578,15 @@ function selectbox() {
         }
     });
 }
-
+selectbox();
+function selectboxClassWise(classname) {
+    $("." + classname).selectize({
+        sortField: {
+            field: "text",
+            direction: "asc"
+        }
+    });
+}
 function phoneExist() {
     //phone-change-model
     // $("#phone-change-model").modal("show");

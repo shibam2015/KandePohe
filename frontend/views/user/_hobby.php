@@ -33,7 +33,7 @@ use yii\helpers\ArrayHelper;
                 <label class="control-label col-sm-3 col-xs-3" for="user-interestid">Interest</label>
 
                 <div class="col-sm-8 col-xs-8">
-                    <select id="select-state" multiple class="demo-default select-beast "
+                    <select id="select-state" multiple class="demo-default select-beast clhobby"
                             placeholder="Select an Interest" name="User[InterestID][]" size="4">
                         <?php if ($model->InterestID) {
                             $UserInterestArray = explode(",", CommonHelper::removeComma($model->InterestID));
@@ -53,7 +53,7 @@ use yii\helpers\ArrayHelper;
                 <label class="control-label col-sm-3 col-xs-3" for="user-favioritereadid">Favourite Reads</label>
 
                 <div class="col-sm-8 col-xs-8">
-                    <select id="select-state" multiple class="demo-default select-beast "
+                    <select id="select-state" multiple class="demo-default select-beast clhobby "
                             placeholder="Select a Favourite Reads" name="User[FavioriteReadID][]" size="4">
                         <?php if ($model->FavioriteReadID) {
                             $UserFavReadsArray = explode(",", CommonHelper::removeComma($model->FavioriteReadID));
@@ -73,7 +73,7 @@ use yii\helpers\ArrayHelper;
                 <label class="control-label col-sm-3 col-xs-3" for="user-faviouritemusicid">Favourite Music</label>
 
                 <div class="col-sm-8 col-xs-8">
-                    <select id="select-state" multiple class="demo-default select-beast "
+                    <select id="select-state" multiple class="demo-default select-beast clhobby"
                             placeholder="Select a Favourite Music" name="User[FaviouriteMusicID][]" size="4">
                         <?php if ($model->FaviouriteMusicID) {
                             $UserFavMusicArray = explode(",", CommonHelper::removeComma($model->FaviouriteMusicID));
@@ -93,7 +93,7 @@ use yii\helpers\ArrayHelper;
                 <label class="control-label col-sm-3 col-xs-3" for="user-favouritecousinesid">Favourite Cousines</label>
 
                 <div class="col-sm-8 col-xs-8">
-                    <select id="select-state" multiple class="demo-default select-beast "
+                    <select id="select-state" multiple class="demo-default select-beast clhobby"
                             placeholder="Select a Favourite Cousine" name="User[FavouriteCousinesID][]" size="4">
                         <?php if ($model->FavouriteCousinesID) {
                             $UserFavCousinArray = explode(",", CommonHelper::removeComma($model->FavouriteCousinesID));
@@ -114,7 +114,7 @@ use yii\helpers\ArrayHelper;
                     Activities</label>
 
                 <div class="col-sm-8 col-xs-8">
-                    <select id="select-state" multiple class="demo-default select-beast "
+                    <select id="select-state" multiple class="demo-default select-beast clhobby"
                             placeholder="Select a Sports Fitness Activities" name="User[SportsFittnessID][]" size="4">
                         <?php if ($model->SportsFittnessID) {
                             $UserSportFitnessArray = explode(",", CommonHelper::removeComma($model->SportsFittnessID));
@@ -134,7 +134,7 @@ use yii\helpers\ArrayHelper;
                 <label class="control-label col-sm-3 col-xs-3" for="user-preferreddressid">Preferred Dress Style</label>
 
                 <div class="col-sm-8 col-xs-8">
-                    <select id="select-state" multiple class="demo-default select-beast "
+                    <select id="select-state" multiple class="demo-default select-beast clhobby"
                             placeholder="Select a Preferred Dress Style" name="User[PreferredDressID][]" size="4">
                         <?php if ($model->PreferredDressID) {
                             $UserPreferredDressArray = explode(",", CommonHelper::removeComma($model->PreferredDressID));
@@ -154,7 +154,7 @@ use yii\helpers\ArrayHelper;
                 <label class="control-label col-sm-3 col-xs-3" for="user-preferredmovieid">Preferred Movie</label>
 
                 <div class="col-sm-8 col-xs-8">
-                    <select id="select-state" multiple class="demo-default select-beast "
+                    <select id="select-state" multiple class="demo-default select-beast clhobby"
                             placeholder="Select a Preferred Movie" name="User[PreferredMovieID][]" size="4">
                         <?php if ($model->PreferredMovieID) {
                             $UserPreferredMovieArray = explode(",", CommonHelper::removeComma($model->PreferredMovieID));
@@ -188,7 +188,7 @@ use yii\helpers\ArrayHelper;
             </div>
             <?php ActiveForm::end();
             $this->registerJs('
-                    selectbox();
+                    selectboxClassWise("clhobby");
          ');
             # $this->registerCssFile(Yii::$app->request->baseUrl . '/plugings/select2/select2.min.css');
             # $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/select2/select2.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);

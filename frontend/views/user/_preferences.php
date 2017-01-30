@@ -38,7 +38,7 @@ use yii\helpers\ArrayHelper;
         <?= $form->errorSummary([$PartenersReligion], ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
         <?= $form->field($PartenersReligion, 'iReligion_ID')->dropDownList(
             ArrayHelper::map(CommonHelper::getReligion(), 'iReligion_ID', 'vName'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Religion']
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Religion']
         ); ?>
         <?php
         $heightrange = range(134, 204);
@@ -46,20 +46,20 @@ use yii\helpers\ArrayHelper;
         ?>
         <?= $form->field($UPP, 'age_from')->dropDownList(
             array_combine($range, $range),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Age From']
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Age From']
         ); ?>
 
         <?= $form->field($UPP, 'age_to')->dropDownList(
             array_combine($range, $range),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Age To']
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Age To']
         ); ?>
         <?= $form->field($UPP, 'height_from')->dropDownList(
             ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Height From']
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Height From']
         ); ?>
         <?= $form->field($UPP, 'height_to')->dropDownList(
             ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Height To']
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Height To']
         ); ?>
 
 
@@ -70,43 +70,43 @@ use yii\helpers\ArrayHelper;
 
         <?= $form->field($PartnersMaritalStatus, 'iMarital_Status_ID')->dropDownList(
             ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Maritial Status']
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Maritial Status']
         ); ?>
 
         <?= $form->field($PartnersMothertongue, 'iMothertongue_ID')->dropDownList(
             ArrayHelper::map(CommonHelper::getMotherTongue(), 'ID', 'Name'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Mother Toungue']
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Mother Toungue']
         ); ?>
 
         <?= $form->field($PartnersCommunity, 'iCommunity_ID')->dropDownList(
             ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Community']
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Community']
         ); ?>
         <?= $form->field($PartnersSubCommunity, 'iSub_Community_ID')->dropDownList(
             ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Sub Community']
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Sub Community']
         ); ?>
 
         <?= $form->field($PartnersRaashi, 'raashi_id')->dropDownList(
             ArrayHelper::map(CommonHelper::getRaashi(), 'ID', 'Name'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Raashi']
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Raashi']
         ); ?>
 
         <?= $form->field($PartnersCharan, 'charan_id')->dropDownList(
             ArrayHelper::map(CommonHelper::getCharan(), 'ID', 'Name'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Charan']
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Charan']
         ); ?>
         <?= $form->field($PartnersNakshtra, 'nakshtra_id')->dropDownList(
             ArrayHelper::map(CommonHelper::getNaksatra(), 'ID', 'Name'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Nakshtra']
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Nakshtra']
         ); ?>
         <?= $form->field($PartnersNadi, 'nadi_id')->dropDownList(
             ArrayHelper::map(CommonHelper::getNadi(), 'ID', 'Name'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Nadi']
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Nadi']
         ); ?>
         <?= $form->field($PartnersGotra, 'iGotra_ID')->dropDownList(
             ArrayHelper::map(CommonHelper::getGotra(), 'iGotraID', 'vName'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Gotra']
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Gotra']
         ); ?>
 
 
@@ -166,7 +166,7 @@ use yii\helpers\ArrayHelper;
         </div>
         <?php ActiveForm::end();
         $this->registerJs('
-          selectbox();
+          selectboxClassWise("clspreferences");
          ');
     } else {
         ?>

@@ -63,17 +63,17 @@ use yii\helpers\Url;
         ?>
         <?= $form->field($model, 'Profile_created_for')->dropDownList(
             ['BRIDE' => 'BRIDE', 'GROOM' => 'GROOM', 'SELF' => 'SELF'],
-            ['class' => 'demo-default select-beast', 'prompt' => 'Profile For']
+            ['class' => 'demo-default select-beast clspersonalinfo', 'prompt' => 'Profile For']
         ); ?>
         <?= $form->field($model, 'county_code')->dropDownList(
             ['+91' => '+91'],
-            ['class' => 'demo-default select-beast', 'prompt' => 'Country Code']
+            ['class' => 'demo-default select-beast clspersonalinfo', 'prompt' => 'Country Code']
         )
         ?>
         <?= $form->field($model, 'Mobile')->input('text') ?>
         <?= $form->field($model, 'mother_tongue')->dropDownList(
             ArrayHelper::map(CommonHelper::getMotherTongue(), 'ID', 'Name'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Mother Tongue']
+            ['class' => 'demo-default select-beast clspersonalinfo', 'prompt' => 'Mother Tongue']
         ); ?>
         <div class="row">
             <div class="col-md-4 col-md-offset-2">
@@ -95,7 +95,7 @@ use yii\helpers\Url;
         <?php ActiveForm::end();
 
         $this->registerJs('
-          selectbox();
+          selectboxClassWise("clspersonalinfo");
          ');
         $this->registerJs('
         $(".genderV").on("change",function(e){

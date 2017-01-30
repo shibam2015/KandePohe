@@ -37,23 +37,23 @@ use yii\helpers\ArrayHelper;
         <?= $form->errorSummary($model, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
         <?= $form->field($model, 'RaashiId')->dropDownList(
             ArrayHelper::map(CommonHelper::getRaashi(), 'ID', 'Name'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Raashi']
+            ['class' => 'demo-default select-beast clshoroscope', 'prompt' => 'Raashi']
         ); ?>
         <?= $form->field($model, 'NakshtraId')->dropDownList(
             ArrayHelper::map(CommonHelper::getNaksatra(), 'ID', 'Name'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Nakshtra']
+            ['class' => 'demo-default select-beast clshoroscope', 'prompt' => 'Nakshtra']
         ); ?>
         <?= $form->field($model, 'CharanId')->dropDownList(
             ArrayHelper::map(CommonHelper::getCharan(), 'ID', 'Name'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Charan']
+            ['class' => 'demo-default select-beast clshoroscope', 'prompt' => 'Charan']
         ); ?>
         <?= $form->field($model, 'NadiId')->dropDownList(
             ArrayHelper::map(CommonHelper::getNadi(), 'ID', 'Name'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Nadi']
+            ['class' => 'demo-default select-beast clshoroscope', 'prompt' => 'Nadi']
         ); ?>
         <?= $form->field($model, 'iGotraID')->dropDownList(
             ArrayHelper::map(CommonHelper::getMasterGotra(), 'iGotraID', 'vName'),
-            ['class' => 'demo-default select-beast', 'prompt' => 'Gotra']
+            ['class' => 'demo-default select-beast clshoroscope', 'prompt' => 'Gotra']
         ); ?>
         <?= $form->field($model, 'Mangalik')->RadioList(
             ['Yes' => 'Yes', 'No' => 'No'],
@@ -87,7 +87,7 @@ use yii\helpers\ArrayHelper;
         </div>
         <?php ActiveForm::end();
         $this->registerJs('
-          selectbox();
+          selectboxClassWise("clshoroscope");
          ');
     } else {
         ?>

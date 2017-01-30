@@ -39,7 +39,7 @@ if ($show) {
     <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
     <?= $form->field($model, 'iHeightID')->dropDownList(
         ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
-        ['class' => 'demo-default select-beast', 'prompt' => 'Height']
+        ['class' => 'demo-default select-beast clslifestyle', 'prompt' => 'Height']
     ); ?>
     <?= $form->field($model, 'vSkinTone')->RadioList(
         ArrayHelper::map(CommonHelper::getSkinTone(), 'ID', 'Name'),
@@ -104,7 +104,7 @@ if ($show) {
 
     <?= $form->field($model, 'vDiet')->dropDownList(
         ArrayHelper::map(CommonHelper::getDiet(), 'iDietID', 'vName'),
-        ['class' => 'demo-default select-beast', 'prompt' => 'Diet']
+        ['class' => 'demo-default select-beast clslifestyle', 'prompt' => 'Diet']
     ); ?>
 
     <?= $form->field($model, 'weight')->input('number') ?>
@@ -127,7 +127,7 @@ if ($show) {
     </div>
     <?php ActiveForm::end();
     $this->registerJs('
-                  selectbox();
+                  selectboxClassWise("clslifestyle");
              ');
 } else {
     ?>

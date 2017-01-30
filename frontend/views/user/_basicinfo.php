@@ -30,24 +30,24 @@ if ($show) {
     <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
     <?= $form->field($model, 'iReligion_ID')->dropDownList(
         ArrayHelper::map(CommonHelper::getReligion(), 'iReligion_ID', 'vName'),
-        ['class' => 'demo-default select-beast', 'prompt' => 'Religion']
+        ['class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'Religion']
     ); ?>
     <?= $form->field($model, 'iCommunity_ID')->dropDownList(
         ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
-        ['class' => 'demo-default select-beast', 'prompt' => 'Community']
+        ['class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'Community']
     ); ?>
     <?= $form->field($model, 'iSubCommunity_ID')->dropDownList(
         ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
-        ['class' => 'demo-default select-beast', 'prompt' => 'Sub Community']
+        ['class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'Sub Community']
     ); ?>
     <?= $form->field($model, 'iGotraID')->dropDownList(
         ArrayHelper::map(CommonHelper::getGotra(), 'iGotraID', 'vName'),
-        ['class' => 'demo-default select-beast', 'prompt' => 'Gotra']
+        ['class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'Gotra']
     ); ?>
     <?= $form->field($model, 'iMaritalStatusID')->dropDownList(
         ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
         ['prompt' => 'Maritial Status',
-            'class' => 'demo-default select-beast',
+            'class' => 'demo-default select-beast clsbasicinfo',
             'onchange' => '
                         var iMaritalStatusID = $(this).val();
                         if(iMaritalStatusID == "4" || iMaritalStatusID == "5"){
@@ -73,7 +73,7 @@ if ($show) {
     </div>
     <?= $form->field($model, 'iCountryId')->dropDownList(
         ArrayHelper::map(CommonHelper::getCountry(), 'iCountryId', 'vCountryName'),
-        ['prompt' => 'Country', 'class' => 'demo-default select-beast',
+        ['prompt' => 'Country', 'class' => 'demo-default select-beast clsbasicinfo',
             'onchange' => '
                                 $.post( "' . Yii::$app->urlManager->createUrl('ajax/getstate?id=') . '"+$(this).val(), function( data ) {
                                   $( "select#iStateId" ).html( data );
@@ -91,7 +91,7 @@ if ($show) {
     <?= $form->field($model, 'iStateId')->dropDownList(
         $stateList,
         ['id' => 'iStateId',
-            'prompt' => 'State', 'class' => 'demo-default select-beast',
+            'prompt' => 'State', 'class' => 'demo-default select-beast clsbasicinfo',
             'onchange' => '
                                 $.post( "' . Yii::$app->urlManager->createUrl('ajax/getcity?id=') . '"+$(this).val(), function( data ) {
                                   $( "select#iCityId" ).html( data );
@@ -108,17 +108,17 @@ if ($show) {
     ?>
     <?= $form->field($model, 'iCityId')->dropDownList(
         $cityList,
-        ['id' => 'iCityId', 'class' => 'demo-default select-beast', 'prompt' => 'City']
+        ['id' => 'iCityId', 'class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'City']
     ); ?>
 
     <?= $form->field($model, 'iDistrictID')->dropDownList(
         ArrayHelper::map(CommonHelper::getDistrict(), 'iDistrictID', 'vName'),
-        ['class' => 'demo-default select-beast', 'prompt' => 'District']
+        ['class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'District']
     ); ?>
 
     <?= $form->field($model, 'iTalukaID')->dropDownList(
         ArrayHelper::map(CommonHelper::getTaluka(), 'iTalukaID', 'vName'),
-        ['class' => 'demo-default select-beast', 'prompt' => 'Taluka']
+        ['class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'Taluka']
     ); ?>
 
     <?= $form->field($model, 'vAreaName')->textInput() ?>
@@ -141,7 +141,7 @@ if ($show) {
     </div>
     <?php ActiveForm::end();
     $this->registerJs('
-          selectbox();
+          selectboxClassWise("clsbasicinfo");
          ');
 } else {
     ?>
