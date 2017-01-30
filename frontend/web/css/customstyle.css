@@ -487,3 +487,11 @@ img.selected {
 textarea {
     resize: none;
 }
+
+.mrg-tb-lr {
+    margin: 5px 0;
+}
+
+.maxwd100 {
+    max-width: 100% !important;
+}

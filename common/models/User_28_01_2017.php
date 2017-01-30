@@ -8,6 +8,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use common\models\UserRequest;
+
 /**
  * User model
  *
@@ -22,7 +23,6 @@ use common\models\UserRequest;
  * @property integer $updated_at
  * @property string $password write-only password
  */
-
 class User extends \common\models\base\baseUser implements IdentityInterface
 {
     const STATUS_DELETED = 0;
@@ -215,8 +215,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return static::find()->where(['Gender' => $Gender])
             ->andWhere(['!=', 'id', $Id])
             ->andWhere(['=', 'iCityId', $PC])
-            ->andWhere(['=', 'iStateId', $PS])
-            ->andWhere(['=', 'iCountryId', $PCS])
+            ->orWhere(['=', 'iStateId', $PS])
+            ->orWhere(['=', 'iCountryId', $PCS])
             ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
             ->orderBy(['LastLoginTime' => SORT_DESC])
             ->all();
@@ -227,7 +227,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         return static::find()->where(['Gender' => $Gender])
             ->andWhere(['!=', 'id', $Id])
             ->andWhere(['=', 'iEducationLevelID', $iEducationLevelID])
-            ->andWhere(['=', 'iEducationFieldID', $iEducationFieldID])
+            ->orWhere(['=', 'iEducationFieldID', $iEducationFieldID])
             ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
             ->orderBy(['LastLoginTime' => SORT_DESC])
             ->all();
@@ -255,6 +255,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             ->orderBy(['LastLoginTime' => SORT_DESC])
             ->all();
     }
+
     public static function findRecentJoinedUserLists($Id, $Gender, $Limit = 4) # Get user list Gender Wise with limit
     {
         $sql = "select user.id,user.email,user.Registration_Number,user.propic,user.DOB,user.iHeightID, user_request.from_user_id, user_request.to_user_id,user_request.send_request_status from user
@@ -312,15 +313,6 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public static function getUserFullInfromation($Id)
     {
         return static::find()->select('*')->joinWith([countryName, stateName, cityName, height, maritalStatusName])->where(['id' => $Id])->one();
-    }
-
-    public static function findByPhoneNumber($Id, $Mobile)
-    {
-        return Static::find()
-            ->where(['Mobile' => $Mobile])
-            #->andwhere(['ePhoneVerifiedStatus' => 'Yes'])
-            ->andWhere(['!=', 'id', $Id])
-            ->all();
     }
 
     /**
@@ -405,7 +397,7 @@ characters are allowed.'
 
             self::SCENARIO_REGISTER4 => ['completed_step', 'iFatherStatusID', 'iFatherWorkingAsID', 'iMotherStatusID', 'iMotherWorkingAsID', 'nob', 'NobM', 'NosM', 'nos', 'eSameAddress', 'iCountryCAId', 'iStateCAId', 'iDistrictCAID', 'iTalukaCAID', 'vAreaNameCA', 'iCityCAId', 'vNativePlaceCA', 'vParentsResiding', 'vFamilyAffluenceLevel', 'vFamilyType', 'vFamilyProperty', 'vDetailRelative'],
             self::SCENARIO_REGISTER5 => ['tYourSelf', 'vDisability', 'vDisabilityDescription', 'eStatusInOwnWord'],
-            self::SCENARIO_REGISTER6 => ['propic', 'pin_email_vaerification', 'pin_phone_vaerification','pin_phone_time','pin_email_time'],
+            self::SCENARIO_REGISTER6 => ['propic', 'pin_email_vaerification', 'pin_phone_vaerification', 'pin_phone_time', 'pin_email_time'],
             self::SCENARIO_REGISTER7 => ['email_pin', 'pin_email_vaerification', 'eEmailVerifiedStatus'],
             #self::SCENARIO_REGISTER7 => ['email_pin','phone_pin','pin_email_vaerification','eEmailVerifiedStatus','pin_phone_vaerification','ePhoneVerifiedStatus'],
             self::SCENARIO_REGISTER8 => ['phone_pin', 'pin_phone_vaerification', 'ePhoneVerifiedStatus'],
@@ -452,19 +444,18 @@ characters are allowed.'
     /**
      * @inheritdoc
      */
-    public function checkDobYear($attribute,$params)
+    public function checkDobYear($attribute, $params)
     {
         $date1 = date('Y-m-d');
         $date2 = $this->DOB;
         $diff = abs(strtotime($date2) - strtotime($date1));
-        $years = floor($diff / (365*60*60*24));
+        $years = floor($diff / (365 * 60 * 60 * 24));
 
-        if($this->Gender == 'FEMALE'){
-            if($years < 18)
+        if ($this->Gender == 'FEMALE') {
+            if ($years < 18)
                 $this->addError('DOB', 'Your age should be grater than 18 Years');
-        }
-        else {
-            if($years < 21)
+        } else {
+            if ($years < 21)
                 $this->addError('DOB', 'Your age should be grater than 21 Years');
         }
 
@@ -644,7 +635,8 @@ characters are allowed.'
         $this->password_reset_token = null;
     }
 
-    public function getFullName(){
+    public function getFullName()
+    {
         return ucwords($this->First_Name . ' ' . $this->Last_Name);
     }
 
@@ -695,7 +687,7 @@ characters are allowed.'
 
     public function getCityName()
     {
-        return $this->hasOne(Cities ::className(), ['iCityId' => 'iCityId']);
+        return $this->hasOne(Cities::className(), ['iCityId' => 'iCityId']);
     }
 
     public function getCountryNameCA()
@@ -710,7 +702,7 @@ characters are allowed.'
 
     public function getCityNameCA()
     {
-        return $this->hasOne(Cities ::className(), ['iCityId' => 'iCityCAId']);
+        return $this->hasOne(Cities::className(), ['iCityId' => 'iCityCAId']);
     }
 
     public function getDistrictNameCA()
@@ -730,27 +722,27 @@ characters are allowed.'
 
     public function getEducationLevelName()
     {
-        return $this->hasOne(EducationLevel ::className(), ['iEducationLevelID' => 'iEducationLevelID']);
+        return $this->hasOne(EducationLevel::className(), ['iEducationLevelID' => 'iEducationLevelID']);
     }
 
     public function getEducationFieldName()
     {
-        return $this->hasOne(EducationField ::className(), ['iEducationFieldID' => 'iEducationFieldID']);
+        return $this->hasOne(EducationField::className(), ['iEducationFieldID' => 'iEducationFieldID']);
     }
 
     public function getWorkingWithName()
     {
-        return $this->hasOne(WorkingWith ::className(), ['iWorkingWithID' => 'iWorkingWithID']);
+        return $this->hasOne(WorkingWith::className(), ['iWorkingWithID' => 'iWorkingWithID']);
     }
 
     public function getWorkingAsName()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iWorkingAsID']);
+        return $this->hasOne(WorkingAS::className(), ['iWorkingAsID' => 'iWorkingAsID']);
     }
 
     public function getAnnualIncome()
     {
-        return $this->hasOne(AnnualIncome ::className(), ['iAnnualIncomeID' => 'iAnnualIncomeID']);
+        return $this->hasOne(AnnualIncome::className(), ['iAnnualIncomeID' => 'iAnnualIncomeID']);
     }
 
     public function getHeight()
@@ -760,31 +752,31 @@ characters are allowed.'
 
     public function getDietName()
     {
-        return $this->hasOne(MasterDiet ::className(), ['iDietID' => 'vDiet']);
+        return $this->hasOne(MasterDiet::className(), ['iDietID' => 'vDiet']);
     }
 
     public function getFatherStatus()
     {
-        $ABC = $this->hasOne(MasterFmStatus ::className(), ['iFMStatusID' => 'iFatherStatusID']);
+        $ABC = $this->hasOne(MasterFmStatus::className(), ['iFMStatusID' => 'iFatherStatusID']);
 
         return $ABC;
     }
 
     public function getFatherStatusId()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iFatherWorkingAsID']);
+        return $this->hasOne(WorkingAS::className(), ['iWorkingAsID' => 'iFatherWorkingAsID']);
     }
 
     public function getMotherStatus()
     {
-        $ABC = $this->hasOne(MasterFmStatus ::className(), ['iFMStatusID' => 'iMotherStatusID']);
+        $ABC = $this->hasOne(MasterFmStatus::className(), ['iFMStatusID' => 'iMotherStatusID']);
 
         return $ABC;
     }
 
     public function getMotherStatusId()
     {
-        return $this->hasOne(WorkingAS ::className(), ['iWorkingAsID' => 'iMotherWorkingAsID']);
+        return $this->hasOne(WorkingAS::className(), ['iWorkingAsID' => 'iMotherWorkingAsID']);
     }
 
     /**
@@ -850,6 +842,11 @@ characters are allowed.'
         return $this->hasOne(PropertyDetails::className(), ['ID' => 'vFamilyProperty']);
     }
 
+    public function getSportsFittnessName()
+    {
+        return $this->hasOne(SportsFitnActivities::className(), ['ID' => 'SportsFittnessID']);
+    }
+
 
     /*public function generateUniqueRandomNumber($length = 9) {
         $PREFIX = CommonHelper::generatePrefix();
@@ -860,11 +857,6 @@ characters are allowed.'
             return $this->generateUniqueRandomNumber($length);
 
     }*/
-
-    public function getSportsFittnessName()
-    {
-        return $this->hasOne(SportsFitnActivities::className(), ['ID' => 'SportsFittnessID']);
-    }
 
     public function getPropertyDetails()
     {
@@ -915,15 +907,15 @@ characters are allowed.'
 
     }
 
-    public function setCompletedStep($step) {
+    public function setCompletedStep($step)
+    {
         $returnVal = $this->completed_step;
-        if($returnVal==""){
+        if ($returnVal == "") {
             $returnVal = $step;
-        }
-        else {
+        } else {
             $arrStep = explode(',', $returnVal);
-            if(!in_array($step, $arrStep)){
-                $returnVal = $returnVal.','.$step;
+            if (!in_array($step, $arrStep)) {
+                $returnVal = $returnVal . ',' . $step;
             }
         }
         return $returnVal;

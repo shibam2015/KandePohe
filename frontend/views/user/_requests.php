@@ -36,7 +36,7 @@ if (($Id == $ModelUser->from_user_id && $ModelUser->send_request_status_from_to 
 <?php } else if (($Id == $ModelUser->from_user_id && $ModelUser->send_request_status_from_to == 'Yes' && $ModelUser->send_request_status_to_from != 'Yes') || ($Id == $ModelUser->to_user_id && $ModelUser->send_request_status_to_from == 'Yes' && $ModelUser->send_request_status_from_to != 'Yes')) {
     ?>
     <div class="name-panel inblock-msg mrg-tp-20">
-        <p>Waiting for a response? Send <?= ($model->Gender != 'MALE') ? 'her' : 'his'; ?> a Reminder...</p>
+        <p>Waiting for a response? Send <?= ($model->Gender == 'MALE') ? 'her' : 'his'; ?> a Reminder...</p>
     </div>
     <div class="profile-control requests">
         <button type="button" class="btn active"> Send Reminder</button>

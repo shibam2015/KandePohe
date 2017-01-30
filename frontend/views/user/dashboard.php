@@ -16,15 +16,10 @@ if (!Yii::$app->user->isGuest) {
     $Id = Yii::$app->user->identity->id;
     $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
 }
-
-$HOME_URL = Yii::getAlias('@web')."/";
-$HOME_URL_SITE = Yii::getAlias('@web')."/site/";
-$UPLOAD_DIR = Yii::getAlias('@frontend') .'/web/uploads/';
-$IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 ?>
     <div class="main-section">
         <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
-        <link rel="stylesheet" type="text/css" href="<?= $HOME_URL ?>css/radical-progress.css"/>
+        <link rel="stylesheet" type="text/css" href="<?= Yii::$app->request->baseUrl ?>/css/radical-progress.css"/>
         <main data-ng-app="myApp" data-ng-controller="dashboardController">
             <section>
                 <div class="container">
@@ -75,11 +70,13 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                     </div>
                                     <div class="panel-body">
                                         <ul class="reset mrg-lt-15 list-item">
-                                            <li><a href="<?= $HOME_URL ?>user/my-profile" title="Edit Profile">Edit
+                                            <li><a href="<?= Yii::$app->request->baseUrl ?>/user/my-profile"
+                                                   title="Edit Profile">Edit
                                                     Profile</a></li>
-                                            <li><a href="<?= $HOME_URL ?>user/photos" title="Manage Photos">Manage
+                                            <li><a href="<?= Yii::$app->request->baseUrl ?>/user/photos"
+                                                   title="Manage Photos">Manage
                                                     Photos</a></li>
-                                            <li><a href="<?= $HOME_URL ?>user/my-profile?tab=EP"
+                                            <li><a href="<?= Yii::$app->request->baseUrl ?>/user/my-profile?tab=EP"
                                                    title="Edit Preference"> Edit Preference</a>
                                             </li>
                                             <li><a href="javascript:void(0)" title="Privacy Options"
@@ -201,7 +198,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                             <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesLocation[$LP]->id, "75" . $PreferencesLocation[$LP]->propic, 120, '', 'Yes'), ['alt' => $PreferencesLocation[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
                                                                         </a></span> <span class="img-desc"> <a href="#"
                                                                                                                class="name"
-                                                                                                               title="<?= $PreferencesLocation[$LP]->Registration_Number ?>"><?= $PreferencesLocation[$LP]->Registration_Number ?></a>
+                                                                                                               title="<?= $PreferencesLocation[$LP]->Registration_Number ?>"><?= ucfirst($PreferencesLocation[$LP]->First_Name) ?></a>
                               <p><?= CommonHelper::getAge($PreferencesLocation[$LP]->DOB); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesLocation[$LP]->height->vName, 'text')); ?> <?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesLocation[$LP]->religionName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesLocation[$LP]->communityName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesLocation[$LP]->workingAsName->vWorkingAsName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesLocation[$LP]->cityName->vCityName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesLocation[$LP]->countryName->vCountryName, 'text')); ?></p>
                                                                 </span>
 
@@ -240,7 +237,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                             <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesProfession[$LP]->id, "75" . $PreferencesProfession[$LP]->propic, 120, '', 'Yes'), ['alt' => $PreferencesProfession[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
                                                                         </a></span> <span class="img-desc"> <a href="#"
                                                                                                                class="name"
-                                                                                                               title="<?= $PreferencesProfession[$LP]->Registration_Number ?>"><?= $PreferencesProfession[$LP]->Registration_Number ?></a>
+                                                                                                               title="<?= $PreferencesProfession[$LP]->Registration_Number ?>"><?= ucfirst($PreferencesProfession[$LP]->First_Name) ?></a>
                               <p><?= CommonHelper::getAge($PreferencesProfession[$LP]->DOB); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesProfession[$LP]->height->vName, 'text')); ?> <?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesProfession[$LP]->religionName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesProfession[$LP]->communityName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesProfession[$LP]->workingAsName->vWorkingAsName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesProfession[$LP]->cityName->vCityName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesProfession[$LP]->countryName->vCountryName, 'text')); ?></p>
                                                                 </span>
 
@@ -282,7 +279,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                             <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesEducation[$LP]->id, "75" . $PreferencesEducation[$LP]->propic, 120, '', 'Yes'), ['alt' => $PreferencesEducation[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
                                                                         </a></span> <span class="img-desc"> <a href="#"
                                                                                                                class="name"
-                                                                                                               title="<?= $PreferencesEducation[$LP]->Registration_Number ?>"><?= $PreferencesEducation[$LP]->Registration_Number ?></a>
+                                                                                                               title="<?= $PreferencesEducation[$LP]->Registration_Number ?>"><?= ucfirst($PreferencesEducation[$LP]->First_Name) ?></a>
                               <p><?= CommonHelper::getAge($PreferencesEducation[$LP]->DOB); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesEducation[$LP]->height->vName, 'text')); ?> <?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesEducation[$LP]->religionName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesEducation[$LP]->communityName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesEducation[$LP]->workingAsName->vWorkingAsName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesEducation[$LP]->cityName->vCityName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesEducation[$LP]->countryName->vCountryName, 'text')); ?></p>
                                                                 </span>
 
@@ -321,7 +318,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                                             <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesPersonal[$LP]->id, "75" . $PreferencesPersonal[$LP]->propic, 120, '', 'Yes'), ['alt' => $PreferencesPersonal[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
                                                                         </a></span> <span class="img-desc"> <a href="#"
                                                                                                                class="name"
-                                                                                                               title="<?= $PreferencesPersonal[$LP]->Registration_Number ?>"><?= $PreferencesPersonal[$LP]->Registration_Number ?></a>
+                                                                                                               title="<?= $PreferencesPersonal[$LP]->Registration_Number ?>"><?= ucfirst($PreferencesPersonal[$LP]->First_Name) ?></a>
                               <p><?= CommonHelper::getAge($PreferencesPersonal[$LP]->DOB); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesPersonal[$LP]->height->vName, 'text')); ?> <?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesPersonal[$LP]->religionName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesPersonal[$LP]->communityName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesPersonal[$LP]->workingAsName->vWorkingAsName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesPersonal[$LP]->cityName->vCityName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($PreferencesPersonal[$LP]->countryName->vCountryName, 'text')); ?></p>
                                                                 </span>
 
@@ -381,7 +378,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                     <h5 class="user-line mrg-tp-20">Add more details to get better
                                                         visibility</h5>
                                                     <div class="ad-title mrg-tp-10"><a
-                                                            href="<?= $HOME_URL ?>user/my-profile">Complete
+                                                            href="<?= Yii::$app->request->baseUrl ?>/user/my-profile">Complete
                                                             your Profile
                                                             Now!</a></div>
                                                 <?php } else { ?>
@@ -434,7 +431,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                             </a>
                                                             <a href="<?= CommonHelper::getUserUrl($UserInfoModel->Registration_Number) ?>&source=profile_viewed_by"
                                                                class="name"
-                                                               title="<?= $UserInfoModel->Registration_Number ?>"><?= $UserInfoModel->Registration_Number ?></a>
+                                                               title="<?= $UserInfoModel->Registration_Number ?>"><?= ucfirst($UserInfoModel->First_Name) ?></a>
 
                                                             <p><?= CommonHelper::getAge($UserInfoModel->DOB); ?> years,
                                                                 <?= CommonHelper::setInputVal($UserInfoModel->height->vName, 'text'); ?></p>
@@ -551,7 +548,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                             </a>
                                                             <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $ValueRM->Registration_Number ?>&source=recently_joined"
                                                                class="name"
-                                                               title="<?= $ValueRM->Registration_Number ?>"><?= $ValueRM->Registration_Number ?></a>
+                                                               title="<?= $ValueRM->Registration_Number ?>"><?= ucfirst($ValueRM->First_Name) ?></a>
 
                                                             <p><?= CommonHelper::getAge($ValueRM->DOB); ?> years,
                                                                 <?= CommonHelper::setInputVal($ValueRM->height->vName, 'text'); ?></p>
@@ -686,7 +683,7 @@ $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
                                                         <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $ValueShort->Registration_Number ?>&source=shortlisted_by"
                                                            class="name"
                                                            title="<?= $ValueShort->Registration_Number ?>">
-                                                            <?= $ValueShort->Registration_Number ?>
+                                                            <?= ucfirst($ValueShort->First_Name) ?>
                                                         </a>
                                                         <p><?= CommonHelper::getAge($ValueShort->DOB); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->height->vName, 'text')); ?> <?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->religionName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->communityName->vName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->workingAsName->vWorkingAsName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->cityName->vCityName, 'text')); ?><?= CommonHelper::setCommaInValue(CommonHelper::setInputVal($ValueShort->countryName->vCountryName, 'text')); ?></p>
                                                     </span>

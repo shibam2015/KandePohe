@@ -190,14 +190,13 @@ AppAsset::register($this);
   <?php } ?>
 
   <!-- NOTIFICATION MODEL START -->
-  <div class="modal fade" id="notification-model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  <div class="modal fade notification-model" id="notification-model" tabindex="-1" role="dialog"
+       aria-labelledby="myModalLabel"
        aria-hidden="true">
       <div class="modal-dialog">
-
           <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
           </p>
           <div class="modal-content">
-              <!-- Modal Header -->
               <div class="modal-header">
                   <button type="button" class="close"
                           data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
@@ -205,7 +204,6 @@ AppAsset::register($this);
                   </button>
                   <h2 class="text-center" id="notification_header"> Information</h2>
               </div>
-              <!-- Modal Body -->
               <div class="modal-body">
                   <form>
                       <div class="row">
@@ -224,12 +222,13 @@ AppAsset::register($this);
                       </div>
                   </form>
               </div>
-              <!-- Modal Footer -->
               <div class="modal-footer"></div>
           </div>
       </div>
-
   </div>
+  <?php if (!Yii::$app->user->isGuest) { ?>
+      <?= $this->render('/user/_phone_process.php'); ?>
+  <?php } ?>
   <!-- NOTIFICATION MODEL END -->
   <!-- Bootstrap core JavaScript
       ================================================== -->

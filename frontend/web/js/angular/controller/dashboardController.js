@@ -31,6 +31,7 @@ app.controller('dashboardController', function ($scope, vService, $http) {
 
 	function changePrivacy() {
 		var user_privacy_option = $scope.user_privacy_option;
+		console.log(user_privacy_option);
 		vService.ajaxWithNotificationFlash({
 			url:'saveprivacy-setting',
 			data:{'user_privacy_option': user_privacy_option,'ACTION': 'Save'}
