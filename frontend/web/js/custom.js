@@ -578,7 +578,7 @@ function selectbox() {
         }
     });
 }
-selectbox();
+//selectbox();
 function selectboxClassWise(classname) {
     $("." + classname).selectize({
         sortField: {
