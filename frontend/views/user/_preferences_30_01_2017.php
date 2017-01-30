@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
+
 ?>
 <style>
     input[type="radio"], input[type="checkbox"] {
@@ -35,24 +36,11 @@ use yii\helpers\ArrayHelper;
             ]
         ]);
         ?>
-        <div class="form-group field-partenersreligion-ireligion_id">
-            <label class="control-label col-sm-3 col-xs-3" for="partenersreligion-ireligion_id">Religion</label>
-
-            <div class="col-sm-8 col-xs-8">
-                <select id="select-state" multiple class="demo-default select-beast clspreferences"
-                        placeholder="Select a Religion" name="PartenersReligion[iReligion_ID][]" size="4">
-                    <?php
-                    $ReligionArray = CommonHelper::getReligion();
-                    foreach ($ReligionArray as $K => $V) { ?>
-                        <option
-                            value="<?= $V->iReligion_ID ?>" <?php if (in_array($V->iReligion_ID, $PartenersReligionIDs)) {
-                            echo "selected";
-                        } ?>><?= $V->vName ?></option>
-                    <?php }
-                    ?>
-                </select>
-            </div>
-        </div>
+        <?= $form->errorSummary([$PartenersReligion], ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
+        <?= $form->field($PartenersReligion, 'iReligion_ID')->dropDownList(
+            ArrayHelper::map(CommonHelper::getReligion(), 'iReligion_ID', 'vName'),
+            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Religion']
+        ); ?>
         <?php
         $heightrange = range(134, 204);
         $range = range(18, 100);
@@ -185,14 +173,14 @@ use yii\helpers\ArrayHelper;
         ?>
         <dl class="dl-horizontal">
             <dt>Religion</dt>
-            <?php
-            #CommonHelper::pr($PartenersReligionIDs);exit;
-            $PReligionArray = \common\models\Religion::getReligionNames(CommonHelper::removeComma(implode(",", $PartenersReligionIDs))); ?>
-            <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PReligionArray, 'vName'), 'text') ?></dd>
+            <dd><?= CommonHelper::setInputVal($PartenersReligion->religionName->vName, 'text') ?>
+            <dd>
             <dt>Age From</dt>
-            <dd><?= CommonHelper::setInputVal($UPP->age_from,'age') ?><dd>
+            <dd><?= CommonHelper::setInputVal($UPP->age_from, 'age') ?>
+            <dd>
             <dt>Age To</dt>
-            <dd><?= CommonHelper::setInputVal($UPP->age_to,'age') ?><dd>
+            <dd><?= CommonHelper::setInputVal($UPP->age_to, 'age') ?>
+            <dd>
             <dt>Height From</dt>
             <dd><?= CommonHelper::setInputVal($UPP->heightFrom->vName, 'text') ?>
             <dd>
@@ -200,7 +188,8 @@ use yii\helpers\ArrayHelper;
             <dd><?= CommonHelper::setInputVal($UPP->heightTo->vName, 'text') ?>
             <dd>
             <dt>Marital Status</dt>
-            <dd><?= CommonHelper::setInputVal($PartnersMaritalStatus->maritalStatusName->vName,'text') ?><dd>
+            <dd><?= CommonHelper::setInputVal($PartnersMaritalStatus->maritalStatusName->vName, 'text') ?>
+            <dd>
 
             <dt>Mothertoungue</dt>
             <dd><?= CommonHelper::setInputVal($PartnersMothertongue->partnersMothertongueName->Name, 'text') ?>

@@ -2,11 +2,17 @@
 
 namespace common\models;
 
+use common\components\CommonHelper;
 use Yii;
 
 class Religion extends \common\models\base\baseReligion
 {
-    
+
+    public static function getReligionNames($RelisionIds)
+    {
+        return static::find()->select('vName')->where('iReligion_ID In (' . $RelisionIds . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */
@@ -25,7 +31,7 @@ class Religion extends \common\models\base\baseReligion
     public function attributeLabels()
     {
         return [
-            'iReligion_ID' => 'Religion  ID',
+            'iReligion_ID' => 'Religion ID',
             'vName' => 'Religion',
             'eStatus' => 'Religion Status',
         ];

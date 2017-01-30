@@ -660,7 +660,8 @@ class UserController extends Controller
     public function actionEditPreferences()
     {
         $id = Yii::$app->user->identity->id;
-        $PartenersReligion = PartenersReligion::findByUserId($id) == NULL ? new PartenersReligion() : PartenersReligion::findByUserId($id);
+        #$PartenersReligion = PartenersReligion::findByUserId($id) == NULL ? new PartenersReligion() : PartenersReligion::findByUserId($id);
+        $PartenersReligion = PartenersReligion::findAllByUserId($id) == NULL ? new PartenersReligion() : PartenersReligion::findAllByUserId($id);
         $UPP = UserPartnerPreference::findByUserId($id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($id);
         $PartnersMaritalStatus = PartnersMaritalStatus::findByUserId($id) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findByUserId($id);
         $PartnersGotra = PartnersGotra::findByUserId($id) == NULL ? new PartnersGotra() : PartnersGotra::findByUserId($id);
@@ -675,20 +676,27 @@ class UserController extends Controller
         $PartnersNadi = PartnersNadi::findByUserId($id) == NULL ? new PartnersNadi() : PartnersNadi::findByUserId($id);
 
         $model = User::findOne($id);
+        #CommonHelper::pr($PartenersReligion);
+        #echo " 111=> ";CommonHelper::pr($PartenersReligionIDs);echo "<=";exit;
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if(Yii::$app->request->post('save')){
-                $CurrDate = date('Y-m-d H:i:s');
-
+                $CurrDate = CommonHelper::getTime();;
                 $ReligionId = Yii::$app->request->post('PartenersReligion')['iReligion_ID'];
-                $PartenersReligion->iUser_ID = $id;
-                $PartenersReligion->iReligion_ID = $ReligionId;
-                $PartenersReligion->dtModified = $CurrDate;
-                if ($PartenersReligion->iPartners_Religion_ID == "") {
-                    $PartenersReligion->dtCreated = $CurrDate;
+                #CommonHelper::pr($ReligionId);exit;
+                if (count($ReligionId)) {
+                    PartnersReligion::deleteAll(['iUser_ID' => $id]);
+                    foreach ($ReligionId as $RK => $RV) {
+                        $PRObj = new PartenersReligion();
+                        $PRObj->iUser_ID = $id;
+                        $PRObj->iReligion_ID = $RV;
+                        $PRObj->dtModified = $CurrDate;
+                        $PRObj->dtCreated = $CurrDate;
+                        $STK = $PRObj->save();
+                    }
+                    $PartenersReligion = PartenersReligion::findAllByUserId($id);
                 }
-                $PartenersReligion->save();
 
                 $UPP->iUser_id = $id;
                 $UPP->age_from = Yii::$app->request->post('UserPartnerPreference')['age_from'];
@@ -797,8 +805,10 @@ class UserController extends Controller
                 $show = false;
             }
         }
+        $PartenersReligionIDs = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
         $myModel = [
             'PartenersReligion' => $PartenersReligion,
+            'PartenersReligionIDs' => $PartenersReligionIDs,
             'model' => $model,
             'UPP' => $UPP,
             'PartnersMaritalStatus' => $PartnersMaritalStatus,
@@ -813,6 +823,7 @@ class UserController extends Controller
             'PartnersNadi' => $PartnersNadi,
 
         ];
+        #commonHelper::pr($PartenersReligion);exit;
         return $this->renderAjax('_preferences', $myModel);
     }
 

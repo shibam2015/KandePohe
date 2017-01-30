@@ -6,6 +6,18 @@ use Yii;
 
 class PartenersReligion extends \common\models\base\basePartenersReligion
 {
+    public static function findByUserId($userid)
+    {
+
+        return static::findOne(['iUser_ID' => $userid]);
+    }
+
+    public static function findAllByUserId($userid)
+    {
+
+        return static::findAll(['iUser_ID' => $userid]);
+    }
+
     /**
      * @inheritdoc
      */
@@ -30,12 +42,6 @@ class PartenersReligion extends \common\models\base\basePartenersReligion
             'dtCreated' => 'Dt Created',
             'dtModified' => 'Dt Modified',
         ];
-    }
-
-    public static function findByUserId($userid)
-    {
-
-        return static::findOne(['iUser_ID' => $userid]);
     }
 
     public function getReligionName()

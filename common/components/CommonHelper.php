@@ -911,6 +911,19 @@ class CommonHelper {
         }
     }
 
+    public static function  convertArrayToString($Data, $Key)
+    {
+        $TempArray = array();
+        if (count($Data) > 0) {
+            foreach ($Data as $K => $V) {
+                #echo "<br> => ".$V->$Key;
+                $TempArray[] = $V->$Key;
+            }
+        }
+        #CommonHelper::pr($TempArray);
+        return $TempArray;
+    }
+
     public function getReligion()
     {
         $religion = \common\models\Religion::find()->all();
@@ -1017,6 +1030,7 @@ class CommonHelper {
             return \common\models\Cities::find()->where(['iStateId' => $id])->all();
 
     }
+
     public function getDiet()
     {
         return \common\models\MasterDiet::find()->all();
@@ -1165,6 +1179,7 @@ class CommonHelper {
     {
         return \common\models\MasterHeights::find()->all();
     }
+
 }
 ?>
 
