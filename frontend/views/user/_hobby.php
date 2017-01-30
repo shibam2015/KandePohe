@@ -28,80 +28,147 @@ use yii\helpers\ArrayHelper;
             ?>
             <?= $form->errorSummary($model, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
 
-            <!-- <?= $form->field($model, 'iReligion_ID')->dropDownList(
-                ArrayHelper::map(CommonHelper::getReligion(), 'iReligion_ID', 'vName'),
-                ['class' => 'js-example-basic-multiple tag-select-box',
-                    'multiple' => 'multiple'
-                ]
 
-            ); ?>-->
-            <!-- <?= $form->field($model, 'InterestID')->dropDownList(
-                ArrayHelper::map(CommonHelper::getInterests(), 'ID', 'Name'),
-                [
-                    'class' => 'js-example-basic-multiple',
-                    'multiple' => 'multiple',
-                    'item' => function ($index, $label, $name, $checked, $value) {
-                        global $model;
-                        $checked = (in_array($value, explode(",", $model->InterestID))) ? 'selected' : '';
-                        $return = '<input type="selectbox" id="InterestID' . $label . '" name="' . $name . '" value="' . $value . '"' . $checked . '>';
-                        $return .= '<label for="InterestID' . $label . '" class="control-label no-content">' . $label . '</label>';
-                        return $return;
-                    }
-                ]
-            ); ?>-->
-            <?php // CommonHelper::pr($model);exit;?>
-            <?=
+            <div class="form-group field-user-interestid">
+                <label class="control-label col-sm-3 col-xs-3" for="user-interestid">Interest</label>
 
-            $form->field($model, 'InterestID')->dropDownList(
-                ArrayHelper::map(CommonHelper::getInterests(), 'ID', 'Name'),
-                ['class' => 'js-example-basic-multiple tag-select-box',
-                    'multiple' => 'multiple',]
+                <div class="col-sm-8 col-xs-8">
+                    <select id="select-state" multiple class="demo-default select-beast "
+                            placeholder="Select an Interest" name="User[InterestID][]" size="4">
+                        <?php if ($model->InterestID) {
+                            $UserInterestArray = explode(",", CommonHelper::removeComma($model->InterestID));
+                        }
+                        $InterestArray = CommonHelper::getInterests();
+                        foreach ($InterestArray as $K => $V) { ?>
+                            <option value="<?= $V->ID ?>" <?php if (in_array($V->ID, $UserInterestArray)) {
+                                echo "selected";
+                            } ?>><?= $V->Name ?></option>
+                        <?php }
+                        ?>
+                    </select>
+                </div>
+            </div>
 
+            <div class="form-group field-user-favioritereadid">
+                <label class="control-label col-sm-3 col-xs-3" for="user-favioritereadid">Favourite Reads</label>
 
-            );
-            ?>
-            <input value="activate selectator" id="activate_selectator4" type="hidden">
+                <div class="col-sm-8 col-xs-8">
+                    <select id="select-state" multiple class="demo-default select-beast "
+                            placeholder="Select a Favourite Reads" name="User[FavioriteReadID][]" size="4">
+                        <?php if ($model->FavioriteReadID) {
+                            $UserFavReadsArray = explode(",", CommonHelper::removeComma($model->FavioriteReadID));
+                        }
+                        $FaviouriteReadArray = CommonHelper::getFavouriteReads();
+                        foreach ($FaviouriteReadArray as $K => $V) { ?>
+                            <option value="<?= $V->ID ?>" <?php if (in_array($V->ID, $UserFavReadsArray)) {
+                                echo "selected";
+                            } ?>><?= $V->Name ?></option>
+                        <?php }
+                        ?>
+                    </select>
+                </div>
+            </div>
 
-            <?= $form->field($model, 'FavioriteReadID')->DropDownList(
-                ArrayHelper::map(CommonHelper::getFavouriteReads(), 'ID', 'Name'),
-                [
-                    'class' => 'js-example-basic-multiple tag-select-box',
-                    'multiple' => 'multiple',
-                ]
-            );
-            ?>
-            <?= $form->field($model, 'FaviouriteMusicID')->dropDownList(
-                ArrayHelper::map(CommonHelper::getFavouriteMusic(), 'ID', 'Name'),
-                [
-                    'class' => 'js-example-basic-multiple',
-                    'multiple' => 'multiple',
-                ]
-            ); ?>
-            <?= $form->field($model, 'FavouriteCousinesID')->dropDownList(
-                ArrayHelper::map(CommonHelper::getFavouriteCousines(), 'ID', 'Name'),
-                ['class' => 'js-example-basic-multiple',
-                    'multiple' => 'multiple',
-                ]
-            ); ?>
-            <?= $form->field($model, 'SportsFittnessID')->dropDownList(
-                ArrayHelper::map(CommonHelper::getSportsFitnActivities(), 'ID', 'Name'),
-                ['class' => 'js-example-basic-multiple',
-                    'multiple' => 'multiple',
-                ]
-            ); ?>
-            <?= $form->field($model, 'PreferredDressID')->dropDownList(
-                ArrayHelper::map(CommonHelper::getPreferredDressStyle(), 'ID', 'Name'),
-                ['class' => 'js-example-basic-multiple',
-                    'multiple' => 'multiple',
-                ]
-            ); ?>
-            <?= $form->field($model, 'PreferredMovieID')->dropDownList(
-                ArrayHelper::map(CommonHelper::getPreferredMovies(), 'ID', 'Name'),
-                ['class' => 'js-example-basic-multiple',
-                    'multiple' => 'multiple',
-                ]
-            ); ?>
+            <div class="form-group field-user-faviouritemusicid">
+                <label class="control-label col-sm-3 col-xs-3" for="user-faviouritemusicid">Favourite Music</label>
 
+                <div class="col-sm-8 col-xs-8">
+                    <select id="select-state" multiple class="demo-default select-beast "
+                            placeholder="Select a Favourite Music" name="User[FaviouriteMusicID][]" size="4">
+                        <?php if ($model->FaviouriteMusicID) {
+                            $UserFavMusicArray = explode(",", CommonHelper::removeComma($model->FaviouriteMusicID));
+                        }
+                        $FaviouriteMusicArray = CommonHelper::getFavouriteMusic();
+                        foreach ($FaviouriteMusicArray as $K => $V) { ?>
+                            <option value="<?= $V->ID ?>" <?php if (in_array($V->ID, $UserFavMusicArray)) {
+                                echo "selected";
+                            } ?>><?= $V->Name ?></option>
+                        <?php }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group field-user-favouritecousinesid">
+                <label class="control-label col-sm-3 col-xs-3" for="user-favouritecousinesid">Favourite Cousines</label>
+
+                <div class="col-sm-8 col-xs-8">
+                    <select id="select-state" multiple class="demo-default select-beast "
+                            placeholder="Select a Favourite Cousine" name="User[FavouriteCousinesID][]" size="4">
+                        <?php if ($model->FavouriteCousinesID) {
+                            $UserFavCousinArray = explode(",", CommonHelper::removeComma($model->FavouriteCousinesID));
+                        }
+                        $FaviouriteCousinArray = CommonHelper::getFavouriteCousines();
+                        foreach ($FaviouriteCousinArray as $K => $V) { ?>
+                            <option value="<?= $V->ID ?>" <?php if (in_array($V->ID, $UserFavCousinArray)) {
+                                echo "selected";
+                            } ?>><?= $V->Name ?></option>
+                        <?php }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group field-user-sportsfittnessid">
+                <label class="control-label col-sm-3 col-xs-3" for="user-sportsfittnessid">Sports Fitness
+                    Activities</label>
+
+                <div class="col-sm-8 col-xs-8">
+                    <select id="select-state" multiple class="demo-default select-beast "
+                            placeholder="Select a Sports Fitness Activities" name="User[SportsFittnessID][]" size="4">
+                        <?php if ($model->SportsFittnessID) {
+                            $UserSportFitnessArray = explode(",", CommonHelper::removeComma($model->SportsFittnessID));
+                        }
+                        $SportFitnessArray = CommonHelper::getSportsFitnActivities();
+                        foreach ($SportFitnessArray as $K => $V) { ?>
+                            <option value="<?= $V->ID ?>" <?php if (in_array($V->ID, $UserSportFitnessArray)) {
+                                echo "selected";
+                            } ?>><?= $V->Name ?></option>
+                        <?php }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group field-user-preferreddressid">
+                <label class="control-label col-sm-3 col-xs-3" for="user-preferreddressid">Preferred Dress Style</label>
+
+                <div class="col-sm-8 col-xs-8">
+                    <select id="select-state" multiple class="demo-default select-beast "
+                            placeholder="Select a Preferred Dress Style" name="User[PreferredDressID][]" size="4">
+                        <?php if ($model->PreferredDressID) {
+                            $UserPreferredDressArray = explode(",", CommonHelper::removeComma($model->PreferredDressID));
+                        }
+                        $PreferredDressArray = CommonHelper::getPreferredDressStyle();
+                        foreach ($PreferredDressArray as $K => $V) { ?>
+                            <option value="<?= $V->ID ?>" <?php if (in_array($V->ID, $UserPreferredDressArray)) {
+                                echo "selected";
+                            } ?>><?= $V->Name ?></option>
+                        <?php }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group field-user-preferredmovieid">
+                <label class="control-label col-sm-3 col-xs-3" for="user-preferredmovieid">Preferred Movie</label>
+
+                <div class="col-sm-8 col-xs-8">
+                    <select id="select-state" multiple class="demo-default select-beast "
+                            placeholder="Select a Preferred Movie" name="User[PreferredMovieID][]" size="4">
+                        <?php if ($model->PreferredMovieID) {
+                            $UserPreferredMovieArray = explode(",", CommonHelper::removeComma($model->PreferredMovieID));
+                        }
+                        $PreferredMovieArray = CommonHelper::getPreferredMovies();
+                        foreach ($PreferredMovieArray as $K => $V) { ?>
+                            <option value="<?= $V->ID ?>" <?php if (in_array($V->ID, $UserPreferredMovieArray)) {
+                                echo "selected";
+                            } ?>><?= $V->Name ?></option>
+                        <?php }
+                        ?>
+                    </select>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-4 col-md-offset-2">
                     <div class="form-cont">
@@ -120,13 +187,16 @@ use yii\helpers\ArrayHelper;
                 </div>
             </div>
             <?php ActiveForm::end();
-            $this->registerCssFile(Yii::$app->request->baseUrl . '/plugings/select2/select2.min.css');
-            $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/select2/select2.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
             $this->registerJs('
-            $(".js-example-basic-multiple").select2({
+                    selectbox();
+         ');
+            # $this->registerCssFile(Yii::$app->request->baseUrl . '/plugings/select2/select2.min.css');
+            # $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/select2/select2.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+            # $this->registerJs('
+            /*$(".js-example-basic-multiple").select2({
                 placeholder: "Select Option"
-            });
-        ');
+            });*/
+            #');
 
         } else {
             ?>

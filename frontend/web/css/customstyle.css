@@ -495,3 +495,7 @@ textarea {
 .maxwd100 {
     max-width: 100% !important;
 }
+
+.dl-horizontal dt {
+    white-space: normal !important;
+}

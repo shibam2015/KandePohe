@@ -571,6 +571,7 @@ $(document).on('mouseover', '.hovertool', function (e) {
 });
 
 function selectbox() {
+    //alert("in");
     $(".select-beast").selectize({
         sortField: {
             field: "text",
