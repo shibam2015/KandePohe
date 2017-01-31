@@ -122,7 +122,11 @@ $HOME_PAGE_URL = Yii::getAlias('@web') . "/";
                                                                        data-ng-click="savePhotoPrivacy()"> Save </a>
                                                                 </div>
                                                                 <?php ActiveForm::end(); ?>
-
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12 col-md-offset-1">
+                                                                    <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes'), ['class' => 'img-responsive photo-main mainpropic ', 'width' => '200', 'alt' => 'Profile Photo']); ?>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -132,7 +136,7 @@ $HOME_PAGE_URL = Yii::getAlias('@web') . "/";
                                                         <div class="inner-block">
                                                             <div class="row">
                                                                 <?php $form = ActiveForm::begin(); ?>
-                                                                <div class="col-md-10  mrg-tp-20">
+                                                                <div class="col-md-10  mrg-tp-20    ">
                                                                     <div class="mid-col">
                                                                         <div class="form-cont">
                                                                             <div class="radio dl" id="IVA">
