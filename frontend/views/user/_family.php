@@ -319,7 +319,7 @@ if ($show) {
             ?>
             <dd><?= CommonHelper::setInputVal($vFamilyProperty, 'text') ?></dd>
             <dt>You can enter your relative surnames etc</dt>
-            <dd><?= CommonHelper::setInputVal($model->vAreaName, 'text') ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->vDetailRelative, 'text') ?></dd>
         </dl>
     
     <?php

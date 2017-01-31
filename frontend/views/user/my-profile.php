@@ -312,8 +312,8 @@ if (!Yii::$app->user->isGuest) {
                                                         My Information</h1>
                                                 </div>
 
-                                                <?php Pjax::begin(['id' => 'my_index', 'enablePushState' => false]); ?>
-                                                <p class="dis_my_info">
+                                                <?php Pjax::begin(['id' => 'div_my_info', 'enablePushState' => false]); ?>
+                                                <p class="div_my_info">
                                                     <i class="fa fa-spinner fa-spin pink"></i> My Information Loading...
                                                 </p>
                                                 <?php Pjax::end(); ?>
@@ -324,12 +324,13 @@ if (!Yii::$app->user->isGuest) {
                                                     <ul class="list-inline major-control">
                                                         <li role="presentation">
                                                             <a href="javascript:void(0)" class="edit_personal_btn"
-                                                               attr-name="my_info"><i class="fa fa-pencil"></i> Edit</a>
+                                                               attr-name="edit_personal_btn"><i
+                                                                    class="fa fa-pencil"></i> Edit</a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <h3><span class="heading-icons icon2"></span> Basic Details</h3>
-                                                <?php Pjax::begin(['id' => 'my_index1', 'enablePushState' => false]); ?>
+                                                <?php Pjax::begin(['id' => 'div_personal_info1', 'enablePushState' => false]); ?>
                                                 <div class="div_personal_info1">
                                                     <i class="fa fa-spinner fa-spin pink"></i>
                                                     Personal Information Loading...
@@ -343,13 +344,13 @@ if (!Yii::$app->user->isGuest) {
                                                     <ul class="list-inline major-control">
                                                         <li role="presentation"><a href="javascript:void(0)"
                                                                                    class="edit_basic_information"
-                                                                                   attr-name="my_info"><i
+                                                                                   attr-name="edit_basic_information"><i
                                                                     class="fa fa-pencil"></i> Edit</a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <h3><span class="heading-icons icon2"></span> Basic information</h3>
-                                                <?php Pjax::begin(['id' => 'my_index2', 'enablePushState' => false]); ?>
+                                                <?php Pjax::begin(['id' => 'div_basic_info', 'enablePushState' => false]); ?>
                                                 <div class="div_basic_info">
                                                     <i class="fa fa-spinner fa-spin pink"></i> Basic Information
                                                     Loading...
@@ -362,13 +363,14 @@ if (!Yii::$app->user->isGuest) {
                                                     <ul class="list-inline major-control">
                                                         <li role="presentation">
                                                             <a href="javascript:void(0)" class="edit_education"
-                                                               attr-name="my_info"><i class="fa fa-pencil"></i> Edit</a>
+                                                               attr-name="edit_education"><i class="fa fa-pencil"></i>
+                                                                Edit</a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <h3><span class="heading-icons icon2"></span> Educational & Occupational
                                                 </h3>
-                                                <?php Pjax::begin(['id' => 'my_index3', 'enablePushState' => false]); ?>
+                                                <?php Pjax::begin(['id' => 'div_education', 'enablePushState' => false]); ?>
                                                 <div class="div_education">
                                                     <i class="fa fa-spinner fa-spin pink"></i> Educational &
                                                     Occupational Information Loading...
@@ -381,13 +383,14 @@ if (!Yii::$app->user->isGuest) {
                                                     <ul class="list-inline major-control">
                                                         <li role="presentation">
                                                             <a href="javascript:void(0)" class="edit_lifestyle"
-                                                               attr-name="my_info"><i class="fa fa-pencil"></i> Edit</a>
+                                                               attr-name="edit_lifestyle"><i class="fa fa-pencil"></i>
+                                                                Edit</a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <h3><span class="heading-icons icon2"></span> Lifestyle & Appearance
                                                 </h3>
-                                                <?php Pjax::begin(['id' => 'my_index4', 'enablePushState' => false]); ?>
+                                                <?php Pjax::begin(['id' => 'div_lifestyle', 'enablePushState' => false]); ?>
                                                 <div class="div_lifestyle">
                                                     <i class="fa fa-spinner fa-spin pink"></i> Lifestyle & Appearance
                                                     Information Loading...
@@ -400,12 +403,12 @@ if (!Yii::$app->user->isGuest) {
                                                     <ul class="list-inline major-control">
                                                         <li role="presentation">
                                                             <a href="javascript:void(0)" class="edit_family"
-                                                               attr-name="my_info"><i class="fa fa-pencil"></i> Edit</a>
+                                                               attr-name="edit_family"><i class="fa fa-pencil"></i> Edit</a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <h3><span class="heading-icons icon2"></span> Family</h3>
-                                                <?php Pjax::begin(['id' => 'my_index5', 'enablePushState' => false]); ?>
+                                                <?php Pjax::begin(['id' => 'div_family', 'enablePushState' => false]); ?>
                                                 <div class="div_family">
                                                     <i class="fa fa-spinner fa-spin pink"></i> Family Information
                                                     Loading...
@@ -418,12 +421,13 @@ if (!Yii::$app->user->isGuest) {
                                                     <ul class="list-inline major-control">
                                                         <li role="presentation">
                                                             <a href="javascript:void(0)" class="edit_horoscope"
-                                                               attr-name="my_info"><i class="fa fa-pencil"></i> Edit</a>
+                                                               attr-name="edit_horoscope"><i class="fa fa-pencil"></i>
+                                                                Edit</a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <h3><span class="heading-icons icon2"></span> HOROSCOPE DETAILS</h3>
-                                                <?php Pjax::begin(['id' => 'my_index6', 'enablePushState' => false]); ?>
+                                                <?php Pjax::begin(['id' => 'div_horoscope', 'enablePushState' => false]); ?>
                                                 <div class="div_horoscope">
                                                     <i class="fa fa-spinner fa-spin pink"></i> HOROSCOPE DETAILS
                                                     Loading...
@@ -436,7 +440,7 @@ if (!Yii::$app->user->isGuest) {
                                                     <ul class="list-inline major-control">
                                                         <li role="presentation"><a href="javascript:void(0)"
                                                                                    class="edit_hobby"
-                                                                                   attr-name="my_info"><i
+                                                                                   attr-name="edit_hobby"><i
                                                                     class="fa fa-pencil"></i> Edit</a></li>
                                                     </ul>
                                                 </div>
@@ -459,7 +463,7 @@ if (!Yii::$app->user->isGuest) {
                                                 <ul class="list-inline major-control">
                                                     <li role="presentation"><a href="javascript:void(0)"
                                                                                class="edit_preferences"
-                                                                               attr-name="my_info"><i
+                                                                               attr-name="edit_preferences"><i
                                                                 class="fa fa-pencil"></i> Edit</a></li>
                                                 </ul>
                                             </div>
@@ -478,7 +482,7 @@ if (!Yii::$app->user->isGuest) {
                                                 <ul class="list-inline major-control">
                                                     <li role="presentation"><a href="javascript:void(0)"
                                                                                class="edit_profession "
-                                                                               attr-name="my_info"><i
+                                                                               attr-name="edit_profession"><i
                                                                 class="fa fa-pencil"></i> Edit</a></li>
                                                 </ul>
                                             </div>
@@ -498,7 +502,7 @@ if (!Yii::$app->user->isGuest) {
                                                 <ul class="list-inline major-control">
                                                     <li role="presentation"><a href="javascript:void(0)"
                                                                                class="edit_location"
-                                                                               attr-name="my_info"><i
+                                                                               attr-name="edit_location"><i
                                                                 class="fa fa-pencil"></i> Edit</a></li>
                                                 </ul>
                                             </div>
@@ -519,7 +523,7 @@ if (!Yii::$app->user->isGuest) {
                                                 <ul class="list-inline major-control">
                                                     <li role="presentation"><a href="javascript:void(0)"
                                                                                class="edit_looking"
-                                                                               attr-name="my_info"><i
+                                                                               attr-name="edit_looking"><i
                                                                 class="fa fa-pencil"></i> Edit</a></li>
                                                 </ul>
                                             </div>
@@ -609,30 +613,7 @@ if (!Yii::$app->user->isGuest) {
                                                 <?php Pjax::end(); ?>
                                             </div>
                                         </div>
-                                        <!--<div role="tabpanel" class="tab-pane" id="tab4">
-                                            <div class="profile-edit pull-right">
-                                                <ul class="list-inline major-control">
-                                                    <li role="presentation"><a href="javascript:void(0)"
-                                                                               class="edit_hobby"
-                                                                               attr-name="my_info"><i
-                                                                class="fa fa-pencil"></i> Edit</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="inner-block">
-                                                <div class="fb-profile-text padd-xs padd-tp-0">
-                                                    <h1><span
-                                                            class="heading-icons icon2"></span>
-                                                        Hobby/Interest Information
-                                                    </h1>
-                                                </div>
-                                                <?php Pjax::begin(['id' => 'my_hobby', 'enablePushState' => false]); ?>
-                                                <div class="div_hobby">
-                                                    <i class="fa fa-spinner fa-spin pink"></i> Hobby/Interest
-                                                    Information Loading...
-                                                </div>
-                                                <?php Pjax::end(); ?>
-                                            </div>
-                                        </div> -->
+
                                     </div>
                                 </div>
                             </div>
@@ -884,52 +865,52 @@ $this->registerJs('
     getInlineDetail("' . Url::to(['user/tag-count']) . '","#tag_count","1");
 
     $(".edit_btn").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-myinfo']).'",".dis_my_info","0");
+        getInlineDetail("' . Url::to(['user/edit-myinfo']) . '","#div_my_info","0");
     });
-    getInlineDetail("'.Url::to(['user/edit-myinfo']).'",".dis_my_info","1");
+    getInlineDetail("' . Url::to(['user/edit-myinfo']) . '","#div_my_info","1");
     $(document).on("click","#cancel_edit_info",function(e){
-        getInlineDetail("'.Url::to(['user/edit-myinfo']).'",".dis_my_info","1");
+        getInlineDetail("' . Url::to(['user/edit-myinfo']) . '","#div_my_info","1");
     });
 
     $(".edit_personal_btn").click(function(e){
-        getInlineDetail("' . Url::to(['user/edit-personal-info']) . '",".div_personal_info1","0");
+        getInlineDetail("' . Url::to(['user/edit-personal-info']) . '","#div_personal_info1","0");
     });
-    getInlineDetail("' . Url::to(['user/edit-personal-info']) . '",".div_personal_info1","1");
+    getInlineDetail("' . Url::to(['user/edit-personal-info']) . '","#div_personal_info1","1");
 
     $(document).on("click","#cancel_edit_personalinfo",function(e){
-        getInlineDetail("' . Url::to(['user/edit-personal-info']) . '",".div_personal_info1","1");
+        getInlineDetail("' . Url::to(['user/edit-personal-info']) . '","#div_personal_info1","1");
     });
 
     $(".edit_basic_information").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-basic-info']).'",".div_basic_info","0");
+        getInlineDetail("' . Url::to(['user/edit-basic-info']) . '","#div_basic_info","0");
     });
-    getInlineDetail("'.Url::to(['user/edit-basic-info']).'",".div_basic_info","1");
+    getInlineDetail("' . Url::to(['user/edit-basic-info']) . '","#div_basic_info","1");
     $(document).on("click","#cancel_edit_basicinfo",function(e){
-        getInlineDetail("'.Url::to(['user/edit-basic-info']).'",".div_basic_info","1");
+        getInlineDetail("' . Url::to(['user/edit-basic-info']) . '","#div_basic_info","1");
     });
 
     $(".edit_education").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-education']).'",".div_education","0");
+        getInlineDetail("' . Url::to(['user/edit-education']) . '","#div_education","0");
     });
-    getInlineDetail("'.Url::to(['user/edit-education']).'",".div_education","1");
+    getInlineDetail("' . Url::to(['user/edit-education']) . '","#div_education","1");
     $(document).on("click","#cancel_edit_education",function(e){
-        getInlineDetail("'.Url::to(['user/edit-education']).'",".div_education","1");
+        getInlineDetail("' . Url::to(['user/edit-education']) . '","#div_education","1");
     });
     
     $(".edit_lifestyle").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-lifestyle']).'",".div_lifestyle","0");
+        getInlineDetail("' . Url::to(['user/edit-lifestyle']) . '","#div_lifestyle","0");
     });
-    getInlineDetail("'.Url::to(['user/edit-lifestyle']).'",".div_lifestyle","1");
+    getInlineDetail("' . Url::to(['user/edit-lifestyle']) . '","#div_lifestyle","1");
     $(document).on("click","#cancel_edit_lifestyle",function(e){
-        getInlineDetail("'.Url::to(['user/edit-lifestyle']).'",".div_lifestyle","1");
+        getInlineDetail("' . Url::to(['user/edit-lifestyle']) . '","#div_lifestyle","1");
     });
     
     $(".edit_family").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-family']).'",".div_family","0");
+        getInlineDetail("' . Url::to(['user/edit-family']) . '","#div_family","0");
     });
-    getInlineDetail("'.Url::to(['user/edit-family']).'",".div_family","1");
+    getInlineDetail("' . Url::to(['user/edit-family']) . '","#div_family","1");
     $(document).on("click","#cancel_edit_family",function(e){
-        getInlineDetail("'.Url::to(['user/edit-family']).'",".div_family","1");
+        getInlineDetail("' . Url::to(['user/edit-family']) . '","#div_family","1");
     });
 
     $(".edit_preferences").click(function(e){
@@ -941,11 +922,11 @@ $this->registerJs('
     });
 
     $(".edit_horoscope").click(function(e){
-        getInlineDetail("' . Url::to(['user/edit-horoscope']) . '",".div_horoscope","0");
+        getInlineDetail("' . Url::to(['user/edit-horoscope']) . '","#div_horoscope","0");
     });
-    getInlineDetail("' . Url::to(['user/edit-horoscope']) . '",".div_horoscope","1");
+    getInlineDetail("' . Url::to(['user/edit-horoscope']) . '","#div_horoscope","1");
     $(document).on("click","#cancel_edit_horoscope",function(e){
-        getInlineDetail("' . Url::to(['user/edit-horoscope']) . '",".div_horoscope","1");
+        getInlineDetail("' . Url::to(['user/edit-horoscope']) . '","#div_horoscope","1");
     });
 
 /*  partner preferences*/
