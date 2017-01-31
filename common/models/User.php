@@ -64,6 +64,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const SCENARIO_RESEND_PIN_FOR_EMAIL = 'Resend Email PIN';
     const SCENARIO_LAST_LOGIN = 'Last Login Time';
     const SCENARIO_PERMANENT_ADDRESS = 'Permanent Address';
+    const SCENARIO_CURRENT_ADDRESS = 'Current Address';
 
     public $repeat_password;
     public $email_pin;
@@ -431,6 +432,7 @@ characters are allowed.'
             self::SCENARIO_RESEND_PIN_FOR_EMAIL => ['completed_step', 'eEmailVerifiedStatus', 'pin_email_vaerification', 'pin_email_time'], # FOR Resend Email PIN PROCESS
 
             self::SCENARIO_PERMANENT_ADDRESS => ['iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'vAreaName', 'iDistrictID'],
+            self::SCENARIO_CURRENT_ADDRESS => ['iTalukaCAID', 'iDistrictCAID', 'iCityCAId', 'iStateCAId', 'iCountryCAId', 'vAreaNameCA'],
 
         ];
 

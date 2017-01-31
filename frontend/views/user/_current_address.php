@@ -30,57 +30,115 @@ use yii\helpers\ArrayHelper;
         ?>
         <?= $form->errorSummary($model, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
 
-        <?= $form->field($model, 'iCountryId')->dropDownList(
+        <?= $form->field($model, 'iCountryCAId')->dropDownList(
             ArrayHelper::map(CommonHelper::getCountry(), 'iCountryId', 'vCountryName'),
             ['prompt' => 'Country', 'class' => 'demo-default select-beast clscurrentaddress',
                 'onchange' => '
-                                $.post( "' . Yii::$app->urlManager->createUrl('ajax/getstate?id=') . '"+$(this).val(), function( data ) {
-                                  $( "select#iStateId" ).html( data );
-                                  $("select#iStateId").niceSelect("update");
+                                $.post( "' . Yii::$app->urlManager->createUrl('ajax/getstatenew?id=') . '"+$(this).val(), function( data ) {
+                                 var htmldata = "";
+                                                            jsondata = data.state;
+                                                                    var new_value_options   = "[";
+                                                                    for (var key in jsondata) {
+                                                                    //console.log(jsondata[key].vStateName);
+                                                                        htmldata += "<option value=\'"+jsondata[key].iStateId+"\'>"+jsondata[key].vStateName+"</option>";
+
+                                                                        var keyPlus = parseInt(key) + 1;
+                                                                        if (keyPlus == jsondata.length) {
+                                                                            new_value_options += "{text: \'"+jsondata[key].vStateName+"\', value: "+jsondata[key].iStateId+"}";
+                                                                        } else {
+                                                                            new_value_options += "{text: \'"+jsondata[key].vStateName+"\', value: "+jsondata[key].iStateId+"},";
+                                                                        }
+                                                                    }
+                                                                    new_value_options   += "]";
+
+                                                            new_value_options = eval("(" + new_value_options + ")");
+                                                            if (new_value_options[0] != undefined) {
+                                                                        // re-fill html select option field
+                                                                        $("select#iStateCAId").html(htmldata);
+                                                                        // re-fill/set the selectize values
+                                                                        var selectize = $("select#iStateCAId")[0].selectize;
+                                                                        selectize.clear();
+                                                                        selectize.clearOptions();
+                                                                        selectize.renderCache["option"] = {};
+                                                                        selectize.renderCache["item"] = {};
+
+                                                                        selectize.addOption(new_value_options);
+                                                                        //selectize.setValue(iStateCAId);
+
+                                                                        var selectize = $("select#iCityCAId")[0].selectize;
+                                                                        selectize.clear();
+                                                                        selectize.clearOptions();
+
+                                                            }
                                 });'
             ]
 
         ); ?>
         <?php
         $stateList = [];
-        if ($model->iCountryId != "") {
-            $stateList = ArrayHelper::map(CommonHelper::getState($model->iCountryId), 'iStateId', 'vStateName');
+        if ($model->iCountryCAId != "") {
+            $stateList = ArrayHelper::map(CommonHelper::getState($model->iCountryCAId), 'iStateId', 'vStateName');
         }
         ?>
-        <?= $form->field($model, 'iStateId')->dropDownList(
+        <?= $form->field($model, 'iStateCAId')->dropDownList(
             $stateList,
-            ['id' => 'iStateId',
+            ['id' => 'iStateCAId',
                 'prompt' => 'State', 'class' => 'demo-default select-beast clscurrentaddress',
                 'onchange' => '
-                                $.post( "' . Yii::$app->urlManager->createUrl('ajax/getcity?id=') . '"+$(this).val(), function( data ) {
-                                  $( "select#iCityId" ).html( data );
-                                  $("select#iCityId").niceSelect("update");
+                                $.post( "' . Yii::$app->urlManager->createUrl('ajax/getcitynew?id=') . '"+$(this).val(), function( data ) {
+                                  var htmldata = "";
+                                                            jsondata = data.city;
+                                                                    var new_value_options   = "[";
+                                                                    for (var key in jsondata) {
+                                                                        htmldata += "<option value=\'"+jsondata[key].iCityId+"\'>"+jsondata[key].vCityName+"</option>";
+                                                                        var keyPlus = parseInt(key) + 1;
+                                                                        if (keyPlus == jsondata.length) {
+                                                                            new_value_options += "{text: \'"+jsondata[key].vCityName+"\', value: "+jsondata[key].iCityId+"}";
+                                                                        } else {
+                                                                            new_value_options += "{text: \'"+jsondata[key].vCityName+"\', value: "+jsondata[key].iCityId+"},";
+                                                                        }
+                                                                    }
+                                                                    new_value_options   += "]";
+
+                                                            new_value_options = eval("(" + new_value_options + ")");
+                                                            if (new_value_options[0] != undefined) {
+                                                                        // re-fill html select option field
+                                                                        $("select#iCityCAId").html(htmldata);
+                                                                        // re-fill/set the selectize values
+                                                                        var selectize = $("select#iCityCAId")[0].selectize;
+                                                                        selectize.clear();
+                                                                        selectize.clearOptions();
+                                                                        selectize.renderCache["option"] = {};
+                                                                        selectize.renderCache["item"] = {};
+
+                                                                        selectize.addOption(new_value_options);
+                                                            }
                                 });'
             ]
 
         ); ?>
         <?php
         $cityList = [];
-        if ($model->iStateId != "") {
-            $cityList = ArrayHelper::map(CommonHelper::getCity($model->iStateId), 'iCityId', 'vCityName');
+        if ($model->iStateCAId != "") {
+            $cityList = ArrayHelper::map(CommonHelper::getCity($model->iStateCAId), 'iCityId', 'vCityName');
         }
         ?>
-        <?= $form->field($model, 'iCityId')->dropDownList(
+        <?= $form->field($model, 'iCityCAId')->dropDownList(
             $cityList,
-            ['id' => 'iCityId', 'class' => 'demo-default select-beast clscurrentaddress', 'prompt' => 'City']
+            ['id' => 'iCityCAId', 'class' => 'demo-default select-beast clscurrentaddress', 'prompt' => 'City']
         ); ?>
 
-        <?= $form->field($model, 'iDistrictID')->dropDownList(
+        <?= $form->field($model, 'iDistrictCAID')->dropDownList(
             ArrayHelper::map(CommonHelper::getDistrict(), 'iDistrictID', 'vName'),
             ['class' => 'demo-default select-beast clscurrentaddress', 'prompt' => 'District']
         ); ?>
 
-        <?= $form->field($model, 'iTalukaID')->dropDownList(
+        <?= $form->field($model, 'iTalukaCAID')->dropDownList(
             ArrayHelper::map(CommonHelper::getTaluka(), 'iTalukaID', 'vName'),
             ['class' => 'demo-default select-beast clscurrentaddress', 'prompt' => 'Taluka']
         ); ?>
 
-        <?= $form->field($model, 'vAreaName')->textInput() ?>
+        <?= $form->field($model, 'vAreaNameCA')->textInput() ?>
         <div class="row">
             <div class="col-md-4 col-md-offset-2">
                 <div class="form-cont">
@@ -93,7 +151,7 @@ use yii\helpers\ArrayHelper;
             <div class="col-md-4">
                 <div class="form-cont">
                     <div class="form-cont">
-                        <?= Html::Button('Cancel', ['class' => 'btn btn-primary my-profile-sc-button', 'id' => 'cancel_edit_permanent_address', 'name' => 'cancel']) ?>
+                        <?= Html::Button('Cancel', ['class' => 'btn btn-primary my-profile-sc-button', 'id' => 'cancel_edit_current_address', 'name' => 'cancel']) ?>
                     </div>
                 </div>
             </div>
@@ -106,17 +164,17 @@ use yii\helpers\ArrayHelper;
         ?>
         <dl class="dl-horizontal">
             <dt>Area Name</dt>
-            <dd><?= $model->vAreaName ?></dd>
+            <dd><?= $model->vAreaNameCA ?></dd>
             <dt>Taluks</dt>
-            <dd><?= $model->talukaName->vName; ?></dd>
+            <dd><?= $model->talukaNameCA->vName; ?></dd>
             <dt>Distict</dt>
-            <dd><?= $model->districtName->vName; ?></dd>
+            <dd><?= $model->districtNameCA->vName; ?></dd>
             <dt>City</dt>
-            <dd><?= $model->cityName->vCityName; ?></dd>
+            <dd><?= $model->cityNameCA->vCityName; ?></dd>
             <dt>State</dt>
-            <dd><?= $model->stateName->vStateName; ?></dd>
+            <dd><?= $model->stateNameCA->vStateName; ?></dd>
             <dt>Country</dt>
-            <dd><?= $model->countryName->vCountryName; ?></dd>
+            <dd><?= $model->countryNameCA->vCountryName; ?></dd>
         </dl>
 
     <?php

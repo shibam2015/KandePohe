@@ -1064,25 +1064,25 @@ class UserController extends Controller
     {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
-        $model->scenario = User::SCENARIO_PERMANENT_ADDRESS;
+        $model->scenario = User::SCENARIO_CURRENT_ADDRESS;
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if (Yii::$app->request->post('save')) {
-                $model->iCountryId = Yii::$app->request->post('User')['iCountryId'];
-                $model->iStateId = Yii::$app->request->post('User')['iStateId'];
-                $model->iCityId = Yii::$app->request->post('User')['iCityId'];
-                $model->iDistrictID = Yii::$app->request->post('User')['iDistrictID'];
-                $model->iTalukaID = Yii::$app->request->post('User')['iTalukaID'];
-                $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
+                $model->iCountryCAId = Yii::$app->request->post('User')['iCountryCAId'];
+                $model->iStateCAId = Yii::$app->request->post('User')['iStateCAId'];
+                $model->iCityCAId = Yii::$app->request->post('User')['iCityCAId'];
+                $model->iDistrictCAID = Yii::$app->request->post('User')['iDistrictCAID'];
+                $model->iTalukaCAID = Yii::$app->request->post('User')['iTalukaCAID'];
+                $model->vAreaNameCA = Yii::$app->request->post('User')['vAreaNameCA'];
 
-                $CityName = $model->cityName->vCityName;
-                $StateName = $model->stateName->vStateName;
-                $CountryName = $model->countryName->vCountryName;
-                $Address = $model->vAreaName . " " . $CityName . " " . $StateName . " " . $CountryName;
+                /*$CityName = $model->cityNameCA->vCityName;
+                $StateName = $model->stateNameCA->vStateName;
+                $CountryName = $model->countryNameCA->vCountryName;
+                $Address = $model->vAreaNameCA . " " . $CityName . " " . $StateName . " " . $CountryName;
                 $LatLongArray = CommonHelper::getLatLong($Address);
                 $model->latitude = $LatLongArray['latitude'];
-                $model->longitude = $LatLongArray['longitude'];
+                $model->longitude = $LatLongArray['longitude'];*/
 
                 if ($model->validate()) {
                     $model->completed_step = $model->setCompletedStep('2');
@@ -1091,7 +1091,7 @@ class UserController extends Controller
                 }
             }
         }
-        return $this->actionRenderAjax($model, '_permanent_address', $show);
+        return $this->actionRenderAjax($model, '_current_address', $show);
     }
 
     public function actionEditHoroscope()
