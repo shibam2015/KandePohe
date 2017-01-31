@@ -986,6 +986,114 @@ class UserController extends Controller
         return $this->renderAjax('_looking', $myModel);
     }
 
+    public function actionEditContactDetail()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_REGISTER1;
+        $show = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if (Yii::$app->request->post('save')) {
+                $model->iReligion_ID = Yii::$app->request->post('User')['iReligion_ID'];
+                $model->iCommunity_ID = Yii::$app->request->post('User')['iCommunity_ID'];
+                $model->iSubCommunity_ID = Yii::$app->request->post('User')['iSubCommunity_ID'];
+                $model->iGotraID = Yii::$app->request->post('User')['iGotraID'];
+                $model->iMaritalStatusID = Yii::$app->request->post('User')['iMaritalStatusID'];
+                $model->noc = Yii::$app->request->post('User')['noc'];
+                $model->iCountryId = Yii::$app->request->post('User')['iCountryId'];
+                $model->iStateId = Yii::$app->request->post('User')['iStateId'];
+                $model->iCityId = Yii::$app->request->post('User')['iCityId'];
+                $model->iDistrictID = Yii::$app->request->post('User')['iDistrictID'];
+                $model->iTalukaID = Yii::$app->request->post('User')['iTalukaID'];
+                $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
+
+                $CityName = $model->cityName->vCityName;
+                $StateName = $model->stateName->vStateName;
+                $CountryName = $model->countryName->vCountryName;
+                $Address = $model->vAreaName . " " . $CityName . " " . $StateName . " " . $CountryName;
+                $LatLongArray = CommonHelper::getLatLong($Address);
+                $model->latitude = $LatLongArray['latitude'];
+                $model->longitude = $LatLongArray['longitude'];
+
+                if ($model->validate()) {
+                    $model->completed_step = $model->setCompletedStep('2');
+                    $model->save();
+                    $show = false;
+                }
+            }
+        }
+        return $this->actionRenderAjax($model, '_contact_detail', $show);
+    }
+
+    public function actionEditPermanentAddress()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_PERMANENT_ADDRESS;
+        $show = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if (Yii::$app->request->post('save')) {
+                $model->iCountryId = Yii::$app->request->post('User')['iCountryId'];
+                $model->iStateId = Yii::$app->request->post('User')['iStateId'];
+                $model->iCityId = Yii::$app->request->post('User')['iCityId'];
+                $model->iDistrictID = Yii::$app->request->post('User')['iDistrictID'];
+                $model->iTalukaID = Yii::$app->request->post('User')['iTalukaID'];
+                $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
+
+                $CityName = $model->cityName->vCityName;
+                $StateName = $model->stateName->vStateName;
+                $CountryName = $model->countryName->vCountryName;
+                $Address = $model->vAreaName . " " . $CityName . " " . $StateName . " " . $CountryName;
+                $LatLongArray = CommonHelper::getLatLong($Address);
+                $model->latitude = $LatLongArray['latitude'];
+                $model->longitude = $LatLongArray['longitude'];
+
+                if ($model->validate()) {
+                    $model->completed_step = $model->setCompletedStep('2');
+                    $model->save();
+                    $show = false;
+                }
+            }
+        }
+        return $this->actionRenderAjax($model, '_permanent_address', $show);
+    }
+
+    public function actionEditCurrentAddress()
+    {
+        $id = Yii::$app->user->identity->id;
+        $model = User::findOne($id);
+        $model->scenario = User::SCENARIO_PERMANENT_ADDRESS;
+        $show = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if (Yii::$app->request->post('save')) {
+                $model->iCountryId = Yii::$app->request->post('User')['iCountryId'];
+                $model->iStateId = Yii::$app->request->post('User')['iStateId'];
+                $model->iCityId = Yii::$app->request->post('User')['iCityId'];
+                $model->iDistrictID = Yii::$app->request->post('User')['iDistrictID'];
+                $model->iTalukaID = Yii::$app->request->post('User')['iTalukaID'];
+                $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
+
+                $CityName = $model->cityName->vCityName;
+                $StateName = $model->stateName->vStateName;
+                $CountryName = $model->countryName->vCountryName;
+                $Address = $model->vAreaName . " " . $CityName . " " . $StateName . " " . $CountryName;
+                $LatLongArray = CommonHelper::getLatLong($Address);
+                $model->latitude = $LatLongArray['latitude'];
+                $model->longitude = $LatLongArray['longitude'];
+
+                if ($model->validate()) {
+                    $model->completed_step = $model->setCompletedStep('2');
+                    $model->save();
+                    $show = false;
+                }
+            }
+        }
+        return $this->actionRenderAjax($model, '_permanent_address', $show);
+    }
+
     public function actionEditHoroscope()
     {
         $id = Yii::$app->user->identity->id;

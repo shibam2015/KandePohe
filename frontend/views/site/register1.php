@@ -217,6 +217,10 @@ use yii\helpers\ArrayHelper;
 
                                                                         selectize.addOption(new_value_options);
                                                                         //selectize.setValue(iStateId);
+
+                                                                         var selectize = $("select#iCityId")[0].selectize;
+                                                                        selectize.clear();
+                                                                        selectize.clearOptions();
                                                             }
                                 });'
                           ]

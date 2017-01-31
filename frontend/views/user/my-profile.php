@@ -540,22 +540,74 @@ if (!Yii::$app->user->isGuest) {
 
                                         </div>
                                         <div role="tabpanel" class="tab-pane" id="tab3">
-                                            <div class="fb-profile-text padd-xs padd-tp-0">
-                                                <h1><span class="heading-icons icon9"></span> Contact Detail</h1>
+                                            <div class="profile-edit pull-right">
+                                                <ul class="list-inline major-control">
+                                                    <li role="presentation"><a href="javascript:void(0)"
+                                                                               class="edit_contact_detail"
+                                                                               attr-name="my_contact_detail"><i
+                                                                class="fa fa-pencil"></i> Edit</a></li>
+                                                </ul>
                                             </div>
-                                            <dl class="dl-horizontal">
-                                                <dt>Email</dt>
-                                                <dd><?= $model->email; ?>
-                                                <dd>
-                                                <dt>Phone No.</dt>
-                                                <dd><?= $model->county_code . " " . $model->Mobile; ?></dd>
-                                                <dt>Perement Address</dt>
-                                                <dd><?= $model->permentAddress; ?>
-                                                <dd>
-                                                <dt>Current Address</dt>
-                                                <dd><?= $model->currentAddress; ?></dd>
+                                            <div class="inner-block">
+                                                <div class="fb-profile-text padd-xs padd-tp-0">
+                                                    <h1><span
+                                                            class="heading-icons icon2"></span>
+                                                        Contact Detail
+                                                    </h1>
+                                                </div>
+                                                <?php Pjax::begin(['id' => 'my_contact_details', 'enablePushState' => false]); ?>
+                                                <div class="div_contact_detail">
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Contact Detail
+                                                    Loading...
+                                                </div>
+                                                <?php Pjax::end(); ?>
+                                            </div>
 
-                                            </dl>
+                                            <div class="profile-edit pull-right">
+                                                <ul class="list-inline major-control">
+                                                    <li role="presentation"><a href="javascript:void(0)"
+                                                                               class="edit_permanent_address"
+                                                                               attr-name="my_permanent_address"><i
+                                                                class="fa fa-pencil"></i> Edit</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="inner-block">
+                                                <div class="fb-profile-text padd-xs padd-tp-0">
+                                                    <h1><span
+                                                            class="heading-icons icon2"></span>
+                                                        Permanent Address
+                                                    </h1>
+                                                </div>
+                                                <?php Pjax::begin(['id' => 'my_permanent_address', 'enablePushState' => false]); ?>
+                                                <div class="div_permanent_address">
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Permanent Address
+                                                    Loading...
+                                                </div>
+                                                <?php Pjax::end(); ?>
+                                            </div>
+
+                                            <div class="profile-edit pull-right">
+                                                <ul class="list-inline major-control">
+                                                    <li role="presentation"><a href="javascript:void(0)"
+                                                                               class="edit_current_address"
+                                                                               attr-name="my_current_address"><i
+                                                                class="fa fa-pencil"></i> Edit</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="inner-block">
+                                                <div class="fb-profile-text padd-xs padd-tp-0">
+                                                    <h1><span
+                                                            class="heading-icons icon2"></span>
+                                                        Current Address
+                                                    </h1>
+                                                </div>
+                                                <?php Pjax::begin(['id' => 'my_current_address', 'enablePushState' => false]); ?>
+                                                <div class="div_current_address">
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Current Address
+                                                    Loading...
+                                                </div>
+                                                <?php Pjax::end(); ?>
+                                            </div>
                                         </div>
                                         <!--<div role="tabpanel" class="tab-pane" id="tab4">
                                             <div class="profile-edit pull-right">
@@ -926,6 +978,32 @@ $this->registerJs('
     $(document).on("click","#cancel_edit_looking",function(e){
         getInlineDetail("' . Url::to(['user/edit-looking-for']) . '","#my_looking","1");
     });
+
+    $(".edit_contact_detail").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-contact-detail']) . '","#my_contact_details","0");
+    });
+    getInlineDetail("' . Url::to(['user/edit-contact-detail']) . '","#my_contact_details","1");
+    $(document).on("click","#cancel_edit_contact_detail",function(e){
+        getInlineDetail("' . Url::to(['user/edit-contact-detail']) . '","#my_contact_details","1");
+    });
+
+    $(".edit_permanent_address").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-permanent-address']) . '","#my_permanent_address","0");
+    });
+    getInlineDetail("' . Url::to(['user/edit-permanent-address']) . '","#my_permanent_address","1");
+    $(document).on("click","#cancel_edit_permanent_address",function(e){
+        getInlineDetail("' . Url::to(['user/edit-permanent-address']) . '","#my_permanent_address","1");
+    });
+
+     $(".edit_current_address").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-current-address']) . '","#my_current_address","0");
+    });
+    getInlineDetail("' . Url::to(['user/edit-current-address']) . '","#my_current_address","1");
+    $(document).on("click","#cancel_edit_current_address",function(e){
+        getInlineDetail("' . Url::to(['user/edit-current-address']) . '","#my_current_address","1");
+    });
+
+
     $(".edit_hobby").click(function(e){
         getInlineDetail("' . Url::to(['user/edit-hobby']) . '","#my_hobby","0");
     });
