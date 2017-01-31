@@ -65,6 +65,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const SCENARIO_LAST_LOGIN = 'Last Login Time';
     const SCENARIO_PERMANENT_ADDRESS = 'Permanent Address';
     const SCENARIO_CURRENT_ADDRESS = 'Current Address';
+    const SCENARIO_CONTACT_DETAILS = 'Contact Detail';
 
     public $repeat_password;
     public $email_pin;
@@ -433,6 +434,7 @@ characters are allowed.'
 
             self::SCENARIO_PERMANENT_ADDRESS => ['iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'vAreaName', 'iDistrictID'],
             self::SCENARIO_CURRENT_ADDRESS => ['iTalukaCAID', 'iDistrictCAID', 'iCityCAId', 'iStateCAId', 'iCountryCAId', 'vAreaNameCA'],
+            self::SCENARIO_CONTACT_DETAILS => ['completed_step', 'email', 'eEmailVerifiedStatus', 'pin_email_vaerification', 'pin_email_time', 'completed_step', 'county_code', 'Mobile', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'pin_phone_time', 'new_county_code', 'new_phone_no'], # FOR PHONE VERIFICATION PROCESS
 
         ];
 

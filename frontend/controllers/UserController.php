@@ -990,40 +990,87 @@ class UserController extends Controller
     {
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
-        $model->scenario = User::SCENARIO_REGISTER1;
+        $model->scenario = User::SCENARIO_CONTACT_DETAILS;
         $show = false;
+        $popup = false;
+        $EmailArray = array();
+        $EMailFlag = $PhoneFlag = 0;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if (Yii::$app->request->post('save')) {
-                $model->iReligion_ID = Yii::$app->request->post('User')['iReligion_ID'];
-                $model->iCommunity_ID = Yii::$app->request->post('User')['iCommunity_ID'];
-                $model->iSubCommunity_ID = Yii::$app->request->post('User')['iSubCommunity_ID'];
-                $model->iGotraID = Yii::$app->request->post('User')['iGotraID'];
-                $model->iMaritalStatusID = Yii::$app->request->post('User')['iMaritalStatusID'];
-                $model->noc = Yii::$app->request->post('User')['noc'];
-                $model->iCountryId = Yii::$app->request->post('User')['iCountryId'];
-                $model->iStateId = Yii::$app->request->post('User')['iStateId'];
-                $model->iCityId = Yii::$app->request->post('User')['iCityId'];
-                $model->iDistrictID = Yii::$app->request->post('User')['iDistrictID'];
-                $model->iTalukaID = Yii::$app->request->post('User')['iTalukaID'];
-                $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
+                #CommonHelper::pr(Yii::$app->request->post());
+                $OldEmailId = $model->email;
+                $NewEmailID = Yii::$app->request->post('User')['email'];
+                $model->email = $NewEmailID;
 
-                $CityName = $model->cityName->vCityName;
-                $StateName = $model->stateName->vStateName;
-                $CountryName = $model->countryName->vCountryName;
-                $Address = $model->vAreaName . " " . $CityName . " " . $StateName . " " . $CountryName;
-                $LatLongArray = CommonHelper::getLatLong($Address);
-                $model->latitude = $LatLongArray['latitude'];
-                $model->longitude = $LatLongArray['longitude'];
-
+                #Phone Start
+                $OldNumber = $model->new_county_code . $model->new_phone_no;
+                $OldCountryCode = $model->county_code;
+                $OldMobileNo = $model->Mobile;
+                $NewCountryCode = Yii::$app->request->post('User')['county_code'];
+                $NewPhoneNumber = Yii::$app->request->post('User')['Mobile'];
+                $NewNumber = $NewCountryCode . $NewPhoneNumber;
+                $model->county_code = $NewCountryCode;
+                $model->Mobile = $NewPhoneNumber;
+                #Phone END
                 if ($model->validate()) {
-                    $model->completed_step = $model->setCompletedStep('2');
-                    $model->save();
                     $show = false;
+                    if ($OldEmailId != $NewEmailID) {
+                        $TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
+                        $PIN_P = CommonHelper::generateNumericUniqueToken(4);
+                        $model->pin_email_vaerification = $PIN_P;
+                        $model->completed_step = CommonHelper::unsetStep($model->completed_step, 9);
+                        $model->eEmailVerifiedStatus = 'No';
+                        $model->pin_email_time = $TimeOut;
+                        $EMailFlag = 1;
+                        /*if ($model->save()) {
+                            $MAIL_DATA = array("EMAIL" => $NewEmailID, "EMAIL_TO" => $NewEmailID, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN_P, "MINUTES" => Yii::$app->params['timePinValidate']);
+                            $MAIL_STATUS = MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
+                            $show = false;
+                            $EmailArray['Status']='S';
+                            $EmailArray['popup']='1'; // Yes
+                        }*/
+                    }
+                    if ($OldNumber != $NewNumber) {
+                        $TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
+                        $PIN_P = CommonHelper::generateNumericUniqueToken(4);
+                        $model->pin_phone_vaerification = $PIN_P;
+                        $model->new_county_code = $NewCountryCode;
+                        $model->new_phone_no = $NewPhoneNumber;
+                        $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
+                        $model->ePhoneVerifiedStatus = 'No';
+                        $model->pin_phone_time = $TimeOut;
+
+                        $model->county_code = $OldCountryCode;
+                        $model->Mobile = $OldMobileNo;
+                        $PhoneFlag = 1;
+                        /*if ($model->save()) {
+                            $SMSArray = array("OTP" => $PIN_P);
+                            $SMSFlag = SmsHelper::SendSMS($NewPhoneNumber, 'PHONE_OTP', $SMSArray);
+                            #$SMSFlag = SmsHelper::SendSMS($PIN_P, $NewPhoneNumber);
+                            $flag = true;
+                            $show = false;
+                        }*/
+                    }
+                    if ($model->save()) {
+                        if ($EMailFlag) {
+                            $MAIL_DATA = array("EMAIL" => $NewEmailID, "EMAIL_TO" => $NewEmailID, "NAME" => $model->First_Name . " " . $model->Last_Name, "PIN" => $PIN_P, "MINUTES" => Yii::$app->params['timePinValidate']);
+                            $MAIL_STATUS = MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
+                            $show = false;
+                            $EmailArray['Status'] = 'S';
+                            $EmailArray['popup'] = '1'; // Yes
+                        }
+                        if ($PhoneFlag) {
+                            $SMSArray = array("OTP" => $PIN_P);
+                            $SMSFlag = SmsHelper::SendSMS($NewPhoneNumber, 'PHONE_OTP', $SMSArray);
+                            $show = false;
+                        }
+                    }
                 }
             }
         }
-        return $this->actionRenderAjax($model, '_contact_detail', $show);
+        $TModel = array('model' => $model, 'EmailArray' => $EmailArray);
+        return $this->actionRenderAjax($TModel, '_contact_detail', $show);
     }
 
     public function actionEditPermanentAddress()

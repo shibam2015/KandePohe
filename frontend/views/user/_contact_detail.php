@@ -2,15 +2,20 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
+use common\components\MessageHelper;
 use yii\helpers\ArrayHelper;
 
+#CommonHelper::pr($model);
+$EmailArray = $model['EmailArray'];
+$Popup = $model['Popup'];
+$model = $model['model'];
 ?>
 <div class=
      <"div_basic_info">
     <?php
     if ($show) {
         $form = ActiveForm::begin([
-            'id' => 'form-register10',
+            'id' => 'form-contact-detail',
             'action' => ['edit-contact-detail'],
             'options' => ['data-pjax' => true],
             'validateOnChange' => true,
@@ -72,3 +77,15 @@ use yii\helpers\ArrayHelper;
     }
     ?>
 </div>
+
+<?php
+
+if (!$show) {
+    if ($EmailArray['popup']) {
+        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'CHANGE_EMAIL_ADDRESS');
+        $this->registerJs('
+                 notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
+                ');
+    }
+}
+?>
