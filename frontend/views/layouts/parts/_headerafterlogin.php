@@ -45,7 +45,7 @@ use common\components\CommonHelper;
                           <li><?= html::a('<i class="ti-power-off m-r-5"></i> My Profile</a>', ['user/my-profile'], ['data-method' => 'post']) ?></li>
                           <li><?= html::a('<i class="ti-power-off m-r-5"></i> Dashboard</a>', ['user/dashboard'], ['data-method' => 'post']) ?></li>
                           <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', ['site/logout'], ['data-method' => 'post', 'class' => 'logout']) ?></li>
-                          <li><a href="#">Setting</a></li>
+                          <li><?= html::a('<i class="ti-power-off m-r-5"></i> Setting</a>', ['user/setting'], ['data-method' => 'post']) ?></li>
                           <li role="separator" class="divider"></li>
                           <li class="dropdown-header">Help</li>
                           <li><a href="#">Report a Problem</a></li>

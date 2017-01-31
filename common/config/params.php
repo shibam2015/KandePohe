@@ -97,5 +97,20 @@ return [
         'Will use old profile, delete this one' => '3',
         'I wish to have multiple profiles' => '4'
     ],
+    # Privacy Setting Start
+    'privacyPhone' => [
+        'Visible to all Premium Members' => '1',
+        'Visible to Premium Members you wish to connect with' => '2',
+        'Not visible to anyone' => '3'
+    ],
+    'privacyPhoto' => [
+        'Visible to all' => '1',
+        'Visible only on invitation Sent/Accepted' => '2',
+    ],
+    'privacyVisitor' => [
+        'Let other members know that I have visited their profile' => '1',
+        'Do not let other members know that I have visited their profile' => '2',
+    ],
+    # Privacy Setting End
 ];
 

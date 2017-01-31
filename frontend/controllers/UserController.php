@@ -1374,7 +1374,6 @@ class UserController extends Controller
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
         return json_encode($return);
     }
-
     public function actionGetCoverPhotoFromPhoto($position = '')
     {
         $id = Yii::$app->user->identity->id;
@@ -2722,5 +2721,39 @@ class UserController extends Controller
         $return = array('DeletePhototStatus'=>$DeletePhotoFromFolder,'STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'ProfilePhoto' => $ProfilePhoto, 'ProfilePhotoThumb' => $ProfilePhotoThumb);
         return json_encode($return);
 
+    }
+
+    public function actionSetting()
+    { #Setting : Privacy Option.
+        $Id = Yii::$app->user->identity->id;
+        $UserModel = User::findOne($Id);
+        #$model->scenario = User::SCENARIO_EDIT_MY_INFO;
+        $show = false;
+        return $this->render('settings', [
+            'UserModel' => $UserModel,
+        ]);
+
+    }
+
+    public function actionSavePrivacyOption()
+    {
+        $Id = Yii::$app->user->identity->id;
+        $UserModel = User::findOne($Id);
+        if (Yii::$app->request->post('ACTION') == 'PRIVACY-PHONE') {
+            $UserModel->phone_privacy = Yii::$app->request->post('phone_privacy');
+        } else if (Yii::$app->request->post('ACTION') == 'PRIVACY-PHOTO') {
+            $UserModel->photo_privacy = Yii::$app->request->post('photo_privacy');
+        } else if (Yii::$app->request->post('ACTION') == 'PRIVACY-VISITOR') {
+            $UserModel->visitor_setting = Yii::$app->request->post('visitor_setting');
+        }
+
+        if ($UserModel->save()) {
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PRIVACY_SETTING');
+        } else {
+            list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PRIVACY_SETTING');
+        }
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
+        return json_encode($return);
+        exit;
     }
 }

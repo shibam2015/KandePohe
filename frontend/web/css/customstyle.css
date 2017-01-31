@@ -466,18 +466,18 @@ img.selected {
     font-weight: bold;
 }
 
-.mp-left {
+/*.mp-left {
     margin-left: -25px;
-}
-
+}*/
+/*
 .tab-width {
     width: 108.90% !important;
-}
+}*/
 
 .nav > li > a {
     color: #000;
     padding: 10px 14px;
-    /*font-weight: bold ;*/
+    font-weight: bold;
 }
 
 .has-error .selectize-input {
