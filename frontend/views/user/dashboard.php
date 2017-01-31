@@ -79,9 +79,7 @@ if (!Yii::$app->user->isGuest) {
                                             <li><a href="<?= Yii::$app->request->baseUrl ?>/user/my-profile?tab=EP"
                                                    title="Edit Preference"> Edit Preference</a>
                                             </li>
-                                            <li><a href="javascript:void(0)" title="Privacy Options"
-                                                   data-target="#privacyoption"
-                                                   data-toggle="modal"> Privacy Options </a></li>
+                                            <li><?= html::a('Privacy Options', ['user/setting'], ["title" => 'Privacy Option']) ?></li>
                                         </ul>
                                         <!-- <a href="javascript:void(0)"
                      class="pull-left profile_set"
