@@ -14,6 +14,11 @@ use Yii;
 class MasterMaritalStatus extends \common\models\base\baseMasterMaritalStatus
 {
 
+    public static function getPartnerMaritalStatus($iMaritalStatusID)
+    {
+        return static::find()->select('vName')->where('iMaritalStatusID In (' . $iMaritalStatusID . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */
@@ -37,4 +42,5 @@ class MasterMaritalStatus extends \common\models\base\baseMasterMaritalStatus
             'eStatus' => 'Marital Status Status',
         ];
     }
+
 }

@@ -659,46 +659,58 @@ class UserController extends Controller
 
     public function actionEditPreferences()
     {
-        $id = Yii::$app->user->identity->id;
-        #$PartenersReligion = PartenersReligion::findByUserId($id) == NULL ? new PartenersReligion() : PartenersReligion::findByUserId($id);
-        $PartenersReligion = PartenersReligion::findAllByUserId($id) == NULL ? new PartenersReligion() : PartenersReligion::findAllByUserId($id);
-        $UPP = UserPartnerPreference::findByUserId($id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($id);
-        $PartnersMaritalStatus = PartnersMaritalStatus::findByUserId($id) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findByUserId($id);
-        $PartnersGotra = PartnersGotra::findByUserId($id) == NULL ? new PartnersGotra() : PartnersGotra::findByUserId($id);
-        $PartnersMothertongue = PartnersMothertongue::findByUserId($id) == NULL ? new PartnersMothertongue() : PartnersMothertongue::findByUserId($id);
-        //$MasterHeight = MasterHeight::findByUserId($id) == NULL ? new MasterHeight() : MasterHeight::findByUserId($id);
-        $PartnersCommunity = PartnersCommunity::findByUserId($id) == NULL ? new PartnersCommunity() : PartnersCommunity::findByUserId($id);
-        $PartnersSubCommunity = PartnersSubcommunity::findByUserId($id) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findByUserId($id);
+        $Id = Yii::$app->user->identity->id;
+        $PartenersReligion = PartenersReligion::findAllByUserId($Id) == NULL ? new PartenersReligion() : PartenersReligion::findAllByUserId($Id);
+        $PartnersMaritalStatus = PartnersMaritalStatus::findAllByUserId($Id) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findAllByUserId($Id);
 
-        $PartnersRaashi = PartnersRaashi::findByUserId($id) == NULL ? new PartnersRaashi() : PartnersRaashi::findByUserId($id);
-        $PartnersCharan = PartnersCharan::findByUserId($id) == NULL ? new PartnersCharan() : PartnersCharan::findByUserId($id);
-        $PartnersNakshtra = PartnersNakshtra::findByUserId($id) == NULL ? new PartnersNakshtra() : PartnersNakshtra::findByUserId($id);
-        $PartnersNadi = PartnersNadi::findByUserId($id) == NULL ? new PartnersNadi() : PartnersNadi::findByUserId($id);
+        $UPP = UserPartnerPreference::findByUserId($Id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($Id);
+        $PartnersGotra = PartnersGotra::findByUserId($Id) == NULL ? new PartnersGotra() : PartnersGotra::findByUserId($Id);
+        $PartnersMothertongue = PartnersMothertongue::findByUserId($Id) == NULL ? new PartnersMothertongue() : PartnersMothertongue::findByUserId($Id);
+        $PartnersCommunity = PartnersCommunity::findByUserId($Id) == NULL ? new PartnersCommunity() : PartnersCommunity::findByUserId($Id);
+        $PartnersSubCommunity = PartnersSubcommunity::findByUserId($Id) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findByUserId($Id);
 
-        $model = User::findOne($id);
+        $PartnersRaashi = PartnersRaashi::findByUserId($Id) == NULL ? new PartnersRaashi() : PartnersRaashi::findByUserId($Id);
+        $PartnersCharan = PartnersCharan::findByUserId($Id) == NULL ? new PartnersCharan() : PartnersCharan::findByUserId($Id);
+        $PartnersNakshtra = PartnersNakshtra::findByUserId($Id) == NULL ? new PartnersNakshtra() : PartnersNakshtra::findByUserId($Id);
+        $PartnersNadi = PartnersNadi::findByUserId($Id) == NULL ? new PartnersNadi() : PartnersNadi::findByUserId($Id);
+
+        $model = User::findOne($Id);
         #CommonHelper::pr($PartenersReligion);
         #echo " 111=> ";CommonHelper::pr($PartenersReligionIDs);echo "<=";exit;
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if(Yii::$app->request->post('save')){
-                $CurrDate = CommonHelper::getTime();;
+                $CurrDate = CommonHelper::getTime();
                 $ReligionId = Yii::$app->request->post('PartenersReligion')['iReligion_ID'];
-                #CommonHelper::pr($ReligionId);exit;
                 if (count($ReligionId)) {
-                    PartnersReligion::deleteAll(['iUser_ID' => $id]);
+                    PartnersReligion::deleteAll(['iUser_ID' => $Id]);
                     foreach ($ReligionId as $RK => $RV) {
                         $PRObj = new PartenersReligion();
-                        $PRObj->iUser_ID = $id;
+                        $PRObj->iUser_ID = $Id;
                         $PRObj->iReligion_ID = $RV;
                         $PRObj->dtModified = $CurrDate;
                         $PRObj->dtCreated = $CurrDate;
                         $STK = $PRObj->save();
                     }
-                    $PartenersReligion = PartenersReligion::findAllByUserId($id);
                 }
+                $PartenersReligion = PartenersReligion::findAllByUserId($Id);
+                $MaritalStatusID = Yii::$app->request->post('PartnersMaritalStatus')['iMarital_Status_ID'];
+                if (count($MaritalStatusID)) {
+                    PartnersMaritalStatus::deleteAll(['iUser_ID' => $Id]);
+                    foreach ($MaritalStatusID as $RK => $RV) {
+                        $PMSObj = new PartnersMaritalStatus();
+                        $PMSObj->iUser_ID = $Id;
+                        $PMSObj->iMarital_Status_ID = $RV;
+                        $PMSObj->dtModified = $CurrDate;
+                        $PMSObj->dtCreated = $CurrDate;
+                        $STK = $PMSObj->save();
+                    }
+                }
+                $PartnersMaritalStatus = PartnersMaritalStatus::findAllByUserId($Id);
 
-                $UPP->iUser_id = $id;
+
+                $UPP->iUser_id = $Id;
                 $UPP->age_from = Yii::$app->request->post('UserPartnerPreference')['age_from'];
                 $UPP->age_to = Yii::$app->request->post('UserPartnerPreference')['age_to'];
                 $UPP->manglik = Yii::$app->request->post('UserPartnerPreference')['manglik'];
@@ -713,17 +725,10 @@ class UserController extends Controller
                 }
                 $UPP->save();
 
-                $MaritalStatusID = Yii::$app->request->post('PartnersMaritalStatus')['iMarital_Status_ID'];
-                $PartnersMaritalStatus->iUser_ID = $id;
-                $PartnersMaritalStatus->iMarital_Status_ID = $MaritalStatusID;
-                $PartnersMaritalStatus->dtModified = $CurrDate;
-                if ($PartnersMaritalStatus->iPartners_Marital_Status_ID == "") {
-                    $PartnersMaritalStatus->dtCreated = $CurrDate;
-                }
-                $PartnersMaritalStatus->save();
+
 
                 $RaashiID = Yii::$app->request->post('PartnersRaashi')['raashi_id'];
-                $PartnersRaashi->user_id = $id;
+                $PartnersRaashi->user_id = $Id;
                 $PartnersRaashi->raashi_id = $RaashiID;
                 $PartnersRaashi->modified_on = $CurrDate;
                 if ($PartnersRaashi->ID == "") {
@@ -732,7 +737,7 @@ class UserController extends Controller
                 $PartnersRaashi->save();
 
                 $CharanID = Yii::$app->request->post('PartnersCharan')['charan_id'];
-                $PartnersCharan->user_id = $id;
+                $PartnersCharan->user_id = $Id;
                 $PartnersCharan->charan_id = $CharanID;
                 $PartnersCharan->modified_on = $CurrDate;
                 if ($PartnersCharan->ID == "") {
@@ -741,7 +746,7 @@ class UserController extends Controller
                 $PartnersCharan->save();
 
                 $NakshtraID = Yii::$app->request->post('PartnersNakshtra')['nakshtra_id'];
-                $PartnersNakshtra->user_id = $id;
+                $PartnersNakshtra->user_id = $Id;
                 $PartnersNakshtra->nakshtra_id = $NakshtraID;
                 $PartnersNakshtra->modified_on = $CurrDate;
                 if ($PartnersNakshtra->ID == "") {
@@ -750,7 +755,7 @@ class UserController extends Controller
                 $PartnersNakshtra->save();
 
                 $NadiID = Yii::$app->request->post('PartnersNadi')['nadi_id'];
-                $PartnersNadi->user_id = $id;
+                $PartnersNadi->user_id = $Id;
                 $PartnersNadi->nadi_id = $NadiID;
                 $PartnersNadi->modified_on = $CurrDate;
                 if ($PartnersNadi->ID == "") {
@@ -759,7 +764,7 @@ class UserController extends Controller
                 $PartnersNadi->save();
 
                 $GotraID = Yii::$app->request->post('PartnersGotra')['iGotra_ID'];
-                $PartnersGotra->iUser_ID = $id;
+                $PartnersGotra->iUser_ID = $Id;
                 $PartnersGotra->iGotra_ID = $GotraID;
                 $PartnersGotra->dtModified = $CurrDate;
                 if ($PartnersGotra->iPartners_Gotra_ID == "") {
@@ -772,7 +777,7 @@ class UserController extends Controller
 
                 $MotherID = Yii::$app->request->post('PartnersMothertongue')['iMothertongue_ID'];
                 $PartnersMothertongue->scenario = PartnersMothertongue::SCENARIO_ADD;
-                $PartnersMothertongue->iUser_ID = $id;
+                $PartnersMothertongue->iUser_ID = $Id;
                 $PartnersMothertongue->iMothertongue_ID = $MotherID;
                 $PartnersMothertongue->dtModified = $CurrDate;
                 if ($PartnersMothertongue->iPartners_Mothertongue_ID == "") {
@@ -783,7 +788,7 @@ class UserController extends Controller
 
                 $CommunityID = Yii::$app->request->post('PartnersCommunity')['iCommunity_ID'];
                 $PartnersCommunity->scenario = PartnersCommunity::SCENARIO_ADD;
-                $PartnersCommunity->iUser_ID = $id;
+                $PartnersCommunity->iUser_ID = $Id;
                 $PartnersCommunity->iCommunity_ID = $CommunityID;
                 $PartnersCommunity->dtModified = $CurrDate;
                 if ($PartnersCommunity->iPartners_Community_ID == "") {
@@ -795,7 +800,7 @@ class UserController extends Controller
                 $SubCommuID = Yii::$app->request->post('PartnersSubcommunity')['iSub_Community_ID'];
                 //CommonHelper::pr($PartnersSubCommunity);exit;
                 $PartnersSubCommunity->scenario = PartnersSubcommunity::SCENARIO_ADD;
-                $PartnersSubCommunity->iUser_ID = $id;
+                $PartnersSubCommunity->iUser_ID = $Id;
                 $PartnersSubCommunity->iSub_Community_ID = $SubCommuID;
                 $PartnersSubCommunity->dtModified = $CurrDate;
                 if ($PartnersSubCommunity->iPartners_Subcommunity_ID == "") {
@@ -805,10 +810,16 @@ class UserController extends Controller
                 $show = false;
             }
         }
+        # CommonHelper::pr($PartenersReligion);
+        # CommonHelper::pr($PartnersMaritalStatus);
         $PartenersReligionIDs = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
+        #$PartnersMaritalPreferences = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
+        $PartnersMaritalPreferences = CommonHelper::convertArrayToString($PartnersMaritalStatus, 'iMarital_Status_ID');
+
         $myModel = [
             'PartenersReligion' => $PartenersReligion,
             'PartenersReligionIDs' => $PartenersReligionIDs,
+            'PartnersMaritalPreferences' => $PartnersMaritalPreferences,
             'model' => $model,
             'UPP' => $UPP,
             'PartnersMaritalStatus' => $PartnersMaritalStatus,

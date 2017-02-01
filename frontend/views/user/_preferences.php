@@ -75,16 +75,28 @@ use yii\helpers\ArrayHelper;
             ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Height To']
         ); ?>
 
+        <div class="form-group field-partnersmaritalstatus-imarital_status_id">
+            <label class="control-label col-sm-3 col-xs-3" for="partnersmaritalstatus-imarital_status_id">Marital
+                Status</label>
 
-        <!-- <?= $form->field($PartnersMaritalStatus, 'iMarital_Status_ID')->dropDownList(
-            ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
-            ['prompt' => 'Maritial Status']
-        ); ?>-->
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clspreferences"
+                        placeholder="Select a Marital Status" name="PartnersMaritalStatus[iMarital_Status_ID][]"
+                        size="4">
+                    <?php
+                    $MaritalStatusArray = CommonHelper::getMaritalStatus();
+                    foreach ($MaritalStatusArray as $K => $V) { ?>
+                        <option
+                            value="<?= $V->iMaritalStatusID ?>" <?php if (in_array($V->iMaritalStatusID, $PartnersMaritalPreferences)) {
+                            echo "selected";
+                        } ?>><?= $V->vName ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
 
-        <?= $form->field($PartnersMaritalStatus, 'iMarital_Status_ID')->dropDownList(
-            ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
-            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Maritial Status']
-        ); ?>
+
 
         <?= $form->field($PartnersMothertongue, 'iMothertongue_ID')->dropDownList(
             ArrayHelper::map(CommonHelper::getMotherTongue(), 'ID', 'Name'),
@@ -185,10 +197,9 @@ use yii\helpers\ArrayHelper;
         ?>
         <dl class="dl-horizontal">
             <dt>Religion</dt>
-            <?php
-            #CommonHelper::pr($PartenersReligionIDs);exit;
-            $PReligionArray = \common\models\Religion::getReligionNames(CommonHelper::removeComma(implode(",", $PartenersReligionIDs))); ?>
+            <?php $PReligionArray = \common\models\Religion::getReligionNames(CommonHelper::removeComma(implode(",", $PartenersReligionIDs))); ?>
             <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PReligionArray, 'vName'), 'text') ?></dd>
+
             <dt>Age From</dt>
             <dd><?= CommonHelper::setInputVal($UPP->age_from,'age') ?><dd>
             <dt>Age To</dt>
@@ -199,8 +210,11 @@ use yii\helpers\ArrayHelper;
             <dt>Height To</dt>
             <dd><?= CommonHelper::setInputVal($UPP->heightTo->vName, 'text') ?>
             <dd>
+
             <dt>Marital Status</dt>
-            <dd><?= CommonHelper::setInputVal($PartnersMaritalStatus->maritalStatusName->vName,'text') ?><dd>
+            <?php $PMaritalStatusArray = \common\models\MasterMaritalStatus::getPartnerMaritalStatus(CommonHelper::removeComma(implode(",", $PartnersMaritalPreferences))); ?>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PMaritalStatusArray, 'vName'), 'text') ?></dd>
+
 
             <dt>Mothertoungue</dt>
             <dd><?= CommonHelper::setInputVal($PartnersMothertongue->partnersMothertongueName->Name, 'text') ?>

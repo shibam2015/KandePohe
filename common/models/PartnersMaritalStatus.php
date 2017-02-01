@@ -23,6 +23,18 @@ class PartnersMaritalStatus extends \common\models\base\basePartnersMaritalStatu
         return 'partners_marital_status';
     }
 
+    public static function findByUserId($UserID)
+    {
+
+        return static::findOne(['iUser_id' => $UserID]);
+    }
+
+    public static function findAllByUserId($UserID)
+    {
+
+        return static::findAll(['iUser_id' => $UserID]);
+    }
+
     /**
      * @inheritdoc
      */
@@ -47,11 +59,6 @@ class PartnersMaritalStatus extends \common\models\base\basePartnersMaritalStatu
             'dtCreated' => 'Dt Created',
             'dtModified' => 'Dt Modified',
         ];
-    }
-
-    public static function findByUserId($userid) {
-
-        return static::findOne(['iUser_id' => $userid]);
     }
 
     public function getMaritalStatusName()
