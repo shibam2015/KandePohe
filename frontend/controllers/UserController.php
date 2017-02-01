@@ -851,74 +851,90 @@ class UserController extends Controller
 
     public function actionEditPreferencesProfession()
     {
-        $id = Yii::$app->user->identity->id;
-        $PartnersEducationalLevel = PartnersEducationalLevel::findByUserId($id) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findByUserId($id);
-        $PartnersEducationField = PartnersEducationField::findByUserId($id) == NULL ? new PartnersEducationField() : PartnersEducationField::findByUserId($id);
-        $PW = PartnerWorkingAs::findByUserId($id) == NULL ? new PartnerWorkingAs() : PartnerWorkingAs::findByUserId($id);
-        $WorkingW = PartnerWorkingWith::findByUserId($id) == NULL ? new PartnerWorkingWith() : PartnerWorkingWith::findByUserId($id);
-        $AI = PartnersAnnualIncome::findByUserId($id) == NULL ? new PartnersAnnualIncome() : PartnersAnnualIncome::findByUserId($id);
-        $model = User::findOne($id);
+        $Id = Yii::$app->user->identity->id;
+        $PartnersEducationalLevel = PartnersEducationalLevel::findAllByUserId($Id) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findAllByUserId($Id);
+        $PartnersEducationField = PartnersEducationField::findAllByUserId($Id) == NULL ? new PartnersEducationField() : PartnersEducationField::findAllByUserId($Id);
+        $PartnerWorkingAS = PartnerWorkingAs::findAllByUserId($Id) == NULL ? new PartnerWorkingAs() : PartnerWorkingAs::findAllByUserId($Id);
+        $PartnerWorkingWith = PartnerWorkingWith::findAllByUserId($Id) == NULL ? new PartnerWorkingWith() : PartnerWorkingWith::findAllByUserId($Id);
+        $AI = PartnersAnnualIncome::findByUserId($Id) == NULL ? new PartnersAnnualIncome() : PartnersAnnualIncome::findByUserId($Id);
+        $model = User::findOne($Id);
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if (Yii::$app->request->post('save')) {
-                $EducationLevelID = Yii::$app->request->post('PartnersEducationalLevel')['iEducation_Level_ID'];
-                $PartnersEducationalLevel->iUser_ID = $id;
-                $PartnersEducationalLevel->iEducation_Level_ID = $EducationLevelID;
-                $PartnersEducationalLevel->save();
-
-                $EducationFieldID = Yii::$app->request->post('PartnersEducationField')['iEducation_Field_ID'];
-                $PartnersEducationField->iUser_ID = $id;
-                $PartnersEducationField->iEducation_Field_ID = $EducationFieldID;
-                $PartnersEducationField->save();
                 $show = false;
+                $EducationLevelIDs = Yii::$app->request->post('PartnersEducationalLevel')['iEducation_Level_ID'];
+                if (count($EducationLevelIDs)) {
+                    PartnersEducationalLevel::deleteAll(['iUser_ID' => $Id]);
+                    foreach ($EducationLevelIDs as $RK => $RV) {
+                        $PEduLvlObj = new PartnersEducationalLevel();
+                        $PEduLvlObj->iUser_ID = $Id;
+                        $PEduLvlObj->iEducation_Level_ID = $RV;
+                        $STK = $PEduLvlObj->save();
+                    }
+                }
+                $PartnersEducationalLevel = PartnersEducationalLevel::findAllByUserId($Id);
 
-                $PWI = Yii::$app->request->post('PartnerWorkingAs')['iWorking_As_ID'];
-                $PW->iUser_ID = $id;
-                $PW->iWorking_As_ID = $PWI;
-                $PW->save();
-                $show = false;
 
-                $WorkingId = Yii::$app->request->post('PartnerWorkingWith')['iWorking_With_ID'];
-                //$WorkingW->scenario = PartnerWorkingWith::SCENARIO_ADD;
-                $WorkingW->iUser_ID = $id;
-                $WorkingW->iWorking_With_ID = $WorkingId;
-                //$WorkingW->dtModified = $CurrDate;
-                //if($WorkingW->ID == ""){
-                //   $WorkingW->dtCreated = $CurrDate;
-                // }
-                $WorkingW->save();
-                $show = false;
+                $EducationFieldIDs = Yii::$app->request->post('PartnersEducationField')['iEducation_Field_ID'];
+                if (count($EducationFieldIDs)) {
+                    PartnersEducationField::deleteAll(['iUser_ID' => $Id]);
+                    foreach ($EducationFieldIDs as $RK => $RV) {
+                        $PEduFieldObj = new PartnersEducationField();
+                        $PEduFieldObj->iUser_ID = $Id;
+                        $PEduFieldObj->iEducation_Field_ID = $RV;
+                        $STK = $PEduFieldObj->save();
+                    }
+                }
+                $PartnersEducationField = PartnersEducationField::findAllByUserId($Id);
+
+
+                $WorkingAsIDs = Yii::$app->request->post('PartnerWorkingAs')['iWorking_As_ID'];
+                if (count($WorkingAsIDs)) {
+                    PartnerWorkingAs::deleteAll(['iUser_ID' => $Id]);
+                    foreach ($WorkingAsIDs as $RK => $RV) {
+                        $PWorkingAsObj = new PartnerWorkingAs();
+                        $PWorkingAsObj->iUser_ID = $Id;
+                        $PWorkingAsObj->iWorking_As_ID = $RV;
+                        $STK = $PWorkingAsObj->save();
+                    }
+                }
+                $PartnerWorkingAS = PartnerWorkingAs::findAllByUserId($Id);
+
+                $WorkingWithIDs = Yii::$app->request->post('PartnerWorkingWith')['iWorking_With_ID'];
+                if (count($WorkingWithIDs)) {
+                    PartnerWorkingWith::deleteAll(['iUser_ID' => $Id]);
+                    foreach ($WorkingWithIDs as $RK => $RV) {
+                        $PWorkingWithObj = new PartnerWorkingWith();
+                        $PWorkingWithObj->iUser_ID = $Id;
+                        $PWorkingWithObj->iWorking_With_ID = $RV;
+                        $STK = $PWorkingWithObj->save();
+                    }
+                }
+                $PartnerWorkingWith = PartnerWorkingWith::findAllByUserId($Id);
+
 
                 $AnuualId = Yii::$app->request->post('PartnersAnnualIncome')['annual_income_id'];
-                //$WorkingW->scenario = PartnerWorkingWith::SCENARIO_ADD;
-                $AI->user_id = $id;
+                $AI->user_id = $Id;
                 $AI->annual_income_id = $AnuualId;
-                //$WorkingW->dtModified = $CurrDate;
-                //if($WorkingW->ID == ""){
-                //   $WorkingW->dtCreated = $CurrDate;
-                // }
                 $AI->save();
-                $show = false;
-
-                /*  $PartnerWorkingWithId = Yii::$app->request->post('PartnerWorkingWith')['iWorking_With_ID'];
-                  $PartnerWorkingWith->iUser_ID = $id;
-                  $PartnerWorkingWith->iWorking_With_ID = $PartnerWorkingWithId;
-                  $show = false;
-
-                  $PartnersAnnualIncomeId = Yii::$app->request->post('PartnersAnnualIncome')['annual_income_id'];
-                  $PartnersAnnualIncome->iUser_ID = $id;
-                  $PartnersAnnualIncome->annual_income_id = $PartnersAnnualIncomeId;
-                  $show = false;*/
 
             }
         }
+        $PartenersEduLevelArray = CommonHelper::convertArrayToString($PartnersEducationalLevel, 'iEducation_Level_ID');
+        $PartenersEduFieldArray = CommonHelper::convertArrayToString($PartnersEducationField, 'iEducation_Field_ID');
+        $PartenersWorkingAsArray = CommonHelper::convertArrayToString($PartnerWorkingAS, 'iWorking_As_ID');
+        $PartenersWorkingWithArray = CommonHelper::convertArrayToString($PartnerWorkingWith, 'iWorking_With_ID');
         $myModel = [
             //'model' => $model,
-            'PartnersEducationalLevel' => $PartnersEducationalLevel,
-            'PartnersEducationField' => $PartnersEducationField,
-            'PW' => $PW,
-            'WorkingW' => $WorkingW,
+            #'PartnersEducationalLevel' => $PartnersEducationalLevel,
+            #'PartnersEducationField' => $PartnersEducationField,
+            'PartenersEduLevelArray' => $PartenersEduLevelArray,
+            'PartenersEduFieldArray' => $PartenersEduFieldArray,
+            #'PartnerWorkingAS' => $PartnerWorkingAS,
+            'PartenersWorkingAsArray' => $PartenersWorkingAsArray,
+            #'PartnerWorkingWith' => $PartnerWorkingWith,
+            'PartenersWorkingWithArray' => $PartenersWorkingWithArray,
             'AI' => $AI,
             //'PartnerWorkingWith' => $PartnerWorkingWith,
             //'PartnersAnnualIncome' => $PartnersAnnualIncome,

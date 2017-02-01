@@ -23,6 +23,18 @@ class PartnersEducationalLevel extends \common\models\base\basePartnersEducation
         return 'partners_educational_level';
     }
 
+    public static function findByUserId($UserID)
+    {
+
+        return static::findOne(['iUser_ID' => $UserID]);
+    }
+
+    public static function findAllByUserId($UserID)
+    {
+
+        return static::findAll(['iUser_ID' => $UserID]);
+    }
+
     /**
      * @inheritdoc
      */
@@ -47,11 +59,6 @@ class PartnersEducationalLevel extends \common\models\base\basePartnersEducation
             'dtCreated' => 'Dt Created',
             'dtModified' => 'Dt Modified',
         ];
-    }
-
-    public static function findByUserId($userid) {
-
-        return static::findOne(['iUser_id' => $userid]);
     }
 
     public function getEducationLevelName()

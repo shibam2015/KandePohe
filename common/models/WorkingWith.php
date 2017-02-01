@@ -13,6 +13,11 @@ use Yii;
  */
 class WorkingWith extends \common\models\base\baseWorkingWith
 {
+    public static function getWorkingWithNames($iWorkingWithID)
+    {
+        return static::find()->select('vWorkingWithName')->where('iWorkingWithID In (' . $iWorkingWithID . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */

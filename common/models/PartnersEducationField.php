@@ -23,13 +23,25 @@ class PartnersEducationField extends \common\models\base\basePartnersEducationFi
         return 'partners_education_field';
     }
 
+    public static function findByUserId($UserID)
+    {
+
+        return static::findOne(['iUser_ID' => $UserID]);
+    }
+
+    public static function findAllByUserId($UserID)
+    {
+
+        return static::findAll(['iUser_ID' => $UserID]);
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-           // [['iUser_ID', 'iEducation_Field_ID'], 'required'],
+            // [['iUser_ID', 'iEducation_Field_ID'], 'required'],
             //[['iUser_ID', 'iEducation_Field_ID'], 'integer'],
             [['dtCreated', 'dtModified'], 'safe'],
         ];
@@ -47,11 +59,6 @@ class PartnersEducationField extends \common\models\base\basePartnersEducationFi
             'dtCreated' => 'Dt Created',
             'dtModified' => 'Dt Modified',
         ];
-    }
-
-    public static function findByUserId($userid) {
-
-        return static::findOne(['iUser_id' => $userid]);
     }
 
     public function getEducationFieldName()

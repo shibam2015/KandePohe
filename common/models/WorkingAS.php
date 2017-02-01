@@ -6,7 +6,12 @@ use Yii;
 
 class WorkingAS extends \common\models\base\baseWorkingAS
 {
-    
+
+    public static function getWorkingAsNames($iWorkingAsID)
+    {
+        return static::find()->select('vWorkingAsName')->where('iWorkingAsID In (' . $iWorkingAsID . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */
@@ -30,4 +35,5 @@ class WorkingAS extends \common\models\base\baseWorkingAS
             'eStatus' => 'Status',
         ];
     }
+
 }

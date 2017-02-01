@@ -34,24 +34,83 @@ use yii\helpers\ArrayHelper;
             ]
         ]);
         ?>
-        <?= $form->errorSummary([$PartnersEducationalLevel], ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
-        <?= $form->field($PartnersEducationalLevel, 'iEducation_Level_ID')->dropDownList(
-            ArrayHelper::map(CommonHelper::getEducationLevel(), 'iEducationLevelID', 'vEducationLevelName'),
-            ['class' => 'demo-default select-beast clsprofession', 'prompt' => 'Education Level']
-        ); ?>
+        <div class="form-group field-partnerseducationallevel-ieducation_level_id">
+            <label class="control-label col-sm-3 col-xs-3" for="partnerseducationallevel-ieducation_level_id">Education
+                Level</label>
 
-        <?= $form->field($PartnersEducationField, 'iEducation_Field_ID')->dropDownList(
-            ArrayHelper::map(CommonHelper::getEducationField(), 'iEducationFieldID', 'vEducationFieldName'),
-            ['class' => 'demo-default select-beast clsprofession', 'prompt' => 'Education Field']
-        ); ?>
-        <?= $form->field($PW, 'iWorking_As_ID')->dropDownList(
-            ArrayHelper::map(CommonHelper::getWorkingAS(), 'iWorkingAsID', 'vWorkingAsName'),
-            ['class' => 'demo-default select-beast clsprofession', 'prompt' => 'Working As']
-        ); ?>
-        <?= $form->field($WorkingW, 'iWorking_With_ID')->dropDownList(
-            ArrayHelper::map(CommonHelper::getWorkingWith(), 'iWorkingWithID', 'vWorkingWithName'),
-            ['class' => 'demo-default select-beast clsprofession', 'prompt' => 'Working With']
-        ); ?>
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clsprofession"
+                        placeholder="Select Education Level" name="PartnersEducationalLevel[iEducation_Level_ID][]"
+                        size="4">
+                    <?php
+                    foreach (CommonHelper::getEducationLevel() as $K => $V) { ?>
+                        <option
+                            value="<?= $V->iEducationLevelID ?>" <?php if (in_array($V->iEducationLevelID, $PartenersEduLevelArray)) {
+                            echo "selected";
+                        } ?>><?= $V->vEducationLevelName ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group field-partnerseducationfield-ieducation_field_id">
+            <label class="control-label col-sm-3 col-xs-3" for="partnerseducationfield-ieducation_field_id">Education
+                Field</label>
+
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clsprofession"
+                        placeholder="Select Education Field" name="PartnersEducationField[iEducation_Field_ID][]"
+                        size="4">
+                    <?php
+                    foreach (CommonHelper::getEducationField() as $K => $V) { ?>
+                        <option
+                            value="<?= $V->iEducationFieldID ?>" <?php if (in_array($V->iEducationFieldID, $PartenersEduFieldArray)) {
+                            echo "selected";
+                        } ?>><?= $V->vEducationFieldName ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group field-partnerworkingas-iworking_as_id">
+            <label class="control-label col-sm-3 col-xs-3" for="partnerworkingas-iworking_as_id">Working As</label>
+
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clsprofession"
+                        placeholder="Select Working As" name="PartnerWorkingAs[iWorking_As_ID][]" size="4">
+                    <?php
+                    foreach (CommonHelper::getWorkingAS() as $K => $V) { ?>
+                        <option
+                            value="<?= $V->iWorkingAsID ?>" <?php if (in_array($V->iWorkingAsID, $PartenersWorkingAsArray)) {
+                            echo "selected";
+                        } ?>><?= $V->vWorkingAsName ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group field-partnerworkingwith-iworking_with_id">
+            <label class="control-label col-sm-3 col-xs-3" for="partnerworkingwith-iworking_with_id">Working
+                With</label>
+
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clsprofession"
+                        placeholder="Select Working With" name="PartnerWorkingWith[iWorking_With_ID][]" size="4">
+                    <?php
+                    foreach (CommonHelper::getWorkingWith() as $K => $V) { ?>
+                        <option
+                            value="<?= $V->iWorkingWithID ?>" <?php if (in_array($V->iWorkingWithID, $PartenersWorkingWithArray)) {
+                            echo "selected";
+                        } ?>><?= $V->vWorkingWithName ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
+
         <?= $form->field($AI, 'annual_income_id')->dropDownList(
             ArrayHelper::map(CommonHelper::getAnnualIncome(), 'iAnnualIncomeID', 'vAnnualIncome'),
             ['class' => 'demo-default select-beast clsprofession', 'prompt' => 'Annual Income']
@@ -84,16 +143,20 @@ use yii\helpers\ArrayHelper;
 
         <dl class="dl-horizontal">
             <dt>Education Level</dt>
-            <dd><?= CommonHelper::setInputVal($PartnersEducationalLevel->educationLevelName->vEducationLevelName, 'text') ?>
+            <?php $PEducationLevelArray = \common\models\EducationLevel::getEducationLevelNames(CommonHelper::removeComma(implode(",", $PartenersEduLevelArray))); ?>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PEducationLevelArray, 'vEducationLevelName'), 'text') ?></dd>
             <dd>
             <dt>Education Field</dt>
-            <dd><?= CommonHelper::setInputVal($PartnersEducationField->educationFieldName->vEducationFieldName, 'text') ?>
+            <?php $PEducationFieldArray = \common\models\EducationField::getEducationFieldNames(CommonHelper::removeComma(implode(",", $PartenersEduFieldArray))); ?>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PEducationFieldArray, 'vEducationFieldName'), 'text') ?></dd>
             <dd>
             <dt>Working As</dt>
-            <dd><?= CommonHelper::setInputVal($PW->workingAsName->vWorkingAsName, 'text') ?>
+            <?php $PWorkingAsArray = \common\models\WorkingAS::getWorkingAsNames(CommonHelper::removeComma(implode(",", $PartenersWorkingAsArray))); ?>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PWorkingAsArray, 'vWorkingAsName'), 'text') ?></dd>
             <dd>
             <dt>Working With</dt>
-            <dd><?= CommonHelper::setInputVal($WorkingW->workingWithName->vWorkingWithName, 'text') ?>
+            <?php $PWorkingWithArray = \common\models\WorkingWith::getWorkingWithNames(CommonHelper::removeComma(implode(",", $PartenersWorkingWithArray))); ?>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PWorkingWithArray, 'vWorkingWithName'), 'text') ?></dd>
             <dd>
             <dt>Annual Income</dt>
             <dd><?= CommonHelper::setInputVal($AI->annualIncomeName->vAnnualIncome, 'text') ?>

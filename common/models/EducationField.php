@@ -13,6 +13,11 @@ use Yii;
  */
 class EducationField extends \common\models\base\baseEducationField
 {
+    public static function getEducationFieldNames($iEducationFieldID)
+    {
+        return static::find()->select('vEducationFieldName')->where('iEducationFieldID In (' . $iEducationFieldID . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */

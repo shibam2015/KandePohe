@@ -22,10 +22,16 @@ class PartnerWorkingWith extends \common\models\base\basePartnerWorkingWith
         return 'partner_working_with';
     }
 
-    public static function findByUserId($userid)
+    public static function findByUserId($UserID)
     {
 
-        return static::findOne(['iUser_id' => $userid]);
+        return static::findOne(['iUser_ID' => $UserID]);
+    }
+
+    public static function findAllByUserId($UserID)
+    {
+
+        return static::findAll(['iUser_ID' => $UserID]);
     }
 
     /**

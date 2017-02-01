@@ -6,7 +6,12 @@ use Yii;
 
 class EducationLevel extends \common\models\base\baseEducationLevel
 {
-    
+
+
+    public static function getEducationLevelNames($iEducationLevelID)
+    {
+        return static::find()->select('vEducationLevelName')->where('iEducationLevelID In (' . $iEducationLevelID . ')')->all();
+    }
 
     /**
      * @inheritdoc
