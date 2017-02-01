@@ -15,12 +15,24 @@ use Yii;
  */
 class PartnersGotra extends \common\models\base\basePartnersGotra
 {
-    
+
+    public static function findByUserId($UserId)
+    {
+
+        return static::findOne(['iUser_ID' => $UserId]);
+    }
+
+    public static function findAllByUserId($UserId)
+    {
+
+        return static::findAll(['iUser_ID' => $UserId]);
+    }
+
     public function rules()
     {
         return [
             //[['iUser_ID', 'iGotra_ID'], 'required'],
-           // [['iUser_ID', 'iGotra_ID'], 'integer'],
+            // [['iUser_ID', 'iGotra_ID'], 'integer'],
             [['dtCreated', 'dtModified'], 'safe'],
         ];
     }
@@ -37,11 +49,6 @@ class PartnersGotra extends \common\models\base\basePartnersGotra
             'dtCreated' => 'Dt Created',
             'dtModified' => 'Dt Modified',
         ];
-    }
-
-    public static function findByUserId($userid) {
-
-        return static::findOne(['iUser_id' => $userid]);
     }
 
     public function getGotraName()

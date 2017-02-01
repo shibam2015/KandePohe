@@ -129,10 +129,25 @@ use yii\helpers\ArrayHelper;
             ArrayHelper::map(CommonHelper::getNadi(), 'ID', 'Name'),
             ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Nadi']
         ); ?>
-        <?= $form->field($PartnersGotra, 'iGotra_ID')->dropDownList(
-            ArrayHelper::map(CommonHelper::getGotra(), 'iGotraID', 'vName'),
-            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Gotra']
-        ); ?>
+
+        <div class="form-group field-partnersgotra-igotra_id">
+            <label class="control-label col-sm-3 col-xs-3" for="partnersgotra-igotra_id">Gotra</label>
+
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clspreferences"
+                        placeholder="Select Gotra" name="PartnersGotra[iGotra_ID][]"
+                        size="4">
+                    <?php
+                    foreach (CommonHelper::getGotra() as $K => $V) { ?>
+                        <option
+                            value="<?= $V->iGotraID ?>" <?php if (in_array($V->iGotraID, $PartnersGotraPreferences)) {
+                            echo "selected";
+                        } ?>><?= $V->vName ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
 
 
         <?= $form->field($UPP, 'manglik')->RadioList(
@@ -229,8 +244,13 @@ use yii\helpers\ArrayHelper;
             <dt>Nadi</dt>
             <dd><?= CommonHelper::setInputVal($PartnersNadi->nadiName->Name, 'text') ?>
             <dd>
+
             <dt>Gotra</dt>
-            <dd><?= CommonHelper::setInputVal($PartnersGotra->gotraName->vName, 'text') ?>
+            <?php
+            #CommonHelper::pr($PartnersGotraPreferences);exit;
+            $PGotraArray = \common\models\MasterGotra::getPartnerGotraStatus(CommonHelper::removeComma(implode(",", $PartnersGotraPreferences))); ?>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PGotraArray, 'vName'), 'text') ?></dd>
+
             <dd>
             <dt>Mangalik</dt>
             <dd><?= CommonHelper::setInputVal($UPP->manglik, 'text') ?>

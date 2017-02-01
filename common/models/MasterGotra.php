@@ -21,6 +21,11 @@ class MasterGotra extends \common\models\base\baseMasterGotra
         return 'master_gotra';
     }*/
 
+    public static function getPartnerGotraStatus($iGotraID)
+    {
+        return static::find()->select('vName')->where('iGotraID In (' . $iGotraID . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */

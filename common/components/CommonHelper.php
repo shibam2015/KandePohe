@@ -914,14 +914,14 @@ class CommonHelper {
     public static function  convertArrayToString($Data, $Key)
     {
         $TempArray = array();
+        #var_dump($Data);
         if (count($Data) > 0) {
             foreach ($Data as $K => $V) {
-                #echo "<br> => ".$V->$Key;
                 $TempArray[] = $V->$Key;
             }
         }
         #CommonHelper::pr($TempArray);
-        return $TempArray;
+        return array_filter($TempArray);
     }
 
     public function getReligion()

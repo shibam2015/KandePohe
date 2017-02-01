@@ -662,9 +662,10 @@ class UserController extends Controller
         $Id = Yii::$app->user->identity->id;
         $PartenersReligion = PartenersReligion::findAllByUserId($Id) == NULL ? new PartenersReligion() : PartenersReligion::findAllByUserId($Id);
         $PartnersMaritalStatus = PartnersMaritalStatus::findAllByUserId($Id) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findAllByUserId($Id);
+        $PartnersGotra = PartnersGotra::findAllByUserId($Id) == NULL ? new PartnersGotra() : PartnersGotra::findAllByUserId($Id);
 
         $UPP = UserPartnerPreference::findByUserId($Id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($Id);
-        $PartnersGotra = PartnersGotra::findByUserId($Id) == NULL ? new PartnersGotra() : PartnersGotra::findByUserId($Id);
+
         $PartnersMothertongue = PartnersMothertongue::findByUserId($Id) == NULL ? new PartnersMothertongue() : PartnersMothertongue::findByUserId($Id);
         $PartnersCommunity = PartnersCommunity::findByUserId($Id) == NULL ? new PartnersCommunity() : PartnersCommunity::findByUserId($Id);
         $PartnersSubCommunity = PartnersSubcommunity::findByUserId($Id) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findByUserId($Id);
@@ -695,6 +696,7 @@ class UserController extends Controller
                     }
                 }
                 $PartenersReligion = PartenersReligion::findAllByUserId($Id);
+
                 $MaritalStatusID = Yii::$app->request->post('PartnersMaritalStatus')['iMarital_Status_ID'];
                 if (count($MaritalStatusID)) {
                     PartnersMaritalStatus::deleteAll(['iUser_ID' => $Id]);
@@ -708,6 +710,20 @@ class UserController extends Controller
                     }
                 }
                 $PartnersMaritalStatus = PartnersMaritalStatus::findAllByUserId($Id);
+
+                $GotraIDs = Yii::$app->request->post('PartnersGotra')['iGotra_ID'];
+                if (count($GotraIDs)) {
+                    PartnersGotra::deleteAll(['iUser_ID' => $Id]);
+                    foreach ($GotraIDs as $RK => $RV) {
+                        $PGotraObj = new PartnersGotra();
+                        $PGotraObj->iUser_ID = $Id;
+                        $PGotraObj->iGotra_ID = $RV;
+                        $PGotraObj->dtModified = $CurrDate;
+                        $PGotraObj->dtCreated = $CurrDate;
+                        $STK = $PGotraObj->save();
+                    }
+                }
+                $PartnersGotra = PartnersGotra::findAllByUserId($Id);
 
 
                 $UPP->iUser_id = $Id;
@@ -763,14 +779,7 @@ class UserController extends Controller
                 }
                 $PartnersNadi->save();
 
-                $GotraID = Yii::$app->request->post('PartnersGotra')['iGotra_ID'];
-                $PartnersGotra->iUser_ID = $Id;
-                $PartnersGotra->iGotra_ID = $GotraID;
-                $PartnersGotra->dtModified = $CurrDate;
-                if ($PartnersGotra->iPartners_Gotra_ID == "") {
-                    $PartnersGotra->dtCreated = $CurrDate;
-                }
-                $PartnersGotra->save();
+
 
 
                 $show = false;
@@ -810,16 +819,18 @@ class UserController extends Controller
                 $show = false;
             }
         }
-        # CommonHelper::pr($PartenersReligion);
-        # CommonHelper::pr($PartnersMaritalStatus);
-        $PartenersReligionIDs = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
-        #$PartnersMaritalPreferences = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
-        $PartnersMaritalPreferences = CommonHelper::convertArrayToString($PartnersMaritalStatus, 'iMarital_Status_ID');
+        #echo " ==> ";CommonHelper::pr($PartnersGotra);echo " <==";
 
+        $PartenersReligionIDs = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
+        $PartnersMaritalPreferences = CommonHelper::convertArrayToString($PartnersMaritalStatus, 'iMarital_Status_ID');
+        $PartnersGotraPreferences = CommonHelper::convertArrayToString($PartnersGotra, 'iGotra_ID');
+        #CommonHelper::pr($PartnersGotraPreferences);
+        # CommonHelper::pr($PartnersGotra);
         $myModel = [
             'PartenersReligion' => $PartenersReligion,
             'PartenersReligionIDs' => $PartenersReligionIDs,
             'PartnersMaritalPreferences' => $PartnersMaritalPreferences,
+            'PartnersGotraPreferences' => $PartnersGotraPreferences,
             'model' => $model,
             'UPP' => $UPP,
             'PartnersMaritalStatus' => $PartnersMaritalStatus,
