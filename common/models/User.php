@@ -858,6 +858,15 @@ characters are allowed.'
         return $this->hasOne(PropertyDetails::className(), ['ID' => 'vFamilyProperty']);
     }
 
+    public function getSkinTone()
+    {
+        return $this->hasOne(SkinTone::className(), ['ID' => 'vSkinTone']);
+    }
+
+    public function getBodyType()
+    {
+        return $this->hasOne(BodyType::className(), ['ID' => 'vBodyType']);
+    }
 
     /*public function generateUniqueRandomNumber($length = 9) {
         $PREFIX = CommonHelper::generatePrefix();

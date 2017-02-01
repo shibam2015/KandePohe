@@ -187,6 +187,26 @@ use yii\helpers\ArrayHelper;
             ]
         )
         ?>
+
+        <div class="form-group field-partnersskintone-iskin_tone_id">
+            <label class="control-label col-sm-3 col-xs-3" for="partnersskintone-iskin_tone_id">Skin Tone</label>
+
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clspreferences"
+                        placeholder="Select Skin Tone" name="PartnersGotra[iSkin_Tone_ID][]"
+                        size="4">
+                    <?php
+                    foreach (CommonHelper::getGotra() as $K => $V) { ?>
+                        <option
+                            value="<?= $V->iGotraID ?>" <?php if (in_array($V->iGotraID, $PartnersGotraPreferences)) {
+                            echo "selected";
+                        } ?>><?= $V->vName ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-4 col-md-offset-2">
                 <div class="form-cont">

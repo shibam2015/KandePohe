@@ -137,9 +137,9 @@ if ($show) {
             <dd><?= CommonHelper::setInputVal($model->height->vName, 'text') ?>
             <dd>
             <dt>Skin Tone</dt>
-            <dd><?= CommonHelper::setInputVal($model->vSkinTone, 'text') ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->skinTone->Name, 'text') ?></dd>
             <dt>Body type</dt>
-            <dd><?= CommonHelper::setInputVal($model->vBodyType, 'text') ?>
+            <dd><?= CommonHelper::setInputVal($model->bodyType->Name, 'text') ?></dd>
             <dd>
             <dt>Smoke</dt>
             <dd><?= CommonHelper::setInputVal($model->vSmoke, 'text') ?></dd>

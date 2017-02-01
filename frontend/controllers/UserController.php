@@ -15,6 +15,7 @@ use common\models\PartnersNadi;
 use common\models\PartnersNakshtra;
 use common\models\PartnersRaashi;
 use common\models\PartnersReligion;
+use common\models\PartnersSkinTone;
 use common\models\PartnersStates;
 use common\models\PartnersSubcommunity;
 use common\models\PartnerWorkingAs;
@@ -675,6 +676,8 @@ class UserController extends Controller
         $PartnersNakshtra = PartnersNakshtra::findByUserId($Id) == NULL ? new PartnersNakshtra() : PartnersNakshtra::findByUserId($Id);
         $PartnersNadi = PartnersNadi::findByUserId($Id) == NULL ? new PartnersNadi() : PartnersNadi::findByUserId($Id);
 
+        $PartnersSkinTone = PartnersSkinTone::findAllByUserId($Id) == NULL ? new PartnersSkinTone() : PartnersSkinTone::findAllByUserId($Id);
+
         $model = User::findOne($Id);
         #CommonHelper::pr($PartenersReligion);
         #echo " 111=> ";CommonHelper::pr($PartenersReligionIDs);echo "<=";exit;
@@ -682,6 +685,8 @@ class UserController extends Controller
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if(Yii::$app->request->post('save')){
+                $show = false;
+
                 $CurrDate = CommonHelper::getTime();
                 $ReligionId = Yii::$app->request->post('PartenersReligion')['iReligion_ID'];
                 if (count($ReligionId)) {
@@ -741,8 +746,6 @@ class UserController extends Controller
                 }
                 $UPP->save();
 
-
-
                 $RaashiID = Yii::$app->request->post('PartnersRaashi')['raashi_id'];
                 $PartnersRaashi->user_id = $Id;
                 $PartnersRaashi->raashi_id = $RaashiID;
@@ -779,11 +782,6 @@ class UserController extends Controller
                 }
                 $PartnersNadi->save();
 
-
-
-
-                $show = false;
-
                 $MotherID = Yii::$app->request->post('PartnersMothertongue')['iMothertongue_ID'];
                 $PartnersMothertongue->scenario = PartnersMothertongue::SCENARIO_ADD;
                 $PartnersMothertongue->iUser_ID = $Id;
@@ -793,7 +791,6 @@ class UserController extends Controller
                     $PartnersMothertongue->dtCreated = $CurrDate;
                 }
                 $PartnersMothertongue->save();
-                $show = false;
 
                 $CommunityID = Yii::$app->request->post('PartnersCommunity')['iCommunity_ID'];
                 $PartnersCommunity->scenario = PartnersCommunity::SCENARIO_ADD;
@@ -804,7 +801,6 @@ class UserController extends Controller
                     $PartnersCommunity->dtCreated = $CurrDate;
                 }
                 $PartnersCommunity->save();
-                $show = false;
 
                 $SubCommuID = Yii::$app->request->post('PartnersSubcommunity')['iSub_Community_ID'];
                 //CommonHelper::pr($PartnersSubCommunity);exit;
@@ -816,7 +812,6 @@ class UserController extends Controller
                     $PartnersSubCommunity->dtCreated = $CurrDate;
                 }
                 $PartnersSubCommunity->save();
-                $show = false;
             }
         }
         #echo " ==> ";CommonHelper::pr($PartnersGotra);echo " <==";
