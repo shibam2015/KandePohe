@@ -25,6 +25,11 @@ class BodyType extends \common\models\base\baseBodyType
         return 'body_type';
     }
 
+    public static function getPartnerBodyType($ID)
+    {
+        return static::find()->select('Name')->where('ID In (' . $ID . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */

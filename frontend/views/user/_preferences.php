@@ -193,14 +193,33 @@ use yii\helpers\ArrayHelper;
 
             <div class="col-sm-8 col-xs-8">
                 <select id="select-state" multiple class="demo-default select-beast clspreferences"
-                        placeholder="Select Skin Tone" name="PartnersGotra[iSkin_Tone_ID][]"
+                        placeholder="Select Skin Tone" name="PartnersSkinTone[iSkin_Tone_ID][]"
                         size="4">
                     <?php
-                    foreach (CommonHelper::getGotra() as $K => $V) { ?>
+                    foreach (CommonHelper::getSkinTone() as $K => $V) { ?>
                         <option
-                            value="<?= $V->iGotraID ?>" <?php if (in_array($V->iGotraID, $PartnersGotraPreferences)) {
+                            value="<?= $V->ID ?>" <?php if (in_array($V->ID, $PartnersSkinTone)) {
                             echo "selected";
-                        } ?>><?= $V->vName ?></option>
+                        } ?>><?= $V->Name ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group field-partnersbodytype-ibody_type_id">
+            <label class="control-label col-sm-3 col-xs-3" for="partnersbodytype-ibody_type_id">Body Type</label>
+
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clspreferences"
+                        placeholder="Select Body Type" name="PartnersBodyType[iBody_Type_ID][]"
+                        size="4">
+                    <?php
+                    foreach (CommonHelper::getBodyType() as $K => $V) { ?>
+                        <option
+                            value="<?= $V->ID ?>" <?php if (in_array($V->ID, $PartnersBodyType)) {
+                            echo "selected";
+                        } ?>><?= $V->Name ?></option>
                     <?php }
                     ?>
                 </select>
@@ -241,10 +260,9 @@ use yii\helpers\ArrayHelper;
             <dd><?= CommonHelper::setInputVal($UPP->age_to,'age') ?><dd>
             <dt>Height From</dt>
             <dd><?= CommonHelper::setInputVal($UPP->heightFrom->vName, 'text') ?>
-            <dd>
+
             <dt>Height To</dt>
             <dd><?= CommonHelper::setInputVal($UPP->heightTo->vName, 'text') ?>
-            <dd>
 
             <dt>Marital Status</dt>
             <?php $PMaritalStatusArray = \common\models\MasterMaritalStatus::getPartnerMaritalStatus(CommonHelper::removeComma(implode(",", $PartnersMaritalPreferences))); ?>
@@ -253,41 +271,35 @@ use yii\helpers\ArrayHelper;
 
             <dt>Mothertoungue</dt>
             <dd><?= CommonHelper::setInputVal($PartnersMothertongue->partnersMothertongueName->Name, 'text') ?>
-            <dd>
             <dt>Raashi</dt>
             <dd><?= CommonHelper::setInputVal($PartnersRaashi->raashiName->Name, 'text') ?>
-            <dd>
             <dt>Charan</dt>
             <dd><?= CommonHelper::setInputVal($PartnersCharan->charanName->Name, 'text') ?>
             <dt>Nakshtra</dt>
             <dd><?= CommonHelper::setInputVal($PartnersNakshtra->nakshtraName->Name, 'text') ?>
             <dt>Nadi</dt>
             <dd><?= CommonHelper::setInputVal($PartnersNadi->nadiName->Name, 'text') ?>
-            <dd>
 
             <dt>Gotra</dt>
             <?php
-            #CommonHelper::pr($PartnersGotraPreferences);exit;
             $PGotraArray = \common\models\MasterGotra::getPartnerGotraStatus(CommonHelper::removeComma(implode(",", $PartnersGotraPreferences))); ?>
             <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PGotraArray, 'vName'), 'text') ?></dd>
 
-            <dd>
             <dt>Mangalik</dt>
             <dd><?= CommonHelper::setInputVal($UPP->manglik, 'text') ?>
-            <dd>
 
             <dt>Community</dt>
             <dd><?= CommonHelper::setInputVal($PartnersCommunity->communityName->vName, 'text') ?>
-            <dd>
             <dt>Sub Community</dt>
             <dd><?= CommonHelper::setInputVal($PartnersSubCommunity->subCommunityName->vName, 'text') ?>
-            <dd>
             <dt>Drink</dt>
             <dd><?= CommonHelper::setInputVal($UPP->drink, 'text') ?>
-            <dd>
             <dt>Smoke</dt>
             <dd><?= CommonHelper::setInputVal($UPP->smoke, 'text') ?>
-            <dd>
+            <dt>Skin Tone</dt>
+            <?php
+            $PBodyTypeArray = \common\models\BodyType::getPartnerBodyType(CommonHelper::removeComma(implode(",", $PartnersBodyType))); ?>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PBodyTypeArray, 'Name'), 'text') ?></dd>
         </dl>
     <?php
     }

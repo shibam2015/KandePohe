@@ -23,6 +23,12 @@ class PartnersBodyType extends \common\models\base\basePartnersBodyType
         return 'partners_body_type';
     }
 
+    public static function findAllByUserId($UserId)
+    {
+
+        return static::findAll(['iUser_ID' => $UserId]);
+    }
+
     /**
      * @inheritdoc
      */

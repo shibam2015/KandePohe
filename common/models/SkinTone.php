@@ -23,6 +23,11 @@ class SkinTone extends \common\models\base\baseSkinTone
         return 'skin_tone';
     }
 
+    public static function getPartnerSkinTone($ID)
+    {
+        return static::find()->select('Name')->where(' ID In (' . $ID . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */

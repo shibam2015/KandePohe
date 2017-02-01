@@ -952,14 +952,12 @@ class CommonHelper {
 
     public function getSkinTone()
     {
-        $skintone = \common\models\SkinTone::find()->all();
-        return $skintone;
+        return \common\models\SkinTone::find()->all();
     }
 
     public function getBodyType()
     {
-        $bodytype = \common\models\BodyType::find()->all();
-        return $bodytype;
+        return \common\models\BodyType::find()->all();
     }
 
     public function getFamilyAffulenceLevel()

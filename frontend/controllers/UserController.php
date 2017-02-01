@@ -6,6 +6,7 @@ use common\components\MessageHelper;
 use common\components\SmsHelper;
 use common\models\Mailbox;
 use common\models\PartnersAnnualIncome;
+use common\models\PartnersBodyType;
 use common\models\PartnersCharan;
 use common\models\PartnersCities;
 use common\models\PartnersCommunity;
@@ -677,6 +678,7 @@ class UserController extends Controller
         $PartnersNadi = PartnersNadi::findByUserId($Id) == NULL ? new PartnersNadi() : PartnersNadi::findByUserId($Id);
 
         $PartnersSkinTone = PartnersSkinTone::findAllByUserId($Id) == NULL ? new PartnersSkinTone() : PartnersSkinTone::findAllByUserId($Id);
+        $PartnersBodyType = PartnersBodyType::findAllByUserId($Id) == NULL ? new PartnersBodyType() : PartnersBodyType::findAllByUserId($Id);
 
         $model = User::findOne($Id);
         #CommonHelper::pr($PartenersReligion);
@@ -729,7 +731,6 @@ class UserController extends Controller
                     }
                 }
                 $PartnersGotra = PartnersGotra::findAllByUserId($Id);
-
 
                 $UPP->iUser_id = $Id;
                 $UPP->age_from = Yii::$app->request->post('UserPartnerPreference')['age_from'];
@@ -812,6 +813,31 @@ class UserController extends Controller
                     $PartnersSubCommunity->dtCreated = $CurrDate;
                 }
                 $PartnersSubCommunity->save();
+
+
+                $SkinToneIDs = Yii::$app->request->post('PartnersSkinTone')['iSkin_Tone_ID'];
+                if (count($SkinToneIDs)) {
+                    PartnersSkinTone::deleteAll(['iUser_ID' => $Id]);
+                    foreach ($SkinToneIDs as $RK => $RV) {
+                        $PSkinToneObj = new PartnersSkinTone();
+                        $PSkinToneObj->iUser_ID = $Id;
+                        $PSkinToneObj->iSkin_Tone_ID = $RV;
+                        $STK = $PSkinToneObj->save();
+                    }
+                }
+                $PartnersSkinTone = PartnersSkinTone::findAllByUserId($Id);
+
+                $BodyTypeIDs = Yii::$app->request->post('PartnersBodyType')['iBody_Type_ID'];
+                if (count($BodyTypeIDs)) {
+                    PartnersBodyType::deleteAll(['iUser_ID' => $Id]);
+                    foreach ($BodyTypeIDs as $RK => $RV) {
+                        $PBodyTypeObj = new PartnersBodyType();
+                        $PBodyTypeObj->iUser_ID = $Id;
+                        $PBodyTypeObj->iBody_Type_ID = $RV;
+                        $STK = $PBodyTypeObj->save();
+                    }
+                }
+                $PartnersBodyType = PartnersBodyType::findAllByUserId($Id);
             }
         }
         #echo " ==> ";CommonHelper::pr($PartnersGotra);echo " <==";
@@ -819,6 +845,8 @@ class UserController extends Controller
         $PartenersReligionIDs = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
         $PartnersMaritalPreferences = CommonHelper::convertArrayToString($PartnersMaritalStatus, 'iMarital_Status_ID');
         $PartnersGotraPreferences = CommonHelper::convertArrayToString($PartnersGotra, 'iGotra_ID');
+        $PartnersSkinTone = CommonHelper::convertArrayToString($PartnersSkinTone, 'iSkin_Tone_ID');
+        $PartnersBodyType = CommonHelper::convertArrayToString($PartnersBodyType, 'iBody_Type_ID');
         #CommonHelper::pr($PartnersGotraPreferences);
         # CommonHelper::pr($PartnersGotra);
         $myModel = [
@@ -838,6 +866,8 @@ class UserController extends Controller
             'PartnersCharan' => $PartnersCharan,
             'PartnersNakshtra' => $PartnersNakshtra,
             'PartnersNadi' => $PartnersNadi,
+            'PartnersSkinTone' => $PartnersSkinTone,
+            'PartnersBodyType' => $PartnersBodyType,
 
         ];
         #commonHelper::pr($PartenersReligion);exit;
