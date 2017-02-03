@@ -12,6 +12,7 @@ use common\models\PartnersCities;
 use common\models\PartnersCommunity;
 use common\models\PartnersCountries;
 use common\models\PartnersDiet;
+use common\models\PartnersDrink;
 use common\models\PartnersFavouriteCousines;
 use common\models\PartnersFavouriteMusic;
 use common\models\PartnersFavouriteReads;
@@ -25,6 +26,7 @@ use common\models\PartnersPreferredMovies;
 use common\models\PartnersRaashi;
 use common\models\PartnersReligion;
 use common\models\PartnersSkinTone;
+use common\models\PartnersSmoke;
 use common\models\PartnersSpectacles;
 use common\models\PartnersStates;
 use common\models\PartnersSubcommunity;
@@ -690,9 +692,11 @@ class UserController extends Controller
         $PartnersBodyType = PartnersBodyType::findAllByUserId($Id) == NULL ? new PartnersBodyType() : PartnersBodyType::findAllByUserId($Id);
         $PartnersDiet = PartnersDiet::findAllByUserId($Id) == NULL ? new PartnersDiet() : PartnersDiet::findAllByUserId($Id);
         $PartnersSpectacles = PartnersSpectacles::findAllByUserId($Id) == NULL ? new PartnersSpectacles() : PartnersSpectacles::findAllByUserId($Id);
+        $PartnersSmoke = PartnersSmoke::findAllByUserId($Id) == NULL ? new PartnersSmoke() : PartnersSmoke::findAllByUserId($Id);
+        $PartnersDrink = PartnersDrink::findAllByUserId($Id) == NULL ? new PartnersDrink() : PartnersDrink::findAllByUserId($Id);
 
         $model = User::findOne($Id);
-        #CommonHelper::pr($PartenersReligion);
+        #CommonHelper::pr($PartnersSmoke);exit;
         #echo " 111=> ";CommonHelper::pr($PartenersReligionIDs);echo "<=";exit;
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
@@ -873,6 +877,31 @@ class UserController extends Controller
                     }
                 }
                 $PartnersSpectacles = PartnersSpectacles::findAllByUserId($Id);
+
+                $SmokeTypes = Yii::$app->request->post('PartnersSmoke')['smoke_type'];
+                if (count($SmokeTypes)) {
+                    PartnersSmoke::deleteAll(['user_id' => $Id]);
+                    foreach ($SmokeTypes as $RK => $RV) {
+                        $PSmokeObj = new PartnersSmoke();
+                        $PSmokeObj->user_id = $Id;
+                        $PSmokeObj->smoke_type = $RV;
+                        $STK = $PSmokeObj->save();
+                    }
+                }
+                $PartnersSmoke = PartnersSmoke::findAllByUserId($Id);
+
+                $DrinkTypes = Yii::$app->request->post('PartnersDrink')['drink_type'];
+                if (count($DrinkTypes)) {
+                    PartnersDrink::deleteAll(['user_id' => $Id]);
+                    foreach ($DrinkTypes as $RK => $RV) {
+                        $PDrinkObj = new PartnersDrink();
+                        $PDrinkObj->user_id = $Id;
+                        $PDrinkObj->drink_type = $RV;
+                        $STK = $PDrinkObj->save();
+                    }
+                }
+                $PartnersDrink = PartnersDrink::findAllByUserId($Id);
+
             }
         }
         #echo " ==> ";CommonHelper::pr($PartnersGotra);echo " <==";
@@ -884,7 +913,9 @@ class UserController extends Controller
         $PartnersBodyType = CommonHelper::convertArrayToString($PartnersBodyType, 'iBody_Type_ID');
         $PartnersDiet = CommonHelper::convertArrayToString($PartnersDiet, 'diet_id');
         $PartnersSpectacles = CommonHelper::convertArrayToString($PartnersSpectacles, 'type');
-        #CommonHelper::pr($PartnersGotraPreferences);
+        $PartnersSmoke = CommonHelper::convertArrayToString($PartnersSmoke, 'smoke_type');
+        $PartnersDrink = CommonHelper::convertArrayToString($PartnersDrink, 'drink_type');
+        #CommonHelper::pr($PartnersSmoke);exit;
         # CommonHelper::pr($PartnersGotra);
         $myModel = [
             'PartenersReligion' => $PartenersReligion,
@@ -907,6 +938,8 @@ class UserController extends Controller
             'PartnersBodyType' => $PartnersBodyType,
             'PartnersDiet' => $PartnersDiet,
             'PartnersSpectacles' => $PartnersSpectacles,
+            'PartnersSmoke' => $PartnersSmoke,
+            'PartnersDrink' => $PartnersDrink,
 
         ];
         #commonHelper::pr($PartenersReligion);exit;

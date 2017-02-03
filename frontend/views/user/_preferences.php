@@ -162,31 +162,43 @@ use yii\helpers\ArrayHelper;
             ]
         )
         ?>
+        <div class="form-group field-partnersdrink-drink_type">
+            <label class="control-label col-sm-3 col-xs-3" for="partnersdrink-drink_type">Drink</label>
 
-        <?= $form->field($UPP, 'drink')->RadioList(
-            ['Yes' => 'Yes', 'No' => 'No', 'Occasionally' => 'Occasionally'],
-            [
-                'item' => function ($index, $label, $name, $checked, $value) {
-                    $checked = ($checked) ? 'checked' : '';
-                    $return = '<input type="radio" class = "drink" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                    $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
-                    return $return;
-                }
-            ]
-        )
-        ?>
-        <?= $form->field($UPP, 'smoke')->RadioList(
-            ['Yes' => 'Yes', 'No' => 'No', 'Occasionally' => 'Occasionally'],
-            [
-                'item' => function ($index, $label, $name, $checked, $value) {
-                    $checked = ($checked) ? 'checked' : '';
-                    $return = '<input type="radio" class = "smoke" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                    $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
-                    return $return;
-                }
-            ]
-        )
-        ?>
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clspreferences"
+                        placeholder="Select Drink" name="PartnersDrink[drink_type][]"
+                        size="4">
+                    <?php
+                    foreach (Yii::$app->params['drinkArray'] as $K => $V) { ?>
+                        <option
+                            value="<?= $V ?>" <?php if (in_array($V, $PartnersDrink)) {
+                            echo "selected";
+                        } ?>><?= $K ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group field-partnerssmoke-smoke_type">
+            <label class="control-label col-sm-3 col-xs-3" for="partnerssmoke-smoke_type">Smoke</label>
+
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clspreferences"
+                        placeholder="Select Smoke" name="PartnersSmoke[smoke_type][]"
+                        size="4">
+                    <?php
+                    foreach (Yii::$app->params['smokeArray'] as $K => $V) { ?>
+                        <option
+                            value="<?= $V ?>" <?php if (in_array($V, $PartnersSmoke)) {
+                            echo "selected";
+                        } ?>><?= $K ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
 
         <div class="form-group field-partnersskintone-iskin_tone_id">
             <label class="control-label col-sm-3 col-xs-3" for="partnersskintone-iskin_tone_id">Skin Tone</label>
@@ -330,9 +342,9 @@ use yii\helpers\ArrayHelper;
             <dt>Sub Community</dt>
             <dd><?= CommonHelper::setInputVal($PartnersSubCommunity->subCommunityName->vName, 'text') ?>
             <dt>Drink</dt>
-            <dd><?= CommonHelper::setInputVal($UPP->drink, 'text') ?>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getValuesFromArray(Yii::$app->params['drinkArray'], $PartnersDrink, 1), 'text') ?></dd>
             <dt>Smoke</dt>
-            <dd><?= CommonHelper::setInputVal($UPP->smoke, 'text') ?>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getValuesFromArray(Yii::$app->params['smokeArray'], $PartnersSmoke, 1), 'text') ?></dd>
             <dt>Skin Tone</dt>
             <?php $PBodyTypeArray = \common\models\BodyType::getPartnerBodyType(CommonHelper::removeComma(implode(",", $PartnersBodyType))); ?>
             <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PBodyTypeArray, 'Name'), 'text') ?></dd>
