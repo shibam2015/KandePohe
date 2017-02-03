@@ -21,6 +21,11 @@ class MasterDiet extends \common\models\base\baseMasterDiet
         return 'master_diet';
     }*/
 
+    public static function getDietNames($iDietID)
+    {
+        return static::find()->select('vName')->where('iDietID In (' . $iDietID . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */
@@ -43,4 +48,5 @@ class MasterDiet extends \common\models\base\baseMasterDiet
             'eStatus' => 'Status',
         ];
     }
+
 }

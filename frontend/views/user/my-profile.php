@@ -493,7 +493,8 @@ if (!Yii::$app->user->isGuest) {
                                                 </div>
                                                 <?php Pjax::begin(['id' => 'my_profession', 'enablePushState' => false]); ?>
                                                 <div class="div_profession">
-                                                    <i class="fa fa-spinner fa-spin pink"></i> Profession Preferences
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Educational &
+                                                    Occupational Preferences
                                                     Loading...
                                                 </div>
                                                 <?php Pjax::end(); ?>
@@ -541,8 +542,32 @@ if (!Yii::$app->user->isGuest) {
                                                 </div>
                                                 <?php Pjax::end(); ?>
                                             </div>
-
+                                            <div class="profile-edit pull-right">
+                                                <ul class="list-inline major-control">
+                                                    <li role="presentation"><a href="javascript:void(0)"
+                                                                               class="edit_partner_hobby"
+                                                                               attr-name="edit_partner_hobby"><i
+                                                                class="fa fa-pencil"></i> Edit</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="inner-block">
+                                                <div class="fb-profile-text padd-xs padd-tp-0">
+                                                    <h1><span
+                                                            class="heading-icons icon2"></span>
+                                                        Hobby/Interest Preferences
+                                                    </h1>
+                                                </div>
+                                                <?php Pjax::begin(['id' => 'partner_hobby', 'enablePushState' => false]); ?>
+                                                <div class="partner_hobby">
+                                                    <i class="fa fa-spinner fa-spin pink"></i> Hobby/Interest
+                                                    Preferences
+                                                    Loading...
+                                                </div>
+                                                <?php Pjax::end(); ?>
+                                            </div>
                                         </div>
+
+
                                         <div role="tabpanel" class="tab-pane" id="tab3">
                                             <div class="profile-edit pull-right">
                                                 <ul class="list-inline major-control">
@@ -952,6 +977,15 @@ $this->registerJs('
     $(document).on("click","#cancel_edit_location",function(e){
         getInlineDetail("' . Url::to(['user/edit-preferences-location']) . '","#my_location","1");
     });
+
+    $(".edit_partner_hobby").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences-hobby']) . '","#partner_hobby","0");
+    });
+    getInlineDetail("' . Url::to(['user/edit-preferences-hobby']) . '","#partner_hobby","1");
+    $(document).on("click","#cancel_edit_partner_hobby",function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences-hobby']) . '","#partner_hobby","1");
+    });
+
     $(".edit_looking").click(function(e){
         getInlineDetail("' . Url::to(['user/edit-looking-for']) . '","#my_looking","0");
     });

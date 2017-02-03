@@ -11,9 +11,17 @@ use common\models\PartnersCharan;
 use common\models\PartnersCities;
 use common\models\PartnersCommunity;
 use common\models\PartnersCountries;
+use common\models\PartnersDiet;
+use common\models\PartnersFavouriteCousines;
+use common\models\PartnersFavouriteMusic;
+use common\models\PartnersFavouriteReads;
+use common\models\PartnersFitnessActivities;
+use common\models\PartnersInterest;
 use common\models\PartnersMothertongue;
 use common\models\PartnersNadi;
 use common\models\PartnersNakshtra;
+use common\models\PartnersPreferredDressType;
+use common\models\PartnersPreferredMovies;
 use common\models\PartnersRaashi;
 use common\models\PartnersReligion;
 use common\models\PartnersSkinTone;
@@ -679,6 +687,7 @@ class UserController extends Controller
 
         $PartnersSkinTone = PartnersSkinTone::findAllByUserId($Id) == NULL ? new PartnersSkinTone() : PartnersSkinTone::findAllByUserId($Id);
         $PartnersBodyType = PartnersBodyType::findAllByUserId($Id) == NULL ? new PartnersBodyType() : PartnersBodyType::findAllByUserId($Id);
+        $PartnersDiet = PartnersDiet::findAllByUserId($Id) == NULL ? new PartnersDiet() : PartnersDiet::findAllByUserId($Id);
 
         $model = User::findOne($Id);
         #CommonHelper::pr($PartenersReligion);
@@ -838,6 +847,18 @@ class UserController extends Controller
                     }
                 }
                 $PartnersBodyType = PartnersBodyType::findAllByUserId($Id);
+
+                $DietIDs = Yii::$app->request->post('PartnersDiet')['diet_id'];
+                if (count($DietIDs)) {
+                    PartnersDiet::deleteAll(['user_id' => $Id]);
+                    foreach ($DietIDs as $RK => $RV) {
+                        $PDietObj = new PartnersDiet();
+                        $PDietObj->user_id = $Id;
+                        $PDietObj->diet_id = $RV;
+                        $STK = $PDietObj->save();
+                    }
+                }
+                $PartnersDiet = PartnersDiet::findAllByUserId($Id);
             }
         }
         #echo " ==> ";CommonHelper::pr($PartnersGotra);echo " <==";
@@ -847,6 +868,7 @@ class UserController extends Controller
         $PartnersGotraPreferences = CommonHelper::convertArrayToString($PartnersGotra, 'iGotra_ID');
         $PartnersSkinTone = CommonHelper::convertArrayToString($PartnersSkinTone, 'iSkin_Tone_ID');
         $PartnersBodyType = CommonHelper::convertArrayToString($PartnersBodyType, 'iBody_Type_ID');
+        $PartnersDiet = CommonHelper::convertArrayToString($PartnersDiet, 'diet_id');
         #CommonHelper::pr($PartnersGotraPreferences);
         # CommonHelper::pr($PartnersGotra);
         $myModel = [
@@ -868,6 +890,7 @@ class UserController extends Controller
             'PartnersNadi' => $PartnersNadi,
             'PartnersSkinTone' => $PartnersSkinTone,
             'PartnersBodyType' => $PartnersBodyType,
+            'PartnersDiet' => $PartnersDiet,
 
         ];
         #commonHelper::pr($PartenersReligion);exit;
@@ -966,6 +989,128 @@ class UserController extends Controller
             'show' => $show
         ];
         return $this->renderAjax('_profession', $myModel);
+    }
+
+    public function actionEditPreferencesHobby()
+    {
+        $Id = Yii::$app->user->identity->id;
+        $PartnersInterest = PartnersInterest::findAllByUserId($Id) == NULL ? new PartnersInterest() : PartnersInterest::findAllByUserId($Id);
+        $PartnersReads = PartnersFavouriteReads::findAllByUserId($Id) == NULL ? new PartnersFavouriteReads() : PartnersFavouriteReads::findAllByUserId($Id);
+        $PartnersMusic = PartnersFavouriteMusic::findAllByUserId($Id) == NULL ? new PartnersFavouriteMusic() : PartnersFavouriteMusic::findAllByUserId($Id);
+        $PartnersCousins = PartnersFavouriteCousines::findAllByUserId($Id) == NULL ? new PartnersFavouriteCousines() : PartnersFavouriteCousines::findAllByUserId($Id);
+        $PartnersFitnessActivity = PartnersFitnessActivities::findAllByUserId($Id) == NULL ? new PartnersFitnessActivities() : PartnersFitnessActivities::findAllByUserId($Id);
+        $PartnersDressStyle = PartnersPreferredDressType::findAllByUserId($Id) == NULL ? new PartnersPreferredDressType() : PartnersPreferredDressType::findAllByUserId($Id);
+        $PartnersMovies = PartnersPreferredMovies::findAllByUserId($Id) == NULL ? new PartnersPreferredMovies() : PartnersPreferredMovies::findAllByUserId($Id);
+
+        $show = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if (Yii::$app->request->post('save')) {
+                $show = false;
+                $InterestIDs = Yii::$app->request->post('PartnersInterest')['interest_id'];
+                if (count($InterestIDs)) {
+                    PartnersInterest::deleteAll(['user_id' => $Id]);
+                    foreach ($InterestIDs as $RK => $RV) {
+                        $PInterestObj = new PartnersInterest();
+                        $PInterestObj->user_id = $Id;
+                        $PInterestObj->interest_id = $RV;
+                        $STK = $PInterestObj->save();
+                    }
+                }
+                $PartnersInterest = PartnersInterest::findAllByUserId($Id);
+
+                $ReadsIDs = Yii::$app->request->post('PartnersFavouriteReads')['read_id'];
+                if (count($ReadsIDs)) {
+                    PartnersFavouriteReads::deleteAll(['user_id' => $Id]);
+                    foreach ($ReadsIDs as $RK => $RV) {
+                        $PReadsObj = new PartnersFavouriteReads();
+                        $PReadsObj->user_id = $Id;
+                        $PReadsObj->read_id = $RV;
+                        $STK = $PReadsObj->save();
+                    }
+                }
+                $PartnersReads = PartnersFavouriteReads::findAllByUserId($Id);
+
+                $MusicIDs = Yii::$app->request->post('PartnersFavouriteMusic')['music_name_id'];
+                if (count($MusicIDs)) {
+                    PartnersFavouriteMusic::deleteAll(['user_id' => $Id]);
+                    foreach ($MusicIDs as $RK => $RV) {
+                        $PMusicObj = new PartnersFavouriteMusic();
+                        $PMusicObj->user_id = $Id;
+                        $PMusicObj->music_name_id = $RV;
+                        $STK = $PMusicObj->save();
+                    }
+                }
+                $PartnersMusic = PartnersFavouriteMusic::findAllByUserId($Id);
+
+                $CousinsIDs = Yii::$app->request->post('PartnersFavouriteCousines')['cousines_id'];
+                if (count($CousinsIDs)) {
+                    PartnersFavouriteCousines::deleteAll(['user_id' => $Id]);
+                    foreach ($CousinsIDs as $RK => $RV) {
+                        $PCousinsObj = new PartnersFavouriteCousines();
+                        $PCousinsObj->user_id = $Id;
+                        $PCousinsObj->cousines_id = $RV;
+                        $STK = $PCousinsObj->save();
+                    }
+                }
+                $PartnersCousins = PartnersFavouriteCousines::findAllByUserId($Id);
+
+                $FitnessIDs = Yii::$app->request->post('PartnersFitnessActivities')['fitness_id'];
+                if (count($FitnessIDs)) {
+                    PartnersFitnessActivities::deleteAll(['user_id' => $Id]);
+                    foreach ($FitnessIDs as $RK => $RV) {
+                        $PFitnessObj = new PartnersFitnessActivities();
+                        $PFitnessObj->user_id = $Id;
+                        $PFitnessObj->fitness_id = $RV;
+                        $STK = $PFitnessObj->save();
+                    }
+                }
+                $PartnersFitnessActivity = PartnersFitnessActivities::findAllByUserId($Id);
+
+                $DressStyleIDs = Yii::$app->request->post('PartnersPreferredDressType')['dress_style_id'];
+                if (count($DressStyleIDs)) {
+                    PartnersPreferredDressType::deleteAll(['user_id' => $Id]);
+                    foreach ($DressStyleIDs as $RK => $RV) {
+                        $PDressStyleObj = new PartnersPreferredDressType();
+                        $PDressStyleObj->user_id = $Id;
+                        $PDressStyleObj->dress_style_id = $RV;
+                        $STK = $PDressStyleObj->save();
+                    }
+                }
+                $PartnersDressStyle = PartnersPreferredDressType::findAllByUserId($Id);
+
+                $MoviesIDs = Yii::$app->request->post('PartnersPreferredMovies')['movie_id'];
+                if (count($MoviesIDs)) {
+                    PartnersPreferredMovies::deleteAll(['user_id' => $Id]);
+                    foreach ($MoviesIDs as $RK => $RV) {
+                        $PMoviesObj = new PartnersPreferredMovies();
+                        $PMoviesObj->user_id = $Id;
+                        $PMoviesObj->movie_id = $RV;
+                        $STK = $PMoviesObj->save();
+                    }
+                }
+                $PartnersMovies = PartnersPreferredMovies::findAllByUserId($Id);
+
+            }
+        }
+        $PartenersInterestArray = CommonHelper::convertArrayToString($PartnersInterest, 'interest_id');
+        $PartenersFavReadsArray = CommonHelper::convertArrayToString($PartnersReads, 'read_id');
+        $PartenersMusicArray = CommonHelper::convertArrayToString($PartnersMusic, 'music_name_id');
+        $PartenersCousinsArray = CommonHelper::convertArrayToString($PartnersCousins, 'cousines_id');
+        $PartenersFitnessArray = CommonHelper::convertArrayToString($PartnersFitnessActivity, 'fitness_id');
+        $PartenersDressStyleArray = CommonHelper::convertArrayToString($PartnersDressStyle, 'dress_style_id');
+        $PartenersMoviesArray = CommonHelper::convertArrayToString($PartnersMovies, 'movie_id');
+        $myModel = [
+            'PartenersInterestArray' => $PartenersInterestArray,
+            'PartenersFavReadsArray' => $PartenersFavReadsArray,
+            'PartenersMusicArray' => $PartenersMusicArray,
+            'PartenersCousinsArray' => $PartenersCousinsArray,
+            'PartenersFitnessArray' => $PartenersFitnessArray,
+            'PartenersDressStyleArray' => $PartenersDressStyleArray,
+            'PartenersMoviesArray' => $PartenersMoviesArray,
+            'show' => $show
+        ];
+        return $this->renderAjax('_hobby_partners', $myModel);
     }
 
     public function actionEditPreferencesLocation()

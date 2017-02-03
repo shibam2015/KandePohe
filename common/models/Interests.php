@@ -26,7 +26,6 @@ class Interests extends \common\models\base\baseInterests
 
     public static function getInterestNames($InterestString)
     {
-        #echo "=>>>> ".$InterestString;exit;
         return static::find()->select('Name')->where('ID In (' . $InterestString . ')')->all();
     }
 

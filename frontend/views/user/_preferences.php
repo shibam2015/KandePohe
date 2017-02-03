@@ -226,6 +226,25 @@ use yii\helpers\ArrayHelper;
             </div>
         </div>
 
+        <div class="form-group field-partnersdiet-diet_id">
+            <label class="control-label col-sm-3 col-xs-3" for="partnersdiet-diet_id">Diet</label>
+
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clspreferences"
+                        placeholder="Select Diet" name="PartnersDiet[diet_id][]"
+                        size="4">
+                    <?php
+                    foreach (CommonHelper::getDiet() as $K => $V) { ?>
+                        <option
+                            value="<?= $V->iDietID ?>" <?php if (in_array($V->iDietID, $PartnersDiet)) {
+                            echo "selected";
+                        } ?>><?= $V->vName ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-4 col-md-offset-2">
                 <div class="form-cont">
@@ -281,8 +300,7 @@ use yii\helpers\ArrayHelper;
             <dd><?= CommonHelper::setInputVal($PartnersNadi->nadiName->Name, 'text') ?>
 
             <dt>Gotra</dt>
-            <?php
-            $PGotraArray = \common\models\MasterGotra::getPartnerGotraStatus(CommonHelper::removeComma(implode(",", $PartnersGotraPreferences))); ?>
+            <?php $PGotraArray = \common\models\MasterGotra::getPartnerGotraStatus(CommonHelper::removeComma(implode(",", $PartnersGotraPreferences))); ?>
             <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PGotraArray, 'vName'), 'text') ?></dd>
 
             <dt>Mangalik</dt>
@@ -297,9 +315,11 @@ use yii\helpers\ArrayHelper;
             <dt>Smoke</dt>
             <dd><?= CommonHelper::setInputVal($UPP->smoke, 'text') ?>
             <dt>Skin Tone</dt>
-            <?php
-            $PBodyTypeArray = \common\models\BodyType::getPartnerBodyType(CommonHelper::removeComma(implode(",", $PartnersBodyType))); ?>
+            <?php $PBodyTypeArray = \common\models\BodyType::getPartnerBodyType(CommonHelper::removeComma(implode(",", $PartnersBodyType))); ?>
             <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PBodyTypeArray, 'Name'), 'text') ?></dd>
+            <dt>Diet</dt>
+            <?php $PDietArray = \common\models\MasterDiet::getDietNames(CommonHelper::removeComma(implode(",", $PartnersDiet))); ?>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PDietArray, 'vName'), 'text') ?></dd>
         </dl>
     <?php
     }
