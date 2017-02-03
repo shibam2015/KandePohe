@@ -25,6 +25,7 @@ use common\models\PartnersPreferredMovies;
 use common\models\PartnersRaashi;
 use common\models\PartnersReligion;
 use common\models\PartnersSkinTone;
+use common\models\PartnersSpectacles;
 use common\models\PartnersStates;
 use common\models\PartnersSubcommunity;
 use common\models\PartnerWorkingAs;
@@ -688,6 +689,7 @@ class UserController extends Controller
         $PartnersSkinTone = PartnersSkinTone::findAllByUserId($Id) == NULL ? new PartnersSkinTone() : PartnersSkinTone::findAllByUserId($Id);
         $PartnersBodyType = PartnersBodyType::findAllByUserId($Id) == NULL ? new PartnersBodyType() : PartnersBodyType::findAllByUserId($Id);
         $PartnersDiet = PartnersDiet::findAllByUserId($Id) == NULL ? new PartnersDiet() : PartnersDiet::findAllByUserId($Id);
+        $PartnersSpectacles = PartnersSpectacles::findAllByUserId($Id) == NULL ? new PartnersSpectacles() : PartnersSpectacles::findAllByUserId($Id);
 
         $model = User::findOne($Id);
         #CommonHelper::pr($PartenersReligion);
@@ -859,6 +861,18 @@ class UserController extends Controller
                     }
                 }
                 $PartnersDiet = PartnersDiet::findAllByUserId($Id);
+
+                $SpectaclesTypes = Yii::$app->request->post('PartnersSpectacles')['type'];
+                if (count($SpectaclesTypes)) {
+                    PartnersSpectacles::deleteAll(['user_id' => $Id]);
+                    foreach ($SpectaclesTypes as $RK => $RV) {
+                        $PSpectaclesObj = new PartnersSpectacles();
+                        $PSpectaclesObj->user_id = $Id;
+                        $PSpectaclesObj->type = $RV;
+                        $STK = $PSpectaclesObj->save();
+                    }
+                }
+                $PartnersSpectacles = PartnersSpectacles::findAllByUserId($Id);
             }
         }
         #echo " ==> ";CommonHelper::pr($PartnersGotra);echo " <==";
@@ -869,6 +883,7 @@ class UserController extends Controller
         $PartnersSkinTone = CommonHelper::convertArrayToString($PartnersSkinTone, 'iSkin_Tone_ID');
         $PartnersBodyType = CommonHelper::convertArrayToString($PartnersBodyType, 'iBody_Type_ID');
         $PartnersDiet = CommonHelper::convertArrayToString($PartnersDiet, 'diet_id');
+        $PartnersSpectacles = CommonHelper::convertArrayToString($PartnersSpectacles, 'type');
         #CommonHelper::pr($PartnersGotraPreferences);
         # CommonHelper::pr($PartnersGotra);
         $myModel = [
@@ -891,6 +906,7 @@ class UserController extends Controller
             'PartnersSkinTone' => $PartnersSkinTone,
             'PartnersBodyType' => $PartnersBodyType,
             'PartnersDiet' => $PartnersDiet,
+            'PartnersSpectacles' => $PartnersSpectacles,
 
         ];
         #commonHelper::pr($PartenersReligion);exit;

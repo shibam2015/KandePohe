@@ -245,6 +245,25 @@ use yii\helpers\ArrayHelper;
             </div>
         </div>
 
+        <div class="form-group field-partnersspectacles-type">
+            <label class="control-label col-sm-3 col-xs-3" for="partnersspectacles-type">Spectacles</label>
+
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clspreferences"
+                        placeholder="Select a Spectacles" name="PartnersSpectacles[type][]"
+                        size="4">
+                    <?php
+                    foreach (Yii::$app->params['eyesArray'] as $K => $V) { ?>
+                        <option
+                            value="<?= $V ?>" <?php if (in_array($V, $PartnersSpectacles)) {
+                            echo "selected";
+                        } ?>><?= $K ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-4 col-md-offset-2">
                 <div class="form-cont">
@@ -320,6 +339,8 @@ use yii\helpers\ArrayHelper;
             <dt>Diet</dt>
             <?php $PDietArray = \common\models\MasterDiet::getDietNames(CommonHelper::removeComma(implode(",", $PartnersDiet))); ?>
             <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PDietArray, 'vName'), 'text') ?></dd>
+            <dt>Spectacles</dt>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getValuesFromArray(Yii::$app->params['eyesArray'], $PartnersSpectacles, 1), 'text') ?></dd>
         </dl>
     <?php
     }

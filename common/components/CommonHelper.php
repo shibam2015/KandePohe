@@ -1178,6 +1178,24 @@ class CommonHelper {
         return \common\models\MasterHeights::find()->all();
     }
 
+    public function getValuesFromArray($MainArray, $ValueArray, $Key = 1)
+    {
+        $Names = '';
+        if (count($MainArray)) {
+            foreach ($MainArray as $K => $V) {
+                if ($Key == 1) {
+                    if (in_array($V, $ValueArray)) {
+                        $Names .= $K . " , ";
+                    }
+                } else {
+                    $Names .= $V . " , ";
+                }
+
+            }
+        }
+        return trim($Names, " , ");
+    }
+
 }
 ?>
 
