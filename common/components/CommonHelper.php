@@ -1188,7 +1188,9 @@ class CommonHelper {
                         $Names .= $K . " , ";
                     }
                 } else {
-                    $Names .= $V . " , ";
+                    if (in_array($K, $ValueArray)) {
+                        $Names .= $V . " , ";
+                    }
                 }
 
             }

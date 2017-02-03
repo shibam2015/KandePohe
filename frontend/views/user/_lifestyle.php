@@ -41,6 +41,7 @@ if ($show) {
         ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
         ['class' => 'demo-default select-beast clslifestyle', 'prompt' => 'Height']
     ); ?>
+
     <?= $form->field($model, 'vSkinTone')->RadioList(
         ArrayHelper::map(CommonHelper::getSkinTone(), 'ID', 'Name'),
         ['item' => function ($index, $label, $name, $checked, $value) {

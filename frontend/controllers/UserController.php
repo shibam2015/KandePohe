@@ -13,6 +13,8 @@ use common\models\PartnersCommunity;
 use common\models\PartnersCountries;
 use common\models\PartnersDiet;
 use common\models\PartnersDrink;
+use common\models\PartnersFamilyAffluenceLevel;
+use common\models\PartnersFamilyType;
 use common\models\PartnersFavouriteCousines;
 use common\models\PartnersFavouriteMusic;
 use common\models\PartnersFavouriteReads;
@@ -1160,6 +1162,53 @@ class UserController extends Controller
             'show' => $show
         ];
         return $this->renderAjax('_hobby_partners', $myModel);
+    }
+
+    public function actionEditPreferencesFamily()
+    {
+        $Id = Yii::$app->user->identity->id;
+        $PartnersFamilyALevel = PartnersFamilyAffluenceLevel::findAllByUserId($Id) == NULL ? new PartnersFamilyAffluenceLevel() : PartnersFamilyAffluenceLevel::findAllByUserId($Id);
+        $PartnersFamilyTypeS = PartnersFamilyType::findAllByUserId($Id) == NULL ? new PartnersFamilyType() : PartnersFamilyType::findAllByUserId($Id);
+
+        $show = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if (Yii::$app->request->post('save')) {
+                $show = false;
+                $FamilyALevelIDs = Yii::$app->request->post('PartnersFamilyAffluenceLevel')['family_affluence_level_id'];
+                if (count($FamilyALevelIDs)) {
+                    PartnersFamilyAffluenceLevel::deleteAll(['user_id' => $Id]);
+                    foreach ($FamilyALevelIDs as $RK => $RV) {
+                        $PFamilyLevelObj = new PartnersFamilyAffluenceLevel();
+                        $PFamilyLevelObj->user_id = $Id;
+                        $PFamilyLevelObj->family_affluence_level_id = $RV;
+                        $STK = $PFamilyLevelObj->save();
+
+                    }
+                }
+                $PartnersFamilyALevel = PartnersFamilyAffluenceLevel::findAllByUserId($Id);
+
+                $FamilyTypeIDs = Yii::$app->request->post('PartnersFamilyType')['family_type'];
+                if (count($FamilyTypeIDs)) {
+                    PartnersFamilyType::deleteAll(['user_id' => $Id]);
+                    foreach ($FamilyTypeIDs as $RK => $RV) {
+                        $PartnersFamilyTypeS = new PartnersFamilyType();
+                        $PartnersFamilyTypeS->user_id = $Id;
+                        $PartnersFamilyTypeS->family_type = $RV;
+                        $STK = $PartnersFamilyTypeS->save();
+                    }
+                }
+                $PartnersFamilyTypeS = PartnersFamilyType::findAllByUserId($Id);
+            }
+        }
+        $PartnersFamilyALevel = CommonHelper::convertArrayToString($PartnersFamilyALevel, 'family_affluence_level_id');
+        $PartnersFamilyTypeS = CommonHelper::convertArrayToString($PartnersFamilyTypeS, 'family_type');
+        $myModel = [
+            'PartnersFamilyALevel' => $PartnersFamilyALevel,
+            'PartnersFamilyTypeS' => $PartnersFamilyTypeS,
+            'show' => $show
+        ];
+        return $this->renderAjax('_family_partners', $myModel);
     }
 
     public function actionEditPreferencesLocation()

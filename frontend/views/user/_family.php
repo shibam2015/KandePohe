@@ -201,12 +201,12 @@ if ($show) {
     ); ?>
 
     <?= $form->field($model, 'vFamilyType')->RadioList(
-        ['Joint' => 'Joint', 'Nuclear' => 'Nuclear'],
+        Yii::$app->params['familyTypeArray'],
         [
             'item' => function ($index, $label, $name, $checked, $value) {
                 $checked = ($checked) ? 'checked' : '';
-                $return = '<input type="radio" id="' . $value . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
-                $return .= '<label for="' . $value . '">' . ucwords($label) . '</label>';
+                $return = '<input type="radio" id="' . $label . '" name="' . $name . '" value="' . $value . '" ' . $checked . '>';
+                $return .= '<label for="' . $label . '">' . ucwords($value) . '</label>';
                 return $return;
             }
         ]
@@ -301,10 +301,10 @@ if ($show) {
             <dd><?= CommonHelper::setInputVal($model->vAreaName, 'text') ?></dd>
             <dt>Native Place</dt>
             <dd><?= CommonHelper::setInputVal($model->vNativePlaceCA, 'text') ?></dd>
-            <dt>Parents Residing At</dt>
-            <dd><?= CommonHelper::setInputVal($model->vParentsResiding, 'text') ?></dd>
+            <!--<dt>Parents Residing At</dt>
+            <dd><?/*= CommonHelper::setInputVal($model->vParentsResiding, 'text') */ ?></dd>-->
             <dt>Family Affluence Level</dt>
-            <dd><?= CommonHelper::setInputVal($model->vFamilyAffluenceLevel, 'text') ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->familyAffluenceLevelName->Name, 'text') ?></dd>
             <dt>Family Type</dt>
             <dd><?= CommonHelper::setInputVal($model->vFamilyType, 'text') ?></dd>
             <dt>Property Details</dt>

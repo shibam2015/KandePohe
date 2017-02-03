@@ -23,6 +23,11 @@ class FamilyAffluenceLevel extends \common\models\base\baseCharan
         return 'family_affluence_level';
     }
 
+    public static function getFamilyAffluenceLevelName($ID)
+    {
+        return static::find()->select('Name')->where('ID In (' . $ID . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */

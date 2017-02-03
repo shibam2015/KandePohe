@@ -112,5 +112,7 @@ return [
         'Do not let other members know that I have visited their profile' => '2',
     ],
     # Privacy Setting End
+
+    'familyTypeArray' => ['Joint' => 'Family_Joint', 'Nuclear' => 'Family_Nuclear'],
 ];
 
