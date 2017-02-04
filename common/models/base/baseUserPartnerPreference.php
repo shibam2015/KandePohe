@@ -24,6 +24,9 @@ use Yii;
  * @property string $smoke
  * @property string $created_on
  * @property string $modified_on
+ * @property string $LookingFor
+ * @property integer $annual_income_from
+ * @property integer $annual_income_to
  */
 class baseUserPartnerPreference extends \yii\db\ActiveRecord
 {
@@ -41,9 +44,9 @@ class baseUserPartnerPreference extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['iUser_id', 'age_from', 'age_to', 'no_of_childs', 'childs_living_with_you', 'height_from', 'height_to', 'weight_from', 'weight_to', 'health_information', 'created_on', 'modified_on'], 'required'],
-            [['iUser_id'], 'integer'],
-            [['age_from', 'age_to', 'no_of_childs', 'childs_living_with_you', 'height_from', 'height_to', 'weight_from', 'weight_to', 'health_information', 'any_disability', 'manglik', 'drink', 'smoke'], 'string'],
+            [['iUser_id', 'age_from', 'age_to', 'no_of_childs', 'childs_living_with_you', 'height_from', 'height_to', 'weight_from', 'weight_to', 'health_information', 'created_on', 'modified_on', 'LookingFor', 'annual_income_from', 'annual_income_to'], 'required'],
+            [['iUser_id', 'annual_income_from', 'annual_income_to'], 'integer'],
+            [['age_from', 'age_to', 'no_of_childs', 'childs_living_with_you', 'height_from', 'height_to', 'weight_from', 'weight_to', 'health_information', 'any_disability', 'manglik', 'drink', 'smoke', 'LookingFor'], 'string'],
             [['created_on', 'modified_on'], 'safe'],
         ];
     }
@@ -71,6 +74,9 @@ class baseUserPartnerPreference extends \yii\db\ActiveRecord
             'smoke' => 'Smoke',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
+            'LookingFor' => 'Looking For',
+            'annual_income_from' => 'Annual Income From',
+            'annual_income_to' => 'Annual Income To',
         ];
     }
 }

@@ -111,9 +111,13 @@ use yii\helpers\ArrayHelper;
             </div>
         </div>
 
-        <?= $form->field($AI, 'annual_income_id')->dropDownList(
+        <?= $form->field($UPP, 'annual_income_from')->dropDownList(
             ArrayHelper::map(CommonHelper::getAnnualIncome(), 'iAnnualIncomeID', 'vAnnualIncome'),
-            ['class' => 'demo-default select-beast clsprofession', 'prompt' => 'Annual Income']
+            ['class' => 'demo-default select-beast clsprofession', 'prompt' => 'Annual Income From']
+        ); ?>
+        <?= $form->field($UPP, 'annual_income_to')->dropDownList(
+            ArrayHelper::map(CommonHelper::getAnnualIncome(), 'iAnnualIncomeID', 'vAnnualIncome'),
+            ['class' => 'demo-default select-beast clsprofession', 'prompt' => 'Annual Income To']
         ); ?>
 
 
@@ -158,8 +162,11 @@ use yii\helpers\ArrayHelper;
             <?php $PWorkingWithArray = \common\models\WorkingWith::getWorkingWithNames(CommonHelper::removeComma(implode(",", $PartenersWorkingWithArray))); ?>
             <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PWorkingWithArray, 'vWorkingWithName'), 'text') ?></dd>
             <dd>
-            <dt>Annual Income</dt>
-            <dd><?= CommonHelper::setInputVal($AI->annualIncomeName->vAnnualIncome, 'text') ?>
+            <dt>Annual Income From</dt>
+            <dd><?= CommonHelper::setInputVal($UPP->annualIncomeFrom->vAnnualIncome, 'text') ?></dd>
+            <dt>Annual Income To</dt>
+            <dd><?= CommonHelper::setInputVal($UPP->annualIncomeTo->vAnnualIncome, 'text') ?></dd>
+
             <dd>
         </dl>
 

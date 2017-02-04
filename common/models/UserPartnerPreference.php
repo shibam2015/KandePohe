@@ -49,7 +49,7 @@ class UserPartnerPreference extends \common\models\base\baseUserPartnerPreferenc
         return [
             // [['iUser_id', 'age_from', 'age_to', 'no_of_childs', 'childs_living_with_you', 'height_from', 'height_to', 'weight_from', 'weight_to', 'health_information', 'created_on', 'modified_on'], 'required'],
             [['iUser_id'], 'integer'],
-            [['age_from', 'age_to', 'no_of_childs', 'childs_living_with_you', 'height_from', 'height_to', 'weight_from', 'weight_to', 'health_information', 'any_disability', 'manglik', 'drink', 'smoke'], 'string'],
+            [['age_from', 'age_to', 'no_of_childs', 'childs_living_with_you', 'height_from', 'height_to', 'weight_from', 'weight_to', 'health_information', 'any_disability', 'manglik', 'drink', 'smoke', 'annual_income_from', 'annual_income_to'], 'string'],
             [['created_on', 'modified_on'], 'safe'],
         ];
     }
@@ -77,6 +77,8 @@ class UserPartnerPreference extends \common\models\base\baseUserPartnerPreferenc
             'smoke' => 'Smoke',
             'created_on' => 'Created On',
             'modified_on' => 'Modified On',
+            'annual_income_from' => 'Annual Income From',
+            'annual_income_to' => 'Annual Income To',
         ];
     }
 
@@ -88,5 +90,15 @@ class UserPartnerPreference extends \common\models\base\baseUserPartnerPreferenc
     public function getHeightTo()
     {
         return $this->hasOne(MasterHeights::className(), ['iHeightID' => 'height_to']);
+    }
+
+    public function getAnnualIncomeFrom()
+    {
+        return $this->hasOne(AnnualIncome::className(), ['iAnnualIncomeID' => 'annual_income_from']);
+    }
+
+    public function getAnnualIncomeTo()
+    {
+        return $this->hasOne(AnnualIncome::className(), ['iAnnualIncomeID' => 'annual_income_to']);
     }
 }

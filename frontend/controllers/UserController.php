@@ -708,8 +708,8 @@ class UserController extends Controller
 
                 $CurrDate = CommonHelper::getTime();
                 $ReligionId = Yii::$app->request->post('PartenersReligion')['iReligion_ID'];
+                PartnersReligion::deleteAll(['iUser_ID' => $Id]);
                 if (count($ReligionId)) {
-                    PartnersReligion::deleteAll(['iUser_ID' => $Id]);
                     foreach ($ReligionId as $RK => $RV) {
                         $PRObj = new PartenersReligion();
                         $PRObj->iUser_ID = $Id;
@@ -722,8 +722,8 @@ class UserController extends Controller
                 $PartenersReligion = PartenersReligion::findAllByUserId($Id);
 
                 $MaritalStatusID = Yii::$app->request->post('PartnersMaritalStatus')['iMarital_Status_ID'];
+                PartnersMaritalStatus::deleteAll(['iUser_ID' => $Id]);
                 if (count($MaritalStatusID)) {
-                    PartnersMaritalStatus::deleteAll(['iUser_ID' => $Id]);
                     foreach ($MaritalStatusID as $RK => $RV) {
                         $PMSObj = new PartnersMaritalStatus();
                         $PMSObj->iUser_ID = $Id;
@@ -736,8 +736,8 @@ class UserController extends Controller
                 $PartnersMaritalStatus = PartnersMaritalStatus::findAllByUserId($Id);
 
                 $GotraIDs = Yii::$app->request->post('PartnersGotra')['iGotra_ID'];
+                PartnersGotra::deleteAll(['iUser_ID' => $Id]);
                 if (count($GotraIDs)) {
-                    PartnersGotra::deleteAll(['iUser_ID' => $Id]);
                     foreach ($GotraIDs as $RK => $RV) {
                         $PGotraObj = new PartnersGotra();
                         $PGotraObj->iUser_ID = $Id;
@@ -833,8 +833,8 @@ class UserController extends Controller
 
 
                 $SkinToneIDs = Yii::$app->request->post('PartnersSkinTone')['iSkin_Tone_ID'];
+                PartnersSkinTone::deleteAll(['iUser_ID' => $Id]);
                 if (count($SkinToneIDs)) {
-                    PartnersSkinTone::deleteAll(['iUser_ID' => $Id]);
                     foreach ($SkinToneIDs as $RK => $RV) {
                         $PSkinToneObj = new PartnersSkinTone();
                         $PSkinToneObj->iUser_ID = $Id;
@@ -845,8 +845,8 @@ class UserController extends Controller
                 $PartnersSkinTone = PartnersSkinTone::findAllByUserId($Id);
 
                 $BodyTypeIDs = Yii::$app->request->post('PartnersBodyType')['iBody_Type_ID'];
+                PartnersBodyType::deleteAll(['iUser_ID' => $Id]);
                 if (count($BodyTypeIDs)) {
-                    PartnersBodyType::deleteAll(['iUser_ID' => $Id]);
                     foreach ($BodyTypeIDs as $RK => $RV) {
                         $PBodyTypeObj = new PartnersBodyType();
                         $PBodyTypeObj->iUser_ID = $Id;
@@ -857,8 +857,8 @@ class UserController extends Controller
                 $PartnersBodyType = PartnersBodyType::findAllByUserId($Id);
 
                 $DietIDs = Yii::$app->request->post('PartnersDiet')['diet_id'];
+                PartnersDiet::deleteAll(['user_id' => $Id]);
                 if (count($DietIDs)) {
-                    PartnersDiet::deleteAll(['user_id' => $Id]);
                     foreach ($DietIDs as $RK => $RV) {
                         $PDietObj = new PartnersDiet();
                         $PDietObj->user_id = $Id;
@@ -869,8 +869,8 @@ class UserController extends Controller
                 $PartnersDiet = PartnersDiet::findAllByUserId($Id);
 
                 $SpectaclesTypes = Yii::$app->request->post('PartnersSpectacles')['type'];
+                PartnersSpectacles::deleteAll(['user_id' => $Id]);
                 if (count($SpectaclesTypes)) {
-                    PartnersSpectacles::deleteAll(['user_id' => $Id]);
                     foreach ($SpectaclesTypes as $RK => $RV) {
                         $PSpectaclesObj = new PartnersSpectacles();
                         $PSpectaclesObj->user_id = $Id;
@@ -881,8 +881,8 @@ class UserController extends Controller
                 $PartnersSpectacles = PartnersSpectacles::findAllByUserId($Id);
 
                 $SmokeTypes = Yii::$app->request->post('PartnersSmoke')['smoke_type'];
+                PartnersSmoke::deleteAll(['user_id' => $Id]);
                 if (count($SmokeTypes)) {
-                    PartnersSmoke::deleteAll(['user_id' => $Id]);
                     foreach ($SmokeTypes as $RK => $RV) {
                         $PSmokeObj = new PartnersSmoke();
                         $PSmokeObj->user_id = $Id;
@@ -893,8 +893,8 @@ class UserController extends Controller
                 $PartnersSmoke = PartnersSmoke::findAllByUserId($Id);
 
                 $DrinkTypes = Yii::$app->request->post('PartnersDrink')['drink_type'];
+                PartnersDrink::deleteAll(['user_id' => $Id]);
                 if (count($DrinkTypes)) {
-                    PartnersDrink::deleteAll(['user_id' => $Id]);
                     foreach ($DrinkTypes as $RK => $RV) {
                         $PDrinkObj = new PartnersDrink();
                         $PDrinkObj->user_id = $Id;
@@ -906,8 +906,6 @@ class UserController extends Controller
 
             }
         }
-        #echo " ==> ";CommonHelper::pr($PartnersGotra);echo " <==";
-
         $PartenersReligionIDs = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
         $PartnersMaritalPreferences = CommonHelper::convertArrayToString($PartnersMaritalStatus, 'iMarital_Status_ID');
         $PartnersGotraPreferences = CommonHelper::convertArrayToString($PartnersGotra, 'iGotra_ID');
@@ -918,7 +916,6 @@ class UserController extends Controller
         $PartnersSmoke = CommonHelper::convertArrayToString($PartnersSmoke, 'smoke_type');
         $PartnersDrink = CommonHelper::convertArrayToString($PartnersDrink, 'drink_type');
         #CommonHelper::pr($PartnersSmoke);exit;
-        # CommonHelper::pr($PartnersGotra);
         $myModel = [
             'PartenersReligion' => $PartenersReligion,
             'PartenersReligionIDs' => $PartenersReligionIDs,
@@ -944,13 +941,13 @@ class UserController extends Controller
             'PartnersDrink' => $PartnersDrink,
 
         ];
-        #commonHelper::pr($PartenersReligion);exit;
         return $this->renderAjax('_preferences', $myModel);
     }
 
     public function actionEditPreferencesProfession()
     {
         $Id = Yii::$app->user->identity->id;
+        $UPP = UserPartnerPreference::findByUserId($Id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($Id);
         $PartnersEducationalLevel = PartnersEducationalLevel::findAllByUserId($Id) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findAllByUserId($Id);
         $PartnersEducationField = PartnersEducationField::findAllByUserId($Id) == NULL ? new PartnersEducationField() : PartnersEducationField::findAllByUserId($Id);
         $PartnerWorkingAS = PartnerWorkingAs::findAllByUserId($Id) == NULL ? new PartnerWorkingAs() : PartnerWorkingAs::findAllByUserId($Id);
@@ -963,8 +960,8 @@ class UserController extends Controller
             if (Yii::$app->request->post('save')) {
                 $show = false;
                 $EducationLevelIDs = Yii::$app->request->post('PartnersEducationalLevel')['iEducation_Level_ID'];
+                PartnersEducationalLevel::deleteAll(['iUser_ID' => $Id]);
                 if (count($EducationLevelIDs)) {
-                    PartnersEducationalLevel::deleteAll(['iUser_ID' => $Id]);
                     foreach ($EducationLevelIDs as $RK => $RV) {
                         $PEduLvlObj = new PartnersEducationalLevel();
                         $PEduLvlObj->iUser_ID = $Id;
@@ -974,10 +971,9 @@ class UserController extends Controller
                 }
                 $PartnersEducationalLevel = PartnersEducationalLevel::findAllByUserId($Id);
 
-
                 $EducationFieldIDs = Yii::$app->request->post('PartnersEducationField')['iEducation_Field_ID'];
+                PartnersEducationField::deleteAll(['iUser_ID' => $Id]);
                 if (count($EducationFieldIDs)) {
-                    PartnersEducationField::deleteAll(['iUser_ID' => $Id]);
                     foreach ($EducationFieldIDs as $RK => $RV) {
                         $PEduFieldObj = new PartnersEducationField();
                         $PEduFieldObj->iUser_ID = $Id;
@@ -989,8 +985,8 @@ class UserController extends Controller
 
 
                 $WorkingAsIDs = Yii::$app->request->post('PartnerWorkingAs')['iWorking_As_ID'];
+                PartnerWorkingAs::deleteAll(['iUser_ID' => $Id]);
                 if (count($WorkingAsIDs)) {
-                    PartnerWorkingAs::deleteAll(['iUser_ID' => $Id]);
                     foreach ($WorkingAsIDs as $RK => $RV) {
                         $PWorkingAsObj = new PartnerWorkingAs();
                         $PWorkingAsObj->iUser_ID = $Id;
@@ -1001,8 +997,8 @@ class UserController extends Controller
                 $PartnerWorkingAS = PartnerWorkingAs::findAllByUserId($Id);
 
                 $WorkingWithIDs = Yii::$app->request->post('PartnerWorkingWith')['iWorking_With_ID'];
+                PartnerWorkingWith::deleteAll(['iUser_ID' => $Id]);
                 if (count($WorkingWithIDs)) {
-                    PartnerWorkingWith::deleteAll(['iUser_ID' => $Id]);
                     foreach ($WorkingWithIDs as $RK => $RV) {
                         $PWorkingWithObj = new PartnerWorkingWith();
                         $PWorkingWithObj->iUser_ID = $Id;
@@ -1011,13 +1007,9 @@ class UserController extends Controller
                     }
                 }
                 $PartnerWorkingWith = PartnerWorkingWith::findAllByUserId($Id);
-
-
-                $AnuualId = Yii::$app->request->post('PartnersAnnualIncome')['annual_income_id'];
-                $AI->user_id = $Id;
-                $AI->annual_income_id = $AnuualId;
-                $AI->save();
-
+                $UPP->annual_income_from = Yii::$app->request->post('UserPartnerPreference')['annual_income_from'];
+                $UPP->annual_income_to = Yii::$app->request->post('UserPartnerPreference')['annual_income_to'];
+                $UPP->save();
             }
         }
         $PartenersEduLevelArray = CommonHelper::convertArrayToString($PartnersEducationalLevel, 'iEducation_Level_ID');
@@ -1026,17 +1018,12 @@ class UserController extends Controller
         $PartenersWorkingWithArray = CommonHelper::convertArrayToString($PartnerWorkingWith, 'iWorking_With_ID');
         $myModel = [
             //'model' => $model,
-            #'PartnersEducationalLevel' => $PartnersEducationalLevel,
-            #'PartnersEducationField' => $PartnersEducationField,
             'PartenersEduLevelArray' => $PartenersEduLevelArray,
             'PartenersEduFieldArray' => $PartenersEduFieldArray,
-            #'PartnerWorkingAS' => $PartnerWorkingAS,
             'PartenersWorkingAsArray' => $PartenersWorkingAsArray,
-            #'PartnerWorkingWith' => $PartnerWorkingWith,
             'PartenersWorkingWithArray' => $PartenersWorkingWithArray,
+            'UPP' => $UPP,
             'AI' => $AI,
-            //'PartnerWorkingWith' => $PartnerWorkingWith,
-            //'PartnersAnnualIncome' => $PartnersAnnualIncome,
             'show' => $show
         ];
         return $this->renderAjax('_profession', $myModel);
@@ -1059,8 +1046,8 @@ class UserController extends Controller
             if (Yii::$app->request->post('save')) {
                 $show = false;
                 $InterestIDs = Yii::$app->request->post('PartnersInterest')['interest_id'];
+                PartnersInterest::deleteAll(['user_id' => $Id]);
                 if (count($InterestIDs)) {
-                    PartnersInterest::deleteAll(['user_id' => $Id]);
                     foreach ($InterestIDs as $RK => $RV) {
                         $PInterestObj = new PartnersInterest();
                         $PInterestObj->user_id = $Id;
@@ -1071,8 +1058,8 @@ class UserController extends Controller
                 $PartnersInterest = PartnersInterest::findAllByUserId($Id);
 
                 $ReadsIDs = Yii::$app->request->post('PartnersFavouriteReads')['read_id'];
+                PartnersFavouriteReads::deleteAll(['user_id' => $Id]);
                 if (count($ReadsIDs)) {
-                    PartnersFavouriteReads::deleteAll(['user_id' => $Id]);
                     foreach ($ReadsIDs as $RK => $RV) {
                         $PReadsObj = new PartnersFavouriteReads();
                         $PReadsObj->user_id = $Id;
@@ -1083,8 +1070,8 @@ class UserController extends Controller
                 $PartnersReads = PartnersFavouriteReads::findAllByUserId($Id);
 
                 $MusicIDs = Yii::$app->request->post('PartnersFavouriteMusic')['music_name_id'];
+                PartnersFavouriteMusic::deleteAll(['user_id' => $Id]);
                 if (count($MusicIDs)) {
-                    PartnersFavouriteMusic::deleteAll(['user_id' => $Id]);
                     foreach ($MusicIDs as $RK => $RV) {
                         $PMusicObj = new PartnersFavouriteMusic();
                         $PMusicObj->user_id = $Id;
@@ -1095,8 +1082,8 @@ class UserController extends Controller
                 $PartnersMusic = PartnersFavouriteMusic::findAllByUserId($Id);
 
                 $CousinsIDs = Yii::$app->request->post('PartnersFavouriteCousines')['cousines_id'];
+                PartnersFavouriteCousines::deleteAll(['user_id' => $Id]);
                 if (count($CousinsIDs)) {
-                    PartnersFavouriteCousines::deleteAll(['user_id' => $Id]);
                     foreach ($CousinsIDs as $RK => $RV) {
                         $PCousinsObj = new PartnersFavouriteCousines();
                         $PCousinsObj->user_id = $Id;
@@ -1107,8 +1094,8 @@ class UserController extends Controller
                 $PartnersCousins = PartnersFavouriteCousines::findAllByUserId($Id);
 
                 $FitnessIDs = Yii::$app->request->post('PartnersFitnessActivities')['fitness_id'];
+                PartnersFitnessActivities::deleteAll(['user_id' => $Id]);
                 if (count($FitnessIDs)) {
-                    PartnersFitnessActivities::deleteAll(['user_id' => $Id]);
                     foreach ($FitnessIDs as $RK => $RV) {
                         $PFitnessObj = new PartnersFitnessActivities();
                         $PFitnessObj->user_id = $Id;
@@ -1119,8 +1106,8 @@ class UserController extends Controller
                 $PartnersFitnessActivity = PartnersFitnessActivities::findAllByUserId($Id);
 
                 $DressStyleIDs = Yii::$app->request->post('PartnersPreferredDressType')['dress_style_id'];
+                PartnersPreferredDressType::deleteAll(['user_id' => $Id]);
                 if (count($DressStyleIDs)) {
-                    PartnersPreferredDressType::deleteAll(['user_id' => $Id]);
                     foreach ($DressStyleIDs as $RK => $RV) {
                         $PDressStyleObj = new PartnersPreferredDressType();
                         $PDressStyleObj->user_id = $Id;
@@ -1131,8 +1118,8 @@ class UserController extends Controller
                 $PartnersDressStyle = PartnersPreferredDressType::findAllByUserId($Id);
 
                 $MoviesIDs = Yii::$app->request->post('PartnersPreferredMovies')['movie_id'];
+                PartnersPreferredMovies::deleteAll(['user_id' => $Id]);
                 if (count($MoviesIDs)) {
-                    PartnersPreferredMovies::deleteAll(['user_id' => $Id]);
                     foreach ($MoviesIDs as $RK => $RV) {
                         $PMoviesObj = new PartnersPreferredMovies();
                         $PMoviesObj->user_id = $Id;
@@ -1176,8 +1163,8 @@ class UserController extends Controller
             if (Yii::$app->request->post('save')) {
                 $show = false;
                 $FamilyALevelIDs = Yii::$app->request->post('PartnersFamilyAffluenceLevel')['family_affluence_level_id'];
+                PartnersFamilyAffluenceLevel::deleteAll(['user_id' => $Id]);
                 if (count($FamilyALevelIDs)) {
-                    PartnersFamilyAffluenceLevel::deleteAll(['user_id' => $Id]);
                     foreach ($FamilyALevelIDs as $RK => $RV) {
                         $PFamilyLevelObj = new PartnersFamilyAffluenceLevel();
                         $PFamilyLevelObj->user_id = $Id;
@@ -1189,8 +1176,8 @@ class UserController extends Controller
                 $PartnersFamilyALevel = PartnersFamilyAffluenceLevel::findAllByUserId($Id);
 
                 $FamilyTypeIDs = Yii::$app->request->post('PartnersFamilyType')['family_type'];
+                PartnersFamilyType::deleteAll(['user_id' => $Id]);
                 if (count($FamilyTypeIDs)) {
-                    PartnersFamilyType::deleteAll(['user_id' => $Id]);
                     foreach ($FamilyTypeIDs as $RK => $RV) {
                         $PartnersFamilyTypeS = new PartnersFamilyType();
                         $PartnersFamilyTypeS->user_id = $Id;
