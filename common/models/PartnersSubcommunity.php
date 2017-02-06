@@ -31,6 +31,12 @@ class PartnersSubcommunity extends \common\models\base\basePartnersSubcommunity
         return static::findOne(['iUser_ID' => $userid]);
     }
 
+    public static function findAllByUserId($UserId)
+    {
+
+        return static::findAll(['iUser_ID' => $UserId]);
+    }
+
     /**
      * @inheritdoc
      */
@@ -49,7 +55,7 @@ class PartnersSubcommunity extends \common\models\base\basePartnersSubcommunity
     public function attributeLabels()
     {
         return [
-            'iPartners_Subcommunity_ID' => 'I Partners  Subcommunity  ID',
+            'iPartners_Subcommunity_ID' => 'Partners  Subcommunity  ID',
             'iUser_ID' => 'I User  ID',
             'iSub_Community_ID' => 'Sub Community',
             'dtCreated' => 'Dt Created',

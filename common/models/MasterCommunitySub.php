@@ -21,6 +21,11 @@ class MasterCommunitySub extends \common\models\base\baseMasterCommunitySub
         return 'master_community_sub';
     }*/
 
+    public static function getSubCommunityNames($iSubCommunity_ID)
+    {
+        return static::find()->select('vName')->where('iSubCommunity_ID In (' . $iSubCommunity_ID . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */

@@ -680,7 +680,7 @@ class UserController extends Controller
         $PartnersGotra = PartnersGotra::findAllByUserId($Id) == NULL ? new PartnersGotra() : PartnersGotra::findAllByUserId($Id);
 
         $PartnersCommunity = PartnersCommunity::findAllByUserId($Id) == NULL ? new PartnersCommunity() : PartnersCommunity::findAllByUserId($Id);
-        $PartnersSubCommunity = PartnersSubcommunity::findByUserId($Id) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findByUserId($Id);
+        $PartnersSubCommunity = PartnersSubcommunity::findAllByUserId($Id) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findAllByUserId($Id);
 
 
         $UPP = UserPartnerPreference::findByUserId($Id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($Id);
@@ -812,18 +812,6 @@ class UserController extends Controller
                 }
                 $PartnersMothertongue->save();
 
-                $SubCommuID = Yii::$app->request->post('PartnersSubcommunity')['iSub_Community_ID'];
-                //CommonHelper::pr($PartnersSubCommunity);exit;
-                $PartnersSubCommunity->scenario = PartnersSubcommunity::SCENARIO_ADD;
-                $PartnersSubCommunity->iUser_ID = $Id;
-                $PartnersSubCommunity->iSub_Community_ID = $SubCommuID;
-                $PartnersSubCommunity->dtModified = $CurrDate;
-                if ($PartnersSubCommunity->iPartners_Subcommunity_ID == "") {
-                    $PartnersSubCommunity->dtCreated = $CurrDate;
-                }
-                $PartnersSubCommunity->save();
-
-
                 $SkinToneIDs = Yii::$app->request->post('PartnersSkinTone')['iSkin_Tone_ID'];
                 PartnersSkinTone::deleteAll(['iUser_ID' => $Id]);
                 if (count($SkinToneIDs)) {
@@ -896,16 +884,6 @@ class UserController extends Controller
                 }
                 $PartnersDrink = PartnersDrink::findAllByUserId($Id);
 
-                /*$CommunityID = Yii::$app->request->post('PartnersCommunity')['iCommunity_ID'];
-                $PartnersCommunity->scenario = PartnersCommunity::SCENARIO_ADD;
-                $PartnersCommunity->iUser_ID = $Id;
-                $PartnersCommunity->iCommunity_ID = $CommunityID;
-                $PartnersCommunity->dtModified = $CurrDate;
-                if ($PartnersCommunity->iPartners_Community_ID == "") {
-                    $PartnersCommunity->dtCreated = $CurrDate;
-                }
-                $PartnersCommunity->save();*/
-
                 $CommunityID = Yii::$app->request->post('PartnersCommunity')['iCommunity_ID'];
                 PartnersCommunity::deleteAll(['iUser_ID' => $Id]);
                 if (count($CommunityID)) {
@@ -919,6 +897,30 @@ class UserController extends Controller
                 }
                 $PartnersCommunity = PartnersCommunity::findAllByUserId($Id);
 
+
+                /*$SubCommuID = Yii::$app->request->post('PartnersSubcommunity')['iSub_Community_ID'];
+                //CommonHelper::pr($PartnersSubCommunity);exit;
+                $PartnersSubCommunity->scenario = PartnersSubcommunity::SCENARIO_ADD;
+                $PartnersSubCommunity->iUser_ID = $Id;
+                $PartnersSubCommunity->iSub_Community_ID = $SubCommuID;
+                $PartnersSubCommunity->dtModified = $CurrDate;
+                if ($PartnersSubCommunity->iPartners_Subcommunity_ID == "") {
+                    $PartnersSubCommunity->dtCreated = $CurrDate;
+                }
+                $PartnersSubCommunity->save();*/
+                $SubCommuIDs = Yii::$app->request->post('PartnersSubcommunity')['iSub_Community_ID'];
+                PartnersSubcommunity::deleteAll(['iUser_ID' => $Id]);
+                if (count($SubCommuIDs)) {
+                    foreach ($SubCommuIDs as $RK => $RV) {
+                        $PartnersSubCommunity = new PartnersSubcommunity();
+                        $PartnersSubCommunity->scenario = PartnersSubcommunity::SCENARIO_ADD;
+                        $PartnersSubCommunity->iUser_ID = $Id;
+                        $PartnersSubCommunity->iSub_Community_ID = $RV;
+                        $STK = $PartnersSubCommunity->save();
+                    }
+                }
+                $PartnersSubCommunity = PartnersSubcommunity::findAllByUserId($Id);
+
             }
         }
         $PartenersReligionIDs = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
@@ -931,6 +933,7 @@ class UserController extends Controller
         $PartnersSmoke = CommonHelper::convertArrayToString($PartnersSmoke, 'smoke_type');
         $PartnersDrink = CommonHelper::convertArrayToString($PartnersDrink, 'drink_type');
         $PartnersCommunity = CommonHelper::convertArrayToString($PartnersCommunity, 'iCommunity_ID');
+        $PartnersSubCommunity = CommonHelper::convertArrayToString($PartnersSubCommunity, 'iSub_Community_ID');
         #CommonHelper::pr($PartnersSmoke);exit;
         $myModel = [
             'PartenersReligion' => $PartenersReligion,
