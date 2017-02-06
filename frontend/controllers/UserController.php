@@ -2247,6 +2247,23 @@ class UserController extends Controller
             $PartnerWorkingAS = PartnerWorkingAs::findAllByUserId($ToUserId) == NULL ? new PartnerWorkingAs() : PartnerWorkingAs::findAllByUserId($ToUserId);
             $PartnerWorkingWith = PartnerWorkingWith::findAllByUserId($ToUserId) == NULL ? new PartnerWorkingWith() : PartnerWorkingWith::findAllByUserId($ToUserId);
 
+            $PartnersCountries = PartnersCountries::findAllByUserId($ToUserId) == NULL ? new PartnersCountries() : PartnersCountries::findAllByUserId($ToUserId);
+            $PartnersStates = PartnersStates::findAllByUserId($ToUserId) == NULL ? new PartnersStates() : PartnersStates::findAllByUserId($ToUserId);
+            $PartnersCities = PartnersCities::findAllByUserId($ToUserId) == NULL ? new PartnersCities() : PartnersCities::findAllByUserId($ToUserId);
+
+            $PartnersFamilyALevel = PartnersFamilyAffluenceLevel::findAllByUserId($ToUserId) == NULL ? new PartnersFamilyAffluenceLevel() : PartnersFamilyAffluenceLevel::findAllByUserId($ToUserId);
+            $PartnersFamilyTypeS = PartnersFamilyType::findAllByUserId($ToUserId) == NULL ? new PartnersFamilyType() : PartnersFamilyType::findAllByUserId($ToUserId);
+
+
+            $PartnersInterest = PartnersInterest::findAllByUserId($ToUserId) == NULL ? new PartnersInterest() : PartnersInterest::findAllByUserId($ToUserId);
+            $PartnersReads = PartnersFavouriteReads::findAllByUserId($ToUserId) == NULL ? new PartnersFavouriteReads() : PartnersFavouriteReads::findAllByUserId($ToUserId);
+            $PartnersMusic = PartnersFavouriteMusic::findAllByUserId($ToUserId) == NULL ? new PartnersFavouriteMusic() : PartnersFavouriteMusic::findAllByUserId($ToUserId);
+            $PartnersCousins = PartnersFavouriteCousines::findAllByUserId($ToUserId) == NULL ? new PartnersFavouriteCousines() : PartnersFavouriteCousines::findAllByUserId($ToUserId);
+            $PartnersFitnessActivity = PartnersFitnessActivities::findAllByUserId($ToUserId) == NULL ? new PartnersFitnessActivities() : PartnersFitnessActivities::findAllByUserId($ToUserId);
+            $PartnersDressStyle = PartnersPreferredDressType::findAllByUserId($ToUserId) == NULL ? new PartnersPreferredDressType() : PartnersPreferredDressType::findAllByUserId($ToUserId);
+            $PartnersMovies = PartnersPreferredMovies::findAllByUserId($ToUserId) == NULL ? new PartnersPreferredMovies() : PartnersPreferredMovies::findAllByUserId($ToUserId);
+
+
         } else if ($ToUserId == $id) {
             $Title = Yii::$app->params['accessDenied'];
             $Message = Yii::$app->params['accessDeniedYourProfile'];
@@ -2273,6 +2290,21 @@ class UserController extends Controller
         $PartenersEduFieldArray = CommonHelper::convertArrayToString($PartnersEducationField, 'iEducation_Field_ID');
         $PartenersWorkingAsArray = CommonHelper::convertArrayToString($PartnerWorkingAS, 'iWorking_As_ID');
         $PartenersWorkingWithArray = CommonHelper::convertArrayToString($PartnerWorkingWith, 'iWorking_With_ID');
+
+        $PartnersCountries = CommonHelper::convertArrayToString($PartnersCountries, 'country_id');
+        $PartnersStates = CommonHelper::convertArrayToString($PartnersStates, 'state_id');
+        $PartnersCities = CommonHelper::convertArrayToString($PartnersCities, 'city_id');
+
+        $PartnersFamilyALevel = CommonHelper::convertArrayToString($PartnersFamilyALevel, 'family_affluence_level_id');
+        $PartnersFamilyTypeS = CommonHelper::convertArrayToString($PartnersFamilyTypeS, 'family_type');
+
+        $PartenersInterestArray = CommonHelper::convertArrayToString($PartnersInterest, 'interest_id');
+        $PartenersFavReadsArray = CommonHelper::convertArrayToString($PartnersReads, 'read_id');
+        $PartenersMusicArray = CommonHelper::convertArrayToString($PartnersMusic, 'music_name_id');
+        $PartenersCousinsArray = CommonHelper::convertArrayToString($PartnersCousins, 'cousines_id');
+        $PartenersFitnessArray = CommonHelper::convertArrayToString($PartnersFitnessActivity, 'fitness_id');
+        $PartenersDressStyleArray = CommonHelper::convertArrayToString($PartnersDressStyle, 'dress_style_id');
+        $PartenersMoviesArray = CommonHelper::convertArrayToString($PartnersMovies, 'movie_id');
 
         return $this->render('profile', [
             'model' => $model,
@@ -2315,6 +2347,21 @@ class UserController extends Controller
             'PartenersEduFieldArray' => $PartenersEduFieldArray,
             'PartenersWorkingAsArray' => $PartenersWorkingAsArray,
             'PartenersWorkingWithArray' => $PartenersWorkingWithArray,
+
+            'PartnersStates' => $PartnersStates,
+            'PartnersCountries' => $PartnersCountries,
+            'PartnersCities' => $PartnersCities,
+
+            'PartnersFamilyALevel' => $PartnersFamilyALevel,
+            'PartnersFamilyTypeS' => $PartnersFamilyTypeS,
+
+            'PartenersInterestArray' => $PartenersInterestArray,
+            'PartenersFavReadsArray' => $PartenersFavReadsArray,
+            'PartenersMusicArray' => $PartenersMusicArray,
+            'PartenersCousinsArray' => $PartenersCousinsArray,
+            'PartenersFitnessArray' => $PartenersFitnessArray,
+            'PartenersDressStyleArray' => $PartenersDressStyleArray,
+            'PartenersMoviesArray' => $PartenersMoviesArray,
         ]);
     }
 

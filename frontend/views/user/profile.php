@@ -508,7 +508,7 @@ use yii\widgets\Pjax;
                                                 </dl>
                                             </div>
                                             <div class="inner-block">
-                                                <h3><span class="heading-icons icon2"></span> Profession Preferences
+                                                <h3><span class="heading-icons icon6"></span> Profession Preferences
                                                 </h3>
                                                 <dl class="dl-horizontal">
                                                     <dt>Education Level</dt>
@@ -539,16 +539,68 @@ use yii\widgets\Pjax;
                                                 <h3><span class="heading-icons icon2"></span>Location Preferences</h3>
                                                 <dl class="dl-horizontal">
                                                     <dt>City</dt>
-                                                    <dd><?= CommonHelper::setInputVal($PC->cityName->vCityName, 'text') ?>
-                                                    <dd>
+                                                    <?php $PCityArray = \common\models\Cities::getCityName(CommonHelper::removeComma(implode(",", $PartnersCities))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PCityArray, 'vCityName'), 'text') ?></dd>
+
+
                                                     <dt>State</dt>
-                                                    <dd><?= CommonHelper::setInputVal($PS->stateName->vStateName, 'text') ?>
-                                                    <dd>
+                                                    <?php $PStateArray = \common\models\States::getStateName(CommonHelper::removeComma(implode(",", $PartnersStates))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PStateArray, 'vStateName'), 'text') ?></dd>
+
+
                                                     <dt>Country</dt>
-                                                    <dd><?= CommonHelper::setInputVal($PCS->countryName->vCountryName, 'text') ?>
-                                                    <dd>
+                                                    <?php $PCountryArray = \common\models\Countries::getCountryName(CommonHelper::removeComma(implode(",", $PartnersCountries))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PCountryArray, 'vCountryName'), 'text') ?></dd>
+
                                                 </dl>
                                             </div>
+                                            <div class="inner-block">
+                                                <h3><span class="heading-icons icon5"></span>Family Preferences</h3>
+                                                <dl class="dl-horizontal">
+                                                    <dt>Family Affluence Level</dt>
+                                                    <?php $PFamilyALevelArray = \common\models\FamilyAffluenceLevel::getFamilyAffluenceLevelName(CommonHelper::removeComma(implode(",", $PartnersFamilyALevel))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PFamilyALevelArray, 'Name'), 'text') ?></dd>
+                                                    <dt>Family Type</dt>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getValuesFromArray(Yii::$app->params['familyTypeArray'], $PartnersFamilyTypeS, 1), 'text') ?></dd>
+
+                                                </dl>
+                                            </div>
+                                            <div class="inner-block">
+                                                <h3><span class="heading-icons icon7"></span>Hobby/Interest Preferences
+                                                </h3>
+                                                <dl class="dl-horizontal">
+
+                                                    <dt>Interest</dt>
+                                                    <?php $PInterestArray = \common\models\Interests::getInterestNames(CommonHelper::removeComma(implode(",", $PartenersInterestArray))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PInterestArray, 'Name'), 'text') ?></dd>
+
+                                                    <dt>Favorite Reads</dt>
+                                                    <?php $PReadsArray = \common\models\FavouriteReads::getReadsNames(CommonHelper::removeComma(implode(",", $PartenersFavReadsArray))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PReadsArray, 'Name'), 'text') ?></dd>
+
+                                                    <dt>Favorite Music</dt>
+                                                    <?php $PMusicArray = \common\models\FavouriteMusic::getMusicNames(CommonHelper::removeComma(implode(",", $PartenersMusicArray))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PMusicArray, 'Name'), 'text') ?></dd>
+
+                                                    <dt>Favorite Cousines</dt>
+                                                    <?php $PCousinsArray = \common\models\FavouriteCousines::getCousinesNames(CommonHelper::removeComma(implode(",", $PartenersCousinsArray))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PCousinsArray, 'Name'), 'text') ?></dd>
+
+                                                    <dt>Sports/Fitness and Activities</dt>
+                                                    <?php $PFitnessArray = \common\models\SportsFitnActivities::getSportsNames(CommonHelper::removeComma(implode(",", $PartenersFitnessArray))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PFitnessArray, 'Name'), 'text') ?></dd>
+
+                                                    <dt>Preferred Dress Style</dt>
+                                                    <?php $PDressStyleArray = \common\models\PreferredDressStyle::getDressNames(CommonHelper::removeComma(implode(",", $PartenersDressStyleArray))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PDressStyleArray, 'Name'), 'text') ?></dd>
+
+                                                    <dt>Preferred Movie</dt>
+                                                    <?php $PMoviesArray = \common\models\PreferredMovies::getMovieNames(CommonHelper::removeComma(implode(",", $PartenersMoviesArray))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PMoviesArray, 'Name'), 'text') ?></dd>
+                                                </dl>
+
+                                            </div>
+
                                             <div class="inner-block">
                                                 <h3>
                                                 <span

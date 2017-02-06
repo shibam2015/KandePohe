@@ -369,7 +369,7 @@ if (!Yii::$app->user->isGuest) {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <h3><span class="heading-icons icon2"></span> Educational & Occupational
+                                            <h3><span class="heading-icons icon6"></span> Educational & Occupational
                                             </h3>
                                             <?php Pjax::begin(['id' => 'div_education', 'enablePushState' => false]); ?>
                                             <div class="div_education">
@@ -408,7 +408,7 @@ if (!Yii::$app->user->isGuest) {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <h3><span class="heading-icons icon2"></span> Family</h3>
+                                            <h3><span class="heading-icons icon5"></span> Family</h3>
                                             <?php Pjax::begin(['id' => 'div_family', 'enablePushState' => false]); ?>
                                             <div class="div_family">
                                                 <i class="fa fa-spinner fa-spin pink"></i> Family Information
@@ -427,7 +427,7 @@ if (!Yii::$app->user->isGuest) {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <h3><span class="heading-icons icon2"></span> Horoscope Details</h3>
+                                            <h3><span class="heading-icons icon3"></span> Horoscope Details</h3>
                                             <?php Pjax::begin(['id' => 'div_horoscope', 'enablePushState' => false]); ?>
                                             <div class="div_horoscope">
                                                 <i class="fa fa-spinner fa-spin pink"></i> Horoscope Details
@@ -445,7 +445,7 @@ if (!Yii::$app->user->isGuest) {
                                                                 class="fa fa-pencil"></i> Edit</a></li>
                                                 </ul>
                                             </div>
-                                            <h3><span class="heading-icons icon2"></span> Hobby/Interest</h3>
+                                            <h3><span class="heading-icons icon7"></span> Hobby/Interest</h3>
                                             <?php Pjax::begin(['id' => 'my_hobby', 'enablePushState' => false]); ?>
                                             <div class="div_hobby">
                                                 <i class="fa fa-spinner fa-spin pink"></i> Hobby/Interest
@@ -489,7 +489,7 @@ if (!Yii::$app->user->isGuest) {
                                         </div>
                                         <div class="inner-block">
                                             <div class="fb-profile-text padd-xs padd-tp-0">
-                                                <h1><span class="heading-icons icon2"></span>Profession Preferences
+                                                <h1><span class="heading-icons icon6"></span>Profession Preferences
                                                 </h1>
                                             </div>
                                             <?php Pjax::begin(['id' => 'my_profession', 'enablePushState' => false]); ?>
@@ -529,21 +529,6 @@ if (!Yii::$app->user->isGuest) {
                                                             class="fa fa-pencil"></i> Edit</a></li>
                                             </ul>
                                         </div>
-                                        <div class="inner-block">
-                                            <div class="fb-profile-text padd-xs padd-tp-0">
-                                                <h1><span
-                                                        class="heading-icons <?= ($model->Gender == 'MALE') ? 'icon1' : 'icon9'; ?>"></span>
-                                                    What I am looking for
-                                                </h1>
-                                            </div>
-                                            <?php Pjax::begin(['id' => 'my_looking', 'enablePushState' => false]); ?>
-                                            <div class="div_looking">
-                                                <i class="fa fa-spinner fa-spin pink"></i> What I am looking for
-                                                Loading...
-                                            </div>
-                                            <?php Pjax::end(); ?>
-                                        </div>
-
 
                                         <div class="profile-edit pull-right">
                                             <ul class="list-inline major-control">
@@ -556,8 +541,8 @@ if (!Yii::$app->user->isGuest) {
                                         <div class="inner-block">
                                             <div class="fb-profile-text padd-xs padd-tp-0">
                                                 <h1><span
-                                                        class="heading-icons icon2"></span>
-                                                    Family
+                                                        class="heading-icons icon5"></span>
+                                                    Family Preferences
                                                 </h1>
                                             </div>
                                             <?php Pjax::begin(['id' => 'partner_family', 'enablePushState' => false]); ?>
@@ -578,7 +563,7 @@ if (!Yii::$app->user->isGuest) {
                                         <div class="inner-block">
                                             <div class="fb-profile-text padd-xs padd-tp-0">
                                                 <h1><span
-                                                        class="heading-icons icon2"></span>
+                                                        class="heading-icons icon7"></span>
                                                     Hobby/Interest Preferences
                                                 </h1>
                                             </div>
@@ -590,6 +575,22 @@ if (!Yii::$app->user->isGuest) {
                                             </div>
                                             <?php Pjax::end(); ?>
                                         </div>
+
+                                        <div class="inner-block">
+                                            <div class="fb-profile-text padd-xs padd-tp-0">
+                                                <h1><span
+                                                        class="heading-icons <?= ($model->Gender == 'MALE') ? 'icon1' : 'icon9'; ?>"></span>
+                                                    What I am looking for
+                                                </h1>
+                                            </div>
+                                            <?php Pjax::begin(['id' => 'my_looking', 'enablePushState' => false]); ?>
+                                            <div class="div_looking">
+                                                <i class="fa fa-spinner fa-spin pink"></i> What I am looking for
+                                                Loading...
+                                            </div>
+                                            <?php Pjax::end(); ?>
+                                        </div>
+
                                     </div>
 
 
