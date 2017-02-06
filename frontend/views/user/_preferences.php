@@ -103,10 +103,26 @@ use yii\helpers\ArrayHelper;
             ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Mother Toungue']
         ); ?>
 
-        <?= $form->field($PartnersCommunity, 'iCommunity_ID')->dropDownList(
-            ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
-            ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Community']
-        ); ?>
+        <div class="form-group field-partners_community-icommunity_id">
+            <label class="control-label col-sm-3 col-xs-3" for="partners_community-icommunity_id">Community</label>
+
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clspreferences"
+                        placeholder="Select Community" name="PartnersCommunity[iCommunity_ID][]"
+                        size="4">
+                    <?php
+                    foreach (CommonHelper::getCommunity() as $K => $V) { ?>
+                        <option
+                            value="<?= $V->iCommunity_ID ?>" <?php if (in_array($V->iCommunity_ID, $PartnersCommunity)) {
+                            echo "selected";
+                        } ?>><?= $V->vName ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
+
+
         <?= $form->field($PartnersSubCommunity, 'iSub_Community_ID')->dropDownList(
             ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
             ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Sub Community']
@@ -338,7 +354,10 @@ use yii\helpers\ArrayHelper;
             <dd><?= CommonHelper::setInputVal($UPP->manglik, 'text') ?>
 
             <dt>Community</dt>
-            <dd><?= CommonHelper::setInputVal($PartnersCommunity->communityName->vName, 'text') ?>
+            <?php $PCommunityArray = \common\models\MasterCommunity::getCommunityNames(CommonHelper::removeComma(implode(",", $PartnersCommunity))); ?>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PCommunityArray, 'vName'), 'text') ?></dd>
+
+
             <dt>Sub Community</dt>
             <dd><?= CommonHelper::setInputVal($PartnersSubCommunity->subCommunityName->vName, 'text') ?>
             <dt>Drink</dt>

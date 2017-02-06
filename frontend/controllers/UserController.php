@@ -679,11 +679,13 @@ class UserController extends Controller
         $PartnersMaritalStatus = PartnersMaritalStatus::findAllByUserId($Id) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findAllByUserId($Id);
         $PartnersGotra = PartnersGotra::findAllByUserId($Id) == NULL ? new PartnersGotra() : PartnersGotra::findAllByUserId($Id);
 
+        $PartnersCommunity = PartnersCommunity::findAllByUserId($Id) == NULL ? new PartnersCommunity() : PartnersCommunity::findAllByUserId($Id);
+        $PartnersSubCommunity = PartnersSubcommunity::findByUserId($Id) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findByUserId($Id);
+
+
         $UPP = UserPartnerPreference::findByUserId($Id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($Id);
 
         $PartnersMothertongue = PartnersMothertongue::findByUserId($Id) == NULL ? new PartnersMothertongue() : PartnersMothertongue::findByUserId($Id);
-        $PartnersCommunity = PartnersCommunity::findByUserId($Id) == NULL ? new PartnersCommunity() : PartnersCommunity::findByUserId($Id);
-        $PartnersSubCommunity = PartnersSubcommunity::findByUserId($Id) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findByUserId($Id);
 
         $PartnersRaashi = PartnersRaashi::findByUserId($Id) == NULL ? new PartnersRaashi() : PartnersRaashi::findByUserId($Id);
         $PartnersCharan = PartnersCharan::findByUserId($Id) == NULL ? new PartnersCharan() : PartnersCharan::findByUserId($Id);
@@ -810,16 +812,6 @@ class UserController extends Controller
                 }
                 $PartnersMothertongue->save();
 
-                $CommunityID = Yii::$app->request->post('PartnersCommunity')['iCommunity_ID'];
-                $PartnersCommunity->scenario = PartnersCommunity::SCENARIO_ADD;
-                $PartnersCommunity->iUser_ID = $Id;
-                $PartnersCommunity->iCommunity_ID = $CommunityID;
-                $PartnersCommunity->dtModified = $CurrDate;
-                if ($PartnersCommunity->iPartners_Community_ID == "") {
-                    $PartnersCommunity->dtCreated = $CurrDate;
-                }
-                $PartnersCommunity->save();
-
                 $SubCommuID = Yii::$app->request->post('PartnersSubcommunity')['iSub_Community_ID'];
                 //CommonHelper::pr($PartnersSubCommunity);exit;
                 $PartnersSubCommunity->scenario = PartnersSubcommunity::SCENARIO_ADD;
@@ -904,6 +896,29 @@ class UserController extends Controller
                 }
                 $PartnersDrink = PartnersDrink::findAllByUserId($Id);
 
+                /*$CommunityID = Yii::$app->request->post('PartnersCommunity')['iCommunity_ID'];
+                $PartnersCommunity->scenario = PartnersCommunity::SCENARIO_ADD;
+                $PartnersCommunity->iUser_ID = $Id;
+                $PartnersCommunity->iCommunity_ID = $CommunityID;
+                $PartnersCommunity->dtModified = $CurrDate;
+                if ($PartnersCommunity->iPartners_Community_ID == "") {
+                    $PartnersCommunity->dtCreated = $CurrDate;
+                }
+                $PartnersCommunity->save();*/
+
+                $CommunityID = Yii::$app->request->post('PartnersCommunity')['iCommunity_ID'];
+                PartnersCommunity::deleteAll(['iUser_ID' => $Id]);
+                if (count($CommunityID)) {
+                    foreach ($CommunityID as $RK => $RV) {
+                        $PartnersCommunity = new PartnersCommunity();
+                        $PartnersCommunity->scenario = PartnersCommunity::SCENARIO_ADD;
+                        $PartnersCommunity->iUser_ID = $Id;
+                        $PartnersCommunity->iCommunity_ID = $RV;
+                        $STK = $PartnersCommunity->save();
+                    }
+                }
+                $PartnersCommunity = PartnersCommunity::findAllByUserId($Id);
+
             }
         }
         $PartenersReligionIDs = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
@@ -915,6 +930,7 @@ class UserController extends Controller
         $PartnersSpectacles = CommonHelper::convertArrayToString($PartnersSpectacles, 'type');
         $PartnersSmoke = CommonHelper::convertArrayToString($PartnersSmoke, 'smoke_type');
         $PartnersDrink = CommonHelper::convertArrayToString($PartnersDrink, 'drink_type');
+        $PartnersCommunity = CommonHelper::convertArrayToString($PartnersCommunity, 'iCommunity_ID');
         #CommonHelper::pr($PartnersSmoke);exit;
         $myModel = [
             'PartenersReligion' => $PartenersReligion,

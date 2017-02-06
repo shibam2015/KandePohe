@@ -31,6 +31,12 @@ class PartnersCommunity extends \common\models\base\basePartnersCommunity
         return static::findOne(['iUser_ID' => $userid]);
     }
 
+    public static function findAllByUserId($UserId)
+    {
+
+        return static::findAll(['iUser_ID' => $UserId]);
+    }
+
     /**
      * @inheritdoc
      */
@@ -49,8 +55,8 @@ class PartnersCommunity extends \common\models\base\basePartnersCommunity
     public function attributeLabels()
     {
         return [
-            'iPartners_Community_ID' => 'I Partners  Community  ID',
-            'iUser_ID' => 'I User  ID',
+            'iPartners_Community_ID' => 'Partners Community ID',
+            'iUser_ID' => 'User ID',
             'iCommunity_ID' => 'Community',
             'dtCreated' => 'Dt Created',
             'dtModified' => 'Dt Modified',

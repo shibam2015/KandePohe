@@ -6,6 +6,11 @@ use Yii;
 
 class MasterCommunity extends \common\models\base\baseMasterCommunity
 {
+    public static function getCommunityNames($iCommunity_ID)
+    {
+        return static::find()->select('vName')->where('iCommunity_ID In (' . $iCommunity_ID . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */
