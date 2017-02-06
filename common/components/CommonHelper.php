@@ -1017,7 +1017,9 @@ class CommonHelper {
         if ($id == '')
             return \common\models\States::find()->all();
         else
-            return \common\models\States::find()->where(['iCountryId' => $id])->all();
+            return \common\models\States::find()->select('*')->where('iCountryID In (' . $id . ')')->orderBy('vStateName')->all();
+        #return \common\models\States::find()->where(['iCountryId' => $id])->all();
+
     }
 
     public function getCity($id = '')
@@ -1025,7 +1027,8 @@ class CommonHelper {
         if ($id == '')
             return \common\models\Cities::find()->all();
         else
-            return \common\models\Cities::find()->where(['iStateId' => $id])->all();
+            return \common\models\Cities::find()->select('*')->where('iStateId In (' . $id . ')')->orderBy('vCityName')->all();
+        #return \common\models\Cities::find()->where(['iStateId' => $id])->all();
 
     }
 

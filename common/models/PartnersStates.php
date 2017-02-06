@@ -27,6 +27,11 @@ class PartnersStates extends \common\models\base\basePartnersStates
         return static::findOne(['user_id' => $userid]);
     }
 
+    public static function findAllByUserId($UserId)
+    {
+
+        return static::findAll(['user_id' => $UserId]);
+    }
     /**
      * @inheritdoc
      */
@@ -66,4 +71,6 @@ class PartnersStates extends \common\models\base\basePartnersStates
     {
         return $this->hasOne(States::className(), ['iStateId' => 'state_id']);
     }
+
+
 }

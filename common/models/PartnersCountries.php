@@ -25,9 +25,15 @@ class PartnersCountries extends \common\models\base\basePartnersCountries
         return 'partners_countries';
     }
 
-    public static function findByUserId($userid)
+    public static function findByUserId($UserId)
     {
-        return static::findOne(['user_id' => $userid]);
+        return static::findOne(['user_id' => $UserId]);
+    }
+
+    public static function findAllByUserId($UserId)
+    {
+
+        return static::findAll(['user_id' => $UserId]);
     }
 
     /**

@@ -30,6 +30,12 @@ class PartnersCities extends \common\models\base\basePartnersCities
         return static::findOne(['user_id' => $userid]);
     }
 
+    public static function findAllByUserId($UserId)
+    {
+
+        return static::findAll(['user_id' => $UserId]);
+    }
+
     /**
      * @inheritdoc
      */

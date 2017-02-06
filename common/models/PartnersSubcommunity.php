@@ -25,10 +25,10 @@ class PartnersSubcommunity extends \common\models\base\basePartnersSubcommunity
         return 'partners_subcommunity';
     }
 
-    public static function findByUserId($userid)
+    public static function findByUserId($UserId)
     {
 
-        return static::findOne(['iUser_ID' => $userid]);
+        return static::findOne(['iUser_ID' => $UserId]);
     }
 
     public static function findAllByUserId($UserId)

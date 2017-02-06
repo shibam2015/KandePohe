@@ -22,6 +22,11 @@ class States extends \common\models\base\baseStates
         return 'states';
     }*/
 
+    public static function getStateName($iStateId)
+    {
+        return static::find()->select('vStateName')->where('iStateId In (' . $iStateId . ')')->orderBy('vStateName')->all();
+    }
+
     /**
      * @inheritdoc
      */
@@ -47,7 +52,8 @@ class States extends \common\models\base\baseStates
             'eStatus' => 'Status',
         ];
     }
-	public function getCountryName()
+
+    public function getCountryName()
     {
         #echo " hello "; print_r($this->hasOne(Countries::className(), ['iCountryId' => 'iCountryId']));exit;
         return $this->hasOne(Countries::className(), ['iCountryId' => 'iCountryId']);

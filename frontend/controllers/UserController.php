@@ -897,17 +897,6 @@ class UserController extends Controller
                 }
                 $PartnersCommunity = PartnersCommunity::findAllByUserId($Id);
 
-
-                /*$SubCommuID = Yii::$app->request->post('PartnersSubcommunity')['iSub_Community_ID'];
-                //CommonHelper::pr($PartnersSubCommunity);exit;
-                $PartnersSubCommunity->scenario = PartnersSubcommunity::SCENARIO_ADD;
-                $PartnersSubCommunity->iUser_ID = $Id;
-                $PartnersSubCommunity->iSub_Community_ID = $SubCommuID;
-                $PartnersSubCommunity->dtModified = $CurrDate;
-                if ($PartnersSubCommunity->iPartners_Subcommunity_ID == "") {
-                    $PartnersSubCommunity->dtCreated = $CurrDate;
-                }
-                $PartnersSubCommunity->save();*/
                 $SubCommuIDs = Yii::$app->request->post('PartnersSubcommunity')['iSub_Community_ID'];
                 PartnersSubcommunity::deleteAll(['iUser_ID' => $Id]);
                 if (count($SubCommuIDs)) {
@@ -1219,6 +1208,76 @@ class UserController extends Controller
 
     public function actionEditPreferencesLocation()
     {
+        $Id = Yii::$app->user->identity->id;
+        $PartnersCountries = PartnersCountries::findAllByUserId($Id) == NULL ? new PartnersCountries() : PartnersCountries::findAllByUserId($Id);
+        $PartnersStates = PartnersStates::findAllByUserId($Id) == NULL ? new PartnersStates() : PartnersStates::findAllByUserId($Id);
+        $PartnersCities = PartnersCities::findAllByUserId($Id) == NULL ? new PartnersCities() : PartnersCities::findAllByUserId($Id);
+        $show = false;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
+            $show = true;
+            if (Yii::$app->request->post('save')) {
+                $show = false;
+                $CurrDate = CommonHelper::getTime();
+
+                $CountryIDs = Yii::$app->request->post('PartnersCountries')['country_id'];
+                PartnersCountries::deleteAll(['user_id' => $Id]);
+                if (count($CountryIDs)) {
+                    foreach ($CountryIDs as $RK => $RV) {
+                        $PartnersCountries = new PartnersCountries();
+                        $PartnersCountries->scenario = PartnersCountries::SCENARIO_ADD;
+                        $PartnersCountries->user_id = $Id;
+                        $PartnersCountries->country_id = $RV;
+                        $STK = $PartnersCountries->save();
+                    }
+                }
+                $PartnersCountries = PartnersCountries::findAllByUserId($Id);
+
+                $StateIDs = Yii::$app->request->post('PartnersStates')['state_id'];
+                PartnersStates::deleteAll(['user_id' => $Id]);
+                if (count($StateIDs)) {
+                    foreach ($StateIDs as $RK => $RV) {
+                        $PartnersStates = new PartnersStates();
+                        $PartnersStates->scenario = PartnersStates::SCENARIO_ADD;
+                        $PartnersStates->user_id = $Id;
+                        $PartnersStates->state_id = $RV;
+                        $STK = $PartnersStates->save();
+                    }
+                }
+                $PartnersStates = PartnersStates::findAllByUserId($Id);
+
+                $CitiesIDs = Yii::$app->request->post('PartnersCities')['city_id'];
+                PartnersCities::deleteAll(['user_id' => $Id]);
+                if (count($CitiesIDs)) {
+                    foreach ($CitiesIDs as $RK => $RV) {
+                        $PartnersCities = new PartnersCities();
+                        $PartnersCities->scenario = PartnersCities::SCENARIO_ADD;
+                        $PartnersCities->user_id = $Id;
+                        $PartnersCities->city_id = $RV;
+                        $STK = $PartnersCities->save();
+                    }
+                }
+                $PartnersCities = PartnersCities::findAllByUserId($Id);
+            }
+        }
+        $PartnersCountries = CommonHelper::convertArrayToString($PartnersCountries, 'country_id');
+        $PartnersStates = CommonHelper::convertArrayToString($PartnersStates, 'state_id');
+        $PartnersCities = CommonHelper::convertArrayToString($PartnersCities, 'city_id');
+        #$CountryIDs = CommonHelper::removeComma(implode(",", $PartnersCountries));
+        #$StatesIDs = CommonHelper::removeComma(implode(",", $PartnersStates));
+        #CommonHelper::pr($PartnersCountries);
+        $myModel = [
+            'PartnersStates' => $PartnersStates,
+            'PartnersCountries' => $PartnersCountries,
+            'PartnersCities' => $PartnersCities,
+            'CountryIDs' => $CountryIDs,
+            'StatesIDs' => $StatesIDs,
+            'show' => $show
+        ];
+        return $this->renderAjax('_location', $myModel);
+    }
+
+    public function actionEditPreferencesLocation1()
+    {
         $id = Yii::$app->user->identity->id;
         $UPP = UserPartnerPreference::findByUserId($id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($id);
         $PC = PartnersCities::findByUserId($id) == NULL ? new PartnersCities() : PartnersCities::findByUserId($id);
@@ -1230,7 +1289,7 @@ class UserController extends Controller
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if (Yii::$app->request->post('save')) {
-                $CurrDate = date('Y-m-d H:i:s');
+                $CurrDate = CommonHelper::getTime();
                 $CitiesId = Yii::$app->request->post('PartnersCities')['city_id'];
                 $PC->scenario = PartnersCities::SCENARIO_ADD;
                 $PC->user_id = $id;

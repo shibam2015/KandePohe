@@ -22,6 +22,11 @@ class Cities extends \common\models\base\baseCities
         return 'cities';
     }*/
 
+    public static function getCityName($iCityId)
+    {
+        return static::find()->select('vCityName')->where('iCityId In (' . $iCityId . ')')->orderBy('vCityName')->all();
+    }
+
     /**
      * @inheritdoc
      */
@@ -47,12 +52,12 @@ class Cities extends \common\models\base\baseCities
             'eStatus' => 'City Status',
         ];
     }
-    
+
      /**
      * @return \yii\db\ActiveQuery
      */
     public function getUsers()
     {
         return $this->hasMany(User::className(), ['iCityId' => 'iCityId']);
-    } 
+    }
 }

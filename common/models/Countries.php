@@ -22,6 +22,11 @@ class Countries extends \common\models\base\baseCountries
         return 'countries';
     }*/
 
+    public static function getCountryName($iCountryId)
+    {
+        return static::find()->select('vCountryName')->where('iCountryId In (' . $iCountryId . ')')->all();
+    }
+
     /**
      * @inheritdoc
      */

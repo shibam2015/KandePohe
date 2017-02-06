@@ -27,48 +27,62 @@ use yii\helpers\ArrayHelper;
             ]
         ]);
         ?>
-        <!-- <?= $form->errorSummary([$PCS], ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?> -->
+        <div class="form-group field-partners_countries-country_id">
+            <label class="control-label col-sm-3 col-xs-3" for="partners_countries-country_id">Country</label>
 
-        <?= $form->field($PCS, 'country_id')->dropDownList(
-            ArrayHelper::map(CommonHelper::getCountry(), 'iCountryId', 'vCountryName'),
-            ['class' => 'demo-default select-beast clselocation', 'prompt' => 'Country',
-                'onchange' => '
-                                $.post( "' . Yii::$app->urlManager->createUrl('ajax/getstate?id=') . '"+$(this).val(), function( data ) {
-                                  $( "select#state_id" ).html( data );
-                                  $("select#state_id").niceSelect("update");
-                                });'
-            ]
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clselocation"
+                        placeholder="Select Country" name="PartnersCountries[country_id][]"
+                        size="4">
+                    <?php
+                    foreach (CommonHelper::getCountry() as $K => $V) { ?>
+                        <option
+                            value="<?= $V->iCountryId ?>" <?php if (in_array($V->iCountryId, $PartnersCountries)) {
+                            echo "selected";
+                        } ?>><?= $V->vCountryName ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
 
-        ); ?>
-        <?php
-        $stateList = [];
-        if ($PCS->country_id != "") {
-            $stateList = ArrayHelper::map(CommonHelper::getState($PCS->country_id), 'iStateId', 'vStateName');
-        }
-        ?>
-        <?= $form->field($PS, 'state_id')->dropDownList(
-            $stateList,
-            ['id' => 'state_id',
-                'class' => 'demo-default select-beast clselocation',
-                'prompt' => 'State',
-                'onchange' => '
-                                $.post( "' . Yii::$app->urlManager->createUrl('ajax/getcity?id=') . '"+$(this).val(), function( data ) {
-                                  $( "select#city_id" ).html( data );
-                                  $("select#city_id").niceSelect("update");
-                                });'
-            ]
+        <div class="form-group field-partnersstates-state_id">
+            <label class="control-label col-sm-3 col-xs-3" for="partnersstates-state_id">State</label>
 
-        ); ?>
-        <?php
-        $cityList = [];
-        if ($PS->state_id != "") {
-            $cityList = ArrayHelper::map(CommonHelper::getCity($PS->state_id), 'iCityId', 'vCityName');
-        }
-        ?>
-        <?= $form->field($PC, 'city_id')->dropDownList(
-            $cityList,
-            ['id' => 'city_id', 'class' => 'demo-default select-beast clselocation', 'prompt' => 'City']
-        ); ?>
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clselocation"
+                        placeholder="Select State" name="PartnersStates[state_id][]"
+                        size="4">
+                    <?php
+                    foreach (CommonHelper::getState($CountryIDs) as $K => $V) { ?>
+                        <option
+                            value="<?= $V->iStateId ?>" <?php if (in_array($V->iStateId, $PartnersStates)) {
+                            echo "selected";
+                        } ?>><?= $V->vStateName ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group field-partnerscities-city_id">
+            <label class="control-label col-sm-3 col-xs-3" for="partnerscities-city_id">City</label>
+
+            <div class="col-sm-8 col-xs-8">
+                <select id="select-state" multiple class="demo-default select-beast clselocation"
+                        placeholder="Select City" name="PartnersCities[city_id][]"
+                        size="4">
+                    <?php
+                    foreach (CommonHelper::getCity($StatesIDs) as $K => $V) { ?>
+                        <option
+                            value="<?= $V->iCityId ?>" <?php if (in_array($V->iCityId, $PartnersCities)) {
+                            echo "selected";
+                        } ?>><?= $V->vCityName ?></option>
+                    <?php }
+                    ?>
+                </select>
+            </div>
+        </div>
 
 
         <div class="row">
@@ -96,17 +110,20 @@ use yii\helpers\ArrayHelper;
         ?>
 
         <dl class="dl-horizontal">
-
             <dt>City</dt>
-            <dd><?= CommonHelper::setInputVal($PC->cityName->vCityName, 'text') ?>
-            <dd>
+            <?php $PCityArray = \common\models\Cities::getCityName(CommonHelper::removeComma(implode(",", $PartnersCities))); ?>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PCityArray, 'vCityName'), 'text') ?></dd>
+
 
             <dt>State</dt>
-            <dd><?= CommonHelper::setInputVal($PS->stateName->vStateName, 'text') ?>
-            <dd>
+            <?php $PStateArray = \common\models\States::getStateName(CommonHelper::removeComma(implode(",", $PartnersStates))); ?>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PStateArray, 'vStateName'), 'text') ?></dd>
+
+
             <dt>Country</dt>
-            <dd><?= CommonHelper::setInputVal($PCS->countryName->vCountryName, 'text') ?>
-            <dd>
+            <?php $PCountryArray = \common\models\Countries::getCountryName(CommonHelper::removeComma(implode(",", $PartnersCountries))); ?>
+            <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PCountryArray, 'vCountryName'), 'text') ?></dd>
+
         </dl>
 
     <?php
