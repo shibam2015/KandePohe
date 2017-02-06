@@ -81,7 +81,7 @@ $M1 = array();
                                                             <div class="form-cont bs">
                                                                 <?= $form->field($TempModel, 'AgeFrom')->dropDownList(
                                                                     array_combine($range, $range),
-                                                                    ['class' => 'cs-select cs-skin-border',
+                                                                    ['class' => 'demo-default select-beast',
                                                                         'prompt' => 'From']
                                                                 )->label(true)->error(false); ?>
                                                             </div>
@@ -94,7 +94,7 @@ $M1 = array();
                                                             <div class="form-cont bs">
                                                                 <?= $form->field($TempModel, 'AgeTo')->dropDownList(
                                                                     array_combine($range, $range),
-                                                                    ['class' => 'cs-select cs-skin-border',
+                                                                    ['class' => 'demo-default select-beast',
                                                                         'prompt' => 'To']
                                                                 )->label(true)->error(false); ?>
                                                             </div>
@@ -113,7 +113,7 @@ $M1 = array();
 
                                                                     <div class="col-sm-8 col-xs-8">
                                                                         <select id="user-heightfrom"
-                                                                                class="cs-select cs-skin-border"
+                                                                                class="demo-default select-beast"
                                                                                 name="User[HeightFrom]">
                                                                             <option value="">Height From</option>
                                                                             <?php foreach (CommonHelper::getHeight() as $K => $V) { ?>
@@ -137,7 +137,7 @@ $M1 = array();
 
                                                                     <div class="col-sm-8 col-xs-8">
                                                                         <select id="user-heightto"
-                                                                                class="cs-select cs-skin-border"
+                                                                                class="demo-default select-beast"
                                                                                 name="User[HeightTo]">
                                                                             <option value="">Height To</option>
                                                                             <?php foreach (CommonHelper::getHeight() as $K => $V) { ?>
@@ -161,7 +161,7 @@ $M1 = array();
                                                                  data-original-title="<?= Yii::$app->params['messageCommunitieBS'] ?>">
                                                                 <?= $form->field($TempModel, 'iCommunity_ID')->dropDownList(
                                                                     ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
-                                                                    ['class' => 'cs-select cs-skin-border',
+                                                                    ['class' => 'demo-default select-beast',
                                                                         'prompt' => 'Community'
                                                                     ]
                                                                 )->label(true)->error(false); ?>
@@ -177,7 +177,7 @@ $M1 = array();
                                                                  data-original-title="<?= Yii::$app->params['messageSubCommunitieBS'] ?>">
                                                                 <?= $form->field($TempModel, 'iSubCommunity_ID')->dropDownList(
                                                                     ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
-                                                                    ['class' => 'cs-select cs-skin-border',
+                                                                    ['class' => 'demo-default select-beast',
                                                                         'prompt' => 'Sub Community']
                                                                 )->label(true)->error(false); ?>
                                                             </div>
@@ -194,7 +194,7 @@ $M1 = array();
                                                                  data-original-title="<?= Yii::$app->params['messageReligionBS'] ?>">
                                                                 <?= $form->field($TempModel, 'iReligion_ID')->dropDownList(
                                                                     ArrayHelper::map(CommonHelper::getReligion(), 'iReligion_ID', 'vName'),
-                                                                    ['class' => 'cs-select cs-skin-border',
+                                                                    ['class' => 'demo-default select-beast',
                                                                         'prompt' => 'Religion']
                                                                 )->label(true)->error(false); ?>
                                                             </div>
@@ -207,7 +207,7 @@ $M1 = array();
                                                             <div class="form-cont bs">
                                                                 <?= $form->field($TempModel, 'Marital_Status')->dropDownList(
                                                                     ArrayHelper::map(CommonHelper::getMaritalStatus(), 'iMaritalStatusID', 'vName'),
-                                                                    ['class' => 'cs-select cs-skin-border',
+                                                                    ['class' => 'demo-default select-beast',
                                                                         'prompt' => 'Maritial Status',
                                                                     ]
                                                                 )->label(true)->error(false); ?>
@@ -223,7 +223,7 @@ $M1 = array();
                                                             <div class="form-cont bs">
                                                                 <!--  <?= $form->field($TempModel, 'iHeightID')->dropDownList(
                                                                     ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
-                                                                    ['class' => 'cs-select cs-skin-border',
+                                                                    ['class' => 'demo-default select-beast',
                                                                         'prompt' => 'Height']
                                                                 )->label(true)->error(false); ?> -->
                                                             </div>
@@ -236,7 +236,7 @@ $M1 = array();
                                                             <div class="form-cont bs">
                                                                 <?= $form->field($TempModel, 'Profile_for')->dropDownList(
                                                                     ['FEMALE' => 'BRIDE', 'MALE' => 'GROOM'],
-                                                                    ['class' => 'cs-select cs-skin-border',
+                                                                    ['class' => 'demo-default select-beast',
                                                                         'prompt' => 'Looking For'
                                                                     ]
                                                                 )->label(true); ?>
@@ -253,7 +253,7 @@ $M1 = array();
                                                                 <label for="amount">Area:</label>
 
                                                                 <div id="slider-range"></div>
-                                                                <input type="text" class="cs-select cs-skin-border"
+                                                                <input type="text" class="demo-default select-beast"
                                                                        id="amount" readonly>
                                                             </div>
                                                         </div>
