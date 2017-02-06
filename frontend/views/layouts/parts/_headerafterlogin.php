@@ -25,7 +25,7 @@ use common\components\CommonHelper;
                       <?php #if (Yii::$app->user->identity->eEmailVerifiedStatus == 'Yes' && Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes') {
                       if (1) { ?>
                     <!-- <li><a href="#">Matches <span class="badge">1</span></a></li>-->
-                      <!--<li><a href="<? /*= CommonHelper::getMailBoxUrl() */ ?>">Search </a></li>-->
+                        <li><?= html::a('<i class="ti-power-off m-r-5"></i> Dashboard</a>', ['user/dashboard']) ?></li>
                       <li><?= html::a('<i class="ti-power-off m-r-5"></i> Search</a>', ['search/basic-search'], ['data-method' => 'post']) ?></li>
                       <li><a href="<?= CommonHelper::getMailBoxUrl() ?>">Inbox
                           <!--<span class="badge">10</span>--></a></li>
@@ -43,7 +43,7 @@ use common\components\CommonHelper;
                           <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                           <li><?= html::a('<i class="ti-power-off m-r-5"></i> My Profile</a>', ['user/my-profile'], ['data-method' => 'post']) ?></li>
-                          <li><?= html::a('<i class="ti-power-off m-r-5"></i> Dashboard</a>', ['user/dashboard'], ['data-method' => 'post']) ?></li>
+                          <li><?= html::a('<i class="ti-power-off m-r-5"></i> Dashboard</a>', ['user/dashboard']) ?></li>
                           <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', ['site/logout'], ['data-method' => 'post', 'class' => 'logout']) ?></li>
                           <li><?= html::a('<i class="ti-power-off m-r-5"></i> Setting</a>', ['user/setting']) ?></li>
                           <li role="separator" class="divider"></li>
