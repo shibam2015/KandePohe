@@ -310,12 +310,12 @@ if (!Yii::$app->user->isGuest) {
                                             <div class="fb-profile-text padd-xs padd-tp-0">
                                                 <h1><span
                                                         class="heading-icons <?= ($model->Gender == 'MALE') ? 'icon9' : 'icon1'; ?>"></span>
-                                                    My Information</h1>
+                                                    About Me</h1>
                                             </div>
 
                                             <?php Pjax::begin(['id' => 'div_my_info', 'enablePushState' => false]); ?>
                                             <p class="div_my_info">
-                                                <i class="fa fa-spinner fa-spin pink"></i> My Information Loading...
+                                                <i class="fa fa-spinner fa-spin pink"></i> About Me Loading...
                                             </p>
                                             <?php Pjax::end(); ?>
                                         </div>
@@ -427,10 +427,10 @@ if (!Yii::$app->user->isGuest) {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <h3><span class="heading-icons icon2"></span> HOROSCOPE DETAILS</h3>
+                                            <h3><span class="heading-icons icon2"></span> Horoscope Details</h3>
                                             <?php Pjax::begin(['id' => 'div_horoscope', 'enablePushState' => false]); ?>
                                             <div class="div_horoscope">
-                                                <i class="fa fa-spinner fa-spin pink"></i> HOROSCOPE DETAILS
+                                                <i class="fa fa-spinner fa-spin pink"></i> Horoscope Details
                                                 Loading...
                                             </div>
                                             <?php Pjax::end(); ?>

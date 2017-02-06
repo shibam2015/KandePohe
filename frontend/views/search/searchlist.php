@@ -8,8 +8,6 @@ use common\components\MessageHelper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 $id = 0;
-$PROFILE_COMPLETENESS = 0;
-
 if (!Yii::$app->user->isGuest) {
     $Id = Yii::$app->user->identity->id;
 }
@@ -360,7 +358,8 @@ $M1 = array();
                                                     <div class="prof-pic">
                                                         <div class="drop-effect"></div>
                                                         <div class="slider">
-                                                            <div id="carousel-example-generic" class="carousel slide"
+                                                            <div id="carousel-example-generic_<?= $SK ?>"
+                                                                 class="carousel slide"
                                                                  data-ride="carousel">
                                                                 <!-- Wrapper for slides -->
                                                                 <div class="carousel-inner">
@@ -389,22 +388,25 @@ $M1 = array();
                                                                     ?>
                                                                 </div>
                                                                 <!-- Controls -->
+                                                                <?php if (is_array($Photos[$SV->id])) { ?>
                                                                 <a class="left carousel-control"
-                                                                   href="#carousel-example-generic"
+                                                                   href="#carousel-example-generic_<?= $SK ?>"
                                                                    data-slide="prev"> <span
                                                                         class="glyphicon glyphicon-chevron-left"></span>
                                                                 </a> <a class="right carousel-control"
-                                                                        href="#carousel-example-generic"
+                                                                        href="#carousel-example-generic_<?= $SK ?>"
                                                                         data-slide="next">
                                                                     <span
                                                                         class="glyphicon glyphicon-chevron-right"></span>
-                                                                </a></div>
+                                                                    </a>
+                                                                <?php } ?>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <?php if (count($SV) > 0) { ?>
-                                                        <p class="text-right"><a href="#" data-toggle="modal"
-                                                                                 data-target="#photo">View
-                                                                Album <i class="fa fa-angle-right"></i></a></p>
+                                                    <?php if (is_array($Photos[$SV->id])) { ?>
+                                                        <!-- <p class="text-right"><a href="#" data-toggle="modal"
+                                                                                  data-target="#photo">View
+                                                                 Album <i class="fa fa-angle-right"></i></a></p>-->
                                                     <?php } ?>
                                                 </div>
                                                 <div class="col-sm-9">
@@ -467,7 +469,6 @@ $M1 = array();
                                                 </div>
                                             </div>
                                             <?php
-
                                             if (!Yii::$app->user->isGuest) {
                                                 if ($SV->Gender != Yii::$app->user->identity->Gender) { ?>
                                                     <div class="row gray-bg">

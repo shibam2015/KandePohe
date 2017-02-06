@@ -318,7 +318,7 @@ if ($show) {
                 $vFamilyProperty = trim($vFamilyProperty,", ")
             ?>
             <dd><?= CommonHelper::setInputVal($vFamilyProperty, 'text') ?></dd>
-            <dt>You can enter your relative surnames etc</dt>
+            <dt>Additional Information</dt>
             <dd><?= CommonHelper::setInputVal($model->vDetailRelative, 'text') ?></dd>
         </dl>
     
