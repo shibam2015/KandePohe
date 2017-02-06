@@ -512,21 +512,27 @@ use yii\widgets\Pjax;
                                                 </h3>
                                                 <dl class="dl-horizontal">
                                                     <dt>Education Level</dt>
-                                                    <dd><?= CommonHelper::setInputVal($PartnersEducationalLevel->educationLevelName->vEducationLevelName, 'text') ?>
+                                                    <?php $PEducationLevelArray = \common\models\EducationLevel::getEducationLevelNames(CommonHelper::removeComma(implode(",", $PartenersEduLevelArray))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PEducationLevelArray, 'vEducationLevelName'), 'text') ?></dd>
                                                     <dd>
                                                     <dt>Education Field</dt>
-                                                    <dd><?= CommonHelper::setInputVal($PartnersEducationField->educationFieldName->vEducationFieldName, 'text') ?>
+                                                    <?php $PEducationFieldArray = \common\models\EducationField::getEducationFieldNames(CommonHelper::removeComma(implode(",", $PartenersEduFieldArray))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PEducationFieldArray, 'vEducationFieldName'), 'text') ?></dd>
                                                     <dd>
                                                     <dt>Working As</dt>
-                                                    <dd><?= CommonHelper::setInputVal($PW->workingAsName->vWorkingAsName, 'text') ?>
+                                                    <?php $PWorkingAsArray = \common\models\WorkingAS::getWorkingAsNames(CommonHelper::removeComma(implode(",", $PartenersWorkingAsArray))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PWorkingAsArray, 'vWorkingAsName'), 'text') ?></dd>
                                                     <dd>
                                                     <dt>Working With</dt>
-                                                    <dd><?= CommonHelper::setInputVal($WorkingW->workingWithName->vWorkingWithName, 'text') ?>
+                                                    <?php $PWorkingWithArray = \common\models\WorkingWith::getWorkingWithNames(CommonHelper::removeComma(implode(",", $PartenersWorkingWithArray))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PWorkingWithArray, 'vWorkingWithName'), 'text') ?></dd>
                                                     <dd>
-                                                    <dt>Annual Income</dt>
-                                                    <dd><?= CommonHelper::setInputVal($AI->annualIncomeName->vAnnualIncome, 'text') ?>
-                                                    <dd>
+                                                    <dt>Annual Income From</dt>
+                                                    <dd><?= CommonHelper::setInputVal($UPP->annualIncomeFrom->vAnnualIncome, 'text') ?></dd>
+                                                    <dt>Annual Income To</dt>
+                                                    <dd><?= CommonHelper::setInputVal($UPP->annualIncomeTo->vAnnualIncome, 'text') ?></dd>
 
+                                                    <dd>
                                                 </dl>
                                             </div>
                                             <div class="inner-block">

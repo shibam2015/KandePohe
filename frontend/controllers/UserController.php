@@ -2227,8 +2227,6 @@ class UserController extends Controller
             $UPP = UserPartnerPreference::findByUserId($ToUserId) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($ToUserId);
             $PartnersFathersStatus = PartnersFathersStatus::findByUserId($ToUserId) == NULL ? new PartnersFathersStatus() : PartnersFathersStatus::findByUserId($ToUserId);
             $PartnersMothersStatus = PartnersMothersStatus::findByUserId($ToUserId) == NULL ? new PartnersMothersStatus() : PartnersMothersStatus::findByUserId($ToUserId);
-            $PartnersEducationalLevel = PartnersEducationalLevel::findByUserId($ToUserId) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findByUserId($ToUserId);
-            $PartnersEducationField = PartnersEducationField::findByUserId($ToUserId) == NULL ? new PartnersEducationField() : PartnersEducationField::findByUserId($ToUserId);
 
             $PartnersMothertongue = PartnersMothertongue::findByUserId($ToUserId) == NULL ? new PartnersMothertongue() : PartnersMothertongue::findByUserId($ToUserId);
             $PartnersRaashi = PartnersRaashi::findByUserId($ToUserId) == NULL ? new PartnersRaashi() : PartnersRaashi::findByUserId($ToUserId);
@@ -2244,6 +2242,10 @@ class UserController extends Controller
             $PartnersSmoke = PartnersSmoke::findAllByUserId($ToUserId) == NULL ? new PartnersSmoke() : PartnersSmoke::findAllByUserId($ToUserId);
             $PartnersDrink = PartnersDrink::findAllByUserId($ToUserId) == NULL ? new PartnersDrink() : PartnersDrink::findAllByUserId($ToUserId);
 
+            $PartnersEducationalLevel = PartnersEducationalLevel::findAllByUserId($ToUserId) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findAllByUserId($ToUserId);
+            $PartnersEducationField = PartnersEducationField::findAllByUserId($ToUserId) == NULL ? new PartnersEducationField() : PartnersEducationField::findAllByUserId($ToUserId);
+            $PartnerWorkingAS = PartnerWorkingAs::findAllByUserId($ToUserId) == NULL ? new PartnerWorkingAs() : PartnerWorkingAs::findAllByUserId($ToUserId);
+            $PartnerWorkingWith = PartnerWorkingWith::findAllByUserId($ToUserId) == NULL ? new PartnerWorkingWith() : PartnerWorkingWith::findAllByUserId($ToUserId);
 
         } else if ($ToUserId == $id) {
             $Title = Yii::$app->params['accessDenied'];
@@ -2266,6 +2268,11 @@ class UserController extends Controller
         $PartnersDrink = CommonHelper::convertArrayToString($PartnersDrink, 'drink_type');
         $PartnersCommunity = CommonHelper::convertArrayToString($PartnersCommunity, 'iCommunity_ID');
         $PartnersSubCommunity = CommonHelper::convertArrayToString($PartnersSubCommunity, 'iSub_Community_ID');
+
+        $PartenersEduLevelArray = CommonHelper::convertArrayToString($PartnersEducationalLevel, 'iEducation_Level_ID');
+        $PartenersEduFieldArray = CommonHelper::convertArrayToString($PartnersEducationField, 'iEducation_Field_ID');
+        $PartenersWorkingAsArray = CommonHelper::convertArrayToString($PartnerWorkingAS, 'iWorking_As_ID');
+        $PartenersWorkingWithArray = CommonHelper::convertArrayToString($PartnerWorkingWith, 'iWorking_With_ID');
 
         return $this->render('profile', [
             'model' => $model,
@@ -2303,6 +2310,11 @@ class UserController extends Controller
             'PartnersDrink' => $PartnersDrink,
 
             'PartnersMothertongue' => $PartnersMothertongue,
+
+            'PartenersEduLevelArray' => $PartenersEduLevelArray,
+            'PartenersEduFieldArray' => $PartenersEduFieldArray,
+            'PartenersWorkingAsArray' => $PartenersWorkingAsArray,
+            'PartenersWorkingWithArray' => $PartenersWorkingWithArray,
         ]);
     }
 
