@@ -183,7 +183,7 @@ use yii\widgets\Pjax;
                                             <div class="inner-block">
                                                 <h3><span
                                                         class="heading-icons <?= ($model->Gender == 'MALE') ? 'icon3' : 'icon1'; ?>"></span>
-                                                    About</h3>
+                                                    About <?= ($model->Gender == 'MALE') ? 'Him' : 'Her'; ?></h3>
 
                                                 <p>
                                                     <?php if ($model->tYourSelf != '') { ?>
@@ -194,31 +194,9 @@ use yii\widgets\Pjax;
                                                 <?php } ?>
                                                 </p>
                                             </div>
+
                                             <div class="inner-block">
-                                                <h3><span class="heading-icons icon2"></span> Lifestyle &amp; Appearance
-                                                </h3>
-                                                <dl class="dl-horizontal">
-                                                    <dt>Food Habbits</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->dietName->vName, 'text') ?>
-                                                    <dd>
-
-                                                    <dt>Drinking Habit</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->vDrink, 'text') ?>
-                                                    <dd>
-
-                                                    <dt>Smoking Habit</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->vSmoke, 'text') ?>
-                                                    <dd>
-
-                                                    <dt>Looks &amp; Appearance</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->vSkinTone, 'text') . ', ' . CommonHelper::setInputVal($model->vBodyType, 'text') ?>
-                                                    <dd>
-
-
-                                                </dl>
-                                            </div>
-                                            <div class="inner-block">
-                                                <h3><span class="heading-icons icon2"></span> Background</h3>
+                                                <h3><span class="heading-icons icon2"></span> Basic information</h3>
                                                 <dl class="dl-horizontal">
                                                     <dt>Religion</dt>
                                                     <dd><?= $model->religionName->vName; ?>
@@ -253,8 +231,156 @@ use yii\widgets\Pjax;
                                                 </dl>
                                             </div>
                                             <div class="inner-block">
+                                                <h3><span class="heading-icons icon6"></span> Education And Career</h3>
+                                                <dl class="dl-horizontal mrg-bt-10">
+                                                    <dt>Education</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->educationLevelName->vEducationLevelName, 'text') ?></dd>
+                                                    <dt>Profession</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->workingAsName->vWorkingAsName, 'text') ?></dd>
+                                                    <dt>Income</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->annualIncome->vAnnualIncome, 'text') ?></dd>
+
+                                                </dl>
+                                                <p>To view details about <strong>College and Company</strong> working
+                                                    at:
+                                                    <span class="mrg-lt-15"><a href="#">Upgrade Now!</a></span></p>
+                                            </div>
+                                            <div class="inner-block">
+                                                <h3><span class="heading-icons icon2"></span> Lifestyle &amp; Appearance
+                                                </h3>
+                                                <dl class="dl-horizontal">
+                                                    <dt>Looks</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->skinTone->Name, 'text') ?></dd>
+                                                    <dt>Appearance</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->bodyType->Name, 'text') ?></dd>
+                                                    <dd>
+                                                    <dt>Smoking Habit</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->vSmoke, 'text') ?></dd>
+                                                    <dt>Drinking Habit</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->vDrink, 'text') ?></dd>
+                                                    <dt>Spectacles/Lens</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->vSpectaclesLens, 'text') ?></dd>
+                                                    <dt>Food Habbits</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->dietName->vName, 'text') ?>
+                                                    <dd>
+                                                        <!--<dt>Looks &amp; Appearance</dt>
+                                                    <dd><? /*= CommonHelper::setInputVal($model->skinTone->Name, 'text') . ', ' . CommonHelper::setInputVal($model->bodyType->Name, 'text') */ ?>
+                                                    <dd>-->
+                                                    <dt>Weight</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->weight . " KG", 'text') ?></dd>
+
+                                                </dl>
+                                            </div>
+
+                                            <div class="inner-block">
+                                                <h3><span class="heading-icons icon5"></span> Family Detail</h3>
+                                                <dl class="dl-horizontal">
+
+                                                    <dt>Father Status</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->fatherStatus->vName, 'text') ?>
+                                                    <dd>
+                                                    <dt>Father Working As</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->fatherStatusId->vWorkingAsName, 'text') ?></dd>
+                                                    <dt>Mother Status</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->motherStatus->vName, 'text') ?>
+                                                    <dd>
+                                                    <dt>Mother Working As</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->motherStatusId->vWorkingAsName, 'text') ?></dd>
+                                                    <dt>No of Brothers</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->nob, 'text') ?></dd>
+                                                    <dt>No of Sisters</dt>
+                                                    <dd><?= $model->nos; ?></dd>
+                                                    <dt>Country</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->countryNameCA->vCountryName, 'text') ?></dd>
+                                                    <dt>State</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->stateNameCA->vStateName, 'text') ?></dd>
+                                                    <dt>City</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->cityNameCA->vCityName, 'text') ?></dd>
+                                                    <dt>Distict</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->districtNameCA->vName, 'text') ?></dd>
+                                                    <dt>Taluks</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->talukaNameCA->vName, 'text') ?></dd>
+                                                    <dt>Area Name</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->vAreaName, 'text') ?></dd>
+                                                    <dt>Native Place</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->vNativePlaceCA, 'text') ?></dd>
+                                                    <!--<dt>Parents Residing At</dt>
+            <dd><? /*= CommonHelper::setInputVal($model->vParentsResiding, 'text') */ ?></dd>-->
+                                                    <dt>Family Affluence Level</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->familyAffluenceLevelName->Name, 'text') ?></dd>
+                                                    <dt>Family Type</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->vFamilyType, 'text') ?></dd>
+
+
+                                                    <?php
+                                                    $family_property_array = ArrayHelper::map(CommonHelper::getFamilyPropertyDetail(), 'ID', 'Name');
+                                                    $family_propertyId_array = explode(',', $model->vFamilyProperty);
+                                                    $vFamilyProperty = "";
+                                                    foreach ($family_propertyId_array as $key => $value) {
+                                                        $vFamilyProperty .= $family_property_array[$value] . ", ";
+                                                    }
+                                                    $vFamilyProperty = trim($vFamilyProperty, ", ")
+                                                    ?>
+                                                    <dt>Property Details</dt>
+                                                    <dd><?= CommonHelper::setInputVal($vFamilyProperty, 'text') ?></dd>
+                                                    <dt>Additional Information</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->vDetailRelative, 'text') ?></dd>
+                                                </dl>
+                                            </div>
+
+                                            <div class="inner-block">
+                                                <h3><span class="heading-icons icon7"></span>Hobbies , Interests &amp;
+                                                    More
+                                                </h3>
+                                                <dl class="dl-horizontal">
+                                                    <dt>Interest</dt>
+
+                                                    <?php $InterestArray = \common\models\Interests::getInterestNames(CommonHelper::removeComma($model->InterestID)); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($InterestArray, 'Name'), 'text') ?></dd>
+                                                    <dt>Favorite Reads</dt>
+                                                    <?php $ReadsArray = \common\models\FavouriteReads::getReadsNames(CommonHelper::removeComma($model->FavioriteReadID)); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($ReadsArray, 'Name'), 'text') ?></dd>
+                                                    <dt>Favorite Music</dt>
+                                                    <?php $MusicArray = \common\models\FavouriteMusic::getMusicNames(CommonHelper::removeComma($model->FaviouriteMusicID)); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($MusicArray, 'Name'), 'text') ?></dd>
+                                                    <dt>Favorite Cousines</dt>
+                                                    <?php $CousinesArray = \common\models\FavouriteCousines::getCousinesNames(CommonHelper::removeComma($model->FavouriteCousinesID)); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($CousinesArray, 'Name'), 'text') ?></dd>
+                                                    <dt>Sports/Fitness and Activities</dt>
+                                                    <?php $SportsArray = \common\models\SportsFitnActivities::getSportsNames(CommonHelper::removeComma($model->SportsFittnessID)); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($SportsArray, 'Name'), 'text') ?></dd>
+                                                    <dt>Preferred Dress Style</dt>
+                                                    <?php $DressArray = \common\models\PreferredDressStyle::getDressNames(CommonHelper::removeComma($model->PreferredDressID)); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($DressArray, 'Name'), 'text') ?></dd>
+                                                    <dt>Preferred Movie</dt>
+                                                    <?php $MovieArray = \common\models\PreferredMovies::getMovieNames(CommonHelper::removeComma($model->PreferredMovieID)); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($MovieArray, 'Name'), 'text') ?></dd>
+                                                </dl>
+                                            </div>
+
+
+                                            <div class="inner-block">
                                                 <h3><span class="heading-icons icon3"></span> Horoscope Details</h3>
-                                                <figcaption class="mrg-tp-30 horo-wrap">
+                                                <dl class="dl-horizontal">
+                                                    <dt>Raashi</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->raashiName->Name, 'text') ?>
+                                                    <dd>
+                                                    <dt>Charan</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->charanName->Name, 'text') ?>
+                                                    <dd>
+                                                    <dt>Nakshtra</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->nakshtraName->Name, 'text') ?>
+                                                    <dd>
+                                                    <dt>Nadi</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->nadiName->Name, 'text') ?>
+                                                    <dd>
+                                                    <dt>Gotra</dt>
+                                                    <dd><?= CommonHelper::setInputVal($model->gotraName->vName, 'text') ?>
+                                                    <dd>
+                                                    <dt>Mangalik</dt>
+                                                    <dd><?= $model->Mangalik ?></dd>
+                                                </dl>
+                                                <!--<figcaption class="mrg-tp-30 horo-wrap">
                                                     <div class="horo-info"> For the common interest of members, <br>
                                                         quickly enter your Astro details & unhide her info
                                                         <div class="dropdown">
@@ -271,71 +397,8 @@ use yii\widgets\Pjax;
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <?= Html::img('@web/images/prof-img.jpg', ['width' => '', 'height' => '', 'alt' => 'email', 'class' => 'img-responsive']); ?>
-                                                </figcaption>
-                                            </div>
-                                            <div class="inner-block">
-                                                <h3><span class="heading-icons icon5"></span> Family Detail</h3>
-                                                <dl class="dl-horizontal">
-                                                    <dt>Father</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->fatherStatusId->vWorkingAsName, 'text') ?>
-                                                    <dd>
-                                                    <dt>Mother</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->motherStatusId->vWorkingAsName, 'text') ?></dd>
-                                                    <dt>Siblings</dt>
-                                                    <dd><?= $model->nob . ' Brother(s) & ' . $model->nos . ' Sister(s)' ?></dd>
-                                                    <dt>Family Class</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->vFamilyAffluenceLevel, 'text') ?></dd>
-
-                                                    <dt>Native Place</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->vNativePlaceCA, 'text') ?></dd>
-
-                                                    <dt>Traditionl Values</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->vFamilyType, 'text') ?></dd>
-                                                </dl>
-                                            </div>
-                                            <div class="inner-block">
-                                                <h3><span class="heading-icons icon6"></span> Education And Career</h3>
-                                                <dl class="dl-horizontal mrg-bt-10">
-                                                    <dt>Education</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->educationLevelName->vEducationLevelName, 'text') ?></dd>
-                                                    <dt>Profession</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->workingAsName->vWorkingAsName, 'text') ?></dd>
-                                                    <dt>Income</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->annualIncome->vAnnualIncome, 'text') ?></dd>
-
-                                                </dl>
-                                                <p>To view details about <strong>College and Company</strong> working
-                                                    at:
-                                                    <span class="mrg-lt-15"><a href="#">Upgrade Now!</a></span></p>
-                                            </div>
-                                            <div class="inner-block">
-                                                <h3><span class="heading-icons icon7"></span>Hobbies , Interests &amp;
-                                                    More
-                                                </h3>
-                                                <dl class="dl-horizontal">
-                                                    <dt>Interest</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->interestName->Name, 'text') ?>
-                                                    </dd>
-                                                    <dt>Favorite Reads</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->favouriteReadsName->Name, 'text') ?>
-                                                    </dd>
-                                                    <dt>Favorite Music</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->favouriteMusicName->Name, 'text') ?>
-                                                    </dd>
-                                                    <dt>Favorite Cousines</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->favouriteCousinesName->Name, 'text') ?>
-                                                    </dd>
-                                                    <dt>Sports/Fitness and Activities</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->sportsFitnActivitiesName->Name, 'text') ?>
-                                                    </dd>
-                                                    <dt>Preferred Dress Style</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->preferredDressStyleName->Name, 'text') ?>
-                                                    </dd>
-                                                    <dt>Preferred Movie</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->preferredMoviesName->Name, 'text') ?>
-                                                    </dd>
-                                                </dl>
+                                                    <? /*= Html::img('@web/images/prof-img.jpg', ['width' => '', 'height' => '', 'alt' => 'email', 'class' => 'img-responsive']); */ ?>
+                                                </figcaption>-->
                                             </div>
                                             <div class="inner-block">
                                                 <h3><span class="heading-icons icon8"></span> Match Compatibility</h3>
@@ -377,11 +440,14 @@ use yii\widgets\Pjax;
                                         </div>
                                         <div role="tabpanel" class="tab-pane" id="profile">
                                             <div class="inner-block">
-                                                <h3><span class="heading-icons icon2"></span> My Preferences</h3>
+                                                <h3><span
+                                                        class="heading-icons icon2"></span> <?= ($model->Gender == 'MALE') ? 'Him' : 'Her'; ?>
+                                                    Preferences</h3>
                                                 <dl class="dl-horizontal">
                                                     <dt>Religion</dt>
-                                                    <dd><?= CommonHelper::setInputVal($PartenersReligion->religionName->vName, 'text') ?>
-                                                    <dd>
+                                                    <?php $PReligionArray = \common\models\Religion::getReligionNames(CommonHelper::removeComma(implode(",", $PartenersReligionIDs))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PReligionArray, 'vName'), 'text') ?></dd>
+
                                                     <dt>Age From</dt>
                                                     <dd><?= CommonHelper::setInputVal($UPP->age_from, 'age') ?>
                                                     <dd>
@@ -390,35 +456,55 @@ use yii\widgets\Pjax;
                                                     <dd>
                                                     <dt>Height From</dt>
                                                     <dd><?= CommonHelper::setInputVal($UPP->heightFrom->vName, 'text') ?>
-                                                    <dd>
+
                                                     <dt>Height To</dt>
                                                     <dd><?= CommonHelper::setInputVal($UPP->heightTo->vName, 'text') ?>
-                                                    <dd>
+
                                                     <dt>Marital Status</dt>
-                                                    <dd><?= CommonHelper::setInputVal($PartnersMaritalStatus->maritalStatusName->vName, 'text') ?>
-                                                    <dd>
-                                                    <dt>Gotra</dt>
-                                                    <dd><?= CommonHelper::setInputVal($PartnersGotra->gotraName->vName, 'text') ?>
-                                                    <dd>
+                                                    <?php $PMaritalStatusArray = \common\models\MasterMaritalStatus::getPartnerMaritalStatus(CommonHelper::removeComma(implode(",", $PartnersMaritalPreferences))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PMaritalStatusArray, 'vName'), 'text') ?></dd>
+
+
                                                     <dt>Mothertoungue</dt>
                                                     <dd><?= CommonHelper::setInputVal($PartnersMothertongue->partnersMothertongueName->Name, 'text') ?>
-                                                    <dd>
+                                                    <dt>Raashi</dt>
+                                                    <dd><?= CommonHelper::setInputVal($PartnersRaashi->raashiName->Name, 'text') ?>
+                                                    <dt>Charan</dt>
+                                                    <dd><?= CommonHelper::setInputVal($PartnersCharan->charanName->Name, 'text') ?>
+                                                    <dt>Nakshtra</dt>
+                                                    <dd><?= CommonHelper::setInputVal($PartnersNakshtra->nakshtraName->Name, 'text') ?>
+                                                    <dt>Nadi</dt>
+                                                    <dd><?= CommonHelper::setInputVal($PartnersNadi->nadiName->Name, 'text') ?>
+
+                                                    <dt>Gotra</dt>
+                                                    <?php $PGotraArray = \common\models\MasterGotra::getPartnerGotraStatus(CommonHelper::removeComma(implode(",", $PartnersGotraPreferences))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PGotraArray, 'vName'), 'text') ?></dd>
+
                                                     <dt>Mangalik</dt>
                                                     <dd><?= CommonHelper::setInputVal($UPP->manglik, 'text') ?>
-                                                    <dd>
-                                                    <dt>Community</dt>
-                                                    <dd><?= CommonHelper::setInputVal($PartnersCommunity->communityName->vName, 'text') ?>
-                                                    <dd>
-                                                    <dt>Sub Community</dt>
-                                                    <dd><?= CommonHelper::setInputVal($PartnersSubCommunity->subCommunityName->vName, 'text') ?>
-                                                    <dd>
-                                                    <dt>Drink</dt>
-                                                    <dd><?= CommonHelper::setInputVal($UPP->drink, 'text') ?>
-                                                    <dd>
-                                                    <dt>Smoke</dt>
-                                                    <dd><?= CommonHelper::setInputVal($UPP->smoke, 'text') ?>
-                                                    <dd>
 
+                                                    <dt>Community</dt>
+                                                    <?php $PCommunityArray = \common\models\MasterCommunity::getCommunityNames(CommonHelper::removeComma(implode(",", $PartnersCommunity))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PCommunityArray, 'vName'), 'text') ?></dd>
+
+
+                                                    <dt>Sub Community</dt>
+                                                    <?php $PSubCommunityArray = \common\models\MasterCommunitySub::getSubCommunityNames(CommonHelper::removeComma(implode(",", $PartnersSubCommunity))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PSubCommunityArray, 'vName'), 'text') ?></dd>
+
+
+                                                    <dt>Drink</dt>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getValuesFromArray(Yii::$app->params['drinkArray'], $PartnersDrink, 1), 'text') ?></dd>
+                                                    <dt>Smoke</dt>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getValuesFromArray(Yii::$app->params['smokeArray'], $PartnersSmoke, 1), 'text') ?></dd>
+                                                    <dt>Skin Tone</dt>
+                                                    <?php $PBodyTypeArray = \common\models\BodyType::getPartnerBodyType(CommonHelper::removeComma(implode(",", $PartnersBodyType))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PBodyTypeArray, 'Name'), 'text') ?></dd>
+                                                    <dt>Diet</dt>
+                                                    <?php $PDietArray = \common\models\MasterDiet::getDietNames(CommonHelper::removeComma(implode(",", $PartnersDiet))); ?>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getCommaSeperatedValue($PDietArray, 'vName'), 'text') ?></dd>
+                                                    <dt>Spectacles</dt>
+                                                    <dd><?= CommonHelper::setInputVal(CommonHelper::getValuesFromArray(Yii::$app->params['eyesArray'], $PartnersSpectacles, 1), 'text') ?></dd>
                                                 </dl>
                                             </div>
                                             <div class="inner-block">

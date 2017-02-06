@@ -2218,14 +2218,32 @@ class UserController extends Controller
             $model = User::findOne($ToUserId);
             $UserPhotoModel = new UserPhotos();
             $PhotoList = $UserPhotoModel->findByUserId($ToUserId);
-            $PartenersReligion = PartenersReligion::findByUserId($ToUserId) == NULL ? new PartenersReligion() : PartenersReligion::findByUserId($ToUserId);
+            $PartenersReligion = PartenersReligion::findAllByUserId($ToUserId) == NULL ? new PartenersReligion() : PartenersReligion::findAllByUserId($ToUserId);
+            $PartnersMaritalStatus = PartnersMaritalStatus::findAllByUserId($ToUserId) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findAllByUserId($ToUserId);
+            $PartnersGotra = PartnersGotra::findAllByUserId($ToUserId) == NULL ? new PartnersGotra() : PartnersGotra::findAllByUserId($ToUserId);
+            $PartnersCommunity = PartnersCommunity::findAllByUserId($ToUserId) == NULL ? new PartnersCommunity() : PartnersCommunity::findAllByUserId($ToUserId);
+            $PartnersSubCommunity = PartnersSubcommunity::findAllByUserId($ToUserId) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findAllByUserId($ToUserId);
+
             $UPP = UserPartnerPreference::findByUserId($ToUserId) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($ToUserId);
-            $PartnersMaritalStatus = PartnersMaritalStatus::findByUserId($ToUserId) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findByUserId($ToUserId);
-            $PartnersGotra = PartnersGotra::findByUserId($ToUserId) == NULL ? new PartnersGotra() : PartnersGotra::findByUserId($ToUserId);
             $PartnersFathersStatus = PartnersFathersStatus::findByUserId($ToUserId) == NULL ? new PartnersFathersStatus() : PartnersFathersStatus::findByUserId($ToUserId);
             $PartnersMothersStatus = PartnersMothersStatus::findByUserId($ToUserId) == NULL ? new PartnersMothersStatus() : PartnersMothersStatus::findByUserId($ToUserId);
             $PartnersEducationalLevel = PartnersEducationalLevel::findByUserId($ToUserId) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findByUserId($ToUserId);
             $PartnersEducationField = PartnersEducationField::findByUserId($ToUserId) == NULL ? new PartnersEducationField() : PartnersEducationField::findByUserId($ToUserId);
+
+            $PartnersMothertongue = PartnersMothertongue::findByUserId($ToUserId) == NULL ? new PartnersMothertongue() : PartnersMothertongue::findByUserId($ToUserId);
+            $PartnersRaashi = PartnersRaashi::findByUserId($ToUserId) == NULL ? new PartnersRaashi() : PartnersRaashi::findByUserId($ToUserId);
+            $PartnersCharan = PartnersCharan::findByUserId($ToUserId) == NULL ? new PartnersCharan() : PartnersCharan::findByUserId($ToUserId);
+            $PartnersNakshtra = PartnersNakshtra::findByUserId($ToUserId) == NULL ? new PartnersNakshtra() : PartnersNakshtra::findByUserId($ToUserId);
+            $PartnersNadi = PartnersNadi::findByUserId($ToUserId) == NULL ? new PartnersNadi() : PartnersNadi::findByUserId($ToUserId);
+
+
+            $PartnersSkinTone = PartnersSkinTone::findAllByUserId($ToUserId) == NULL ? new PartnersSkinTone() : PartnersSkinTone::findAllByUserId($ToUserId);
+            $PartnersBodyType = PartnersBodyType::findAllByUserId($ToUserId) == NULL ? new PartnersBodyType() : PartnersBodyType::findAllByUserId($ToUserId);
+            $PartnersDiet = PartnersDiet::findAllByUserId($ToUserId) == NULL ? new PartnersDiet() : PartnersDiet::findAllByUserId($ToUserId);
+            $PartnersSpectacles = PartnersSpectacles::findAllByUserId($ToUserId) == NULL ? new PartnersSpectacles() : PartnersSpectacles::findAllByUserId($ToUserId);
+            $PartnersSmoke = PartnersSmoke::findAllByUserId($ToUserId) == NULL ? new PartnersSmoke() : PartnersSmoke::findAllByUserId($ToUserId);
+            $PartnersDrink = PartnersDrink::findAllByUserId($ToUserId) == NULL ? new PartnersDrink() : PartnersDrink::findAllByUserId($ToUserId);
+
 
         } else if ($ToUserId == $id) {
             $Title = Yii::$app->params['accessDenied'];
@@ -2236,6 +2254,19 @@ class UserController extends Controller
         }
         $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
         list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, $id, 3);
+
+        $PartenersReligionIDs = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
+        $PartnersMaritalPreferences = CommonHelper::convertArrayToString($PartnersMaritalStatus, 'iMarital_Status_ID');
+        $PartnersGotraPreferences = CommonHelper::convertArrayToString($PartnersGotra, 'iGotra_ID');
+        $PartnersSkinTone = CommonHelper::convertArrayToString($PartnersSkinTone, 'iSkin_Tone_ID');
+        $PartnersBodyType = CommonHelper::convertArrayToString($PartnersBodyType, 'iBody_Type_ID');
+        $PartnersDiet = CommonHelper::convertArrayToString($PartnersDiet, 'diet_id');
+        $PartnersSpectacles = CommonHelper::convertArrayToString($PartnersSpectacles, 'type');
+        $PartnersSmoke = CommonHelper::convertArrayToString($PartnersSmoke, 'smoke_type');
+        $PartnersDrink = CommonHelper::convertArrayToString($PartnersDrink, 'drink_type');
+        $PartnersCommunity = CommonHelper::convertArrayToString($PartnersCommunity, 'iCommunity_ID');
+        $PartnersSubCommunity = CommonHelper::convertArrayToString($PartnersSubCommunity, 'iSub_Community_ID');
+
         return $this->render('profile', [
             'model' => $model,
             'MatchCompatibility' => $MatchCompatibility,
@@ -2244,14 +2275,34 @@ class UserController extends Controller
             'Message' => $Message,
             'Title' => $Title,
             'PartenersReligion' => $PartenersReligion,
+            'PartenersReligionIDs' => $PartenersReligionIDs,
             'UPP' => $UPP,
-            'PartnersMaritalStatus' => $PartnersMaritalStatus,
-            'PartnersGotra' => $PartnersGotra,
             'PartnersFathersStatus' => $PartnersFathersStatus,
             'PartnersMothersStatus' => $PartnersMothersStatus,
             'PartnersEducationalLevel' => $PartnersEducationalLevel,
             'PartnersEducationField' => $PartnersEducationField,
             'SimilarProfile' => $SimilarProfile,
+
+            'PartnersMaritalPreferences' => $PartnersMaritalPreferences,
+            'PartnersGotraPreferences' => $PartnersGotraPreferences,
+            'PartnersMaritalStatus' => $PartnersMaritalStatus,
+            'PartnersGotra' => $PartnersGotra,
+            'PartnersCommunity' => $PartnersCommunity,
+            'PartnersSubCommunity' => $PartnersSubCommunity,
+
+            'PartnersRaashi' => $PartnersRaashi,
+            'PartnersCharan' => $PartnersCharan,
+            'PartnersNakshtra' => $PartnersNakshtra,
+            'PartnersNadi' => $PartnersNadi,
+
+            'PartnersSkinTone' => $PartnersSkinTone,
+            'PartnersBodyType' => $PartnersBodyType,
+            'PartnersDiet' => $PartnersDiet,
+            'PartnersSpectacles' => $PartnersSpectacles,
+            'PartnersSmoke' => $PartnersSmoke,
+            'PartnersDrink' => $PartnersDrink,
+
+            'PartnersMothertongue' => $PartnersMothertongue,
         ]);
     }
 
