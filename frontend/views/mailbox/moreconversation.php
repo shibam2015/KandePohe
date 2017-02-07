@@ -12,7 +12,6 @@ use yii\helpers\Url;
 #CommonHelper::pr($Type);
 ?>
     <div class="main-section">
-        <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
         <main>
             <section class="inbox">
                 <div class="container">

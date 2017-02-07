@@ -7,10 +7,8 @@ use yii\widgets\Pjax;
 use common\models\User;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-
 ?>
     <div class="main-section">
-        <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
         <main>
             <section class="inbox">
                 <div class="container">
