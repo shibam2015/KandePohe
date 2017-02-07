@@ -53,6 +53,11 @@ AppAsset::register($this);
     <script type="text/javascript" src="<?= Yii::$app->homeUrl ?>js/angular.min.js"></script>
   </head>
   <body>
+  <?php if (Yii::$app->user->identity->eEmailVerifiedStatus == 'Yes' || Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes') { ?>
+      <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
+  <?php } else { ?>
+      <?php echo $this->render('/layouts/parts/_headerregister.php'); ?>
+  <?php } ?>
   <?php $this->beginBody() ?>
   <!--<div class="">
     <? /*= $this->render('/layouts/parts/_headerafterlogin');*/ ?>

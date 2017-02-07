@@ -5,9 +5,6 @@ use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
 
 ?>
-<?php
-  echo $this->render('/layouts/parts/_headerregister.php');
-?>
 <main>
   <div class="container-fluid">
     <div class="row no-gutter bg-dark">

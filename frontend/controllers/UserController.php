@@ -263,6 +263,7 @@ class UserController extends Controller
     public function actionPhotos($ref = '')
     {
         if (!Yii::$app->user->isGuest) {
+            CommonHelper::checkVerification();
             $id = Yii::$app->user->identity->id;
             $USER_PHOTO_MODEL = new UserPhotos();
             $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
@@ -3207,6 +3208,7 @@ class UserController extends Controller
     public function actionSetting()
     { #Setting : Privacy Option.
         $Id = Yii::$app->user->identity->id;
+        CommonHelper::checkVerification();
         $UserModel = User::findOne($Id);
         #$model->scenario = User::SCENARIO_EDIT_MY_INFO;
         $show = false;

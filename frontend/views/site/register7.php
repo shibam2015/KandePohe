@@ -8,11 +8,6 @@ use common\components\CommonHelper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 ?>
-<?php if (Yii::$app->user->identity->eEmailVerifiedStatus == 'Yes' && Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes') { ?>
-    <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
-<?php } else { ?>
-    <?php echo $this->render('/layouts/parts/_headerregister.php'); ?>
-<?php } ?>
 <main>
     <div class="main-section">
         <section>

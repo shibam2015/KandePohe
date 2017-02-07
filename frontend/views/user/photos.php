@@ -12,11 +12,6 @@ $UPLOAD_DIR = Yii::getAlias('@frontend') . '/web/uploads/';
 $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 ?>
 <div class="" xmlns="http://www.w3.org/1999/html">
-    <?php if (Yii::$app->user->identity->eEmailVerifiedStatus == 'Yes' && Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes') { ?>
-        <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
-    <?php } else { ?>
-        <?php echo $this->render('/layouts/parts/_headerregister.php'); ?>
-    <?php } ?>
     <main>
         <div class="main-section">
             <div class="col-md-9 col-sm-12">

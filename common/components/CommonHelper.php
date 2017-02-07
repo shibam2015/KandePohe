@@ -872,7 +872,7 @@ class CommonHelper {
 
     public static function checkVerification()
     {
-        if (Yii::$app->user->identity->eEmailVerifiedStatus != 'Yes' && Yii::$app->user->identity->ePhoneVerifiedStatus != 'Yes') {
+        if (Yii::$app->user->identity->eEmailVerifiedStatus == 'No' && Yii::$app->user->identity->ePhoneVerifiedStatus == 'No') {
             $TempArray = explode(",", Yii::$app->user->identity->completed_step);
             if ((max($TempArray)) <= 7) {
                 $URLPage = Yii::$app->params['pageArray'][(max($TempArray))];

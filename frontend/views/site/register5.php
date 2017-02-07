@@ -4,7 +4,7 @@ use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
 
-echo $this->render('/layouts/parts/_headerregister.php');
+#echo $this->render('/layouts/parts/_headerregister.php');
 ?>
 <main>
   <div class="container-fluid">

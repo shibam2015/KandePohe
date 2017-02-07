@@ -16,7 +16,7 @@ $UPLOAD_DIR = Yii::getAlias('@frontend') .'/web/uploads/';
 $IMG_DIR = Yii::getAlias('@frontend') .'/web/';
 ?>
 <?php
-echo $this->render('/layouts/parts/_headerregister.php');
+#echo $this->render('/layouts/parts/_headerregister.php');
 ?>
 <main>
   <div class="main-section">
