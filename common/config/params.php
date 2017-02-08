@@ -49,6 +49,7 @@ return [
     'messageSubCommunitieBS' => 'To include more sub communities, please use Advance Search.',
     'messageReligionBS' => 'To include more Religion, please use Advance Search.',
     'messageJsCall' => 'Something went wrong. Please try again !',
+    'errorMessage' => 'Something went wrong. Please try again !',
 
     /* Photo Section Start */
     'sizeUserPhoto' => array(30, 63, 75, 110, 120, 155, 180, 200, 260),
@@ -88,7 +89,7 @@ return [
                         such as your name in their Inbox list and messages that you\'ve sent.',
     'validationDone' => 'VERIFICATION-DONE',
     'multipleProfileMsg' => 'Multiple Profile',
-    'multipleProfile' => 'It appears that the number you verified is associated ith another profile',
+    'multipleProfile' => 'It appears that the number you verified is associated with another profile',
     'MultipleProfileTellUp' => 'Tell us why you wish to have multiple profiles with the same number. How are you related to these profiles ?',
     'MultipleProfileContact' => '(Please note sandepohe.com team may contact you in this regard)',
     'multipleProfileOption' => [

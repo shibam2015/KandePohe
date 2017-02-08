@@ -589,6 +589,11 @@ function selectboxClassWise(classname) {
 }
 function phoneExist() {
     //phone-change-model
-    // $("#phone-change-model").modal("show");
+    $('#phone-change-model').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $('#multiple_profile_reason').val('');
+    $("#phone-change-model").modal("show");
 }
 //phoneExist();

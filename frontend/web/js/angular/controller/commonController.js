@@ -12,7 +12,7 @@ commonApp.factory('vService', ['$http', function($http) {
         ajaxWithnotification: function(commonObj) {
 	  		$http({
 	            method: "POST",
-	            url: commonObj.url,
+				url: [commonObj.url],
 	            data: commonObj.data,
 	        }).then(function mySucces(response) {
 	        	notificationPopup(response.data.STATUS, response.data.MESSAGE);
@@ -26,7 +26,21 @@ commonApp.factory('vService', ['$http', function($http) {
 				url: commonObj.url,
 				data: commonObj.data,
 			}).then(function mySucces(response) {
-				showNotification(response.data.STATUS, response.data.MESSAGE);
+				var ck = angular.isUndefined(response.data.POPUPTYPE);
+				var ck1 = angular.isUndefined(response.data.REDIRECTURL);
+				if (ck != true || response.data.POPUPTYPE == 1) {
+					notificationPopup(response.data.STATUS, response.data.MESSAGE);
+				} else {
+					showNotification(response.data.STATUS, response.data.MESSAGE);
+				}
+				if (ck1 != true) {
+					setTimeout(function () {
+						//window.location.href = response.data.REDIRECTURL;
+						window.location.reload();
+					}, 3000);
+
+				}
+
 			}, function myError(response) {
 				showNotification('ERROR', 'Something went wrong. Please try again !');
 			});

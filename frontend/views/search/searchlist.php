@@ -842,7 +842,7 @@ $this->registerJs('
     $(document).on("click",".send_email",function(e){
         var formData = new FormData();
         formData.append("ToUserId", $(this).data("id"));
-        formData.append("UserId", ' . Yii::$app->user->identity->id . ');
+        formData.append("UserId", "' . Yii::$app->user->identity->id . '");
         loaderStart();
          $.ajax({
                         url: "' . Yii::$app->homeUrl . 'user/send-email-profile",

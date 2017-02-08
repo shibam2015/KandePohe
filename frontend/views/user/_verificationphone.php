@@ -136,7 +136,8 @@ use yii\widgets\Pjax;
         } else { ?>
             <div class="mrg-tp-20 mrg-bt-10">
                 <span class="phone_status"></span>
-                <p> Your <strong><?= $model->DisplayMobile ?></strong> mobile number is verified.
+
+                <p> Your <strong ng-bind="test"><?= $model->DisplayMobile ?></strong> mobile number is verified.
                     <a href="javascript:void(0)" class="btn btn-default btn-xs edit_phone"><span
                             class="glyphicon glyphicon-pencil"></span> Edit</a></p>
             </div>
@@ -148,7 +149,7 @@ use yii\widgets\Pjax;
                         $this->registerJs('
                             notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
                             setTimeout(function(){
-                                $(".modal").modal("hide");
+                                $("#notification-model").modal("hide");
                                 }, 4000);
                             ');
 
@@ -157,19 +158,41 @@ use yii\widgets\Pjax;
                         $this->registerJs('
                             notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
                             setTimeout(function(){
-                                $(".modal").modal("hide");
+                                $("#notification-model").modal("hide");
                                 }, 4000);
                             ');
                     }
-                    if ($model->eEmailVerifiedStatus == 'Yes' && $model->ePhoneVerifiedStatus == 'Yes') {
-                        $this->registerJs('
-                               $(".modal").on("hidden.bs.modal", function (e) {
+                    if ($model->ePhoneVerifiedStatus == 'Yes') {
+                        #CommonHelper::pr($temp);
+                        if ($temp['MultipleProfile'] == 0) {
+                            if ($model->eEmailVerifiedStatus == 'Yes' && $model->ePhoneVerifiedStatus == 'Yes') {
+                                $this->registerJs('
+                               $("#notification-model").on("hidden.bs.modal", function (e) {
                                         //window.location = "' . Yii::$app->homeUrl . 'user/dashboard?type=' . base64_encode("'.Yii::$app->params['validationDone'].'") . '";
-                                        window.location = "' . Yii::$app->homeUrl . 'user/dashboard";
+                                        //window.location = "' . Yii::$app->homeUrl . 'user/dashboard";
                                })
 
                         ');
+                            }
+                        } else {
+                            $this->registerJs('
+                            $("#notification-model").on("hidden.bs.modal", function (e) {
+                                        phoneExist();
+                               })
+
+                            ');
+                        }
+
                     }
+                    /*if ($model->eEmailVerifiedStatus == 'Yes' && $model->ePhoneVerifiedStatus == 'Yes') {
+                        $this->registerJs('
+                               $("#notification-model").on("hidden.bs.modal", function (e) {
+                                        //window.location = "' . Yii::$app->homeUrl . 'user/dashboard?type=' . base64_encode("'.Yii::$app->params['validationDone'].'") . '";
+                                        //window.location = "' . Yii::$app->homeUrl . 'user/dashboard";
+                               })
+
+                        ');
+                    }*/
                 }
             }
         } ?>

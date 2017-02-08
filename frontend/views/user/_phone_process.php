@@ -28,7 +28,8 @@ use common\models\User;
                     $ModelPhoneProcess = User::findOne(Yii::$app->user->identity->id);
                     $form = ActiveForm::begin([
                         'id' => 'phone-process',
-                        'validateOnChange' => false,
+                        'action' => ['user/phone-process'],
+                        'validateOnChange' => true,
                     ]);
                     ?>
                     <div class="row">
@@ -65,9 +66,12 @@ use common\models\User;
                             <div class="box">
                                 <div class="mid-col maxwd100">
                                     <div class="form-cont">
-                					<span class="input input--akira input--filled input-textarea mrg-tp-10">
+                					<span class="input input--akira input--filled input-textarea mrg-tp-10"
+                                          data-ng-init="multiple_profile_reason=''">
                                             <textarea class="input__field input__field--akira col-md-12" cols="50"
+                                                      data-ng-model="multiple_profile_reason"
                                                       rows="5" name="User[multiple_profile_reason]"
+                                                      id="multiple_profile_reason"
                                                       placeholder="<?= Yii::$app->params['MultipleProfileTellUp'] ?>"></textarea>
                                                   <label class="input__label input__label--akira" for="input-22">
                                                      <span class="input__label-content input__label-content--akira">

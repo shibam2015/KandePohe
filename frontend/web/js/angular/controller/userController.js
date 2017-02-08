@@ -24,15 +24,19 @@ app.controller('userController', function ($scope, vService, $http) {
     $scope.multipleProfile = multipleProfile;
 
     function init() {
-        console.log("In...");
+        // console.log("In...");
     }
-
     init();
     function multipleProfile() {
-        var multiple_profile_status = $scope.multiple_profile_status;
+        var MultipleProfileStatus = $scope.multiple_profile_status;
+        var MultipleProfileReason = $scope.multiple_profile_reason;
         vService.ajaxWithNotificationFlash({
-            url: 'multiple-profile-option',
-            data: {'user_privacy_option': user_privacy_option, 'ACTION': 'Save'}
+            url: masterSiteUrl + 'user/multiple-profile-option',
+            data: {
+                'MultipleProfileStatus': MultipleProfileStatus,
+                'MultipleProfileReason': MultipleProfileReason,
+                'ACTION': 'MULTIPLE-PROFILE'
+            }
         });
 
     }

@@ -156,7 +156,7 @@ use yii\helpers\Url;
         } else {
             if ($flag) {
                 $this->registerJs('
-                            getInlineDetail("' . Url::to(['user/phone-verification']) . '","#phone_verification","1");
+                            //getInlineDetail("' . Url::to(['user/phone-verification']) . '","#phone_verification","1");
                               //                          $(".pw").hide();
                 ');
             }
