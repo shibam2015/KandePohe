@@ -2048,7 +2048,7 @@ class UserController extends Controller
                     $model->Mobile = $OldMobileNo;
                     if ($model->save()) {
                         $SMSArray = array("OTP" => $PIN_P);
-                        # $SMSFlag = SmsHelper::SendSMS($NewPhoneNumber, 'PHONE_OTP', $SMSArray);
+                        $SMSFlag = SmsHelper::SendSMS($NewPhoneNumber, 'PHONE_OTP', $SMSArray);
                         #$SMSFlag = SmsHelper::SendSMS($PIN_P, $NewPhoneNumber);
                         $flag = true;
                         $show = false;
