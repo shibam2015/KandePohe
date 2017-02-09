@@ -3275,7 +3275,19 @@ class UserController extends Controller
             $UserModel->multiple_profile_status = $MultipleProfileStatus;
 
             if ($MultipleProfileStatus == 1) { # Keep This Profile, Delete Others
+                #$DeleteCurrentUser = User::deleteAll(['id' => $Id]);
+                #$DeleteCurrentUser = User::deleteAll("day !='" . date('Y-m-d') . "'");
                 #$DeleteOtherUsers = User::deleteOtherProfile($Id, $UserModel->new_county_code, $UserModel->new_phone_no);
+                #$DeleteAllUser = User::deleteAll(" county_code = '".$UserModel->new_county_code."' AND Mobile = '".$UserModel->new_phone_no."' AND id !='" . $Id . "'");
+                $DeleteAllUser = User::checkMultiplePhoneNumber($Id, $UserModel->new_county_code, $UserModel->new_phone_no);
+                foreach ($DeleteAllUser as $DK => $DV) {
+                    #  CommonHelper::pr($DV->id);
+                    $DelUserId = $DV->id;
+                    $DeleteUserPhotos = UserPhotos::deleteAll(['iUser_ID' => $DelUserId]);
+                    $DeleteUserRequest = UserRequestOp::deleteAll(" from_user_id = '" . $DelUserId . "' OR to_user_id = '" . $DelUserId . "'");
+                    $DeleteUserMailbox = Mailbox::deleteAll(" from_user_id = '" . $DelUserId . "' OR to_user_id = '" . $DelUserId . "'");
+                    $DeleteCurrentUser = User::deleteAll(['id' => $DelUserId]);
+                }
                 $UserModel->county_code = $UserModel->new_county_code;
                 $UserModel->Mobile = $UserModel->new_phone_no;
             } else if ($MultipleProfileStatus == 2) { # Provide Alternate No. For This Profile
