@@ -53,14 +53,22 @@ use yii\helpers\Url;
 <?php } elseif ($Id == $LastMail->from_user_id) { ?>
     <p><strong><?= $MailArray->FullName ?></strong></p>
     <div class="desc-mail">
-        <p><strong><em><?= $MailArray->LastMailContent ?></em></strong></p>
+        <?php if ($LastMail->msg_type != 'DeclineInterest' && $LastMail->msg_type != 'CancelInterest') { ?>
+            <?php if ($LastMail->msg_type == 'SendInterest') {
+                $LastMailContent = Yii::$app->params['mailboxWaiting'];
+            }
+        } else {
+            $LastMailContent = $MailArray->LastMailContent;
+        } ?>
+        <p><strong><em><?= $LastMailContent ?></em></strong></p>
     </div>
     <div class="text-right">
-        <?php if ($LastMail->msg_type == 'SendInterest') {
-            $TextMsg = Yii::$app->params['sendInterestMessageInbox'];
-        } ?>
+
         <span><?= $TextMsg ?></span>
         <?php if ($LastMail->msg_type != 'DeclineInterest' && $LastMail->msg_type != 'CancelInterest') { ?>
+            <?php if ($LastMail->msg_type == 'SendInterest') {
+                $TextMsg = Yii::$app->params['sendInterestMessageInbox'];
+            } ?>
             <div class="row">
                     <span class="col-md-4">
                         <button class="btn btn-primary sendmail" data-target="#sendMail"

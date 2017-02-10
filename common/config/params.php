@@ -20,6 +20,7 @@ return [
     'acceptInterest' => " Do You want to Accept Interest ?",
     'declineInterest' => " Do You want to Decline Interest ?",
     'cancelInterest' => " Do You want to Cancel Interest ?",
+    'mailboxWaiting' => " Sent Interest request. Waiting for response.",
     'acceptInterestMessage' => '#NAME#  has accepted interest request.',
     'declineInterestMessage' => '#NAME#  has Decline interest request.',
     'cancelInterestMessage' => '#NAME#  has Cancel their interest request.',

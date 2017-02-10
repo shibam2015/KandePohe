@@ -18,7 +18,7 @@ use yii\helpers\Url;
         <tbody>
         <?php
         foreach ($MailListArray as $MKey => $MValue) { ?>
-            <tr data-toggle="collapse" data-target="#demo<?= $MKey ?>"
+            <tr data-toggle="collapse" data-target="#kp_toggle<?= $MKey ?>"
                 class="accordion-toggle">
                 <td>
                     <button class="btn btn-default btn-xs"><span
@@ -31,7 +31,7 @@ use yii\helpers\Url;
             </tr>
             <tr>
                 <td colspan="12" class="hiddenRow">
-                    <div class="accordian-body collapse" id="demo<?= $MKey ?>">
+                    <div class="accordian-body collapse" id="kp_toggle<?= $MKey ?>">
                         <?= str_replace("#NAME#", $model->fromUserInfo->fullName, $MValue['MailContent']) ?>
                     </div>
                 </td>
