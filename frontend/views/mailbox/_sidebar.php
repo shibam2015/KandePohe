@@ -23,7 +23,7 @@ use yii\helpers\Url;
         <!--<li><a href="#">Starred</a></li>
         <li><a href="#">Important</a></li>-->
         <li  <?= ($MainMenu == 'SentBox') ? 'class="active"' : ''; ?>><a
-                href="<?= CommonHelper::getMailBoxUrl('', 2) ?>">Sent Mail</a></li>
+                href="<?= CommonHelper::getMailBoxUrl(2, '') ?>">Sent Mail</a></li>
         <!--<li><a href="#"><span class="badge pull-right">3</span>Drafts</a></li>-->
     </ul>
 </div>
