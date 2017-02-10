@@ -3275,10 +3275,6 @@ class UserController extends Controller
             $UserModel->multiple_profile_status = $MultipleProfileStatus;
 
             if ($MultipleProfileStatus == 1) { # Keep This Profile, Delete Others
-                #$DeleteCurrentUser = User::deleteAll(['id' => $Id]);
-                #$DeleteCurrentUser = User::deleteAll("day !='" . date('Y-m-d') . "'");
-                #$DeleteOtherUsers = User::deleteOtherProfile($Id, $UserModel->new_county_code, $UserModel->new_phone_no);
-                #$DeleteAllUser = User::deleteAll(" county_code = '".$UserModel->new_county_code."' AND Mobile = '".$UserModel->new_phone_no."' AND id !='" . $Id . "'");
                 $DeleteAllUser = User::checkMultiplePhoneNumber($Id, $UserModel->new_county_code, $UserModel->new_phone_no);
                 foreach ($DeleteAllUser as $DK => $DV) {
                     #  CommonHelper::pr($DV->id);
@@ -3296,6 +3292,11 @@ class UserController extends Controller
                 $UserModel->alternative_county_code = $UserModel->new_county_code;
             } else if ($MultipleProfileStatus == 3) { # Will Use Old Profile, Delete This One
                 #$DeleteCurrentUser = User::deleteCurrentProfile($Id);
+                $DeleteCurrentUserPhotos = UserPhotos::deleteAll(['iUser_ID' => $Id]);
+                $DeleteCurrentUserRequest = UserRequestOp::deleteAll(" from_user_id = '" . $Id . "' OR to_user_id = '" . $Id . "'");
+                $DeleteCurrentUserMailbox = Mailbox::deleteAll(" from_user_id = '" . $Id . "' OR to_user_id = '" . $Id . "'");
+                $DeleteCurrentUser = User::deleteAll(['id' => $Id]);
+
                 $DeleteCurrentUser = User::deleteAll(['id' => $Id]);
                 #return $this->redirect(Yii::getAlias('@web'));
                 $RedirectURL = Yii::getAlias('@web');
