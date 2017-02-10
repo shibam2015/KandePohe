@@ -42,7 +42,7 @@ use yii\helpers\Url;
                 <div class="row ">
                     <span class="col-md-4">
                         <button class="btn btn-primary sendmail" data-target="#sendMail"
-                                data-id="<?= $LastMail->MailId ?>"
+                                data-id="<?= $LastMail->from_user_id ?>"
                                 data-toggle="modal">Send Mail
                         </button>
                     </span>
@@ -56,6 +56,8 @@ use yii\helpers\Url;
         <?php if ($LastMail->msg_type != 'DeclineInterest' && $LastMail->msg_type != 'CancelInterest') { ?>
             <?php if ($LastMail->msg_type == 'SendInterest') {
                 $LastMailContent = Yii::$app->params['mailboxWaiting'];
+            } else {
+                $LastMailContent = $MailArray->LastMailContent;
             }
         } else {
             $LastMailContent = $MailArray->LastMailContent;
@@ -72,8 +74,8 @@ use yii\helpers\Url;
             <div class="row">
                     <span class="col-md-4">
                         <button class="btn btn-primary sendmail" data-target="#sendMail"
-                                data-id="<?= $LastMail->MailId ?>"
-                                data-toggle="modal">Send Mail
+                                data-id="<?= $LastMail->to_user_id ?>"
+                                data-toggle="modal">Send Mail payal
                         </button>
                     </span>
             </div>

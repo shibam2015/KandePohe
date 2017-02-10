@@ -91,8 +91,9 @@ use yii\helpers\Url;
                             <div class="tab-page">
                                 <div class="tab-content" id="tab-content">
                                     <div class="tab-pane fade in active page-wrap-tab" id="all">
-                                        <div class="text-center mrg-tp-20 mrg-lt-20"><p><i
-                                                    class="fa fa-spinner fa-spin pink"></i> Loading...</p></div>
+                                        <div class="text-center mrg-tp-20 mrg-lt-20"><p>
+                                                <i class="fa fa-spinner fa-spin pink"></i> Loading...
+                                            </p></div>
                                     </div>
 
                                     <div class="tab-pane fade in" id="read">
@@ -166,12 +167,12 @@ use yii\helpers\Url;
         </div>
     </div>
     <!-- send mail -->
-    <div class="modal fade" id="sendMail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="sendMail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <p class="text-center mrg-bt-10">
-                <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+                <img src="<? /*= CommonHelper::getLogo() */ ?>" width="157" height="61" alt="logo">
             </p>
-            <?php Pjax::begin(['id' => 'my_index7', 'enablePushState' => false]); ?>
+            <?php /*Pjax::begin(['id' => 'my_index7', 'enablePushState' => false]); */ ?>
             <div class="send_message">
                 <div class="modal-content ">
                     <div class="modal-header">
@@ -189,9 +190,9 @@ use yii\helpers\Url;
                     </div>
                 </div>
             </div>
-            <?php Pjax::end(); ?>
+            <?php /*Pjax::end(); */ ?>
         </div>
-    </div>
+    </div>-->
     <script src="<?= Yii::$app->homeUrl ?>js/jquery.js" type="text/javascript"></script>
     <script src="<?= Yii::$app->homeUrl ?>js/selectFx.js"></script>
 

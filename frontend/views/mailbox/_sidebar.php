@@ -27,3 +27,32 @@ use yii\helpers\Url;
         <!--<li><a href="#"><span class="badge pull-right">3</span>Drafts</a></li>-->
     </ul>
 </div>
+
+<!-- send mail -->
+<div class="modal fade" id="sendMail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <p class="text-center mrg-bt-10">
+            <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+        </p>
+        <?php Pjax::begin(['id' => 'send_message', 'enablePushState' => false]); ?>
+        <div class="send_message">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span> <span
+                            class="sr-only">Close</span></button>
+                    <h2 class="text-center">Please Wait</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 mrg-tp-20">
+                            <i class="fa fa-spinner fa-spin pink"></i> Loading Information...
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <?php Pjax::end(); ?>
+    </div>
+</div>

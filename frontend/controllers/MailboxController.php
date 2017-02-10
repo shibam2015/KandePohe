@@ -104,6 +104,7 @@ class MailboxController extends Controller
         $show = false;
         $flag = false;
         $popup = false;
+        $Temp = 1;
         $ModelInbox = new Mailbox();
         $ModelInbox->scenario = Mailbox::SCENARIO_SEND_MESSAGE;
         if (Yii::$app->request->post() && (Yii::$app->request->post('ToUserId') != '')) {
@@ -111,7 +112,8 @@ class MailboxController extends Controller
             $show = false;
         }
         if (Yii::$app->request->post() && (Yii::$app->request->post('Action') == 'SEND_MESSAGE')) {
-            #CommonHelper::pr(Yii::$app->request->post());
+            #CommonHelper::pr(Yii::$app->request->post());exit;
+            $Temp = 0;
             $ModelInbox->from_user_id = $id;
             $ModelInbox->to_user_id = Yii::$app->request->post('User')['ToUserId'];
             $ModelInbox->MailContent = Yii::$app->request->post('Mailbox')['MailContent'];
@@ -120,6 +122,7 @@ class MailboxController extends Controller
             $ModelInbox->subject = Yii::$app->request->post('Mailbox')['MailContent'];
             $ModelInbox->dtadded = CommonHelper::getTime();
             $popup = true;
+            #var_dump($ModelInbox->save());
             if ($ModelInbox->save()) {
                 $flag = true;
             } else {
@@ -132,9 +135,15 @@ class MailboxController extends Controller
             'modelInbox' => $ModelInbox,
             'ToUserId' => Yii::$app->request->post('ToUserId')
         ];
-        return $this->actionRenderCall($myModel, '_sendmessage', $show, $popup, $flag);
-    }
+        #return $this->actionRenderCall($myModel, '_sendmessage', $show, $popup, $flag);
+        $HtmlOutput = $this->actionRenderCall($myModel, '_sendmessage', $show, $popup, $flag);
+        if ($Temp == 0) {
+            echo $HtmlOutput;
+        }
+        $Output = array("HtmlOutput" => $HtmlOutput, "Notification" => array());
+        return json_encode($Output);
 
+    }
     function actionRenderCall($model, $view, $show = false, $popup = false, $flag = false, $temp = array())
     {
         return $this->renderAjax($view, [

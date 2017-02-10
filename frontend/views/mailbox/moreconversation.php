@@ -135,34 +135,7 @@ use yii\helpers\Url;
         </main>
     </div>
 
-    <!-- send mail -->
-    <div class="modal fade" id="sendMail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <p class="text-center mrg-bt-10">
-                <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
-            </p>
-            <?php Pjax::begin(['id' => 'my_index7', 'enablePushState' => false]); ?>
-            <div class="send_message">
-                <div class="modal-content ">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span
-                                aria-hidden="true">&times;</span> <span
-                                class="sr-only">Close</span></button>
-                        <h2 class="text-center">Please Wait</h2>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12 mrg-tp-20">
-                                Loading Information...
-                            </div>
-                        </div>
 
-                    </div>
-                </div>
-            </div>
-            <?php Pjax::end(); ?>
-        </div>
-    </div>
 <?php /*if ($MailArray[$Model->id]['MsgCount'] == 1 || $Model->send_request_status == 'Yes') { */ ?><!--
     <div class="modal fade" id="request_response" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
@@ -211,11 +184,11 @@ use yii\helpers\Url;
 #if (count($Model) && count($HandleArray) == 0) {
 if (count($UserModel) && count($HandleErrors) == 0) {
     $this->registerJs('
-$(document).on("click",".sendmail",function(e){
-      var formData = new FormData();
-      formData.append("ToUserId", $(this).data("id"));
-      sendRequest("' . Url::to(['mailbox/inbox-send-message']) . '",".send_message",formData);;
-    });
+        $(document).on("click",".sendmail",function(e){
+          var formData = new FormData();
+          formData.append("ToUserId", $(this).data("id"));
+          sendRequest("' . Url::to(['mailbox/inbox-send-message']) . '","#send_message",formData);;
+        });
   ');
     $this->registerJs('
         var formDataRequest = new FormData();

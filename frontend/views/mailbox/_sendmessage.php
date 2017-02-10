@@ -47,7 +47,7 @@ $model = $model['model'];
                 <div class="row">
                     <div class="col-md-9 col-sm-8">
                         <div class="form-group">
-                            <label for="msg">Enter your message</label>
+                            <label for="msg" class="mrg-bt-10">Enter your message</label>
                             <?= $form->field($modelInbox, 'MailContent')->textArea(['rows' => '5', 'cols' => '50', 'class' => "form-control msg-b", 'id' => 'msg', 'placeholder' => 'Type Message Here...'])->label(false)->error(false) ?>
                             <!--<textarea class="form-control msg-b" rows="4" id="msg" name="message"
                                       placeholder="Type message here..."></textarea>-->
@@ -59,17 +59,19 @@ $model = $model['model'];
                                 communications.</label>
                         </div>-->
                     </div>
-                    <div class="col-md-3 col-sm-4">
-                        <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $model->propic, 140), ['width' => '', 'height' => '120', 'alt' => 'Profile', 'class' => '']); ?>
 
+                    <div class="col-md-3 col-sm-4 mrg-tp-20">
+                        <?= Html::img(CommonHelper::getPhotos('USER', $model->id, "75" . $model->propic, 120, '', 'Yes'), ['width' => '', 'height' => '120', 'alt' => 'Profile Pic', 'class' => '']); ?>
                     </div>
                 </div>
-                <p>
-                    <?= Html::submitButton('Send message', ['class' => 'btn btn-primary', 'name' => 'Action', 'value' => 'SEND_MESSAGE']) ?>
-                    <?= Html::Button('Cancel', ['class' => 'btn btn-primary pull-right', 'id' => 'cancel_edit_horoscope', 'name' => 'cancel', "data-dismiss" => "modal"]) ?>
-                    <!--<button class="btn btn-primary">Send message</button>
-                    <button class="btn btn-primary" data-dismiss="modal">cancel</button>-->
-                </p>
+                <div class="row">
+                    <div class="col-sm-4  col-md-4 col-md-offset-1">
+                        <?= Html::submitButton('Send message', ['class' => 'btn btn-primary SEND_MESSAGE_USER', 'name' => 'Action', 'value' => 'SEND_MESSAGE']) ?>
+                    </div>
+                    <div class="col-sm-4  col-md-4 ">
+                        <?= Html::Button('Cancel', ['class' => 'btn btn-primary pull-right', 'id' => 'cancel_edit_horoscope', 'name' => 'cancel', "data-dismiss" => "modal"]) ?>
+                    </div>
+                </div>
             </div>
         </div>
         <?php ActiveForm::end();
@@ -83,11 +85,14 @@ $model = $model['model'];
             $this->registerJs('
              $(window).trigger("hashchange");
              showNotification("' . $STATUS . '", "' . $MESSAGE . '" );
+
+                setTimeout(function () {
+                    location.reload();
+                },1500);
             ');
         }
-
         ?>
-        <div class="modal-content">
+        <!--<div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
                         class="sr-only">Close</span></button>
@@ -100,7 +105,7 @@ $model = $model['model'];
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
     <?php
     }
