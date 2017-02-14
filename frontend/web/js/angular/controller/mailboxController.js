@@ -1,5 +1,5 @@
 //Module..........
-var app = angular.module('myApp', ['myCommonApp']);
+var app = angular.module('mailboxApp', ['myCommonApp']);
 
 //Configuration......
 app.config(['$httpProvider', function ($httpProvider) {
@@ -8,7 +8,7 @@ app.config(['$httpProvider', function ($httpProvider) {
 
 //run...........
 app.run(function run($http) {
-    $http.defaults.headers.post['X-CSRF-Token'] = document.querySelector('meta[name=csrf-token]').content;
+    //$http.defaults.headers.post['X-CSRF-Token'] = document.querySelector('meta[name=csrf-token]').content;
 });
 
 //Controller............
@@ -19,20 +19,15 @@ app.controller('mailboxController', function ($scope, vService, $http) {
         test: 'test'
     };
     $scope.inboxAll = '';
+    $scope.loader = '';
     //local variable
     //Scope Function declaretion
     $scope.init = init;
-    $scope.student = tabAll;
 
     function init() {
-        window.alert("hi!");
+        console.log("In...m");
     }
 
-    function tabAll() {
-        var av = vService.ajaxWithOutNotification({
-            url: 'all',
-            data: {'Type': 'Inbox'}
-        });
-        console.log(av);
-    }
+    init();
+
 });

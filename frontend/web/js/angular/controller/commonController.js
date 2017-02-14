@@ -8,7 +8,7 @@ commonApp.run(function run($http) {
 
 //factory code
 commonApp.factory('vService', ['$http', function($http) {
-    return {
+	return {
         ajaxWithnotification: function(commonObj) {
 	  		$http({
 	            method: "POST",
@@ -52,6 +52,17 @@ commonApp.factory('vService', ['$http', function($http) {
 				data: commonObj.data,
 			}).then(function mySucces(response) {
 				return response.data;
+			}, function myError(response) {
+				notificationPopup('ERROR', 'Something went wrong. Please try again !');
+			});
+		},
+		ajaxWithSetHtml: function (commonObj) {
+			$http({
+				method: "POST",
+				url: commonObj.url,
+				data: commonObj.data,
+			}).then(function mySucces(response) {
+				//return response.data;
 			}, function myError(response) {
 				notificationPopup('ERROR', 'Something went wrong. Please try again !');
 			});

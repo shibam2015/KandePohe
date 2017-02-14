@@ -252,6 +252,15 @@ class Mailbox extends \common\models\base\baseMailbox
         return $Data;
     }
     /* SENT TAB END */
+
+    public static function getComposeMailUserList($Id)
+    {
+        $Sql = "SELECT * FROM mailbox
+                  WHERE (msg_type='" . self::ACCEPT_INTEREST . "') AND ((to_user_id=$Id) OR (from_user_id=$Id)) GROUP BY to_user_id,from_user_id";
+        $Data = Static::findBySql($Sql)->all();
+        return $Data;
+    }
+
     /**
      * @inheritdoc
      */
@@ -308,5 +317,6 @@ class Mailbox extends \common\models\base\baseMailbox
     {
         return $this->hasOne(User::className(), ['id' => 'to_user_id']);
     }
+
 
 }
