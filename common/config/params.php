@@ -32,6 +32,9 @@ return [
     'photoMissingError' => 'Photo has issue. Please try again !',
     'photoCopyError' => 'Photo saving has issue. Please try again !',
     'photoCropAreaSelection' => 'Please first select photo portion !',
+    'customMessageTest' => 'Please Enter Your Message Here...',
+    'customMailNoUserList' => 'Sorry ! But you don\'t able to send mail to any user.',
+    'customMailSubject' => 'Custom',
 
 
 

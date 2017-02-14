@@ -917,4 +917,57 @@ class MailboxController extends Controller
 
     /* SENT BOX TAB END */
 
+    public function actionNewMailCompose()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $Id = Yii::$app->user->identity->id;
+        $UserEmail = array();
+        $UserMailList = Mailbox::getComposeMailUserList($Id);
+        #CommonHelper::pr($UserMailList);
+        foreach ($UserMailList as $UK => $UV) {
+            if ($Id == $UV->to_user_id) {
+                $UserEmail[$UV->from_user_id] = User::getEmailID($UV->from_user_id);
+            }
+            if ($Id == $UV->from_user_id) {
+                $UserEmail[$UV->to_user_id] = User::getEmailID($UV->to_user_id);
+            }
+        }
+        $show = false;
+        $flag = false;
+        $popup = false;
+        $Temp = 1;
+        $ModelInbox = new Mailbox();
+        $ModelInbox->scenario = Mailbox::SCENARIO_SEND_MESSAGE;
+        if (Yii::$app->request->post() && (Yii::$app->request->post('ToUserId') != '')) {
+            # $model = User::findOne(Yii::$app->request->post('ToUserId'));
+            $show = false;
+        }
+        if (Yii::$app->request->post() && (Yii::$app->request->post('Action') == 'NEW_MAIL_COMPOSE')) {
+            #CommonHelper::pr(Yii::$app->request->post());exit;
+            $Temp = 0;
+            $ModelInbox->from_user_id = $Id;
+            $ModelInbox->to_user_id = Yii::$app->request->post('Mailbox')['to_user_id'];
+            $ModelInbox->MailContent = Yii::$app->request->post('Mailbox')['MailContent'];
+            $ModelInbox->from_reg_no = User::getRegisterNo($Id);
+            $ModelInbox->to_reg_no = User::getRegisterNo(Yii::$app->request->post('Mailbox')['to_user_id']);
+            $ModelInbox->subject = Yii::$app->params['customMailSubject'];
+            $ModelInbox->dtadded = CommonHelper::getTime();
+            $popup = true;
+            if ($ModelInbox->save()) {
+                $flag = true;
+            } else {
+                $flag = false;
+            }
+            $show = true;
+        }
+        $myModel = [
+            'modelInbox' => $ModelInbox,
+            'otherUserMails' => $UserEmail,
+        ];
+        return $this->actionRenderCall($myModel, '_newmailcompose', $show, $popup, $flag);
+
+    }
+
 }

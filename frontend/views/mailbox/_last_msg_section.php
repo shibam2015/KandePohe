@@ -75,7 +75,7 @@ use yii\helpers\Url;
                     <span class="col-md-4">
                         <button class="btn btn-primary sendmail" data-target="#sendMail"
                                 data-id="<?= $LastMail->to_user_id ?>"
-                                data-toggle="modal">Send Mail payal
+                                data-toggle="modal">Send Mail
                         </button>
                     </span>
             </div>

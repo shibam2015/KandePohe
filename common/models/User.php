@@ -347,6 +347,12 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             ->all();
     }
 
+    public static function getEmailID($Id)
+    {
+        $Data = User::find()->select('id,email,First_Name, Last_Name, Registration_Number')->where(['id' => $Id])->one();
+        return $Data;
+    }
+
     /**
      * @inheritdoc
      */
@@ -874,11 +880,6 @@ characters are allowed.'
         return $this->hasOne(FamilyAffluenceLevel::className(), ['ID' => 'vFamilyAffluenceLevel']);
     }
 
-    public function getFamilyPropertyName()
-    {
-        return $this->hasOne(PropertyDetails::className(), ['ID' => 'vFamilyProperty']);
-    }
-
     /*public function generateUniqueRandomNumber($length = 9) {
         $PREFIX = CommonHelper::generatePrefix();
         $RANDOM_USER_NUMBER = $PREFIX.CommonHelper::generateNumericUniqueToken($length);
@@ -888,6 +889,11 @@ characters are allowed.'
             return $this->generateUniqueRandomNumber($length);
 
     }*/
+
+    public function getFamilyPropertyName()
+    {
+        return $this->hasOne(PropertyDetails::className(), ['ID' => 'vFamilyProperty']);
+    }
 
     public function getSkinTone()
     {

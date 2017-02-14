@@ -11,7 +11,9 @@ use yii\helpers\Url;
 ?>
 
 <div class="col-sm-3 col-md-2" id="mailbox_sidebar">
-    <a href="#" class="btn btn-danger btn-sm btn-block" role="button">COMPOSE</a>
+    <a href="javascript:void(0)"
+       data-target="#compose_mail"
+       data-toggle="modal" class="btn btn-danger btn-sm btn-block compose_mail" role="button">COMPOSE</a>
     <hr/>
     <ul class="nav nav-pills nav-stacked">
         <li  <?= ($MainMenu == '') ? 'class="active"' : ''; ?>>
@@ -56,3 +58,45 @@ use yii\helpers\Url;
         <?php Pjax::end(); ?>
     </div>
 </div>
+
+    <!-- Compose mail -->
+    <div class="modal fade" id="compose_mail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <p class="text-center mrg-bt-10">
+                <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+            </p>
+            <?php Pjax::begin(['id' => 'new_mail_compose', 'enablePushState' => false]); ?>
+            <div class="new_mail_compose">
+                <div class="modal-content ">
+                    <!--<div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span> <span
+                                class="sr-only">Close</span></button>
+                        <h2 class="text-center">New Mail</h2>
+                    </div>-->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12 mrg-tp-20">
+                                <i class="fa fa-spinner fa-spin pink"></i> Loading Information...
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <?php Pjax::end(); ?>
+        </div>
+    </div>
+
+
+
+<?php
+$this->registerJs('
+$(document).on("click",".compose_mail",function(e){
+       getInlineDetail("' . Url::to(['mailbox/new-mail-compose']) . '","#new_mail_compose","0");
+    });
+
+  ');
+
+?>
