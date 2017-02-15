@@ -20,11 +20,14 @@ use yii\helpers\ArrayHelper;
             <div class="col-lg-8 col-md-12 col-sm-12">
               <div class="white-section mrg-tp-20 mrg-bt-10">
                 <h3>About YourSelf</h3>
+
+                <p><span class="text-danger">*</span> marked fields are mandatory</p>
                 <?php
                 $form = ActiveForm::begin([
                     'id' => 'form-register5',
                 ]);
                 ?>
+                <?= $form->errorSummary($model, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
                 <div class="box">
                   <div class="small-col">
                     <div class="required1"><!--<span class="text-danger">*</span>--></div>
@@ -44,8 +47,10 @@ use yii\helpers\ArrayHelper;
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-10 col-sm-offset-1">
-                    <label for="Remember" class="control-label">Any Disability :</label>
+                  <div class="col-sm-10 col-md-offset-1">
+                    <!--<div class="required1"><span class="text-danger">*</span></div>-->
+                    <label for="Remember" class="control-label"> <span class="text-danger">*</span> Any Disability
+                      :</label>
                   </div>
                 </div>
                 <div class="box">
@@ -78,7 +83,7 @@ use yii\helpers\ArrayHelper;
                             }
                             '
                               ]
-                          )->label(false); ?>
+                          )->label(false)->error(false); ?>
                         </dd>
                         <!--<dd>
                             <input id="None" type="radio" name="disability" value="None" <?/*= ($model->disability == 'None') ? 'checked="checked"' :''; */?>>
