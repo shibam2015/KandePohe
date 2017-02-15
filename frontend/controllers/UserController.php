@@ -263,7 +263,7 @@ class UserController extends Controller
     public function actionPhotos($ref = '')
     {
         if (!Yii::$app->user->isGuest) {
-            CommonHelper::checkVerification();
+            //CommonHelper::checkVerification();
             $id = Yii::$app->user->identity->id;
             $USER_PHOTO_MODEL = new UserPhotos();
             $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
@@ -2422,6 +2422,7 @@ class UserController extends Controller
             }
         }
     }
+
 
     public function actionMailSendRequest($id, $ToUserId, $MailType)
     {
