@@ -27,7 +27,7 @@ if (!Yii::$app->user->isGuest) {
 <link href="css/style-responsive.css" rel="stylesheet"> -->
 <!--<div class="wrapper">-->
 <div class="main-section">
-    <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
+    <!-- <?= $this->render('/layouts/parts/_headerafterlogin'); ?> -->
     <main>
         <section>
             <div class="container">
@@ -253,8 +253,8 @@ if (!Yii::$app->user->isGuest) {
                                         <div class="panel no-border panel-default panel-friends">
                                             <div class="panel-heading">
                                                 <h3 class="heading-xs"> Photos <span
-                                                        class="text-danger">(<?= count($UserTotalPhotoCount) ?>
-                                                        )</span></h3>
+                                                        class="text-danger">(<?= count($UserTotalPhotoCount) ?>)</span>
+                                                </h3>
                                             </div>
                                             <div class="panel-body text-center">
                                                 <ul class="friends">
