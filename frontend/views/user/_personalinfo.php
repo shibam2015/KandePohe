@@ -12,8 +12,10 @@ use yii\helpers\Url;
     if ($show) {
         $form = ActiveForm::begin([
             'id' => 'form',
-            'validateOnChange' => true,
-            'validateOnSubmit' => true,
+            //'enableClientValidation'=> true,
+            'enableAjaxValidation' => false,
+            'validateOnSubmit' => false,
+            'validateOnChange' => false,
             'action' => ['edit-personal-info'],
             'options' => ['data-pjax' => true],
             'layout' => 'horizontal',
@@ -44,7 +46,11 @@ use yii\helpers\Url;
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
                 'labelOptions' => ['class' => ''],
             ])->textInput() ?>
-        <?= $form->field($model, 'Gender')->RadioList(
+        <?= $form->field($model, 'Gender', [
+            'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+            'labelOptions' => ['class' => ''],
+        ])->RadioList(
             ['MALE' => 'MALE', 'FEMALE' => 'FEMALE'],
             [
                 'item' => function ($index, $label, $name, $checked, $value) {
@@ -69,6 +75,7 @@ use yii\helpers\Url;
                     'options' => [
                         'id' => 'DOB',
                         'class' => 'form-control',
+                        'onkeyup' => ' $(".hasDatepicker").val("");',
                     ],
                     'clientOptions' => [
                         'changeMonth' => true,

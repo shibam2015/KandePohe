@@ -19,12 +19,6 @@ if (!Yii::$app->user->isGuest) {
 //die();
 use yii\jui\DatePicker;
 ?>
-<style type="text/css">
-    selectbox
-    (
-    )
-    ;
-</style>
     <div class="video">
         <div class="drop-effect"></div>
         <video autoplay data-preload="auto" poster="images/poster.jpg" id="bgvid" loop>
@@ -686,12 +680,7 @@ FREE">[Register FREE]</a>
 
 
 <?php } ?>
-    <style type="text/css">
-        selectbox
-        (
-        )
-        ;
-    </style>
+
 <?php if (Yii::$app->user->isGuest) { ?>
     <?php # Popup Open
     $this->registerJs('

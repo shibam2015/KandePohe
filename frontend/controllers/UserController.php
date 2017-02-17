@@ -492,6 +492,8 @@ class UserController extends Controller
                 $model->Last_Name = Yii::$app->request->post('User')['Last_Name'];
                 $model->Profile_created_for = Yii::$app->request->post('User')['Profile_created_for'];
                 $model->DOB = Yii::$app->request->post('User')['DOB'];
+                // echo "hii";
+                // die();
                 $model->Age = CommonHelper::ageCalculator(Yii::$app->request->post('User')['DOB']);
                 # $model->county_code = $model->county_code;//Yii::$app->request->post('User')['county_code'];
                 #   $model->Mobile = $model->Mobile;//$NewMobileNo;
@@ -514,6 +516,7 @@ class UserController extends Controller
                     # }
                     #$model->Mobile = $OldMobileNo;
                     #  var_dump($model->save());exit;
+
                     if ($model->save())
                         $show = false;
                     else
