@@ -2032,7 +2032,8 @@ class UserController extends Controller
         $temp = array();
         if (Yii::$app->request->post() && (Yii::$app->request->post('save') == 'PHONE_NUMBER_CHANGE')) {
             $show = true;
-            $OldNumber = $model->new_county_code . $model->new_phone_no;
+            //$OldNumber = $model->new_county_code . $model->new_phone_no;
+            $OldNumber = $model->county_code . $model->Mobile;
             $OldCountryCode = $model->county_code;
             $OldMobileNo = $model->Mobile;
             $NewCountryCode = Yii::$app->request->post('User')['county_code'];
@@ -2076,8 +2077,10 @@ class UserController extends Controller
                 $flag = false;
             }
         } else {
-            $model->county_code = $model->new_county_code;
-            $model->Mobile = $model->new_phone_no;
+            if ($model->ePhoneVerifiedStatus == 'No') {
+                $model->county_code = $model->new_county_code;
+                $model->Mobile = $model->new_phone_no;
+            }
         }
         return $this->actionRenderAjax($model, '_changephone', $show, $popup, $flag);
     }

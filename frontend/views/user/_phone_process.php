@@ -8,7 +8,7 @@ use common\models\User;
 ?>
     <div class="modal fade phone-change-model " id="phone-change-model" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel"
-         aria-hidden="true">
+         aria-hidden="true" style="overflow-y: auto !important;">
         <div class="modal-dialog" style="width: 56%;" data-ng-app="userApp" data-ng-controller="userController">
             <!--<div class="modal-dialog" style="width: 56%;" >-->
             <p class="text-center mrg-bt-10"><img src="<?= CommonHelper::getLogo() ?>" width="157" height="61"

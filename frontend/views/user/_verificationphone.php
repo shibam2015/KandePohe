@@ -178,6 +178,10 @@ use yii\widgets\Pjax;
                             $this->registerJs('
                             $("#notification-model").on("hidden.bs.modal", function (e) {
                                         phoneExist();
+                                         $("#phone-change-model").modal({
+                                            backdrop: "static",
+                                            keyboard: false
+                                        });
                                })
 
                             ');
