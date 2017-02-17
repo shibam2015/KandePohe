@@ -119,5 +119,6 @@ return [
     # Privacy Setting End
 
     'familyTypeArray' => ['Joint' => 'Family_Joint', 'Nuclear' => 'Family_Nuclear'],
+    'profileFor' => ['Self' => 'Self', 'Son' => 'Son', 'Daughter' => 'Daughter', 'Brother' => 'Brother', 'Sister' => 'Sister', 'Friend' => 'Friend'],
 ];
 

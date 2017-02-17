@@ -448,7 +448,8 @@ characters are allowed.'
             self::SCENARIO_FP => ['email', 'password_hash', 'password_reset_token'],
             self::SCENARIO_SFP => ['email', 'password_reset_token'],
             self::SCENARIO_EDIT_MY_INFO => ['tYourSelf'],
-            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'pin_phone_time', 'completed_step', 'Age', 'new_phone_no', 'new_county_code'],
+            #self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'pin_phone_time', 'completed_step', 'Age', 'new_phone_no', 'new_county_code'],
+            self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'pin_phone_time', 'completed_step', 'Age', 'new_phone_no', 'new_county_code'],
 
             #self::SCENARIO_VERIFY_PIN_FOR_PHONE => ['phone_pin', 'completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification', 'pin_phone_time'], # FOR PHONE VERIFICATION PROCESS
             self::SCENARIO_VERIFY_PIN_FOR_PHONE => ['phone_pin', 'completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification', 'pin_phone_time', 'Mobile_Alternative_No', 'alternative_county_code', 'Mobile_Multiple_Status'], # FOR PHONE VERIFICATION PROCESS

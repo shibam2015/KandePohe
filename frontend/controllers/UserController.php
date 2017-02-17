@@ -486,36 +486,40 @@ class UserController extends Controller
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if(Yii::$app->request->post('save')){
-                $NewMobileNo = Yii::$app->request->post('User')['Mobile'];
-                $OldMobileNo = $model->Mobile;
+                # $NewMobileNo = Yii::$app->request->post('User')['Mobile'];
+                # $OldMobileNo = $model->Mobile;
                 $model->First_Name = Yii::$app->request->post('User')['First_Name'];
                 $model->Last_Name = Yii::$app->request->post('User')['Last_Name'];
                 $model->Profile_created_for = Yii::$app->request->post('User')['Profile_created_for'];
                 $model->DOB = Yii::$app->request->post('User')['DOB'];
                 $model->Age = CommonHelper::ageCalculator(Yii::$app->request->post('User')['DOB']);
-                $model->county_code = Yii::$app->request->post('User')['county_code'];
-                $model->Mobile = $NewMobileNo;
+                # $model->county_code = $model->county_code;//Yii::$app->request->post('User')['county_code'];
+                #   $model->Mobile = $model->Mobile;//$NewMobileNo;
                 $model->Gender = Yii::$app->request->post('User')['Gender'];
                 $model->mother_tongue = Yii::$app->request->post('User')['mother_tongue'];
+                #CommonHelper::pr( Yii::$app->request->post());
                 if($model->validate()){
-                    if ($NewMobileNo != $OldMobileNo) {
-                        $TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
-                        $PIN_P = CommonHelper::generateNumericUniqueToken(4);
-                        //new_phone_no
-                        $model->new_phone_no = $NewMobileNo;
-                        $model->pin_phone_vaerification = $PIN_P;
-                        $model->ePhoneVerifiedStatus = 'No';
-                        $model->pin_phone_time = $TimeOut;
-                        $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
-                        $SMSArray = array("OTP" => $PIN_P);
-                        $SMSFlag = SmsHelper::SendSMS($NewMobileNo, 'PHONE_OTP', $SMSArray);
-                        #$SMSFlag = SmsHelper::SendSMS($PIN_P, $NewMobileNo);
-                        $popup = true;
-                    }
-                    $model->Mobile = $OldMobileNo;
-                    $model->save();
-                    $show = false;
+                    #if ($NewMobileNo != $OldMobileNo) {
+                    /*$TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
+                    $PIN_P = CommonHelper::generateNumericUniqueToken(4);
+                    //new_phone_no
+                    $model->new_phone_no = $NewMobileNo;
+                    $model->pin_phone_vaerification = $PIN_P;
+                    $model->ePhoneVerifiedStatus = 'No';
+                    $model->pin_phone_time = $TimeOut;
+                    $model->completed_step = CommonHelper::unsetStep($model->completed_step, 8);
+                    $SMSArray = array("OTP" => $PIN_P);
+                    $SMSFlag = SmsHelper::SendSMS($NewMobileNo, 'PHONE_OTP', $SMSArray);
+                    $popup = true;*/
+                    # }
+                    #$model->Mobile = $OldMobileNo;
+                    #  var_dump($model->save());exit;
+                    if ($model->save())
+                        $show = false;
+                    else
+                        $show = true;
                 }
+
             }
         }
 
