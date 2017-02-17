@@ -52,7 +52,7 @@ use common\models\User;
                                                     [
                                                         'item' => function ($index, $label, $name, $checked, $value) {
                                                             $checked = ($label == 1) ? 'checked' : '';
-                                                            $return = '<input data-ng-model="multiple_profile_status" type="radio" id="multiple_profile_status_' . $label . '" name="' . $name . '" value="' . ucwords($label) . '" ngValue="' . ucwords($label) . '" ' . $checked . '>';
+                                                            $return = '<input data-ng-model="multiple_profile_status" type="radio" id="multiple_profile_status_' . $label . '" name="' . $name . '" value="' . ucwords($label) . '" ng-click=ShowReasonSection(' . ucwords($label) . ') ngValue="' . ucwords($label) . '" ' . $checked . '>';
                                                             $return .= '<label for="multiple_profile_status_' . $label . '" class="mrg-tb-lr ">' . ucwords($value) . '</label>';
                                                             return $return;
                                                         }
@@ -63,7 +63,7 @@ use common\models\User;
                                     </div>
                                 </div>
                             </div>
-                            <div class="box">
+                            <div class="box" ng-show="IsVisible">
                                 <div class="mid-col maxwd100">
                                     <div class="form-cont">
                 					<span class="input input--akira input--filled input-textarea mrg-tp-10"
@@ -83,7 +83,7 @@ use common\models\User;
 
                             </div>
                         </div>
-                        <div class="col-sm-12 text-left mrg-bt-10">
+                        <div class="col-sm-12 text-left mrg-bt-10 " ng-show="IsVisible">
                             <?= Yii::$app->params['MultipleProfileContact'] ?>
                         </div>
                     </div>

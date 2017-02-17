@@ -22,11 +22,15 @@ app.controller('userController', function ($scope, vService, $http) {
     //Scope Function declaretion
     $scope.init = init;
     $scope.multipleProfile = multipleProfile;
-
+    $scope.IsVisible = false;
     function init() {
         // console.log("In...");
     }
     init();
+    $scope.ShowReasonSection = function (value) {
+        //If DIV is visible it will be hidden and vice versa.
+        $scope.IsVisible = value == "4";
+    }
     function multipleProfile() {
         var MultipleProfileStatus = $scope.multiple_profile_status;
         var MultipleProfileReason = $scope.multiple_profile_reason;

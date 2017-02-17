@@ -596,4 +596,4 @@ function phoneExist() {
     $('#multiple_profile_reason').val('');
     $("#phone-change-model").modal("show");
 }
-//phoneExist();
+phoneExist();
