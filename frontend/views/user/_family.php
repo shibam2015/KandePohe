@@ -26,7 +26,7 @@ if ($show) {
         'fieldConfig' => [
             'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
             'horizontalCssClasses' => [
-                'label' => 'col-sm-3 col-xs-3',
+                'label' => 'col-sm-4 col-xs-4',
                 'offset' => '',
                 'wrapper' => 'col-sm-8 col-xs-8',
                 'error' => '',
@@ -36,28 +36,56 @@ if ($show) {
     ]);
     ?>
     <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
-    <?= $form->field($model, 'iFatherStatusID')->dropDownList(
+    <?= $form->field($model, 'iFatherStatusID', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->dropDownList(
         ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
         ['class' => 'demo-default select-beast clsfamily', 'prompt' => 'Father Status']
     ); ?>
 
-    <?= $form->field($model, 'iFatherWorkingAsID')->dropDownList(
+    <?= $form->field($model, 'iFatherWorkingAsID', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->dropDownList(
         ArrayHelper::map(CommonHelper::getWorkingas(), 'iWorkingAsID', 'vWorkingAsName'),
         ['class' => 'demo-default select-beast clsfamily', 'prompt' => 'Father Working AS']
     ); ?>
 
-    <?= $form->field($model, 'iMotherStatusID')->dropDownList(
+    <?= $form->field($model, 'iMotherStatusID', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->dropDownList(
         ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
         ['class' => 'demo-default select-beast clsfamily', 'prompt' => 'Mother Status']
     ); ?>
 
-    <?= $form->field($model, 'iMotherWorkingAsID')->dropDownList(
+    <?= $form->field($model, 'iMotherWorkingAsID', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->dropDownList(
         ArrayHelper::map(CommonHelper::getWorkingAS(), 'iWorkingAsID', 'vWorkingAsName'),
         ['class' => 'demo-default select-beast clsfamily', 'prompt' => 'Mother Working AS']
     ); ?>
-    <?= $form->field($model, 'nob')->input('number') ?>
-    <?= $form->field($model, 'nos')->input('number') ?>
-    <?= $form->field($model, 'iCountryCAId')->dropDownList(
+    <?= $form->field($model, 'nob', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->input('number') ?>
+    <?= $form->field($model, 'nos', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->input('number') ?>
+    <?= $form->field($model, 'iCountryCAId', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->dropDownList(
         ArrayHelper::map(CommonHelper::getCountry(), 'iCountryId', 'vCountryName'),
         ['class' => 'demo-default select-beast clsfamily',
             'prompt' => 'Country',
@@ -108,7 +136,11 @@ if ($show) {
         $stateList = ArrayHelper::map(CommonHelper::getState($model->iCountryCAId), 'iStateId', 'vStateName');
     }
     ?>
-    <?= $form->field($model, 'iStateCAId')->dropDownList(
+    <?= $form->field($model, 'iStateCAId', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->dropDownList(
         $stateList,
         ['class' => 'demo-default select-beast clsfamily',
             'id' => 'iStateCAId',
@@ -152,7 +184,11 @@ if ($show) {
         $cityList = ArrayHelper::map(CommonHelper::getCity($model->iStateCAId), 'iCityId', 'vCityName');
     }
     ?>
-    <?= $form->field($model, 'iCityCAId')->dropDownList(
+    <?= $form->field($model, 'iCityCAId', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->dropDownList(
         $cityList,
         ['class' => 'demo-default select-beast clsfamily',
             'id' => 'iCityCAId',
@@ -160,23 +196,43 @@ if ($show) {
         ]
 
     ); ?>
-    <?= $form->field($model, 'iDistrictCAID')->dropDownList(
+    <?= $form->field($model, 'iDistrictCAID', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->dropDownList(
         ArrayHelper::map(CommonHelper::getDistrict(), 'iDistrictID', 'vName'),
         ['class' => 'demo-default select-beast clsfamily',
             'prompt' => 'District'
         ]
     ); ?>
-    <?= $form->field($model, 'iTalukaCAID')->dropDownList(
+    <?= $form->field($model, 'iTalukaCAID', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->dropDownList(
         ArrayHelper::map(CommonHelper::getTaluka(), 'iTalukaID', 'vName'),
         ['class' => 'demo-default select-beast clsfamily',
             'prompt' => 'Taluka'
         ]
     ); ?>
-    <?= $form->field($model, 'vAreaNameCA')->input('text', ['class' => 'form-control']) ?>
+    <?= $form->field($model, 'vAreaNameCA', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->input('text', ['class' => 'form-control']) ?>
 
-    <?= $form->field($model, 'vNativePlaceCA')->input('text', ['class' => 'form-control']) ?>
+    <?= $form->field($model, 'vNativePlaceCA', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->input('text', ['class' => 'form-control']) ?>
 
-    <?= $form->field($model, 'vParentsResiding')->RadioList(
+    <?= $form->field($model, 'vParentsResiding', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->RadioList(
         ['Current_Address' => 'Current Address', 'Permanent_Address' => 'Permanent Address'],
         [
             'item' => function ($index, $label, $name, $checked, $value) {
@@ -188,7 +244,11 @@ if ($show) {
         ]
     ); ?>
 
-    <?= $form->field($model, 'vFamilyAffluenceLevel')->RadioList(
+    <?= $form->field($model, 'vFamilyAffluenceLevel', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->RadioList(
          ArrayHelper::map(CommonHelper::getFamilyAffulenceLevel(), 'ID', 'Name'),
         [
             'item' => function ($index, $label, $name, $checked, $value) {
@@ -200,7 +260,11 @@ if ($show) {
         ]
     ); ?>
 
-    <?= $form->field($model, 'vFamilyType')->RadioList(
+    <?= $form->field($model, 'vFamilyType', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->RadioList(
         Yii::$app->params['familyTypeArray'],
         [
             'item' => function ($index, $label, $name, $checked, $value) {
@@ -214,7 +278,11 @@ if ($show) {
 
     <?php global $ABC;
     $ABC = $model->vFamilyProperty; ?>
-    <?= $form->field($model, 'vFamilyProperty')->checkboxList(
+    <?= $form->field($model, 'vFamilyProperty', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->checkboxList(
         ArrayHelper::map(CommonHelper::getFamilyPropertyDetail(), 'ID', 'Name'),
         [
             'item' => function ($index, $label, $name, $checked, $value) {

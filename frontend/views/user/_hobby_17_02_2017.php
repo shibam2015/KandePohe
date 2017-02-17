@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
+
 ?>
     <div class="div_hobby">
         <?php
@@ -17,7 +18,7 @@ use yii\helpers\ArrayHelper;
                 'fieldConfig' => [
                     'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
                     'horizontalCssClasses' => [
-                        'label' => 'col-sm-4 col-xs-4',
+                        'label' => 'col-sm-3 col-xs-3',
                         'offset' => '',
                         'wrapper' => 'col-sm-8 col-xs-8',
                         'error' => '',
@@ -30,7 +31,7 @@ use yii\helpers\ArrayHelper;
 
 
             <div class="form-group field-user-interestid">
-                <label class="control-label col-sm-4 col-xs-4" for="user-interestid">Interest</label>
+                <label class="control-label col-sm-3 col-xs-3" for="user-interestid">Interest</label>
 
                 <div class="col-sm-8 col-xs-8">
                     <select id="select-state" multiple class="demo-default select-beast clhobby"
@@ -50,7 +51,7 @@ use yii\helpers\ArrayHelper;
             </div>
 
             <div class="form-group field-user-favioritereadid">
-                <label class="control-label col-sm-4 col-xs-4" for="user-favioritereadid">Favourite Reads</label>
+                <label class="control-label col-sm-3 col-xs-3" for="user-favioritereadid">Favourite Reads</label>
 
                 <div class="col-sm-8 col-xs-8">
                     <select id="select-state" multiple class="demo-default select-beast clhobby "
@@ -70,7 +71,7 @@ use yii\helpers\ArrayHelper;
             </div>
 
             <div class="form-group field-user-faviouritemusicid">
-                <label class="control-label col-sm-4 col-xs-4" for="user-faviouritemusicid">Favourite Music</label>
+                <label class="control-label col-sm-3 col-xs-3" for="user-faviouritemusicid">Favourite Music</label>
 
                 <div class="col-sm-8 col-xs-8">
                     <select id="select-state" multiple class="demo-default select-beast clhobby"
@@ -90,7 +91,7 @@ use yii\helpers\ArrayHelper;
             </div>
 
             <div class="form-group field-user-favouritecousinesid">
-                <label class="control-label col-sm-4 col-xs-4" for="user-favouritecousinesid">Favourite Cousines</label>
+                <label class="control-label col-sm-3 col-xs-3" for="user-favouritecousinesid">Favourite Cousines</label>
 
                 <div class="col-sm-8 col-xs-8">
                     <select id="select-state" multiple class="demo-default select-beast clhobby"
@@ -110,7 +111,7 @@ use yii\helpers\ArrayHelper;
             </div>
 
             <div class="form-group field-user-sportsfittnessid">
-                <label class="control-label col-sm-4 col-xs-4" for="user-sportsfittnessid">Sports Fitness
+                <label class="control-label col-sm-3 col-xs-3" for="user-sportsfittnessid">Sports Fitness
                     Activities</label>
 
                 <div class="col-sm-8 col-xs-8">
@@ -131,7 +132,7 @@ use yii\helpers\ArrayHelper;
             </div>
 
             <div class="form-group field-user-preferreddressid">
-                <label class="control-label col-sm-4 col-xs-4" for="user-preferreddressid">Preferred Dress Style</label>
+                <label class="control-label col-sm-3 col-xs-3" for="user-preferreddressid">Preferred Dress Style</label>
 
                 <div class="col-sm-8 col-xs-8">
                     <select id="select-state" multiple class="demo-default select-beast clhobby"
@@ -151,7 +152,7 @@ use yii\helpers\ArrayHelper;
             </div>
 
             <div class="form-group field-user-preferredmovieid">
-                <label class="control-label col-sm-4 col-xs-4" for="user-preferredmovieid">Preferred Movie</label>
+                <label class="control-label col-sm-3 col-xs-3" for="user-preferredmovieid">Preferred Movie</label>
 
                 <div class="col-sm-8 col-xs-8">
                     <select id="select-state" multiple class="demo-default select-beast clhobby"

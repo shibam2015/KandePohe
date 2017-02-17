@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use yii\helpers\ArrayHelper;
+
 ?>
     <div class="div_personal_info">
         <?php
@@ -17,7 +18,7 @@ use yii\helpers\ArrayHelper;
                 'fieldConfig' => [
                     'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
                     'horizontalCssClasses' => [
-                        'label' => 'col-sm-4 col-xs-4',
+                        'label' => 'col-sm-3 col-xs-3',
                         'offset' => '',
                         'wrapper' => 'col-sm-8 col-xs-8',
                         'error' => '',
@@ -27,46 +28,26 @@ use yii\helpers\ArrayHelper;
             ]);
             ?>
             <?= $form->errorSummary($model, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
-            <?= $form->field($model, 'iEducationLevelID', [
-                'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
-                                <div class="col-sm-8 col-xs-8">{input}</div>',
-                'labelOptions' => ['class' => ''],
-            ])->dropDownList(
+            <?= $form->field($model, 'iEducationLevelID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getEducationLevel(), 'iEducationLevelID', 'vEducationLevelName'),
                 ['class' => 'demo-default select-beast clseducation', 'prompt' => 'Education Level']
             ); ?>
 
-            <?= $form->field($model, 'iEducationFieldID', [
-                'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
-                                <div class="col-sm-8 col-xs-8">{input}</div>',
-                'labelOptions' => ['class' => ''],
-            ])->dropDownList(
+            <?= $form->field($model, 'iEducationFieldID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getEducationField(), 'iEducationFieldID', 'vEducationFieldName'),
                 ['class' => 'demo-default select-beast clseducation', 'prompt' => 'Education Field']
             ); ?>
 
-            <?= $form->field($model, 'iWorkingWithID', [
-                'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
-                                <div class="col-sm-8 col-xs-8">{input}</div>',
-                'labelOptions' => ['class' => ''],
-            ])->dropDownList(
+            <?= $form->field($model, 'iWorkingWithID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getWorkingWith(), 'iWorkingWithID', 'vWorkingWithName'),
                 ['class' => 'demo-default select-beast clseducation', 'prompt' => 'Working with']
             ); ?>
 
-            <?= $form->field($model, 'iWorkingAsID', [
-                'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
-                                <div class="col-sm-8 col-xs-8">{input}</div>',
-                'labelOptions' => ['class' => ''],
-            ])->dropDownList(
+            <?= $form->field($model, 'iWorkingAsID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getWorkingAS(), 'iWorkingAsID', 'vWorkingAsName'),
                 ['class' => 'demo-default select-beast clseducation', 'prompt' => 'Working As']
             ); ?>
-            <?= $form->field($model, 'iAnnualIncomeID', [
-                'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
-                                <div class="col-sm-8 col-xs-8">{input}</div>',
-                'labelOptions' => ['class' => ''],
-            ])->dropDownList(
+            <?= $form->field($model, 'iAnnualIncomeID')->dropDownList(
                 ArrayHelper::map(CommonHelper::getAnnualIncome(), 'iAnnualIncomeID', 'vAnnualIncome'),
                 ['class' => 'demo-default select-beast clseducation', 'prompt' => 'Annual Income']
             ); ?>

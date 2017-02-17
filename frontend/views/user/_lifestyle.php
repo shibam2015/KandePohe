@@ -27,7 +27,7 @@ if ($show) {
         'fieldConfig' => [
             'template' => "{label}{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
             'horizontalCssClasses' => [
-                'label' => 'col-sm-3 col-xs-3',
+                'label' => 'col-sm-4 col-xs-4',
                 'offset' => '',
                 'wrapper' => 'col-sm-8 col-xs-8',
                 'error' => '',
@@ -37,12 +37,20 @@ if ($show) {
     ]);
     ?>
     <?= $form->errorSummary($model,['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
-    <?= $form->field($model, 'iHeightID')->dropDownList(
+    <?= $form->field($model, 'iHeightID', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->dropDownList(
         ArrayHelper::map(CommonHelper::getHeight(), 'iHeightID', 'vName'),
         ['class' => 'demo-default select-beast clslifestyle', 'prompt' => 'Height']
     ); ?>
 
-    <?= $form->field($model, 'vSkinTone')->RadioList(
+    <?= $form->field($model, 'vSkinTone', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->RadioList(
         ArrayHelper::map(CommonHelper::getSkinTone(), 'ID', 'Name'),
         ['item' => function ($index, $label, $name, $checked, $value) {
             $checked = ($checked) ? 'checked' : '';
@@ -53,7 +61,11 @@ if ($show) {
         ]
     ); ?>
 
-    <?= $form->field($model, 'vBodyType')->RadioList(
+    <?= $form->field($model, 'vBodyType', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->RadioList(
         ArrayHelper::map(CommonHelper::getBodyType(), 'ID', 'Name'),
         ['item' => function ($index, $label, $name, $checked, $value) {
             $checked = ($checked) ? 'checked' : '';
@@ -64,7 +76,11 @@ if ($show) {
         ]
     ); ?>
 
-    <?= $form->field($model, 'vSmoke')->RadioList(
+    <?= $form->field($model, 'vSmoke', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->RadioList(
         Yii::$app->params['smokeArray'],
         [
             'item' => function ($index, $label, $name, $checked, $value) {
@@ -77,7 +93,11 @@ if ($show) {
         ]
     ); ?>
 
-    <?= $form->field($model, 'vDrink')->RadioList(
+    <?= $form->field($model, 'vDrink', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->RadioList(
         Yii::$app->params['drinkArray'],
         [
             'item' => function ($index, $label, $name, $checked, $value) {
@@ -90,7 +110,11 @@ if ($show) {
         ]
     ); ?>
 
-    <?= $form->field($model, 'vSpectaclesLens')->RadioList(
+    <?= $form->field($model, 'vSpectaclesLens', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->RadioList(
         Yii::$app->params['eyesArray'],
         [
             'item' => function ($index, $label, $name, $checked, $value) {
@@ -103,12 +127,20 @@ if ($show) {
         ]
     ); ?>
 
-    <?= $form->field($model, 'vDiet')->dropDownList(
+    <?= $form->field($model, 'vDiet', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->dropDownList(
         ArrayHelper::map(CommonHelper::getDiet(), 'iDietID', 'vName'),
         ['class' => 'demo-default select-beast clslifestyle', 'prompt' => 'Diet']
     ); ?>
 
-    <?= $form->field($model, 'weight')->input('number') ?>
+    <?= $form->field($model, 'weight', [
+        'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+        'labelOptions' => ['class' => ''],
+    ])->input('number') ?>
     <div class="row">
         <div class="col-md-4 col-md-offset-2">
             <div class="form-cont">
