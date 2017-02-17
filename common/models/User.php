@@ -481,7 +481,7 @@ characters are allowed.'
     public function isNumbersOnly($attribute)
     {
         if (!preg_match('/^[0-9]{10}$/', $this->$attribute)) {
-            $this->addError($attribute, 'Please enter valid mobile number.');
+            $this->addError($attribute, 'Please enter 10 digit valid mobile number.');
         }
     }
 

@@ -9,11 +9,6 @@ use yii\widgets\Pjax;
 $HOME_PAGE_URL = Yii::getAlias('@web') . "/";
 ?>
 
-<?php if (Yii::$app->user->identity->eEmailVerifiedStatus == 'Yes' && Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes') { ?>
-    <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
-<?php } else { ?>
-    <?php echo $this->render('/layouts/parts/_headerregister.php'); ?>
-<?php } ?>
     <div class="main-section">
         <main data-ng-app="privacyApp" data-ng-controller="privacyController">
             <section>

@@ -2055,8 +2055,7 @@ class UserController extends Controller
                     $model->Mobile = $OldMobileNo;
                     if ($model->save()) {
                         $SMSArray = array("OTP" => $PIN_P);
-                        $SMSFlag = SmsHelper::SendSMS($NewPhoneNumber, 'PHONE_OTP', $SMSArray);
-                        #$SMSFlag = SmsHelper::SendSMS($PIN_P, $NewPhoneNumber);
+                        #$SMSFlag = SmsHelper::SendSMS($NewPhoneNumber, 'PHONE_OTP', $SMSArray);
                         $flag = true;
                         $show = false;
                     } else {
@@ -2069,10 +2068,16 @@ class UserController extends Controller
                     $flag = true;
                 }
             } else {
+
+                $model->county_code = Yii::$app->request->post('User')['county_code'];
+                $model->Mobile = Yii::$app->request->post('User')['Mobile'];
                 $popup = false;
                 $show = false;
-                $flag = true;
+                $flag = false;
             }
+        } else {
+            $model->county_code = $model->new_county_code;
+            $model->Mobile = $model->new_phone_no;
         }
         return $this->actionRenderAjax($model, '_changephone', $show, $popup, $flag);
     }
