@@ -17,6 +17,12 @@ dmstr\web\AdminLteAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
+<style>
+    .login-page {
+        background: url(../../../images/poster.jpg);
+        background-size: cover;
+    }
+</style>
 <body class="login-page">
 
 <?php $this->beginBody() ?>
