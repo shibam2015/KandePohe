@@ -170,6 +170,7 @@ use yii\widgets\Pjax;
                                $("#notification-model").on("hidden.bs.modal", function (e) {
                                         //window.location = "' . Yii::$app->homeUrl . 'user/dashboard?type=' . base64_encode("'.Yii::$app->params['validationDone'].'") . '";
                                         //window.location = "' . Yii::$app->homeUrl . 'user/dashboard";
+                                        location.reload();
                                })
 
                         ');

@@ -20,7 +20,49 @@ use frontend\models\ContactForm;
 use common\components\CommonHelper;
 use common\components\MailHelper;
 use common\models\User;
+
+//use common\models\PartenersReligion;
+//use common\models\PartnersMaritalStatus;
+use common\models\UserPartnerPreference;
+
+use common\models\PartnersAnnualIncome;
+use common\models\PartnersBodyType;
+use common\models\PartnersCharan;
+use common\models\PartnersCities;
+use common\models\PartnersCommunity;
+use common\models\PartnersCountries;
+use common\models\PartnersDiet;
+use common\models\PartnersDrink;
+use common\models\PartnersFamilyAffluenceLevel;
+use common\models\PartnersFamilyType;
+use common\models\PartnersFavouriteCousines;
+use common\models\PartnersFavouriteMusic;
+use common\models\PartnersFavouriteReads;
+use common\models\PartnersFitnessActivities;
+use common\models\PartnersInterest;
+use common\models\PartnersMothertongue;
+use common\models\PartnersNadi;
+use common\models\PartnersNakshtra;
+use common\models\PartnersPreferredDressType;
+use common\models\PartnersPreferredMovies;
+use common\models\PartnersRaashi;
+use common\models\PartnersReligion;
+use common\models\PartnersSkinTone;
+use common\models\PartnersSmoke;
+use common\models\PartnersSpectacles;
+use common\models\PartnersStates;
+use common\models\PartnersSubcommunity;
+use common\models\PartnerWorkingAs;
+use common\models\PartnerWorkingWith;
 use common\models\PartenersReligion;
+//use common\models\UserPartnerPreference;
+use common\models\PartnersMaritalStatus;
+use common\models\PartnersGotra;
+use common\models\PartnersFathersStatus;
+use common\models\PartnersMothersStatus;
+use common\models\PartnersEducationalLevel;
+use common\models\PartnersEducationField;
+
 use yii\widgets\ActiveForm;
 use yii\web\Response;
 
@@ -461,6 +503,534 @@ class SiteController extends Controller
             return $this->redirect(Yii::getAlias('@web'));
         }
     }
+
+    public function actionPartnerPreferences()
+    {
+
+        if (!Yii::$app->user->isGuest) {
+            $Id = Yii::$app->user->identity->id;
+            $model = User::findOne($Id);
+
+            $PartenersReligion = PartenersReligion::findAllByUserId($Id) == NULL ? new PartenersReligion() : PartenersReligion::findAllByUserId($Id);
+            $PartnersMaritalStatus = PartnersMaritalStatus::findAllByUserId($Id) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findAllByUserId($Id);
+            $PartnersGotra = PartnersGotra::findAllByUserId($Id) == NULL ? new PartnersGotra() : PartnersGotra::findAllByUserId($Id);
+            $PartnersCommunity = PartnersCommunity::findAllByUserId($Id) == NULL ? new PartnersCommunity() : PartnersCommunity::findAllByUserId($Id);
+            $PartnersSubCommunity = PartnersSubcommunity::findAllByUserId($Id) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findAllByUserId($Id);
+            $UPP = UserPartnerPreference::findByUserId($Id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($Id);
+            $PartnersMothertongue = PartnersMothertongue::findByUserId($Id) == NULL ? new PartnersMothertongue() : PartnersMothertongue::findByUserId($Id);
+            $PartnersRaashi = PartnersRaashi::findByUserId($Id) == NULL ? new PartnersRaashi() : PartnersRaashi::findByUserId($Id);
+            $PartnersCharan = PartnersCharan::findByUserId($Id) == NULL ? new PartnersCharan() : PartnersCharan::findByUserId($Id);
+            $PartnersNakshtra = PartnersNakshtra::findByUserId($Id) == NULL ? new PartnersNakshtra() : PartnersNakshtra::findByUserId($Id);
+            $PartnersNadi = PartnersNadi::findByUserId($Id) == NULL ? new PartnersNadi() : PartnersNadi::findByUserId($Id);
+            $PartnersSkinTone = PartnersSkinTone::findAllByUserId($Id) == NULL ? new PartnersSkinTone() : PartnersSkinTone::findAllByUserId($Id);
+            $PartnersBodyType = PartnersBodyType::findAllByUserId($Id) == NULL ? new PartnersBodyType() : PartnersBodyType::findAllByUserId($Id);
+            $PartnersDiet = PartnersDiet::findAllByUserId($Id) == NULL ? new PartnersDiet() : PartnersDiet::findAllByUserId($Id);
+            $PartnersSpectacles = PartnersSpectacles::findAllByUserId($Id) == NULL ? new PartnersSpectacles() : PartnersSpectacles::findAllByUserId($Id);
+            $PartnersSmoke = PartnersSmoke::findAllByUserId($Id) == NULL ? new PartnersSmoke() : PartnersSmoke::findAllByUserId($Id);
+            $PartnersDrink = PartnersDrink::findAllByUserId($Id) == NULL ? new PartnersDrink() : PartnersDrink::findAllByUserId($Id);
+            $PartnersEducationalLevel = PartnersEducationalLevel::findAllByUserId($Id) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findAllByUserId($Id);
+            $PartnersEducationField = PartnersEducationField::findAllByUserId($Id) == NULL ? new PartnersEducationField() : PartnersEducationField::findAllByUserId($Id);
+            $PartnerWorkingAS = PartnerWorkingAs::findAllByUserId($Id) == NULL ? new PartnerWorkingAs() : PartnerWorkingAs::findAllByUserId($Id);
+            $PartnerWorkingWith = PartnerWorkingWith::findAllByUserId($Id) == NULL ? new PartnerWorkingWith() : PartnerWorkingWith::findAllByUserId($Id);
+            $AI = PartnersAnnualIncome::findByUserId($Id) == NULL ? new PartnersAnnualIncome() : PartnersAnnualIncome::findByUserId($Id);
+            $PartnersInterest = PartnersInterest::findAllByUserId($Id) == NULL ? new PartnersInterest() : PartnersInterest::findAllByUserId($Id);
+            $PartnersReads = PartnersFavouriteReads::findAllByUserId($Id) == NULL ? new PartnersFavouriteReads() : PartnersFavouriteReads::findAllByUserId($Id);
+            $PartnersMusic = PartnersFavouriteMusic::findAllByUserId($Id) == NULL ? new PartnersFavouriteMusic() : PartnersFavouriteMusic::findAllByUserId($Id);
+            $PartnersCousins = PartnersFavouriteCousines::findAllByUserId($Id) == NULL ? new PartnersFavouriteCousines() : PartnersFavouriteCousines::findAllByUserId($Id);
+            $PartnersFitnessActivity = PartnersFitnessActivities::findAllByUserId($Id) == NULL ? new PartnersFitnessActivities() : PartnersFitnessActivities::findAllByUserId($Id);
+            $PartnersDressStyle = PartnersPreferredDressType::findAllByUserId($Id) == NULL ? new PartnersPreferredDressType() : PartnersPreferredDressType::findAllByUserId($Id);
+            $PartnersMovies = PartnersPreferredMovies::findAllByUserId($Id) == NULL ? new PartnersPreferredMovies() : PartnersPreferredMovies::findAllByUserId($Id);
+            $PartnersFamilyALevel = PartnersFamilyAffluenceLevel::findAllByUserId($Id) == NULL ? new PartnersFamilyAffluenceLevel() : PartnersFamilyAffluenceLevel::findAllByUserId($Id);
+            $PartnersFamilyTypeS = PartnersFamilyType::findAllByUserId($Id) == NULL ? new PartnersFamilyType() : PartnersFamilyType::findAllByUserId($Id);
+            $PartnersCountries = PartnersCountries::findAllByUserId($Id) == NULL ? new PartnersCountries() : PartnersCountries::findAllByUserId($Id);
+            $PartnersStates = PartnersStates::findAllByUserId($Id) == NULL ? new PartnersStates() : PartnersStates::findAllByUserId($Id);
+            $PartnersCities = PartnersCities::findAllByUserId($Id) == NULL ? new PartnersCities() : PartnersCities::findAllByUserId($Id);
+            if (Yii::$app->request->post() || Yii::$app->request->post('register11')) {
+                $model->completed_step = $model->setCompletedStep('-1'); //25 For Partner Preferences
+                $model->save();
+                $CurrDate = CommonHelper::getTime();
+                $ReligionId = Yii::$app->request->post('PartenersReligion')['iReligion_ID'];
+                PartnersReligion::deleteAll(['iUser_ID' => $Id]);
+                if (count($ReligionId)) {
+                    foreach ($ReligionId as $RK => $RV) {
+                        $PRObj = new PartenersReligion();
+                        $PRObj->iUser_ID = $Id;
+                        $PRObj->iReligion_ID = $RV;
+                        $PRObj->dtModified = $CurrDate;
+                        $PRObj->dtCreated = $CurrDate;
+                        $STK = $PRObj->save();
+                    }
+                }
+                $PartenersReligion = PartenersReligion::findAllByUserId($Id);
+
+                $MaritalStatusID = Yii::$app->request->post('PartnersMaritalStatus')['iMarital_Status_ID'];
+                PartnersMaritalStatus::deleteAll(['iUser_ID' => $Id]);
+                if (count($MaritalStatusID)) {
+                    foreach ($MaritalStatusID as $RK => $RV) {
+                        $PMSObj = new PartnersMaritalStatus();
+                        $PMSObj->iUser_ID = $Id;
+                        $PMSObj->iMarital_Status_ID = $RV;
+                        $PMSObj->dtModified = $CurrDate;
+                        $PMSObj->dtCreated = $CurrDate;
+                        $STK = $PMSObj->save();
+                    }
+                }
+                $PartnersMaritalStatus = PartnersMaritalStatus::findAllByUserId($Id);
+
+                $GotraIDs = Yii::$app->request->post('PartnersGotra')['iGotra_ID'];
+                PartnersGotra::deleteAll(['iUser_ID' => $Id]);
+                if (count($GotraIDs)) {
+                    foreach ($GotraIDs as $RK => $RV) {
+                        $PGotraObj = new PartnersGotra();
+                        $PGotraObj->iUser_ID = $Id;
+                        $PGotraObj->iGotra_ID = $RV;
+                        $PGotraObj->dtModified = $CurrDate;
+                        $PGotraObj->dtCreated = $CurrDate;
+                        $STK = $PGotraObj->save();
+                    }
+                }
+                $PartnersGotra = PartnersGotra::findAllByUserId($Id);
+
+                $UPP->iUser_id = $Id;
+                $UPP->age_from = Yii::$app->request->post('UserPartnerPreference')['age_from'];
+                $UPP->age_to = Yii::$app->request->post('UserPartnerPreference')['age_to'];
+                $UPP->manglik = Yii::$app->request->post('UserPartnerPreference')['manglik'];
+                $UPP->height_from = Yii::$app->request->post('UserPartnerPreference')['height_from'];
+                $UPP->height_to = Yii::$app->request->post('UserPartnerPreference')['height_to'];
+                $UPP->drink = Yii::$app->request->post('UserPartnerPreference')['drink'];
+                $UPP->smoke = Yii::$app->request->post('UserPartnerPreference')['smoke'];
+                $UPP->modified_on = $CurrDate;
+
+                if ($UPP->ID == "") {
+                    $UPP->created_on = $CurrDate;
+                }
+                $UPP->save();
+
+                $RaashiID = Yii::$app->request->post('PartnersRaashi')['raashi_id'];
+                $PartnersRaashi->user_id = $Id;
+                $PartnersRaashi->raashi_id = $RaashiID;
+                $PartnersRaashi->modified_on = $CurrDate;
+                if ($PartnersRaashi->ID == "") {
+                    $PartnersRaashi->created_on = $CurrDate;
+                }
+                $PartnersRaashi->save();
+
+                $CharanID = Yii::$app->request->post('PartnersCharan')['charan_id'];
+                $PartnersCharan->user_id = $Id;
+                $PartnersCharan->charan_id = $CharanID;
+                $PartnersCharan->modified_on = $CurrDate;
+                if ($PartnersCharan->ID == "") {
+                    $PartnersCharan->created_on = $CurrDate;
+                }
+                $PartnersCharan->save();
+
+                $NakshtraID = Yii::$app->request->post('PartnersNakshtra')['nakshtra_id'];
+                $PartnersNakshtra->user_id = $Id;
+                $PartnersNakshtra->nakshtra_id = $NakshtraID;
+                $PartnersNakshtra->modified_on = $CurrDate;
+                if ($PartnersNakshtra->ID == "") {
+                    $PartnersNakshtra->created_on = $CurrDate;
+                }
+                $PartnersNakshtra->save();
+
+                $NadiID = Yii::$app->request->post('PartnersNadi')['nadi_id'];
+                $PartnersNadi->user_id = $Id;
+                $PartnersNadi->nadi_id = $NadiID;
+                $PartnersNadi->modified_on = $CurrDate;
+                if ($PartnersNadi->ID == "") {
+                    $PartnersNadi->created_on = $CurrDate;
+                }
+                $PartnersNadi->save();
+
+                $MotherID = Yii::$app->request->post('PartnersMothertongue')['iMothertongue_ID'];
+                $PartnersMothertongue->scenario = PartnersMothertongue::SCENARIO_ADD;
+                $PartnersMothertongue->iUser_ID = $Id;
+                $PartnersMothertongue->iMothertongue_ID = $MotherID;
+                $PartnersMothertongue->dtModified = $CurrDate;
+                if ($PartnersMothertongue->iPartners_Mothertongue_ID == "") {
+                    $PartnersMothertongue->dtCreated = $CurrDate;
+                }
+                $PartnersMothertongue->save();
+
+                $SkinToneIDs = Yii::$app->request->post('PartnersSkinTone')['iSkin_Tone_ID'];
+                PartnersSkinTone::deleteAll(['iUser_ID' => $Id]);
+                if (count($SkinToneIDs)) {
+                    foreach ($SkinToneIDs as $RK => $RV) {
+                        $PSkinToneObj = new PartnersSkinTone();
+                        $PSkinToneObj->iUser_ID = $Id;
+                        $PSkinToneObj->iSkin_Tone_ID = $RV;
+                        $STK = $PSkinToneObj->save();
+                    }
+                }
+                $PartnersSkinTone = PartnersSkinTone::findAllByUserId($Id);
+
+                $BodyTypeIDs = Yii::$app->request->post('PartnersBodyType')['iBody_Type_ID'];
+                PartnersBodyType::deleteAll(['iUser_ID' => $Id]);
+                if (count($BodyTypeIDs)) {
+                    foreach ($BodyTypeIDs as $RK => $RV) {
+                        $PBodyTypeObj = new PartnersBodyType();
+                        $PBodyTypeObj->iUser_ID = $Id;
+                        $PBodyTypeObj->iBody_Type_ID = $RV;
+                        $STK = $PBodyTypeObj->save();
+                    }
+                }
+                $PartnersBodyType = PartnersBodyType::findAllByUserId($Id);
+
+                $DietIDs = Yii::$app->request->post('PartnersDiet')['diet_id'];
+                PartnersDiet::deleteAll(['user_id' => $Id]);
+                if (count($DietIDs)) {
+                    foreach ($DietIDs as $RK => $RV) {
+                        $PDietObj = new PartnersDiet();
+                        $PDietObj->user_id = $Id;
+                        $PDietObj->diet_id = $RV;
+                        $STK = $PDietObj->save();
+                    }
+                }
+                $PartnersDiet = PartnersDiet::findAllByUserId($Id);
+
+                $SpectaclesTypes = Yii::$app->request->post('PartnersSpectacles')['type'];
+                PartnersSpectacles::deleteAll(['user_id' => $Id]);
+                if (count($SpectaclesTypes)) {
+                    foreach ($SpectaclesTypes as $RK => $RV) {
+                        $PSpectaclesObj = new PartnersSpectacles();
+                        $PSpectaclesObj->user_id = $Id;
+                        $PSpectaclesObj->type = $RV;
+                        $STK = $PSpectaclesObj->save();
+                    }
+                }
+                $PartnersSpectacles = PartnersSpectacles::findAllByUserId($Id);
+
+                $SmokeTypes = Yii::$app->request->post('PartnersSmoke')['smoke_type'];
+                PartnersSmoke::deleteAll(['user_id' => $Id]);
+                if (count($SmokeTypes)) {
+                    foreach ($SmokeTypes as $RK => $RV) {
+                        $PSmokeObj = new PartnersSmoke();
+                        $PSmokeObj->user_id = $Id;
+                        $PSmokeObj->smoke_type = $RV;
+                        $STK = $PSmokeObj->save();
+                    }
+                }
+                $PartnersSmoke = PartnersSmoke::findAllByUserId($Id);
+
+                $DrinkTypes = Yii::$app->request->post('PartnersDrink')['drink_type'];
+                PartnersDrink::deleteAll(['user_id' => $Id]);
+                if (count($DrinkTypes)) {
+                    foreach ($DrinkTypes as $RK => $RV) {
+                        $PDrinkObj = new PartnersDrink();
+                        //  $PDrinkObj->scenario = PartnersDrink::SCENARIO_PREF;
+                        $PDrinkObj->user_id = $Id;
+                        $PDrinkObj->drink_type = $RV;
+                        $STK = $PDrinkObj->save();
+                    }
+                }
+                $PartnersDrink = PartnersDrink::findAllByUserId($Id);
+
+                $CommunityID = Yii::$app->request->post('PartnersCommunity')['iCommunity_ID'];
+                PartnersCommunity::deleteAll(['iUser_ID' => $Id]);
+                if (count($CommunityID)) {
+                    foreach ($CommunityID as $RK => $RV) {
+                        $PartnersCommunity = new PartnersCommunity();
+                        $PartnersCommunity->scenario = PartnersCommunity::SCENARIO_ADD;
+                        $PartnersCommunity->iUser_ID = $Id;
+                        $PartnersCommunity->iCommunity_ID = $RV;
+                        $STK = $PartnersCommunity->save();
+                    }
+                }
+                $PartnersCommunity = PartnersCommunity::findAllByUserId($Id);
+
+                $SubCommuIDs = Yii::$app->request->post('PartnersSubcommunity')['iSub_Community_ID'];
+                PartnersSubcommunity::deleteAll(['iUser_ID' => $Id]);
+                if (count($SubCommuIDs)) {
+                    foreach ($SubCommuIDs as $RK => $RV) {
+                        $PartnersSubCommunity = new PartnersSubcommunity();
+                        $PartnersSubCommunity->scenario = PartnersSubcommunity::SCENARIO_ADD;
+                        $PartnersSubCommunity->iUser_ID = $Id;
+                        $PartnersSubCommunity->iSub_Community_ID = $RV;
+                        $STK = $PartnersSubCommunity->save();
+                    }
+                }
+                $PartnersSubCommunity = PartnersSubcommunity::findAllByUserId($Id);
+                $EducationLevelIDs = Yii::$app->request->post('PartnersEducationalLevel')['iEducation_Level_ID'];
+                PartnersEducationalLevel::deleteAll(['iUser_ID' => $Id]);
+                if (count($EducationLevelIDs)) {
+                    foreach ($EducationLevelIDs as $RK => $RV) {
+                        $PEduLvlObj = new PartnersEducationalLevel();
+                        $PEduLvlObj->iUser_ID = $Id;
+                        $PEduLvlObj->iEducation_Level_ID = $RV;
+                        $STK = $PEduLvlObj->save();
+                    }
+                }
+                $PartnersEducationalLevel = PartnersEducationalLevel::findAllByUserId($Id);
+
+                $EducationFieldIDs = Yii::$app->request->post('PartnersEducationField')['iEducation_Field_ID'];
+                PartnersEducationField::deleteAll(['iUser_ID' => $Id]);
+                if (count($EducationFieldIDs)) {
+                    foreach ($EducationFieldIDs as $RK => $RV) {
+                        $PEduFieldObj = new PartnersEducationField();
+                        $PEduFieldObj->iUser_ID = $Id;
+                        $PEduFieldObj->iEducation_Field_ID = $RV;
+                        $STK = $PEduFieldObj->save();
+                    }
+                }
+                $PartnersEducationField = PartnersEducationField::findAllByUserId($Id);
+
+
+                $WorkingAsIDs = Yii::$app->request->post('PartnerWorkingAs')['iWorking_As_ID'];
+                PartnerWorkingAs::deleteAll(['iUser_ID' => $Id]);
+                if (count($WorkingAsIDs)) {
+                    foreach ($WorkingAsIDs as $RK => $RV) {
+                        $PWorkingAsObj = new PartnerWorkingAs();
+                        $PWorkingAsObj->iUser_ID = $Id;
+                        $PWorkingAsObj->iWorking_As_ID = $RV;
+                        $STK = $PWorkingAsObj->save();
+                    }
+                }
+                $PartnerWorkingAS = PartnerWorkingAs::findAllByUserId($Id);
+
+                $WorkingWithIDs = Yii::$app->request->post('PartnerWorkingWith')['iWorking_With_ID'];
+                PartnerWorkingWith::deleteAll(['iUser_ID' => $Id]);
+                if (count($WorkingWithIDs)) {
+                    foreach ($WorkingWithIDs as $RK => $RV) {
+                        $PWorkingWithObj = new PartnerWorkingWith();
+                        $PWorkingWithObj->iUser_ID = $Id;
+                        $PWorkingWithObj->iWorking_With_ID = $RV;
+                        $STK = $PWorkingWithObj->save();
+                    }
+                }
+                $PartnerWorkingWith = PartnerWorkingWith::findAllByUserId($Id);
+                $UPP->annual_income_from = Yii::$app->request->post('UserPartnerPreference')['annual_income_from'];
+                $UPP->annual_income_to = Yii::$app->request->post('UserPartnerPreference')['annual_income_to'];
+                $UPP->LookingFor = Yii::$app->request->post('UserPartnerPreference')['LookingFor'];
+                $UPP->save();
+                $InterestIDs = Yii::$app->request->post('PartnersInterest')['interest_id'];
+                PartnersInterest::deleteAll(['user_id' => $Id]);
+                if (count($InterestIDs)) {
+                    foreach ($InterestIDs as $RK => $RV) {
+                        $PInterestObj = new PartnersInterest();
+                        $PInterestObj->user_id = $Id;
+                        $PInterestObj->interest_id = $RV;
+                        $STK = $PInterestObj->save();
+                    }
+                }
+                $PartnersInterest = PartnersInterest::findAllByUserId($Id);
+
+                $ReadsIDs = Yii::$app->request->post('PartnersFavouriteReads')['read_id'];
+                PartnersFavouriteReads::deleteAll(['user_id' => $Id]);
+                if (count($ReadsIDs)) {
+                    foreach ($ReadsIDs as $RK => $RV) {
+                        $PReadsObj = new PartnersFavouriteReads();
+                        $PReadsObj->user_id = $Id;
+                        $PReadsObj->read_id = $RV;
+                        $STK = $PReadsObj->save();
+                    }
+                }
+                $PartnersReads = PartnersFavouriteReads::findAllByUserId($Id);
+
+                $MusicIDs = Yii::$app->request->post('PartnersFavouriteMusic')['music_name_id'];
+                PartnersFavouriteMusic::deleteAll(['user_id' => $Id]);
+                if (count($MusicIDs)) {
+                    foreach ($MusicIDs as $RK => $RV) {
+                        $PMusicObj = new PartnersFavouriteMusic();
+                        $PMusicObj->user_id = $Id;
+                        $PMusicObj->music_name_id = $RV;
+                        $STK = $PMusicObj->save();
+                    }
+                }
+                $PartnersMusic = PartnersFavouriteMusic::findAllByUserId($Id);
+
+                $CousinsIDs = Yii::$app->request->post('PartnersFavouriteCousines')['cousines_id'];
+                PartnersFavouriteCousines::deleteAll(['user_id' => $Id]);
+                if (count($CousinsIDs)) {
+                    foreach ($CousinsIDs as $RK => $RV) {
+                        $PCousinsObj = new PartnersFavouriteCousines();
+                        $PCousinsObj->user_id = $Id;
+                        $PCousinsObj->cousines_id = $RV;
+                        $STK = $PCousinsObj->save();
+                    }
+                }
+                $PartnersCousins = PartnersFavouriteCousines::findAllByUserId($Id);
+
+                $FitnessIDs = Yii::$app->request->post('PartnersFitnessActivities')['fitness_id'];
+                PartnersFitnessActivities::deleteAll(['user_id' => $Id]);
+                if (count($FitnessIDs)) {
+                    foreach ($FitnessIDs as $RK => $RV) {
+                        $PFitnessObj = new PartnersFitnessActivities();
+                        $PFitnessObj->user_id = $Id;
+                        $PFitnessObj->fitness_id = $RV;
+                        $STK = $PFitnessObj->save();
+                    }
+                }
+                $PartnersFitnessActivity = PartnersFitnessActivities::findAllByUserId($Id);
+
+                $DressStyleIDs = Yii::$app->request->post('PartnersPreferredDressType')['dress_style_id'];
+                PartnersPreferredDressType::deleteAll(['user_id' => $Id]);
+                if (count($DressStyleIDs)) {
+                    foreach ($DressStyleIDs as $RK => $RV) {
+                        $PDressStyleObj = new PartnersPreferredDressType();
+                        $PDressStyleObj->user_id = $Id;
+                        $PDressStyleObj->dress_style_id = $RV;
+                        $STK = $PDressStyleObj->save();
+                    }
+                }
+                $PartnersDressStyle = PartnersPreferredDressType::findAllByUserId($Id);
+
+                $MoviesIDs = Yii::$app->request->post('PartnersPreferredMovies')['movie_id'];
+                PartnersPreferredMovies::deleteAll(['user_id' => $Id]);
+                if (count($MoviesIDs)) {
+                    foreach ($MoviesIDs as $RK => $RV) {
+                        $PMoviesObj = new PartnersPreferredMovies();
+                        $PMoviesObj->user_id = $Id;
+                        $PMoviesObj->movie_id = $RV;
+                        $STK = $PMoviesObj->save();
+                    }
+                }
+                $PartnersMovies = PartnersPreferredMovies::findAllByUserId($Id);
+
+                $FamilyALevelIDs = Yii::$app->request->post('PartnersFamilyAffluenceLevel')['family_affluence_level_id'];
+                PartnersFamilyAffluenceLevel::deleteAll(['user_id' => $Id]);
+                if (count($FamilyALevelIDs)) {
+                    foreach ($FamilyALevelIDs as $RK => $RV) {
+                        $PFamilyLevelObj = new PartnersFamilyAffluenceLevel();
+                        $PFamilyLevelObj->user_id = $Id;
+                        $PFamilyLevelObj->family_affluence_level_id = $RV;
+                        $STK = $PFamilyLevelObj->save();
+
+                    }
+                }
+                $PartnersFamilyALevel = PartnersFamilyAffluenceLevel::findAllByUserId($Id);
+
+                $FamilyTypeIDs = Yii::$app->request->post('PartnersFamilyType')['family_type'];
+                PartnersFamilyType::deleteAll(['user_id' => $Id]);
+                if (count($FamilyTypeIDs)) {
+                    foreach ($FamilyTypeIDs as $RK => $RV) {
+                        $PartnersFamilyTypeS = new PartnersFamilyType();
+                        $PartnersFamilyTypeS->user_id = $Id;
+                        $PartnersFamilyTypeS->family_type = $RV;
+                        $STK = $PartnersFamilyTypeS->save();
+                    }
+                }
+                $PartnersFamilyTypeS = PartnersFamilyType::findAllByUserId($Id);
+                $CountryIDs = Yii::$app->request->post('PartnersCountries')['country_id'];
+                PartnersCountries::deleteAll(['user_id' => $Id]);
+                if (count($CountryIDs)) {
+                    foreach ($CountryIDs as $RK => $RV) {
+                        $PartnersCountries = new PartnersCountries();
+                        $PartnersCountries->scenario = PartnersCountries::SCENARIO_ADD;
+                        $PartnersCountries->user_id = $Id;
+                        $PartnersCountries->country_id = $RV;
+                        $STK = $PartnersCountries->save();
+                    }
+                }
+                $PartnersCountries = PartnersCountries::findAllByUserId($Id);
+
+                $StateIDs = Yii::$app->request->post('PartnersStates')['state_id'];
+                PartnersStates::deleteAll(['user_id' => $Id]);
+                if (count($StateIDs)) {
+                    foreach ($StateIDs as $RK => $RV) {
+                        $PartnersStates = new PartnersStates();
+                        $PartnersStates->scenario = PartnersStates::SCENARIO_ADD;
+                        $PartnersStates->user_id = $Id;
+                        $PartnersStates->state_id = $RV;
+                        $STK = $PartnersStates->save();
+                    }
+                }
+                $PartnersStates = PartnersStates::findAllByUserId($Id);
+
+                $CitiesIDs = Yii::$app->request->post('PartnersCities')['city_id'];
+                PartnersCities::deleteAll(['user_id' => $Id]);
+                if (count($CitiesIDs)) {
+                    foreach ($CitiesIDs as $RK => $RV) {
+                        $PartnersCities = new PartnersCities();
+                        $PartnersCities->scenario = PartnersCities::SCENARIO_ADD;
+                        $PartnersCities->user_id = $Id;
+                        $PartnersCities->city_id = $RV;
+                        $STK = $PartnersCities->save();
+                    }
+                }
+                $PartnersCities = PartnersCities::findAllByUserId($Id);
+
+                return $this->redirect(['user/dashboard']);
+                exit;
+            }
+            $PartenersReligionIDs = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
+            $PartnersMaritalPreferences = CommonHelper::convertArrayToString($PartnersMaritalStatus, 'iMarital_Status_ID');
+            $PartnersGotraPreferences = CommonHelper::convertArrayToString($PartnersGotra, 'iGotra_ID');
+            $PartnersSkinTone = CommonHelper::convertArrayToString($PartnersSkinTone, 'iSkin_Tone_ID');
+            $PartnersBodyType = CommonHelper::convertArrayToString($PartnersBodyType, 'iBody_Type_ID');
+            $PartnersDiet = CommonHelper::convertArrayToString($PartnersDiet, 'diet_id');
+            $PartnersSpectacles = CommonHelper::convertArrayToString($PartnersSpectacles, 'type');
+            $PartnersSmoke = CommonHelper::convertArrayToString($PartnersSmoke, 'smoke_type');
+            $PartnersDrink = CommonHelper::convertArrayToString($PartnersDrink, 'drink_type');
+            $PartnersCommunity = CommonHelper::convertArrayToString($PartnersCommunity, 'iCommunity_ID');
+            $PartnersSubCommunity = CommonHelper::convertArrayToString($PartnersSubCommunity, 'iSub_Community_ID');
+            $PartenersEduLevelArray = CommonHelper::convertArrayToString($PartnersEducationalLevel, 'iEducation_Level_ID');
+            $PartenersEduFieldArray = CommonHelper::convertArrayToString($PartnersEducationField, 'iEducation_Field_ID');
+            $PartenersWorkingAsArray = CommonHelper::convertArrayToString($PartnerWorkingAS, 'iWorking_As_ID');
+            $PartenersWorkingWithArray = CommonHelper::convertArrayToString($PartnerWorkingWith, 'iWorking_With_ID');
+            $PartenersInterestArray = CommonHelper::convertArrayToString($PartnersInterest, 'interest_id');
+            $PartenersFavReadsArray = CommonHelper::convertArrayToString($PartnersReads, 'read_id');
+            $PartenersMusicArray = CommonHelper::convertArrayToString($PartnersMusic, 'music_name_id');
+            $PartenersCousinsArray = CommonHelper::convertArrayToString($PartnersCousins, 'cousines_id');
+            $PartenersFitnessArray = CommonHelper::convertArrayToString($PartnersFitnessActivity, 'fitness_id');
+            $PartenersDressStyleArray = CommonHelper::convertArrayToString($PartnersDressStyle, 'dress_style_id');
+            $PartenersMoviesArray = CommonHelper::convertArrayToString($PartnersMovies, 'movie_id');
+            $PartnersFamilyALevel = CommonHelper::convertArrayToString($PartnersFamilyALevel, 'family_affluence_level_id');
+            $PartnersFamilyTypeS = CommonHelper::convertArrayToString($PartnersFamilyTypeS, 'family_type');
+            $PartnersCountries = CommonHelper::convertArrayToString($PartnersCountries, 'country_id');
+
+#CommonHelper::pr($PartnersCountries);
+            $PartnersStates = CommonHelper::convertArrayToString($PartnersStates, 'state_id');
+            # CommonHelper::pr($PartnersStates);exit;
+            $PartnersCities = CommonHelper::convertArrayToString($PartnersCities, 'city_id');
+
+            return $this->render('partner_preferences', [
+                'PartenersReligion' => $PartenersReligion,
+                'PartenersReligionIDs' => $PartenersReligionIDs,
+                'PartnersMaritalPreferences' => $PartnersMaritalPreferences,
+                'PartnersGotraPreferences' => $PartnersGotraPreferences,
+                'model' => $model,
+                'UPP' => $UPP,
+                'PartnersMaritalStatus' => $PartnersMaritalStatus,
+                'PartnersGotra' => $PartnersGotra,
+                'PartnersMothertongue' => $PartnersMothertongue,
+                'PartnersCommunity' => $PartnersCommunity,
+                'PartnersSubCommunity' => $PartnersSubCommunity,
+                'show' => $show,
+                'PartnersRaashi' => $PartnersRaashi,
+                'PartnersCharan' => $PartnersCharan,
+                'PartnersNakshtra' => $PartnersNakshtra,
+                'PartnersNadi' => $PartnersNadi,
+                'PartnersSkinTone' => $PartnersSkinTone,
+                'PartnersBodyType' => $PartnersBodyType,
+                'PartnersDiet' => $PartnersDiet,
+                'PartnersSpectacles' => $PartnersSpectacles,
+                'PartnersSmoke' => $PartnersSmoke,
+                'PartnersDrink' => $PartnersDrink,
+                'PartenersEduLevelArray' => $PartenersEduLevelArray,
+                'PartenersEduFieldArray' => $PartenersEduFieldArray,
+                'PartenersWorkingAsArray' => $PartenersWorkingAsArray,
+                'PartenersWorkingWithArray' => $PartenersWorkingWithArray,
+                'AI' => $AI,
+                'PartenersInterestArray' => $PartenersInterestArray,
+                'PartenersFavReadsArray' => $PartenersFavReadsArray,
+                'PartenersMusicArray' => $PartenersMusicArray,
+                'PartenersCousinsArray' => $PartenersCousinsArray,
+                'PartenersFitnessArray' => $PartenersFitnessArray,
+                'PartenersDressStyleArray' => $PartenersDressStyleArray,
+                'PartenersMoviesArray' => $PartenersMoviesArray,
+                'PartnersFamilyALevel' => $PartnersFamilyALevel,
+                'PartnersFamilyTypeS' => $PartnersFamilyTypeS,
+                'PartnersStates' => $PartnersStates,
+                'PartnersCountries' => $PartnersCountries,
+                'PartnersCities' => $PartnersCities,
+                'CountryIDs' => $CountryIDs,
+                'StatesIDs' => $StatesIDs,
+            ]);
+        } else {
+            return $this->redirect(Yii::getAlias('@web'));
+        }
+    }
+
     public function actionAboutFamily($id='')
     {
         if (!Yii::$app->user->isGuest) {
@@ -625,6 +1195,11 @@ class SiteController extends Controller
             $id = Yii::$app->user->identity->id;
             #$id = base64_decode($id);
             if($model = User::findOne($id)){
+                $TempArray = explode(",", Yii::$app->user->identity->completed_step);
+                if (in_array('-1', $TempArray)) {
+                    return $this->redirect(['site/partner-preferences']);
+                    exit;
+                }
                 $model->scenario = User::SCENARIO_REGISTER7;
                 $model1 = User::findOne($id);
                 $model1->scenario = User::SCENARIO_REGISTER8;

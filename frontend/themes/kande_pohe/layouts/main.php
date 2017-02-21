@@ -57,7 +57,13 @@ AppAsset::register($this);
     </head>
     <body>
 
-    <?php if (Yii::$app->user->identity->eEmailVerifiedStatus == 'Yes' || Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes') { ?>
+    <?php
+    $TempArray = explode(",", Yii::$app->user->identity->completed_step);
+    $PartnerPre = 0;
+    if (in_array('-1', $TempArray)) {
+        $PartnerPre = 1;
+    }
+    if ($PartnerPre && (Yii::$app->user->identity->eEmailVerifiedStatus == 'Yes' || Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes')) { ?>
         <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
     <?php } else { ?>
         <?php echo $this->render('/layouts/parts/_headerregister.php'); ?>

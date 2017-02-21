@@ -18,8 +18,8 @@ if (!Yii::$app->user->isGuest) {
 }
 ?>
     <div class="main-section">
-        <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
-        <link rel="stylesheet" type="text/css" href="<?= Yii::$app->request->baseUrl ?>/css/radical-progress.css"/>
+
+    <link rel="stylesheet" type="text/css" href="<?= Yii::$app->request->baseUrl ?>/css/radical-progress.css"/>
         <main data-ng-app="myApp" data-ng-controller="dashboardController">
             <section>
                 <div class="container">

@@ -36,7 +36,7 @@ class PartnersNadi extends \common\models\base\basePartnersNadi
     public function rules()
     {
         return [
-            // [['user_id', 'nadi_id'], 'required'],
+            [['user_id', 'nadi_id'], 'required'],
             [['user_id', 'nadi_id'], 'integer'],
             [['is_partner_preference'], 'string'],
             [['created_on', 'modified_on'], 'safe'],

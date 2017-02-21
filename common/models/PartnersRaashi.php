@@ -36,7 +36,7 @@ class PartnersRaashi extends \common\models\base\basePartnersRaashi
     public function rules()
     {
         return [
-            [['user_id', 'raashi_id'], 'required'],
+            //[['user_id', 'raashi_id'], 'required'],
             [['user_id', 'raashi_id'], 'integer'],
             [['is_partner_preference'], 'string'],
             [['created_on', 'modified_on'], 'safe'],

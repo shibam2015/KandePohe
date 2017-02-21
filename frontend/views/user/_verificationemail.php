@@ -155,7 +155,8 @@ use yii\widgets\Pjax;
                         $this->registerJs(' 
                                $(".modal").on("hidden.bs.modal", function (e) {
                                         //window.location = "' . Yii::$app->homeUrl . 'user/dashboard?type=' . base64_encode("VERIFICATION-DONE") . '";
-                                        window.location = "' . Yii::$app->homeUrl . 'user/dashboard";
+                                        //window.location = "' . Yii::$app->homeUrl . 'user/dashboard";
+                                        location.reload();
                                })
 
                         ');

@@ -36,7 +36,7 @@ class PartnersNakshtra extends \common\models\base\basePartnersNakshtra
     public function rules()
     {
         return [
-            [['user_id', 'nakshtra_id'], 'required'],
+            // [['user_id', 'nakshtra_id'], 'required'],
             [['user_id', 'nakshtra_id'], 'integer'],
             [['is_partner_preference'], 'string'],
             [['created_on', 'modified_on'], 'safe'],

@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\components\MessageHelper;
 use common\components\SmsHelper;
+use common\models\Cities;
 use common\models\otherlibraries\Compressimage;
 use Yii;
 use yii\base\InvalidParamException;
@@ -99,10 +100,13 @@ class SiteController extends Controller
             );
             exit;
         }
+        $FeaturedMembers = User::findFeaturedMembers(4);
+        #CommonHelper::pr($FeaturedMembers);exit;
         //return $this->redirect(Yii::$app->request->referrer);
         return $this->render('index',
             [
                 'model' => $model,
+                'FeaturedMembers' => $FeaturedMembers,
                 'ref' => $ref,
             ]
         );
@@ -211,9 +215,7 @@ class SiteController extends Controller
     {
         $model = new User;
         $model->scenario = User::SCENARIO_REGISTER;
-        //if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
             Yii::$app->end();
@@ -232,6 +234,11 @@ class SiteController extends Controller
             $U_R_ID = CommonHelper::generateUniqueRandomNumber(9);
             $model->Registration_Number = $U_R_ID;
             $model->completed_step = $model->setCompletedStep('1');
+            $model->Age = CommonHelper::ageCalculator($model->DOB);
+            //CommonHelper::pr(Yii::$app->request->post());
+            $model->new_county_code = Yii::$app->request->post('User')['county_code'];
+            $model->new_phone_no = Yii::$app->request->post('User')['Mobile'];
+            #CommonHelper::pr(Yii::$app->request->post());exit;
             /*$model->save();
             var_dump($model->errors);
             die();*/
@@ -324,7 +331,6 @@ class SiteController extends Controller
                 $returnData['status'] = 0;
             }
             return $returnData;
-            Yii::$app->end();
         }
     }
 
@@ -344,11 +350,10 @@ class SiteController extends Controller
         } catch (InvalidParamException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
-
-
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
             Yii::$app->session->setFlash('success', 'New password was saved.');
-            return $this->goHome();
+
+            return $this->redirect(Yii::$app->homeUrl . '?ref=cps');
         }
         return $this->render('reset-password', [
             'model' => $model
@@ -367,7 +372,6 @@ class SiteController extends Controller
             } else {
                 #$this->redirect('index.php');
             }
-
         } else {
             #$this->redirect('index.php');
         }
@@ -377,22 +381,26 @@ class SiteController extends Controller
     public function actionBasicDetails($id = '')
     {
         if (!Yii::$app->user->isGuest) {
-            #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
-            #   $id = base64_decode($id);
-
             if ($model = User::findOne($id)) {
-
                 $model->scenario = User::SCENARIO_REGISTER1;
                 if ($model->load(Yii::$app->request->post())) {
-                    //$model->save();
                     $model->completed_step = $model->setCompletedStep('2');
+                    $AreaName = Yii::$app->request->post('User')['vAreaName'];
+                    $CityName = $model->cityName->vCityName;
+                    $StateName = $model->stateName->vStateName;
+                    $CountryName = $model->countryName->vCountryName;
+                    $Address = $AreaName . " " . $CityName . " " . $StateName . " " . $CountryName;
+                    $LatLongArray = CommonHelper::getLatLong($Address);
+                    $model->latitude = $LatLongArray['latitude'];
+                    $model->longitude = $LatLongArray['longitude'];
                     if ($model->save()) {
                         $this->redirect(['site/education-occupation']);
                     }
                 }
                 return $this->render('register1', [
-                    'model' => $model
+                    'model' => $model,
+                    'CurrentStep' => 2,
                 ]);
             } else {
                 return $this->redirect(Yii::getAlias('@web'));
@@ -406,22 +414,18 @@ class SiteController extends Controller
     public function actionEducationOccupation($id = '')
     {
         if (!Yii::$app->user->isGuest) {
-            #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
-            #   $id = base64_decode($id);
-
             if ($model = User::findOne($id)) {
-
                 $model->scenario = User::SCENARIO_REGISTER2;
                 if ($model->load(Yii::$app->request->post())) {
                     $model->completed_step = $model->setCompletedStep('3');
                     if ($model->save()) {
-
                         $this->redirect(['site/life-style']);
                     }
                 }
                 return $this->render('register2', [
-                    'model' => $model
+                    'model' => $model,
+                    'CurrentStep' => 3,
                 ]);
 
             } else {
@@ -435,33 +439,25 @@ class SiteController extends Controller
     public function actionLifeStyle($id = '')
     {
         if (!Yii::$app->user->isGuest) {
-            #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
-            #   $id = base64_decode($id);
-
             if ($model = User::findOne($id)) {
-
                 $model->scenario = User::SCENARIO_REGISTER3;
-
                 if ($model->load(Yii::$app->request->post())) {
-                    #echo "<pre>"; print_r($model->scenario);exit;
                     $model->completed_step = $model->setCompletedStep('4');
                     if ($model->save()) {
-
                         $this->redirect(['site/about-family']);
                     }
                 }
                 return $this->render('register3', [
-                    'model' => $model
+                    'model' => $model,
+                    'CurrentStep' => 4,
                 ]);
-
             } else {
                 return $this->redirect(Yii::getAlias('@web'));
             }
         } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
-
     }
 
     public function actionAboutFamily($id = '')
@@ -487,7 +483,8 @@ class SiteController extends Controller
                     }
                 }
                 return $this->render('register4', [
-                    'model' => $model
+                    'model' => $model,
+                    'CurrentStep' => 5,
                 ]);
 
             } else {
@@ -499,10 +496,9 @@ class SiteController extends Controller
 
     }
 
-    public function actionAboutYourself($id = '')
+    public function actionAboutYourself($ref = '')
     {
         if (!Yii::$app->user->isGuest) {
-            #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
             if ($model = User::findOne($id)) {
                 $tYourSelf_old = $model->tYourSelf;
@@ -513,11 +509,18 @@ class SiteController extends Controller
                         $model->eStatusInOwnWord = 'Pending';
                     }
                     if ($model->save()) {
-                        $this->redirect(['user/photos']);
+                        $PhotoSection = \common\models\User::weightedCheck(7);
+                        if ($PhotoSection || Yii::$app->user->identity->propic != '') {
+                            $this->redirect(['user/photos']);
+                        } else {
+                            $this->redirect(['site/about-yourself', 'ref' => 'first']);
+                        }
                     }
                 }
                 return $this->render('register5', [
-                    'model' => $model
+                    'model' => $model,
+                    'CurrentStep' => 6,
+                    'ref' => $ref
                 ]);
             } else {
                 return $this->redirect(Yii::getAlias('@web'));
@@ -699,7 +702,6 @@ class SiteController extends Controller
         return json_encode($return);
 
     }
-
     public function actionVerificationEmailPin()
     {
         $STATUS = $MESSAGE = '';
