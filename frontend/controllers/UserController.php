@@ -3348,6 +3348,9 @@ class UserController extends Controller
             $STATUS = 'E';
             $MESSAGE = Yii::$app->params['errorMessage'];
         }
+        if ($UserModel->eEmailVerifiedStatus == 'Yes' && $UserModel->ePhoneVerifiedStatus == 'Yes') {
+            $RedirectURL = 'site/partner-preferences';
+        }
 
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE, 'POPUPTYPE' => $PopUpType, 'REDIRECTURL' => $RedirectURL);
         return json_encode($return);

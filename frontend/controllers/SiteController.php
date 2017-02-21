@@ -1201,11 +1201,15 @@ class SiteController extends Controller
             $id = Yii::$app->user->identity->id;
             #$id = base64_decode($id);
             if($model = User::findOne($id)){
-                $TempArray = explode(",", Yii::$app->user->identity->completed_step);
-                if (!in_array('-1', $TempArray)) {
-                    return $this->redirect(['site/partner-preferences']);
-                    exit;
+                if ($model->eEmailVerifiedStatus == 'Yes' && Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes') {
+                    $TempArray = explode(",", Yii::$app->user->identity->completed_step);
+                    /*if (!in_array('-1', $TempArray)) {
+                        echo " asdasdasd";exit;
+                        return $this->redirect(['site/partner-preferences']);
+                        exit;
+                    }*/
                 }
+
                 $model->scenario = User::SCENARIO_REGISTER7;
                 $model1 = User::findOne($id);
                 $model1->scenario = User::SCENARIO_REGISTER8;

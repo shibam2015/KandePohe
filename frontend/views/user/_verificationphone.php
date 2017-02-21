@@ -167,10 +167,11 @@ use yii\widgets\Pjax;
                         if ($temp['MultipleProfile'] == 0) {
                             if ($model->eEmailVerifiedStatus == 'Yes' && $model->ePhoneVerifiedStatus == 'Yes') {
                                 $this->registerJs('
-                               $("#notification-model").on("hidden.bs.modal", function (e) {
+                                $("#notification-model").on("hidden.bs.modal", function (e) {
                                         //window.location = "' . Yii::$app->homeUrl . 'user/dashboard?type=' . base64_encode("'.Yii::$app->params['validationDone'].'") . '";
                                         //window.location = "' . Yii::$app->homeUrl . 'user/dashboard";
-                                        location.reload();
+                                        window.location = "' . Yii::$app->homeUrl . 'site/partner-preferences";
+                                        //location.reload();
                                })
 
                         ');

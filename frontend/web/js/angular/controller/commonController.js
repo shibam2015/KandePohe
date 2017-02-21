@@ -35,8 +35,8 @@ commonApp.factory('vService', ['$http', function($http) {
 				}
 				if (ck1 != true) {
 					setTimeout(function () {
-						//window.location.href = response.data.REDIRECTURL;
-						window.location.reload();
+						window.location.href = response.data.REDIRECTURL;
+						//window.location.reload();
 					}, 3000);
 
 				}

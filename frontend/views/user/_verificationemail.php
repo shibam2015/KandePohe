@@ -136,27 +136,26 @@ use yii\widgets\Pjax;
                         $this->registerJs('
                             notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
                             setTimeout(function(){
-                                $(".modal").modal("hide");
+                                $("#notification-model").modal("hide");
                                 }, 4000);
                             ');
                     } else {
-
-                    }
-                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'EMAIL_VERIFICATION');
-                    $this->registerJs('
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'EMAIL_VERIFICATION');
+                        $this->registerJs('
                        notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
                        setTimeout(function(){
-                          $(".modal").modal("hide");
+                          $("#notification-model").modal("hide");
                        }, 4000);
 
                     ');
-
+                    }
                     if ($model->eEmailVerifiedStatus == 'Yes' && $model->ePhoneVerifiedStatus == 'Yes') {
-                        $this->registerJs(' 
-                               $(".modal").on("hidden.bs.modal", function (e) {
+                        $this->registerJs('
+                               $("#notification-model").on("hidden.bs.modal", function (e) {
                                         //window.location = "' . Yii::$app->homeUrl . 'user/dashboard?type=' . base64_encode("VERIFICATION-DONE") . '";
                                         //window.location = "' . Yii::$app->homeUrl . 'user/dashboard";
-                                        location.reload();
+                                        window.location = "' . Yii::$app->homeUrl . 'site/partner-preferences";
+                                        //location.reload();
                                })
 
                         ');
