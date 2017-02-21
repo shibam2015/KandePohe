@@ -510,7 +510,10 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             $Id = Yii::$app->user->identity->id;
             $model = User::findOne($Id);
-
+            if ($model->eEmailVerifiedStatus != 'Yes' || $model->ePhoneVerifiedStatus != 'Yes') {
+                return $this->redirect(['site/verification']);
+                exit;
+            }
             $PartenersReligion = PartenersReligion::findAllByUserId($Id) == NULL ? new PartenersReligion() : PartenersReligion::findAllByUserId($Id);
             $PartnersMaritalStatus = PartnersMaritalStatus::findAllByUserId($Id) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findAllByUserId($Id);
             $PartnersGotra = PartnersGotra::findAllByUserId($Id) == NULL ? new PartnersGotra() : PartnersGotra::findAllByUserId($Id);
