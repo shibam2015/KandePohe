@@ -717,6 +717,21 @@ class UserController extends Controller
                 $show = false;
 
                 $CurrDate = CommonHelper::getTime();
+                $UPP->scenario = UserPartnerPreference::SCENARIO_PREFERENCE;
+                $UPP->iUser_id = $Id;
+                $UPP->age_from = Yii::$app->request->post('UserPartnerPreference')['age_from'];
+                $UPP->age_to = Yii::$app->request->post('UserPartnerPreference')['age_to'];
+                $UPP->manglik = Yii::$app->request->post('UserPartnerPreference')['manglik'];
+                $UPP->height_from = Yii::$app->request->post('UserPartnerPreference')['height_from'];
+                $UPP->height_to = Yii::$app->request->post('UserPartnerPreference')['height_to'];
+                $UPP->drink = Yii::$app->request->post('UserPartnerPreference')['drink'];
+                $UPP->smoke = Yii::$app->request->post('UserPartnerPreference')['smoke'];
+                $UPP->modified_on = $CurrDate;
+                if ($UPP->ID == "") {
+                    $UPP->created_on = $CurrDate;
+                }
+                $UPP->save();
+
                 $ReligionId = Yii::$app->request->post('PartenersReligion')['iReligion_ID'];
                 PartnersReligion::deleteAll(['iUser_ID' => $Id]);
                 if (count($ReligionId)) {
@@ -759,20 +774,7 @@ class UserController extends Controller
                 }
                 $PartnersGotra = PartnersGotra::findAllByUserId($Id);
 
-                $UPP->iUser_id = $Id;
-                $UPP->age_from = Yii::$app->request->post('UserPartnerPreference')['age_from'];
-                $UPP->age_to = Yii::$app->request->post('UserPartnerPreference')['age_to'];
-                $UPP->manglik = Yii::$app->request->post('UserPartnerPreference')['manglik'];
-                $UPP->height_from = Yii::$app->request->post('UserPartnerPreference')['height_from'];
-                $UPP->height_to = Yii::$app->request->post('UserPartnerPreference')['height_to'];
-                $UPP->drink = Yii::$app->request->post('UserPartnerPreference')['drink'];
-                $UPP->smoke = Yii::$app->request->post('UserPartnerPreference')['smoke'];
-                $UPP->modified_on = $CurrDate;
 
-                if ($UPP->ID == "") {
-                    $UPP->created_on = $CurrDate;
-                }
-                $UPP->save();
 
                 $RaashiID = Yii::$app->request->post('PartnersRaashi')['raashi_id'];
                 $PartnersRaashi->user_id = $Id;
@@ -1023,6 +1025,7 @@ class UserController extends Controller
                     }
                 }
                 $PartnerWorkingWith = PartnerWorkingWith::findAllByUserId($Id);
+                $UPP->scenario = UserPartnerPreference::SCENARIO_PREFERENCE;
                 $UPP->annual_income_from = Yii::$app->request->post('UserPartnerPreference')['annual_income_from'];
                 $UPP->annual_income_to = Yii::$app->request->post('UserPartnerPreference')['annual_income_to'];
                 $UPP->save();
@@ -1351,6 +1354,7 @@ class UserController extends Controller
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
             if (Yii::$app->request->post('save')) {
+                $UPP->scenario = UserPartnerPreference::SCENARIO_PREFERENCE;
                 $UPP->iUser_id = $id;
                 $UPP->LookingFor = Yii::$app->request->post('UserPartnerPreference')['LookingFor'];
                 $UPP->save();

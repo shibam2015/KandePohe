@@ -35,6 +35,7 @@ use yii\helpers\ArrayHelper;
             ]
         ]);
         ?>
+        <?= $form->errorSummary($UPP, ['header' => '<p>Oops! Please ensure all fields are valid</p>']); ?>
         <div class="form-group field-partenersreligion-ireligion_id">
             <label class="control-label col-sm-3 col-xs-3" for="partenersreligion-ireligion_id">Religion</label>
 
@@ -55,7 +56,7 @@ use yii\helpers\ArrayHelper;
         </div>
         <?php
         $heightrange = range(134, 204);
-        $range = range(18, 100);
+        $range = range(18, 99);
         ?>
         <?= $form->field($UPP, 'age_from')->dropDownList(
             array_combine($range, $range),

@@ -591,6 +591,7 @@ class SiteController extends Controller
                 }
                 $PartnersGotra = PartnersGotra::findAllByUserId($Id);
 
+                $UPP->scenario = UserPartnerPreference::SCENARIO_PREFERENCE;
                 $UPP->iUser_id = $Id;
                 $UPP->age_from = Yii::$app->request->post('UserPartnerPreference')['age_from'];
                 $UPP->age_to = Yii::$app->request->post('UserPartnerPreference')['age_to'];
@@ -600,6 +601,11 @@ class SiteController extends Controller
                 $UPP->drink = Yii::$app->request->post('UserPartnerPreference')['drink'];
                 $UPP->smoke = Yii::$app->request->post('UserPartnerPreference')['smoke'];
                 $UPP->modified_on = $CurrDate;
+
+                $UPP->annual_income_from = Yii::$app->request->post('UserPartnerPreference')['annual_income_from'];
+                $UPP->annual_income_to = Yii::$app->request->post('UserPartnerPreference')['annual_income_to'];
+                $UPP->LookingFor = Yii::$app->request->post('UserPartnerPreference')['LookingFor'];
+
 
                 if ($UPP->ID == "") {
                     $UPP->created_on = $CurrDate;
@@ -798,10 +804,7 @@ class SiteController extends Controller
                     }
                 }
                 $PartnerWorkingWith = PartnerWorkingWith::findAllByUserId($Id);
-                $UPP->annual_income_from = Yii::$app->request->post('UserPartnerPreference')['annual_income_from'];
-                $UPP->annual_income_to = Yii::$app->request->post('UserPartnerPreference')['annual_income_to'];
-                $UPP->LookingFor = Yii::$app->request->post('UserPartnerPreference')['LookingFor'];
-                $UPP->save();
+
                 $InterestIDs = Yii::$app->request->post('PartnersInterest')['interest_id'];
                 PartnersInterest::deleteAll(['user_id' => $Id]);
                 if (count($InterestIDs)) {
@@ -1196,7 +1199,7 @@ class SiteController extends Controller
             #$id = base64_decode($id);
             if($model = User::findOne($id)){
                 $TempArray = explode(",", Yii::$app->user->identity->completed_step);
-                if (in_array('-1', $TempArray)) {
+                if (!in_array('-1', $TempArray)) {
                     return $this->redirect(['site/partner-preferences']);
                     exit;
                 }
