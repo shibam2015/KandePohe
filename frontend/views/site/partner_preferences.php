@@ -94,8 +94,7 @@ use yii\widgets\Pjax;
                                             </div>
                                         </div>
                                         <?php
-                                        $heightrange = range(134, 204);
-                                        $range = range(18, 100);
+                                        $range = range(18, 99);
                                         ?>
                                         <?= $form->field($UPP, 'age_from')->dropDownList(
                                             array_combine($range, $range),
