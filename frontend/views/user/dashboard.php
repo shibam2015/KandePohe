@@ -143,17 +143,22 @@ if (!Yii::$app->user->isGuest) {
                                     </div>
                                     <div class="panel-body">
                                         <ul class="reset list-item">
-                                            <li><a href="<?= CommonHelper::getMailBoxUrl() ?>"
-                                                   title="Inbox">Inbox</a> <span
-                                                    class="badge">10</span></li>
-                                            <li><a href="<?= CommonHelper::getMailBoxUrl(1.3) ?>" title="Accepted">Accepted
-                                                    Interest</a> <span
-                                                    class="badge">2</span></li>
-                                            <li><a href="<?= CommonHelper::getMailBoxUrl() ?>" title="Not Replied"> Not
-                                                    Replied </a> <span
-                                                    class="badge">1</span></li>
-                                            <li><a href="<?= CommonHelper::getMailBoxUrl(2) ?>" title="Sent"> Sent </a>
-                                                <span class="badge">1</span></li>
+                                            <li>
+                                                <a href="<?= CommonHelper::getMailBoxUrl() ?>" title="Inbox">Inbox</a>
+                                                <span class="badge">10</span>
+                                            </li>
+                                            <!--<li>
+                                                <a href="<? /*= CommonHelper::getMailBoxUrl(1.3) */ ?>" title="Accepted">Accepted Interest</a>
+                                                <span class="badge">2</span>
+                                            </li>
+                                            <li>
+                                                <a href="<? /*= CommonHelper::getMailBoxUrl() */ ?>" title="Not Replied"> Not Replied </a>
+                                                <span class="badge">1</span>
+                                            </li>
+                                            <li>
+                                                <a href="<? /*= CommonHelper::getMailBoxUrl(2) */ ?>" title="Sent"> Sent </a>
+                                                <span class="badge">1</span>
+                                            </li>-->
                                         </ul>
                                     </div>
                                 </div>
