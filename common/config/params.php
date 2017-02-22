@@ -86,7 +86,8 @@ return [
     /* Photo Section End */
     'smokeArray' => ['Yes' => 'Smoke_Yes', 'No' => 'Smoke_No', 'Occasionally' => 'Smoke_Occasionally'],
     'drinkArray' => ['Yes' => 'Drink_Yes', 'No' => 'Drink_No', 'Occasionally' => 'Drink_Occasionally'],
-    'eyesArray' => ['Spectacles' => 'SpectaclesLens_Spectacles', 'Lens' => 'SpectaclesLens_Lens'],
+    //'eyesArray' => ['Spectacles' => 'SpectaclesLens_Spectacles', 'Lens' => 'SpectaclesLens_Lens'],
+    'eyesArray' => ['Yes' => 'SpectaclesLens_Yes', 'No' => 'SpectaclesLens_No'],
     'deleteProfileTitle' => 'Delete profile',
     'deleteProfileMessage' => 'Are you sure you want to delete your profile?',
     'deleteProfileNote' => 'Deleting your account will disable your Profile. Some information may still be visible to others,
