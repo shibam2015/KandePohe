@@ -10,6 +10,7 @@ use yii\bootstrap\Alert;   // For Alert Notification
 use yii\web\View;
 use kartik\editable\Editable;
 use yii\widgets\Pjax;
+
 $id = 0;
 $PROFILE_COMPLETENESS = 0;
 if (!Yii::$app->user->isGuest) {
@@ -329,7 +330,7 @@ if (!Yii::$app->user->isGuest) {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <h3><span class="heading-icons icon2"></span> Basic information</h3>
+                                            <h3><span class="heading-icons icon2"></span> Basic Details</h3>
                                             <?php Pjax::begin(['id' => 'div_personal_info1', 'enablePushState' => false]); ?>
                                             <div class="div_personal_info1">
                                                 <i class="fa fa-spinner fa-spin pink"></i>
@@ -338,7 +339,7 @@ if (!Yii::$app->user->isGuest) {
                                             <?php Pjax::end(); ?>
 
                                         </div>
-                                        <!--<div class="divider"></div>
+                                        <div class="divider"></div>
                                         <div class="inner-block">
                                             <div class="profile-edit pull-right">
                                                 <ul class="list-inline major-control">
@@ -350,13 +351,13 @@ if (!Yii::$app->user->isGuest) {
                                                 </ul>
                                             </div>
                                             <h3><span class="heading-icons icon2"></span> Basic information</h3>
-                                            <?php /*Pjax::begin(['id' => 'div_basic_info', 'enablePushState' => false]); */ ?>
+                                            <?php Pjax::begin(['id' => 'div_basic_info', 'enablePushState' => false]); ?>
                                             <div class="div_basic_info">
                                                 <i class="fa fa-spinner fa-spin pink"></i> Basic Information
                                                 Loading...
                                             </div>
-                                            <?php /*Pjax::end(); */ ?>
-                                        </div>-->
+                                            <?php Pjax::end(); ?>
+                                        </div>
                                         <div class="divider"></div>
                                         <div class="inner-block">
                                             <div class="profile-edit pull-right">
@@ -687,57 +688,57 @@ if (!Yii::$app->user->isGuest) {
                             class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                     <li class="active"><span
                             class="imgarea"><?= Html::img('@web/images/profile2.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="online"></span> </li>
+            </span> <span class="online"></span></li>
                     <li><span
                             class="imgarea"><?= Html::img('@web/images/profile3.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                     <li><span
                             class="imgarea"><?= Html::img('@web/images/profile1.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                     <li><span
                             class="imgarea"><?= Html::img('@web/images/profile2.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                     <li><span
                             class="imgarea"><?= Html::img('@web/images/profile3.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                     <li><span
                             class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                     <li><span
                             class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                     <li><span
                             class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                     <li><span
                             class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                     <li><span
                             class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
-            </span> <span class="time">12:24</span> </li>
+            </span> <span class="time">12:24</span></li>
                 </ul>
             </div>
             <div class="panel-footer">
@@ -748,13 +749,14 @@ if (!Yii::$app->user->isGuest) {
                            placeholder="Type your message here..."/>
                         <span class="input-group-btn dropup">
           <button class="btn btn-default btn-sm" id="btn-chat"><i class="fa fa-pencil-square-o"></i></button>
-          <button class="btn btn-default btn-sm" id="btn-chat" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-cog"></i> </button>
+          <button class="btn btn-default btn-sm" id="btn-chat" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false"><i class="fa fa-cog"></i></button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
               <li><a href="#">Action</a></li>
               <li><a href="#">Another action</a></li>
               <li><a href="#">Something else here</a></li>
           </ul>
-          </span> </div>
+          </span></div>
             </div>
         </div>
     </div>
@@ -936,11 +938,10 @@ $this->registerJs('
         getInlineDetail("' . Url::to(['user/edit-personal-info']) . '","#div_personal_info1","1");
     });
 
-    /*$(".edit_basic_information").click(function(e){
+    $(".edit_basic_information").click(function(e){
         getInlineDetail("' . Url::to(['user/edit-basic-info']) . '","#div_basic_info","0");
     });
-    getInlineDetail("' . Url::to(['user/edit-basic-info']) . '","#div_basic_info","1");*/
-
+    getInlineDetail("' . Url::to(['user/edit-basic-info']) . '","#div_basic_info","1");
     $(document).on("click","#cancel_edit_basicinfo",function(e){
         getInlineDetail("' . Url::to(['user/edit-basic-info']) . '","#div_basic_info","1");
     });
@@ -970,11 +971,11 @@ $this->registerJs('
     });
 
     $(".edit_preferences").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-preferences']).'","#my_preferences","0");
+        getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","0");
     });
-    getInlineDetail("'.Url::to(['user/edit-preferences']).'","#my_preferences","1");
+    getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","1");
     $(document).on("click","#cancel_edit_preferences",function(e){
-        getInlineDetail("'.Url::to(['user/edit-preferences']).'","#my_preferences","1");
+        getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","1");
     });
 
     $(".edit_horoscope").click(function(e){

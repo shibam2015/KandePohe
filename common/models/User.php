@@ -55,6 +55,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const SCENARIO_FIRST_VERIFICATION = 'Firstverification';
     const SCENARIO_EDIT_MY_INFO = 'Edit My Info';
     const SCENARIO_EDIT_PERSONAL_INFO = 'Edit Personal Info';
+    const SCENARIO_EDIT_PERSONAL_INFO_BASIC_INFO = 'Edit Personal Info';
     const SCENARIO_EDIT_LIFESTYLE = 'Edit Lifestyle and Appearance';
     const SCENARIO_VERIFY_PIN_FOR_PHONE = 'Verify Phone PIN';
     const SCENARIO_PHONE_NUMBER_CHANGE = 'Phone Number Update';
@@ -450,6 +451,7 @@ characters are allowed.'
             self::SCENARIO_EDIT_MY_INFO => ['tYourSelf'],
             #self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'Mobile', 'county_code', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'pin_phone_time', 'completed_step', 'Age', 'new_phone_no', 'new_county_code'],
             self::SCENARIO_EDIT_PERSONAL_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'pin_phone_time', 'completed_step', 'Age', 'new_phone_no', 'new_county_code'],
+            self::SCENARIO_EDIT_PERSONAL_INFO_BASIC_INFO => ['First_Name', 'Last_Name', 'DOB', 'Gender', 'Profile_created_for', 'mother_tongue', 'Marital_Status', 'pin_phone_vaerification', 'ePhoneVerifiedStatus', 'pin_phone_time', 'completed_step', 'Age', 'new_phone_no', 'new_county_code', 'iReligion_ID', 'First_Name', 'Last_Name', 'iCommunity_ID', 'iSubCommunity_ID', 'iDistrictID', 'iGotraID', 'iMaritalStatusID', 'iTalukaID', 'iCountryId', 'iStateId', 'iCityId', 'noc', 'vAreaName', 'cnb'],
 
             #self::SCENARIO_VERIFY_PIN_FOR_PHONE => ['phone_pin', 'completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification', 'pin_phone_time'], # FOR PHONE VERIFICATION PROCESS
             self::SCENARIO_VERIFY_PIN_FOR_PHONE => ['phone_pin', 'completed_step', 'ePhoneVerifiedStatus', 'pin_phone_vaerification', 'pin_phone_time', 'Mobile_Alternative_No', 'alternative_county_code', 'Mobile_Multiple_Status'], # FOR PHONE VERIFICATION PROCESS
