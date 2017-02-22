@@ -215,7 +215,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             ->limit($Limit)->all();
     }
 
-    public static function getPreferencesLocation($Gender, $Id, $PC = NULL, $PS = NULL, $PCS = NULL) # Get user list Gender Wise with limit
+    public static function getPreferencesLocation($Gender, $Id, $PC = 0, $PS = 0, $PCS = 0) # Get user list Gender Wise with limit
     {
         return static::find()->where(['Gender' => $Gender])
             ->andWhere(['!=', 'id', $Id])
@@ -227,7 +227,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             ->all();
     }
 
-    public static function getPreferencesEducation($Gender, $Id, $iEducationLevelID = NULL, $iEducationFieldID = NULL) # Get user list Gender Wise with PreferencesEducation
+    public static function getPreferencesEducation($Gender, $Id, $iEducationLevelID = 0, $iEducationFieldID = 0) # Get user list Gender Wise with PreferencesEducation
     {
         return static::find()->where(['Gender' => $Gender])
             ->andWhere(['!=', 'id', $Id])
@@ -238,24 +238,24 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             ->all();
     }
 
-    public static function getPreferencesProfession($Gender, $Id, $iWorkingAsID = NULL, $iWorkingWithID = NULL, $iAnnualIncomeID = NULL) # Get user list Gender Wise with PreferencesEducation
+    public static function getPreferencesProfession($Gender, $Id, $iWorkingAsID = 0, $iWorkingWithID = 0, $iAnnualIncomeID = 0) # Get user list Gender Wise with PreferencesEducation
     {
         return static::find()->where(['Gender' => $Gender])
             ->andWhere(['!=', 'id', $Id])
             ->andWhere(['=', 'iWorkingAsID', $iWorkingAsID])
-            ->orWhere(['=', 'iWorkingWithID', $iWorkingWithID])
-            ->orWhere(['=', 'iAnnualIncomeID', $iAnnualIncomeID])
+            ->andWhere(['=', 'iWorkingWithID', $iWorkingWithID])
+            ->andWhere(['=', 'iAnnualIncomeID', $iAnnualIncomeID])
             ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
             ->orderBy(['LastLoginTime' => SORT_DESC])
             ->all();
     }
 
-    public static function getPreferencesPersonal($Gender, $Id, $iWorkingAsID = NULL, $iReligion_ID = NULL, $iMaritalStatusID = NULL) # Get user list Gender Wise with PreferencesEducation
+    public static function getPreferencesPersonal($Gender, $Id, $iReligion_ID = 0, $iMaritalStatusID = 0) # Get user list Gender Wise with PreferencesEducation
     {
         return static::find()->where(['Gender' => $Gender])
             ->andWhere(['!=', 'id', $Id])
             ->andWhere(['=', 'iReligion_ID', $iReligion_ID])
-            ->orWhere(['=', 'iMaritalStatusID', $iMaritalStatusID])
+            ->andWhere(['=', 'iMaritalStatusID', $iMaritalStatusID])
             ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
             ->orderBy(['LastLoginTime' => SORT_DESC])
             ->all();

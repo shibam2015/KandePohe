@@ -234,7 +234,7 @@ class UserController extends Controller
                 $iReligion_ID = PartnersReligion::findByUserId($Id);
                 $iMaritalStatusID = PartnersMaritalStatus::findByUserId($Id);
                 $PreferencesPersonal = User::getPreferencesPersonal($Gender, $Id, $iReligion_ID->iReligion_ID, $iMaritalStatusID->iMarital_Status_ID);
-                #CommonHelper::pr($PreferencesPersonal);exit;
+                //CommonHelper::pr($PreferencesPersonal);exit;
                 #echo count($PreferencesPersonal);exit;
                 # My Preferences End
                 $TotalInboxCount = Mailbox::getUnreadMailCount($Id);
