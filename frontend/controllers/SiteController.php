@@ -549,10 +549,40 @@ class SiteController extends Controller
             $PartnersStates = PartnersStates::findAllByUserId($Id) == NULL ? new PartnersStates() : PartnersStates::findAllByUserId($Id);
             $PartnersCities = PartnersCities::findAllByUserId($Id) == NULL ? new PartnersCities() : PartnersCities::findAllByUserId($Id);
             $UPP->scenario = UserPartnerPreference::SCENARIO_PREFERENCE;
-            if ((Yii::$app->request->post() || Yii::$app->request->post('register11')) && $UPP->validate()) {
-                $model->completed_step = $model->setCompletedStep('-1'); //25 For Partner Preferences
-                $model->save();
+            if ((Yii::$app->request->post() || Yii::$app->request->post('register11'))) {
                 $CurrDate = CommonHelper::getTime();
+                $UPP->iUser_id = $Id;
+                $UPP->age_from = Yii::$app->request->post('UserPartnerPreference')['age_from'];
+                $UPP->age_to = Yii::$app->request->post('UserPartnerPreference')['age_to'];
+                $UPP->manglik = Yii::$app->request->post('UserPartnerPreference')['manglik'];
+                $UPP->height_from = Yii::$app->request->post('UserPartnerPreference')['height_from'];
+                $UPP->height_to = Yii::$app->request->post('UserPartnerPreference')['height_to'];
+                $UPP->drink = Yii::$app->request->post('UserPartnerPreference')['drink'];
+                $UPP->smoke = Yii::$app->request->post('UserPartnerPreference')['smoke'];
+                $UPP->modified_on = $CurrDate;
+                if (Yii::$app->request->post('UserPartnerPreference')['annual_income_from'] == '') {
+                    $annual_income_from = 0;
+                } else {
+                    $annual_income_from = Yii::$app->request->post('UserPartnerPreference')['annual_income_from'];
+                }
+                if (Yii::$app->request->post('UserPartnerPreference')['annual_income_to'] == '') {
+                    $annual_income_to = 0;
+                } else {
+                    $annual_income_to = Yii::$app->request->post('UserPartnerPreference')['annual_income_to'];
+                }
+
+                $UPP->annual_income_from = $annual_income_from;
+                $UPP->annual_income_to = $annual_income_to;
+                $UPP->LookingFor = Yii::$app->request->post('UserPartnerPreference')['LookingFor'];
+                if ($UPP->validate()) {
+                    $model->completed_step = $model->setCompletedStep('-1'); //25 For Partner Preferences
+                    $model->save();
+                    if ($UPP->ID == "") {
+                        $UPP->created_on = $CurrDate;
+                    }
+                    $UPP->save();
+                }
+
                 $ReligionId = Yii::$app->request->post('PartenersReligion')['iReligion_ID'];
                 PartnersReligion::deleteAll(['iUser_ID' => $Id]);
                 if (count($ReligionId)) {
@@ -596,73 +626,69 @@ class SiteController extends Controller
                 $PartnersGotra = PartnersGotra::findAllByUserId($Id);
 
 
-                if ($UPP->validate()) {
-                    $UPP->iUser_id = $Id;
-                    $UPP->age_from = Yii::$app->request->post('UserPartnerPreference')['age_from'];
-                    $UPP->age_to = Yii::$app->request->post('UserPartnerPreference')['age_to'];
-                    $UPP->manglik = Yii::$app->request->post('UserPartnerPreference')['manglik'];
-                    $UPP->height_from = Yii::$app->request->post('UserPartnerPreference')['height_from'];
-                    $UPP->height_to = Yii::$app->request->post('UserPartnerPreference')['height_to'];
-                    $UPP->drink = Yii::$app->request->post('UserPartnerPreference')['drink'];
-                    $UPP->smoke = Yii::$app->request->post('UserPartnerPreference')['smoke'];
-                    $UPP->modified_on = $CurrDate;
+                #if ($UPP->validate()) {
 
-                    $UPP->annual_income_from = Yii::$app->request->post('UserPartnerPreference')['annual_income_from'];
-                    $UPP->annual_income_to = Yii::$app->request->post('UserPartnerPreference')['annual_income_to'];
-                    $UPP->LookingFor = Yii::$app->request->post('UserPartnerPreference')['LookingFor'];
-
-
-                    if ($UPP->ID == "") {
-                        $UPP->created_on = $CurrDate;
-                    }
-                    $UPP->save();
-                }
+                #  }
 
                 $RaashiID = Yii::$app->request->post('PartnersRaashi')['raashi_id'];
-                $PartnersRaashi->user_id = $Id;
-                $PartnersRaashi->raashi_id = $RaashiID;
-                $PartnersRaashi->modified_on = $CurrDate;
-                if ($PartnersRaashi->ID == "") {
-                    $PartnersRaashi->created_on = $CurrDate;
+                if ($RaashiID != '') {
+                    $PartnersRaashi->user_id = $Id;
+                    $PartnersRaashi->raashi_id = $RaashiID;
+                    $PartnersRaashi->modified_on = $CurrDate;
+                    if ($PartnersRaashi->ID == "") {
+                        $PartnersRaashi->created_on = $CurrDate;
+                    }
+                    $PartnersRaashi->save();
                 }
-                $PartnersRaashi->save();
 
                 $CharanID = Yii::$app->request->post('PartnersCharan')['charan_id'];
-                $PartnersCharan->user_id = $Id;
-                $PartnersCharan->charan_id = $CharanID;
-                $PartnersCharan->modified_on = $CurrDate;
-                if ($PartnersCharan->ID == "") {
-                    $PartnersCharan->created_on = $CurrDate;
+                if ($CharanID != '') {
+                    $PartnersCharan->user_id = $Id;
+                    $PartnersCharan->charan_id = $CharanID;
+                    $PartnersCharan->modified_on = $CurrDate;
+                    if ($PartnersCharan->ID == "") {
+                        $PartnersCharan->created_on = $CurrDate;
+                    }
+                    $PartnersCharan->save();
                 }
-                $PartnersCharan->save();
+
 
                 $NakshtraID = Yii::$app->request->post('PartnersNakshtra')['nakshtra_id'];
-                $PartnersNakshtra->user_id = $Id;
-                $PartnersNakshtra->nakshtra_id = $NakshtraID;
-                $PartnersNakshtra->modified_on = $CurrDate;
-                if ($PartnersNakshtra->ID == "") {
-                    $PartnersNakshtra->created_on = $CurrDate;
+                if ($NakshtraID != '') {
+                    $PartnersNakshtra->user_id = $Id;
+                    $PartnersNakshtra->nakshtra_id = $NakshtraID;
+                    $PartnersNakshtra->modified_on = $CurrDate;
+                    if ($PartnersNakshtra->ID == "") {
+                        $PartnersNakshtra->created_on = $CurrDate;
+                    }
+                    $PartnersNakshtra->save();
                 }
-                $PartnersNakshtra->save();
+
 
                 $NadiID = Yii::$app->request->post('PartnersNadi')['nadi_id'];
-                $PartnersNadi->user_id = $Id;
-                $PartnersNadi->nadi_id = $NadiID;
-                $PartnersNadi->modified_on = $CurrDate;
-                if ($PartnersNadi->ID == "") {
-                    $PartnersNadi->created_on = $CurrDate;
+                if ($NadiID != '') {
+                    $PartnersNadi->user_id = $Id;
+                    $PartnersNadi->nadi_id = $NadiID;
+                    $PartnersNadi->modified_on = $CurrDate;
+                    if ($PartnersNadi->ID == "") {
+                        $PartnersNadi->created_on = $CurrDate;
+                    }
+                    $PartnersNadi->save();
                 }
-                $PartnersNadi->save();
+
 
                 $MotherID = Yii::$app->request->post('PartnersMothertongue')['iMothertongue_ID'];
-                $PartnersMothertongue->scenario = PartnersMothertongue::SCENARIO_ADD;
-                $PartnersMothertongue->iUser_ID = $Id;
-                $PartnersMothertongue->iMothertongue_ID = $MotherID;
-                $PartnersMothertongue->dtModified = $CurrDate;
-                if ($PartnersMothertongue->iPartners_Mothertongue_ID == "") {
-                    $PartnersMothertongue->dtCreated = $CurrDate;
+                if ($MotherID !== '') {
+                    $PartnersMothertongue->scenario = PartnersMothertongue::SCENARIO_ADD;
+                    $PartnersMothertongue->iUser_ID = $Id;
+                    $PartnersMothertongue->iMothertongue_ID = $MotherID;
+                    $PartnersMothertongue->dtModified = $CurrDate;
+                    if ($PartnersMothertongue->iPartners_Mothertongue_ID == "") {
+                        $PartnersMothertongue->dtCreated = $CurrDate;
+                    }
+                    $PartnersMothertongue->save();
                 }
-                $PartnersMothertongue->save();
+
 
                 $SkinToneIDs = Yii::$app->request->post('PartnersSkinTone')['iSkin_Tone_ID'];
                 PartnersSkinTone::deleteAll(['iUser_ID' => $Id]);

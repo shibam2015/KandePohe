@@ -53,7 +53,7 @@ class UserPartnerPreference extends \common\models\base\baseUserPartnerPreferenc
             [['iUser_id', 'age_from', 'age_to', 'height_from', 'height_to', 'manglik'], 'required'],
             [['iUser_id'], 'integer'],
             [['age_from', 'age_to', 'no_of_childs', 'childs_living_with_you', 'height_from', 'height_to', 'weight_from', 'weight_to', 'health_information', 'any_disability', 'manglik', 'drink', 'smoke', 'annual_income_from', 'annual_income_to'], 'string'],
-            [['created_on', 'modified_on', 'drink', 'smoke'], 'safe'],
+            [['created_on', 'modified_on', 'drink', 'smoke', 'iUser_id'], 'safe'],
         ];
     }
 
@@ -61,7 +61,6 @@ class UserPartnerPreference extends \common\models\base\baseUserPartnerPreferenc
     {
         return [
             self::SCENARIO_PREFERENCE => ['iUser_id', 'age_from', 'age_to', 'height_from', 'height_to', 'manglik', 'drink', 'smoke'],
-
 
         ];
 

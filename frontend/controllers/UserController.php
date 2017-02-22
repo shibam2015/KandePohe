@@ -803,50 +803,59 @@ class UserController extends Controller
 
 
                 $RaashiID = Yii::$app->request->post('PartnersRaashi')['raashi_id'];
-                $PartnersRaashi->user_id = $Id;
-                $PartnersRaashi->raashi_id = $RaashiID;
-                $PartnersRaashi->modified_on = $CurrDate;
-                if ($PartnersRaashi->ID == "") {
-                    $PartnersRaashi->created_on = $CurrDate;
+                if ($RaashiID != '') {
+                    $PartnersRaashi->user_id = $Id;
+                    $PartnersRaashi->raashi_id = $RaashiID;
+                    $PartnersRaashi->modified_on = $CurrDate;
+                    if ($PartnersRaashi->ID == "") {
+                        $PartnersRaashi->created_on = $CurrDate;
+                    }
+                    $PartnersRaashi->save();
                 }
-                $PartnersRaashi->save();
-
                 $CharanID = Yii::$app->request->post('PartnersCharan')['charan_id'];
-                $PartnersCharan->user_id = $Id;
-                $PartnersCharan->charan_id = $CharanID;
-                $PartnersCharan->modified_on = $CurrDate;
-                if ($PartnersCharan->ID == "") {
-                    $PartnersCharan->created_on = $CurrDate;
+                if ($CharanID != '') {
+                    $PartnersCharan->user_id = $Id;
+                    $PartnersCharan->charan_id = $CharanID;
+                    $PartnersCharan->modified_on = $CurrDate;
+                    if ($PartnersCharan->ID == "") {
+                        $PartnersCharan->created_on = $CurrDate;
+                    }
+                    $PartnersCharan->save();
                 }
-                $PartnersCharan->save();
 
                 $NakshtraID = Yii::$app->request->post('PartnersNakshtra')['nakshtra_id'];
-                $PartnersNakshtra->user_id = $Id;
-                $PartnersNakshtra->nakshtra_id = $NakshtraID;
-                $PartnersNakshtra->modified_on = $CurrDate;
-                if ($PartnersNakshtra->ID == "") {
-                    $PartnersNakshtra->created_on = $CurrDate;
+                if ($NakshtraID != '') {
+                    $PartnersNakshtra->user_id = $Id;
+                    $PartnersNakshtra->nakshtra_id = $NakshtraID;
+                    $PartnersNakshtra->modified_on = $CurrDate;
+                    if ($PartnersNakshtra->ID == "") {
+                        $PartnersNakshtra->created_on = $CurrDate;
+                    }
+                    $PartnersNakshtra->save();
                 }
-                $PartnersNakshtra->save();
 
                 $NadiID = Yii::$app->request->post('PartnersNadi')['nadi_id'];
-                $PartnersNadi->user_id = $Id;
-                $PartnersNadi->nadi_id = $NadiID;
-                $PartnersNadi->modified_on = $CurrDate;
-                if ($PartnersNadi->ID == "") {
-                    $PartnersNadi->created_on = $CurrDate;
+                if ($NadiID != '') {
+                    $PartnersNadi->user_id = $Id;
+                    $PartnersNadi->nadi_id = $NadiID;
+                    $PartnersNadi->modified_on = $CurrDate;
+                    if ($PartnersNadi->ID == "") {
+                        $PartnersNadi->created_on = $CurrDate;
+                    }
+                    $PartnersNadi->save();
                 }
-                $PartnersNadi->save();
 
                 $MotherID = Yii::$app->request->post('PartnersMothertongue')['iMothertongue_ID'];
-                $PartnersMothertongue->scenario = PartnersMothertongue::SCENARIO_ADD;
-                $PartnersMothertongue->iUser_ID = $Id;
-                $PartnersMothertongue->iMothertongue_ID = $MotherID;
-                $PartnersMothertongue->dtModified = $CurrDate;
-                if ($PartnersMothertongue->iPartners_Mothertongue_ID == "") {
-                    $PartnersMothertongue->dtCreated = $CurrDate;
+                if ($MotherID !== '') {
+                    $PartnersMothertongue->scenario = PartnersMothertongue::SCENARIO_ADD;
+                    $PartnersMothertongue->iUser_ID = $Id;
+                    $PartnersMothertongue->iMothertongue_ID = $MotherID;
+                    $PartnersMothertongue->dtModified = $CurrDate;
+                    if ($PartnersMothertongue->iPartners_Mothertongue_ID == "") {
+                        $PartnersMothertongue->dtCreated = $CurrDate;
+                    }
+                    $PartnersMothertongue->save();
                 }
-                $PartnersMothertongue->save();
 
                 $SkinToneIDs = Yii::$app->request->post('PartnersSkinTone')['iSkin_Tone_ID'];
                 PartnersSkinTone::deleteAll(['iUser_ID' => $Id]);
