@@ -2000,6 +2000,7 @@ class UserController extends Controller
         $popup = false;
         $flag = false;
         $temp = array();
+        $temp['MultipleProfile'] = 0;
         if (Yii::$app->request->post() && (Yii::$app->request->post('verify') == 'PHONE_VERIFY')) {
             $show = true;
             $PIN = $model->pin_phone_vaerification;
@@ -2026,7 +2027,7 @@ class UserController extends Controller
                         } else {
                             $model->county_code = $model->new_county_code;
                             $model->Mobile = $model->new_phone_no;
-                            $model->Mobile_Multiple_Status = 1;
+                            $model->Mobile_Multiple_Status = 0;
                             $temp['MultipleProfile'] = 0;
                         }
                         #END For Multiple Profile Check
