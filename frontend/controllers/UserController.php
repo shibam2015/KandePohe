@@ -237,7 +237,7 @@ class UserController extends Controller
                 #CommonHelper::pr($PreferencesPersonal);exit;
                 #echo count($PreferencesPersonal);exit;
                 # My Preferences End
-
+                $TotalInboxCount = Mailbox::getUnreadMailCount($Id);
                 return $this->render('dashboard',[
                     'model' => $model,
                     'VER_ARRAY' => $VER_ARRAY,
@@ -251,6 +251,7 @@ class UserController extends Controller
                     'PreferencesEducation' => $PreferencesEducation,
                     'PreferencesProfession' => $PreferencesProfession,
                     'PreferencesPersonal' => $PreferencesPersonal,
+                    'TotalInboxCount' => $TotalInboxCount,
                 ]);
             }else{
                 return $this->redirect(Yii::getAlias('@web'));

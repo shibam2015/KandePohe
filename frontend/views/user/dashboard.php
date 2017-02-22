@@ -145,7 +145,8 @@ if (!Yii::$app->user->isGuest) {
                                         <ul class="reset list-item">
                                             <li>
                                                 <a href="<?= CommonHelper::getMailBoxUrl() ?>" title="Inbox">Inbox</a>
-                                                <span class="badge">10</span>
+                                                <?php if ($TotalInboxCount > 0) { ?><span
+                                                    class="badge"><?= $TotalInboxCount ?></span><?php } ?>
                                             </li>
                                             <!--<li>
                                                 <a href="<? /*= CommonHelper::getMailBoxUrl(1.3) */ ?>" title="Accepted">Accepted Interest</a>

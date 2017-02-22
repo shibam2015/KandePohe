@@ -261,6 +261,16 @@ class Mailbox extends \common\models\base\baseMailbox
         return $Data;
     }
 
+    public static function getUnreadMailCount($Id)
+    {
+        return Static::find()
+            ->where(['to_user_id' => $Id])
+            ->andWhere(['!=', 'from_user_id', $Id])
+            ->andwhere(['read_status' => 'NO'])
+            ->groupBy(['to_user_id', 'from_user_id'])
+            ->count();
+    }
+
     /**
      * @inheritdoc
      */
@@ -317,6 +327,5 @@ class Mailbox extends \common\models\base\baseMailbox
     {
         return $this->hasOne(User::className(), ['id' => 'to_user_id']);
     }
-
 
 }
