@@ -241,15 +241,28 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             ->all();*/
     }
 
-    public static function getPreferencesEducation($Gender, $Id, $iEducationLevelID = 0, $iEducationFieldID = 0) # Get user list Gender Wise with PreferencesEducation
+    public static function getPreferencesEducation($Gender, $Id, $PartnerEducationLevels = '', $PartnerEducationFields = '') # Get user list Gender Wise with PreferencesEducation
     {
-        return static::find()->where(['Gender' => $Gender])
+        $Where = '';
+        if ($PartnerEducationLevels != '') {
+            $Where .= ' AND (iEducationLevelID IN (' . $PartnerEducationLevels . ')';
+        }
+        if ($PartnerEducationFields != '') {
+            if ($Where != '')
+                $Where .= ' OR iEducationFieldID IN (' . $PartnerEducationFields . ') )';
+            else
+                $Where .= ' AND iEducationFieldID IN (' . $PartnerEducationFields . '))';
+        }
+        $sql = "select * from user where Gender=:gen and status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "')  AND id != " . $Id . " " . $Where;
+        return static::findBySql($sql, [":gen" => $Gender])->orderBy(['LastLoginTime' => SORT_DESC])->all();
+
+        /*return static::find()->where(['Gender' => $Gender])
             ->andWhere(['!=', 'id', $Id])
             ->andWhere(['=', 'iEducationLevelID', $iEducationLevelID])
             ->andWhere(['=', 'iEducationFieldID', $iEducationFieldID])
             ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
             ->orderBy(['LastLoginTime' => SORT_DESC])
-            ->all();
+            ->all();*/
     }
 
     public static function getPreferencesProfession($Gender, $Id, $iWorkingAsID = 0, $iWorkingWithID = 0, $iAnnualIncomeID = 0) # Get user list Gender Wise with PreferencesEducation

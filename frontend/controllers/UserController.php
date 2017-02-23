@@ -217,9 +217,9 @@ class UserController extends Controller
                 $PreferencesLocation = User::getPreferencesLocation($Gender, $Id, $PartnersCities, $PartnersStates, $PartnersCountries);
 
                 # Education Wise
-                $iEducationLevelID = PartnersEducationalLevel::findByUserId($Id);
-                $iEducationFieldID = PartnersEducationField::findByUserId($Id);
-                $PreferencesEducation = User::getPreferencesEducation($Gender, $Id, $iEducationLevelID->iEducation_Level_ID, $iEducationFieldID->iEducation_Field_ID);
+                $PartnerEducationLevels = CommonHelper::removeComma(implode(",", CommonHelper::convertArrayToString(PartnersEducationalLevel::findAllByUserId($Id), 'iEducation_Level_ID')));
+                $PartnerEducationFields = CommonHelper::removeComma(implode(",", CommonHelper::convertArrayToString(PartnersEducationField::findAllByUserId($Id), 'iEducation_Field_ID')));
+                $PreferencesEducation = User::getPreferencesEducation($Gender, $Id, $PartnerEducationLevels, $PartnerEducationFields);
 
                 # Profession Wise
                 $iWorkingWithID = PartnerWorkingWith::findByUserId($Id);
