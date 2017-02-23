@@ -222,10 +222,15 @@ class UserController extends Controller
                 $PreferencesEducation = User::getPreferencesEducation($Gender, $Id, $PartnerEducationLevels, $PartnerEducationFields);
 
                 # Profession Wise
-                $iWorkingWithID = PartnerWorkingWith::findByUserId($Id);
-                $iWorkingAsID = PartnerWorkingAs::findByUserId($Id);
-                $iAnnualIncomeID = PartnersAnnualIncome::findByUserId($Id);
-                $PreferencesProfession = User::getPreferencesProfession($Gender, $Id, $iWorkingWithID->iWorking_With_ID, $iWorkingAsID->iWorking_As_ID, $iAnnualIncomeID->annual_income_id);
+                $PartnerWorkingWith = CommonHelper::removeComma(implode(",", CommonHelper::convertArrayToString(PartnerWorkingWith::findAllByUserId($Id), 'iWorking_With_ID')));
+                $PartnerWorkingAs = CommonHelper::removeComma(implode(",", CommonHelper::convertArrayToString(PartnerWorkingAs::findAllByUserId($Id), 'iWorking_As_ID')));
+                #$UserPartnerPreferences = 1;//UserPartnerPreference::findByUserId($Id);
+                $UPP = UserPartnerPreference::findByUserId($Id);
+                if ($UPP != NULL) {
+                    $PartnerAnnualIncomeFrom = $UPP->annual_income_from;
+                    $PartnerAnnualIncomeTo = $UPP->annual_income_to;
+                }
+                $PreferencesProfession = User::getPreferencesProfession($Gender, $Id, $PartnerWorkingWith, $PartnerWorkingAs, $PartnerAnnualIncomeFrom, $PartnerAnnualIncomeTo);
 
                 # Personal ( My Preferences ) Wise
                 $iReligion_ID = PartnersReligion::findByUserId($Id);

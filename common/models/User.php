@@ -244,15 +244,17 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public static function getPreferencesEducation($Gender, $Id, $PartnerEducationLevels = '', $PartnerEducationFields = '') # Get user list Gender Wise with PreferencesEducation
     {
         $Where = '';
+        if ($PartnerEducationLevels != '' || $PartnerEducationFields != '') $Where .= ' AND (';
         if ($PartnerEducationLevels != '') {
-            $Where .= ' AND (iEducationLevelID IN (' . $PartnerEducationLevels . ')';
+            $Where .= ' iEducationLevelID IN (' . $PartnerEducationLevels . ')';
         }
         if ($PartnerEducationFields != '') {
-            if ($Where != '')
-                $Where .= ' OR iEducationFieldID IN (' . $PartnerEducationFields . ') )';
+            if ($Where != ' AND (')
+                $Where .= ' OR iEducationFieldID IN (' . $PartnerEducationFields . ')';
             else
-                $Where .= ' AND iEducationFieldID IN (' . $PartnerEducationFields . '))';
+                $Where .= ' iEducationFieldID IN (' . $PartnerEducationFields . ')';
         }
+        if ($PartnerEducationLevels != '' || $PartnerEducationFields != '') $Where .= ' )';
         $sql = "select * from user where Gender=:gen and status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "')  AND id != " . $Id . " " . $Where;
         return static::findBySql($sql, [":gen" => $Gender])->orderBy(['LastLoginTime' => SORT_DESC])->all();
 
@@ -265,16 +267,46 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             ->all();*/
     }
 
-    public static function getPreferencesProfession($Gender, $Id, $iWorkingAsID = 0, $iWorkingWithID = 0, $iAnnualIncomeID = 0) # Get user list Gender Wise with PreferencesEducation
+    public static function getPreferencesProfession($Gender, $Id, $PartnerWorkingWith = '', $PartnerWorkingAs = '', $PartnerAnnualIncomeFrom = 0, $PartnerAnnualIncomeTo = 0) # Get user list Gender Wise with PreferencesEducation
     {
-        return static::find()->where(['Gender' => $Gender])
+        $Where = '';
+        if ($PartnerWorkingWith != '' || $PartnerWorkingAs != '' || $PartnerAnnualIncomeFrom != 0 || $PartnerAnnualIncomeTo != 0) $Where .= ' AND (';
+
+        if ($PartnerWorkingWith != '') {
+            $Where .= ' iWorkingWithID IN (' . $PartnerWorkingWith . ')';
+        }
+        if ($PartnerWorkingAs != '') {
+            if (strlen($Where) > 7)
+                $Where .= ' OR iWorkingAsID IN (' . $PartnerWorkingAs . ')';
+            else
+                $Where .= ' iWorkingAsID IN (' . $PartnerWorkingAs . ')';
+        }
+        if ($PartnerAnnualIncomeFrom != 0) {
+            if (strlen($Where) > 7)
+                $Where .= ' OR iAnnualIncomeID IN (' . $PartnerAnnualIncomeFrom . ')';
+            else
+                $Where .= ' iAnnualIncomeID IN (' . $PartnerAnnualIncomeFrom . ')';
+        }
+
+        if ($PartnerAnnualIncomeTo != 0) {
+            if (strlen($Where) > 7)
+                $Where .= ' OR iAnnualIncomeID IN (' . $PartnerAnnualIncomeTo . ')';
+            else
+                $Where .= ' iAnnualIncomeID IN (' . $PartnerAnnualIncomeTo . ')';
+        }
+
+        if ($PartnerWorkingWith != '' || $PartnerWorkingAs != '' || $PartnerAnnualIncomeFrom != 0 || $PartnerAnnualIncomeTo != 0) $Where .= ' )';
+
+        $sql = "select * from user where Gender=:gen and status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "')  AND id != " . $Id . " " . $Where;
+        return static::findBySql($sql, [":gen" => $Gender])->orderBy(['LastLoginTime' => SORT_DESC])->all();
+        /*return static::find()->where(['Gender' => $Gender])
             ->andWhere(['!=', 'id', $Id])
             ->andWhere(['=', 'iWorkingAsID', $iWorkingAsID])
             ->andWhere(['=', 'iWorkingWithID', $iWorkingWithID])
             ->andWhere(['=', 'iAnnualIncomeID', $iAnnualIncomeID])
             ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
             ->orderBy(['LastLoginTime' => SORT_DESC])
-            ->all();
+            ->all();*/
     }
 
     public static function getPreferencesPersonal($Gender, $Id, $iReligion_ID = 0, $iMaritalStatusID = 0) # Get user list Gender Wise with PreferencesEducation
