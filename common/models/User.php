@@ -215,16 +215,30 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             ->limit($Limit)->all();
     }
 
-    public static function getPreferencesLocation($Gender, $Id, $PC = 0, $PS = 0, $PCS = 0) # Get user list Gender Wise with limit
+    public static function getPreferencesLocation($Gender, $Id, $PartnersCities = '', $PartnersStates = '', $PartnersCountries = '') # Get user list Gender Wise with limit
     {
-        return static::find()->where(['Gender' => $Gender])
+        $Where = '';
+        if ($PartnersCities != '') {
+            $Where .= ' AND iCityId IN (' . $PartnersCities . ')';
+        }
+        if ($PartnersStates != '') {
+            $Where .= ' AND iStateId IN (' . $PartnersStates . ')';
+        }
+        if ($PartnersCountries != '') {
+            $Where .= ' AND iCountryId IN (' . $PartnersCountries . ')';
+        }
+        $sql = "select * from user where Gender=:gen and status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "')  AND id != " . $Id . " " . $Where;
+
+        return static::findBySql($sql, [":gen" => $Gender])->orderBy(['LastLoginTime' => SORT_DESC])->all();
+
+        /*return static::find()->where(['Gender' => $Gender])
             ->andWhere(['!=', 'id', $Id])
-            ->andWhere(['=', 'iCityId', $PC])
-            ->andWhere(['=', 'iStateId', $PS])
-            ->andWhere(['=', 'iCountryId', $PCS])
-            ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
+            ->andWhere(['iCityId' => $PartnersCities])
+            ->andWhere(['iStateId' =>  $PartnersStates])
+            ->andWhere(['iCountryId' => $PartnersCountries])
+            ->andWhere(['status1' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
             ->orderBy(['LastLoginTime' => SORT_DESC])
-            ->all();
+            ->all();*/
     }
 
     public static function getPreferencesEducation($Gender, $Id, $iEducationLevelID = 0, $iEducationFieldID = 0) # Get user list Gender Wise with PreferencesEducation

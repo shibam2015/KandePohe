@@ -29,6 +29,7 @@ class UserPartnerPreference extends \common\models\base\baseUserPartnerPreferenc
 {
 
     const SCENARIO_PREFERENCE = 'Preference';
+    const SCENARIO_PREFERENCE_INCOME = 'Preference Income';
     /**
      * @inheritdoc
      */
@@ -61,6 +62,7 @@ class UserPartnerPreference extends \common\models\base\baseUserPartnerPreferenc
     {
         return [
             self::SCENARIO_PREFERENCE => ['iUser_id', 'age_from', 'age_to', 'height_from', 'height_to', 'manglik', 'drink', 'smoke'],
+            self::SCENARIO_PREFERENCE_INCOME => ['annual_income_from', 'annual_income_to'],
 
         ];
 
