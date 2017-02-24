@@ -157,7 +157,12 @@ use yii\widgets\Pjax;
                                         window.location = "' . Yii::$app->homeUrl . 'site/partner-preferences";
                                         //location.reload();
                                })
-
+                        ');
+                    } else if ($model->eEmailVerifiedStatus == 'Yes') {
+                        $this->registerJs('
+                               $("#notification-model").on("hidden.bs.modal", function (e) {
+                                        window.location = "' . Yii::$app->homeUrl . 'site/partner-preferences";
+                               })
                         ');
                     }
 

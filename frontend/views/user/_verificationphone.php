@@ -163,7 +163,6 @@ use yii\widgets\Pjax;
                             ');
                     }
                     if ($model->ePhoneVerifiedStatus == 'Yes') {
-                        #CommonHelper::pr($temp);
                         if ($temp['MultipleProfile'] == 0) {
                             if ($model->eEmailVerifiedStatus == 'Yes' && $model->ePhoneVerifiedStatus == 'Yes') {
                                 $this->registerJs('
@@ -174,7 +173,13 @@ use yii\widgets\Pjax;
                                         //location.reload();
                                })
 
-                        ');
+                            ');
+                            } else if ($model->ePhoneVerifiedStatus == 'Yes') {
+                                $this->registerJs('
+                                $("#notification-model").on("hidden.bs.modal", function (e) {
+                                        window.location = "' . Yii::$app->homeUrl . 'site/partner-preferences";
+                               })
+                            ');
                             }
                         } else {
                             $this->registerJs('
