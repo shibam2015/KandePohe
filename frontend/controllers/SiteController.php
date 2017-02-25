@@ -516,7 +516,7 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             $Id = Yii::$app->user->identity->id;
             $model = User::findOne($Id);
-            if ($model->eEmailVerifiedStatus != 'Yes' || $model->ePhoneVerifiedStatus != 'Yes') {
+            if ($model->eEmailVerifiedStatus != 'Yes' && $model->ePhoneVerifiedStatus != 'Yes') {
                 return $this->redirect(['site/verification']);
                 exit;
             }
