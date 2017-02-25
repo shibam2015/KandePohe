@@ -219,6 +219,13 @@ use yii\helpers\Url;
                                                                         selectize.clearOptions();
 
                                                                          if(data.CountryId == 101){
+                                                                            $(".user_idistrictid_div").show();
+                                                                            $(".user_iTalukaID_div").show();
+                                                                            var selectize = $("select#user-idistrictid")[0].selectize;
+                                                                            selectize.clear();
+                                                                            var selectize = $("select#user-italukaid")[0].selectize;
+                                                                            selectize.clear();
+                                                                        }else{
                                                                             $(".user_idistrictid_div").hide();
                                                                             var selectize = $("select#user-idistrictid")[0].selectize;
                                                                             selectize.clear();
@@ -227,13 +234,7 @@ use yii\helpers\Url;
                                                                             var selectize = $("select#user-italukaid")[0].selectize;
                                                                             selectize.clear();
                                                                             selectize.setValue(1);
-                                                                        }else{
-                                                                            $(".user_idistrictid_div").show();
-                                                                            $(".user_iTalukaID_div").show();
-                                                                            var selectize = $("select#user-idistrictid")[0].selectize;
-                                                                            selectize.clear();
-                                                                            var selectize = $("select#user-italukaid")[0].selectize;
-                                                                            selectize.clear();
+
                                                                         }
 
                                                             }
@@ -306,7 +307,7 @@ use yii\helpers\Url;
             ['id' => 'iCityId', 'class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'City']
         ); ?>
         <?php $hide = '';
-        if ($model->iCountryId == 101) {
+        if ($model->iCountryId != 101) {
             $hide = "display: none; ";
         } ?>
         <div class="user_idistrictid_div"
@@ -355,7 +356,21 @@ use yii\helpers\Url;
             </div>
         </div>
         <?php ActiveForm::end();
+        if ($model->iCountryId == 101) {
+            if ($model->iDistrictID == 1) {
+                $this->registerJs('
+                    var selectize = $("select#user-idistrictid")[0].selectize;
+                    selectize.clear();
+                 ');
+            }
+            if ($model->iTalukaID == 1) {
+                $this->registerJs('
+                    var selectize = $("select#user-italukaid")[0].selectize;
+                    selectize.clear();
+                 ');
+            }
 
+        }
         $this->registerJs('
           selectboxClassWise("clspersonalinfo");
            selectboxClassWise("clsbasicinfo");
@@ -415,7 +430,7 @@ use yii\helpers\Url;
             <dt>City</dt>
             <dd><?= $model->cityName->vCityName; ?></dd>
             <?php $hide = '';
-            if ($model->iCountryId == 101) {
+            if ($model->iCountryId != 101) {
                 $hide = "display: none; ";
             } ?>
 

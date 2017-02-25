@@ -20,7 +20,7 @@ if ($show) {
         'id' => 'form',
         'action' => ['edit-family'],
         'options' => ['data-pjax' => true],
-        'validateOnChange' => true,
+        'validateOnChange' => false,
         'validateOnSubmit' => true,
         'layout' => 'horizontal',
         'fieldConfig' => [
@@ -125,6 +125,24 @@ if ($show) {
                                                                         selectize.clear();
                                                                         selectize.clearOptions();
 
+
+                                                                        if(data.CountryId == 101){
+                                                                           $(".user_idistrictid_div").show();
+                                                                            $(".user_iTalukaID_div").show();
+                                                                            var selectize = $("select#user-idistrictcaid")[0].selectize;
+                                                                            selectize.clear();
+                                                                            var selectize = $("select#user-italukacaid")[0].selectize;
+                                                                            selectize.clear();
+                                                                        }else{
+                                                                            $(".user_idistrictid_div").hide();
+                                                                            var selectize = $("select#user-idistrictcaid")[0].selectize;
+                                                                            selectize.clear();
+                                                                            selectize.setValue(1);
+                                                                            $(".user_iTalukaID_div").hide();
+                                                                            var selectize = $("select#user-italukacaid")[0].selectize;
+                                                                            selectize.clear();
+                                                                            selectize.setValue(1);
+                                                                        }
                                                             }
                                 });'
         ]
@@ -196,6 +214,12 @@ if ($show) {
         ]
 
     ); ?>
+    <?php $hide = '';
+    if ($model->iCountryCAId != 101) {
+        $hide = "display: none; ";
+    } ?>
+    <div class="user_idistrictid_div"
+         style="<?= $hide ?>">
     <?= $form->field($model, 'iDistrictCAID', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -206,6 +230,9 @@ if ($show) {
             'prompt' => 'District'
         ]
     ); ?>
+    </div>
+    <div class="box user_iTalukaID_div"
+         style="<?= $hide ?>">
     <?= $form->field($model, 'iTalukaCAID', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -216,6 +243,7 @@ if ($show) {
             'prompt' => 'Taluka'
         ]
     ); ?>
+    </div>
     <?= $form->field($model, 'vAreaNameCA', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -337,6 +365,21 @@ if ($show) {
     $this->registerJs('
           selectboxClassWise("clsfamily");
          ');
+    if ($model->iCountryCAId == 101) {
+        if ($model->iDistrictCAID == 1) {
+            $this->registerJs('
+                    var selectize = $("select#user-idistrictcaid")[0].selectize;
+                    selectize.clear();
+                 ');
+        }
+        if ($model->iTalukaCAID == 1) {
+            $this->registerJs('
+                    var selectize = $("select#user-italukacaid")[0].selectize;
+                    selectize.clear();
+                 ');
+        }
+
+    }
 } else {
     ?>
     
@@ -361,10 +404,17 @@ if ($show) {
             <dd><?= CommonHelper::setInputVal($model->stateNameCA->vStateName, 'text') ?></dd>
             <dt>City</dt>
             <dd><?= CommonHelper::setInputVal($model->cityNameCA->vCityName, 'text') ?></dd>
+            <?php $hide = '';
+            if ($model->iCountryCAId != 101) {
+                $hide = "display: none; ";
+            } ?>
+
+            <div style="<?= $hide ?>">
             <dt>Distict</dt>
             <dd><?= CommonHelper::setInputVal($model->districtNameCA->vName, 'text') ?></dd>
             <dt>Taluks</dt>
             <dd><?= CommonHelper::setInputVal($model->talukaNameCA->vName, 'text') ?></dd>
+            </div>
             <dt>Area Name</dt>
             <dd><?= CommonHelper::setInputVal($model->vAreaName, 'text') ?></dd>
             <dt>Native Place</dt>

@@ -220,6 +220,13 @@ use yii\helpers\ArrayHelper;
                                                                         selectize.clearOptions();
 
                                                                         if(data.CountryId == 101){
+                                                                            $(".user_idistrictid_div").show();
+                                                                            $(".user_iTalukaID_div").show();
+                                                                            var selectize = $("select#user-idistrictid")[0].selectize;
+                                                                            selectize.clear();
+                                                                            var selectize = $("select#user-italukaid")[0].selectize;
+                                                                            selectize.clear();
+                                                                        }else{
                                                                             $(".user_idistrictid_div").hide();
                                                                             var selectize = $("select#user-idistrictid")[0].selectize;
                                                                             selectize.clear();
@@ -228,13 +235,6 @@ use yii\helpers\ArrayHelper;
                                                                             var selectize = $("select#user-italukaid")[0].selectize;
                                                                             selectize.clear();
                                                                             selectize.setValue(1);
-                                                                        }else{
-                                                                            $(".user_idistrictid_div").show();
-                                                                            $(".user_iTalukaID_div").show();
-                                                                            var selectize = $("select#user-idistrictid")[0].selectize;
-                                                                            selectize.clear();
-                                                                            var selectize = $("select#user-italukaid")[0].selectize;
-                                                                            selectize.clear();
                                                                         }
                                                             }
                                 });'
@@ -333,7 +333,7 @@ use yii\helpers\ArrayHelper;
                   </div>
                 </div>
                   <div class="box user_idistrictid_div"
-                       style="<?php if ($model->iCountryId == 101) { ?> display: none; <?php } ?>">
+                       style="<?php if ($model->iCountryId != 101) { ?> display: none; <?php } ?>">
                   <div class="small-col">
                     <div class="required1"><span class="text-danger">*</span></div>
                   </div>
@@ -352,7 +352,7 @@ use yii\helpers\ArrayHelper;
                   </div>
                 </div>
                   <div class="box user_iTalukaID_div"
-                       style="<?php if ($model->iCountryId == 101) { ?> display: none; <?php } ?>">
+                       style="<?php if ($model->iCountryId != 101) { ?> display: none; <?php } ?>">
                   <div class="small-col">
                     <div class="required1"><span class="text-danger">*</span></div>
                   </div>
@@ -419,6 +419,21 @@ Koregaon Park',
   </div>
 </main>
 <?php
+if ($model->iCountryId == 101) {
+    if ($model->iDistrictID == 1) {
+        $this->registerJs('
+                    var selectize = $("select#user-idistrictid")[0].selectize;
+                    selectize.clear();
+                 ');
+    }
+    if ($model->iTalukaID == 1) {
+        $this->registerJs('
+                    var selectize = $("select#user-italukaid")[0].selectize;
+                    selectize.clear();
+                 ');
+    }
+
+}
   $this->registerJs('
     $("#form-register1").on("submit",function(e){
       var ireligion_id = $("#user-ireligion_id").val();

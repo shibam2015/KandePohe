@@ -433,7 +433,7 @@ class SiteController extends Controller
                     $model->completed_step = $model->setCompletedStep('2');
                     $AreaName = Yii::$app->request->post('User')['vAreaName'];
                     //$iDistrictID = Yii::$app->request->post('User')['iDistrictID'];
-                    if (Yii::$app->request->post('User')['iCountryId'] == 101) {
+                    if (Yii::$app->request->post('User')['iCountryId'] != 101) {
                         $model->iDistrictID = 1;
                         $model->iTalukaID = 1;
                     }
@@ -1091,7 +1091,7 @@ class SiteController extends Controller
                     }
 
                     $model->completed_step = $model->setCompletedStep('5');
-                    if (Yii::$app->request->post('User')['iCountryCAId'] == 101) {
+                    if (Yii::$app->request->post('User')['iCountryCAId'] != 101) {
                         $model->iDistrictCAID = 1;
                         $model->iTalukaCAID = 1;
                     }

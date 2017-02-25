@@ -515,15 +515,16 @@ class UserController extends Controller
                 $model->iCountryId = Yii::$app->request->post('User')['iCountryId'];
                 $model->iStateId = Yii::$app->request->post('User')['iStateId'];
                 $model->iCityId = Yii::$app->request->post('User')['iCityId'];
-                $model->iDistrictID = Yii::$app->request->post('User')['iDistrictID'];
-                if (Yii::$app->request->post('User')['iCountryId'] == 101) {
+
+                if (Yii::$app->request->post('User')['iCountryId'] != 101) {
                     $model->iDistrictID = 1;
                     $model->iTalukaID = 1;
                 } else {
                     $model->iTalukaID = Yii::$app->request->post('User')['iTalukaID'];
-                    $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
+                    $model->iDistrictID = Yii::$app->request->post('User')['iDistrictID'];
                 }
 
+                $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
 
                 $CityName = $model->cityName->vCityName;
                 $StateName = $model->stateName->vStateName;
@@ -685,8 +686,15 @@ class UserController extends Controller
                 $model->iCountryCAId = Yii::$app->request->post('User')['iCountryCAId'];
                 $model->iStateCAId = Yii::$app->request->post('User')['iStateCAId'];
                 $model->iCityCAId = Yii::$app->request->post('User')['iCityCAId'];
-                $model->iDistrictCAID = Yii::$app->request->post('User')['iDistrictCAID'];
-                $model->iTalukaCAID = Yii::$app->request->post('User')['iTalukaCAID'];
+                if (Yii::$app->request->post('User')['iCountryCAId'] != 101) {
+                    $model->iDistrictCAID = 1;
+                    $model->iTalukaCAID = 1;
+                } else {
+                    $model->iDistrictCAID = Yii::$app->request->post('User')['iDistrictCAID'];
+                    $model->iTalukaCAID = Yii::$app->request->post('User')['iTalukaCAID'];
+                }
+                /*$model->iDistrictCAID = Yii::$app->request->post('User')['iDistrictCAID'];
+                $model->iTalukaCAID = Yii::$app->request->post('User')['iTalukaCAID'];*/
                 $model->vAreaNameCA = Yii::$app->request->post('User')['vAreaNameCA'];
                 $model->vNativePlaceCA = Yii::$app->request->post('User')['vNativePlaceCA'];
                 $model->vParentsResiding = Yii::$app->request->post('User')['vParentsResiding'];
