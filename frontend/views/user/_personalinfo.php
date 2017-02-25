@@ -418,6 +418,7 @@ use yii\helpers\Url;
             if ($model->iCountryId == 101) {
                 $hide = "display: none; ";
             } ?>
+
             <div style="<?= $hide ?>">
             <dt>Distict</dt>
             <dd><?= $model->districtName->vName; ?></dd>
