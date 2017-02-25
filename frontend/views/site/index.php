@@ -54,7 +54,7 @@ use yii\jui\DatePicker;
                                         <li><a href="user/my-profile" title="Profile">Profile</a></li>
                                     <?php } else { ?>
                                         <li><a href="#" title="Login" data-toggle="modal" data-target="#login"
-                                               id="login_button">Login</a>
+                                               class="login_button">Login</a>
                                         </li>
                                         <li><a href="#" title="Sign up Free" data-toggle="modal"
                                                data-target="#myModalNorm"
@@ -140,9 +140,17 @@ use yii\jui\DatePicker;
                                 ]
                             )->label(false)->error(false); ?>
                         </div>
+                        <?php if (!Yii::$app->user->isGuest) { ?>
+                            <div class="col-sm-4 col-md-2">
+                                <?= Html::submitButton('SEARCH', ['class' => 'btn btn-primary mrg-tp-10 ', 'name' => 'button']) ?>
+                            </div>
+                        <?php } else { ?>
                         <div class="col-sm-4 col-md-2">
-                            <?= Html::submitButton('SEARCH', ['class' => 'btn btn-primary mrg-tp-10 ', 'name' => 'button']) ?>
+                            <a href="#" title="Login" data-toggle="modal" data-target="#login"
+                               class="btn btn-primary mrg-tp-10 login_button"
+                               id="">Seach</a>
                         </div>
+                        <?php } ?>
                         <?php ActiveForm::end(); ?>
                     </div>
                 </div>
@@ -748,7 +756,7 @@ FREE">[Register FREE]</a>
     $("#suf").click(function(){
     $("#form-signup")[0].reset();
     });
-    $("#login_button").click(function(){
+    $(".login_button").click(function(){
     $("#login-form")[0].reset();
     });
     $("#form-search").on("submit",function(e){
