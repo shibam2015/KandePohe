@@ -218,24 +218,6 @@ use yii\helpers\Url;
                                                                         selectize.clear();
                                                                         selectize.clearOptions();
 
-                                                                         if(data.CountryId == 101){
-                                                                            $(".user_idistrictid_div").hide();
-                                                                            var selectize = $("select#user-idistrictid")[0].selectize;
-                                                                            selectize.clear();
-                                                                            selectize.setValue(1);
-                                                                            $(".user_iTalukaID_div").hide();
-                                                                            var selectize = $("select#user-italukaid")[0].selectize;
-                                                                            selectize.clear();
-                                                                            selectize.setValue(1);
-                                                                        }else{
-                                                                            $(".user_idistrictid_div").show();
-                                                                            $(".user_iTalukaID_div").show();
-                                                                            var selectize = $("select#user-idistrictid")[0].selectize;
-                                                                            selectize.clear();
-                                                                            var selectize = $("select#user-italukaid")[0].selectize;
-                                                                            selectize.clear();
-                                                                        }
-
                                                             }
                                 });'
             ]
@@ -305,12 +287,7 @@ use yii\helpers\Url;
             $cityList,
             ['id' => 'iCityId', 'class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'City']
         ); ?>
-        <?php $hide = '';
-        if ($model->iCountryId == 101) {
-            $hide = "display: none; ";
-        } ?>
-        <div class="user_idistrictid_div"
-             style="<?= $hide ?>">
+
         <?= $form->field($model, 'iDistrictID', [
             'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -319,9 +296,7 @@ use yii\helpers\Url;
             ArrayHelper::map(CommonHelper::getDistrict(), 'iDistrictID', 'vName'),
             ['class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'District']
         ); ?>
-        </div>
-        <div class="box user_iTalukaID_div"
-             style="<?= $hide ?>">
+
         <?= $form->field($model, 'iTalukaID', [
             'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -330,7 +305,7 @@ use yii\helpers\Url;
             ArrayHelper::map(CommonHelper::getTaluka(), 'iTalukaID', 'vName'),
             ['class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'Taluka']
         ); ?>
-        </div>
+
         <?= $form->field($model, 'vAreaName', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -364,11 +339,11 @@ use yii\helpers\Url;
         $(".genderV").on("change",function(e){
           var genderVal = $(this).val();
           if(genderVal == "FEMALE") {
-            $("#DOB").datepicker("option","maxDate","'.date('Y-m-d',strtotime('-18 year')).'");
+            $("#DOB").datepicker("option","maxDate","' . date('Y-m-d', strtotime('-18 year')) . '");
             $("#DOB").datepicker("option","yearRange","-70:-18");
           }
           else {
-            $("#DOB").datepicker("option","maxDate","'.date('Y-m-d',strtotime('-21 year')).'");
+            $("#DOB").datepicker("option","maxDate","' . date('Y-m-d', strtotime('-21 year')) . '");
             $("#DOB").datepicker("option","yearRange","-70:-21");
           }
         });
@@ -378,13 +353,16 @@ use yii\helpers\Url;
 
         <dl class="dl-horizontal">
             <dt>Name</dt>
-            <dd><?= $model->FullName; ?><dd>
+            <dd><?= $model->FullName; ?>
+            <dd>
             <dt>Profile created by</dt>
             <dd><?= $model->Profile_created_for; ?></dd>
             <dt>Date Of Birth</dt>
-            <dd><?= $model->DOB; ?><dd>
+            <dd><?= $model->DOB; ?>
+            <dd>
             <dt>Age</dt>
-            <dd><?= CommonHelper::getAge($model->DOB);?> years<dd>
+            <dd><?= CommonHelper::getAge($model->DOB); ?> years
+            <dd>
             <dt>Gender</dt>
             <dd><?= $model->Gender ?></dd>
             <!--  <dt>Mobile</dt>
@@ -414,16 +392,10 @@ use yii\helpers\Url;
             <dd><?= $model->stateName->vStateName; ?></dd>
             <dt>City</dt>
             <dd><?= $model->cityName->vCityName; ?></dd>
-            <?php $hide = '';
-            if ($model->iCountryId == 101) {
-                $hide = "display: none; ";
-            } ?>
-            <div style="<?= $hide ?>">
             <dt>Distict</dt>
             <dd><?= $model->districtName->vName; ?></dd>
             <dt>Taluks</dt>
             <dd><?= $model->talukaName->vName; ?></dd>
-            </div>
             <dt>Area Name</dt>
             <dd><?= $model->vAreaName ?></dd>
 

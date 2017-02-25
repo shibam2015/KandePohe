@@ -121,7 +121,8 @@ class UserController extends Controller
         return $PERCENTAGE;
     }
 
-    public function beforeAction($action) {
+    public function beforeAction($action)
+    {
         //$this->enableCsrfValidation = false;
         return parent::beforeAction($action);
     }
@@ -240,7 +241,7 @@ class UserController extends Controller
                 #echo count($PreferencesPersonal);exit;
                 # My Preferences End
                 $TotalInboxCount = Mailbox::getUnreadMailCount($Id);
-                return $this->render('dashboard',[
+                return $this->render('dashboard', [
                     'model' => $model,
                     'VER_ARRAY' => $VER_ARRAY,
                     'type' => $type,
@@ -255,10 +256,10 @@ class UserController extends Controller
                     'PreferencesPersonal' => $PreferencesPersonal,
                     'TotalInboxCount' => $TotalInboxCount,
                 ]);
-            }else{
+            } else {
                 return $this->redirect(Yii::getAlias('@web'));
             }
-        }else{
+        } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
     }
@@ -279,7 +280,7 @@ class UserController extends Controller
                         $PIN = CommonHelper::generateNumericUniqueToken(4);
                         $model->pin_email_vaerification = $PIN;
                         $model->pin_email_time = $TimeOut;
-                        $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->FullName, "PIN" => $PIN,'MINUTES'=> Yii::$app->params['timePinValidate']);
+                        $MAIL_DATA = array("EMAIL" => $model->email, "EMAIL_TO" => $model->email, "NAME" => $model->FullName, "PIN" => $PIN, 'MINUTES' => Yii::$app->params['timePinValidate']);
                         MailHelper::SendMail('EMAIL_VERIFICATION_PIN', $MAIL_DATA);
                     }
                     if ($model->ePhoneVerifiedStatus == 'No' && $model->pin_phone_vaerification == 0) {
@@ -296,7 +297,7 @@ class UserController extends Controller
                     #echo "<br> *** 4 ***";
                     $model->completed_step = $model->setCompletedStep('7');
                     if ($model->save($model)) {
-                      #  echo "<br> *** 5 ***";exit;
+                        #  echo "<br> *** 5 ***";exit;
                         $this->redirect(['site/verification']);
                     }
                 }
@@ -489,7 +490,7 @@ class UserController extends Controller
         $popup = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
-            if(Yii::$app->request->post('save')){
+            if (Yii::$app->request->post('save')) {
                 # $NewMobileNo = Yii::$app->request->post('User')['Mobile'];
                 # $OldMobileNo = $model->Mobile;
                 $model->First_Name = Yii::$app->request->post('User')['First_Name'];
@@ -516,14 +517,8 @@ class UserController extends Controller
                 $model->iStateId = Yii::$app->request->post('User')['iStateId'];
                 $model->iCityId = Yii::$app->request->post('User')['iCityId'];
                 $model->iDistrictID = Yii::$app->request->post('User')['iDistrictID'];
-                if (Yii::$app->request->post('User')['iCountryId'] == 101) {
-                    $model->iDistrictID = 1;
-                    $model->iTalukaID = 1;
-                } else {
-                    $model->iTalukaID = Yii::$app->request->post('User')['iTalukaID'];
-                    $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
-                }
-
+                $model->iTalukaID = Yii::$app->request->post('User')['iTalukaID'];
+                $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
 
                 $CityName = $model->cityName->vCityName;
                 $StateName = $model->stateName->vStateName;
@@ -535,7 +530,7 @@ class UserController extends Controller
                 #End Second Step
 
 
-                if($model->validate()){
+                if ($model->validate()) {
                     #if ($NewMobileNo != $OldMobileNo) {
                     /*$TimeOut = CommonHelper::getDateTimeToString(CommonHelper::getTime());
                     $PIN_P = CommonHelper::generateNumericUniqueToken(4);
@@ -614,7 +609,7 @@ class UserController extends Controller
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
-            if(Yii::$app->request->post('save')){
+            if (Yii::$app->request->post('save')) {
                 $model->iEducationLevelID = Yii::$app->request->post('User')['iEducationLevelID'];
                 $model->iEducationFieldID = Yii::$app->request->post('User')['iEducationFieldID'];
                 $model->iWorkingWithID = Yii::$app->request->post('User')['iWorkingWithID'];
@@ -643,7 +638,7 @@ class UserController extends Controller
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
-            if(Yii::$app->request->post('save')){
+            if (Yii::$app->request->post('save')) {
                 $model->iHeightID = Yii::$app->request->post('User')['iHeightID'];
                 $model->vSkinTone = Yii::$app->request->post('User')['vSkinTone'];
                 $model->vBodyType = Yii::$app->request->post('User')['vBodyType'];
@@ -652,7 +647,7 @@ class UserController extends Controller
                 $model->vSpectaclesLens = Yii::$app->request->post('User')['vSpectaclesLens'];
                 $model->vDiet = Yii::$app->request->post('User')['vDiet'];
                 $model->weight = Yii::$app->request->post('User')['weight'];
-                if($model->validate()){
+                if ($model->validate()) {
                     $model->completed_step = $model->setCompletedStep('4');
                     $model->save();
                     $show = false;
@@ -675,7 +670,7 @@ class UserController extends Controller
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
-            if(Yii::$app->request->post('save')){
+            if (Yii::$app->request->post('save')) {
                 $model->iFatherStatusID = Yii::$app->request->post('User')['iFatherStatusID'];
                 $model->iFatherWorkingAsID = Yii::$app->request->post('User')['iFatherWorkingAsID'];
                 $model->iMotherStatusID = Yii::$app->request->post('User')['iMotherStatusID'];
@@ -709,8 +704,7 @@ class UserController extends Controller
 
         if ($show) {
             return $this->actionRenderAjax($model, '_family', true);
-        }
-        else {
+        } else {
             return $this->actionRenderAjax($model, '_family', false);
         }
     }
@@ -748,7 +742,7 @@ class UserController extends Controller
         $show = false;
         if (Yii::$app->request->post() && (Yii::$app->request->post('cancel') == '0' || Yii::$app->request->post('save'))) {
             $show = true;
-            if(Yii::$app->request->post('save')){
+            if (Yii::$app->request->post('save')) {
                 $show = false;
 
                 $CurrDate = CommonHelper::getTime();
@@ -808,7 +802,6 @@ class UserController extends Controller
                     }
                 }
                 $PartnersGotra = PartnersGotra::findAllByUserId($Id);
-
 
 
                 $RaashiID = Yii::$app->request->post('PartnersRaashi')['raashi_id'];
@@ -1813,6 +1806,7 @@ class UserController extends Controller
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
         return json_encode($return);
     }
+
     public function actionGetCoverPhotoFromPhoto($position = '')
     {
         $id = Yii::$app->user->identity->id;
@@ -2068,7 +2062,7 @@ class UserController extends Controller
                         $model->save();
                         $model->phone_pin = '';*/
                         $show = false;
-                    }else{
+                    } else {
                         $temp['Error'] = 1;
                     }
                 }
@@ -2080,9 +2074,10 @@ class UserController extends Controller
         }
         //$model = User::findOne($id);
         //echo CommonHelper::getDateTimeToString(CommonHelper::getTime());
-        list($temp['StartTime'],$temp['RemainingTime']) = CommonHelper::getTimeDifference($model->pin_phone_time);
-        return $this->actionRenderAjax($model, '_verificationphone', $show, $popup,$flag,$temp);
+        list($temp['StartTime'], $temp['RemainingTime']) = CommonHelper::getTimeDifference($model->pin_phone_time);
+        return $this->actionRenderAjax($model, '_verificationphone', $show, $popup, $flag, $temp);
     }
+
     public function actionPhoneNumberChange() # For Phone Number Change : VS
     {
         $id = Yii::$app->user->identity->id;
@@ -2169,8 +2164,8 @@ class UserController extends Controller
                 $temp['Status'] = $Status;
                 $temp['Message'] = $Message;
                 $popup = true;
-                if($Status!=''){
-                    list($temp['StartTime'],$temp['RemainingTime']) = CommonHelper::getTimeDifference($model->pin_phone_time);
+                if ($Status != '') {
+                    list($temp['StartTime'], $temp['RemainingTime']) = CommonHelper::getTimeDifference($model->pin_phone_time);
                 }
             } else {
                 $popup = false;
@@ -3267,41 +3262,42 @@ class UserController extends Controller
     {
         unlink(Yii::$app->request->post('ImagePath'));
     }
+
     public function actionProfilePhotoRemove()
     {
         $Id = Yii::$app->user->identity->id;
         $UserModel = User::findOne($Id);
         $ProPic = $UserModel->propic;
-        if($ProPic!=''){
+        if ($ProPic != '') {
             $UserPhotoSizeArray = Yii::$app->params['sizeUserPhoto'];
             $ProfilePhotoPath = CommonHelper::getUserUploadFolder(3, $Id);
             $DeletePhotoFromFolder = 1;
             #list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PROFILE_PHOTO_DELETE');
-            foreach($UserPhotoSizeArray as $SizeKey=>$SizeValue){
-                if(!unlink($ProfilePhotoPath.$SizeValue.$ProPic)){
+            foreach ($UserPhotoSizeArray as $SizeKey => $SizeValue) {
+                if (!unlink($ProfilePhotoPath . $SizeValue . $ProPic)) {
                     $DeletePhotoFromFolder = 0;
                 }
             }
-            if($DeletePhotoFromFolder){
+            if ($DeletePhotoFromFolder) {
                 $UserModel->propic = '';
                 if ($UserModel->save()) {
                     $PG = new UserPhotos();
                     $PG->updateIsProfilePhoto($Id);
                     list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PROFILE_PHOTO_DELETE');
-                }else{
+                } else {
                     list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PROFILE_PHOTO_DELETE');
                 }
-            }else{
+            } else {
                 $DeletePhotoFromFolder = 0;
                 list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PROFILE_PHOTO_DELETE');
             }
-        }else{
+        } else {
             $DeletePhotoFromFolder = 0;
             list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('W', 'PROFILE_PHOTO_DELETE');
         }
         $ProfilePhoto = CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . '', 200, '', 'Yes');
         $ProfilePhotoThumb = CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "30" . '', 200, '', 'Yes');
-        $return = array('DeletePhototStatus'=>$DeletePhotoFromFolder,'STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'ProfilePhoto' => $ProfilePhoto, 'ProfilePhotoThumb' => $ProfilePhotoThumb);
+        $return = array('DeletePhototStatus' => $DeletePhotoFromFolder, 'STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'ProfilePhoto' => $ProfilePhoto, 'ProfilePhotoThumb' => $ProfilePhotoThumb);
         return json_encode($return);
 
     }
