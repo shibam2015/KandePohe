@@ -218,6 +218,24 @@ use yii\helpers\ArrayHelper;
                                                                          var selectize = $("select#iCityId")[0].selectize;
                                                                         selectize.clear();
                                                                         selectize.clearOptions();
+
+                                                                        if(data.CountryId == 101){
+                                                                            $(".user_idistrictid_div").hide();
+                                                                            var selectize = $("select#user-idistrictid")[0].selectize;
+                                                                            selectize.clear();
+                                                                            selectize.setValue(1);
+                                                                            $(".user_iTalukaID_div").hide();
+                                                                            var selectize = $("select#user-italukaid")[0].selectize;
+                                                                            selectize.clear();
+                                                                            selectize.setValue(1);
+                                                                     }else{
+                                                                        $(".user_idistrictid_div").show();
+                                                                        $(".user_iTalukaID_div").show();
+                                                                        var selectize = $("select#user-idistrictid")[0].selectize;
+                                                                        selectize.clear();
+                                                                        var selectize = $("select#user-italukaid")[0].selectize;
+                                                                        selectize.clear();
+                                                                     }
                                                             }
                                 });'
                           ]
@@ -314,7 +332,8 @@ use yii\helpers\ArrayHelper;
                     <a href="#" data-toggle="tooltip" data-placement="right" title="Mention Your City"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21','height' => 21,'alt' => 'help']); ?></a>
                   </div>
                 </div>
-                <div class="box">
+                  <div class="box user_idistrictid_div"
+                       style="<?php if ($model->iCountryId == 101) { ?> display: none; <?php } ?>">
                   <div class="small-col">
                     <div class="required1"><span class="text-danger">*</span></div>
                   </div>
@@ -323,9 +342,8 @@ use yii\helpers\ArrayHelper;
                       <?= $form->field($model, 'iDistrictID')->dropDownList(
                           ArrayHelper::map(CommonHelper::getDistrict(), 'iDistrictID', 'vName'),
                           ['class' => 'demo-default select-beast',
-                              'prompt' => 'District'
+                              'prompt' => 'District',
                           ]
-
                       )->label(false)->error(false);?>
                     </div>
                   </div>
@@ -333,7 +351,8 @@ use yii\helpers\ArrayHelper;
                     <a href="#" data-toggle="tooltip" data-placement="right" title="Mention Your District"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21','height' => 21,'alt' => 'help']); ?></a>
                   </div>
                 </div>
-                <div class="box">
+                  <div class="box user_iTalukaID_div"
+                       style="<?php if ($model->iCountryId == 101) { ?> display: none; <?php } ?>">
                   <div class="small-col">
                     <div class="required1"><span class="text-danger">*</span></div>
                   </div>

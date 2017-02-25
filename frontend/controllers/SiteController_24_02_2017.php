@@ -169,8 +169,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
 
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
-        {
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
 
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
@@ -254,7 +253,8 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionRegister() {
+    public function actionRegister()
+    {
         $model = new User;
         $model->scenario = User::SCENARIO_REGISTER;
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
@@ -263,14 +263,14 @@ class SiteController extends Controller
             Yii::$app->end();
         }
 
-        if ($model->load(Yii::$app->request->post()) ) {
+        if ($model->load(Yii::$app->request->post())) {
             //get verify response data
             $password = $model->password_hash;
             $email = $model->email;
-            $model->password_hash=$model->setPassword($password);
-            $model->repeat_password=$model->password_hash;
-            $model->toc=$model->toc[0];
-            $model->status= 1;
+            $model->password_hash = $model->setPassword($password);
+            $model->repeat_password = $model->password_hash;
+            $model->toc = $model->toc[0];
+            $model->status = 1;
             $region_id = $model->iReligion_ID;
             #$U_R_ID = $model->generateUniqueRandomNumber(9);
             $U_R_ID = CommonHelper::generateUniqueRandomNumber(9);
@@ -285,16 +285,16 @@ class SiteController extends Controller
             /*$model->save();
             var_dump($model->errors);
             die();*/
-            if($model->save()){
-                $OUTPUT ='';
+            if ($model->save()) {
+                $OUTPUT = '';
                 #$OUTPUT ='';
                 $EMAIL_ID = $model->email;
-                $OUTPUT .='
+                $OUTPUT .= '
                           <div class="row">
                             <div class="col-sm-10 col-sm-offset-1 text-center">
-                              <h4 class="mrg-bt-30 text-dark">'.$EMAIL_ID.'</h4>
+                              <h4 class="mrg-bt-30 text-dark">' . $EMAIL_ID . '</h4>
                               <h4 class="mrg-bt-30"><span class="text-success"><strong>&#10003;</strong></span>
-                              A confirmation email was sent to '.$EMAIL_ID.'
+                              A confirmation email was sent to ' . $EMAIL_ID . '
                               To confirm your account, please click the link in the message.
                               If you do not see the email in your Inbox, please check your Spam box.
                             </h4>
@@ -304,7 +304,7 @@ class SiteController extends Controller
                 #$activation_link = Yii::$app->urlManager->createAbsoluteUrl(['site/activationaccount','id'=> base64_encode($model->id)]);
                 $activation_link = '';
                 $activation_link .= Yii::$app->urlManager->createAbsoluteUrl(['site/activeaccount']);
-                $activation_link .= "?id=".base64_encode($model->id);
+                $activation_link .= "?id=" . base64_encode($model->id);
                 #$activation_link1 = Yii::$app->urlManager->createUrl(['site/activeaccount']);
                 #$activation_link1 = $activation_link1."?id=".base64_encode($model->id);
                 #$OUTPUT .= $activation_link1;
@@ -323,17 +323,16 @@ class SiteController extends Controller
 
                 }
 
-            }
-            else {
+            } else {
                 $this->goHome();
 
             }
 
 
-        }else{
-            $OUTPUT ='';
+        } else {
+            $OUTPUT = '';
             #$OUTPUT1 ='';
-            $OUTPUT .='
+            $OUTPUT .= '
                           <div class="row">
                             <div class="col-sm-10 col-sm-offset-1 text-center">
                               <h4 class="mrg-bt-30 text-dark"></h4>
@@ -359,22 +358,19 @@ class SiteController extends Controller
         $model = new PasswordResetRequestForm();
         //$model->scenario = User::SCENARIO_SFP;
         $commonhelper = new CommonHelper();
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))
-        {
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $returnData = ActiveForm::validate($model);
 
-            if(Yii::$app->request->post('vStatus')==1 && count($returnData)==0){
+            if (Yii::$app->request->post('vStatus') == 1 && count($returnData) == 0) {
                 if ($model->sendEmail()) {
                     $returnData['status'] = 1;
                     $returnData['email'] = Yii::$app->request->post('PasswordResetRequestForm')['email'];
-                }
-                else {
+                } else {
                     $returnData['status'] = 0;
                 }
 
-            }
-            else {
+            } else {
                 $returnData['status'] = 0;
             }
             return $returnData;
@@ -397,46 +393,43 @@ class SiteController extends Controller
         } catch (InvalidParamException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
-        if($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()){
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
             Yii::$app->session->setFlash('success', 'New password was saved.');
 
             return $this->redirect(Yii::$app->homeUrl . '?ref=cps');
         }
-        return $this->render('reset-password',[
+        return $this->render('reset-password', [
             'model' => $model
         ]);
 
     }
 
-    public function actionActiveaccount($id){
+    public function actionActiveaccount($id)
+    {
         $id = base64_decode($id);
-        if($model = User::findOne($id)){
+        if ($model = User::findOne($id)) {
             $model->scenario = User::SCENARIO_FIRST_VERIFICATION;
             $model->eFirstVerificationMailStatus = 'YES';
-            if($model->save($model)){
+            if ($model->save($model)) {
                 $this->redirect(['site/basic-details']);
-            }else{
+            } else {
                 #$this->redirect('index.php');
             }
-        }else{
+        } else {
             #$this->redirect('index.php');
         }
 
     }
-    public function actionBasicDetails($id='')
+
+    public function actionBasicDetails($id = '')
     {
         if (!Yii::$app->user->isGuest) {
             $id = Yii::$app->user->identity->id;
-            if($model = User::findOne($id)){
+            if ($model = User::findOne($id)) {
                 $model->scenario = User::SCENARIO_REGISTER1;
-                if($model->load(Yii::$app->request->post())){
+                if ($model->load(Yii::$app->request->post())) {
                     $model->completed_step = $model->setCompletedStep('2');
                     $AreaName = Yii::$app->request->post('User')['vAreaName'];
-                    //$iDistrictID = Yii::$app->request->post('User')['iDistrictID'];
-                    if (Yii::$app->request->post('User')['iCountryId'] == 101) {
-                        $model->iDistrictID = 1;
-                        $model->iTalukaID = 1;
-                    }
                     $CityName = $model->cityName->vCityName;
                     $StateName = $model->stateName->vStateName;
                     $CountryName = $model->countryName->vCountryName;
@@ -444,68 +437,68 @@ class SiteController extends Controller
                     $LatLongArray = CommonHelper::getLatLong($Address);
                     $model->latitude = $LatLongArray['latitude'];
                     $model->longitude = $LatLongArray['longitude'];
-                    if($model->save()){
+                    if ($model->save()) {
                         $this->redirect(['site/education-occupation']);
                     }
                 }
-                return $this->render('register1',[
+                return $this->render('register1', [
                     'model' => $model,
                     'CurrentStep' => 2,
                 ]);
-            }else{
+            } else {
                 return $this->redirect(Yii::getAlias('@web'));
             }
-        }else{
+        } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
     }
 
 
-    public function actionEducationOccupation($id='')
+    public function actionEducationOccupation($id = '')
     {
         if (!Yii::$app->user->isGuest) {
             $id = Yii::$app->user->identity->id;
-            if($model = User::findOne($id)){
+            if ($model = User::findOne($id)) {
                 $model->scenario = User::SCENARIO_REGISTER2;
-                if($model->load(Yii::$app->request->post())){
+                if ($model->load(Yii::$app->request->post())) {
                     $model->completed_step = $model->setCompletedStep('3');
-                    if($model->save()){
+                    if ($model->save()) {
                         $this->redirect(['site/life-style']);
                     }
                 }
-                return $this->render('register2',[
+                return $this->render('register2', [
                     'model' => $model,
                     'CurrentStep' => 3,
                 ]);
 
-            }else{
+            } else {
                 return $this->redirect(Yii::getAlias('@web'));
             }
-        }else{
+        } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
     }
 
-    public function actionLifeStyle($id='')
+    public function actionLifeStyle($id = '')
     {
         if (!Yii::$app->user->isGuest) {
             $id = Yii::$app->user->identity->id;
-            if($model = User::findOne($id)){
+            if ($model = User::findOne($id)) {
                 $model->scenario = User::SCENARIO_REGISTER3;
-                if($model->load(Yii::$app->request->post())){
+                if ($model->load(Yii::$app->request->post())) {
                     $model->completed_step = $model->setCompletedStep('4');
-                    if($model->save()){
+                    if ($model->save()) {
                         $this->redirect(['site/about-family']);
                     }
                 }
-                return $this->render('register3',[
+                return $this->render('register3', [
                     'model' => $model,
                     'CurrentStep' => 4,
                 ]);
-            }else{
+            } else {
                 return $this->redirect(Yii::getAlias('@web'));
             }
-        }else{
+        } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
     }
@@ -1072,38 +1065,37 @@ class SiteController extends Controller
         }
     }
 
-    public function actionAboutFamily($id='')
+    public function actionAboutFamily($id = '')
     {
         if (!Yii::$app->user->isGuest) {
             #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
-            if($model = User::findOne($id)){
+            if ($model = User::findOne($id)) {
                 $model->scenario = User::SCENARIO_REGISTER4;
-                if($model->load(Yii::$app->request->post())){
+                if ($model->load(Yii::$app->request->post())) {
                     #echo "<pre>"; print_r($model->scenario);exit;
                     $vFamilyProperty_ARRAY = Yii::$app->request->post('User');
 
-                    if(is_array($vFamilyProperty_ARRAY['vFamilyProperty'])){
-                        $model->vFamilyProperty = implode(",",$vFamilyProperty_ARRAY['vFamilyProperty']);
-                    }
-                    else {
+                    if (is_array($vFamilyProperty_ARRAY['vFamilyProperty'])) {
+                        $model->vFamilyProperty = implode(",", $vFamilyProperty_ARRAY['vFamilyProperty']);
+                    } else {
                         $model->vFamilyProperty = '';
                     }
 
                     $model->completed_step = $model->setCompletedStep('5');
-                    if($model->save()){
+                    if ($model->save()) {
                         $this->redirect(['site/about-yourself']);
                     }
                 }
-                return $this->render('register4',[
+                return $this->render('register4', [
                     'model' => $model,
                     'CurrentStep' => 5,
                 ]);
 
-            }else{
+            } else {
                 return $this->redirect(Yii::getAlias('@web'));
             }
-        }else{
+        } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
 
@@ -1113,15 +1105,15 @@ class SiteController extends Controller
     {
         if (!Yii::$app->user->isGuest) {
             $id = Yii::$app->user->identity->id;
-            if($model = User::findOne($id)){
+            if ($model = User::findOne($id)) {
                 $tYourSelf_old = $model->tYourSelf;
                 $model->scenario = User::SCENARIO_REGISTER5;
-                if($model->load(Yii::$app->request->post())){
+                if ($model->load(Yii::$app->request->post())) {
                     $model->completed_step = $model->setCompletedStep('6');
                     if (strcmp($tYourSelf_old, $model->tYourSelf) !== 0) {
                         $model->eStatusInOwnWord = 'Pending';
                     }
-                    if($model->save()){
+                    if ($model->save()) {
                         $PhotoSection = \common\models\User::weightedCheck(7);
                         if ($PhotoSection || Yii::$app->user->identity->propic != '') {
                             $this->redirect(['user/photos']);
@@ -1130,30 +1122,31 @@ class SiteController extends Controller
                         }
                     }
                 }
-                return $this->render('register5',[
+                return $this->render('register5', [
                     'model' => $model,
                     'CurrentStep' => 6,
                     'ref' => $ref
                 ]);
-            }else{
+            } else {
                 return $this->redirect(Yii::getAlias('@web'));
             }
-        }else{
+        } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
 
     }
-    public function actionMyPhotos($id='')
+
+    public function actionMyPhotos($id = '')
     {
         if (!Yii::$app->user->isGuest) {
             #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
             #   $id = base64_decode($id);
-            if($model = User::findOne($id)){
+            if ($model = User::findOne($id)) {
 
                 $model->scenario = User::SCENARIO_REGISTER6;
-                $target_dir = Yii::getAlias('@web').'/uploads/';
-                if(Yii::$app->request->post()){
+                $target_dir = Yii::getAlias('@web') . '/uploads/';
+                if (Yii::$app->request->post()) {
                     if ($model->eEmailVerifiedStatus == 'No' && $model->pin_email_vaerification == '') {
                         $PIN = CommonHelper::generateNumericUniqueToken(4);
                         $model->pin_email_vaerification = $PIN;
@@ -1172,33 +1165,34 @@ class SiteController extends Controller
                         $this->redirect(['site/verification']);
                     }
                 }
-                if($model->propic !='')
-                    $model->propic = $target_dir.$model->propic;
-                return $this->render('register6',[
+                if ($model->propic != '')
+                    $model->propic = $target_dir . $model->propic;
+                return $this->render('register6', [
                     'model' => $model
                 ]);
-            }else{
+            } else {
                 return $this->redirect(Yii::getAlias('@web'));
             }
 
-        }else{
+        } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
 
     }
 
-    public function actionPhotoupload($id){
+    public function actionPhotoupload($id)
+    {
         $id = base64_decode($id);
 
-        if($model = User::findOne($id)){
+        if ($model = User::findOne($id)) {
             #echo "<pre>"; print_r(":hiiii");exit;
 
             $model->scenario = User::SCENARIO_REGISTER6;
             #if($model->load(Yii::$app->request->post())){
 
-            $target_dir = Yii::getAlias('@frontend') .'/web/uploads/';
+            $target_dir = Yii::getAlias('@frontend') . '/web/uploads/';
             $target_file = $target_dir . basename($_FILES["fileInput"]["name"]);
-            if ($_FILES['fileInput']['name'] !='') {
+            if ($_FILES['fileInput']['name'] != '') {
                 // Start
                 #$PHOTO_NAME = $generalfuncobj->photoUpload($iUserId,$_FILES['vPhotoCard'],$PATH,$URL,$VISITING_CARD_SIZE_ARRAY,'');
                 $CM_HELPER = new CommonHelper();
@@ -1224,18 +1218,18 @@ class SiteController extends Controller
             }
             #}
 
-        }else{
+        } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
     }
 
-    public function actionVerification($id='',$msg='')
+    public function actionVerification($id = '', $msg = '')
     {
         if (!Yii::$app->user->isGuest) {
             #$id = base64_decode($id);
             $id = Yii::$app->user->identity->id;
             #$id = base64_decode($id);
-            if($model = User::findOne($id)){
+            if ($model = User::findOne($id)) {
                 if ($model->eEmailVerifiedStatus == 'Yes' && Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes') {
                     $TempArray = explode(",", Yii::$app->user->identity->completed_step);
                     /*if (!in_array('-1', $TempArray)) {
@@ -1248,12 +1242,12 @@ class SiteController extends Controller
                 $model->scenario = User::SCENARIO_REGISTER7;
                 $model1 = User::findOne($id);
                 $model1->scenario = User::SCENARIO_REGISTER8;
-                if($model->load(Yii::$app->request->post())){
+                if ($model->load(Yii::$app->request->post())) {
                     #echo "<pre>";print_r(Yii::$app->request->post());echo "</pre>";
                     $USERARRAY = Yii::$app->request->post('User');
                     $PIN = $USERARRAY['email_pin'];
-                    if($PIN !=''){
-                        if($model->pin_email_vaerification == $PIN){
+                    if ($PIN != '') {
+                        if ($model->pin_email_vaerification == $PIN) {
                             $model->eEmailVerifiedStatus = 'Yes';
                             $model->completed_step = $model->setCompletedStep('9');
                             $model->save($model);
@@ -1263,30 +1257,30 @@ class SiteController extends Controller
                             return $this->render('register7', [
                                 'model' => $model
                             ]);
-                        }else{
+                        } else {
                             $model->email_verification_msg = 'Incorrect PIN. Please Enter Valid PIN.';
                             $model->error_class = 'error';
-                            return $this->render('register7',[
+                            return $this->render('register7', [
                                 'model' => $model
                             ]);
                             //Oops! Please ensure all fields are valid
                         }
                     }
                 }
-                if($msg !='') {
+                if ($msg != '') {
                     $model->email_verification_msg = $msg;
                     $model->error_class = 'success';
                 }
-                
-                return $this->render('register7',[
+
+                return $this->render('register7', [
                     'model' => $model,
                     'model1' => $model1
                 ]);
 
-            }else{
+            } else {
                 return $this->redirect(Yii::getAlias('@web'));
             }
-        }else{
+        } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
 
@@ -1298,7 +1292,7 @@ class SiteController extends Controller
         $STATUS = $MESSAGE = '';
         if (!Yii::$app->user->isGuest) {
             $id = Yii::$app->user->identity->id;
-            if($model = User::findOne($id)){
+            if ($model = User::findOne($id)) {
                 $model->scenario = User::SCENARIO_REGISTER6;
                 $PIN = CommonHelper::generateNumericUniqueToken(4);
                 $model->pin_email_vaerification = $PIN;
@@ -1312,16 +1306,17 @@ class SiteController extends Controller
                     }
                 }
 
-            }else{
+            } else {
                 return $this->redirect(Yii::getAlias('@web'));
             }
-        }else{
+        } else {
             return $this->redirect(Yii::getAlias('@web'));
         }
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE);
         return json_encode($return);
 
     }
+
     public function actionVerificationEmailPin()
     {
         $STATUS = $MESSAGE = '';

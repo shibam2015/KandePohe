@@ -50,6 +50,7 @@ class AjaxController extends \yii\web\Controller
         $id = Yii::$app->request->get('id');
         $posts = CommonHelper::getState($id);
         $data['state'] = $posts;
+        $data['CountryId'] = $id;
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return $data;
     }
