@@ -268,28 +268,6 @@ use yii\helpers\ArrayHelper;
 
                                                                         selectize.addOption(new_value_options);
                                                                         //selectize.setValue(iStateId);
-
-                                                                        var selectize = $("select#iCityCAId")[0].selectize;
-                                                                        selectize.clear();
-                                                                        selectize.clearOptions();
-
-                                                                         if(data.CountryId == 101){
-                                                                            $(".user_idistrictid_div").hide();
-                                                                            var selectize = $("select#user-idistrictcaid")[0].selectize;
-                                                                            selectize.clear();
-                                                                            selectize.setValue(1);
-                                                                            $(".user_iTalukaID_div").hide();
-                                                                            var selectize = $("select#user-italukacaid")[0].selectize;
-                                                                            selectize.clear();
-                                                                            selectize.setValue(1);
-                                                                        }else{
-                                                                            $(".user_idistrictid_div").show();
-                                                                            $(".user_iTalukaID_div").show();
-                                                                            var selectize = $("select#user-idistrictcaid")[0].selectize;
-                                                                            selectize.clear();
-                                                                            var selectize = $("select#user-italukacaid")[0].selectize;
-                                                                            selectize.clear();
-                                                                        }
                                                             }
 
                                                         });'
@@ -386,8 +364,7 @@ use yii\helpers\ArrayHelper;
                                            title="Mention Your City"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
                                     </div>
                                 </div>
-                                <div class="box user_idistrictid_div"
-                                     style="<?php if ($model->iCountryCAId == 101) { ?> display: none; <?php } ?>">
+                                <div class="box">
                                     <div class="small-col">
                                         <div class="required1"><span class="text-danger">*</span></div>
                                     </div>
@@ -406,8 +383,7 @@ use yii\helpers\ArrayHelper;
                                            title="Mention Your District"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
                                     </div>
                                 </div>
-                                <div class="box user_iTalukaID_div"
-                                     style="<?php if ($model->iCountryCAId == 101) { ?> display: none; <?php } ?>">
+                                <div class="box">
                                     <div class="small-col">
                                         <div class="required1"><span class="text-danger">*</span></div>
                                     </div>
@@ -610,7 +586,8 @@ Koregaon Park']) ?>
                                             <div class=""></div>
 
 					<span class="input input--akira input--filled input-textarea mrg-tp-10">
-                          <textarea class="input__field input__field--akira" cols="50" rows="5" name="User[vDetailRelative]" ><?= ($model->vDetailRelative)?></textarea>
+                          <textarea class="input__field input__field--akira" cols="50" rows="5"
+                                    name="User[vDetailRelative]"><?= ($model->vDetailRelative) ?></textarea>
                           <label class="input__label input__label--akira" for="input-22">
                               <span class="input__label-content input__label-content--akira">You can enter your relative surnames etc...</span>
                           </label>
@@ -671,15 +648,15 @@ $this->registerJs('
             $(".Paddress").fadeOut("fast");
     });
   function sameAsAboveAddress(){
-      var iCountryId = "'.$model->iCountryId.'";
-      var iStateId = "'.$model->iStateId .'";
-      var iCityId = "'.$model->iCityId .'";
-      var iDistrictID = "'.$model->iDistrictID .'";
-      var iTalukaID = "'.$model->iTalukaID .'";
-      var vAreaName = "'.$model->vAreaName .'";
+      var iCountryId = "' . $model->iCountryId . '";
+      var iStateId = "' . $model->iStateId . '";
+      var iCityId = "' . $model->iCityId . '";
+      var iDistrictID = "' . $model->iDistrictID . '";
+      var iTalukaID = "' . $model->iTalukaID . '";
+      var vAreaName = "' . $model->vAreaName . '";
 
       $.ajax({
-        url:"'.Url::to(['ajax/sameasaboveaddress']).'", 
+        url:"' . Url::to(['ajax/sameasaboveaddress']) . '",
         type: "post",
         dataType: "JSON",
         data: {

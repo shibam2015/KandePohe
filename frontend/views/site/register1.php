@@ -228,14 +228,14 @@ use yii\helpers\ArrayHelper;
                                                                             var selectize = $("select#user-italukaid")[0].selectize;
                                                                             selectize.clear();
                                                                             selectize.setValue(1);
-                                                                     }else{
-                                                                        $(".user_idistrictid_div").show();
-                                                                        $(".user_iTalukaID_div").show();
-                                                                        var selectize = $("select#user-idistrictid")[0].selectize;
-                                                                        selectize.clear();
-                                                                        var selectize = $("select#user-italukaid")[0].selectize;
-                                                                        selectize.clear();
-                                                                     }
+                                                                        }else{
+                                                                            $(".user_idistrictid_div").show();
+                                                                            $(".user_iTalukaID_div").show();
+                                                                            var selectize = $("select#user-idistrictid")[0].selectize;
+                                                                            selectize.clear();
+                                                                            var selectize = $("select#user-italukaid")[0].selectize;
+                                                                            selectize.clear();
+                                                                        }
                                                             }
                                 });'
                           ]

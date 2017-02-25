@@ -1091,6 +1091,11 @@ class SiteController extends Controller
                     }
 
                     $model->completed_step = $model->setCompletedStep('5');
+                    if (Yii::$app->request->post('User')['iCountryCAId'] == 101) {
+                        $model->iDistrictCAID = 1;
+                        $model->iTalukaCAID = 1;
+                    }
+
                     if($model->save()){
                         $this->redirect(['site/about-yourself']);
                     }
