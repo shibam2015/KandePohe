@@ -85,7 +85,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public $vName;
     public $Name;
     public $vEducationFieldName;
-    public $iWorkingWithID;
+    //public $iWorkingWithID;
     public $vWorkingAsName;
     public $vAnnualIncome;
     public $vEducationLevelName;
