@@ -704,12 +704,12 @@ if (!Yii::$app->user->isGuest) {
                                             </div>
                                         </div>
                                     <?php } ?>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                    <!--<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                                         <div class="bg-white mrg-tp-20">
                                             <h3 class="heading-xs">Your Phone No. Viewed By</h3>
                                             <ul class="list-unstyled ad-prof mrg-tp-20">
                                                 <li><span
-                                                        class="imgarea"><?= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?></span> <span
+                                                        class="imgarea"><? /*= Html::img('@web/images/profile1.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile', 'class' => '']); */ ?></span> <span
                                                         class="img-desc"> <a title="KP123WERT" class="name" href="#">KP123WERT</a>
                         <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                         </span>
@@ -717,7 +717,7 @@ if (!Yii::$app->user->isGuest) {
                                                     <div class="clearfix"></div>
                                                 </li>
                                                 <li><span
-                                                        class="imgarea"><?= Html::img('@web/images/profile2.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?></span> <span
+                                                        class="imgarea"><? /*= Html::img('@web/images/profile2.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile', 'class' => '']); */ ?></span> <span
                                                         class="img-desc"> <a title="KP123WERT" class="name" href="#">KP123WERT</a>
                         <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                         </span>
@@ -725,7 +725,7 @@ if (!Yii::$app->user->isGuest) {
                                                     <div class="clearfix"></div>
                                                 </li>
                                                 <li><span
-                                                        class="imgarea"><?= Html::img('@web/images/profile3.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?></span> <span
+                                                        class="imgarea"><? /*= Html::img('@web/images/profile3.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile', 'class' => '']); */ ?></span> <span
                                                         class="img-desc"> <a title="KP123WERT" class="name" href="#">KP123WERT</a>
                         <p>27, 5'5", Hindu, Brahmin, Finance Manager, Indore, India</p>
                         </span>
@@ -735,7 +735,7 @@ if (!Yii::$app->user->isGuest) {
                                             </ul>
                                             <div class="text-right"><a title="View All" href="#">View All &gt;</a></div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>
