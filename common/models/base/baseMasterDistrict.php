@@ -10,6 +10,7 @@ use Yii;
  * @property integer $iDistrictID
  * @property string $vName
  * @property string $eStatus
+ * @property integer $State_Id
  */
 class baseMasterDistrict extends \yii\db\ActiveRecord
 {
@@ -27,7 +28,8 @@ class baseMasterDistrict extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['vName'], 'required'],
+            [['iDistrictID', 'vName', 'State_Id'], 'required'],
+            [['iDistrictID', 'State_Id'], 'integer'],
             [['eStatus'], 'string'],
             [['vName'], 'string', 'max' => 250],
         ];
@@ -42,6 +44,7 @@ class baseMasterDistrict extends \yii\db\ActiveRecord
             'iDistrictID' => 'I District ID',
             'vName' => 'V Name',
             'eStatus' => 'E Status',
+            'State_Id' => 'State  ID',
         ];
     }
 }
