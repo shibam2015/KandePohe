@@ -400,6 +400,11 @@ function sendRequestDashboard(url, htmlId, type, pid, dataArr) {
                     }
                 }
             }
+            if (type == 'SLU') {
+                if (dataObj.STATUS == 'S') {
+                    $('.sl__' + pid).html('<a href="javascript:void(0)">Shortlisted<i class="fa fa-list-ul"></i> </a>');
+                }
+            }
             if (type == 'MAILBOX') {
                 loaderStart();
                 sendRequest("last-msg", "#last_message_section", dataArr);

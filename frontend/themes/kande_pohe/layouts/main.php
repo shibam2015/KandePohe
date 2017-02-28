@@ -58,18 +58,26 @@ AppAsset::register($this);
     <body>
 
     <?php
-    $TempArray = explode(",", Yii::$app->user->identity->completed_step);
-    $PartnerPre = 0;
-    if (in_array('-1', $TempArray)) {
-        $PartnerPre = 1;
-    }
-    if ($PartnerPre && (Yii::$app->user->identity->eEmailVerifiedStatus == 'Yes' || Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes')) { ?>
-        <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
-    <?php } else { ?>
-        <?php echo $this->render('/layouts/parts/_headerregister.php'); ?>
-    <?php } ?>
 
-    <?php if (!Yii::$app->user->isGuest) { ?>
+    $isFrontpage = true;
+    if ($path = Yii::$app->request->pathInfo == '') {
+        $isFrontpage = false;
+    }
+    if ($isFrontpage) {
+        $TempArray = explode(",", Yii::$app->user->identity->completed_step);
+        $PartnerPre = 0;
+        if (in_array('-1', $TempArray)) {
+            $PartnerPre = 1;
+        }
+        if ($PartnerPre && (Yii::$app->user->identity->eEmailVerifiedStatus == 'Yes' || Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes')) { ?>
+            <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
+        <?php } else { ?>
+            <?php echo $this->render('/layouts/parts/_headerregister.php'); ?>
+        <?php } ?>
+
+    <?php }
+
+    if (!Yii::$app->user->isGuest) { ?>
         <?= $this->render('/user/_phone_process.php'); ?>
         <?php
         if (Yii::$app->user->identity->Mobile_Multiple_Status == 1 && Yii::$app->user->identity->multiple_profile_status == 0) {

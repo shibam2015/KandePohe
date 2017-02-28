@@ -2894,34 +2894,45 @@ class UserController extends Controller
 
     public function actionUserShortList($Id, $ToUserId, $MailType)
     {
-        $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
+        $Model = UserRequestOp::checkUsers($Id, $ToUserId);// == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
         $Temp = 0;
-        $Model->scenario = UserRequestOp::SCENARIO_SHORTLIST_INTEREST;
-        if ($Model->id) {
-            if ($Id == $Model->from_user_id) {
-                if ($Model->short_list_status_from_to == 'No') {
-                    $Temp = 1;
-                    $Model->short_list_status_from_to = 'Yes';
-                } else if ($Model->short_list_status_from_to == 'Yes') {
-                    return 'UB';
-                } else {
-                    return 'W';
-                }
-
-            } else if ($Id == $Model->to_user_id) {
-                if ($Model->short_list_status_to_from == 'No') {
-                    $Temp = 1;
-                    $Model->short_list_status_to_from = 'Yes';
-                } else if ($Model->short_list_status_to_from == 'Yes') {
-                    return 'UB';
-                } else {
-                    return 'W';
-                }
-            }
+        if ($Model == NULL) {
+            $Model = new UserRequestOp();
+            $Model->scenario = UserRequestOp::SCENARIO_SHORTLIST_INTEREST;
+            $Model->from_user_id = $Id;
+            $Model->to_user_id = $ToUserId;
+            $Model->short_list_status_from_to = 'Yes';
+            $Temp = 1;
         } else {
-            return 'W';
+            $Model->scenario = UserRequestOp::SCENARIO_SHORTLIST_INTEREST;
+            if ($Model->id) {
+                if ($Id == $Model->from_user_id) {
+                    if ($Model->short_list_status_from_to == 'No') {
+                        $Temp = 1;
+                        $Model->short_list_status_from_to = 'Yes';
+                    } else if ($Model->short_list_status_from_to == 'Yes') {
+                        return 'UB';
+                    } else {
+                        return 'W';
+                    }
+
+                } else if ($Id == $Model->to_user_id) {
+                    if ($Model->short_list_status_to_from == 'No') {
+                        $Temp = 1;
+                        $Model->short_list_status_to_from = 'Yes';
+                    } else if ($Model->short_list_status_to_from == 'Yes') {
+                        return 'UB';
+                    } else {
+                        return 'W';
+                    }
+                }
+            } else {
+                return 'W';
+            }
         }
+        #echo " TEMP ==>".$Temp;exit;
         if ($Temp) {
+
             if ($Model->save()) {
                 //$this->actionMailBoxLog($Id, $ToUserId, Yii::$app->params['cancelInterestMessage'], 'CancelInterest');
                 $this->actionMailSendRequest($Id, $ToUserId, $MailType);
