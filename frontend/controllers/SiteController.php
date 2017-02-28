@@ -1019,7 +1019,7 @@ class SiteController extends Controller
             $PartnersFamilyTypeS = CommonHelper::convertArrayToString($PartnersFamilyTypeS, 'family_type');
             $PartnersCountries = CommonHelper::convertArrayToString($PartnersCountries, 'country_id');
 
-#CommonHelper::pr($PartnersCountries);
+#CommonHelper::pr($PartnersCountries);exit;
             $PartnersStates = CommonHelper::convertArrayToString($PartnersStates, 'state_id');
             # CommonHelper::pr($PartnersStates);exit;
             $PartnersCities = CommonHelper::convertArrayToString($PartnersCities, 'city_id');

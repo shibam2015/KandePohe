@@ -48,7 +48,7 @@ class AjaxController extends \yii\web\Controller
     public function actionGetstatenew()
     {
         $id = Yii::$app->request->get('id');
-        $posts = CommonHelper::getState($id);
+        $posts = \common\components\CommonHelper::getState($id);
         $data['state'] = $posts;
         $data['CountryId'] = $id;
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
@@ -58,7 +58,7 @@ class AjaxController extends \yii\web\Controller
     public function actionGetcitynew()
     {
         $id = Yii::$app->request->get('id');
-        $posts = CommonHelper::getCity($id);
+        $posts = \common\components\CommonHelper::getCity($id);
         $data['city'] = $posts;
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return $data;

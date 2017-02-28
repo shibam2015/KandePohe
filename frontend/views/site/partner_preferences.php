@@ -477,8 +477,8 @@ use yii\widgets\Pjax;
                                                    for="partners_countries-country_id">Country</label>
 
                                             <div class="col-sm-8 col-xs-8">
-                                                <select id="select-state" multiple
-                                                        class="demo-default select-beast clselocation"
+                                                <select id="select-country" multiple
+                                                        class="demo-default select-beast clselocation bb_country"
                                                         placeholder="Select Country"
                                                         name="PartnersCountries[country_id][]"
                                                         size="4">
@@ -493,25 +493,43 @@ use yii\widgets\Pjax;
                                                 </select>
                                             </div>
                                         </div>
+                                        <?php
+                                        #CommonHelper::pr($PartnersCountries);
+                                        if (count($PartnersCountries) > 0)
+                                            $CountryIDs = CommonHelper::removeComma(implode(",", $PartnersCountries));
+                                        else
+                                            $CountryIDs = '';
 
+                                        if (count($PartnersStates) > 0)
+                                            $StateIDs = CommonHelper::removeComma(implode(",", $PartnersStates));
+                                        else
+                                            $StateIDs = '';
+
+                                        #CommonHelper::pr($PartnersStates);exit;
+                                        ?>
                                         <div class="form-group field-partnersstates-state_id">
                                             <label class="control-label col-sm-3 col-xs-3"
                                                    for="partnersstates-state_id">State</label>
 
                                             <div class="col-sm-8 col-xs-8">
                                                 <select id="select-state" multiple
-                                                        class="demo-default select-beast clselocation"
+                                                        class="demo-default select-beast clselocation bb_state"
                                                         placeholder="Select State" name="PartnersStates[state_id][]"
                                                         size="4">
                                                     <?php
-                                                    #echo "====>".$CountryIDs;exit;
-                                                    foreach (CommonHelper::getState() as $K => $V) { ?>
-                                                        <option
-                                                            value="<?= $V->iStateId ?>" <?php if (in_array($V->iStateId, $PartnersStates)) {
-                                                            echo "selected";
-                                                        } ?>><?= $V->vStateName ?></option>
-                                                    <?php }
+                                                    if ($CountryIDs == '') {
+                                                        ?>
+                                                        <option value=""></option>
+                                                    <?php } else {
+                                                        foreach (CommonHelper::getState($CountryIDs) as $K => $V) { ?>
+                                                            <option
+                                                                value="<?= $V->iStateId ?>" <?php if (in_array($V->iStateId, $PartnersStates)) {
+                                                                echo "selected";
+                                                            } ?>><?= $V->vStateName ?></option>
+                                                        <?php }
+                                                    }
                                                     ?>
+
                                                 </select>
                                             </div>
                                         </div>
@@ -521,16 +539,21 @@ use yii\widgets\Pjax;
 
                                             <div class="col-sm-8 col-xs-8">
                                                 <select id="select-state" multiple
-                                                        class="demo-default select-beast clselocation"
+                                                        class="demo-default select-beast clselocation bb_city"
                                                         placeholder="Select City" name="PartnersCities[city_id][]"
                                                         size="4">
                                                     <?php
-                                                    foreach (CommonHelper::getCity() as $K => $V) { ?>
-                                                        <option
-                                                            value="<?= $V->iCityId ?>" <?php if (in_array($V->iCityId, $PartnersCities)) {
-                                                            echo "selected";
-                                                        } ?>><?= $V->vCityName ?></option>
-                                                    <?php }
+                                                    if ($StateIDs == '') {
+                                                        ?>
+                                                        <option value=""></option>
+                                                    <?php } else {
+                                                        foreach (CommonHelper::getCity($StateIDs) as $K => $V) { ?>
+                                                            <option
+                                                                value="<?= $V->iCityId ?>" <?php if (in_array($V->iCityId, $PartnersCities)) {
+                                                                echo "selected";
+                                                            } ?>><?= $V->vCityName ?></option>
+                                                        <?php }
+                                                    }
                                                     ?>
                                                 </select>
                                             </div>
@@ -837,6 +860,148 @@ use yii\widgets\Pjax;
     </section>
     </div>
 </main>
+<?php
+$this->registerJs('
+$(".bb_country").change(function () {
+    var countries = [];
+        $.each($(".bb_country option:selected"), function(){
+            countries.push($(this).val());
+        });
+    var states_bb = [];
+        $.each($(".bb_state option:selected"), function(){
+            states_bb.push($(this).val());
+        });
+        console.log(states_bb.join());
+    var city_bb = [];
+        $.each($(".bb_city option:selected"), function(){
+            city_bb.push($(this).val());
+    });
+    if(countries.length==0){
+                $("select.bb_state").html("");
+                var selectize = $("select.bb_state")[0].selectize;
+                selectize.clear();
+                selectize.clearOptions();
+                selectize.renderCache["option"] = {};
+                selectize.renderCache["item"] = {};
+                selectize.addOption("");
+                selectize.setValue(states_bb);
+    }else{
+        $.ajax({
+            url:"' . Url::to(['ajax/getstatenew']) . '",
+            type: "get",
+            dataType: "JSON",
+            async: false,
+            data: {
+                    id:countries.join(),
+                  },
+            success: function(res){
+                //setTimeout(function(){
+                var htmldata = "";
+                jsondata = res.state;
+                        var new_value_options   = "[";
+                        for (var key in jsondata) {
+                        //console.log(jsondata[key].vStateName);
+                            htmldata += "<option value=\'"+jsondata[key].iStateId+"\'>"+jsondata[key].vStateName+"</option>";
 
+                            var keyPlus = parseInt(key) + 1;
+                            if (keyPlus == jsondata.length) {
+                                new_value_options += "{text: \'"+jsondata[key].vStateName+"\', value: "+jsondata[key].iStateId+"}";
+                            } else {
+                                new_value_options += "{text: \'"+jsondata[key].vStateName+"\', value: "+jsondata[key].iStateId+"},";
+                            }
+                        }
+                        new_value_options   += "]";
+
+                new_value_options = eval("(" + new_value_options + ")");
+                if (new_value_options[0] != undefined) {
+                            // re-fill html select option field
+                            $("select.bb_state").html(htmldata);
+                            // re-fill/set the selectize values
+                            var selectize = $("select.bb_state")[0].selectize;
+                            selectize.clear();
+                            selectize.clearOptions();
+                            selectize.renderCache["option"] = {};
+                            selectize.renderCache["item"] = {};
+                            selectize.addOption(new_value_options);
+                            //selectize.setValue(iStateId);
+                            selectize.setValue(states_bb);
+                }
+            //}, 1000);
+            }
+        });
+    }
+
+});
+
+$(".bb_state").change(function () {
+     var states_bb = [];
+        $.each($(".bb_state option:selected"), function(){
+            states_bb.push($(this).val());
+        });
+     var countries = [];
+        $.each($(".bb_country option:selected"), function(){
+            countries.push($(this).val());
+        });
+     if(states_bb.length>0){
+         var city_bb = [];
+            $.each($(".bb_city option:selected"), function(){
+                city_bb.push($(this).val());
+         });
+     }
+
+     if(countries.length==0){
+               $("select.bb_city").html("");
+               var selectize = $("select.bb_city")[0].selectize;
+               selectize.clear();
+               selectize.clearOptions();
+               selectize.renderCache["option"] = {};
+               selectize.renderCache["item"] = {};
+               selectize.addOption("");
+               selectize.setValue(city_bb);
+     }
+     if(states_bb.length>0){
+        $.ajax({
+            url:"' . Url::to(['ajax/getcitynew']) . '",
+            type: "get",
+            dataType: "JSON",
+            async: false,
+            data: {
+                    id:states_bb.join(),
+                  },
+            success: function(res){
+                    var htmldata = "";
+                    jsondata = res.city;
+                    var new_value_options   = "[";
+                    for (var key in jsondata) {
+                            htmldata += "<option value=\'"+jsondata[key].iCityId+"\'>"+jsondata[key].vCityName+"</option>";
+                            var keyPlus = parseInt(key) + 1;
+                            if (keyPlus == jsondata.length) {
+                                new_value_options += "{text: \'"+jsondata[key].vCityName+"\', value: "+jsondata[key].iCityId+"}";
+                            } else {
+                                new_value_options += "{text: \'"+jsondata[key].vCityName+"\', value: "+jsondata[key].iCityId+"},";
+                            }
+                    }
+                    new_value_options   += "]";
+                    new_value_options = eval("(" + new_value_options + ")");
+                    if (new_value_options[0] != undefined) {
+                        // re-fill html select option field
+                        $("select.bb_city").html(htmldata);
+                        // re-fill/set the selectize values
+                        var selectize = $("select.bb_city")[0].selectize;
+                        selectize.clear();
+                        selectize.clearOptions();
+                        selectize.renderCache["option"] = {};
+                        selectize.renderCache["item"] = {};
+                        selectize.addOption(new_value_options);
+                        selectize.setValue(city_bb);
+                  }
+            }
+        });
+    }
+
+});
+');
+
+?>
 
 
