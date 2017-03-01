@@ -442,13 +442,17 @@ class UserSearch extends User
         if ($Type == User::USER_APRROVED) {
             $query = User::find()->where(['status' => User::STATUS_APPROVE])->orderBy(['id' => SORT_DESC]); //For Approveed user List
         } else if ($Type == User::USER_IN_APPROVAL) {
-            $query = User::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK], 'eEmailVerifiedStatus' => 'Yes', 'ePhoneVerifiedStatus' => 'Yes'])->orderBy(['id' => SORT_DESC]); // In Approval
-        } else if ($Type == User::USER_NEWLY_REGISTERED) {
             $query = User::find()
-                ->where(['eEmailVerifiedStatus' => 'Yes'])// New Registered user.
-                ->orWhere(['ePhoneVerifiedStatus' => 'Yes'])// New Registered user.
-                ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK]])->orderBy(['id' => SORT_DESC]); // New Registered user.
-            #$query = User::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK], 'eEmailVerifiedStatus' => 'No', 'ePhoneVerifiedStatus' => 'No'])->orderBy(['id' => SORT_DESC]); // New Registered user.
+                ->where(['eEmailVerifiedStatus' => 'Yes'])
+                ->orWhere(['ePhoneVerifiedStatus' => 'Yes'])
+                ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK]])->orderBy(['id' => SORT_DESC]);// In Approval
+            #$query = User::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK], 'eEmailVerifiedStatus' => 'Yes', 'ePhoneVerifiedStatus' => 'Yes'])->orderBy(['id' => SORT_DESC]); // In Approval
+        } else if ($Type == User::USER_NEWLY_REGISTERED) {
+            /*$query = User::find()
+                ->where(['eEmailVerifiedStatus' => 'Yes'])
+                ->orWhere(['ePhoneVerifiedStatus' => 'Yes'])
+                ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK]])->orderBy(['id' => SORT_DESC]); // New Registered user.*/
+            $query = User::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK], 'eEmailVerifiedStatus' => 'No', 'ePhoneVerifiedStatus' => 'No'])->orderBy(['id' => SORT_DESC]); // New Registered user.
         } else if ($Type == User::USER_ALL) {
             $query = User::find()->orderBy(['id' => SORT_DESC]); // All User List.
         }
