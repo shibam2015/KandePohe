@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
+use common\components\CommonHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
@@ -11,11 +12,7 @@ $this->title = $model->First_Name." ".$model->Last_Name;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 //echo Yii::$app->urlManagerFrontend->baseUrl;
-if($model->propic !='') {
-    $PROPIC = "../../../../frontend/web/uploads/" . $model->propic;
-}else{
-    $PROPIC = "../../../../frontend/web/images/placeholder.jpg";
-}
+$PROPIC = CommonHelper::getPhotosBackend('USER', $model->id, "200" . $model->propic, 200, '', 'Yes', 1);
 ?>
 
 
