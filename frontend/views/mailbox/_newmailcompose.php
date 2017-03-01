@@ -13,7 +13,7 @@ $model = $model['model'];
 ?>
 <div class="new_mail_compose">
     <?php
-    if (count($UserEmail) == 0) { ?>
+    if (count($otherUserMails) == 0) { ?>
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
