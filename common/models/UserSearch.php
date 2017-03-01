@@ -440,11 +440,11 @@ class UserSearch extends User
     public function getUserList($params, $Type)
     {
         if ($Type == User::USER_APRROVED) {
-            $query = User::find()->where(['status' => User::STATUS_APPROVE]); //For Approveed user List
+            $query = User::find()->where(['status' => User::STATUS_APPROVE])->orderBy(['id' => SORT_DESC]); //For Approveed user List
         } else if ($Type == User::USER_IN_APPROVAL) {
-            $query = User::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK], 'eEmailVerifiedStatus' => 'Yes', 'ePhoneVerifiedStatus' => 'Yes']); // In Approval
+            $query = User::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK], 'eEmailVerifiedStatus' => 'Yes', 'ePhoneVerifiedStatus' => 'Yes'])->orderBy(['id' => SORT_DESC]); // In Approval
         } else if ($Type == User::USER_NEWLY_REGISTERED) {
-            $query = User::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK], 'eEmailVerifiedStatus' => 'No', 'ePhoneVerifiedStatus' => 'No']); // New Registered user.
+            $query = User::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK], 'eEmailVerifiedStatus' => 'No', 'ePhoneVerifiedStatus' => 'No'])->orderBy(['id' => SORT_DESC]); // New Registered user.
         }
 
         #echo $query->createCommand()->sql;exit;
