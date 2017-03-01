@@ -42,7 +42,7 @@ class Mailbox extends \common\models\base\baseMailbox
     {
         $LastMessageDetails = Static::find()
             ->where(['from_user_id' => $ToUserId, 'to_user_id' => $Id])
-            #->orWhere(['from_user_id' => $Id, 'to_user_id' => $ToUserId])
+            ->orWhere(['from_user_id' => $Id, 'to_user_id' => $ToUserId])
             ->orderBy(['MailId' => SORT_DESC])->one();
         return $LastMessageDetails;
 
