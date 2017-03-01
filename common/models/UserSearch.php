@@ -445,6 +445,8 @@ class UserSearch extends User
             $query = User::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK], 'eEmailVerifiedStatus' => 'Yes', 'ePhoneVerifiedStatus' => 'Yes'])->orderBy(['id' => SORT_DESC]); // In Approval
         } else if ($Type == User::USER_NEWLY_REGISTERED) {
             $query = User::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_DISAPPROVE, self::STATUS_BLOCK], 'eEmailVerifiedStatus' => 'No', 'ePhoneVerifiedStatus' => 'No'])->orderBy(['id' => SORT_DESC]); // New Registered user.
+        } else if ($Type == User::USER_ALL) {
+            $query = User::find()->orderBy(['id' => SORT_DESC]); // All User List.
         }
 
         #echo $query->createCommand()->sql;exit;
