@@ -58,17 +58,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'format' => 'raw',
                                                 'value' => function ($model, $key, $index) {
                                                     if ($model->status == 1) {
-                                                        return '<button class="btn btn-success">&nbsp;&nbsp;Active&nbsp;&nbsp;</button>';
+                                                        return '<button class="btn btn-success">&nbsp;&nbsp;Actived&nbsp;&nbsp;</button>';
                                                     } else if ($model->status == 2) {
-                                                        return '<button class="btn bg-navy btn-flat margin">&nbsp;&nbsp;Inactive&nbsp;&nbsp;</button>';
+                                                        return '<button class="btn bg-navy btn-flat margin">&nbsp;&nbsp;Inactived&nbsp;&nbsp;</button>';
                                                     } else if ($model->status == 3) {
                                                         return '<button class="btn bg-yellow">&nbsp;&nbsp;Pending&nbsp;&nbsp;</button>';
                                                     } else if ($model->status == 4) {
-                                                        return '<button class="btn bg-red">&nbsp;&nbsp;Disapprove&nbsp;&nbsp;</button>';
+                                                        return '<button class="btn bg-red">&nbsp;&nbsp;Disapproved&nbsp;&nbsp;</button>';
                                                     } else if ($model->status == 5) {
-                                                        return '<button class="btn btn-success">&nbsp;&nbsp;Approve&nbsp;&nbsp;</button>';
+                                                        return '<button class="btn btn-success">&nbsp;&nbsp;Approved&nbsp;&nbsp;</button>';
                                                     } else if ($model->status == 6) {
-                                                        return '<button class="btn bg-yellow">&nbsp;&nbsp;Block&nbsp;&nbsp;</button>';
+                                                        return '<button class="btn bg-yellow">&nbsp;&nbsp;Blocked&nbsp;&nbsp;</button>';
                                                     }
                                                 },
                                             ],

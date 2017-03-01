@@ -70,10 +70,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 {
                     if($model->eStatusPhotoModify == 'Approve')
                     {
-                        return '<button class="btn btn-success">&nbsp;&nbsp;Approve&nbsp;&nbsp;</button>';
+                        return '<button class="btn btn-success">&nbsp;&nbsp;Approved&nbsp;&nbsp;</button>';
                     } else if ($model->eStatusPhotoModify == 'Disapprove')
                     {
-                        return '<button class="btn bg-red">&nbsp;&nbsp;Disapprove&nbsp;&nbsp;</button>';
+                        return '<button class="btn bg-red">&nbsp;&nbsp;Disapproved&nbsp;&nbsp;</button>';
                     }else{
                         return '<button class="btn bg-yellow btn-flat margin">&nbsp;&nbsp;Pending&nbsp;&nbsp;</button>';
                     }
