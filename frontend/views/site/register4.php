@@ -693,11 +693,11 @@ $this->registerJs('
       var iDistrictID = "'.$model->iDistrictID .'";
       var iTalukaID = "'.$model->iTalukaID .'";
       var vAreaName = "'.$model->vAreaName .'";
-
       $.ajax({
         url:"'.Url::to(['ajax/sameasaboveaddress']).'", 
         type: "post",
         dataType: "JSON",
+        async: false,
         data: {
                 iCountryId:iCountryId,
                 iStateId:iStateId,
@@ -777,9 +777,7 @@ $this->registerJs('
             }, 500);
         }, 1000);
 
-
-
-
+        setTimeout(function(){
             var htmldata = "";
             jsondata =  res.district;
                     var new_value_options   = "[";
@@ -837,36 +835,7 @@ $this->registerJs('
                         selectize.setValue(iTalukaID);
             }
 
-
-            /*var $select1 = $("select#iStateCAId").selectize();
-            var control1 = $select1[0].selectize;
-            control1.clear();
-            control1.clearOptions();
-                $("select#iStateCAId").selectize(res.state)*/
-            //control1.refreshItems();
-
-            //$("select#user-icountrycaid").clear();
-            //$("select#user-icountrycaid").selectize(res.country);
-            /*$(".select-beast").selectize({
-                 //create: true,
-                 sortField: {
-                     field: "text",
-                     direction: "asc"
-                 }
-             });*/
-            //$("select#user-icountrycaid").niceSelect("update");
-/*
-            $( "select#iStateCAId" ).html( res.state );
-            //$("select#iStateCAId").niceSelect("update");
-
-            $( "select#iCityCAId" ).html( res.city );
-            //$("select#iCityCAId").niceSelect("update");
-
-            $( "select#user-idistrictcaid" ).html( res.district );
-            //$("select#user-idistrictcaid").niceSelect("update");
-
-            $( "select#user-italukacaid" ).html( res.taluka );
-            //$("select#user-italukacaid").niceSelect("update");*/
+        }, 500);
 
             $("#user-vareanameca").val(res.areaname );
         }
