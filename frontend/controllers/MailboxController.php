@@ -717,7 +717,6 @@ class MailboxController extends Controller
                 $ToUserId = $Value->from_user_id;
             }
             list($TotalMailCount, $LastMail) = $this->getLastMailInfoAndUnreadMailCount($Id, $ToUserId);
-            #echo " hii ";CommonHelper::pr($LastMail);echo " end====";exit;
             $OtherInformationArray[$ToUserId]['MailTotalCount'] = $TotalMailCount;
             $OtherInformationArray[$ToUserId]['LastMailDate'] = $LastMail->dtadded;
             $OtherInformationArray[$ToUserId]['LastMailReadStatus'] = $LastMail->read_status;

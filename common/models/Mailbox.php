@@ -45,7 +45,6 @@ class Mailbox extends \common\models\base\baseMailbox
             ->orWhere(['from_user_id' => $Id, 'to_user_id' => $ToUserId])
             ->orderBy(['MailId' => SORT_DESC])->one();
         return $LastMessageDetails;
-
     }
 
     public static function getMailList($Id, $ToUserId)
