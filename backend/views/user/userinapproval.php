@@ -75,8 +75,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                             #['class' => 'yii\grid\ActionColumn'],
                                             ['class' => 'yii\grid\ActionColumn',
-                                                'template' => '{view}',
-                                                #'template'=>'{view} {approve}',
+                                                //'template' => '{view}',
+                                                'template' => '{view} {approve}',
                                                 'buttons' => [
                                                     'edit' => function ($model, $key, $index, $instance) {
                                                         $urlConfig = [];
