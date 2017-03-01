@@ -20,7 +20,8 @@ if (!Yii::$app->user->isGuest) {
     <div class="main-section">
 
     <link rel="stylesheet" type="text/css" href="<?= Yii::$app->request->baseUrl ?>/css/radical-progress.css"/>
-        <main data-ng-app="myApp" data-ng-controller="dashboardController">
+        <main
+        <!--data-ng-app="myApp" data-ng-controller="dashboardController"-->>
             <section>
                 <div class="container">
                     <div class="row">
@@ -743,11 +744,11 @@ if (!Yii::$app->user->isGuest) {
                     </div>
                 </div>
             </section>
-            <div class="modal fade" id="privacyoption" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        <!-- <div class="modal fade" id="privacyoption" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog">
                     <p class="text-center mrg-bt-10">
-                        <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo"></p>
+                        <img src="<? /*= CommonHelper::getLogo() */ ?>" width="157" height="61" alt="logo"></p>
 
                     <div class="modal-content">
                         <div class="modal-header">
@@ -758,12 +759,12 @@ if (!Yii::$app->user->isGuest) {
                         </div>
                         <div class="modal-body">
                             <div class="choose-photo">
-                                <?php $form = ActiveForm::begin(); ?>
+                                <?php /*$form = ActiveForm::begin(); */ ?>
                                 <div class="form-cont">
                                     <div class="radio dl" id="IVA">
                                         <dt></dt>
-                                        <dd data-ng-init="user_privacy_option=<?= $model->user_privacy_option ?>">
-                                            <?= $form->field($model, 'user_privacy_option')->RadioList(
+                                        <dd data-ng-init="user_privacy_option=<? /*= $model->user_privacy_option */ ?>">
+                                            <? /*= $form->field($model, 'user_privacy_option')->RadioList(
                                                 ['0' => 'Visible to all', '1' => 'Visible only to members whom I had contacted / responded'],
                                                 [
                                                     'item' => function ($index, $label, $name, $checked, $value) {
@@ -774,7 +775,7 @@ if (!Yii::$app->user->isGuest) {
                                                     }
 
                                                 ]
-                                            )->label(false); ?>
+                                            )->label(false); */ ?>
                                         </dd>
                                     </div>
                                 </div>
@@ -791,13 +792,12 @@ if (!Yii::$app->user->isGuest) {
                                            data-dismiss="modal"> Back </a>
                                     </div>
                                 </div>
-                                <?php ActiveForm::end(); ?>
+                                <?php /*ActiveForm::end(); */ ?>
                             </div>
                         </div>
                     </div>
-                    <!-- Modal Footer -->
                 </div>
-            </div>
+            </div>-->
         </main>
     </div>
     <div class="modal fade" id="sendInterest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

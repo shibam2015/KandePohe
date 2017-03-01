@@ -77,24 +77,26 @@ AppAsset::register($this);
 
     <?php }
 
-    if (!Yii::$app->user->isGuest) { ?>
-        <?= $this->render('/user/_phone_process.php'); ?>
-        <?php
-        if (Yii::$app->user->identity->Mobile_Multiple_Status == 1 && Yii::$app->user->identity->multiple_profile_status == 0) {
-            $this->registerJs('
-            phoneExist();
-            ');
+    if (!Yii::$app->user->isGuest) {
+        $isSettingpage = true;
+        if (Yii::$app->request->pathInfo == 'user/setting') {
+            $isSettingpage = false;
+        }
+        if ($isSettingpage) {
+            ?>
+            <?= $this->render('/user/_phone_process.php'); ?>
+            <?php
+            if (Yii::$app->user->identity->Mobile_Multiple_Status == 1 && Yii::$app->user->identity->multiple_profile_status == 0) {
+                $this->registerJs('
+                 phoneExist();
+                ');
+            }
+
         }
     } ?>
 
     <?php $this->beginBody() ?>
-    <!--<div class="">
-    <? /*= $this->render('/layouts/parts/_headerafterlogin');*/ ?>
 
-    <main>
-      <section>
-        <div class="container">
-          --><? /*= Alert::widget() */ ?>
     <?= $content ?>
     <!--Footer-->
     <?= $this->render('_footer'); ?>
