@@ -5,11 +5,7 @@ use common\components\CommonHelper;
 use common\components\MailHelper;
 use yii\helpers\ArrayHelper;
 
-$HOME_URL = Yii::getAlias('@web') . "/";
-$HOME_URL_SITE = Yii::getAlias('@web') . "/site/";
 $HOME_PAGE_URL = Yii::getAlias('@web') . "/";
-$UPLOAD_DIR = Yii::getAlias('@frontend') . '/web/uploads/';
-$IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 ?>
 <div class="" xmlns="http://www.w3.org/1999/html">
     <main>
@@ -231,47 +227,33 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
 
                                             <div class="faces-pic">
                                                 <div class="row no-gutter mrg-tp-30">
-                                                    <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
-                                                            src="<?= $HOME_PAGE_URL ?>images/faces/face1.jpg"
-                                                            width="113" height="97" class="img-responsive"
-                                                            alt="Close up">
-
+                                                    <div class="col-md-3 col-sm-6 col-xs-6 text-center">
+                                                        <?= Html::img('@web/images/faces/face1.jpg', ['width' => '113', 'height' => '97', 'alt' => 'Close up', 'class' => 'img-responsive']); ?>
                                                         <div class="title right">Close up</div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
-                                                            src="<?= $HOME_PAGE_URL ?>images/faces/face2.jpg"
-                                                            width="113" height="97" class="img-responsive"
-                                                            alt="Full view">
-
+                                                    <div class="col-md-3 col-sm-6 col-xs-6 text-center">
+                                                        <?= Html::img('@web/images/faces/face2.jpg', ['width' => '113', 'height' => '97', 'alt' => 'Full view', 'class' => 'img-responsive']); ?>
                                                         <div class="title right">Full View</div>
                                                     </div>
                                                 </div>
                                                 <div class="row no-gutter mrg-tp-10">
-                                                    <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
-                                                            src="<?= $HOME_PAGE_URL ?>images/faces/face2.jpg"
-                                                            width="113" height="97" class="img-responsive"
-                                                            alt="Side Face">
+                                                    <div class="col-md-3 col-sm-6 col-xs-6 text-center">
+                                                        <?= Html::img('@web/images/faces/face3.jpg', ['width' => '113', 'height' => '97', 'alt' => 'Side view', 'class' => 'img-responsive']); ?>
 
                                                         <div class="title wrong">Side Face</div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
-                                                            src="<?= $HOME_PAGE_URL ?>images/faces/face4.jpg"
-                                                            width="113" height="97" class="img-responsive"
-                                                            alt="Blur Image">
+                                                    <div class="col-md-3 col-sm-6 col-xs-6 text-center">
+                                                        <?= Html::img('@web/images/faces/face4.jpg', ['width' => '113', 'height' => '97', 'alt' => 'Blur view', 'class' => 'img-responsive']); ?>
 
                                                         <div class="title wrong">Blur Image</div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
-                                                            src="<?= $HOME_PAGE_URL ?>images/faces/face5.jpg"
-                                                            width="113" height="97" class="img-responsive" alt="Group ">
+                                                    <div class="col-md-3 col-sm-6 col-xs-6 text-center">
+                                                        <?= Html::img('@web/images/faces/face5.jpg', ['width' => '113', 'height' => '97', 'alt' => 'Group', 'class' => 'img-responsive']); ?>
 
                                                         <div class="title wrong">Group</div>
                                                     </div>
-                                                    <div class="col-md-3 col-sm-6 col-xs-6 text-center"><img
-                                                            src="<?= $HOME_PAGE_URL ?>images/faces/face6.jpg"
-                                                            width="113" height="97" class="img-responsive"
-                                                            alt="Watermark">
-
+                                                    <div class="col-md-3 col-sm-6 col-xs-6 text-center">
+                                                        <?= Html::img('@web/images/faces/face6.jpg', ['width' => '113', 'height' => '97', 'alt' => 'Watermark', 'class' => 'img-responsive']); ?>
                                                         <div class="title wrong">Watermark</div>
                                                     </div>
                                                 </div>
@@ -283,9 +265,7 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                     <div class="col-sm-6">
                                                         <div class="promo">
                                                             <figure>
-                                                                <img src="<?= $HOME_PAGE_URL ?>images/icon4.jpg"
-                                                                     width="61" height="70"
-                                                                     alt="Upload from Mobile">
+                                                                <?= Html::img('@web/images/icon4.jpg', ['width' => '61', 'height' => '70', 'alt' => 'Upload from Mobile', 'class' => '']); ?>
                                                             </figure>
 
                                                             <figcaption>
@@ -300,12 +280,10 @@ $IMG_DIR = Yii::getAlias('@frontend') . '/web/';
                                                     <div class="col-sm-6">
                                                         <div class="promo">
                                                             <figure>
-                                                                <img src="<?= $HOME_PAGE_URL ?>images/icon5.jpg"
-                                                                     width="61" height="70" alt="Send via Email">
+                                                                <?= Html::img('@web/images/icon5.jpg', ['width' => '61', 'height' => '70', 'alt' => 'Send via Email', 'class' => '']); ?>
                                                             </figure>
                                                             <figcaption>
                                                                 <h4>Send via Email</h4>
-
                                                                 <p>Email your photo to <a href="mailto:photos@kp.com">photos@kp.com</a>
                                                                     along with your profile id (KP245454567)</p>
                                                             </figcaption>
@@ -343,13 +321,3 @@ require_once __DIR__ . '/_photosection.php';
 <link href='<?= Yii::$app->request->baseUrl ?>/plugings/cropping/imgareaselect.css' rel='stylesheet' type='text/css'>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.imgareaselect.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/cropping/jquery.form.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
-
-<!--
-<script src="js/lightgallery.js"></script>
-<script src="js/lg-fullscreen.js"></script>
-<script src="js/lg-thumbnail.js"></script>
-<script src="js/lg-video.js"></script>
-<script src="js/lg-autoplay.js"></script>
-<script src="js/lg-zoom.js"></script>
-<script src="js/lg-hash.js"></script>
-<script src="js/lg-pager.js"></script>-->
