@@ -855,7 +855,7 @@ if (!Yii::$app->user->isGuest) {
             </div>
         </div>
     </div>
-
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/js/jquery.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <?=$this->registerJsFile(Yii::$app->request->baseUrl.'/js/angular/controller/dashboardController.js', ['depends' => [\frontend\assets\AppAsset::className()],'position' => \yii\web\View::POS_END]);?>
     <script type="text/javascript">
         var PRO_COMP = <?=$PROFILE_COMPLETENESS?>;
