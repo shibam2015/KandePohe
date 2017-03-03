@@ -14,7 +14,13 @@ use yii\helpers\ArrayHelper;
       ?>
       <div class="col-sm-9">
         <div class="right-column"> <span class="welcome-note">
-          <p><strong><?= $model->First_Name; ?> !</strong> One last thing… describe your self.</p>
+          <!--<p><strong><? /*= $model->First_Name; */ ?> !</strong> One last thing… describe your self.</p>-->
+            <?php if ($model->Profile_created_for !== "Self") { ?>
+              <p><strong>Welcome ,</strong> please give us few details about
+                <strong><?= $model->First_Name; ?> </strong>.</p>
+            <?php } else { ?>
+              <p><strong>Welcome <?= $model->First_Name; ?> ,</strong> please give us few details about yourself.</p>
+            <?php } ?>
           </span>
           <div class="row no-gutter">
             <div class="col-lg-8 col-md-12 col-sm-12">

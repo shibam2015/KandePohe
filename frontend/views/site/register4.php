@@ -17,7 +17,7 @@ use yii\helpers\ArrayHelper;
                 <div class="right-column">
                         <span class="welcome-note">
                               <?php
-                              if ($model->Profile_created_for !== "SELF") {
+                              if ($model->Profile_created_for != "Self") {
                                   ?>
                                   <p>Some details about <strong><?= $model->First_Name; ?>'s</strong> family …</p>
                               <?php } else {
