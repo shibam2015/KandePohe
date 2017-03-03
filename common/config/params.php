@@ -96,7 +96,7 @@ return [
     'multipleProfileMsg' => 'Multiple Profile',
     'multipleProfile' => 'It appears that the number you verified is associated with another profile',
     'MultipleProfileTellUp' => 'Tell us why you wish to have multiple profiles with the same number. How are you related to these profiles ?',
-    'MultipleProfileContact' => '(Please note sandepohe.com team may contact you in this regard)',
+    'MultipleProfileContact' => '(Please note kandepohe.com team may contact you in this regard)',
     'multipleProfileOption' => [
         'Keep this profile, delete others' => '1',
         'Provide alternate no. for this profile' => '2',
