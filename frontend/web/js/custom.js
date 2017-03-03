@@ -8,10 +8,10 @@ $( document ).ready(function() {
             // $('select').niceSelect();
             $('.select-beast').selectize({
                 //create: true,
-                sortField: {
+                /*sortField: {
                     field: 'text',
                     direction: 'asc'
-                }
+                 }*/
             });
         }
 
@@ -266,10 +266,10 @@ function setDesign() {
     // $('select').niceSelect();
     $(".select-beast").selectize({
         //create: true,
-        sortField: {
+        /*sortField: {
             field: "text",
             direction: "asc"
-        }
+         }*/
     });
     (function () {
         // trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
