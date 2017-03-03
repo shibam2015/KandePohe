@@ -669,13 +669,13 @@ if (!Yii::$app->user->isGuest) {
                             </div>
                         </div>
                     </div>
-                    <?= $this->render('/layouts/parts/_rightbar.php', ['SimilarProfile' => $SimilarProfile]) ?>
+                    <!-- <?= $this->render('/layouts/parts/_rightbar.php', ['SimilarProfile' => $SimilarProfile]) ?> -->
                 </div>
             </div>
         </section>
     </main>
 </div>
-<div class="chatwe">
+<!--<div class="chatwe">
     <div class="panel panel-primary">
         <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne"
              id="chatbox"><i class="fa fa-comment"></i> Members Online
@@ -684,57 +684,57 @@ if (!Yii::$app->user->isGuest) {
             <div class="panel-body">
                 <ul class="list-unstyled ad-prof">
                     <li><span
-                            class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
+                            class="imgarea"><? /*= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); */ ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
             </span> <span class="time">12:24</span> </li>
                     <li class="active"><span
-                            class="imgarea"><?= Html::img('@web/images/profile2.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
+                            class="imgarea"><? /*= Html::img('@web/images/profile2.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); */ ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
             </span> <span class="online"></span> </li>
                     <li><span
-                            class="imgarea"><?= Html::img('@web/images/profile3.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
+                            class="imgarea"><? /*= Html::img('@web/images/profile3.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); */ ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
             </span> <span class="time">12:24</span> </li>
                     <li><span
-                            class="imgarea"><?= Html::img('@web/images/profile1.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
+                            class="imgarea"><? /*= Html::img('@web/images/profile1.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); */ ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
             </span> <span class="time">12:24</span> </li>
                     <li><span
-                            class="imgarea"><?= Html::img('@web/images/profile2.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
+                            class="imgarea"><? /*= Html::img('@web/images/profile2.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); */ ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
             </span> <span class="time">12:24</span> </li>
                     <li><span
-                            class="imgarea"><?= Html::img('@web/images/profile3.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
+                            class="imgarea"><? /*= Html::img('@web/images/profile3.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); */ ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
             </span> <span class="time">12:24</span> </li>
                     <li><span
-                            class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
+                            class="imgarea"><? /*= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); */ ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
             </span> <span class="time">12:24</span> </li>
                     <li><span
-                            class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
+                            class="imgarea"><? /*= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); */ ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
             </span> <span class="time">12:24</span> </li>
                     <li><span
-                            class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
+                            class="imgarea"><? /*= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); */ ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
             </span> <span class="time">12:24</span> </li>
                     <li><span
-                            class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
+                            class="imgarea"><? /*= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); */ ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
             </span> <span class="time">12:24</span> </li>
                     <li><span
-                            class="imgarea"><?= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); ?></span>
+                            class="imgarea"><? /*= Html::img('@web/images/profile4.jpg', ['width' => '40', 'height' => '40', 'alt' => 'Profile']); */ ?></span>
                             <span class="img-desc">
             <p class="name">Ishita J </p>
             </span> <span class="time">12:24</span> </li>
@@ -758,7 +758,7 @@ if (!Yii::$app->user->isGuest) {
             </div>
         </div>
     </div>
-</div>
+</div>-->
 <!-- Modal Photo -->
 <div class="modal fade" id="photodelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
