@@ -577,19 +577,19 @@ $(document).on('mouseover', '.hovertool', function (e) {
 
 function selectbox() {
     $(".select-beast").selectize({
-        sortField: {
+        /*sortField: {
             field: "text",
             direction: "asc"
-        }
+         }*/
     });
 }
 //selectbox();
 function selectboxClassWise(classname) {
     $("." + classname).selectize({
-        sortField: {
+        /*sortField: {
             field: "text",
             direction: "asc"
-        }
+         }*/
     });
 }
 function phoneExist() {
