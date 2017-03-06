@@ -3364,7 +3364,7 @@ class UserController extends Controller
     {
         $Id = Yii::$app->user->identity->id;
         $UserModel = User::findOne($Id);
-        $RedirectURL = Yii::getAlias('@web');
+        $RedirectURL = Yii::$app->homeUrl . 'site/partner-preferences';//Yii::getAlias('@web');
         if (Yii::$app->request->post('ACTION') == 'MULTIPLE-PROFILE') {
             #CommonHelper::pr(Yii::$app->request->post());
             $MultipleProfileStatus = Yii::$app->request->post('MultipleProfileStatus');
@@ -3395,7 +3395,7 @@ class UserController extends Controller
 
                 $DeleteCurrentUser = User::deleteAll(['id' => $Id]);
                 #return $this->redirect(Yii::getAlias('@web'));
-                $RedirectURL = Yii::getAlias('@web');
+                #$RedirectURL = Yii::getAlias('@web');
                 if ($DeleteCurrentUser) {
                     list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'PROFILE_DELETE_CURRENT_USER');
                 } else {
@@ -3425,9 +3425,16 @@ class UserController extends Controller
             $MESSAGE = Yii::$app->params['errorMessage'];
         }
         if ($UserModel->eEmailVerifiedStatus == 'Yes' && $UserModel->ePhoneVerifiedStatus == 'Yes') {
-            $RedirectURL = 'site/partner-preferences';
+            $TempArray = explode(",", $UserModel->completed_step);
+            $PartnerPre = 0;
+            if (in_array('-1', $TempArray)) {
+                $PartnerPre = 1;
+            }
+            if ($PartnerPre)
+                $RedirectURL = Yii::$app->homeUrl . 'user/dashboard';
+            else
+                $RedirectURL = Yii::$app->homeUrl . 'site/partner-preferences';
         }
-
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE, 'POPUPTYPE' => $PopUpType, 'REDIRECTURL' => $RedirectURL);
         return json_encode($return);
         exit;

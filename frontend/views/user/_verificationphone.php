@@ -165,11 +165,18 @@ use yii\widgets\Pjax;
                     if ($model->ePhoneVerifiedStatus == 'Yes') {
                         if ($temp['MultipleProfile'] == 0) {
                             if ($model->eEmailVerifiedStatus == 'Yes' && $model->ePhoneVerifiedStatus == 'Yes') {
+                                $TempArray = explode(",", $model->completed_step);
+                                $PartnerPre = 0;
+                                if (in_array('-1', $TempArray)) {
+                                    $Redirect_URL = Yii::$app->homeUrl . 'user/dashboard';
+                                } else {
+                                    $Redirect_URL = Yii::$app->homeUrl . 'site/partner-preferences';
+                                }
                                 $this->registerJs('
                                 $("#notification-model").on("hidden.bs.modal", function (e) {
                                         //window.location = "' . Yii::$app->homeUrl . 'user/dashboard?type=' . base64_encode("'.Yii::$app->params['validationDone'].'") . '";
-                                        //window.location = "' . Yii::$app->homeUrl . 'user/dashboard";
-                                        window.location = "' . Yii::$app->homeUrl . 'site/partner-preferences";
+                                        window.location = "' . $Redirect_URL . '";
+                                        //window.location = "' . Yii::$app->homeUrl . 'site/partner-preferences";
                                         //location.reload();
                                })
 
