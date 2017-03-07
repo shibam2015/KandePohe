@@ -42,9 +42,26 @@ if ($show) {
         'labelOptions' => ['class' => ''],
     ])->dropDownList(
         ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
-        ['class' => 'demo-default select-beast clsfamily', 'prompt' => 'Father Status']
+        ['class' => 'demo-default select-beast clsfamily', 'prompt' => 'Father Status',
+            'onchange' => '
+                                                    var wArray = ' . json_encode(Yii::$app->params['fatherWorkingAsNot']) . ';
+                                                                if(wArray.indexOf($(this).val())!=-1){ //.trim()
+                                                                       $(".user_ifatherworkingasid_div").hide();
+                                                                            var selectize = $("select#user-ifatherworkingasid")[0].selectize;
+                                                                            selectize.clear();
+                                                                            selectize.setValue(0);
+                                                                }else{
+                                                                    $(".user_ifatherworkingasid_div").show();
+                                                                }
+                                                    '
+        ]
     ); ?>
-
+    <?php
+    if (in_array($model->iFatherStatusID, Yii::$app->params['fatherWorkingAsNot'])) {
+        $Ft = 'style="display:none;"';
+    }
+    ?>
+    <div class="user_ifatherworkingasid_div" <?= $Ft ?>>
     <?= $form->field($model, 'iFatherWorkingAsID', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -53,16 +70,33 @@ if ($show) {
         ArrayHelper::map(CommonHelper::getWorkingas(), 'iWorkingAsID', 'vWorkingAsName'),
         ['class' => 'demo-default select-beast clsfamily', 'prompt' => 'Father Working AS']
     ); ?>
-
+    </div>
     <?= $form->field($model, 'iMotherStatusID', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
         'labelOptions' => ['class' => ''],
     ])->dropDownList(
         ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
-        ['class' => 'demo-default select-beast clsfamily', 'prompt' => 'Mother Status']
+        ['class' => 'demo-default select-beast clsfamily', 'prompt' => 'Mother Status',
+            'onchange' => '
+                                                      var wArray = ' . json_encode(Yii::$app->params['motherWorkingAsNot']) . ';
+                                                                if(wArray.indexOf($(this).val().trim())!=-1){
+                                                                       $(".user_imotherworkingasid_div").hide();
+                                                                            var selectize = $("select#user-imotherworkingasid")[0].selectize;
+                                                                            selectize.clear();
+                                                                            selectize.setValue(0);
+                                                                }else{
+                                                                    $(".user_imotherworkingasid_div").show();
+                                                                }
+                                                    '
+        ]
     ); ?>
-
+    <?php
+    if (in_array($model->iMotherStatusID, Yii::$app->params['motherWorkingAsNot'])) {
+        $Mt = 'style="display:none;"';
+    }
+    ?>
+    <div class="user_imotherworkingasid_div" <?= $Mt ?>>
     <?= $form->field($model, 'iMotherWorkingAsID', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -71,6 +105,8 @@ if ($show) {
         ArrayHelper::map(CommonHelper::getWorkingAS(), 'iWorkingAsID', 'vWorkingAsName'),
         ['class' => 'demo-default select-beast clsfamily', 'prompt' => 'Mother Working AS']
     ); ?>
+    </div>
+
     <?= $form->field($model, 'nob', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -387,13 +423,17 @@ if ($show) {
             <dt>Father Status</dt>
             <dd><?= CommonHelper::setInputVal($model->fatherStatus->vName, 'text') ?>
             <dd>
+                <?php if (!in_array($model->iFatherStatusID, Yii::$app->params['fatherWorkingAsNot'])) { ?>
             <dt>Father Working As</dt>
             <dd><?= CommonHelper::setInputVal($model->fatherStatusId->vWorkingAsName, 'text') ?></dd>
+            <?php } ?>
             <dt>Mother Status</dt>
             <dd><?= CommonHelper::setInputVal($model->motherStatus->vName, 'text') ?>
             <dd>
+                <?php if (!in_array($model->iMotherStatusID, Yii::$app->params['motherWorkingAsNot'])) { ?>
             <dt>Mother Working As</dt>
             <dd><?= CommonHelper::setInputVal($model->motherStatusId->vWorkingAsName, 'text') ?></dd>
+        <?php } ?>
             <dt>No of Brothers</dt>
             <dd><?= CommonHelper::setInputVal($model->nob, 'text') ?></dd>
             <dt>No of Sisters</dt>
