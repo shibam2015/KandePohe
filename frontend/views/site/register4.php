@@ -48,7 +48,18 @@ use yii\helpers\ArrayHelper;
                                             <?= $form->field($model, 'iFatherStatusID')->dropDownList(
                                                 ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
                                                 ['class' => 'demo-default select-beast',
-                                                    'prompt' => 'Father Status'
+                                                    'prompt' => 'Father Status',
+                                                    'onchange' => '
+                                                    var wArray = ' . json_encode(Yii::$app->params['fatherWorkingAsNot']) . ';
+                                                                if(wArray.indexOf($(this).val())!=-1){ //.trim()
+                                                                       $(".user_ifatherworkingasid_div").hide();
+                                                                            var selectize = $("select#user-ifatherworkingasid")[0].selectize;
+                                                                            selectize.clear();
+                                                                            selectize.setValue(0);
+                                                                }else{
+                                                                    $(".user_ifatherworkingasid_div").show();
+                                                                }
+                                                    '
                                                 ]
 
                                             )->label(false)->error(false); ?>
@@ -59,7 +70,12 @@ use yii\helpers\ArrayHelper;
                                            title="Mention Your Father Status "><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
                                     </div>
                                 </div>
-                                <div class="box">
+                                <?php
+                                if (in_array($model->iFatherStatusID, Yii::$app->params['fatherWorkingAsNot'])) {
+                                    $Ft = 'style="display:none;"';
+                                }
+                                ?>
+                                <div class="box user_ifatherworkingasid_div" <?= $Ft ?>>
                                     <div class="small-col">
                                         <div class="required1"><!--<span class="text-danger">*</span>--></div>
                                     </div>
@@ -87,7 +103,18 @@ use yii\helpers\ArrayHelper;
                                             <?= $form->field($model, 'iMotherStatusID')->dropDownList(
                                                 ArrayHelper::map(CommonHelper::getFmstatus(), 'iFMStatusID', 'vName'),
                                                 ['class' => 'demo-default select-beast',
-                                                    'prompt' => 'Mother Status'
+                                                    'prompt' => 'Mother Status',
+                                                    'onchange' => '
+                                                      var wArray = ' . json_encode(Yii::$app->params['motherWorkingAsNot']) . ';
+                                                                if(wArray.indexOf($(this).val().trim())!=-1){
+                                                                       $(".user_imotherworkingasid_div").hide();
+                                                                            var selectize = $("select#user-imotherworkingasid")[0].selectize;
+                                                                            selectize.clear();
+                                                                            selectize.setValue(0);
+                                                                }else{
+                                                                    $(".user_imotherworkingasid_div").show();
+                                                                }
+                                                    '
                                                 ]
                                             )->label(false)->error(false); ?>
                                         </div>
@@ -97,7 +124,12 @@ use yii\helpers\ArrayHelper;
                                            title="Mention Your Mother Status"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
                                     </div>
                                 </div>
-                                <div class="box">
+                                <?php
+                                if (in_array($model->iMotherStatusID, Yii::$app->params['motherWorkingAsNot'])) {
+                                    $Mt = 'style="display:none;"';
+                                }
+                                ?>
+                                <div class="box user_imotherworkingasid_div" <?= $Mt ?>>
                                     <div class="small-col">
                                         <div class="required1"><!--<span class="text-danger">*</span>--></div>
                                     </div>

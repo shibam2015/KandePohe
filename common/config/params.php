@@ -118,8 +118,9 @@ return [
         'Do not let other members know that I have visited their profile' => '2',
     ],
     # Privacy Setting End
-
     'familyTypeArray' => ['Joint' => 'Family_Joint', 'Nuclear' => 'Family_Nuclear'],
     'profileFor' => ['Self' => 'Self', 'Son' => 'Son', 'Daughter' => 'Daughter', 'Brother' => 'Brother', 'Sister' => 'Sister', 'Friend' => 'Friend'],
+    'fatherWorkingAsNot' => array('4', '5', '6'),//array('Homemaker','Passed Away','Not Employed'),
+    'motherWorkingAsNot' => array('4', '5', '6'),//array('Homemaker','Passed Away','Not Employed'),
 ];
 
