@@ -211,7 +211,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         #return static::find()->where(['Gender' => $Gender, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->limit($Limit)->all();
         return static::find()->where(['Gender' => $Gender])
             ->andWhere(['!=', 'id', $Id])
-            ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
+            ->andWhere(['status' => [self::STATUS_APPROVE]])
+            //->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
             ->orderBy(['LastLoginTime' => SORT_DESC])
             ->limit($Limit)->all();
     }
@@ -228,7 +229,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         if ($PartnersCountries != '') {
             $Where .= ' AND iCountryId IN (' . $PartnersCountries . ')';
         }
-        $sql = "select * from user where Gender=:gen and status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "')  AND id != " . $Id . " " . $Where;
+        #$sql = "select * from user where Gender=:gen and status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "')  AND id != " . $Id . " " . $Where;
+        $sql = "select * from user where Gender=:gen and status IN ('" . self::STATUS_APPROVE . "')  AND id != " . $Id . " " . $Where;
 
         return static::findBySql($sql, [":gen" => $Gender])->orderBy(['LastLoginTime' => SORT_DESC])->all();
 
@@ -256,7 +258,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
                 $Where .= ' iEducationFieldID IN (' . $PartnerEducationFields . ')';
         }
         if ($PartnerEducationLevels != '' || $PartnerEducationFields != '') $Where .= ' )';
-        $sql = "select * from user where Gender=:gen and status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "')  AND id != " . $Id . " " . $Where;
+        #$sql = "select * from user where Gender=:gen and status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "')  AND id != " . $Id . " " . $Where;
+        $sql = "select * from user where Gender=:gen and status IN ('" . self::STATUS_APPROVE . "')  AND id != " . $Id . " " . $Where;
         return static::findBySql($sql, [":gen" => $Gender])->orderBy(['LastLoginTime' => SORT_DESC])->all();
 
         /*return static::find()->where(['Gender' => $Gender])
@@ -298,7 +301,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
         if ($PartnerWorkingWith != '' || $PartnerWorkingAs != '' || $PartnerAnnualIncomeFrom != 0 || $PartnerAnnualIncomeTo != 0) $Where .= ' )';
 
-        $sql = "select * from user where Gender=:gen and status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "')  AND id != " . $Id . " " . $Where;
+        #$sql = "select * from user where Gender=:gen and status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "')  AND id != " . $Id . " " . $Where;
+        $sql = "select * from user where Gender=:gen and status IN ('" . self::STATUS_APPROVE . "')  AND id != " . $Id . " " . $Where;
         return static::findBySql($sql, [":gen" => $Gender])->orderBy(['LastLoginTime' => SORT_DESC])->all();
         /*return static::find()->where(['Gender' => $Gender])
             ->andWhere(['!=', 'id', $Id])
@@ -316,7 +320,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
             ->andWhere(['!=', 'id', $Id])
             ->andWhere(['=', 'iReligion_ID', $iReligion_ID])
             ->andWhere(['=', 'iMaritalStatusID', $iMaritalStatusID])
-            ->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
+            ->andWhere(['status' => [self::STATUS_APPROVE]])
+            #->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
             ->orderBy(['LastLoginTime' => SORT_DESC])
             ->all();
     }
@@ -324,7 +329,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     {
         $sql = "select user.id,user.email,user.Registration_Number,user.propic,user.DOB,user.iHeightID, user_request.from_user_id, user_request.to_user_id,user_request.send_request_status from user
                 LEFT JOIN user_request ON 1=1
-                where user.Gender=:gen and user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "')  AND  user_request.from_user_id!= " . $Id;
+                where user.Gender=:gen and user.status IN ('" . self::STATUS_APPROVE . "')  AND  user_request.from_user_id!= " . $Id;
+        #where user.Gender=:gen and user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "')  AND  user_request.from_user_id!= " . $Id;
         return static::findBySql($sql, [":gen" => $Gender])->limit($Limit)->all();
     }
 
@@ -351,7 +357,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
         // LEFT JOIN master_heights ON user.iHeightID = master_heights.iHeightID
         $Records = User::find()->select(' * ')
             ->leftJoin('master_heights', '`user`.`iHeightID` = `master_heights`.`iHeightID`')
-            ->where((" 1=1  AND user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "') $WHERE "))->orderBy(['LastLoginTime' => SORT_DESC])->offset($Offset)->limit($Limit)->all();
+            ->where((" 1=1  AND user.status IN ('" . self::STATUS_APPROVE . "') $WHERE "))->orderBy(['LastLoginTime' => SORT_DESC])->offset($Offset)->limit($Limit)->all();
+        #->where((" 1=1  AND user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "') $WHERE "))->orderBy(['LastLoginTime' => SORT_DESC])->offset($Offset)->limit($Limit)->all();
         return $Records;
 
         /*$Records = User::find()->select(' * ')->where((" 1=1  AND user.status IN ('" . self::STATUS_ACTIVE . "','" . self::STATUS_APPROVE . "') $WHERE "))->orderBy(['LastLoginTime' => SORT_DESC])->offset($Offset)->limit($Limit)->all();
@@ -360,7 +367,8 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public static function findFeaturedMembers($Limit = 4) # Get Featured Members list with limit
     {
-        return static::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
+        return static::find()->where(['status' => [self::STATUS_APPROVE]])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
+        #return static::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
     }
 
     public static function getUserInfroamtion($Id)

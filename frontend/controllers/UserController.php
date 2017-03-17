@@ -3215,7 +3215,8 @@ class UserController extends Controller
                 }
             }
             $model = User::find()->joinWith([countryName, stateName, cityName, height, maritalStatusName, talukaName, districtName, gotraName, subCommunityName, communityName, religionName, educationLevelName, communityName, workingWithName, workingAsName, dietName, fatherStatus])->where(['id' => $UserId])->one();
-            if ($model->status == User::STATUS_ACTIVE || $model->status == User::STATUS_APPROVE) {
+            #if ($model->status == User::STATUS_ACTIVE || $model->status == User::STATUS_APPROVE) {
+            if ($model->status == User::STATUS_APPROVE) {
                 $USER_PHOTO_MODEL = new  UserPhotos();
                 $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($UserId);
                 $COVER_PHOTO = CommonHelper::getCoverPhotos($TYPE = 'USER', $UserId, $model->cover_photo);
