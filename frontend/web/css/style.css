@@ -3222,3 +3222,11 @@ padding: 5px 15px;
 .btn-link {
 	color: #ea0b44;
 }
+
+.btn-link {
+	color: #ea0b44;
+}
+
+.btn-link:focus, .btn-link:hover {
+	color: #ea0b44;
+}
