@@ -36,7 +36,7 @@ use yii\jui\DatePicker;
                     <div class="col-sm-6 col-xs-12">
                         <div class="logo"><a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>" title="logo">
                                 <img
-                                    src="images/logo1.png" width="250" height="88" alt="logo" class="img1"
+                                    src="images/logo1.png" width="278" height="98" alt="logo" class="img1"
                                     title="Kande Pohe"> </a>
                             <a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>" title="logo"> <img
                                     src="images/logo2.png"
