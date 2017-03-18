@@ -3218,3 +3218,7 @@ padding: 5px 15px;
 .radio-new label:before, .checkbox-new label:before {
 	top: 0;
 }
+
+.btn-link {
+	color: #ea0b44;
+}

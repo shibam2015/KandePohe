@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use common\models\LoginForm;
 use yii\captcha\Captcha;
 use frontend\models\PasswordResetRequestForm;
+
 $forgot = new PasswordResetRequestForm();
 /*$religion_data = CommonHelper::getReligion();
 $community_data = CommonHelper::getCommunity();*/
@@ -18,6 +19,7 @@ if (!Yii::$app->user->isGuest) {
 }
 //die();
 use yii\jui\DatePicker;
+
 ?>
 <div class="video">
     <div class="drop-effect"></div>
@@ -359,7 +361,7 @@ use yii\jui\DatePicker;
 </section>
 <?php if (Yii::$app->user->isGuest) { ?>
     <!-- Modal Signup -->
-    <div class="modal fade signup-modal" id="myModalNorm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div class="modal fade" id="myModalNorm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <p class="text-center mrg-bt-30">
@@ -483,14 +485,16 @@ use yii\jui\DatePicker;
                                                 'item' => function ($index, $label, $name, $checked, $value) {
 
                                                     $return = '<input type="checkbox" id="toc" name="' . $name . '" value="YES" >';
-                                                    $return .= '<label for="toc" class="control-label toccl">By clicking  ‘Sign Up Free’  you agree to our <a href="#" title="Terms">Terms</a></label>';
+                                                    $return .= '<label for="toc" class="control-label toccl">I agree to the <a href="#" title="[Privacy
+Policy]">[Privacy
+Policy]</a> and <a href="#" title="[T&C]">[T&C]</a></label>';
                                                     return $return;
                                                 }
                                             ]
                                         )->label(false); ?>
 
                                     </div>
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-10">
 
                                         <?= Html::submitButton('Sign up free', ['class' => 'btn btn-primary mrg-tp-10', 'name' => 'signup-button', 'id' => 'btnSignup']) ?>
                                     </div>
@@ -504,10 +508,6 @@ use yii\jui\DatePicker;
                     </div>
                 </div>
             </div>
-            <p class="text-center text-white mrg-tp-10">Already have an account ? <a class="btn-link"
-                                                                                     data-target="#login"
-                                                                                     data-toggle="modal" title="Login"
-                                                                                     href="#">Login</a></p>
         </div>
     </div>
 
@@ -542,7 +542,7 @@ use yii\jui\DatePicker;
                     ?>
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1 text-left">
-                            <?= $form->errorSummary($model,['header' => '']); ?></div>
+                            <?= $form->errorSummary($model, ['header' => '']); ?></div>
                     </div>
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">
@@ -559,12 +559,12 @@ use yii\jui\DatePicker;
                                    data-target="#fpswd">Forgot password?</a></div>
                             <!-- <a href="dash-board.html" class="">Login</a> -->
                             <?= Html::submitButton('Login', ['class' => 'btn btn-primary mrg-tp-10 col-xs-12 login-btn', 'id' => '#loginbtn', 'name' => 'login-button', 'data-loading-text' => '<i class="fa fa-circle-o-notch fa-spin"></i> Login...']) ?>
-                            <!--<div class="checkbox">
+                            <div class="checkbox">
                                 <a href="javascript:void(0)" class="pull-right freeacc register_link" title="Register
 FREE">[Register FREE]</a>
 
                                 <span class="pull-right freeacc">Don’t have an
-                    account?</span></div>-->
+                    account?</span></div>
                             <div class="bar-devider"><span>OR</span></div>
 
                             <a class="btn btn-block btn-social btn-facebook"> <i class="fa fa-facebook"></i> Sign in
@@ -576,16 +576,12 @@ FREE">[Register FREE]</a>
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>
-            <p class="text-center text-white mrg-tp-10">Don't have an account? <a class="btn-link "
-                                                                                  data-target="#myModalNorm"
-                                                                                  data-toggle="modal"
-                                                                                  title="Sign up Free" href="#">SIGN UP
-                    FREE</a></p>
+
             <!-- Modal Footer -->
         </div>
     </div>
     <!-- Modal Sign Up After -->
-    <div class="modal fade " id="signup_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div class="modal fade" id="signup_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <p class="text-center mrg-bt-30"><img src="images/logo.png" width="157" height="61" alt="logo"></p>
