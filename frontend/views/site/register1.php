@@ -51,10 +51,10 @@ use yii\helpers\ArrayHelper;
                     <div class="form-cont">
                       <?= $form->field($model, 'iReligion_ID')->dropDownList(
                           ArrayHelper::map(CommonHelper::getReligion(), 'iReligion_ID', 'vName'),
-                          ['class' => 'demo-default select-beast',
-                              'prompt' => 'Religion'
+                          ['options' => [1 => ['Selected' => 'selected']],
+                              'class' => 'demo-default select-beast',
+                              'prompt' => 'Religion',
                           ]
-
                       )->label(false)->error(false);?>
                     </div>
                   </div>

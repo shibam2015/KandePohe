@@ -926,7 +926,7 @@ class CommonHelper {
 
     public function getReligion()
     {
-        $religion = \common\models\Religion::find()->all();
+        $religion = \common\models\Religion::find()->select('*')->where('eStatus In ("Active")')->all();
         return $religion;
     }
 
