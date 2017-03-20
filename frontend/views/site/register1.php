@@ -25,7 +25,6 @@ use yii\helpers\ArrayHelper;
             <?php
             }
             ?>
-                            <?php echo CommonHelper::getIPAddress(); ?>
               </span>
 
                         <div class="row no-gutter">
