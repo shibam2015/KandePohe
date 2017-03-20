@@ -267,9 +267,9 @@ if ($show) {
         ]
     ); ?>
     </div>
-    <div class="box user_iTalukaID_div"
-         style="<?= $hide ?>">
-    <?= $form->field($model, 'iTalukaCAID', [
+    <!--<div class="box user_iTalukaID_div"
+         style="<? /*= $hide */ ?>">
+    <? /*= $form->field($model, 'iTalukaCAID', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
         'labelOptions' => ['class' => ''],
@@ -278,8 +278,8 @@ if ($show) {
         ['class' => 'demo-default select-beast clsfamily',
             'prompt' => 'Taluka'
         ]
-    ); ?>
-    </div>
+    ); */ ?>
+    </div>-->
     <?= $form->field($model, 'vAreaNameCA', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -452,8 +452,8 @@ if ($show) {
             <div style="<?= $hide ?>">
             <dt>Distict</dt>
             <dd><?= CommonHelper::setInputVal($model->districtNameCA->vName, 'text') ?></dd>
-            <dt>Taluks</dt>
-            <dd><?= CommonHelper::setInputVal($model->talukaNameCA->vName, 'text') ?></dd>
+                <!-- <dt>Taluks</dt>
+            <dd><?/*= CommonHelper::setInputVal($model->talukaNameCA->vName, 'text') */ ?></dd>-->
             </div>
             <dt>Area Name</dt>
             <dd><?= CommonHelper::setInputVal($model->vAreaName, 'text') ?></dd>

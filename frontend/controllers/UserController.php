@@ -523,6 +523,7 @@ class UserController extends Controller
                     $model->iTalukaID = Yii::$app->request->post('User')['iTalukaID'];
                     $model->iDistrictID = Yii::$app->request->post('User')['iDistrictID'];
                 }
+                $model->iTalukaID = 0; #TODO : This is for temporary base. Please remove this line when use taluka.
 
                 $model->vAreaName = Yii::$app->request->post('User')['vAreaName'];
 
@@ -693,6 +694,7 @@ class UserController extends Controller
                     $model->iDistrictCAID = Yii::$app->request->post('User')['iDistrictCAID'];
                     $model->iTalukaCAID = Yii::$app->request->post('User')['iTalukaCAID'];
                 }
+                $model->iTalukaCAID = 0; #TODO : This is for temporary base. Please remove this line when use taluka.
                 /*$model->iDistrictCAID = Yii::$app->request->post('User')['iDistrictCAID'];
                 $model->iTalukaCAID = Yii::$app->request->post('User')['iTalukaCAID'];*/
                 $model->vAreaNameCA = Yii::$app->request->post('User')['vAreaNameCA'];

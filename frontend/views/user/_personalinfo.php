@@ -321,17 +321,17 @@ use yii\helpers\Url;
             ['class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'District']
         ); ?>
         </div>
-        <div class="box user_iTalukaID_div"
-             style="<?= $hide ?>">
-        <?= $form->field($model, 'iTalukaID', [
+        <!--<div class="box user_iTalukaID_div"
+             style="<? /*= $hide */ ?>">
+        <? /*= $form->field($model, 'iTalukaID', [
             'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
             'labelOptions' => ['class' => ''],
         ])->dropDownList(
             ArrayHelper::map(CommonHelper::getTaluka(), 'iTalukaID', 'vName'),
             ['class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'Taluka']
-        ); ?>
-        </div>
+        ); */ ?>
+        </div>-->
         <?= $form->field($model, 'vAreaName', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -437,8 +437,8 @@ use yii\helpers\Url;
             <div style="<?= $hide ?>">
             <dt>Distict</dt>
             <dd><?= $model->districtName->vName; ?></dd>
-            <dt>Taluks</dt>
-            <dd><?= $model->talukaName->vName; ?></dd>
+                <!-- <dt>Taluks</dt>
+            <dd><?/*= $model->talukaName->vName; */ ?></dd>-->
             </div>
             <dt>Area Name</dt>
             <dd><?= $model->vAreaName ?></dd>
