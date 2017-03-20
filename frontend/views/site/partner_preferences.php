@@ -163,7 +163,7 @@ use yii\widgets\Pjax;
                                             </div>
                                         </div>
 
-                                        <div class="form-group field-partners_subcommunity-isub_community_id">
+                                        <!--<div class="form-group field-partners_subcommunity-isub_community_id">
                                             <label class="control-label col-sm-3 col-xs-3"
                                                    for="partners_subcommunity-isub_community_id">Sub
                                                 Community</label>
@@ -175,16 +175,16 @@ use yii\widgets\Pjax;
                                                         name="PartnersSubcommunity[iSub_Community_ID][]"
                                                         size="4">
                                                     <?php
-                                                    foreach (CommonHelper::getSubCommunity() as $K => $V) { ?>
+                                        /*                                                    foreach (CommonHelper::getSubCommunity() as $K => $V) { */ ?>
                                                         <option
-                                                            value="<?= $V->iSubCommunity_ID ?>" <?php if (in_array($V->iSubCommunity_ID, $PartnersSubCommunity)) {
+                                                            value="<? /*= $V->iSubCommunity_ID */ ?>" <?php /*if (in_array($V->iSubCommunity_ID, $PartnersSubCommunity)) {
                                                             echo "selected";
-                                                        } ?>><?= $V->vName ?></option>
-                                                    <?php }
-                                                    ?>
+                                                        } */ ?>><? /*= $V->vName */ ?></option>
+                                                    <?php /*}
+                                                    */ ?>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <?= $form->field($PartnersRaashi, 'raashi_id')->dropDownList(
                                             ArrayHelper::map(CommonHelper::getRaashi(), 'ID', 'Name'),
                                             ['class' => 'demo-default select-beast clspreferences', 'prompt' => 'Raashi']

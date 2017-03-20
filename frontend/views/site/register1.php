@@ -90,13 +90,10 @@ use yii\helpers\ArrayHelper;
                                         </div>
                                         <div class="mid-col">
                                             <div class="form-cont">
-                                                <?= $form->field($model, 'iSubCommunity_ID')->dropDownList(
-                                                    ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
-                                                    ['class' => 'demo-default select-beast',
-                                                        'prompt' => 'Sub Community'
-                                                    ]
+                                                <?= $form->field($model, 'iSubCommunity_ID', ["template" => '<span class="input input--akira input--filled dobcl">{input}<label class="input__label input__label--akira" for="input-22"> <span class="input__label-content input__label-content--akira">Sub Community</span> </label></span>'])->input('text', ['class' => 'input__field input__field--akira form-control vareaname', 'placeholder' => '',
 
-                                                )->label(false)->error(false); ?>
+
+                                                ]) ?>
                                             </div>
 
                                         </div>
@@ -105,6 +102,28 @@ use yii\helpers\ArrayHelper;
                                                title="Mention Your Sub Community"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
                                         </div>
                                     </div>
+                                    <!--<div class="box">
+                                        <div class="small-col">
+                                            <div class="required1"></div>
+                                        </div>
+                                        <div class="mid-col">
+                                            <div class="form-cont">
+                                                <? /*= $form->field($model, 'iSubCommunity_ID')->dropDownList(
+                                                    ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
+                                                    ['class' => 'demo-default select-beast',
+                                                        'prompt' => 'Sub Community'
+                                                    ]
+
+                                                )->label(false)->error(false); */ ?>
+                                            </div>
+
+                                        </div>
+                                        <div class="small-col tp ">
+                                            <a href="#" data-toggle="tooltip" data-placement="right"
+                                               title="Mention Your Sub Community"><? /*= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); */ ?></a>
+                                        </div>
+                                    </div>-->
+
                                     <div class="box">
                                         <div class="small-col">
                                             <div class="required1"><span class="text-danger">*</span></div>

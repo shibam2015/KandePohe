@@ -129,6 +129,7 @@ use yii\helpers\Url;
             ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
             ['class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'Community']
         ); ?>
+        <!--
         <?= $form->field($model, 'iSubCommunity_ID', [
             'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -137,6 +138,16 @@ use yii\helpers\Url;
             ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
             ['class' => 'demo-default select-beast clsbasicinfo', 'prompt' => 'Sub Community']
         ); ?>
+        -->
+
+        <?= $form->field($model, 'iSubCommunity_ID',
+            [
+                'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+                'labelOptions' => ['class' => ''],
+            ]
+        )->textInput() ?>
+
         <?= $form->field($model, 'iGotraID', [
             'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -413,8 +424,9 @@ use yii\helpers\Url;
             <dt>Community</dt>
             <dd><?= $model->communityName->vName; ?></dd>
             <dt>Sub Community</dt>
-            <dd><?= $model->subCommunityName->vName; ?>
+            <dd><?= $model->iSubCommunity_ID; ?>
             <dd>
+                <!-- <?= $model->subCommunityName->vName; ?>-->
             <dt>Gotra</dt>
             <dd><?= $model->gotraName->vName; ?></dd>
             <dt>Marital Status</dt>

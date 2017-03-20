@@ -204,8 +204,9 @@ use yii\widgets\Pjax;
                                                     <dt>Community</dt>
                                                     <dd><?= $model->communityName->vName; ?></dd>
                                                     <dt>Sub Community</dt>
-                                                    <dd><?= $model->subCommunityName->vName; ?>
+                                                    <dd><?= $model->iSubCommunity_ID; ?>
                                                     <dd>
+                                                        <!--<dd><? /*= $model->subCommunityName->vName; */ ?><dd>-->
                                                     <dt>Gotra</dt>
                                                     <dd><?= $model->gotraName->vName; ?></dd>
                                                     <dt>Marital Status</dt>
