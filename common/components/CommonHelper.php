@@ -1039,7 +1039,7 @@ class CommonHelper {
 
     public function getFmstatus()
     {
-        return \common\models\MasterFmStatus::find()->all();
+        return \common\models\MasterFmStatus::find()->orderBy('vName')->all();
     }
 
     public function getMotherTongue()
