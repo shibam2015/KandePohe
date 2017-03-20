@@ -48,10 +48,14 @@ use yii\helpers\ArrayHelper;
                         <option
                             value="<?= $V->iReligion_ID ?>" <?php if (in_array($V->iReligion_ID, $PartenersReligionIDs)) {
                             echo "selected";
+                        }
+                        if (count($PartenersReligionIDs) == 0) {
+                            echo "selected";
                         } ?>><?= $V->vName ?></option>
                     <?php }
                     ?>
                 </select>
+                <?php #Todo : Please remove count()==0 condition.?>
             </div>
         </div>
         <?php
