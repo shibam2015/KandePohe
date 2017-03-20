@@ -401,9 +401,10 @@ Koregaon Park',
                                                title="Mention Your Area Name"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
                                         </div>
                                     </div>
-                                    <div class="checkbox mrg-lt-30">
+                                    <div class="checkbox mrg-lt-30"
+                                         style="display: none;">  <?php #Todo:remove style from here. ?>
                                         <input id="Remember" type="checkbox" name="User[cnb]"
-                                               value="YES" <?php echo ($model->cnb == 'YES') ? 'checked' : ''; ?>>
+                                               value="YES" <?php echo ($model->cnb == 'YES') ? 'checked' : 'checked'; ?>>
                                         <label for="Remember" class="control-label">Not particular about my partner’s
                                             community (Caste No Bar) </label>
                                     </div>
