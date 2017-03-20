@@ -281,6 +281,7 @@ class SiteController extends Controller
             $model->new_county_code = Yii::$app->request->post('User')['county_code'];
             $model->new_phone_no = Yii::$app->request->post('User')['Mobile'];
             $model->LastLoginTime = CommonHelper::getTime();
+            $model->IP_Address = CommonHelper::getIPAddress();
             #CommonHelper::pr(Yii::$app->request->post());exit;
             /*$model->save();
             var_dump($model->errors);
