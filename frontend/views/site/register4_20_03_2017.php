@@ -439,26 +439,26 @@ use yii\helpers\ArrayHelper;
                                            title="Mention Your District"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
                                     </div>
                                 </div>
-                                <!--<div class="box user_iTalukaID_div"
-                                     style="<?php /*if ($model->iCountryCAId != 101) { */ ?> display: none; <?php /*} */ ?>">
+                                <div class="box user_iTalukaID_div"
+                                     style="<?php if ($model->iCountryCAId != 101) { ?> display: none; <?php } ?>">
                                     <div class="small-col">
                                         <div class="required1"><span class="text-danger">*</span></div>
                                     </div>
                                     <div class="mid-col">
                                         <div class="form-cont">
-                                            <? /*= $form->field($model, 'iTalukaCAID')->dropDownList(
+                                            <?= $form->field($model, 'iTalukaCAID')->dropDownList(
                                                 ArrayHelper::map(CommonHelper::getTaluka(), 'iTalukaID', 'vName'),
                                                 ['class' => 'demo-default select-beast',
                                                     'prompt' => 'Taluka'
                                                 ]
-                                            )->label(false)->error(false); */ ?>
+                                            )->label(false)->error(false); ?>
                                         </div>
                                     </div>
                                     <div class="small-col tp ">
                                         <a href="#" data-toggle="tooltip" data-placement="right"
-                                           title="Mention Your Taluka"><? /*= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); */ ?></a>
+                                           title="Mention Your Taluka"><?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => 21, 'alt' => 'help']); ?></a>
                                     </div>
-                                </div>-->
+                                </div>
                                 <div class="box">
                                     <div class="small-col">
                                         <div class="required1"><!--<span class="text-danger">*</span>--></div>
@@ -643,7 +643,8 @@ Koregaon Park']) ?>
                                             <div class=""></div>
 
 					<span class="input input--akira input--filled input-textarea mrg-tp-10">
-                          <textarea class="input__field input__field--akira" cols="50" rows="5" name="User[vDetailRelative]" ><?= ($model->vDetailRelative)?></textarea>
+                          <textarea class="input__field input__field--akira" cols="50" rows="5"
+                                    name="User[vDetailRelative]"><?= ($model->vDetailRelative) ?></textarea>
                           <label class="input__label input__label--akira" for="input-22">
                               <span class="input__label-content input__label-content--akira">You can enter your relative surnames etc...</span>
                           </label>
@@ -719,14 +720,14 @@ $this->registerJs('
             $(".Paddress").fadeOut("fast");
     });
   function sameAsAboveAddress(){
-      var iCountryId = "'.$model->iCountryId.'";
-      var iStateId = "'.$model->iStateId .'";
-      var iCityId = "'.$model->iCityId .'";
-      var iDistrictID = "'.$model->iDistrictID .'";
-      var iTalukaID = "'.$model->iTalukaID .'";
-      var vAreaName = "'.$model->vAreaName .'";
+      var iCountryId = "' . $model->iCountryId . '";
+      var iStateId = "' . $model->iStateId . '";
+      var iCityId = "' . $model->iCityId . '";
+      var iDistrictID = "' . $model->iDistrictID . '";
+      var iTalukaID = "' . $model->iTalukaID . '";
+      var vAreaName = "' . $model->vAreaName . '";
       $.ajax({
-        url:"'.Url::to(['ajax/sameasaboveaddress']).'", 
+        url:"' . Url::to(['ajax/sameasaboveaddress']) . '",
         type: "post",
         dataType: "JSON",
         async: false,
