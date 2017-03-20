@@ -218,8 +218,8 @@ use yii\widgets\Pjax;
                                                     <dd><?= CommonHelper::setInputVal($model->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($model->stateName->vStateName, 'text') . ', ' . CommonHelper::setInputVal($model->countryName->vCountryName, 'text') ?></dd>
                                                     <dt>Distict</dt>
                                                     <dd><?= $model->districtName->vName; ?></dd>
-                                                    <dt>Taluks</dt>
-                                                    <dd><?= $model->talukaName->vName; ?></dd>
+                                                    <!--<dt>Taluks</dt>
+                                                    <dd><? /*= $model->talukaName->vName; */ ?></dd>-->
                                                     <dt>Area Name</dt>
                                                     <dd><?= $model->vAreaName ?></dd>
                                                     <dt>Mother Tongue</dt>
@@ -298,8 +298,8 @@ use yii\widgets\Pjax;
                                                     <dd><?= CommonHelper::setInputVal($model->cityNameCA->vCityName, 'text') ?></dd>
                                                     <dt>Distict</dt>
                                                     <dd><?= CommonHelper::setInputVal($model->districtNameCA->vName, 'text') ?></dd>
-                                                    <dt>Taluks</dt>
-                                                    <dd><?= CommonHelper::setInputVal($model->talukaNameCA->vName, 'text') ?></dd>
+                                                    <!--<dt>Taluks</dt>
+                                                    <dd><? /*= CommonHelper::setInputVal($model->talukaNameCA->vName, 'text') */ ?></dd>-->
                                                     <dt>Area Name</dt>
                                                     <dd><?= CommonHelper::setInputVal($model->vAreaName, 'text') ?></dd>
                                                     <dt>Native Place</dt>
