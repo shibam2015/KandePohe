@@ -780,8 +780,8 @@ use yii\widgets\Pjax;
                             <h5 class="mrg-bt-30 mrg-tp-20 font-15 text-dark">
                                 <strong>
                                     <i class="fa">
-                                        <img src="/KandePohe/images/call.png" width="" height=""
-                                             alt="call"></i> <?= $model->getDisplayMobile() ?>
+                                        <?= Html::img('@web/images/call.png', ['width' => '', 'height' => '', 'alt' => 'call']); ?>
+                                    </i> <?= $model->getDisplayMobile() ?>
                                 </strong>
                             </h5>
                         </div>
