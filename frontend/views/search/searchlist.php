@@ -335,14 +335,18 @@ $M1 = array();
                                             class="white-section <?= ($SK == 0) ? 'listing' : ''; ?> border-sharp mrg-tp-10">
                                             <div class="row mrg-bt-20">
                                                 <div class="col-sm-12">
-                                                    <div class="featured-prof"><span class="featured-icon"></span> <span
-                                                            class="thead">Featured Profile <a href="#"
-                                                                                              data-toggle="tooltip"
-                                                                                              data-placement="right"
-                                                                                              title=""
-                                                                                              data-original-title="This is where the help text will appear when the mouse hovers over the help icon">
-                                                                <?= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => '21']); ?>
-                                                            </a></span></div>
+                                                    <!--<div class="featured-prof">
+                                                        <span class="featured-icon"></span>
+                                                        <span class="thead">Featured Profile
+                                                            <a href="#"
+                                                                      data-toggle="tooltip"
+                                                                      data-placement="right"
+                                                                      title=""
+                                                                      data-original-title="This is where the help text will appear when the mouse hovers over the help icon">
+                                                                <? /*= Html::img('@web/images/tooltip.jpg', ['width' => '21', 'height' => '21']); */ ?>
+                                                            </a>
+                                                        </span>
+                                                    </div>-->
                                                 </div>
                                             </div>
                                             <div class="row">

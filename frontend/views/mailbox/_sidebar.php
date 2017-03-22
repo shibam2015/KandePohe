@@ -11,9 +11,9 @@ use yii\helpers\Url;
 ?>
 
 <div class="col-sm-3 col-md-2" id="mailbox_sidebar">
-    <a href="javascript:void(0)"
+    <!--<a href="javascript:void(0)"
        data-target="#compose_mail"
-       data-toggle="modal" class="btn btn-danger btn-sm btn-block compose_mail" role="button">COMPOSE</a>
+       data-toggle="modal" class="btn btn-danger btn-sm btn-block compose_mail" role="button">COMPOSE</a>-->
     <hr/>
     <ul class="nav nav-pills nav-stacked">
         <li  <?= ($MainMenu == '') ? 'class="active"' : ''; ?>>

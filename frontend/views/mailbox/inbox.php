@@ -14,7 +14,7 @@ use yii\helpers\Url;
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-3 col-md-2">
-                            <div class="btn-group">
+                            <!--<div class="btn-group">
                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"> Mail
                                     <span class="caret"></span></button>
                                 <ul class="dropdown-menu" role="menu">
@@ -22,7 +22,7 @@ use yii\helpers\Url;
                                     <li><a href="#">Contacts</a></li>
                                     <li><a href="#">Tasks</a></li>
                                 </ul>
-                            </div>
+                            </div>-->
                         </div>
                         <!--<div class="col-sm-9 col-md-10">
                             <div class="pull-left">

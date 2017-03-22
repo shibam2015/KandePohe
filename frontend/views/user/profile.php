@@ -142,14 +142,16 @@ use yii\widgets\Pjax;
                                                         Chat Now</a>
                                                 </li>
                                                 <li>
-                                                    <a href="<?= Yii::$app->homeUrl ?>/payment/payment?source=profile_callsmsnow&uk=<?= $model->Registration_Number ?>"
-                                                       target="_blank"><i class="fa">
+                                                    <a href="javascript::void(0)" data-toggle="modal"
+                                                       data-target="#phone_number_modal">
+                                                        <i class="fa">
                                                             <?= Html::img('@web/images/call.png', ['width' => '', 'height' => '', 'alt' => 'call']); ?>
-                                                        </i> Call/ Send SMS</a></li>
+                                                        </i> Call Now</a></li>
                                                 <li><a href="#"><i class="fa">
                                                             <?= Html::img('@web/images/lock.png', ['width' => '', 'height' => '', 'alt' => 'lock']); ?>
                                                         </i></a></li>
                                             </ul>
+
                                         </div>
                                     </div>
                                 </div>
@@ -755,6 +757,40 @@ use yii\widgets\Pjax;
             </div>
         </main>
     </div>
+
+<!--Phone NUmber -->
+<div class="modal fade" id="phone_number_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <p class="text-center mrg-bt-10">
+            <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+        </p>
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span> <span
+                        class="sr-only">Close</span></button>
+                <h2 class="text-center">Contact Number</h2>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="text-center">
+                        <div class="col-md-12 col-sm-12">
+                            <h5 class="mrg-bt-30 mrg-tp-20 font-15 text-dark">
+                                <strong>
+                                    <i class="fa">
+                                        <img src="/KandePohe/images/call.png" width="" height=""
+                                             alt="call"></i> <?= $model->getDisplayMobile() ?>
+                                </strong>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- Modal Photo -->
     <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">

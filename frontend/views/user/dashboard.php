@@ -20,8 +20,7 @@ if (!Yii::$app->user->isGuest) {
     <div class="main-section">
 
     <link rel="stylesheet" type="text/css" href="<?= Yii::$app->request->baseUrl ?>/css/radical-progress.css"/>
-        <main
-        <!--data-ng-app="myApp" data-ng-controller="dashboardController"-->>
+        <main> <!--data-ng-app="myApp" data-ng-controller="dashboardController"-->
             <section>
                 <div class="container">
                     <div class="row">
@@ -94,7 +93,6 @@ if (!Yii::$app->user->isGuest) {
                                 <div class="panel no-border padd-hr-10 panel-default panel-friends">
                                     <div class="panel-heading">
                                         <h3 class="panel-title text-muted">Unblock Trust Badges
-                                            <!--<img src="images/follower-member.png">-->
                                             <?= Html::img('@web/images/follower-member.png', ['width' => '', 'height' => '', 'alt' => '']); ?>
                                         </h3>
                                     </div>
@@ -740,7 +738,8 @@ if (!Yii::$app->user->isGuest) {
                                 </div>
                             </div>
                         </div>
-                        <!--  <?= $this->render('/layouts/parts/_rightbar.php', ['SimilarProfile' => $SimilarProfile]) ?> -->
+                        <!-- <? /*= $this->render('/layouts/parts/_rightbar.php', ['SimilarProfile' => $SimilarProfile]) */ ?> -->
+
                     </div>
                 </div>
             </section>
@@ -797,7 +796,7 @@ if (!Yii::$app->user->isGuest) {
                         </div>
                     </div>
                 </div>
-            </div>-->
+            </div> -->
         </main>
     </div>
     <div class="modal fade" id="sendInterest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
