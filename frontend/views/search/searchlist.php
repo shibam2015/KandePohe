@@ -280,15 +280,15 @@ $M1 = array();
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <!--<div class="col-md-6">
                                                         <div class="box">
                                                             <div class="mid-col">
                                                                 <div class="form-cont bs">
-                                                                    <?= html::a('<i class="ti-power-off m-r-5"></i> Advanced Search</a>', ['search/advanced-search'], ['data-method' => 'post']) ?>
+                                                                    <? /*= html::a('<i class="ti-power-off m-r-5"></i> Advanced Search</a>', ['search/advanced-search'], ['data-method' => 'post']) */ ?>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div>-->
                                                 </div>
                                             </div>
                                             <?php ActiveForm::end(); ?>
