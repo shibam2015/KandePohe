@@ -80,6 +80,7 @@ if (!Yii::$app->user->isGuest) {
                                                    title="Edit Preference"> Edit Preference</a>
                                             </li>
                                             <li><?= html::a('Privacy Options', ['user/setting'], ["title" => 'Privacy Option']) ?></li>
+                                            <li><?= html::a('Shortlisted Profile(s)', ['search/short-list'], ["title" => 'Shortlisted Profile(s)']) ?></li>
                                         </ul>
                                         <!-- <a href="javascript:void(0)"
                      class="pull-left profile_set"
