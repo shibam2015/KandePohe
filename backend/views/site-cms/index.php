@@ -36,9 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <tr role="row">
                                         </thead>
                                         <tbody>
-                                        <p>
-                                            <?= Html::a('Create Site Cms', ['create'], ['class' => 'btn btn-success pull-right']) ?>
-                                        </p>
+                                        <!--<p>
+                                            <? /*= Html::a('Create Site Cms', ['create'], ['class' => 'btn btn-success pull-right']) */ ?>
+                                        </p>-->
                                         <?= GridView::widget([
                                             'dataProvider' => $dataProvider,
                                             'filterModel' => $searchModel,
