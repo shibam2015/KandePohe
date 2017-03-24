@@ -144,6 +144,7 @@ $ADMIN_NAME = ucwords(strtolower(Yii::$app->user->identity->vFirstName. ' ' .Yii
 
                         ], 'visible' => !Yii::$app->user->isGuest
                     ],
+                    ['label' => 'Site CMS', 'icon' => 'fa fa-user-secret', 'url' => ['/site-cms'], 'visible' => !Yii::$app->user->isGuest],
 
                     /*['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [

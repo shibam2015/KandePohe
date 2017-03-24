@@ -4,7 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
-use common\components\MailHelper;
+
 /**
  * ContactForm is the model behind the contact form.
  */
@@ -12,9 +12,10 @@ class ContactForm extends Model
 {
     public $name;
     public $email;
-    public $phone;
-    public $message;
+    public $subject;
+    public $body;
     public $verifyCode;
+
 
     /**
      * @inheritdoc
@@ -23,10 +24,9 @@ class ContactForm extends Model
     {
         return [
             // name, email, subject and body are required
-            [['name', 'email', 'phone', 'message'], 'required'],
+            [['name', 'email', 'subject', 'body'], 'required'],
             // email has to be a valid email address
             ['email', 'email'],
-            ['phone', 'match', 'pattern' => '/^[0-9]{10}$/', 'message' => 'Please enter 10 digit valid phone number.'],
             // verifyCode needs to be entered correctly
             ['verifyCode', 'captcha'],
         ];
@@ -50,14 +50,11 @@ class ContactForm extends Model
      */
     public function sendEmail($email)
     {
-
-        $MAIL_DATA = array("EMAIL" => $this->email, "EMAIL_TO" => $email, "NAME" => $this->name, "PHONE" => $this->phone, "CONTACT_US_MESSAGE" => $this->message, "TODAY_DATE" => date('Y-m-d'));
-        return MailHelper::SendMail('CONTACT_US', $MAIL_DATA);
-        /*return Yii::$app->mailer->compose()
+        return Yii::$app->mailer->compose()
             ->setTo($email)
             ->setFrom([$this->email => $this->name])
             ->setSubject($this->subject)
             ->setTextBody($this->body)
-            ->send();*/
+            ->send();
     }
 }

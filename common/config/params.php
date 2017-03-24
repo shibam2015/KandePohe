@@ -1,6 +1,8 @@
 <?php
 return [
     'adminEmail' => 'kandepohetest@gmail.com',
+    #'helpEmail' => 'parmarvikrantr@gmail.com',
+    'helpEmail' => 'help@kande-pohe.com',
     'supportEmail' => 'support@example.com',
     'user.passwordResetTokenExpire' => 3600,
     'pageError' => 'Sorry but there was an error: ',
@@ -122,5 +124,10 @@ return [
     'profileFor' => ['Self' => 'Self', 'Son' => 'Son', 'Daughter' => 'Daughter', 'Brother' => 'Brother', 'Sister' => 'Sister', 'Friend' => 'Friend'],
     'fatherWorkingAsNot' => array('4', '5', '6'),//array('Homemaker','Passed Away','Not Employed'),
     'motherWorkingAsNot' => array('4', '5', '6'),//array('Homemaker','Passed Away','Not Employed'),
+
+    'footerFacebookURL' => 'https://www.facebook.com/Kande-Pohe-Marathi-Matrimony-1664757640440971/',
+    'footerTwitterURL' => 'https://twitter.com/',
+    'footerYoutubeURL' => 'https://www.youtube.com/',
+    'footerGooglePlusURL' => 'https://plus.google.com',
 ];
 

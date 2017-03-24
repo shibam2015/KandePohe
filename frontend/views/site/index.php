@@ -71,8 +71,8 @@ use yii\jui\DatePicker;
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1 class="welcome-line">Etiam pellentesque sapien felis<br>
-                            <span>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</span></h1>
+                        <h1 class="welcome-line">navaIna naa%yaaMcaI sau$vaat kra kaMdo - paohoM saaobat<br>
+                            <span>Search from thousands of your community matches, near you</span></h1>
                         <!--<input type="button" name="button" value="button label" class="btn btn-primary mrg-tp-10">
                         <p class="play visible-lg visible-md"><a href="#"><img src="images/play.png" width="48" height="48" alt="play"></a></p>-->
                     </div>
@@ -112,15 +112,15 @@ use yii\jui\DatePicker;
                         )->label(false)->error(false); ?>
 
                     </div>
-                    <div class="col-sm-4 col-md-2">
-                        <?= $form->field($model, 'iSubCommunity_ID')->dropDownList(
+                    <!-- <div class="col-sm-4 col-md-2">
+                        <? /*= $form->field($model, 'iSubCommunity_ID')->dropDownList(
                             ArrayHelper::map(CommonHelper::getSubCommunity(), 'iSubCommunity_ID', 'vName'),
                             ['class' => 'demo-default select-beast',
                                 'prompt' => 'Sub Caste'
                             ]
 
-                        )->label(false)->error(false); ?>
-                    </div>
+                        )->label(false)->error(false); */ ?>
+                    </div>-->
                     <div class="col-sm-4 col-md-2">
                         <?php
                         $range = range(18, 100);
@@ -141,14 +141,14 @@ use yii\jui\DatePicker;
                         )->label(false)->error(false); ?>
                     </div>
                     <?php if (!Yii::$app->user->isGuest) { ?>
-                        <div class="col-sm-4 col-md-2">
+                        <div class="col-sm-4 col-md-4">
                             <?= Html::submitButton('SEARCH', ['class' => 'btn btn-primary mrg-tp-10 ', 'name' => 'button']) ?>
                         </div>
                     <?php } else { ?>
-                        <div class="col-sm-4 col-md-2">
+                        <div class="col-sm-4 col-md-4">
                             <a href="#" title="Login" data-toggle="modal" data-target="#login"
                                class="btn btn-primary mrg-tp-10 login_button"
-                               id="">Seach</a>
+                               id="">Search</a>
                         </div>
                     <?php } ?>
                     <?php ActiveForm::end(); ?>
@@ -315,7 +315,7 @@ use yii\jui\DatePicker;
     <div class="container">
         <div class="row">
             <div class="col-sm-12 text-center">
-                <h2 class="heading-md">What Sets us Apart</h2>
+                <h2 class="heading-md">What Sets Us Apart</h2>
             </div>
         </div>
         <div class="row">
@@ -326,8 +326,8 @@ use yii\jui\DatePicker;
                     <figcaption>
                         <h3>Safe and Secure</h3>
 
-                        <p>sed tincidunt mi rhoncus. Nam eget nulla risus. Etiam aliqttricies maximus. Vivamus risus
-                            velit, cursus at aliquam eu, vehicula vel risus. </p>
+                        <p>We ensure that all your private information is safe with us. We use best in class technology
+                            to protect you from online threats.</p>
                     </figcaption>
                 </div>
             </div>
@@ -336,10 +336,10 @@ use yii\jui\DatePicker;
                     <figure><img src="images/vector_icon2.png" width="119" height="102" alt="Maximum Responses">
                     </figure>
                     <figcaption>
-                        <h3>Maximum Responses</h3>
+                        <h3>Innovative</h3>
 
-                        <p>sed tincidunt mi rhoncus. Nam eget nulla risus. Etiam aliqttricies maximus. Vivamus risus
-                            velit, cursus at aliquam eu, vehicula vel risus. </p>
+                        <p>We are innovative in all our approaches. Right from the start we understand you as a person
+                            and provide very suitable matches to you. </p>
                     </figcaption>
                 </div>
             </div>
@@ -347,10 +347,10 @@ use yii\jui\DatePicker;
                 <div class="promo">
                     <figure><img src="images/vector_icon3.png" width="119" height="102" alt="Best Matches"></figure>
                     <figcaption>
-                        <h3>Best Matches</h3>
+                        <h3>Nearby Matches</h3>
 
-                        <p>sed tincidunt mi rhoncus. Nam eget nulla risus. Etiam aliqttricies maximus. Vivamus risus
-                            velit, cursus at aliquam eu, vehicula vel risus. </p>
+                        <p>We know that distance matters. Hence, we come up with an idea of suggesting you nearby
+                            matches. Now find thousands of nearby matches from your community</p>
                     </figcaption>
                 </div>
             </div>

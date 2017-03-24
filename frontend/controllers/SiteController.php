@@ -5,6 +5,7 @@ use common\components\MessageHelper;
 use common\components\SmsHelper;
 use common\models\Cities;
 use common\models\otherlibraries\Compressimage;
+use common\models\SiteCms;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -228,9 +229,87 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionAbout()
+    public function actionAboutUs()
     {
-        return $this->render('about');
+        $SiteCMSModel = SiteCms::findOne(['type' => 'ABOUT_US']);
+
+        #CommonHelper::pr($SiteCMSModel);
+        return $this->render('about_us',
+            [
+                'SiteCMSModel' => $SiteCMSModel,
+
+            ]
+        );
+
+    }
+
+    public function actionTermsOfUse()
+    {
+        $SiteCMSModel = SiteCms::findOne(['type' => 'TERMS_OF_USE_OR_SERVICE_AGREEMENT']);
+        #CommonHelper::pr($SiteCMSModel);
+        return $this->render('terms_of_condition',
+            [
+                'SiteCMSModel' => $SiteCMSModel,
+
+            ]
+        );
+
+    }
+
+    public function actionContactUs()
+    {
+        $model = new ContactForm();
+        $STATUS = $MESSAGE = $TITLE = '';
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail(Yii::$app->params['helpEmail'])) {
+                #Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'CONTACT_US');
+                $model->name = '';
+                $model->email = '';
+                $model->phone = '';
+                $model->message = '';
+            } else {
+                #Yii::$app->session->setFlash('error', 'There was an error sending email.');
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'CONTACT_US');
+            }
+            #return $this->refresh();
+
+        }
+        return $this->render('contact_us', [
+            'model' => $model,
+            'STATUS' => $STATUS,
+            'MESSAGE' => $MESSAGE,
+            'TITLE' => $TITLE,
+
+        ]);
+    }
+
+    public function actionHelpFeedback()
+    {
+        $model = new ContactForm();
+        $STATUS = $MESSAGE = $TITLE = '';
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail(Yii::$app->params['helpEmail'])) {
+                #Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'CONTACT_US');
+                $model->name = '';
+                $model->email = '';
+                $model->phone = '';
+                $model->message = '';
+            } else {
+                #Yii::$app->session->setFlash('error', 'There was an error sending email.');
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'CONTACT_US');
+            }
+            #return $this->refresh();
+
+        }
+        return $this->render('help_feedback', [
+            'model' => $model,
+            'STATUS' => $STATUS,
+            'MESSAGE' => $MESSAGE,
+            'TITLE' => $TITLE,
+
+        ]);
     }
 
     /**
@@ -1283,7 +1362,7 @@ class SiteController extends Controller
                     $model->email_verification_msg = $msg;
                     $model->error_class = 'success';
                 }
-                
+
                 return $this->render('register7',[
                     'model' => $model,
                     'model1' => $model1

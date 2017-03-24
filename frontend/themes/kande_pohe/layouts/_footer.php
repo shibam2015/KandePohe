@@ -1,54 +1,54 @@
+<?php use yii\helpers\Html; ?>
 <footer>
   <div class="mega-footer">
     <div class="container">
       <div class="row">
-        <div class="col-md-2 col-sm-6">
-          <h5>Explore Us</h5>
-          <ul class="list-unstyled fbox">
+        <div class="col-md-4 col-sm-4">
+          <!--<h5>Explore Us</h5>-->
+          <strong>Kande-Pohe.com</strong> is Marathi matrimony, handcrafted especially for all you Marathi breed,
+          existing
+          <br>anywhere on the planet earth or on the Mars for that matter, with a sole purpose of helping you find your
+          life partner.
+          <br><br>Register today for FREE and experience an entire new concept of arranged marriages.
+
+          <!--<ul class="list-unstyled fbox">
             <li><a href="#">About Us</a></li>
             <li><a href="#">Contact Us</a></li>
             <li><a href="#">Advanced Search</a></li>
             <li><a href="#">Success Stories</a></li>
             <li><a href="#">Sitemap</a></li>
-          </ul>
+          </ul>-->
         </div>
-        <div class="col-md-2 col-sm-6">
-          <h5>Our Services</h5>
-          <ul class="list-unstyled fbox">
-            <li><a href="#"> Membership Options </a></li>
-            <li><a href="#">Centers</a></li>
-            <li><a href="#">Advanced Search</a></li>
-          </ul>
-        </div>
-        <div class="col-md-2 col-sm-6">
-          <h5>Help</h5>
-          <ul class="list-unstyled fbox">
-            <li><a href="#">Live Help</a></li>
-            <li><a href="#">Feedback/Queries</a></li>
-          </ul>
-        </div>
-        <div class="col-md-2 col-sm-6">
+        <div class="col-md-3 col-sm-6">
           <h5>Explore Us</h5>
           <ul class="list-unstyled fbox">
-            <li><a href="#">Fraud ALert</a></li>
-            <li><a href="#">Terms of Use</a></li>
-            <li><a href="#">Privacy Policy</a></li>
+            <li><?= html::a('About Kande-Pohe Marathi Matrimony', ['site/about-us']) ?></li>
+            <li><?= html::a('Contact Us', ['site/contact-us']) ?></li>
+            <li><?= html::a('Terms of Use / Privacy Policy', ['site/terms-of-use']) ?></li>
+            <li><?= html::a('Help / Feedback', ['site/help-feedback']) ?></li>
           </ul>
         </div>
         <div class="col-md-2 col-sm-6">
           <div class="fbox">
-            <h5>Customer Service <br>
-              <span>(Toll Free)</span> <br>
-              1-800-419-6299</h5>
+            <h5>Customer Service </h5>
+            <ul class="list-unstyled fbox">
+              <li><a href="javascript:void(0)">(10.00 AM – 07.00 PM)</a></li>
+              <li><a href="javascript:void(0)">1-800-419-6299</a></li>
+            </ul>
+
           </div>
         </div>
-        <div class="col-md-2 col-sm-6">
+        <div class="col-md-3 col-sm-6">
           <h5>Stay Connected</h5>
           <ul class="list-inline fbox social-icons">
-            <li><a href="#"><i class="fa fa-youtube-square"></i></a></li>
-            <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
-            <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
-            <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+            <li><a href="<?= Yii::$app->params['footerYoutubeURL'] ?>" target="_blank"><i
+                    class="fa fa-youtube-square"></i></a></li>
+            <li><a href="<?= Yii::$app->params['footerGooglePlusURL'] ?>" target="_blank"><i
+                    class="fa fa-google-plus-square"></i></a></li>
+            <li><a href="<?= Yii::$app->params['footerTwitterURL'] ?>" target="_blank"><i
+                    class="fa fa-twitter-square"></i></a></li>
+            <li><a href="<?= Yii::$app->params['footerFacebookURL'] ?>" target="_blank"><i
+                    class="fa fa-facebook-square"></i></a></li>
           </ul>
         </div>
       </div>
