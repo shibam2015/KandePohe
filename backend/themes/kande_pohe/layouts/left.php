@@ -140,11 +140,11 @@ $ADMIN_NAME = ucwords(strtolower(Yii::$app->user->identity->vFirstName. ' ' .Yii
                             ['label' => 'Email Template', 'icon' => 'fa fa-envelope', 'url' => ['/email-format'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'SMS Template', 'icon' => 'fa fa-envelope', 'url' => ['/sms-format'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'Site Message', 'icon' => 'fa fa-envelope', 'url' => ['/site-messages'], 'visible' => !Yii::$app->user->isGuest],
-                            ['label' => 'SMS Setting', 'icon' => 'fa fa-cog', 'url' => ['/setting'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'SMS Setting', 'icon' => 'fa-mobile-phone', 'url' => ['/setting'], 'visible' => !Yii::$app->user->isGuest],
 
                         ], 'visible' => !Yii::$app->user->isGuest
                     ],
-                    ['label' => 'Site CMS', 'icon' => 'fa fa-user-secret', 'url' => ['/site-cms'], 'visible' => !Yii::$app->user->isGuest],
+                    ['label' => 'Site CMS', 'icon' => 'fa fa-cog', 'url' => ['/site-cms'], 'visible' => !Yii::$app->user->isGuest],
 
                     /*['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
