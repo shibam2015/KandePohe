@@ -107,12 +107,14 @@ class SearchController extends Controller
             $HeightTo = $params['User']['HeightTo'];
             $ReligionID = $params['User']['iReligion_ID'];
             $MaritalStatusID = $params['User']['Marital_Status'];
-            if ($params['User']['Agerange'] != '') {
+            #$AgeFrom = $params['User']['AgeFrom'];
+            #$AgeTo = $params['User']['AgeFrom'];
+            /*if ($params['User']['AgeTo'] != '') {
                 list($AgeFrom, $AgeTo) = explode("-", $params['User']['Agerange']);
-            } else {
+            } else {*/
                 $AgeFrom = $params['User']['AgeFrom'];
                 $AgeTo = $params['User']['AgeTo'];
-            }
+            //}
             $session->set('Profile_for', $Gender);
             $session->set('iCommunity_ID', $Community);
             $session->set('iSubCommunity_ID', $SubCommunity);
