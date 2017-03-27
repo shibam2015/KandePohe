@@ -3,11 +3,11 @@
   <div class="mega-footer">
     <div class="container">
       <div class="row">
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-4 col-sm-4 txt-justify">
           <!--<h5>Explore Us</h5>-->
           <strong>Kande-Pohe.com</strong> is Marathi matrimony, handcrafted especially for all you Marathi breed,
-          existing
-          <br>anywhere on the planet earth or on the Mars for that matter, with a sole purpose of helping you find your
+          existing anywhere on the planet earth or on the Mars for that matter, with a sole purpose of helping you find
+          your
           life partner.
           <br><br>Register today for FREE and experience an entire new concept of arranged marriages.
 
@@ -19,7 +19,7 @@
             <li><a href="#">Sitemap</a></li>
           </ul>-->
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 col-md-offset-1">
           <h5>Explore Us</h5>
           <ul class="list-unstyled fbox">
             <li><?= html::a('About Kande-Pohe Marathi Matrimony', ['site/about-us']) ?></li>
@@ -33,12 +33,12 @@
             <h5>Customer Service </h5>
             <ul class="list-unstyled fbox">
               <li><a href="javascript:void(0)">(10.00 AM – 07.00 PM)</a></li>
-              <li><a href="javascript:void(0)">1-800-419-6299</a></li>
+              <li><a href="javascript:void(0)">+91-7387986545</a></li>
             </ul>
 
           </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-2 col-sm-6">
           <h5>Stay Connected</h5>
           <ul class="list-inline fbox social-icons">
             <li><a href="<?= Yii::$app->params['footerYoutubeURL'] ?>" target="_blank"><i

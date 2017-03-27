@@ -54,6 +54,14 @@ AppAsset::register($this);
         <script>
             var masterSiteUrl = '<?= Yii::$app->homeUrl ?>';
         </script>
+        <?php
+        //if (in_array("Glenn", $people))
+        if ((in_array(Yii::$app->request->pathInfo, Yii::$app->params['googleAnalyticsCodePages']))) {
+            echo Yii::$app->params['googleAnalyticsCode'];
+        }
+        ?>
+
+
     </head>
     <body>
 

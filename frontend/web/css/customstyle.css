@@ -512,3 +512,7 @@ textarea {
     overflow-x: hidden;
     overflow-y: auto;
 }
+
+.txt-justify {
+    text-align: justify;
+}

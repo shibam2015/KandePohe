@@ -101,7 +101,7 @@ use yii\jui\DatePicker;
                             ]
                         )->label(false); ?>
                     </div>
-                    <div class="col-sm-4 col-md-2">
+                    <div class="col-sm-4 col-md-3">
 
                         <?= $form->field($model, 'iCommunity_ID')->dropDownList(
                             ArrayHelper::map(CommonHelper::getCommunity(), 'iCommunity_ID', 'vName'),
@@ -138,11 +138,11 @@ use yii\jui\DatePicker;
                         )->label(false)->error(false); ?>
                     </div>
                     <?php if (!Yii::$app->user->isGuest) { ?>
-                        <div class="col-sm-4 col-md-4">
+                        <div class="col-sm-3 col-md-3">
                             <?= Html::submitButton('SEARCH', ['class' => 'btn btn-primary mrg-tp-10 ', 'name' => 'button']) ?>
                         </div>
                     <?php } else { ?>
-                        <div class="col-sm-4 col-md-4">
+                        <div class="col-sm-3 col-md-3">
                             <a href="#" title="Login" data-toggle="modal" data-target="#login"
                                class="btn btn-primary mrg-tp-10 login_button"
                                id="">Search</a>
@@ -199,7 +199,12 @@ use yii\jui\DatePicker;
                             <?= Html::img(CommonHelper::getPhotos('USER', $FV->id, '260' . $FV->propic, 260, '', 'Yes'), ['alt' => $FV->FullName]); ?>
                         </div>
                         <figcaption>
-                            <a href="<?= CommonHelper::getUserUrl($FV->Registration_Number) ?>&source=recently_joined">
+                            <a <?php
+                            if (!Yii::$app->user->isGuest) { ?>
+                                href="<?= CommonHelper::getUserUrl($FV->Registration_Number) ?>&source=recently_joined"
+                            <?php } else { ?>
+                                href="#" title="Login" data-toggle="modal" data-target="#login" id="login_button"
+                            <?php } ?> >
                                 <small><?= $FV->FullName ?></small>
                             </a>
 
@@ -231,7 +236,7 @@ use yii\jui\DatePicker;
 ?>
 
 <!--Success Stories-->
-<section>
+<!--<section>
     <div class="container">
         <div class="row">
             <div class="col-sm-12 text-center">
@@ -306,7 +311,7 @@ use yii\jui\DatePicker;
             </div>
         </div>
     </div>
-</section>
+</section>-->
 <!--What Sets us Apart-->
 <section>
     <div class="container">
