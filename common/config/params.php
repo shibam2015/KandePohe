@@ -148,5 +148,6 @@ return [
                                     Email: help@kande-pohe.com <br>
                                     Contact Number:+91-7387986545 <br>',
     'sitePhoneNumber' => '+91-7387986545',
+    'homePageHeaderText' => 'नवीन नात्यांची सुरूवात करा कांदे - पोहें सोबत',
 ];
 

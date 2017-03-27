@@ -71,7 +71,7 @@ use yii\jui\DatePicker;
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1 class="welcome-line">navaIna naa%yaaMcaI sau$vaat kra kaMdo - paohoM saaobat<br>
+                        <h1 class="welcome-line"><?= Yii::$app->params['homePageHeaderText'] ?><br>
                             <span>Search from thousands of your community matches, near you</span></h1>
                         <!--<input type="button" name="button" value="button label" class="btn btn-primary mrg-tp-10">
                         <p class="play visible-lg visible-md"><a href="#"><img src="images/play.png" width="48" height="48" alt="play"></a></p>-->
