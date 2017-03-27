@@ -33,7 +33,7 @@
             <h5>Customer Service </h5>
             <ul class="list-unstyled fbox">
               <li><a href="javascript:void(0)">(10.00 AM – 07.00 PM)</a></li>
-              <li><a href="javascript:void(0)">+91-7387986545</a></li>
+              <li><a href="javascript:void(0)"><?= Yii::$app->params['sitePhoneNumber'] ?></a></li>
             </ul>
 
           </div>

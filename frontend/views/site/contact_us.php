@@ -55,13 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                 <div class="aside-content">
                                     <!--<div id="map"></div>-->
-                                    <strong>
-                                        Kande-Pohe Marathi Matrimony </strong><br>
-                                    Sr. No 48/1, Opp. Anand Mangal Society, <br>
-                                    Ganeshnagar, Vadgaonsheri, <br>
-                                    Pune - 411014 <br>
-                                    Email: help@kande-pohe.com <br>
-                                    Contact Number: <br>
+                                    <?= Yii::$app->params['siteLocationAddress'] ?>
 
                                 </div>
                                 <div class="aside-footer  mrg-bt-10">

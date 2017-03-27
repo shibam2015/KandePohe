@@ -141,5 +141,12 @@ return [
                             </script>
                             ",
     'googleAnalyticsCodePages' => array('', 'site/about-us', 'site/contact-us', 'site/help-feedback', 'site/terms-of-use'),
+    'siteLocationAddress' => '<strong>Kande-Pohe Marathi Matrimony </strong><br>
+                                    Sr. No 48/1, Opp. Anand Mangal Society, <br>
+                                    Ganeshnagar, Vadgaonsheri, <br>
+                                    Pune - 411014 <br>
+                                    Email: help@kande-pohe.com <br>
+                                    Contact Number:+91-7387986545 <br>',
+    'sitePhoneNumber' => '+91-7387986545',
 ];
 
