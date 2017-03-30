@@ -1,8 +1,3 @@
-/*
-waitMe - 1.18 [23.09.16]
-Author: vadimsva
-Github: https://github.com/vadimsva/waitMe
-*/
 .waitMe_container:not(body) {
     transform: translateZ(0);
     backface-visibility: hidden
@@ -82,7 +77,6 @@ body.waitMe_container .waitMe .waitMe_content {
     margin: 20px 0 0
 }
 
-/* before load animation */
 body.waitMe_body {
     overflow: hidden;
     height: 100%
@@ -173,7 +167,6 @@ body.waitMe_body .waitMe_container.text > div {
     }
 }
 
-/* bounce */
 .waitMe_container .waitMe_progress.bounce > div {
     width: 20px;
     height: 20px;
@@ -198,7 +191,6 @@ body.waitMe_body .waitMe_container.text > div {
     }
 }
 
-/* rotateplane */
 .waitMe_container .waitMe_progress.rotateplane > div {
     width: 30px;
     height: 30px;
@@ -218,7 +210,6 @@ body.waitMe_body .waitMe_container.text > div {
     }
 }
 
-/* stretch */
 .waitMe_container .waitMe_progress.stretch {
     height: 60px
 }
@@ -255,7 +246,6 @@ body.waitMe_body .waitMe_container.text > div {
     }
 }
 
-/* orbit */
 .waitMe_container .waitMe_progress.orbit {
     width: 40px;
     height: 40px;
@@ -309,7 +299,6 @@ body.waitMe_body .waitMe_container.text > div {
     }
 }
 
-/* roundBounce */
 .waitMe_container .waitMe_progress.roundBounce {
     width: 60px;
     height: 60px;
@@ -445,7 +434,6 @@ body.waitMe_body .waitMe_container.text > div {
     }
 }
 
-/* win8 */
 .waitMe_container .waitMe_progress.win8 {
     width: 40px;
     height: 40px;
@@ -524,7 +512,6 @@ body.waitMe_body .waitMe_container.text > div {
     }
 }
 
-/* win8_linear */
 .waitMe_container .waitMe_progress.win8_linear {
     margin: auto;
     width: 150px;
@@ -583,7 +570,6 @@ body.waitMe_body .waitMe_container.text > div {
     }
 }
 
-/* ios */
 .waitMe_container .waitMe_progress.ios {
     margin: auto;
     width: 40px;
@@ -671,7 +657,6 @@ body.waitMe_body .waitMe_container.text > div {
     }
 }
 
-/* facebook */
 .waitMe_container .waitMe_progress.facebook {
     margin: auto
 }
@@ -716,7 +701,6 @@ body.waitMe_body .waitMe_container.text > div {
     }
 }
 
-/* rotation */
 .waitMe_container .waitMe_progress.rotation > div {
     width: 60px;
     height: 60px;
@@ -739,7 +723,6 @@ body.waitMe_body .waitMe_container.text > div {
     }
 }
 
-/* timer */
 .waitMe_container .waitMe_progress.timer {
     width: 40px;
     height: 40px;
@@ -751,7 +734,6 @@ body.waitMe_body .waitMe_container.text > div {
     position: relative;
     text-indent: -9999px
 }
-
 .waitMe_container .waitMe_progress.timer > .waitMe_progress_elem1,
 .waitMe_container .waitMe_progress.timer > .waitMe_progress_elem2 {
     border-radius: 3px;
@@ -780,7 +762,6 @@ body.waitMe_body .waitMe_container.text > div {
     }
 }
 
-/* pulse */
 .waitMe_container .waitMe_progress.pulse {
     width: 30px;
     height: 30px;
@@ -816,7 +797,6 @@ body.waitMe_body .waitMe_container.text > div {
     }
 }
 
-/* progressBar */
 .waitMe_container .waitMe_progress.progressBar {
     width: 200px;
     height: 20px;
@@ -848,7 +828,6 @@ body.waitMe_body .waitMe_container.text > div {
     }
 }
 
-/* bouncePulse */
 .waitMe_container .waitMe_progress.bouncePulse > div {
     width: 20px;
     height: 20px;
@@ -858,7 +837,6 @@ body.waitMe_body .waitMe_container.text > div {
     transform: scale(.5);
     animation: bouncePulse 1.4s infinite ease-in-out
 }
-
 .waitMe_container .waitMe_progress.bouncePulse > .waitMe_progress_elem1,
 .waitMe_container .waitMe_progress.bouncePulse > .waitMe_progress_elem3 {
     animation-delay: .1s

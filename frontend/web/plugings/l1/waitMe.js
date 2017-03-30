@@ -1,25 +1,7 @@
-/*
- waitMe - 1.18 [23.09.16]
- Author: vadimsva
- Github: https://github.com/vadimsva/waitMe
- */
 (function ($) {
     $.fn.waitMe = function (method) {
         return this.each(function () {
-
-            var elem = $(this),
-                elemClass = 'waitMe',
-                waitMe_text,
-                effectObj,
-                effectElemCount,
-                createSubElem = false,
-                specificAttr = 'background-color',
-                addStyle = '',
-                effectElemHTML = '',
-                waitMeObj,
-                _options,
-                currentID;
-
+            var elem = $(this), elemClass = 'waitMe', waitMe_text, effectObj, effectElemCount, createSubElem = false, specificAttr = 'background-color', addStyle = '', effectElemHTML = '', waitMeObj, _options, currentID;
             var methods = {
                 init: function () {
                     var _defaults = {
@@ -35,49 +17,47 @@
                         }
                     };
                     _options = $.extend(_defaults, method);
-
                     currentID = new Date().getMilliseconds();
                     waitMeObj = $('<div class="' + elemClass + '" data-waitme_id="' + currentID + '"></div>');
-
                     switch (_options.effect) {
-                        case 'none':
+                        case'none':
                             effectElemCount = 0;
                             break;
-                        case 'bounce':
+                        case'bounce':
                             effectElemCount = 3;
                             break;
-                        case 'rotateplane':
+                        case'rotateplane':
                             effectElemCount = 1;
                             break;
-                        case 'stretch':
+                        case'stretch':
                             effectElemCount = 5;
                             break;
-                        case 'orbit':
+                        case'orbit':
                             effectElemCount = 2;
                             createSubElem = true;
                             break;
-                        case 'roundBounce':
+                        case'roundBounce':
                             effectElemCount = 12;
                             break;
-                        case 'win8':
+                        case'win8':
                             effectElemCount = 5;
                             createSubElem = true;
                             break;
-                        case 'win8_linear':
+                        case'win8_linear':
                             effectElemCount = 5;
                             createSubElem = true;
                             break;
-                        case 'ios':
+                        case'ios':
                             effectElemCount = 12;
                             break;
-                        case 'facebook':
+                        case'facebook':
                             effectElemCount = 3;
                             break;
-                        case 'rotation':
+                        case'rotation':
                             effectElemCount = 1;
                             specificAttr = 'border-color';
                             break;
-                        case 'timer':
+                        case'timer':
                             effectElemCount = 2;
                             if ($.isArray(_options.color)) {
                                 var color = _options.color[0];
@@ -86,25 +66,23 @@
                             }
                             addStyle = 'border-color:' + color;
                             break;
-                        case 'pulse':
+                        case'pulse':
                             effectElemCount = 1;
                             specificAttr = 'border-color';
                             break;
-                        case 'progressBar':
+                        case'progressBar':
                             effectElemCount = 1;
                             break;
-                        case 'bouncePulse':
+                        case'bouncePulse':
                             effectElemCount = 3;
                             break;
-                        case 'img':
+                        case'img':
                             effectElemCount = 1;
                             break;
                     }
-
                     if (addStyle !== '') {
                         addStyle += ';';
                     }
-
                     if (effectElemCount > 0) {
                         if (_options.effect === 'img') {
                             effectElemHTML = '<img src="' + _options.source + '">';
@@ -127,7 +105,6 @@
                         }
                         effectObj = $('<div class="' + elemClass + '_progress ' + _options.effect + '" style="' + addStyle + '">' + effectElemHTML + '</div>');
                     }
-
                     if (_options.text) {
                         if ($.isArray(_options.color)) {
                             var color = _options.color[0];
@@ -142,7 +119,6 @@
                         waitMe_text = $('<div class="' + elemClass + '_text" style="color:' + color + ';' + size + '">' + _options.text + '</div>');
                     }
                     var elemObj = elem.find('> .' + elemClass);
-
                     if (elemObj) {
                         elemObj.remove();
                     }
@@ -156,7 +132,6 @@
                     elemObj = elem.find('> .' + elemClass);
                     var elemContentObj = elem.find('.' + elemClass + '_content');
                     elemObj.css({background: _options.bg});
-
                     if (_options.maxSize !== '' && _options.effect != 'none') {
                         var elemH = effectObj.outerHeight();
                         var elemW = effectObj.outerWidth();
@@ -199,22 +174,16 @@
                                         whiteSpace: 'nowrap'
                                     });
                                 }
-
                             }
                         }
                     }
                     elemContentObj.css({marginTop: -elemContentObj.outerHeight() / 2 + 'px'});
-
                     function setElTop(getTop) {
                         elemContentObj.css({top: 'auto', transform: 'translateY(' + getTop + 'px) translateZ(0)'});
                     }
 
                     if (elem.outerHeight() > $(window).height()) {
-                        var sTop = $(window).scrollTop(),
-                            elH = elemContentObj.outerHeight(),
-                            elTop = elem.offset().top,
-                            cH = elem.outerHeight(),
-                            getTop = sTop - elTop + $(window).height() / 2;
+                        var sTop = $(window).scrollTop(), elH = elemContentObj.outerHeight(), elTop = elem.offset().top, cH = elem.outerHeight(), getTop = sTop - elTop + $(window).height() / 2;
                         if (getTop < 0) {
                             getTop = Math.abs(getTop);
                         }
@@ -232,21 +201,18 @@
                             setElTop(getTop);
                         }
                         $(document).scroll(function () {
-                            var sTop = $(window).scrollTop(),
-                                getTop = sTop - elTop + $(window).height() / 2;
+                            var sTop = $(window).scrollTop(), getTop = sTop - elTop + $(window).height() / 2;
                             if (getTop - elH >= 0 && getTop + elH <= cH) {
                                 setElTop(getTop);
                             }
                         });
                     }
-
                     elemObj.on('destroyed', function () {
                         if (_options.onClose && $.isFunction(_options.onClose)) {
                             _options.onClose();
                         }
                         elemObj.trigger('close');
                     });
-
                     $.event.special.destroyed = {
                         remove: function (o) {
                             if (o.handler) {
@@ -254,10 +220,8 @@
                             }
                         }
                     };
-
                     return elemObj;
-                },
-                hide: function () {
+                }, hide: function () {
                     waitMeClose();
                 }
             };
@@ -273,9 +237,7 @@
             } else if (typeof method === 'object' || !method) {
                 return methods.init.apply(this, arguments);
             }
-
         });
-
     };
     $(window).on('load', function () {
         $('body.waitMe_body').addClass('hideMe');

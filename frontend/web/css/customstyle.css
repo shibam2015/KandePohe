@@ -1,9 +1,7 @@
-/* FOr Pop up Success Message */
 .text-success {
     color: #11d814;
 }
 
-/* FOr Pop up Error Message */
 .text-error {
     color: #f50505;
 }
@@ -20,17 +18,13 @@ img.selected {
     background: #43a44c;
 }
 
-/* COVER PHOTO START */
 #timelineBackground {
     max-height: 240px !important;
-
 }
 
 .cover-pic {
-    /*height: 315px;*/
     max-height: 240px !important;
     position: relative;
-
     overflow: hidden;
     background-color: #ffffff
 }
@@ -42,7 +36,6 @@ img.selected {
 .headerimage {
     cursor: s-resize;
     position: relative;
-
     overflow: hidden;
     background-color: #ffffff;
     width: 100% !important;
@@ -61,8 +54,6 @@ img.selected {
     clear: both;
     float: right;
     position: absolute;
-    /*margin-top: 267px;*/
-    /*margin-left: 760px;*/
     z-index: 4000;
     right: 10px;
     top: 10px;
@@ -72,8 +63,6 @@ img.selected {
     clear: both;
     float: right;
     position: absolute;
-    /*margin-top: 267px;*/
-    /*margin-left: 760px;*/
     z-index: 4000;
     right: 10px;
     top: 50px;
@@ -88,18 +77,14 @@ img.selected {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     cursor: pointer;
     text-decoration: none;
-    /*border-width: 1px;*/
     border-style: solid;
     border-color: #fff;
     white-space: nowrap;
-
     display: -moz-inline-stack;
-
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     -o-border-radius: 3px;
     border-radius: 3px;
-
 }
 
 .radio_step4 {
@@ -109,7 +94,6 @@ img.selected {
 .radio_step4 label {
     margin-bottom: 10px;
 }
-/* COVER PHOTO END*/
 
 .tag_delete1 {
     cursor: pointer;
@@ -118,8 +102,6 @@ img.selected {
 .send_email {
     cursor: pointer !important;
 }
-
-/* Notification Start */
 
 .kp_loader_section {
     bottom: 35px;
@@ -130,13 +112,11 @@ img.selected {
     border-top-right-radius: 20px;
     border-top-left-radius: 0;
     background: rgb(255, 187, 0);
-
     z-index: 1000;
     position: fixed;
     color: #fff;
     padding: 10px;
     text-align: center;
-
 }
 
 .kp_notify {
@@ -153,8 +133,6 @@ img.selected {
 .kp_notification {
     width: 90%;
     text-align: center;
-    /*border-top-right-radius:7px;
-    border-top-left-radius:7px;*/
 }
 
 .kp_notification_close {
@@ -178,9 +156,6 @@ img.selected {
     background: rgb(46, 204, 113);
 }
 
-/* Notification End */
-
-/* Notify Message Start */
 .notice {
     position: relative;
     margin: 1em;
@@ -243,8 +218,6 @@ img.selected {
     background-color: #FF4136;
 }
 
-/* Notify Message End */
-
 .pink {
     color: #ff517d;
 }
@@ -288,7 +261,6 @@ img.selected {
     font-size: 14px;
 }
 
-/* Validation Error - Success - Label Start */
 .has-error .form-control {
     border-color: #cf0d0d !important;
 }
@@ -300,8 +272,6 @@ img.selected {
 .has-error .checkbox, .has-error .checkbox-inline, .has-error .control-label, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.checkbox label, .has-error.checkbox-inline label, .has-error.radio label, .has-error.radio-inline label {
     border-color: #cf0d0d !important;
 }
-
-/* Validation Error - Success - Label End */
 
 .adbtn {
     width: 80% !important;
@@ -323,7 +293,6 @@ img.selected {
 
 .kp_warningv {
     border-color: #FFDC00;
-
 }
 
 .kp_warningv:before {
@@ -335,19 +304,6 @@ img.selected {
     background-color: #FFDC00;
 }
 
-/*#changePic {
-    margin-top: -22px !important;
-}*/
-
-/*.crop_save {
-    margin-top: -30px !important;
-}*/
-
-/*
-.white-section h3       {
-    margin-bottom: 10px !important;
-}*/
-
 .kp_crop_close {
     z-index: 11000;
     position: fixed;
@@ -357,10 +313,9 @@ img.selected {
     cursor: pointer;
     background-color: #ea0b44;
     color: #fff;
-
 }
 
-.timeout{
+.timeout {
     padding: 19px 29px;
     background: #ea0b44;
     border-radius: 2px;
@@ -380,7 +335,8 @@ img.selected {
     touch-action: manipulation;
     cursor: pointer;
 }
-.btn-primary{
+
+.btn-primary {
     width: 100%;
 }
 
@@ -407,7 +363,6 @@ img.selected {
 }
 
 .nav-tabs[role=tablist] {
-    /*font-size: 12px;*/
 }
 
 .kp_ur {
@@ -429,7 +384,6 @@ img.selected {
     width: 0px;
 }
 
-/*Home Page Start*/
 .ui-datepicker {
     z-index: 1200 !important;
 }
@@ -447,7 +401,6 @@ img.selected {
     background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x !important;
     font-weight: normal !important;
     color: #ee1845 !important;
-
 }
 
 .btn-primary.disabled, .btn-primary.disabled.active, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled].active, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary.active, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
@@ -459,20 +412,10 @@ img.selected {
     top: 0;
 }
 
-/*Home Page End*/
-
 .nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
     background-color: #ff517d;
     font-weight: bold;
 }
-
-/*.mp-left {
-    margin-left: -25px;
-}*/
-/*
-.tab-width {
-    width: 108.90% !important;
-}*/
 
 .nav > li > a {
     color: #000;
