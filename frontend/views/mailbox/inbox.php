@@ -167,6 +167,39 @@ use yii\helpers\Url;
         </div>
     </div>
     <!-- send mail -->
+    <!-- Start Notify for not approved User  -->
+    <div class="modal fade" id="notifyuser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <p class="text-center mrg-bt-10">
+                <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+            </p>
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span> <span
+                            class="sr-only">Close</span></button>
+                    <h2 class="text-center"><?= Yii::$app->params['titleInformation'] ?></h2>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="row">
+                        <p><strong><?= Yii::$app->params['userNotApprovedRequest'] ?></strong></p>
+
+                        <p></p><br>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 col-xs-6 pull-right">
+                            <button class="btn btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Notify for not approved User  -->
+
+
     <!-- <div class="modal fade" id="sendMail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <p class="text-center mrg-bt-10">

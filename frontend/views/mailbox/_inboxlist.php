@@ -33,14 +33,20 @@ $model = $model['model'];*/
                                 <label for="chk" class="control-label"></label>
                             </div>
                         </div>
+                        <?php
+                        if ($ModelInfo->status == \common\models\User::STATUS_APPROVE) {
+                            ?>
                         <div class="box-inbox pull-left">
                             <?= Html::img(CommonHelper::getPhotos('USER', $FId, "75" . $ModelInfo->propic, 75, '', 'Yes'), ['width' => '65', 'height' => '', 'alt' => 'Profile Pic', 'class' => '']); ?>
                         </div>
                         <div class="box-inbox3 pull-right">
                             <p class="name">
+
                                 <a href="<?= CommonHelper::getUserUrl($ModelInfo->Registration_Number); ?>">
                                     <strong><?= $ModelInfo->fullName; ?></strong>
                                 </a>
+
+
                                 (Last online
                                 : <?= CommonHelper::DateTime($ModelInfo->LastLoginTime, 7); ?>
                                 )</p>
@@ -76,11 +82,50 @@ $model = $model['model'];*/
                                     data-toggle="modal">Send Mail
                             </button>
                             --><?php /*} */ ?>
+
                             <a href="<?= CommonHelper::getMailBoxUrl(1, $ModelInfo->Registration_Number) ?>"
                                class="btn btn-info pull-right">
                                 <?= ($Value['MailTotalCount'] == 1) ? 'View conversation' : '+' . $Value['MailTotalCount'] . ' more conversation'; ?>
                             </a>
                         </div>
+                        <?php } else { ?>
+                            <div class="box-inbox pull-left">
+                                <?= Html::img(CommonHelper::getPhotos('USER', $FId, "75" . '', 75, '', 'Yes'), ['width' => '65', 'height' => '', 'alt' => 'Profile Pic', 'class' => '']); ?>
+                            </div>
+                            <div class="box-inbox3 pull-right">
+                                <p class="name">
+                                    <a href="<?= CommonHelper::getUserUrl($ModelInfo->Registration_Number); ?>">
+                                        <strong><?= $ModelInfo->fullName; ?></strong>
+                                    </a>
+
+                                    (Last online
+                                    : <?= CommonHelper::DateTime($ModelInfo->LastLoginTime, 7); ?>
+                                    )</p>
+                                <ul class="list-inline pull-left">
+                                    <li>
+                                        <?= Yii::$app->params['userNotApprovedRequest'] ?>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                                <hr>
+                                <!--<p class="mrg-bt-20">
+                                <? /*= $MailArray[$Value->id]['LastMsg'] */ ?>
+                            </p>
+                            <?php /*if ($MailArray[$Value->id]['MsgCount'] > 1 || $Model->send_request_status == 'Yes') { */ ?>
+                            <button class="btn btn-primary sendmail" data-target="#sendMail"
+                                    data-id="<? /*= $ModelInfo->id */ ?>"
+                                    data-toggle="modal">Send Mail
+                            </button>
+                            --><?php /*} */ ?>
+
+                                <a data-target="#notifyuser"
+                                   data-id="<?= $ModelInfo->id ?>"
+                                   data-toggle="modal"
+                                   class="btn btn-info pull-right">
+                                    <?= ($Value['MailTotalCount'] == 1) ? 'View conversation' : '+' . $Value['MailTotalCount'] . ' more conversation'; ?>
+                                </a>
+                            </div>
+                        <?php } ?>
                         <div class="clearfix"></div>
                         <div></div>
                     </div>

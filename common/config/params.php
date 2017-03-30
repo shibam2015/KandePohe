@@ -45,6 +45,7 @@ return [
 
     'titleInformation' => 'Information',
     'titleWarrning' => 'Warrning',
+    'userNotApprovedRequest' => 'This user profile is not approved yet.',
 
     'resetPasswordWrongEmailIdMessage' => 'This email ID is not registered at Kande-Pohe.com. Please contact administrator to reset your password',
     'ref' => ['recently_joined' => 'recently_joined', 'you_shortlisted_by' => 'you_shortlisted_by'],
