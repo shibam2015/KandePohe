@@ -12,6 +12,7 @@ $this->title = $model->First_Name." ".$model->Last_Name;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 //echo Yii::$app->urlManagerFrontend->baseUrl;
+echo $model->propic;
 $PROPIC = CommonHelper::getPhotosBackend('USER', $model->id, "200" . $model->propic, 200, '', 'Yes', 1);
 ?>
 
