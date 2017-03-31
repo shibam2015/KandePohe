@@ -372,7 +372,7 @@ $M1 = array();
                                                                             } ?>
                                                                             <div
                                                                                 class="item <?= ($K == 0) ? 'active' : ''; ?>">
-                                                                                <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, $Photo, 120, '', $Yes), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
+                                                                                <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, $Photo, 120, '', $Yes, CommonHelper::getVisiblePhoto($SV->id, $V['eStatus'])), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
                                                                             </div>
                                                                         <?php
                                                                         }

@@ -143,7 +143,11 @@ class SiteController extends Controller
             );
             exit;
         }
-        $FeaturedMembers = User::findFeaturedMembers(4);
+        if (Yii::$app->user->isGuest) {
+            $FeaturedMembers = User::findFeaturedMembers(4);
+        } else {
+            $FeaturedMembers = User::findFeaturedMembersLogin(4, Yii::$app->user->identity->id);
+        }
         #CommonHelper::pr($FeaturedMembers);exit;
         //return $this->redirect(Yii::$app->request->referrer);
         return $this->render('index',

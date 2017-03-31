@@ -37,7 +37,7 @@ if (!Yii::$app->user->isGuest) {
                                     <div class="panel-body">
                                         <div class="profile-header-container">
                                             <div class="profile-header-img">
-                                                <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes'), ['width' => '200', 'height' => '200', 'alt' => 'Profile Photo', 'class' => 'img-circle mainpropic']); ?>
+                                                <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "200" . Yii::$app->user->identity->propic, 200, '', 'Yes', CommonHelper::getVisiblePhoto(Yii::$app->user->identity->id, Yii::$app->user->identity->eStatusPhotoModify)), ['width' => '200', 'height' => '200', 'alt' => 'Profile Photo', 'class' => 'img-circle mainpropic']); ?>
                                                 <!-- badge -->
                                                 <div class="rank-label-container img-circle">
                                                     <div class="dropdown">
@@ -199,7 +199,7 @@ if (!Yii::$app->user->isGuest) {
                                                                 for ($LP = 0; $LP < (count($PreferencesLocation) >= 2 ? 2 : 1); $LP++) { ?>
                                                                     <li> <span class="imgarea">
                                                                         <a href="#" class="name" title="KP123WERT">
-                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesLocation[$LP]->id, "75" . $PreferencesLocation[$LP]->propic, 120, '', 'Yes'), ['alt' => $PreferencesLocation[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
+                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesLocation[$LP]->id, "75" . $PreferencesLocation[$LP]->propic, 120, '', 'Yes', CommonHelper::getVisiblePhoto($PreferencesLocation[$LP]->id, $PreferencesLocation[$LP]->eStatusPhotoModify)), ['alt' => $PreferencesLocation[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
                                                                         </a></span> <span class="img-desc"> <a href="#"
                                                                                                                class="name"
                                                                                                                title="<?= $PreferencesLocation[$LP]->Registration_Number ?>"><?= ucfirst($PreferencesLocation[$LP]->First_Name) ?></a>
@@ -238,7 +238,7 @@ if (!Yii::$app->user->isGuest) {
                                                             for ($LP = 0; $LP < (count($PreferencesProfession) >= 2 ? 2 : 1); $LP++) { ?>
                                                                 <li> <span class="imgarea">
                                                                         <a href="#" class="name" title="KP123WERT">
-                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesProfession[$LP]->id, "75" . $PreferencesProfession[$LP]->propic, 120, '', 'Yes'), ['alt' => $PreferencesProfession[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
+                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesProfession[$LP]->id, "75" . $PreferencesProfession[$LP]->propic, 120, '', 'Yes', CommonHelper::getVisiblePhoto($PreferencesProfession[$LP]->id, $PreferencesProfession[$LP]->eStatusPhotoModify)), ['alt' => $PreferencesProfession[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
                                                                         </a></span> <span class="img-desc"> <a href="#"
                                                                                                                class="name"
                                                                                                                title="<?= $PreferencesProfession[$LP]->Registration_Number ?>"><?= ucfirst($PreferencesProfession[$LP]->First_Name) ?></a>
@@ -280,7 +280,7 @@ if (!Yii::$app->user->isGuest) {
                                                                 for ($LP = 0; $LP < (count($PreferencesEducation) >= 2 ? 2 : 1); $LP++) { ?>
                                                                     <li> <span class="imgarea">
                                                                         <a href="#" class="name" title="KP123WERT">
-                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesEducation[$LP]->id, "75" . $PreferencesEducation[$LP]->propic, 120, '', 'Yes'), ['alt' => $PreferencesEducation[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
+                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesEducation[$LP]->id, "75" . $PreferencesEducation[$LP]->propic, 120, '', 'Yes', CommonHelper::getVisiblePhoto($PreferencesEducation[$LP]->id, $PreferencesEducation[$LP]->eStatusPhotoModify)), ['alt' => $PreferencesEducation[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
                                                                         </a></span> <span class="img-desc"> <a href="#"
                                                                                                                class="name"
                                                                                                                title="<?= $PreferencesEducation[$LP]->Registration_Number ?>"><?= ucfirst($PreferencesEducation[$LP]->First_Name) ?></a>
@@ -319,7 +319,7 @@ if (!Yii::$app->user->isGuest) {
                                                             for ($LP = 0; $LP < (count($PreferencesPersonal) >= 2 ? 2 : 1); $LP++) { ?>
                                                                 <li> <span class="imgarea">
                                                                         <a href="#" class="name" title="KP123WERT">
-                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesPersonal[$LP]->id, "75" . $PreferencesPersonal[$LP]->propic, 120, '', 'Yes'), ['alt' => $PreferencesPersonal[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
+                                                                            <?= Html::img(CommonHelper::getPhotos('USER', $PreferencesPersonal[$LP]->id, "75" . $PreferencesPersonal[$LP]->propic, 120, '', 'Yes', CommonHelper::getVisiblePhoto($PreferencesPersonal[$LP]->id, $PreferencesPersonal[$LP]->eStatusPhotoModify)), ['alt' => $PreferencesPersonal[$LP]->FullName, 'style' => '    width: 65px !important;']); ?>
                                                                         </a></span> <span class="img-desc"> <a href="#"
                                                                                                                class="name"
                                                                                                                title="<?= $PreferencesPersonal[$LP]->Registration_Number ?>"><?= ucfirst($PreferencesPersonal[$LP]->First_Name) ?></a>
@@ -431,7 +431,7 @@ if (!Yii::$app->user->isGuest) {
                                                             <a href="<?= CommonHelper::getUserUrl($UserInfoModel->Registration_Number) ?>&source=profile_viewed_by"
                                                                class="name-img"
                                                                title="<?= $UserInfoModel->Registration_Number ?>">
-                                                                <?= Html::img(CommonHelper::getPhotos('USER', $ViewerId, "120" . $UserInfoModel->propic, 120, '', 'Yes'), ['width' => '120', 'height' => '130', 'alt' => 'Profile', 'class' => '']); ?>
+                                                                <?= Html::img(CommonHelper::getPhotos('USER', $ViewerId, "120" . $UserInfoModel->propic, 120, '', 'Yes', CommonHelper::getVisiblePhoto($ViewerId, $UserInfoModel->eStatusPhotoModify)), ['width' => '120', 'height' => '130', 'alt' => 'Profile', 'class' => '']); ?>
                                                             </a>
                                                             <a href="<?= CommonHelper::getUserUrl($UserInfoModel->Registration_Number) ?>&source=profile_viewed_by"
                                                                class="name"
@@ -548,7 +548,7 @@ if (!Yii::$app->user->isGuest) {
                                                             <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $ValueRM->Registration_Number ?>&source=recently_joined"
                                                                class="name-img"
                                                                title="<?= $ValueRM->Registration_Number ?>">
-                                                                <?= Html::img(CommonHelper::getPhotos('USER', $ValueRM->id, "120" . $ValueRM->propic, 120, '', 'Yes'), ['width' => '120', 'height' => '130', 'alt' => 'Profile', 'class' => '']); ?>
+                                                                <?= Html::img(CommonHelper::getPhotos('USER', $ValueRM->id, "120" . $ValueRM->propic, 120, '', 'Yes', CommonHelper::getVisiblePhoto($ValueRM->id, $ValueRM->eStatusPhotoModify)), ['width' => '120', 'height' => '130', 'alt' => 'Profile', 'class' => '']); ?>
                                                             </a>
                                                             <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $ValueRM->Registration_Number ?>&source=recently_joined"
                                                                class="name"
@@ -681,7 +681,7 @@ if (!Yii::$app->user->isGuest) {
                                                     <?php foreach ($ShortListUser as $KeyShort => $ValueShort) { ?>
                                                         <li>
                                                     <span class="imgarea">
-                                                        <?= Html::img(CommonHelper::getPhotos('USER', $ValueShort->id, "75" . $ValueShort->propic, 120, '', 'Yes'), ['alt' => $ValueShort->FullName, 'style' => '    width: 65px !important;']); ?>
+                                                        <?= Html::img(CommonHelper::getPhotos('USER', $ValueShort->id, "75" . $ValueShort->propic, 120, '', 'Yes', CommonHelper::getVisiblePhoto($ValueShort->id, $ValueShort->eStatusPhotoModify)), ['alt' => $ValueShort->FullName, 'style' => '    width: 65px !important;']); ?>
                                                     </span>
                                                     <span class="img-desc">
                                                         <a href="<?= Yii::$app->homeUrl ?>user/profile?uk=<?= $ValueShort->Registration_Number ?>&source=shortlisted_by"

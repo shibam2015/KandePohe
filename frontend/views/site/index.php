@@ -196,7 +196,7 @@ use yii\jui\DatePicker;
                                         City: <?= CommonHelper::setInputVal($FV->cityName->vCityName, 'text') . ', ' . CommonHelper::setInputVal($FV->countryName->vCountryName, 'text') ?></p>
                                 </div>
                             </div>
-                            <?= Html::img(CommonHelper::getPhotos('USER', $FV->id, '260' . $FV->propic, 260, '', 'Yes'), ['alt' => $FV->FullName]); ?>
+                            <?= Html::img(CommonHelper::getPhotos('USER', $FV->id, '260' . $FV->propic, 260, '', 'Yes', CommonHelper::getVisiblePhoto($FV->id, $FV->eStatusPhotoModify)), ['alt' => $FV->FullName]); ?>
                         </div>
                         <figcaption>
                             <a <?php

@@ -37,7 +37,7 @@ $model = $model['model'];*/
                         if ($ModelInfo->status == \common\models\User::STATUS_APPROVE) {
                             ?>
                             <div class="box-inbox pull-left">
-                                <?= Html::img(CommonHelper::getPhotos('USER', $FId, "75" . $ModelInfo->propic, 75, '', 'Yes'), ['width' => '65', 'height' => '', 'alt' => 'Profile Pic', 'class' => '']); ?>
+                                <?= Html::img(CommonHelper::getPhotos('USER', $FId, "75" . $ModelInfo->propic, 75, '', 'Yes', CommonHelper::getVisiblePhoto($FId, $ModelInfo->eStatusPhotoModify)), ['width' => '65', 'height' => '', 'alt' => 'Profile Pic', 'class' => '']); ?>
                             </div>
                         <div class="box-inbox3 pull-right">
                             <p class="name">
@@ -173,7 +173,7 @@ $model = $model['model'];*/
                             </div>
                         </div>
                         <div class="box-inbox pull-left">
-                            <?= Html::img(CommonHelper::getPhotos('USER', $ModelInfo->id, "75" . $ModelInfo->propic, 75, '', 'Yes'), ['width' => '65', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?>
+                            <?= Html::img(CommonHelper::getPhotos('USER', $ModelInfo->id, "75" . $ModelInfo->propic, 75, '', 'Yes', CommonHelper::getVisiblePhoto($ModelInfo->id, $ModelInfo->eStatusPhotoModify)), ['width' => '65', 'height' => '', 'alt' => 'Profile', 'class' => '']); ?>
                         </div>
                         <div class="box-inbox3 pull-right">
                             <p class="name">

@@ -168,8 +168,9 @@ class CommonHelper {
 
     }
 
-    public static function getPhotos($TYPE = 'USER', $ID, $PHOTO, $SIZE = '', $DefaultStatus = '', $Profile = 'No') // GET USER PHOTO (Profile)
+    public static function getPhotos($TYPE = 'USER', $ID, $PHOTO, $SIZE = '', $DefaultStatus = '', $Profile = 'No', $Visible = 1) // GET USER PHOTO (Profile)
     {
+        #echo $Visible;exit;
         if ($TYPE == 'USER') {
             $U_PATH = $ID . "/";
             $PHOTO_WITH_SIZE = $PHOTO;
@@ -184,11 +185,20 @@ class CommonHelper {
                 $URL = $MAIN_URL;
             }
             $DefaultPhotoURL = CommonHelper::getUserUploadFolder(2);
-            if ($DefaultStatus == '')
-                $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $DefaultPhotoURL . 'no-user-img.jpg';
-            else
-                $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $DefaultPhotoURL . $SIZE . '_no-user-img.jpg';
-            return $PHOTO_USER;
+            if ($Visible != 1) {
+                if ($DefaultStatus == '')
+                    $PHOTO_USER = $DefaultPhotoURL . 'no-user-img.jpg';
+                else
+                    $PHOTO_USER = $DefaultPhotoURL . $SIZE . '_no-user-img.jpg';
+                return $PHOTO_USER;
+            } else {
+                if ($DefaultStatus == '')
+                    $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $DefaultPhotoURL . 'no-user-img.jpg';
+                else
+                    $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $DefaultPhotoURL . $SIZE . '_no-user-img.jpg';
+                return $PHOTO_USER;
+            }
+
         }
     }
 
@@ -213,6 +223,29 @@ class CommonHelper {
     {
         $HostName = "http://" . $_SERVER["HTTP_HOST"] . Yii::getAlias('@web');
         return $HostName;
+    }
+
+    public static function getVisiblePhoto($UserId, $PhotoStatus)
+    {
+        # 0 FOR Not Visisble. 1 For Visible.
+        if (Yii::$app->user->isGuest) {
+            if ($PhotoStatus != User::USER_PHOTO_APPROVE) {
+                return 0;
+            } else {
+                return 1;
+            }
+        } else {
+            if (Yii::$app->user->identity->id == $UserId) {
+                return 1;
+            } else {
+                if ($PhotoStatus != User::USER_PHOTO_APPROVE) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+
+        }
     }
 
     public static function getUserDefaultPhoto()

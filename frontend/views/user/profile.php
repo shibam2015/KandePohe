@@ -46,7 +46,7 @@ use yii\widgets\Pjax;
                                                                 }
                                                                 ?>
                                                                 <div class="item <?= ($K == 0) ? 'active' : ''; ?>">
-                                                                    <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $Photo, 120, '', $Yes), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
+                                                                    <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $Photo, 120, '', $Yes, CommonHelper::getVisiblePhoto($model->id, $V['eStatus'])), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
 
                                                                 </div>
                                                             <?php }
@@ -188,11 +188,16 @@ use yii\widgets\Pjax;
                                                     About <?= ($model->Gender == 'MALE') ? 'Him' : 'Her'; ?></h3>
 
                                                 <p>
+
+                                                    <?php if ($model->eStatusInOwnWord == \common\models\User::USER_PHOTO_APPROVE) { ?>
                                                     <?php if ($model->tYourSelf != '') { ?>
                                                         <?= $model->tYourSelf; ?>
                                                     <?php } else { ?>
 
                                                 <div class="notice kp_info"><p>Information Not Available.</p></div>
+                                                <?php } ?>
+                                                <?php } else { ?>
+                                                    <div class="notice kp_info"><p>Under Approval.</p></div>
                                                 <?php } ?>
                                                 </p>
                                             </div>
@@ -777,7 +782,7 @@ use yii\widgets\Pjax;
                         </div>
                     </div>
                 </div>-->
-                    <?= $this->render('/layouts/parts/_rightbar.php', ['SimilarProfile' => $SimilarProfile, 'aside' => 1]) ?>
+                    <!-- <? /*= $this->render('/layouts/parts/_rightbar.php', ['SimilarProfile' => $SimilarProfile, 'aside' => 1]) */ ?> -->
                 </div>
                 <?php if ($flag) { ?>
                     <div class="mrg-bt-10">
@@ -884,7 +889,7 @@ use yii\widgets\Pjax;
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-sm-12">
-                                    <?= Html::img(CommonHelper::getPhotos('USER', $model->id, '120' . $model->propic, 120, '', 'Yes'), ['width' => '', 'height' => '120', 'alt' => 'Profile', 'class' => '']); ?>
+                                    <?= Html::img(CommonHelper::getPhotos('USER', $model->id, '120' . $model->propic, 120, '', 'Yes', CommonHelper::getVisiblePhoto($model->id, $model->eStatusPhotoModify)), ['width' => '', 'height' => '120', 'alt' => 'Profile', 'class' => '']); ?>
                                 </div>
                                 <div class="col-md-12 col-sm-12">
                                     <h6 class="mrg-bt-30 mrg-tp-20 font-15 text-dark"><strong>Request the member to add

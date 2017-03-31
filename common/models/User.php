@@ -37,6 +37,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     const USER_NEWLY_REGISTERED = 'Newly-Registered';
     const USER_IN_APPROVAL = 'In-Approval';
     const USER_ALL = 'All USer';
+    const USER_PHOTO_APPROVE = 'Approve';
 
 
     const SCENARIO_LOGIN = 'login';
@@ -368,6 +369,12 @@ class User extends \common\models\base\baseUser implements IdentityInterface
     public static function findFeaturedMembers($Limit = 4) # Get Featured Members list with limit
     {
         return static::find()->where(['status' => [self::STATUS_APPROVE]])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
+        #return static::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
+    }
+
+    public static function findFeaturedMembersLogin($Limit = 4, $Id) # Get Featured Members list with limit
+    {
+        return static::find()->where(['status' => [self::STATUS_APPROVE]])->andWhere(['!=', 'id', $Id])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
         #return static::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
     }
 
