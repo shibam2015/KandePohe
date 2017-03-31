@@ -512,8 +512,11 @@ class CommonHelper {
                 $PATH = CommonHelper::getUserUploadFolderBackend(3, $ID, $dir);
                 $URL = $MAIN_URL;
             }
-            $DefaultPhotoURL = CommonHelper::getUserUploadFolderBackend(2);
-
+            if ($dir == 2) {
+                $DefaultPhotoURL = '../../../../frontend/web/uploads/users/';
+            } else {
+                $DefaultPhotoURL = CommonHelper::getUserUploadFolderBackend(2);
+            }
             if ($DefaultStatus == '')
                 $PHOTO_USER = is_file($PATH . $PHOTO_WITH_SIZE) ? $URL . $PHOTO_WITH_SIZE : $DefaultPhotoURL . 'no-user-img.jpg';
             else
@@ -528,7 +531,7 @@ class CommonHelper {
             $USER_UPLOAD = Yii::getAlias('@frontend') . '/web/uploads/users/';
         } else if ($TYPE == 2) {
             if ($dir == 0)
-                $USER_UPLOAD = '../../../frontend/web/uploads/users/';
+                $USER_UPLOAD = '../../../frontend/web/uploads/users/';#$USER_UPLOAD = '../../../../frontend/web/uploads/users/' ;#$USER_UPLOAD = '../../../frontend/web/uploads/users/';
             else
                 $USER_UPLOAD = '../../../../frontend/web/uploads/users/';
         } else if ($TYPE == 3) { //Profile Photo Path
