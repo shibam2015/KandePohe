@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             ['class' => 'yii\grid\ActionColumn',
 
-                                                'template' => '{view} {disapprove}',
+                                                'template' => '{view} {disapprove} {photos} {bio}',
                                                 'buttons' => [
                                                     'edit' => function ($model, $key, $index, $instance) {
                                                         $urlConfig = [];
@@ -90,6 +90,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         ]);
 
                                                     },
+                                                    'photos' => function ($url, $model) {
+                                                        return Html::a('<span class="fa  fa-picture-o"></span>', ['profilepic', 'id' => $model->id], ['title' => 'Photo Album']);
+                                                    },
+                                                    'bio' => function ($url, $model) {
+                                                        return Html::a('<span class="fa fa-file-text-o"></span>', ['inownwords', 'id' => $model->id], ['title' => 'Bio']);
+                                                    }
+
                                                 ]
                                             ],
                                         ],

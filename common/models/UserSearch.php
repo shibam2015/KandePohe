@@ -237,10 +237,16 @@ class UserSearch extends User
     }
     public function searchInOwnWords($params)
     {
-        $query = User::find()->where(['eStatusInOwnWord' => ['Disapprove', 'Pending']])
+        $query = User::find()
+            ->where(['eEmailVerifiedStatus' => 'Yes'])
+            ->orWhere(['ePhoneVerifiedStatus' => 'Yes'])
+            ->andWhere(['Status' => [User::STATUS_APPROVE, User::STATUS_ACTIVE]])
+            ->orderBy(['id' => SORT_DESC]);/*
+            ->where(['eStatusInOwnWord' => ['Disapprove', 'Pending']])
+
             ->andWhere(['ePhoneVerifiedStatus' => ['Yes']])
             ->andWhere(['eEmailVerifiedStatus' => ['Yes']])
-            ->andWhere(['Status' => User::STATUS_APPROVE]); // 5 For Approve
+            ->andWhere(['Status' => User::STATUS_APPROVE]); // 5 For Approve*/
         #echo $query->createCommand()->sql;
         #print_r($query->createCommand()->getRawSql());
         // add conditions that should always apply here
@@ -338,11 +344,13 @@ class UserSearch extends User
     }
     public function searchProfilePhoto($params)
     {
-        $query = User::find()->where(['eStatusPhotoModify' => ['Disapprove', 'Pending']])->andWhere(['ePhoneVerifiedStatus' => ['Yes']])
-            ->andWhere(['eEmailVerifiedStatus' => ['Yes']])
-            ->andWhere(['Status' => User::STATUS_APPROVE]); // 5 For Approve
+        $query = User::find()->where(['eStatusPhotoModify' => ['Disapprove', 'Pending']])
+            ->where(['eEmailVerifiedStatus' => 'Yes'])
+            ->orWhere(['ePhoneVerifiedStatus' => 'Yes'])
+            ->andWhere(['Status' => [User::STATUS_APPROVE, User::STATUS_ACTIVE]])
+            ->orderBy(['id' => SORT_DESC]);
         #echo $query->createCommand()->sql;
-        #print_r($query->createCommand()->getRawSql());
+        #    print_r($query->createCommand()->getRawSql());
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
