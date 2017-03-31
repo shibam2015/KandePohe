@@ -624,6 +624,43 @@ use yii\widgets\Pjax;
                                 </div>
                             </div>
                             <div class="clearfix"></div>
+
+
+
+                            <!--Phone NUmber -->
+                            <div class="modal fade" id="phone_number_modal" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <p class="text-center mrg-bt-10">
+                                        <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+                                    </p>
+
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                    aria-hidden="true">&times;</span> <span
+                                                    class="sr-only">Close</span></button>
+                                            <h2 class="text-center">Contact Number</h2>
+                                        </div>
+                                        <div class="modal-body ">
+                                            <div class="row">
+                                                <div class="text-center">
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <h5 class="mrg-bt-30 mrg-tp-20 font-15 text-dark">
+                                                            <strong>
+                                                                <i class="fa">
+                                                                    <?= Html::img('@web/images/call.png', ['width' => '', 'height' => '', 'alt' => 'call']); ?>
+                                                                </i> <?= $model->getDisplayMobile() ?>
+                                                            </strong>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <?php } else { ?>
                             <div class="padd-xs mrg-tp-10">
                                 <div class="row">
@@ -758,39 +795,6 @@ use yii\widgets\Pjax;
         </main>
     </div>
 
-<!--Phone NUmber -->
-<div class="modal fade" id="phone_number_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <p class="text-center mrg-bt-10">
-            <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
-        </p>
-
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span
-                        aria-hidden="true">&times;</span> <span
-                        class="sr-only">Close</span></button>
-                <h2 class="text-center">Contact Number</h2>
-            </div>
-            <div class="modal-body ">
-                <div class="row">
-                    <div class="text-center">
-                        <div class="col-md-12 col-sm-12">
-                            <h5 class="mrg-bt-30 mrg-tp-20 font-15 text-dark">
-                                <strong>
-                                    <i class="fa">
-                                        <?= Html::img('@web/images/call.png', ['width' => '', 'height' => '', 'alt' => 'call']); ?>
-                                    </i> <?= $model->getDisplayMobile() ?>
-                                </strong>
-                            </h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
     <!-- Modal Photo -->
     <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
