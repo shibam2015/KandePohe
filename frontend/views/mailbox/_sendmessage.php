@@ -61,7 +61,7 @@ $model = $model['model'];
                     </div>
 
                     <div class="col-md-3 col-sm-4 mrg-tp-20">
-                        <?= Html::img(CommonHelper::getPhotos('USER', $model->id, "75" . $model->propic, 120, '', 'Yes'), ['width' => '', 'height' => '120', 'alt' => 'Profile Pic', 'class' => '']); ?>
+                        <?= Html::img(CommonHelper::getPhotos('USER', $model->id, "75" . $model->propic, 120, '', 'Yes', CommonHelper::getVisiblePhoto($model->id, $model->eStatusPhotoModify)), ['width' => '', 'height' => '120', 'alt' => 'Profile Pic', 'class' => '']); ?>
                     </div>
                 </div>
                 <div class="row">

@@ -32,7 +32,7 @@ use yii\helpers\Url;
                                         <div class="clearfix"></div>
                                         <div class="inbox-thread">
                                             <div class="box-inbox pull-left">
-                                                <?= Html::img(CommonHelper::getPhotos('USER', $UserModel->id, "75" . $UserModel->propic, 75, '', 'Yes'), ['width' => '60', 'height' => '60', 'alt' => 'Profile', 'class' => '']); ?>
+                                                <?= Html::img(CommonHelper::getPhotos('USER', $UserModel->id, "75" . $UserModel->propic, 75, '', 'Yes', CommonHelper::getVisiblePhoto($UserModel->id, $UserModel->eStatusPhotoModify)), ['width' => '60', 'height' => '60', 'alt' => 'Profile', 'class' => '']); ?>
                                             </div>
                                             <div class="box-inbox3 conv pull-right">
                                                 <p class="name">
