@@ -22,6 +22,7 @@
         <div class="col-md-3 col-sm-6 col-md-offset-1">
           <h5>Explore Us</h5>
           <ul class="list-unstyled fbox">
+            <li><?= html::a('Home', ['/']) ?></li>
             <li><?= html::a('About Kande-Pohe Marathi Matrimony', ['site/about-us']) ?></li>
             <li><?= html::a('Contact Us', ['site/contact-us']) ?></li>
             <li><?= html::a('Terms of Use / Privacy Policy', ['site/terms-of-use']) ?></li>

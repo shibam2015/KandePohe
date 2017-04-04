@@ -150,5 +150,7 @@ return [
                                     Contact Number:+91-7387986545 <br>',
     'sitePhoneNumber' => '+91-7387986545',
     'homePageHeaderText' => 'नवीन नात्यांची सुरूवात करा कांदे - पोहें सोबत',
+    'publicPageTitle' => 'वधू- वर शोधा - Kande-Pohe Marathi Matrimony',
+    'publicPages' => array('', 'site/about-us', 'site/contact-us', 'site/help-feedback', 'site/terms-of-use'),
 ];
 

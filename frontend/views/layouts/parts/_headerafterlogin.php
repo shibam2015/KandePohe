@@ -10,9 +10,16 @@ use common\components\CommonHelper;
         <div class="row">
           <div class="col-xs-4">
             <div class="logo">
-              <a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/user/dashboard" title="logo">
-                <?= Html::img('@web/images/logo-inner.png', ['width' => '202', 'height' => 83, 'alt' => 'logo']); ?>
-              </a>
+              <?php if ((in_array(Yii::$app->request->pathInfo, Yii::$app->params['publicPages']))) { ?>
+                <a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/" title="logo">
+                  <?= Html::img('@web/images/logo-inner.png', ['width' => '202', 'height' => 83, 'alt' => 'logo']); ?>
+                </a>
+              <?php } else { ?>
+                <a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/user/dashboard" title="logo">
+                  <?= Html::img('@web/images/logo-inner.png', ['width' => '202', 'height' => 83, 'alt' => 'logo']); ?>
+                </a>
+              <?php } ?>
+
             </div>
           </div>
           <div class="col-xs-8">

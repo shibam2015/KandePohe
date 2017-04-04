@@ -485,12 +485,12 @@ use yii\jui\DatePicker;
                                                 'item' => function ($index, $label, $name, $checked, $value) {
 
                                                     $return = '<input type="checkbox" id="toc" name="' . $name . '" value="YES" >';
-                                                    $return .= '<label for="toc" class="control-label toccl">By clicking  ‘Sign Up Free’  you agree to our <a href="#" title="Terms">Terms</a></label>';
+                                                    $return .= '<label for="toc" class="control-label toccl">By clicking  ‘Sign Up Free’  you agree to our <a href="site/terms-of-use" title="Terms" target="_blank">Terms</a></label>';
+
                                                     return $return;
                                                 }
                                             ]
                                         )->label(false); ?>
-
                                     </div>
                                     <div class="col-sm-12">
 

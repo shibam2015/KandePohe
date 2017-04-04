@@ -29,7 +29,14 @@ AppAsset::register($this);
         <meta name="author" content="">
         <link rel="icon" href="<?= Yii::$app->homeUrl ?>images/favicon.ico">
         <?= Html::csrfMetaTags() ?>
-        <title><?= Html::encode($this->title) ?></title>
+        <?php
+        //if (in_array("Glenn", $people))
+        if ((in_array(Yii::$app->request->pathInfo, Yii::$app->params['publicPages']))) { ?>
+            <title><?= Yii::$app->params['publicPageTitle'] ?></title>
+        <?php } else { ?>
+            <title>Kande Pohe</title>
+        <?php }
+        ?>
         <?php $this->head() ?>
         <meta name="apple-mobile-web-app-title" content="Kande Pohe">
         <meta name="apple-mobile-web-app-capable" content="yes">
