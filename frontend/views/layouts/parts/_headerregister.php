@@ -17,7 +17,7 @@
               <ul class="list-inline">
                 <?php if (!Yii::$app->user->isGuest) { ?>
                   <!--<li><? /*= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', Yii::$app->homeUrl . 'site/logout', ['data-method' => 'post']) */ ?></li>-->
-                  <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', [Yii::$app->homeUrl . 'site/logout'], ['data-method' => 'post', 'class' => 'logout']) ?></li>
+                  <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', ['site/logout'], ['data-method' => 'post', 'class' => 'logout']) ?></li>
                   <?php if (Yii::$app->user->identity->eEmailVerifiedStatus == 'Yes' || Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes') { ?>
                     <!-- <li><a href="<? /*= Yii::$app->homeUrl */ ?>user/my-profile" title="Profile">Profile</a></li>-->
                   <?php } ?>
