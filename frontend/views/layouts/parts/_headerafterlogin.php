@@ -12,11 +12,11 @@ use common\components\CommonHelper;
             <div class="logo">
               <?php if ((in_array(Yii::$app->request->pathInfo, Yii::$app->params['publicPages']))) { ?>
                 <a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/" title="logo">
-                  <?= Html::img('@web/images/logo-inner.png', ['width' => '202', 'height' => 83, 'alt' => 'logo']); ?>
+                  <?= Html::img('@web/images/logo-inner.png', ['width' => '235', 'height' => 83, 'alt' => 'logo']); ?>
                 </a>
               <?php } else { ?>
                 <a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/user/dashboard" title="logo">
-                  <?= Html::img('@web/images/logo-inner.png', ['width' => '202', 'height' => 83, 'alt' => 'logo']); ?>
+                  <?= Html::img('@web/images/logo-inner.png', ['width' => '235', 'height' => 83, 'alt' => 'logo']); ?>
                 </a>
               <?php } ?>
 

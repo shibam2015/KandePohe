@@ -134,3 +134,5 @@ class AjaxController extends \yii\web\Controller
     }
 
 }
+
+?>
