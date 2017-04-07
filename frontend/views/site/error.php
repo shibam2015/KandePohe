@@ -13,12 +13,6 @@ $this->title = $name;
 //echo $this->render('/layouts/parts/_headerregister.php');
 ?>
 <div class="">
-    <?php if (!Yii::$app->user->isGuest) {
-        echo $this->render('/layouts/parts/_headerafterlogin');
-    } else {
-        echo $this->render('/layouts/parts/_headerregister.php');
-    }
-    ?>
     <main>
         <section>
             <div class="container">

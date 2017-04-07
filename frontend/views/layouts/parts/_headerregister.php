@@ -7,12 +7,12 @@
     <div class="header-inner">
       <div class="container">
         <div class="row">
-          <div class="col-xs-8">
+          <div class="col-xs-4">
             <div class="logo"><a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>" title="logo">
                 <!-- <img src="images/logo-inner.png" width="202" height="83" alt="logo" title="Kande Pohe"> --><?= Html::img('@web/images/logo-inner.png', ['width' => '235', 'height' => 83, 'alt' => 'logo']); ?> </a>
             </div>
           </div>
-          <div class="col-xs-4">
+          <div class="col-xs-8">
             <div class="help pull-right">
               <ul class="list-inline">
                 <?php if (!Yii::$app->user->isGuest) { ?>
