@@ -11,6 +11,9 @@ use Yii;
  * @property string $type
  * @property string $title
  * @property string $description
+ * @property string $meta_title
+ * @property string $meta_keyword
+ * @property string $meta_description
  */
 class baseSiteCms extends \yii\db\ActiveRecord
 {
@@ -28,8 +31,9 @@ class baseSiteCms extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'title', 'description'], 'required'],
-            [['description'], 'string'],
+            [['id', 'type', 'title', 'description', 'meta_title', 'meta_keyword', 'meta_description'], 'required'],
+            [['id'], 'integer'],
+            [['description', 'meta_title', 'meta_keyword', 'meta_description'], 'string'],
             [['type', 'title'], 'string', 'max' => 200],
         ];
     }
@@ -44,6 +48,9 @@ class baseSiteCms extends \yii\db\ActiveRecord
             'type' => 'Type',
             'title' => 'Title',
             'description' => 'Description',
+            'meta_title' => 'Meta Title',
+            'meta_keyword' => 'Meta Keyword',
+            'meta_description' => 'Meta Description',
         ];
     }
 }

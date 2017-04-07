@@ -219,7 +219,8 @@ class SearchController extends Controller
             $WHERE .= ($SubCommunity != '') ? ' AND user.iSubCommunity_ID = "' . $SubCommunity . '" ' : '';
             #$WHERE .= ($HeightFrom != '') ? ' AND user.iHeightID = "' . $HeightFrom . '" ' : '';
             $WHERE .= ($ReligionID != '') ? ' AND user.iReligion_ID = "' . $ReligionID . '" ' : '';
-            $WHERE .= ($MaritalStatusID != '') ? ' AND user.Marital_Status = "' . $MaritalStatusID . '" ' : '';
+            #$WHERE .= ($MaritalStatusID != '') ? ' AND user.Marital_Status = "' . $MaritalStatusID . '" ' : '';
+            $WHERE .= ($MaritalStatusID != '') ? ' AND user.iMaritalStatusID = "' . $MaritalStatusID . '" ' : '';
             $WHERE .= ($AgeFrom != '') ? ' AND ( (user.Age >= "' . $AgeFrom . '") OR (TIMESTAMPDIFF(YEAR, user.DOB, CURDATE()) >= "' . $AgeFrom . '"))' : '';
             $WHERE .= ($AgeTo != '') ? ' AND ((user.Age <= "' . $AgeTo . '") OR (TIMESTAMPDIFF(YEAR, user.DOB, CURDATE()) <= "' . $AgeTo . '")) ' : '';
 
