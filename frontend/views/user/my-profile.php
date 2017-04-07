@@ -936,10 +936,12 @@ $this->registerJs('
         getInlineDetail("' . Url::to(['user/edit-personal-info']) . '","#div_personal_info1","1");
     });
 
-    /*$(".edit_basic_information").click(function(e){
+    /*
+    $(".edit_basic_information").click(function(e){
         getInlineDetail("' . Url::to(['user/edit-basic-info']) . '","#div_basic_info","0");
     });
-    getInlineDetail("' . Url::to(['user/edit-basic-info']) . '","#div_basic_info","1");*/
+    getInlineDetail("' . Url::to(['user/edit-basic-info']) . '","#div_basic_info","1");
+    */
 
     $(document).on("click","#cancel_edit_basicinfo",function(e){
         getInlineDetail("' . Url::to(['user/edit-basic-info']) . '","#div_basic_info","1");
@@ -985,7 +987,7 @@ $this->registerJs('
         getInlineDetail("' . Url::to(['user/edit-horoscope']) . '","#div_horoscope","1");
     });
 
-/*  partner preferences*/
+/*  partner preferences */
 
      $(".edit_preferences").click(function(e){
         getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","0");

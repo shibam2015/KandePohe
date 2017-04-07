@@ -160,6 +160,9 @@ if ($show) {
     </div>
     <?php ActiveForm::end();
     $this->registerJs('
+           $(".edit_lifestyle").hide();
+        ');
+    $this->registerJs('
                   selectboxClassWise("clslifestyle");
              ');
 } else {
@@ -187,6 +190,9 @@ if ($show) {
         </dl>
   
     <?php
+    $this->registerJs('
+           $(".edit_lifestyle").show();
+        ');
 }
 ?>
   </div>

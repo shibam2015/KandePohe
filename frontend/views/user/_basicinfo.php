@@ -246,6 +246,9 @@ if ($show) {
     </div>
     <?php ActiveForm::end();
     $this->registerJs('
+           $(".edit_basic_information").hide();
+        ');
+    $this->registerJs('
           selectboxClassWise("clsbasicinfo");
          ');
 } else {
@@ -282,6 +285,9 @@ if ($show) {
         </dl>
     
     <?php
+    $this->registerJs('
+           $(".edit_basic_information").show();
+        ');
 }
 ?>
 </div>

@@ -56,12 +56,18 @@ use yii\helpers\ArrayHelper;
             </div>
         </div>
         <?php ActiveForm::end();
+        $this->registerJs('
+           $(".edit_looking").hide();
+        ');
     } else {
         if ($UPP->LookingFor != '') {
             echo $UPP->LookingFor;
         } else { ?>
             <div class="notice kp_info"><p>Information Not Available.</p></div>
         <?php }
+        $this->registerJs('
+           $(".edit_looking").show();
+        ');
     }
     ?>
 </div>

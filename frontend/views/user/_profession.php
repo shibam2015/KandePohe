@@ -140,6 +140,9 @@ use yii\helpers\ArrayHelper;
         </div>
         <?php ActiveForm::end();
         $this->registerJs('
+           $(".edit_profession").hide();
+        ');
+        $this->registerJs('
           selectboxClassWise("clsprofession");
          ');
     } else {
@@ -171,6 +174,9 @@ use yii\helpers\ArrayHelper;
         </dl>
 
     <?php
+        $this->registerJs('
+           $(".edit_profession").show();
+        ');
     }
     ?>
 </div>

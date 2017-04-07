@@ -158,6 +158,9 @@ use yii\helpers\ArrayHelper;
         </div>
         <?php ActiveForm::end();
         $this->registerJs('
+           $(".edit_current_address").hide();
+        ');
+        $this->registerJs('
           selectboxClassWise("clscurrentaddress");
          ');
     } else {
@@ -178,6 +181,9 @@ use yii\helpers\ArrayHelper;
         </dl>
 
     <?php
+        $this->registerJs('
+           $(".edit_current_address").show();
+        ');
     }
     ?>
 </div>

@@ -97,7 +97,9 @@ use yii\helpers\ArrayHelper;
                 </div>
             </div>
             <?php ActiveForm::end();
-
+            $this->registerJs('
+           $(".edit_partner_family").hide();
+        ');
             $this->registerJs('
           selectboxClassWise("clspartnersfamily");
          ');
@@ -115,6 +117,9 @@ use yii\helpers\ArrayHelper;
             </dl>
 
         <?php
+            $this->registerJs('
+           $(".edit_partner_family").show();
+        ');
         }
         ?>
     </div>

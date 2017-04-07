@@ -161,6 +161,9 @@ use yii\helpers\ArrayHelper;
         </div>
         <?php ActiveForm::end();
         $this->registerJs('
+           $(".edit_permanent_address").hide();
+        ');
+        $this->registerJs('
           selectboxClassWise("clspermanentaddress");
          ');
     } else {
@@ -181,6 +184,9 @@ use yii\helpers\ArrayHelper;
         </dl>
 
     <?php
+        $this->registerJs('
+           $(".edit_permanent_address").show();
+        ');
     }
     ?>
 </div>

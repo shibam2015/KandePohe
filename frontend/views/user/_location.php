@@ -104,6 +104,9 @@ use yii\helpers\ArrayHelper;
         </div>
         <?php ActiveForm::end();
         $this->registerJs('
+           $(".edit_location").hide();
+        ');
+        $this->registerJs('
           selectboxClassWise("clselocation");
          ');
     } else {
@@ -127,6 +130,9 @@ use yii\helpers\ArrayHelper;
         </dl>
 
     <?php
+        $this->registerJs('
+           $(".edit_location").show();
+        ');
     }
     ?>
 </div>

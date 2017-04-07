@@ -450,7 +450,9 @@ if ($show) {
         </div>
     </div>
     <?php ActiveForm::end();
-
+    $this->registerJs('
+           $(".edit_family").hide();
+        ');
     $this->registerJs('
           selectboxClassWise("clsfamily");
          ');
@@ -542,6 +544,9 @@ if ($show) {
         </dl>
     
     <?php
+    $this->registerJs('
+           $(".edit_family").show();
+        ');
 }
 ?>
 </div>

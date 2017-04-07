@@ -188,6 +188,9 @@ use yii\helpers\ArrayHelper;
             </div>
             <?php ActiveForm::end();
             $this->registerJs('
+           $(".edit_hobby").hide();
+        ');
+            $this->registerJs('
                     selectboxClassWise("clhobby");
          ');
             # $this->registerCssFile(Yii::$app->request->baseUrl . '/plugings/select2/select2.min.css');
@@ -227,6 +230,9 @@ use yii\helpers\ArrayHelper;
             </dl>
 
         <?php
+            $this->registerJs('
+           $(".edit_hobby").show();
+        ');
         }
         ?>
     </div>

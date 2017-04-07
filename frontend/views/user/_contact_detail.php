@@ -61,6 +61,9 @@ $model = $model['model'];
         </div>
         <?php ActiveForm::end();
         $this->registerJs('
+           $(".edit_contact_detail").hide();
+        ');
+        $this->registerJs('
           selectboxClassWise("clscontactdetails");
          ');
     } else {
@@ -74,6 +77,9 @@ $model = $model['model'];
         </dl>
 
     <?php
+        $this->registerJs('
+           $(".edit_contact_detail").show();
+        ');
     }
     ?>
 </div>

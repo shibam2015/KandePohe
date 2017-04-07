@@ -331,6 +331,9 @@ use yii\helpers\ArrayHelper;
         </div>
         <?php ActiveForm::end();
         $this->registerJs('
+           $(".edit_preferences").hide();
+        ');
+        $this->registerJs('
           selectboxClassWise("clspreferences");
          ');
     } else {
@@ -397,6 +400,9 @@ use yii\helpers\ArrayHelper;
             <dd><?= CommonHelper::setInputVal(CommonHelper::getValuesFromArray(Yii::$app->params['eyesArray'], $PartnersSpectacles, 1), 'text') ?></dd>
         </dl>
     <?php
+        $this->registerJs('
+           $(".edit_preferences").show();
+        ');
     }
     ?>
 </div>

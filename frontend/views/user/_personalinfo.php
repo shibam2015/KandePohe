@@ -367,6 +367,9 @@ use yii\helpers\Url;
             </div>
         </div>
         <?php ActiveForm::end();
+        $this->registerJs('
+           $(".edit_personal_btn").hide();
+        ');
         if ($model->iCountryId == 101) {
             if ($model->iDistrictID == 1) {
                 $this->registerJs('
@@ -457,6 +460,9 @@ use yii\helpers\Url;
 
         </dl>
         <?php
+        $this->registerJs('
+           $(".edit_personal_btn").show();
+        ');
         if ($popup) {
             list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'CHANGE_PHONE_NUMBER');
             $this->registerJs('

@@ -90,6 +90,9 @@ use yii\helpers\ArrayHelper;
             </div>
             <?php ActiveForm::end();
             $this->registerJs('
+           $(".edit_education").hide();
+        ');
+            $this->registerJs('
                   selectboxClassWise("clseducation");
              ');
         } else {
@@ -108,6 +111,9 @@ use yii\helpers\ArrayHelper;
                 <dd><?= CommonHelper::setInputVal($model->annualIncome->vAnnualIncome, 'text') ?></dd>
             </dl>
         <?php
+            $this->registerJs('
+           $(".edit_education").show();
+        ');
         }
         ?>
     </div>

@@ -87,6 +87,9 @@ use yii\helpers\ArrayHelper;
         </div>
         <?php ActiveForm::end();
         $this->registerJs('
+           $(".edit_horoscope").hide();
+        ');
+        $this->registerJs('
           selectboxClassWise("clshoroscope");
          ');
     } else {
@@ -112,7 +115,10 @@ use yii\helpers\ArrayHelper;
             <dd><?= $model->Mangalik ?></dd>
         </dl>
 
-    <?php
+        <?php
+        $this->registerJs('
+           $(".edit_horoscope").show();
+        ');
     }
     ?>
 </div>

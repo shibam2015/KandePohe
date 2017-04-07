@@ -44,6 +44,9 @@ if ($show) {
 
     </div>
     <?php ActiveForm::end();
+    $this->registerJs('
+           $(".edit_btn").hide();
+        ');
 } else {
   ?>
         <?php if ($model->tYourSelf != '') { ?>
@@ -60,6 +63,9 @@ if ($show) {
             notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
         ');
     }
+    $this->registerJs('
+           $(".edit_btn").show();
+        ');
     ?>
     <?php
 }
