@@ -275,7 +275,7 @@ $M1 = array();
                                                         <div class="box">
                                                             <div class="mid-col">
                                                                 <div class="form-cont bs">
-                                                                    <?= Html::resetButton('Reset', ['class' => 'btn btn-primary']) ?>
+                                                                    <?= Html::resetButton('Reset', ['class' => 'btn btn-primary rset']) ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -834,7 +834,6 @@ $this->registerJsFile(Yii::$app->request->baseUrl . '/js/cover/jquery-ui.min.js'
 
 $this->registerJs('
        jQuery(document).ready(function($) {
-
         $("#myCarousel").carousel({
                 interval: 5000
         });
@@ -919,7 +918,6 @@ $this->registerJs('
         color: #696767;
         height: 20px;
     }
-
     #amount {
         -webkit-border-radius: 2px;
         border: #c4c4c4 1px solid;

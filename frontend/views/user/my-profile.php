@@ -669,7 +669,7 @@ if (!Yii::$app->user->isGuest) {
                             </div>
                         </div>
                     </div>
-                    <!-- <?= $this->render('/layouts/parts/_rightbar.php', ['SimilarProfile' => $SimilarProfile]) ?> -->
+                    <!-- <? /*= $this->render('/layouts/parts/_rightbar.php', ['SimilarProfile' => $SimilarProfile]) */ ?> -->
                 </div>
             </div>
         </section>

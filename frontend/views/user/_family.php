@@ -435,7 +435,7 @@ if ($show) {
             <dd><?= CommonHelper::setInputVal($model->motherStatusId->vWorkingAsName, 'text') ?></dd>
         <?php } ?>
             <dt>No of Brothers</dt>
-            <dd><?= CommonHelper::setInputVal($model->nob, 'text') ?></dd>
+            <dd><?= $model->nob ?></dd>
             <dt>No of Sisters</dt>
             <dd><?= $model->nos; ?></dd>
             <dt>Country</dt>
