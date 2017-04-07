@@ -184,28 +184,6 @@ if (!Yii::$app->user->isGuest) {
                                                 <div class="pie_progress__label">Complete</div>
                                             </div>
                                             <?php if ($PROFILE_COMPLETENESS < 100) { ?>
-                                                <!--<div class="radial-progress" data-progress="0">
-                                                        <div class="circle">
-                                                            <div class="mask full">
-                                                                <div class="fill"></div>
-                                                            </div>
-                                                            <div class="mask half">
-                                                                <div class="fill"></div>
-                                                                <div class="fill fix"></div>
-                                                            </div>
-                                                            <div class="shadow"></div>
-                                                        </div>
-                                                        <div class="inset">
-                                                            <div class="percentage">
-                                                                <div class="numbers">
-                                                                    <span>-</span><span>0% Complete</span>
-                                                                    <?php /*for ($i = 1; $i <= 100; $i++) { */ ?>
-                                                                        <span><? /*= $i */ ?>% Complete</span>
-                                                                    <?php /*} */ ?>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>-->
                                                 <div class="text-center">
                                                     <p>Complete your profile for better search results</p>
                                                 </div>
@@ -897,6 +875,7 @@ if (!Yii::$app->user->isGuest) {
 </div>
 <script type="text/javascript">
     var PRO_COMP = <?=$PROFILE_COMPLETENESS?>;
+
 </script>
 <script src="<?= Yii::$app->request->baseUrl ?>/js/selectFx.js"></script>
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/js/cover/jquery-ui.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
@@ -1149,10 +1128,12 @@ require_once __DIR__ . '/_photosection.php';
 <?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/meter/js/jquery-asPieProgress.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <?php
 $this->registerJs("
-$('.pie_progress').asPieProgress({
+//alert(PRO_COMP);
+profile_meter(PRO_COMP);
+/*$('.pie_progress').asPieProgress({
         namespace: 'pie_progress'
       });
-	  $('.pie_progress').asPieProgress('go', PRO_COMP+'%');
+	  //$('.pie_progress').asPieProgress('go', PRO_COMP+'%');*/
     ");
 ?>
 <style type="text/css">

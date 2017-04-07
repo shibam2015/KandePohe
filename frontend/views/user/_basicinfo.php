@@ -285,8 +285,10 @@ if ($show) {
         </dl>
     
     <?php
+    $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
     $this->registerJs('
            $(".edit_basic_information").show();
+           profile_meter(' . $PROFILE_COMPLETENESS . ');
         ');
 }
 ?>

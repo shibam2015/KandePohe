@@ -437,3 +437,10 @@ function phoneExist() {
     $('#multiple_profile_reason').val('');
     $("#phone-change-model").modal("show");
 }
+
+function profile_meter(PRO_COMP) {
+    $('.pie_progress').asPieProgress({
+        namespace: 'pie_progress'
+    });
+    $('.pie_progress').asPieProgress('go', PRO_COMP + '%');
+}

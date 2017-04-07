@@ -111,8 +111,10 @@ use yii\helpers\ArrayHelper;
                 <dd><?= CommonHelper::setInputVal($model->annualIncome->vAnnualIncome, 'text') ?></dd>
             </dl>
         <?php
+            $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
             $this->registerJs('
            $(".edit_education").show();
+            profile_meter(' . $PROFILE_COMPLETENESS . ');
         ');
         }
         ?>

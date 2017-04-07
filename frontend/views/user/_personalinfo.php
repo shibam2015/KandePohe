@@ -460,8 +460,10 @@ use yii\helpers\Url;
 
         </dl>
         <?php
+        $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
         $this->registerJs('
            $(".edit_personal_btn").show();
+                   profile_meter(' . $PROFILE_COMPLETENESS . ');
         ');
         if ($popup) {
             list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('S', 'CHANGE_PHONE_NUMBER');

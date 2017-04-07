@@ -63,8 +63,10 @@ if ($show) {
             notificationPopup("' . $STATUS . '", "' . $MESSAGE . '", "' . $TITLE . '");
         ');
     }
+    $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
     $this->registerJs('
            $(".edit_btn").show();
+            profile_meter(' . $PROFILE_COMPLETENESS . ');
         ');
     ?>
     <?php

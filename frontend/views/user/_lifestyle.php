@@ -159,8 +159,10 @@ if ($show) {
         </div>
     </div>
     <?php ActiveForm::end();
+    $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
     $this->registerJs('
            $(".edit_lifestyle").hide();
+            profile_meter(' . $PROFILE_COMPLETENESS . ');
         ');
     $this->registerJs('
                   selectboxClassWise("clslifestyle");

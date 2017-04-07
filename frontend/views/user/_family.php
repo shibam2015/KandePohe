@@ -544,8 +544,10 @@ if ($show) {
         </dl>
     
     <?php
+    $PROFILE_COMPLETENESS = $this->context->profileCompleteness($model->completed_step);
     $this->registerJs('
            $(".edit_family").show();
+            profile_meter(' . $PROFILE_COMPLETENESS . ');
         ');
 }
 ?>
