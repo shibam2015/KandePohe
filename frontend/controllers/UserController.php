@@ -683,7 +683,19 @@ class UserController extends Controller
                 $model->iMotherStatusID = Yii::$app->request->post('User')['iMotherStatusID'];
                 $model->iMotherWorkingAsID = Yii::$app->request->post('User')['iMotherWorkingAsID'];
                 $model->nob = Yii::$app->request->post('User')['nob'];
+                if (Yii::$app->request->post('User')['nob'] == 0) {
+                    $model->NobM = 0;
+                } else {
+                    $model->NobM = Yii::$app->request->post('User')['NobM'];
+                }
+
+
                 $model->nos = Yii::$app->request->post('User')['nos'];
+                if (Yii::$app->request->post('User')['nos'] == 0) {
+                    $model->NosM = 0;
+                } else {
+                    $model->NosM = Yii::$app->request->post('User')['NosM'];
+                }
                 $model->iCountryCAId = Yii::$app->request->post('User')['iCountryCAId'];
                 $model->iStateCAId = Yii::$app->request->post('User')['iStateCAId'];
                 $model->iCityCAId = Yii::$app->request->post('User')['iCityCAId'];

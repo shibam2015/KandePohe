@@ -111,12 +111,65 @@ if ($show) {
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
         'labelOptions' => ['class' => ''],
-    ])->input('number') ?>
+])->input('number', ['min' => '0',
+    'onkeyup' => '
+                                                            var nob = $(this).val();
+                                                            if(nob == 0){
+                                                            $("#nobmDiv").hide();
+                                                               // $("#NobM").val("0");
+                                                            }
+                                                            else {
+                                                              $("#nobmDiv").show();
+                                                            }
+                                                            '
+]) ?>
+    <?php
+
+    if ($model->nob == '0') {
+        $style = "display:none";
+    } else {
+        $style = "display:block";
+    }
+    ?>
+    <div class="box NobM" id="nobmDiv" style="<?= $style ?>">
+        <?= $form->field($model, 'NobM', [
+            'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger"> </span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+            'labelOptions' => ['class' => ''],
+        ])->input('number') ?>
+    </div>
+
     <?= $form->field($model, 'nos', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
         'labelOptions' => ['class' => ''],
-    ])->input('number') ?>
+])->input('number', ['min' => '0', 'onkeyup' => '
+                                                    var nos = $(this).val();
+                                                    if(nos == 0){
+                                                    $("#nosmDiv").hide();
+                                                      $("#NosM").val("0");
+                                                    }
+                                                    else {
+                                                      $("#nosmDiv").show();
+                                                    }
+                                                     '
+]) ?>
+
+    <?php
+    if ($model->nos == '0') {
+        $style = "display:none";
+    } else {
+        $style = "display:block";
+    }
+    ?>
+    <div class="box NosM" id="nosmDiv" style="<?= $style ?>">
+        <?= $form->field($model, 'NosM', [
+            'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger"></span>{label}</label>
+                                <div class="col-sm-8 col-xs-8">{input}</div>',
+            'labelOptions' => ['class' => ''],
+        ])->input('number') ?>
+    </div>
+
     <?= $form->field($model, 'iCountryCAId', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">*</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -436,8 +489,16 @@ if ($show) {
         <?php } ?>
             <dt>No of Brothers</dt>
             <dd><?= $model->nob ?></dd>
+            <?php if ($model->nob > 0) { ?>
+                <dt>Number Of Merried Brothers</dt>
+                <dd><?= $model->NobM ?></dd>
+            <?php } ?>
             <dt>No of Sisters</dt>
             <dd><?= $model->nos; ?></dd>
+            <?php if ($model->nos > 0) { ?>
+                <dt>Number Of Merried Sisters</dt>
+                <dd><?= $model->NosM ?></dd>
+            <?php } ?>
             <dt>Country</dt>
             <dd><?= CommonHelper::setInputVal($model->countryNameCA->vCountryName, 'text') ?></dd>
             <dt>State</dt>
