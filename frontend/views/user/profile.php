@@ -82,7 +82,7 @@ use yii\widgets\Pjax;
                                                     class="font-light">(<?= CommonHelper::setInputVal($model->Registration_Number, 'text') ?>
                                                     )</span></h2>
 
-                                            <p>Profile created by <?= $model->Profile_created_for; ?> | Last
+                                            <p>Profile created for <?= $model->Profile_created_for; ?> | Last
                                                 online <?= CommonHelper::DateTime($model->LastLoginTime, 7); ?></p>
                                             <!-- TODO: Set Last login time and profile creted by -->
                                         </div>

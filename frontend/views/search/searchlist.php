@@ -431,7 +431,7 @@ $M1 = array();
                                                             <?php } ?>
                                                         </h2>
                                                         <?php $USER_PHONE = \common\models\User::weightedCheck(8); ?>
-                                                        <p>Profile created by <?= $SV->Profile_created_for; ?> | Last
+                                                        <p>Profile created for <?= $SV->Profile_created_for; ?> | Last
                                                             online <?= CommonHelper::DateTime($SV->LastLoginTime, 28); ?>
                                                             |
                                                         <span class="pager-icon">
