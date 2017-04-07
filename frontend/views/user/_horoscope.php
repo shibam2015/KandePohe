@@ -96,11 +96,11 @@ use yii\helpers\ArrayHelper;
             <dt>Raashi</dt>
             <dd><?= CommonHelper::setInputVal($model->raashiName->Name, 'text') ?>
             <dd>
-            <dt>Charan</dt>
-            <dd><?= CommonHelper::setInputVal($model->charanName->Name, 'text') ?>
-            <dd>
             <dt>Nakshtra</dt>
             <dd><?= CommonHelper::setInputVal($model->nakshtraName->Name, 'text') ?>
+            <dd>
+            <dt>Charan</dt>
+            <dd><?= CommonHelper::setInputVal($model->charanName->Name, 'text') ?>
             <dd>
             <dt>Nadi</dt>
             <dd><?= CommonHelper::setInputVal($model->nadiName->Name, 'text') ?>
