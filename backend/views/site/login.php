@@ -25,7 +25,8 @@ $baseUrl = str_replace('/frontend/web', '', (new Request)->getBaseUrl())."/";
 <div class="login-box">
     <div class="login-logo">
 
-        <a href="#"><b><img src="<?=$baseUrl?>images/logo.png" width="250" height="88" alt="<?=Yii::$app->name?>" ></b></a>
+        <a href="#"><b><img src="<?= $baseUrl ?>images/logo.png" width="235" height="88"
+                            alt="<?= Yii::$app->name ?>"></b></a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
