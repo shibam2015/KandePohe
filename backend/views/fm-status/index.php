@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'iFMStatusID',
+            # 'iFMStatusID',
             'vName:ntext',
             'eStatus',
 

@@ -41,7 +41,7 @@ class MasterTalukaSearch extends MasterTaluka
      */
     public function search($params)
     {
-        $query = MasterTaluka::find();
+        $query = MasterTaluka::find()->where(['!=', 'vName', '']);
 
         // add conditions that should always apply here
 

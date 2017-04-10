@@ -12,8 +12,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'vName')->textarea(['rows' => 6]) ?>
-
+    <?= $form->field($model, 'vName')->textInput() ?>
+    <?= $form->field($model, 'Centimeters')->textInput() ?>
     <?= $form->field($model, 'eStatus')->dropDownList([ 'Active' => 'Active', 'Inactive' => 'Inactive', ]) ?>
 
     <div class="form-group">

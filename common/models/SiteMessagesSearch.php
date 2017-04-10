@@ -41,7 +41,7 @@ class SiteMessagesSearch extends SiteMessages
      */
     public function search($params)
     {
-        $query = SiteMessages::find();
+        $query = SiteMessages::find()->orderBy(['message_action' => SORT_ASC]);
 
         // add conditions that should always apply here
 

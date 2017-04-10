@@ -10,9 +10,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * HeightController implements the CRUD actions for MasterHeight model.
+ * MasterHeightsController implements the CRUD actions for MasterHeights model.
  */
-class HeightController extends Controller
+class MasterHeightsController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,7 +30,7 @@ class HeightController extends Controller
     }
 
     /**
-     * Lists all MasterHeight models.
+     * Lists all MasterHeights models.
      * @return mixed
      */
     public function actionIndex()
@@ -45,7 +45,7 @@ class HeightController extends Controller
     }
 
     /**
-     * Displays a single MasterHeight model.
+     * Displays a single MasterHeights model.
      * @param integer $id
      * @return mixed
      */
@@ -57,10 +57,10 @@ class HeightController extends Controller
     }
 
     /**
-     * Finds the MasterHeight model based on its primary key value.
+     * Finds the MasterHeights model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return MasterHeight the loaded model
+     * @return MasterHeights the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
@@ -73,7 +73,7 @@ class HeightController extends Controller
     }
 
     /**
-     * Creates a new MasterHeight model.
+     * Creates a new MasterHeights model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -91,7 +91,7 @@ class HeightController extends Controller
     }
 
     /**
-     * Updates an existing MasterHeight model.
+     * Updates an existing MasterHeights model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -110,7 +110,7 @@ class HeightController extends Controller
     }
 
     /**
-     * Deletes an existing MasterHeight model.
+     * Deletes an existing MasterHeights model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed

@@ -17,7 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <h3 class="profile-username text-center"><?php echo $this->title = ucwords($model->Name); ?></h3>
 
         <p class="text-muted text-center">Property
-            <DETAILS></DETAILS>
         </p>
     </div>
 

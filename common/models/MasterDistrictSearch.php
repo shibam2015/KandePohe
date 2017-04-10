@@ -41,7 +41,7 @@ class MasterDistrictSearch extends MasterDistrict
      */
     public function search($params)
     {
-        $query = MasterDistrict::find();
+        $query = MasterDistrict::find()->where(['!=', 'vName', '']);
 
         // add conditions that should always apply here
 

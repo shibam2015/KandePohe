@@ -112,7 +112,7 @@ $ADMIN_NAME = ucwords(strtolower(Yii::$app->user->identity->vFirstName. ' ' .Yii
                             ['label' => 'Gan', 'icon' => 'fa  fa-star', 'url' => ['/gan'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'Hobbies', 'icon' => 'fa  fa-star', 'url' => ['/hobbies'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'Interests', 'icon' => 'fa  fa-star', 'url' => ['/interests'], 'visible' => !Yii::$app->user->isGuest],
-                            ['label' => 'Interest Statuses', 'icon' => 'fa  fa-star', 'url' => ['/interest-statuses'], 'visible' => !Yii::$app->user->isGuest],
+                            // ['label' => 'Interest Statuses', 'icon' => 'fa  fa-star', 'url' => ['/interest-statuses'], 'visible' => !Yii::$app->user->isGuest],
 
                             ['label' => 'Mother Tongue', 'icon' => 'fa fa-hourglass-1', 'url' => ['/mother-tongue'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'Nadi', 'icon' => 'fa fa-hourglass-1', 'url' => ['/nadi'], 'visible' => !Yii::$app->user->isGuest],
@@ -122,7 +122,7 @@ $ADMIN_NAME = ucwords(strtolower(Yii::$app->user->identity->vFirstName. ' ' .Yii
                             ['label' => 'Preferred Movies', 'icon' => 'fa fa-hourglass-1', 'url' => ['/preferred-movies'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'Property Details', 'icon' => 'fa fa-hourglass-1', 'url' => ['/property-details'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'Raashi', 'icon' => 'fa fa-hourglass-1', 'url' => ['/raashi'], 'visible' => !Yii::$app->user->isGuest],
-                            ['label' => 'Residency Status', 'icon' => 'fa fa-hourglass-1', 'url' => ['/residency-status'], 'visible' => !Yii::$app->user->isGuest],
+                            # ['label' => 'Residency Status', 'icon' => 'fa fa-hourglass-1', 'url' => ['/residency-status'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'Skin Tone', 'icon' => 'fa fa-hourglass-1', 'url' => ['/skin-tone'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'Sports Fitness Activities', 'icon' => 'fa fa-hourglass-1', 'url' => ['/sports-fitn-activities'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'Tags', 'icon' => 'fa fa-hourglass-1', 'url' => ['/tags'], 'visible' => !Yii::$app->user->isGuest],
@@ -140,7 +140,7 @@ $ADMIN_NAME = ucwords(strtolower(Yii::$app->user->identity->vFirstName. ' ' .Yii
                             ['label' => 'Email Template', 'icon' => 'fa fa-envelope', 'url' => ['/email-format'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'SMS Template', 'icon' => 'fa fa-envelope', 'url' => ['/sms-format'], 'visible' => !Yii::$app->user->isGuest],
                             ['label' => 'Site Message', 'icon' => 'fa fa-envelope', 'url' => ['/site-messages'], 'visible' => !Yii::$app->user->isGuest],
-                            ['label' => 'SMS Setting', 'icon' => 'fa-mobile-phone', 'url' => ['/setting'], 'visible' => !Yii::$app->user->isGuest],
+                            //  ['label' => 'SMS Setting', 'icon' => 'fa-mobile-phone', 'url' => ['/setting'], 'visible' => !Yii::$app->user->isGuest],
 
                         ], 'visible' => !Yii::$app->user->isGuest
                     ],

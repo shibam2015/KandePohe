@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
                                     <p>
-                                        <?= Html::a('Create Sms Format', ['create'], ['class' => 'btn btn-success pull-right']) ?>
+                                        <!-- <? /*= Html::a('Create Sms Format', ['create'], ['class' => 'btn btn-success pull-right']) */ ?> -->
 
                                     </p>
                                     <?= GridView::widget([

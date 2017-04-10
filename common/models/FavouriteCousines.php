@@ -53,10 +53,10 @@ class FavouriteCousines extends \common\models\base\baseFavouriteCousines
         ];
     }
 
-    public function scenarios()
-    {
-        return [
-        ];
+    /* public function scenarios()
+     {
+         return [
+         ];
 
-    }
+     }*/
 }

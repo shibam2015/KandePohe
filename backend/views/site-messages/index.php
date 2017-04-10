@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </thead>
                                     <tbody>
                                     <p>
-                                        <?= Html::a('Create Site Messages', ['create'], ['class' => 'btn btn-success pull-right']) ?>
+                                        <!-- <? /*= Html::a('Create Site Messages', ['create'], ['class' => 'btn btn-success pull-right']) */ ?> -->
                                     </p>
                                     <?= GridView::widget([
                                         'dataProvider' => $dataProvider,

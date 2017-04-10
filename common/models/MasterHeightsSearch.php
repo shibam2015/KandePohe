@@ -8,9 +8,9 @@ use yii\data\ActiveDataProvider;
 use common\models\MasterHeights;
 
 /**
- * MasterHeightSearch represents the model behind the search form about `common\models\MasterHeight`.
+ * MasterHeightsSearch represents the model behind the search form about `common\models\MasterHeights`.
  */
-class MasterHeightSearch extends MasterHeights
+class MasterHeightsSearch extends MasterHeights
 {
     /**
      * @inheritdoc
@@ -20,6 +20,7 @@ class MasterHeightSearch extends MasterHeights
         return [
             [['iHeightID'], 'integer'],
             [['vName', 'eStatus'], 'safe'],
+            [['Centimeters'], 'number'],
         ];
     }
 
@@ -41,7 +42,7 @@ class MasterHeightSearch extends MasterHeights
      */
     public function search($params)
     {
-        $query = MasterHeight::find();
+        $query = MasterHeights::find();
 
         // add conditions that should always apply here
 
@@ -60,6 +61,7 @@ class MasterHeightSearch extends MasterHeights
         // grid filtering conditions
         $query->andFilterWhere([
             'iHeightID' => $this->iHeightID,
+            'Centimeters' => $this->Centimeters,
         ]);
 
         $query->andFilterWhere(['like', 'vName', $this->vName])

@@ -82,7 +82,7 @@ class FavouriteCousinesController extends Controller
     {
         $model = new FavouriteCousines();
 
-        $model->scenario = FavouriteCousines::SCENARIO_ADD;
+        # $model->scenario = FavouriteCousines::SCENARIO_ADD;
         if ($model->load(Yii::$app->request->post())) {
             $DATETIME = CommonHelper::getTime();
             $model->created_on = $DATETIME;
@@ -107,7 +107,7 @@ class FavouriteCousinesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->scenario = FavouriteCousines::SCENARIO_UPDATE;
+        # $model->scenario = FavouriteCousines::SCENARIO_UPDATE;
         if ($model->load(Yii::$app->request->post())) {
             $DATETIME = CommonHelper::getTime();
             $model->modified_on = $DATETIME;
