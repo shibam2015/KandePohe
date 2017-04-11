@@ -34,7 +34,7 @@ class AdminController extends Controller
             ],
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index', 'create', 'update', 'view'],
+                'only' => ['index', 'create', 'update', 'view', 'delete'],
                 'rules' => [
                     // allow authenticated users
                     [

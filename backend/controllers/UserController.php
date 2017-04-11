@@ -26,10 +26,21 @@ class UserController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
-                    //'approve' => ['POST'],
                 ],
             ],
-        ];
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index', 'create', 'update', 'view', 'delete', 'new-registered', 'userapprove', 'in-approval', 'user-in-own-words', 'user-profile-pic', 'profilepic', 'inownwords'],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    // everything else is denied
+                ],
+            ],
+        ]; #Only Access By Admin login.
     }
 
     /**
