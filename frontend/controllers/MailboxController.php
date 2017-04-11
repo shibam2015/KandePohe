@@ -100,6 +100,9 @@ class MailboxController extends Controller
 
     public function actionInboxSendMessage()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $id = Yii::$app->user->identity->id;
         $show = false;
         $flag = false;
@@ -179,6 +182,9 @@ class MailboxController extends Controller
 
     public function actionMoreConversationCommon($Id, $uk, $Type = 'Inbox')
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $OtherUserId = User::getIdNo($uk); # Get User Using Registration_Number.
         #var_dump($OtherUserId);
         #CommonHelper::pr($OtherUserId);exit;
@@ -471,6 +477,9 @@ class MailboxController extends Controller
 
     public function actionLastMsg($uk = '')
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         $request = Yii::$app->request;
         $params = $request->bodyParams;
@@ -527,6 +536,9 @@ class MailboxController extends Controller
 
     public function actionMoreCoversationAll($uk = '')
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         $request = Yii::$app->request;
         $params = $request->bodyParams;
@@ -609,6 +621,9 @@ class MailboxController extends Controller
 
     public function actionMoreCoversationAll_oldone_v($uk = '')
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         $uk = Yii::$app->request->post('uk');
         $FromUserId = User::find()->select('id')->where(['Registration_Number' => $uk])->one();
@@ -644,6 +659,9 @@ class MailboxController extends Controller
 
     public function actionAcceptDecline() //Not Usefull any more
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         $ToUserId = Yii::$app->request->post('ToUserId');
         $Action = Yii::$app->request->post('Action');
