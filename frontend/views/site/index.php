@@ -205,7 +205,7 @@ use yii\jui\DatePicker;
                             <?php } else { ?>
                                 href="#" title="Login" data-toggle="modal" data-target="#login" id="login_button"
                             <?php } ?> >
-                                <small><?= $FV->FullName ?></small>
+                                <small><?= ucfirst($FV->First_Name) ?></small>
                             </a>
 
                             <div class="inter">
