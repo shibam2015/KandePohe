@@ -380,6 +380,9 @@ class UserController extends Controller
      */
     public function actionPhotoOperation()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $PG = new UserPhotos();
         $CM_HELPER = new CommonHelper();
         $id = Yii::$app->user->identity->id;
@@ -444,6 +447,9 @@ class UserController extends Controller
 
     public function actionEditMyinfo()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_EDIT_MY_INFO;
@@ -481,6 +487,9 @@ class UserController extends Controller
 
     public function actionEditPersonalInfo()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         #$model->scenario = User::SCENARIO_EDIT_PERSONAL_INFO;
@@ -568,6 +577,9 @@ class UserController extends Controller
 
     public function actionEditBasicInfo()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER1;
@@ -610,6 +622,9 @@ class UserController extends Controller
 
     public function actionEditEducation()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER2;
@@ -639,6 +654,9 @@ class UserController extends Controller
 
     public function actionEditLifestyle()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_EDIT_LIFESTYLE;
@@ -671,6 +689,9 @@ class UserController extends Controller
 
     public function actionEditFamily()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER4;
@@ -739,6 +760,9 @@ class UserController extends Controller
 
     public function actionEditPreferences()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         $PartenersReligion = PartenersReligion::findAllByUserId($Id) == NULL ? new PartenersReligion() : PartenersReligion::findAllByUserId($Id);
         $PartnersMaritalStatus = PartnersMaritalStatus::findAllByUserId($Id) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findAllByUserId($Id);
@@ -1030,6 +1054,9 @@ class UserController extends Controller
 
     public function actionEditPreferencesProfession()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         $UPP = UserPartnerPreference::findByUserId($Id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($Id);
         $PartnersEducationalLevel = PartnersEducationalLevel::findAllByUserId($Id) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findAllByUserId($Id);
@@ -1128,6 +1155,10 @@ class UserController extends Controller
 
     public function actionEditPreferencesHobby()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $Id = Yii::$app->user->identity->id;
         $PartnersInterest = PartnersInterest::findAllByUserId($Id) == NULL ? new PartnersInterest() : PartnersInterest::findAllByUserId($Id);
         $PartnersReads = PartnersFavouriteReads::findAllByUserId($Id) == NULL ? new PartnersFavouriteReads() : PartnersFavouriteReads::findAllByUserId($Id);
@@ -1250,6 +1281,10 @@ class UserController extends Controller
 
     public function actionEditPreferencesFamily()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $Id = Yii::$app->user->identity->id;
         $PartnersFamilyALevel = PartnersFamilyAffluenceLevel::findAllByUserId($Id) == NULL ? new PartnersFamilyAffluenceLevel() : PartnersFamilyAffluenceLevel::findAllByUserId($Id);
         $PartnersFamilyTypeS = PartnersFamilyType::findAllByUserId($Id) == NULL ? new PartnersFamilyType() : PartnersFamilyType::findAllByUserId($Id);
@@ -1297,6 +1332,10 @@ class UserController extends Controller
 
     public function actionEditPreferencesLocation()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $Id = Yii::$app->user->identity->id;
         $PartnersCountries = PartnersCountries::findAllByUserId($Id) == NULL ? new PartnersCountries() : PartnersCountries::findAllByUserId($Id);
         $PartnersStates = PartnersStates::findAllByUserId($Id) == NULL ? new PartnersStates() : PartnersStates::findAllByUserId($Id);
@@ -1367,6 +1406,10 @@ class UserController extends Controller
 
     public function actionEditPreferencesLocation1()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $UPP = UserPartnerPreference::findByUserId($id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($id);
         $PC = PartnersCities::findByUserId($id) == NULL ? new PartnersCities() : PartnersCities::findByUserId($id);
@@ -1425,6 +1468,10 @@ class UserController extends Controller
 
     public function actionEditLookingFor()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $UPP = UserPartnerPreference::findByUserId($id) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($id);
         $model = User::findOne($id);
@@ -1449,6 +1496,10 @@ class UserController extends Controller
 
     public function actionEditContactDetail()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_CONTACT_DETAILS;
@@ -1536,6 +1587,10 @@ class UserController extends Controller
 
     public function actionEditPermanentAddress()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_PERMANENT_ADDRESS;
@@ -1570,6 +1625,10 @@ class UserController extends Controller
 
     public function actionEditCurrentAddress()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_CURRENT_ADDRESS;
@@ -1604,6 +1663,10 @@ class UserController extends Controller
 
     public function actionEditHoroscope()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER10;
@@ -1633,6 +1696,10 @@ class UserController extends Controller
 
     public function actionEditHobby()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_REGISTER10;
@@ -1685,6 +1752,10 @@ class UserController extends Controller
 
     public function actionCoverupload()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $session_uid = $id;
@@ -1706,6 +1777,10 @@ class UserController extends Controller
 
     public function actionCoverphotoback()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $session_uid = $id;
@@ -1733,6 +1808,10 @@ class UserController extends Controller
 
     public function actionSaveCoverPhoto($position = '')
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $P_ID = Yii::$app->request->post('position');
@@ -1771,6 +1850,10 @@ class UserController extends Controller
 
     public function getPhotoListOutput()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $PG = new UserPhotos();
         $id = Yii::$app->user->identity->id;
         $USER_PHOTOS_LIST = $PG->findByUserId($id);
@@ -1801,6 +1884,10 @@ class UserController extends Controller
 
     public function getPhotoListOutputOne()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $PG = new UserPhotos();
         $id = Yii::$app->user->identity->id;
         $USER_PHOTOS_LIST = $PG->findByUserId($id);
@@ -1823,6 +1910,10 @@ class UserController extends Controller
 
     public function actionSaveprivacySetting()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $user_privacy_option = $P_ID = Yii::$app->request->post('user_privacy_option');
@@ -1837,6 +1928,10 @@ class UserController extends Controller
     }
     public function actionGetCoverPhotoFromPhoto($position = '')
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $STATUS = "S";
@@ -1870,6 +1965,10 @@ class UserController extends Controller
 
     public function actionSaveCoverPhotoFromPhoto($position = '')
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
 
@@ -1906,6 +2005,10 @@ class UserController extends Controller
 
     public function actionHideProfile()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $HS = '';
@@ -1932,6 +2035,10 @@ class UserController extends Controller
 
     public function actionAccountDelete() # Account Delete
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->status = STATUS_DELETED;
@@ -1951,6 +2058,10 @@ class UserController extends Controller
 
     public function actionTagList()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $show = false;
@@ -1970,6 +2081,10 @@ class UserController extends Controller
 
     public function actionAddAllTags()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $show = false;
@@ -1996,6 +2111,10 @@ class UserController extends Controller
 
     public function actionTagDelete()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         if (Yii::$app->request->post() && (Yii::$app->request->post('TagId') != '' && Yii::$app->request->post('TagId') != 0)) {
@@ -2008,6 +2127,10 @@ class UserController extends Controller
 
     public function actionTagSuggestionList()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $show = false;
@@ -2024,6 +2147,10 @@ class UserController extends Controller
 
     public function actionTagCount()
     { //tag-suggestion-list
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $show = false;
@@ -2035,6 +2162,10 @@ class UserController extends Controller
 
     public function actionPhoneVerification()   # For Phone Verification : VS
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_VERIFY_PIN_FOR_PHONE;
@@ -2107,6 +2238,10 @@ class UserController extends Controller
     }
     public function actionPhoneNumberChange() # For Phone Number Change : VS
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_PHONE_NUMBER_CHANGE;
@@ -2170,6 +2305,10 @@ class UserController extends Controller
 
     public function actionPhonePinResend() # For Phone Pin Resend : VS
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_RESEND_PIN_FOR_PHONE;
@@ -2203,6 +2342,10 @@ class UserController extends Controller
 
     public function actionEmailVerification()   # For Email Verification : VS
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_VERIFY_PIN_FOR_EMAIL;
@@ -2244,6 +2387,10 @@ class UserController extends Controller
 
     public function actionEmailIdChange() # For Email ID Change : VS
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_EMAIL_ID_CHANGE;
@@ -2289,6 +2436,10 @@ class UserController extends Controller
 
     public function actionEmailPinResend() # For EMail PIN Resend : VS
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $id = Yii::$app->user->identity->id;
         $model = User::findOne($id);
         $model->scenario = User::SCENARIO_RESEND_PIN_FOR_EMAIL;
@@ -2490,6 +2641,10 @@ class UserController extends Controller
 
     public function actionProfileViewedBy($Id, $ToUserId)
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
         $Temp = 0;
         $Model->scenario = UserRequest::SCENARIO_PROFILE_VIEWED_BY;
@@ -2521,9 +2676,12 @@ class UserController extends Controller
         }
     }
 
-
     public function actionMailSendRequest($id, $ToUserId, $MailType)
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $Model = User::findOne($id);
         $UserModel = User::findOne($ToUserId);
         $PG = new UserPhotos();
@@ -2548,6 +2706,10 @@ class UserController extends Controller
 
     public function actionSendEmailProfile()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         #echo "<pre>";print_r($_REQUEST);exit;
 
         $UserId = Yii::$app->request->post('ToUserId');
@@ -2565,6 +2727,10 @@ class UserController extends Controller
 
     public function actionUserRequest() # For User Request : VS
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $Id = Yii::$app->user->identity->id;
         $model = User::findOne($Id);
         $show = $popup = false;
@@ -2645,6 +2811,10 @@ class UserController extends Controller
 
     public function actionSendInterest($Id, $ToUserId, $MailType)
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
         $Temp = 0;
         $Model->scenario = UserRequestOp::SCENARIO_SEND_INTEREST;
@@ -2701,6 +2871,10 @@ class UserController extends Controller
 
     public function actionMailBoxLog($Id, $ToUserId, $Content, $MessageType = 'Custom')
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $MailBoxModel = new Mailbox();
         $MailBoxModel->scenario = Mailbox::SCENARIO_SEND_MESSAGE;
         $MailBoxModel->from_user_id = $Id;
@@ -2720,6 +2894,10 @@ class UserController extends Controller
 
     public function actionAcceptInterest($Id, $ToUserId, $MailType)
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
         $Temp = 0;
         $Model->scenario = UserRequestOp::SCENARIO_ACCEPT_INTEREST;
@@ -2765,6 +2943,10 @@ class UserController extends Controller
 
     public function actionDeclineInterest($Id, $ToUserId, $MailType)
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
         $Temp = 0;
         $Model->scenario = UserRequestOp::SCENARIO_DECLINE_INTEREST;
@@ -2810,6 +2992,10 @@ class UserController extends Controller
 
     public function actionCancelInterest($Id, $ToUserId, $MailType)
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
         $Temp = 0;
         $Model->scenario = UserRequestOp::SCENARIO_CANCEL_INTEREST;
@@ -2860,6 +3046,10 @@ class UserController extends Controller
 
     public function actionUserBlock($Id, $ToUserId, $MailType)
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $Model = UserRequestOp::checkUsers($Id, $ToUserId) == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
         $Temp = 0;
         $Model->scenario = UserRequestOp::SCENARIO_CANCEL_INTEREST;
@@ -2908,6 +3098,10 @@ class UserController extends Controller
 
     public function actionUserShortList($Id, $ToUserId, $MailType)
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+            exit;
+        }
         $Model = UserRequestOp::checkUsers($Id, $ToUserId);// == NULL ? new UserRequestOp() : UserRequestOp::checkUsers($Id, $ToUserId);
         $Temp = 0;
         if ($Model == NULL) {
@@ -2959,6 +3153,9 @@ class UserController extends Controller
 
     public function actionSendIntDashboard()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         $ToUserId = Yii::$app->request->post('ToUserId');
         $Flag = $this->actionSendInterest($Id, $ToUserId, 'SEND_INTEREST_OF');
@@ -2977,6 +3174,9 @@ class UserController extends Controller
 
     public function actionInterestAccept()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         $ToUserId = Yii::$app->request->post('ToUserId');
         $Flag = $this->actionSendInterest($Id, $ToUserId, 'SEND_INTEREST_OF');
@@ -2995,6 +3195,9 @@ class UserController extends Controller
 
     public function actionPhotoPopUp()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $UserPhoto = new UserPhotos();
         $Id = Yii::$app->user->identity->id;
         $UserPhotoList = $UserPhoto->findByUserId($Id);
@@ -3013,6 +3216,9 @@ class UserController extends Controller
      * */
     public function actionSetProfilePhoto()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         $ProfilePhotoPath = CommonHelper::getUserUploadFolder(3, $Id);
         $Photo = Yii::$app->request->post('image_name');
@@ -3087,6 +3293,9 @@ class UserController extends Controller
 
     public function actionSetProfilePhotoOne()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         $ProfilePhotoPath = CommonHelper::getUserUploadFolder(3, $Id);
         $Photo = Yii::$app->request->post('imgName');
@@ -3171,6 +3380,9 @@ class UserController extends Controller
      */
     public function actionPhotoCropping()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         $ProfilePhotoPath = CommonHelper::getUserUploadFolder(3, $Id);
         $ActualImagePATH = CommonHelper::getUserUploadFolder(1) . $Id . "/";
@@ -3210,6 +3422,9 @@ class UserController extends Controller
 
     public function actionUserProfile($uk = '')
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         /*if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }*/
@@ -3303,6 +3518,9 @@ class UserController extends Controller
     }
     public function actionProfilePhotoRemove()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         $UserModel = User::findOne($Id);
         $ProPic = $UserModel->propic;
@@ -3342,6 +3560,9 @@ class UserController extends Controller
 
     public function actionSetting()
     { #Setting : Privacy Option.
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         CommonHelper::checkVerification();
         $UserModel = User::findOne($Id);
@@ -3355,6 +3576,9 @@ class UserController extends Controller
 
     public function actionSavePrivacyOption() #For Save Privacy Options.
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         $UserModel = User::findOne($Id);
         if (Yii::$app->request->post('ACTION') == 'PRIVACY-PHONE') {
@@ -3377,6 +3601,9 @@ class UserController extends Controller
 
     public function actionMultipleProfileOption() #For Multiple Profile Options
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $Id = Yii::$app->user->identity->id;
         $UserModel = User::findOne($Id);
         $RedirectURL = Yii::$app->homeUrl . 'site/partner-preferences';//Yii::getAlias('@web');
