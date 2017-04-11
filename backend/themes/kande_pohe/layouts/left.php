@@ -47,18 +47,18 @@ $ADMIN_NAME = ucwords(strtolower(Yii::$app->user->identity->vFirstName. ' ' .Yii
 					['label' => 'admin', 'icon' => 'fa fa-user-secret', 'url' => ['/admin'], 'visible' => !Yii::$app->user->isGuest],
                     #['label' => 'Community', 'icon' => 'fa fa-user-secret', 'url' => ['/master-community'], 'visible' => !Yii::$app->user->isGuest],
 
-                    ['label' => 'Login', 'icon' => 'fa-sign-in', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+                    ['label' => 'Login', 'icon' => 'fa fa-sign-in', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
                         'label' => 'User Manage',
                         'icon' => 'fa fa-users',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'User List (All)', 'icon' => 'fa fa-list', 'url' => ['/user/index'],],
-                            ['label' => 'User List (Approved)', 'icon' => 'fa  fa-check-circle', 'url' => ['/user/userapprove']],
-                            ['label' => 'User List (In Pending Approval)', 'icon' => 'fa fa-list-alt', 'url' => ['/user/in-approval'],],
-                            ['label' => 'User List (Newly Registered)', 'icon' => 'fa fa-list-alt', 'url' => ['/user/new-registered'],],
-                            ['label' => 'User List (In Bio)', 'icon' => 'fa fa-file-code-o', 'url' => ['/user/user-in-own-words'],],
-                            ['label' => 'User List (Photo Album)', 'icon' => 'fa fa-file-code-o', 'url' => ['/user/user-profile-pic'],],
+                            ['label' => 'User List (All)', 'icon' => 'fa fa-list', 'url' => ['/user/index'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'User List (Approved)', 'icon' => 'fa  fa-check-circle', 'url' => ['/user/userapprove'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'User List (In Pending Approval)', 'icon' => 'fa fa-list-alt', 'url' => ['/user/in-approval'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'User List (Newly Registered)', 'icon' => 'fa fa-list-alt', 'url' => ['/user/new-registered'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'User List (In Bio)', 'icon' => 'fa fa-file-code-o', 'url' => ['/user/user-in-own-words'], 'visible' => !Yii::$app->user->isGuest],
+                            ['label' => 'User List (Photo Album)', 'icon' => 'fa fa-file-code-o', 'url' => ['/user/user-profile-pic'], 'visible' => !Yii::$app->user->isGuest],
 
                             //['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug'],],
                             /*[

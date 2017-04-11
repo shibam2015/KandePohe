@@ -29,10 +29,30 @@ class AdminController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index', 'create', 'update', 'view'],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    // everything else is denied
+                ],
+            ],
+        ]; #Only Access By Admin login.
+        /*return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
-        ];
+        ];*/
         /*return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -82,9 +102,33 @@ class AdminController extends Controller
      */
     public function actionView($id)
     {
+        $this->actionCheckLogin();
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+    function actionCheckLogin()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+    }
+
+    /**
+     * Finds the Admin model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Admin the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Admin::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
     /**
@@ -105,7 +149,7 @@ class AdminController extends Controller
             ]);
         }*/
         $model->scenario = Admin::SCENARIO_ADD;
-        if ($model->load(Yii::$app->request->post()) ) {
+        if ($model->load(Yii::$app->request->post())) {
             $password = $model->vPassword;
             $model->vPassword=$model->setPassword($password);
             if($model->save()){
@@ -134,20 +178,20 @@ class AdminController extends Controller
             Yii::$app->end();
         }
 
-        if ($model->load(Yii::$app->request->post()) ) {
+        if ($model->load(Yii::$app->request->post())) {
             $ADMIN_ARRAY = Yii::$app->request->post('Admin');
             $password = $ADMIN_ARRAY['vPassword'];
-            if($password == ''){
+            if ($password == '') {
                 $password = $model->vPassword;
             }
 
-            $model->vPassword=$model->setPassword($password);
+            $model->vPassword = $model->setPassword($password);
             #echo "<pre>"; print_r($model->save());exit;
-            if($model->save()){
+            if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->iAdminId]);
             }
-        }else {
-            $model->vPassword='';
+        } else {
+            $model->vPassword = '';
             return $this->render('update', [
                 'model' => $model,
             ]);
@@ -173,22 +217,6 @@ class AdminController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Admin model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Admin the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Admin::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 
 }
