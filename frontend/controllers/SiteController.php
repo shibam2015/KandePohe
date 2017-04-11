@@ -1277,6 +1277,9 @@ class SiteController extends Controller
     }
 
     public function actionPhotoupload($id){
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $id = base64_decode($id);
 
         if($model = User::findOne($id)){
