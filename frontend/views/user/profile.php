@@ -77,9 +77,11 @@ use yii\widgets\Pjax;
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="name-panel">
-                                            <h2 class="nameplate"><?= $model->FullName; ?><span
+                                            <h2 class="nameplate"><?= $model->FullName; ?>
+                                                <span
                                                     class="font-light">(<?= CommonHelper::setInputVal($model->Registration_Number, 'text') ?>
-                                                    )</span></h2>
+                                                    )</span>
+                                            </h2>
 
                                             <p>Profile created for <?= $model->Profile_created_for; ?> | Last
                                                 online <?= CommonHelper::DateTime($model->LastLoginTime, 7); ?></p>
@@ -747,10 +749,11 @@ use yii\widgets\Pjax;
                                                     <div class="text-center">
                                                         <div class="col-md-12 col-sm-12">
                                                             <div class="fb-profile-text mrg-bt-30 text-dark">
-                                                                <h1 id="p_u_name"><?= $model->FullName; ?><span
-                                                                        class="sub-text"
-                                                                        id="p_u_rgno">(<?= CommonHelper::setInputVal($model->Registration_Number, 'text') ?>
-                                                                        )</span></h1>
+                                                                <h1 id="p_u_name"><?= $model->FullName; ?>
+                                                                    <span class="sub-text"
+                                                                          id="p_u_rgno">(<?= CommonHelper::setInputVal($model->Registration_Number, 'text') ?>
+                                                                        )</span>
+                                                                </h1>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 col-sm-12">
