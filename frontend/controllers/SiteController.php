@@ -146,7 +146,7 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest) {
             $FeaturedMembers = User::findFeaturedMembers(4);
         } else {
-            $FeaturedMembers = User::findFeaturedMembersLogin(4, Yii::$app->user->identity->id);
+            $FeaturedMembers = User::findFeaturedMembersLogin(4, Yii::$app->user->identity->id, Yii::$app->user->identity->Gender);
         }
         #CommonHelper::pr($FeaturedMembers);exit;
         //return $this->redirect(Yii::$app->request->referrer);
