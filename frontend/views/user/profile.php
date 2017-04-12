@@ -938,20 +938,15 @@ use yii\widgets\Pjax;
                                     <div class="col-sm-12">
                                         <div class="name-panel">
                                             <div class="ad-title"><h3><?= $Title ?></h3></div>
+                                        </div>
                                             <div class="clearfix"></div>
                                             <div class="notice kp_warning"><p><?= $Message ?></p></div>
-                                            <!--<div class="row">
-                                                <div class="col-sm-12">-->
                                             <ul class="list-inline pull-right">
                                                 <li><a href="<?= Yii::$app->homeUrl ?>user/my-profile"><i
                                                             class="fa fa-angle-left"></i> My Profile </a></li>
                                                 <li><a href="<?= Yii::$app->homeUrl ?>user/dashboard">My Dashboard <i
                                                             class="fa fa-angle-right"></i></a></li>
                                             </ul>
-                                            <!--</div>
-                                        </div>-->
-
-                                        </div>
                                     </div>
                                 </div>
                             </div>
