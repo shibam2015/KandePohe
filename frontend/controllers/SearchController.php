@@ -278,7 +278,8 @@ class SearchController extends Controller
     public function getPhotoList($Id)
     {
         $UserPhotoModel = new UserPhotos();
-        $PhotoList = $UserPhotoModel->findByUserId($Id);
+        #$PhotoList = $UserPhotoModel->findByUserId($Id);
+        $PhotoList = $UserPhotoModel->userPhotoList($Id);
         if (count($PhotoList)) {
             $Photos = $PhotoList;
         } else {

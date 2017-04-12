@@ -71,7 +71,7 @@ use yii\widgets\Pjax;
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-3 col-xs-4">
                                                 <div class="prof-pic">
                                                     <div class="drop-effect"></div>
                                                     <div class="slider">
@@ -81,7 +81,7 @@ use yii\widgets\Pjax;
                                                             <div class="carousel-inner">
 
                                                                 <div class="item active">
-                                                                    <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, '120' . $SV->propic, 120, '', 'Yes'), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive item']); ?>
+                                                                    <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, '200' . $SV->propic, 200, '', 'Yes'), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive item']); ?>
                                                                 </div>
 
                                                             </div>

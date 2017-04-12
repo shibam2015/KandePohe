@@ -222,6 +222,7 @@ $M1 = array();
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!--
                                                 <div class="col-md-6">
                                                     <div class="box">
                                                         <div class="mid-col">
@@ -235,7 +236,7 @@ $M1 = array();
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <!--<div class="row">
                                                 <div class="col-md-6">
@@ -350,7 +351,7 @@ $M1 = array();
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-3 col-xs-4">
                                                     <div class="prof-pic">
                                                         <div class="drop-effect"></div>
                                                         <div class="slider">
@@ -363,16 +364,16 @@ $M1 = array();
                                                                     if (is_array($Photos[$SV->id])) {
                                                                         foreach ($Photos[$SV->id] as $K => $V) {
                                                                             $SELECTED = '';
-                                                                            $Photo = Yii::$app->params['thumbnailPrefix'] . '120_' . $V->File_Name;
+                                                                            $Photo = Yii::$app->params['thumbnailPrefix'] . '200_' . $V->File_Name;
                                                                             $Yes = 'No';
                                                                             if ($V['Is_Profile_Photo'] == 'YES') {
                                                                                 $SELECTED = "active";
-                                                                                $Photo = '120' . $SV->propic;
+                                                                                $Photo = '200' . $SV->propic;
                                                                                 $Yes = 'Yes';
                                                                             } ?>
                                                                             <div
                                                                                 class="item <?= ($K == 0) ? 'active' : ''; ?>">
-                                                                                <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, $Photo, 120, '', $Yes, CommonHelper::getVisiblePhoto($SV->id, $V['eStatus'])), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
+                                                                                <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, $Photo, 200, '', $Yes, CommonHelper::getVisiblePhoto($SV->id, $V['eStatus'])), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
                                                                             </div>
                                                                         <?php
                                                                         }
@@ -384,7 +385,8 @@ $M1 = array();
                                                                     ?>
                                                                 </div>
                                                                 <!-- Controls -->
-                                                                <?php if (is_array($Photos[$SV->id])) { ?>
+                                                                <?php if (is_array($Photos[$SV->id])) {
+                                                                    if (count($Photos[$SV->id]) > 1) { ?>
                                                                 <a class="left carousel-control"
                                                                    href="#carousel-example-generic_<?= $SK ?>"
                                                                    data-slide="prev"> <span
@@ -395,7 +397,8 @@ $M1 = array();
                                                                     <span
                                                                         class="glyphicon glyphicon-chevron-right"></span>
                                                                     </a>
-                                                                <?php } ?>
+                                                                    <?php }
+                                                                } ?>
                                                             </div>
                                                         </div>
                                                     </div>
