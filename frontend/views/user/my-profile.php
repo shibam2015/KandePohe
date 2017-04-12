@@ -433,11 +433,7 @@ if (!Yii::$app->user->isGuest) {
                                             </div>
                                             <?php Pjax::end(); ?>
                                         </div>
-
-
                                     </div>
-
-
                                     <div role="tabpanel" class="tab-pane <?= ($tab == 'EP') ? 'active' : ''; ?> "
                                          id="tab2">
                                         <div class="profile-edit pull-right">
