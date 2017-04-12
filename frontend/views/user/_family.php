@@ -344,7 +344,7 @@ if ($show) {
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
         'labelOptions' => ['class' => ''],
     ])->input('text', ['class' => 'form-control']) ?>
-
+    <!--
     <?= $form->field($model, 'vParentsResiding', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',
@@ -360,7 +360,7 @@ if ($show) {
             }
         ]
     ); ?>
-
+-->
     <?= $form->field($model, 'vFamilyAffluenceLevel', [
         'template' => '<label class="control-label col-sm-4 col-xs-4" for="user-last_name"><span class="text-danger">&nbsp</span>{label}</label>
                                 <div class="col-sm-8 col-xs-8">{input}</div>',

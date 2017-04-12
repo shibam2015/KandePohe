@@ -256,15 +256,18 @@ if (!Yii::$app->user->isGuest) {
                             </div>
                             <div class="col-sm-8 mp-left">
                                 <ul class="nav nav-pills bg-white my-profile tab-width" role="tablist">
-                                    <li role="presentation" <?= ($tab == '') ? 'class="active"' : ''; ?> ><a
-                                            href="#tab1" aria-controls="home"
-                                            role="tab" data-toggle="tab">Personal Information</a>
+                                    <li role="presentation" <?= ($tab == '') ? 'class="active"' : ''; ?> >
+                                        <a href="#tab1" class="profile_tabination" id="personal_information_tab"
+                                           aria-controls="home" role="tab" data-toggle="tab">Personal Information</a>
                                     </li>
-                                    <li role="presentation" <?= ($tab == 'EP') ? 'class="active"' : ''; ?> ><a
-                                            href="#tab2" aria-controls="profile" role="tab"
-                                            data-toggle="tab">Partner Preferences</a></li>
-                                    <li role="presentation"><a href="#tab3" aria-controls="profile" role="tab"
-                                                               data-toggle="tab"> Contact Details</a></li>
+                                    <li role="presentation" <?= ($tab == 'EP') ? 'class="active"' : ''; ?> >
+                                        <a href="#tab2" class="profile_tabination" id="partner_preferences_tab"
+                                           aria-controls="profile" role="tab" data-toggle="tab">Partner Preferences</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#tab3" class="profile_tabination" id="contact_details_tab"
+                                           aria-controls="profile" role="tab" data-toggle="tab"> Contact Details</a>
+                                    </li>
                                     <!--<li role="presentation"><a href="#tab4" aria-controls="profile" role="tab"
                                                                data-toggle="tab"> Hobby / Interest</a></li>-->
                                 </ul>
@@ -898,10 +901,19 @@ $this->registerJs('
     getInlineDetail("' . Url::to(['user/tag-suggestion-list']) . '","#suggest_tag_list","1");
     getInlineDetail("' . Url::to(['user/tag-count']) . '","#tag_count","1");
 
+    /* Personal Information Tab */
+    function personalInformation(){
+        getInlineDetail("' . Url::to(['user/edit-myinfo']) . '","#div_my_info","1");
+        getInlineDetail("' . Url::to(['user/edit-personal-info']) . '","#div_personal_info1","1");
+        getInlineDetail("' . Url::to(['user/edit-education']) . '","#div_education","1");
+        getInlineDetail("' . Url::to(['user/edit-lifestyle']) . '","#div_lifestyle","1");
+        getInlineDetail("' . Url::to(['user/edit-family']) . '","#div_family","1");
+        getInlineDetail("' . Url::to(['user/edit-horoscope']) . '","#div_horoscope","1");
+        getInlineDetail("' . Url::to(['user/edit-hobby']) . '","#my_hobby","1");
+    }
     $(".edit_btn").click(function(e){
         getInlineDetail("' . Url::to(['user/edit-myinfo']) . '","#div_my_info","0");
     });
-    getInlineDetail("' . Url::to(['user/edit-myinfo']) . '","#div_my_info","1");
     $(document).on("click","#cancel_edit_info",function(e){
         getInlineDetail("' . Url::to(['user/edit-myinfo']) . '","#div_my_info","1");
     });
@@ -909,10 +921,131 @@ $this->registerJs('
     $(".edit_personal_btn").click(function(e){
         getInlineDetail("' . Url::to(['user/edit-personal-info']) . '","#div_personal_info1","0");
     });
-    getInlineDetail("' . Url::to(['user/edit-personal-info']) . '","#div_personal_info1","1");
-
     $(document).on("click","#cancel_edit_personalinfo",function(e){
         getInlineDetail("' . Url::to(['user/edit-personal-info']) . '","#div_personal_info1","1");
+    });
+    $(document).on("click","#cancel_edit_basicinfo",function(e){
+        getInlineDetail("' . Url::to(['user/edit-basic-info']) . '","#div_basic_info","1");
+    });
+
+    $(".edit_education").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-education']) . '","#div_education","0");
+    });
+
+    $(document).on("click","#cancel_edit_education",function(e){
+        getInlineDetail("' . Url::to(['user/edit-education']) . '","#div_education","1");
+    });
+     $(".edit_lifestyle").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-lifestyle']) . '","#div_lifestyle","0");
+    });
+
+    $(document).on("click","#cancel_edit_lifestyle",function(e){
+        getInlineDetail("' . Url::to(['user/edit-lifestyle']) . '","#div_lifestyle","1");
+    });
+
+    $(".edit_family").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-family']) . '","#div_family","0");
+    });
+
+    $(document).on("click","#cancel_edit_family",function(e){
+        getInlineDetail("' . Url::to(['user/edit-family']) . '","#div_family","1");
+    });
+
+    $(".edit_horoscope").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-horoscope']) . '","#div_horoscope","0");
+    });
+
+    $(document).on("click","#cancel_edit_horoscope",function(e){
+        getInlineDetail("' . Url::to(['user/edit-horoscope']) . '","#div_horoscope","1");
+    });
+
+    $(".edit_hobby").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-hobby']) . '","#my_hobby","0");
+    });
+
+    $(document).on("click","#cancel_edit_hobby",function(e){
+        getInlineDetail("' . Url::to(['user/edit-hobby']) . '","#my_hobby","1");
+    });
+
+    /* Partner Preferences Tab */
+    $(".profile_tabination").click(function(){
+        var tab_id = $(this).attr("id");
+        if(tab_id =="personal_information_tab"){
+            personalInformation()
+        }else if(tab_id =="partner_preferences_tab"){
+            partnerPreferences()
+        }else if(tab_id =="contact_details_tab"){
+            contactDetail()
+        }
+
+    });
+    function partnerPreferences(){
+        getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","1");
+        getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","1");
+        getInlineDetail("' . Url::to(['user/edit-preferences-profession']) . '","#my_profession","1");
+        getInlineDetail("' . Url::to(['user/edit-preferences-location']) . '","#my_location","1");
+        getInlineDetail("' . Url::to(['user/edit-preferences-hobby']) . '","#partner_hobby","1");
+        getInlineDetail("' . Url::to(['user/edit-preferences-family']) . '","#partner_family","1");
+        getInlineDetail("' . Url::to(['user/edit-looking-for']) . '","#my_looking","1");
+    }
+    var tab_temp = "' . $tab . '";
+    if(tab_temp=="")
+        personalInformation();
+    else
+        partnerPreferences();
+
+   $(".edit_preferences").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","0");
+    });
+
+    $(document).on("click","#cancel_edit_preferences",function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","1");
+    });
+
+    $(".edit_preferences").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","0");
+    });
+
+    $(document).on("click","#cancel_edit_preferences",function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","1");
+    });
+    $(".edit_profession").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences-profession']) . '","#my_profession","0");
+    });
+
+    $(document).on("click","#cancel_edit_profession",function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences-profession']) . '","#my_profession","1");
+    });
+    $(".edit_location").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences-location']) . '","#my_location","0");
+    });
+
+    $(document).on("click","#cancel_edit_location",function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences-location']) . '","#my_location","1");
+    });
+
+    $(".edit_partner_hobby").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences-hobby']) . '","#partner_hobby","0");
+    });
+
+    $(document).on("click","#cancel_edit_partner_hobby",function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences-hobby']) . '","#partner_hobby","1");
+    });
+
+    $(".edit_partner_family").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences-family']) . '","#partner_family","0");
+    });
+
+    $(document).on("click","#cancel_edit_partner_family",function(e){
+        getInlineDetail("' . Url::to(['user/edit-preferences-family']) . '","#partner_family","1");
+    });
+
+    $(".edit_looking").click(function(e){
+        getInlineDetail("' . Url::to(['user/edit-looking-for']) . '","#my_looking","0");
+    });
+
+    $(document).on("click","#cancel_edit_looking",function(e){
+        getInlineDetail("' . Url::to(['user/edit-looking-for']) . '","#my_looking","1");
     });
 
     /*
@@ -922,102 +1055,16 @@ $this->registerJs('
     getInlineDetail("' . Url::to(['user/edit-basic-info']) . '","#div_basic_info","1");
     */
 
-    $(document).on("click","#cancel_edit_basicinfo",function(e){
-        getInlineDetail("' . Url::to(['user/edit-basic-info']) . '","#div_basic_info","1");
-    });
-
-    $(".edit_education").click(function(e){
-        getInlineDetail("' . Url::to(['user/edit-education']) . '","#div_education","0");
-    });
-    getInlineDetail("' . Url::to(['user/edit-education']) . '","#div_education","1");
-    $(document).on("click","#cancel_edit_education",function(e){
-        getInlineDetail("' . Url::to(['user/edit-education']) . '","#div_education","1");
-    });
-    
-    $(".edit_lifestyle").click(function(e){
-        getInlineDetail("' . Url::to(['user/edit-lifestyle']) . '","#div_lifestyle","0");
-    });
-    getInlineDetail("' . Url::to(['user/edit-lifestyle']) . '","#div_lifestyle","1");
-    $(document).on("click","#cancel_edit_lifestyle",function(e){
-        getInlineDetail("' . Url::to(['user/edit-lifestyle']) . '","#div_lifestyle","1");
-    });
-    
-    $(".edit_family").click(function(e){
-        getInlineDetail("' . Url::to(['user/edit-family']) . '","#div_family","0");
-    });
-    getInlineDetail("' . Url::to(['user/edit-family']) . '","#div_family","1");
-    $(document).on("click","#cancel_edit_family",function(e){
-        getInlineDetail("' . Url::to(['user/edit-family']) . '","#div_family","1");
-    });
-
-    $(".edit_preferences").click(function(e){
-        getInlineDetail("'.Url::to(['user/edit-preferences']).'","#my_preferences","0");
-    });
-    getInlineDetail("'.Url::to(['user/edit-preferences']).'","#my_preferences","1");
-    $(document).on("click","#cancel_edit_preferences",function(e){
-        getInlineDetail("'.Url::to(['user/edit-preferences']).'","#my_preferences","1");
-    });
-
-    $(".edit_horoscope").click(function(e){
-        getInlineDetail("' . Url::to(['user/edit-horoscope']) . '","#div_horoscope","0");
-    });
-    getInlineDetail("' . Url::to(['user/edit-horoscope']) . '","#div_horoscope","1");
-    $(document).on("click","#cancel_edit_horoscope",function(e){
-        getInlineDetail("' . Url::to(['user/edit-horoscope']) . '","#div_horoscope","1");
-    });
-
-/*  partner preferences */
-
-     $(".edit_preferences").click(function(e){
-        getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","0");
-    });
-    getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","1");
-    $(document).on("click","#cancel_edit_preferences",function(e){
-        getInlineDetail("' . Url::to(['user/edit-preferences']) . '","#my_preferences","1");
-    });
-    $(".edit_profession").click(function(e){
-        getInlineDetail("' . Url::to(['user/edit-preferences-profession']) . '","#my_profession","0");
-    });
-    getInlineDetail("' . Url::to(['user/edit-preferences-profession']) . '","#my_profession","1");
-    $(document).on("click","#cancel_edit_profession",function(e){
-        getInlineDetail("' . Url::to(['user/edit-preferences-profession']) . '","#my_profession","1");
-    });
-    $(".edit_location").click(function(e){
-        getInlineDetail("' . Url::to(['user/edit-preferences-location']) . '","#my_location","0");
-    });
-    getInlineDetail("' . Url::to(['user/edit-preferences-location']) . '","#my_location","1");
-    $(document).on("click","#cancel_edit_location",function(e){
-        getInlineDetail("' . Url::to(['user/edit-preferences-location']) . '","#my_location","1");
-    });
-
-    $(".edit_partner_hobby").click(function(e){
-        getInlineDetail("' . Url::to(['user/edit-preferences-hobby']) . '","#partner_hobby","0");
-    });
-    getInlineDetail("' . Url::to(['user/edit-preferences-hobby']) . '","#partner_hobby","1");
-    $(document).on("click","#cancel_edit_partner_hobby",function(e){
-        getInlineDetail("' . Url::to(['user/edit-preferences-hobby']) . '","#partner_hobby","1");
-    });
-
-    $(".edit_partner_family").click(function(e){
-        getInlineDetail("' . Url::to(['user/edit-preferences-family']) . '","#partner_family","0");
-    });
-    getInlineDetail("' . Url::to(['user/edit-preferences-family']) . '","#partner_family","1");
-    $(document).on("click","#cancel_edit_partner_family",function(e){
-        getInlineDetail("' . Url::to(['user/edit-preferences-family']) . '","#partner_family","1");
-    });
-
-    $(".edit_looking").click(function(e){
-        getInlineDetail("' . Url::to(['user/edit-looking-for']) . '","#my_looking","0");
-    });
-    getInlineDetail("' . Url::to(['user/edit-looking-for']) . '","#my_looking","1");
-    $(document).on("click","#cancel_edit_looking",function(e){
-        getInlineDetail("' . Url::to(['user/edit-looking-for']) . '","#my_looking","1");
-    });
-
+    /* Contact Details Tab */
+    function contactDetail(){
+        getInlineDetail("' . Url::to(['user/edit-contact-detail']) . '","#my_contact_details","1");
+        getInlineDetail("' . Url::to(['user/edit-permanent-address']) . '","#my_permanent_address","1");
+        getInlineDetail("' . Url::to(['user/edit-current-address']) . '","#my_current_address","1");
+    }
     $(".edit_contact_detail").click(function(e){
         getInlineDetail("' . Url::to(['user/edit-contact-detail']) . '","#my_contact_details","0");
     });
-    getInlineDetail("' . Url::to(['user/edit-contact-detail']) . '","#my_contact_details","1");
+
     $(document).on("click","#cancel_edit_contact_detail",function(e){
         getInlineDetail("' . Url::to(['user/edit-contact-detail']) . '","#my_contact_details","1");
     });
@@ -1025,7 +1072,7 @@ $this->registerJs('
     $(".edit_permanent_address").click(function(e){
         getInlineDetail("' . Url::to(['user/edit-permanent-address']) . '","#my_permanent_address","0");
     });
-    getInlineDetail("' . Url::to(['user/edit-permanent-address']) . '","#my_permanent_address","1");
+
     $(document).on("click","#cancel_edit_permanent_address",function(e){
         getInlineDetail("' . Url::to(['user/edit-permanent-address']) . '","#my_permanent_address","1");
     });
@@ -1033,19 +1080,11 @@ $this->registerJs('
      $(".edit_current_address").click(function(e){
         getInlineDetail("' . Url::to(['user/edit-current-address']) . '","#my_current_address","0");
     });
-    getInlineDetail("' . Url::to(['user/edit-current-address']) . '","#my_current_address","1");
+
     $(document).on("click","#cancel_edit_current_address",function(e){
         getInlineDetail("' . Url::to(['user/edit-current-address']) . '","#my_current_address","1");
     });
 
-
-    $(".edit_hobby").click(function(e){
-        getInlineDetail("' . Url::to(['user/edit-hobby']) . '","#my_hobby","0");
-    });
-    getInlineDetail("' . Url::to(['user/edit-hobby']) . '","#my_hobby","1");
-    $(document).on("click","#cancel_edit_hobby",function(e){
-        getInlineDetail("' . Url::to(['user/edit-hobby']) . '","#my_hobby","1");
-    });
         var P_ID = "";
         var P_TYPE = "";
         function profile_photo(){

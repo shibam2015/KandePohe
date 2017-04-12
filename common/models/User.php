@@ -759,6 +759,7 @@ characters are allowed.'
 
     public function getFullName(){
         return ucwords($this->First_Name . ' ' . $this->Last_Name);
+        //return ucwords($this->First_Name . ' ' . $this->Last_Name);
     }
 
     public function getReligionName()

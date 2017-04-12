@@ -39,7 +39,6 @@ return [
     'customMailSubject' => 'Custom',
 
 
-
     'noRecordsFoundInShortList' => 'There are no record found in your short list.',
 
 
@@ -94,7 +93,7 @@ return [
     'deleteProfileTitle' => 'Delete profile',
     'deleteProfileMessage' => 'Are you sure you want to delete your profile?',
     'deleteProfileNote' => 'Deleting your account will disable your Profile. Some information may still be visible to others,
-                        such as your name in their Inbox list and messages that you\'ve sent.',
+                            such as your name in their Inbox list and messages that you\'ve sent.',
     'validationDone' => 'VERIFICATION-DONE',
     'multipleProfileMsg' => 'Multiple Profile',
     'multipleProfile' => 'It appears that the number you verified is associated with another profile',
@@ -132,23 +131,23 @@ return [
     'footerGooglePlusURL' => 'https://plus.google.com',
 
     'googleAnalyticsCode' => "
-                            <script>
-                              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-                              ga('create', 'UA-43899395-17', 'auto');
-                              ga('send', 'pageview');
-                            </script>
-                            ",
+                                <script>
+                                  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                                  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                                  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                                  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+                                  ga('create', 'UA-43899395-17', 'auto');
+                                  ga('send', 'pageview');
+                                </script>
+                                ",
     'googleAnalyticsCodePages' => array('', 'site/about-us', 'site/contact-us', 'site/help-feedback', 'site/terms-of-use'),
     'siteLocationAddress' => '<strong>Kande-Pohe Marathi Matrimony </strong><br>
-                                    Sr. No 48/1, Opp. Anand Mangal Society, <br>
-                                    Ganeshnagar, Vadgaonsheri, <br>
-                                    Pune - 411014 <br>
-                                    Email: help@kande-pohe.com <br>
-                                    Contact Number:+91-7387986545 <br>',
-    'sitePhoneNumber' => '+91-7387986545',
+                                        Sr. No 48/1, Opp. Anand Mangal Society, <br>
+                                        Ganeshnagar, Vadgaonsheri, <br>
+                                        Pune - 411014 <br>
+                                        Email: connect@kande-pohe.com <br>
+                                        Contact Number:+91 80075 80058 <br>',
+    'sitePhoneNumber' => '+91 80075 80058',
     'homePageHeaderText' => 'नवीन नात्यांची सुरूवात करा कांदे - पोहें सोबत',
     'publicPageTitle' => 'वधू- वर शोधा - Kande-Pohe Marathi Matrimony',
     'publicPages' => array('', 'site/about-us', 'site/contact-us', 'site/help-feedback', 'site/terms-of-use'),
