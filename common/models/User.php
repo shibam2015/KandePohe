@@ -380,7 +380,7 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public static function getUserInfroamtion($Id)
     {
-        return static::find()->select('id, First_Name, Last_Name, Registration_Number,DOB,Age,user.iCountryId,user.iHeightID, propic')->joinWith([countryName, stateName, cityName, height, maritalStatusName])->where(['id' => $Id])->one();
+        return static::find()->select('id, First_Name, Last_Name, Registration_Number,DOB,Age,user.iCountryId,user.iHeightID, propic,eStatusPhotoModify')->joinWith([countryName, stateName, cityName, height, maritalStatusName])->where(['id' => $Id])->one();
     }
 
     public static function getIdNo($Registration_Number)

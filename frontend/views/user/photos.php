@@ -4,8 +4,6 @@ use yii\bootstrap\ActiveForm;
 use common\components\CommonHelper;
 use common\components\MailHelper;
 use yii\helpers\ArrayHelper;
-
-$HOME_PAGE_URL = Yii::getAlias('@web') . "/";
 ?>
 <div class="" xmlns="http://www.w3.org/1999/html">
     <main>

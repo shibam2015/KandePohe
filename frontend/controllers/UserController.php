@@ -2516,7 +2516,8 @@ class UserController extends Controller
                     $flag = true;
                     $model = User::findOne($ToUserId);
                     $UserPhotoModel = new UserPhotos();
-                    $PhotoList = $UserPhotoModel->findByUserId($ToUserId);
+                    $PhotoList = $UserPhotoModel->userPhotoList($ToUserId);
+                    # CommonHelper::pr($PhotoList);exit;
                     $PartenersReligion = PartenersReligion::findAllByUserId($ToUserId) == NULL ? new PartenersReligion() : PartenersReligion::findAllByUserId($ToUserId);
                     $PartnersMaritalStatus = PartnersMaritalStatus::findAllByUserId($ToUserId) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findAllByUserId($ToUserId);
                     $PartnersGotra = PartnersGotra::findAllByUserId($ToUserId) == NULL ? new PartnersGotra() : PartnersGotra::findAllByUserId($ToUserId);

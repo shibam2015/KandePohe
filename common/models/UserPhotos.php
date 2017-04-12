@@ -17,6 +17,9 @@ use yii\data\ActiveDataProvider;
  */
 class UserPhotos extends \common\models\base\baseUserPhotos
 {
+    const PHOTO_APRROVED = 'Approve';
+    const PHOTO_DISAPPROVE = 'Disapprove';
+    const PHOTO_PENDING = 'Pending';
     public $photo_id;
     public $comment;
     /**
@@ -59,7 +62,14 @@ class UserPhotos extends \common\models\base\baseUserPhotos
     public function findByUserId($iUser_ID, $Limit = 0)
     {
         if ($Limit == 0) $Limit = Yii::$app->params['total_files_allowed'];
-        return static::find()->where(['iUser_ID' => $iUser_ID])->limit($Limit)->orderBy(['iPhoto_ID' => SORT_DESC])->all();
+        return static::find()->where(['iUser_ID' => $iUser_ID])->limit($Limit)->orderBy(['Is_Profile_Photo' => SORT_ASC])->all();
+        #return static::find()->where(['iUser_ID' => $iUser_ID])->limit($Limit)->orderBy(['iPhoto_ID' => SORT_DESC])->all();
+    }
+
+    public function userPhotoList($iUser_ID, $Limit = 0)
+    {
+        if ($Limit == 0) $Limit = Yii::$app->params['total_files_allowed'];
+        return static::find()->where(['iUser_ID' => $iUser_ID])->andWhere(['eStatus' => self::PHOTO_APRROVED])->limit($Limit)->orderBy(['Is_Profile_Photo' => SORT_ASC])->all();
     }
 
     public function totalUploadPhotos($iUser_ID)

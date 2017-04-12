@@ -32,20 +32,25 @@ use yii\widgets\Pjax;
                                             <div id="carousel-example-generic" class="carousel slide"
                                                  data-ride="carousel">
                                                 <!-- Wrapper for slides -->
-                                                <div class="carousel-inner">
-                                                    <?php if (count($PhotoList) > 0) {
+                                                <div class="carousel-inner lightgallery">
+                                                    <?php
+                                                    $PhotoCount = count($PhotoList);
+                                                    if ($PhotoCount > 0) {
                                                         foreach ($PhotoList as $K => $V) {
                                                             $SELECTED = '';
-                                                            $Photo = Yii::$app->params['thumbnailPrefix'] . '120_' . $V->File_Name;
+                                                            $Photo = Yii::$app->params['thumbnailPrefix'] . '200_' . $V->File_Name;
                                                             $Yes = 'No';
-                                                            if ($V['Is_Profile_Photo'] == 'YES') {
+                                                            /*if ($V['Is_Profile_Photo'] == 'YES') {
                                                                 $SELECTED = "active";
-                                                                $Photo = '120' . $model->propic;
+                                                                $Photo = '200_' . $model->propic;
                                                                 $Yes = 'Yes';
-                                                            }
+                                                            }*/
                                                             ?>
-                                                            <div class="item <?= ($K == 0) ? 'active' : ''; ?>">
-                                                                <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $Photo, 120, '', $Yes, CommonHelper::getVisiblePhoto($model->id, $V['eStatus'])), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
+                                                            <div
+                                                                class="item <?= ($K == 0) ? 'active' : ''; ?> kp_gallery"
+                                                                data-src="<?= CommonHelper::getPhotos('USER', $model->id, $V['File_Name']) ?>"
+                                                                id="img_<?= $V['iPhoto_ID'] ?>">
+                                                                <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $Photo, 200, '', $Yes, CommonHelper::getVisiblePhoto($model->id, $V['eStatus'])), ['width' => '200', 'alt' => $model->FullName, 'class' => 'img-responsive']); ?>
 
                                                             </div>
                                                         <?php }
@@ -57,30 +62,34 @@ use yii\widgets\Pjax;
 
                                                 </div>
                                                 <!-- Controls -->
-                                                <?php if (count($PhotoList) > 0) { ?>
-                                                    <a class="left carousel-control"
-                                                       href="#carousel-example-generic"
-                                                       data-slide="prev"> <span
-                                                            class="glyphicon glyphicon-chevron-left"></span> </a> <a
-                                                        class="right carousel-control"
-                                                        href="#carousel-example-generic"
-                                                        data-slide="next"> <span
-                                                            class="glyphicon glyphicon-chevron-right"></span>
-                                                    </a>         <?php } ?>
+                                                <?php if ($PhotoCount > 1) { ?>
+                                                    <a class="left carousel-control" href="#carousel-example-generic"
+                                                       data-slide="prev">
+                                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                                    </a>
+                                                    <a class="right carousel-control" href="#carousel-example-generic"
+                                                       data-slide="next">
+                                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                                    </a>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                     </div>
-                                    <?php if (count($PhotoList) > 0) { ?>
-                                        <!--<p class="text-right"><a href="#" data-toggle="modal" data-target="#photo">View
-                                                Album <i class="fa fa-angle-right"></i></a></p>-->
+                                    <?php if ($PhotoCount > 0) { ?>
+                                        <p class="text-right">
+                                            <a href="#" data-toggle="modal" data-target="#photo" class="gallery_view">View
+                                                Album
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </p>
                                     <?php } ?>
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="name-panel">
                                         <h2 class="nameplate"><?= $model->FullName; ?>
-                                            <span
-                                                class="font-light">(<?= CommonHelper::setInputVal($model->Registration_Number, 'text') ?>
-                                                )</span>
+                                            <span class="font-light">
+                                                (<?= CommonHelper::setInputVal($model->Registration_Number, 'text') ?>)
+                                            </span>
                                         </h2>
 
                                         <p>Profile created for <?= $model->Profile_created_for; ?> | Last
@@ -665,66 +674,6 @@ use yii\widgets\Pjax;
                             </div>
                         </div>
                         <!-- Modal Photo -->
-                        <div class="modal fade" id="photo" tabindex="-1" role="dialog"
-                             aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <p class="text-center mrg-bt-10">
-                                    <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
-                                </p>
-
-                                <div class="modal-content">
-                                    <!-- Modal Header -->
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"><span
-                                                aria-hidden="true">&times;</span> <span
-                                                class="sr-only">Close</span></button>
-                                        <h2 class="text-center"> Photo Gallery</h2>
-                                        <!--<div class="profile-control photo-btn">
-                                            <button class="btn " type="button"> Upload Video or Photo</button>
-                                            <button class="btn active" type="button"> Choose from Photos</button>
-                                            <button class="btn" type="button"> Albums</button>
-                                        </div>-->
-                                    </div>
-                                    <!-- Modal Body -->
-                                    <div class="modal-body photo-gallery">
-                                        <div class="choose-photo">
-                                            <div class="row" id="profile_list_popup">
-                                                <?php
-                                                if (count($PhotoList) > 0) {
-                                                    foreach ($PhotoList as $K => $V) {
-                                                        ?>
-                                                        <div class="col-md-3 col-sm-3 col-xs-6">
-                                                            <?php $SELECTED = '';
-                                                            if ($V['Is_Profile_Photo'] == 'YES') {
-                                                                $SELECTED = "selected";
-                                                            } ?>
-                                                            <a href="javascript:void(0)" class="pull-left"
-                                                               data-id="<?= $V['iPhoto_ID'] ?>">
-                                                                <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive ' . $SELECTED, 'height' => '140', 'alt' => 'Photo' . $K, 'style' => 'height:140px;']); ?>
-                                                            </a>
-                                                        </div>
-                                                    <?php }
-                                                } else {
-                                                    ?>
-                                                    <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                                        <p> No Photos Available</p>
-                                                    </div>
-                                                <?php } ?>
-
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                                <!-- Modal Footer -->
-
-                            </div>
-
-                        </div>
                         <div class="modal fade" id="sendInterest" tabindex="-1" role="dialog"
                              aria-labelledby="myModalLabel"
                              aria-hidden="true">
@@ -750,9 +699,10 @@ use yii\widgets\Pjax;
                                                     <div class="col-md-12 col-sm-12">
                                                         <div class="fb-profile-text mrg-bt-30 text-dark">
                                                             <h1 id="p_u_name"><?= $model->FullName; ?>
-                                                                <span class="sub-text"
-                                                                      id="p_u_rgno">(<?= CommonHelper::setInputVal($model->Registration_Number, 'text') ?>
-                                                                    )</span>
+                                                                <span class="sub-text" id="p_u_rgno">
+                                                                    (<?= CommonHelper::setInputVal($model->Registration_Number, 'text') ?>
+                                                                    )
+                                                                </span>
                                                             </h1>
                                                         </div>
                                                     </div>
@@ -1057,6 +1007,9 @@ use yii\widgets\Pjax;
 
 <?php
 $this->registerJs('
+    $(".gallery_view").click(function(){
+        $(".kp_gallery").click();
+    });
 var formData = new FormData();
     formData.append("ToUserId", "' . $model->id . '");
     formData.append("UserId", ' . $model->id . ');
@@ -1112,3 +1065,14 @@ $(document).on("click",".send_email",function(e){
 
 
 <?php require_once __DIR__ . '/_useroperation.php'; ?>
+
+
+<link href='<?= Yii::$app->request->baseUrl ?>/plugings/gallery/css/lightgallery.css' rel='stylesheet' type='text/css'>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lightgallery.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-fullscreen.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-thumbnail.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-video.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-autoplay.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-zoom.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-hash.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile(Yii::$app->request->baseUrl . '/plugings/gallery/js/lg-pager.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>

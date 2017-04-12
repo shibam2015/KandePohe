@@ -76,16 +76,16 @@ if ($model->propic != '') {
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="col-md-6">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <?php //$PROPIC = CommonHelper::getPhotosBackend('USER', $model->id, "200" . $model->propic, 200, '', 'Yes',1);?>
 
                                             <?php if ($V['Is_Profile_Photo'] == 'YES') { ?>
-                                                <?= Html::img(CommonHelper::getPhotosBackend('USER', $model->id, "200" . $model->propic, 200, '', 'Yes', 1), ['class' => 'img-responsive ', 'height' => '140', 'alt' => 'Photo' . $K]); ?>
+                                                <?= Html::img(CommonHelper::getPhotosBackend('USER', $model->id, "200" . $model->propic, 200, '', 'Yes', 1), ['class' => 'img-responsive ', 'alt' => 'Photo' . $K]); ?>
                                                 <span class="btn btn-block btn-success">
                                             Profile Photo
                                             </span>
                                             <?php } else { ?>
-                                                <?= Html::img(CommonHelper::getPhotosBackend('USER', $model->id, Yii::$app->params['thumbnailPrefix'] . "200_" . $V['File_Name'], 200, '', 'No', 1), ['class' => 'img-responsive ', 'height' => '140', 'alt' => 'Photo' . $K]); ?>
+                                                <?= Html::img(CommonHelper::getPhotosBackend('USER', $model->id, Yii::$app->params['thumbnailPrefix'] . "200_" . $V['File_Name'], 200, '', 'No', 1), ['class' => 'img-responsive ', 'alt' => 'Photo' . $K]); ?>
                                             <?php } ?>
 
                                         </div>
