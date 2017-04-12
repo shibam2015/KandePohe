@@ -2470,173 +2470,197 @@ class UserController extends Controller
 
     public function actionProfile($uk = '', $source = '') #Other User Profile View : VS
     {
-        if (Yii::$app->user->isGuest) {
+        if (Yii::$app->user->isGuest || $uk == '') {
             return $this->goHome();
         }
         $id = Yii::$app->user->identity->id;
         #echo $uk;exit;echo $Registration_Number;exit;
         $model1 = User::findOne(['Registration_Number' => $uk]);
         $ToUserId = $model1->id;
-
-        /* Insert Record for As Your Profile Viewed By Section Start */
-        $this->actionProfileViewedBy($id, $ToUserId);
-        /* Insert Record for As Your Profile Viewed By Section End */
-
-        $flag = false;
-        $MatchCompatibility = array();
-        $PhotoList = array();
-        $model = array();
-        $Title = $Message = '';
-        if ($ToUserId != $id) {
-            $flag = true;
-            $model = User::findOne($ToUserId);
-            $UserPhotoModel = new UserPhotos();
-            $PhotoList = $UserPhotoModel->findByUserId($ToUserId);
-            $PartenersReligion = PartenersReligion::findAllByUserId($ToUserId) == NULL ? new PartenersReligion() : PartenersReligion::findAllByUserId($ToUserId);
-            $PartnersMaritalStatus = PartnersMaritalStatus::findAllByUserId($ToUserId) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findAllByUserId($ToUserId);
-            $PartnersGotra = PartnersGotra::findAllByUserId($ToUserId) == NULL ? new PartnersGotra() : PartnersGotra::findAllByUserId($ToUserId);
-            $PartnersCommunity = PartnersCommunity::findAllByUserId($ToUserId) == NULL ? new PartnersCommunity() : PartnersCommunity::findAllByUserId($ToUserId);
-            $PartnersSubCommunity = PartnersSubcommunity::findAllByUserId($ToUserId) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findAllByUserId($ToUserId);
-
-            $UPP = UserPartnerPreference::findByUserId($ToUserId) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($ToUserId);
-            $PartnersFathersStatus = PartnersFathersStatus::findByUserId($ToUserId) == NULL ? new PartnersFathersStatus() : PartnersFathersStatus::findByUserId($ToUserId);
-            $PartnersMothersStatus = PartnersMothersStatus::findByUserId($ToUserId) == NULL ? new PartnersMothersStatus() : PartnersMothersStatus::findByUserId($ToUserId);
-
-            $PartnersMothertongue = PartnersMothertongue::findByUserId($ToUserId) == NULL ? new PartnersMothertongue() : PartnersMothertongue::findByUserId($ToUserId);
-            $PartnersRaashi = PartnersRaashi::findByUserId($ToUserId) == NULL ? new PartnersRaashi() : PartnersRaashi::findByUserId($ToUserId);
-            $PartnersCharan = PartnersCharan::findByUserId($ToUserId) == NULL ? new PartnersCharan() : PartnersCharan::findByUserId($ToUserId);
-            $PartnersNakshtra = PartnersNakshtra::findByUserId($ToUserId) == NULL ? new PartnersNakshtra() : PartnersNakshtra::findByUserId($ToUserId);
-            $PartnersNadi = PartnersNadi::findByUserId($ToUserId) == NULL ? new PartnersNadi() : PartnersNadi::findByUserId($ToUserId);
-
-
-            $PartnersSkinTone = PartnersSkinTone::findAllByUserId($ToUserId) == NULL ? new PartnersSkinTone() : PartnersSkinTone::findAllByUserId($ToUserId);
-            $PartnersBodyType = PartnersBodyType::findAllByUserId($ToUserId) == NULL ? new PartnersBodyType() : PartnersBodyType::findAllByUserId($ToUserId);
-            $PartnersDiet = PartnersDiet::findAllByUserId($ToUserId) == NULL ? new PartnersDiet() : PartnersDiet::findAllByUserId($ToUserId);
-            $PartnersSpectacles = PartnersSpectacles::findAllByUserId($ToUserId) == NULL ? new PartnersSpectacles() : PartnersSpectacles::findAllByUserId($ToUserId);
-            $PartnersSmoke = PartnersSmoke::findAllByUserId($ToUserId) == NULL ? new PartnersSmoke() : PartnersSmoke::findAllByUserId($ToUserId);
-            $PartnersDrink = PartnersDrink::findAllByUserId($ToUserId) == NULL ? new PartnersDrink() : PartnersDrink::findAllByUserId($ToUserId);
-
-            $PartnersEducationalLevel = PartnersEducationalLevel::findAllByUserId($ToUserId) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findAllByUserId($ToUserId);
-            $PartnersEducationField = PartnersEducationField::findAllByUserId($ToUserId) == NULL ? new PartnersEducationField() : PartnersEducationField::findAllByUserId($ToUserId);
-            $PartnerWorkingAS = PartnerWorkingAs::findAllByUserId($ToUserId) == NULL ? new PartnerWorkingAs() : PartnerWorkingAs::findAllByUserId($ToUserId);
-            $PartnerWorkingWith = PartnerWorkingWith::findAllByUserId($ToUserId) == NULL ? new PartnerWorkingWith() : PartnerWorkingWith::findAllByUserId($ToUserId);
-
-            $PartnersCountries = PartnersCountries::findAllByUserId($ToUserId) == NULL ? new PartnersCountries() : PartnersCountries::findAllByUserId($ToUserId);
-            $PartnersStates = PartnersStates::findAllByUserId($ToUserId) == NULL ? new PartnersStates() : PartnersStates::findAllByUserId($ToUserId);
-            $PartnersCities = PartnersCities::findAllByUserId($ToUserId) == NULL ? new PartnersCities() : PartnersCities::findAllByUserId($ToUserId);
-
-            $PartnersFamilyALevel = PartnersFamilyAffluenceLevel::findAllByUserId($ToUserId) == NULL ? new PartnersFamilyAffluenceLevel() : PartnersFamilyAffluenceLevel::findAllByUserId($ToUserId);
-            $PartnersFamilyTypeS = PartnersFamilyType::findAllByUserId($ToUserId) == NULL ? new PartnersFamilyType() : PartnersFamilyType::findAllByUserId($ToUserId);
-
-
-            $PartnersInterest = PartnersInterest::findAllByUserId($ToUserId) == NULL ? new PartnersInterest() : PartnersInterest::findAllByUserId($ToUserId);
-            $PartnersReads = PartnersFavouriteReads::findAllByUserId($ToUserId) == NULL ? new PartnersFavouriteReads() : PartnersFavouriteReads::findAllByUserId($ToUserId);
-            $PartnersMusic = PartnersFavouriteMusic::findAllByUserId($ToUserId) == NULL ? new PartnersFavouriteMusic() : PartnersFavouriteMusic::findAllByUserId($ToUserId);
-            $PartnersCousins = PartnersFavouriteCousines::findAllByUserId($ToUserId) == NULL ? new PartnersFavouriteCousines() : PartnersFavouriteCousines::findAllByUserId($ToUserId);
-            $PartnersFitnessActivity = PartnersFitnessActivities::findAllByUserId($ToUserId) == NULL ? new PartnersFitnessActivities() : PartnersFitnessActivities::findAllByUserId($ToUserId);
-            $PartnersDressStyle = PartnersPreferredDressType::findAllByUserId($ToUserId) == NULL ? new PartnersPreferredDressType() : PartnersPreferredDressType::findAllByUserId($ToUserId);
-            $PartnersMovies = PartnersPreferredMovies::findAllByUserId($ToUserId) == NULL ? new PartnersPreferredMovies() : PartnersPreferredMovies::findAllByUserId($ToUserId);
-
-
-        } else if ($ToUserId == $id) {
+        if ($ToUserId == '') {
+            $flag = false;
             $Title = Yii::$app->params['accessDenied'];
-            $Message = Yii::$app->params['accessDeniedYourProfile'];
+            $Message = Yii::$app->params['userProfilePageUK'];
+            return $this->render('profile',
+                [
+                    'flag' => $flag,
+                    'Title' => $Title,
+                    'Message' => $Message,
+                ]);
         } else {
-            $Title = Yii::$app->params['accessDenied'];
-            $Message = Yii::$app->params['accessDeniedInvalid'];
+            #echo ;exit;
+            $flag = false;
+            $MatchCompatibility = array();
+            $PhotoList = array();
+            $model = array();
+            $Title = $Message = '';
+            $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
+            list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, $id, 3);
+
+            if (Yii::$app->user->identity->Gender == $model1->Gender) {
+                $flag = false;
+                $Title = Yii::$app->params['accessDenied'];
+                $Message = Yii::$app->params['userProfilePageSameGender'];
+                return $this->render('profile',
+                    [
+                        'flag' => $flag,
+                        'Title' => $Title,
+                        'Message' => $Message,
+                    ]);
+            } else {
+                /* Insert Record for As Your Profile Viewed By Section Start */
+                $this->actionProfileViewedBy($id, $ToUserId);
+                /* Insert Record for As Your Profile Viewed By Section End */
+
+                if ($ToUserId != $id) {
+                    $flag = true;
+                    $model = User::findOne($ToUserId);
+                    $UserPhotoModel = new UserPhotos();
+                    $PhotoList = $UserPhotoModel->findByUserId($ToUserId);
+                    $PartenersReligion = PartenersReligion::findAllByUserId($ToUserId) == NULL ? new PartenersReligion() : PartenersReligion::findAllByUserId($ToUserId);
+                    $PartnersMaritalStatus = PartnersMaritalStatus::findAllByUserId($ToUserId) == NULL ? new PartnersMaritalStatus() : PartnersMaritalStatus::findAllByUserId($ToUserId);
+                    $PartnersGotra = PartnersGotra::findAllByUserId($ToUserId) == NULL ? new PartnersGotra() : PartnersGotra::findAllByUserId($ToUserId);
+                    $PartnersCommunity = PartnersCommunity::findAllByUserId($ToUserId) == NULL ? new PartnersCommunity() : PartnersCommunity::findAllByUserId($ToUserId);
+                    $PartnersSubCommunity = PartnersSubcommunity::findAllByUserId($ToUserId) == NULL ? new PartnersSubcommunity() : PartnersSubcommunity::findAllByUserId($ToUserId);
+
+                    $UPP = UserPartnerPreference::findByUserId($ToUserId) == NULL ? new UserPartnerPreference() : UserPartnerPreference::findByUserId($ToUserId);
+                    $PartnersFathersStatus = PartnersFathersStatus::findByUserId($ToUserId) == NULL ? new PartnersFathersStatus() : PartnersFathersStatus::findByUserId($ToUserId);
+                    $PartnersMothersStatus = PartnersMothersStatus::findByUserId($ToUserId) == NULL ? new PartnersMothersStatus() : PartnersMothersStatus::findByUserId($ToUserId);
+
+                    $PartnersMothertongue = PartnersMothertongue::findByUserId($ToUserId) == NULL ? new PartnersMothertongue() : PartnersMothertongue::findByUserId($ToUserId);
+                    $PartnersRaashi = PartnersRaashi::findByUserId($ToUserId) == NULL ? new PartnersRaashi() : PartnersRaashi::findByUserId($ToUserId);
+                    $PartnersCharan = PartnersCharan::findByUserId($ToUserId) == NULL ? new PartnersCharan() : PartnersCharan::findByUserId($ToUserId);
+                    $PartnersNakshtra = PartnersNakshtra::findByUserId($ToUserId) == NULL ? new PartnersNakshtra() : PartnersNakshtra::findByUserId($ToUserId);
+                    $PartnersNadi = PartnersNadi::findByUserId($ToUserId) == NULL ? new PartnersNadi() : PartnersNadi::findByUserId($ToUserId);
+
+
+                    $PartnersSkinTone = PartnersSkinTone::findAllByUserId($ToUserId) == NULL ? new PartnersSkinTone() : PartnersSkinTone::findAllByUserId($ToUserId);
+                    $PartnersBodyType = PartnersBodyType::findAllByUserId($ToUserId) == NULL ? new PartnersBodyType() : PartnersBodyType::findAllByUserId($ToUserId);
+                    $PartnersDiet = PartnersDiet::findAllByUserId($ToUserId) == NULL ? new PartnersDiet() : PartnersDiet::findAllByUserId($ToUserId);
+                    $PartnersSpectacles = PartnersSpectacles::findAllByUserId($ToUserId) == NULL ? new PartnersSpectacles() : PartnersSpectacles::findAllByUserId($ToUserId);
+                    $PartnersSmoke = PartnersSmoke::findAllByUserId($ToUserId) == NULL ? new PartnersSmoke() : PartnersSmoke::findAllByUserId($ToUserId);
+                    $PartnersDrink = PartnersDrink::findAllByUserId($ToUserId) == NULL ? new PartnersDrink() : PartnersDrink::findAllByUserId($ToUserId);
+
+                    $PartnersEducationalLevel = PartnersEducationalLevel::findAllByUserId($ToUserId) == NULL ? new PartnersEducationalLevel() : PartnersEducationalLevel::findAllByUserId($ToUserId);
+                    $PartnersEducationField = PartnersEducationField::findAllByUserId($ToUserId) == NULL ? new PartnersEducationField() : PartnersEducationField::findAllByUserId($ToUserId);
+                    $PartnerWorkingAS = PartnerWorkingAs::findAllByUserId($ToUserId) == NULL ? new PartnerWorkingAs() : PartnerWorkingAs::findAllByUserId($ToUserId);
+                    $PartnerWorkingWith = PartnerWorkingWith::findAllByUserId($ToUserId) == NULL ? new PartnerWorkingWith() : PartnerWorkingWith::findAllByUserId($ToUserId);
+
+                    $PartnersCountries = PartnersCountries::findAllByUserId($ToUserId) == NULL ? new PartnersCountries() : PartnersCountries::findAllByUserId($ToUserId);
+                    $PartnersStates = PartnersStates::findAllByUserId($ToUserId) == NULL ? new PartnersStates() : PartnersStates::findAllByUserId($ToUserId);
+                    $PartnersCities = PartnersCities::findAllByUserId($ToUserId) == NULL ? new PartnersCities() : PartnersCities::findAllByUserId($ToUserId);
+
+                    $PartnersFamilyALevel = PartnersFamilyAffluenceLevel::findAllByUserId($ToUserId) == NULL ? new PartnersFamilyAffluenceLevel() : PartnersFamilyAffluenceLevel::findAllByUserId($ToUserId);
+                    $PartnersFamilyTypeS = PartnersFamilyType::findAllByUserId($ToUserId) == NULL ? new PartnersFamilyType() : PartnersFamilyType::findAllByUserId($ToUserId);
+
+
+                    $PartnersInterest = PartnersInterest::findAllByUserId($ToUserId) == NULL ? new PartnersInterest() : PartnersInterest::findAllByUserId($ToUserId);
+                    $PartnersReads = PartnersFavouriteReads::findAllByUserId($ToUserId) == NULL ? new PartnersFavouriteReads() : PartnersFavouriteReads::findAllByUserId($ToUserId);
+                    $PartnersMusic = PartnersFavouriteMusic::findAllByUserId($ToUserId) == NULL ? new PartnersFavouriteMusic() : PartnersFavouriteMusic::findAllByUserId($ToUserId);
+                    $PartnersCousins = PartnersFavouriteCousines::findAllByUserId($ToUserId) == NULL ? new PartnersFavouriteCousines() : PartnersFavouriteCousines::findAllByUserId($ToUserId);
+                    $PartnersFitnessActivity = PartnersFitnessActivities::findAllByUserId($ToUserId) == NULL ? new PartnersFitnessActivities() : PartnersFitnessActivities::findAllByUserId($ToUserId);
+                    $PartnersDressStyle = PartnersPreferredDressType::findAllByUserId($ToUserId) == NULL ? new PartnersPreferredDressType() : PartnersPreferredDressType::findAllByUserId($ToUserId);
+                    $PartnersMovies = PartnersPreferredMovies::findAllByUserId($ToUserId) == NULL ? new PartnersPreferredMovies() : PartnersPreferredMovies::findAllByUserId($ToUserId);
+                } else if ($ToUserId == $id) {
+                    $Title = Yii::$app->params['accessDenied'];
+                    $Message = Yii::$app->params['accessDeniedYourProfile'];
+                } else {
+                    $Title = Yii::$app->params['accessDenied'];
+                    $Message = Yii::$app->params['accessDeniedInvalid'];
+                }
+
+
+                $PartenersReligionIDs = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
+                $PartnersMaritalPreferences = CommonHelper::convertArrayToString($PartnersMaritalStatus, 'iMarital_Status_ID');
+                $PartnersGotraPreferences = CommonHelper::convertArrayToString($PartnersGotra, 'iGotra_ID');
+                $PartnersSkinTone = CommonHelper::convertArrayToString($PartnersSkinTone, 'iSkin_Tone_ID');
+                $PartnersBodyType = CommonHelper::convertArrayToString($PartnersBodyType, 'iBody_Type_ID');
+                $PartnersDiet = CommonHelper::convertArrayToString($PartnersDiet, 'diet_id');
+                $PartnersSpectacles = CommonHelper::convertArrayToString($PartnersSpectacles, 'type');
+                $PartnersSmoke = CommonHelper::convertArrayToString($PartnersSmoke, 'smoke_type');
+                $PartnersDrink = CommonHelper::convertArrayToString($PartnersDrink, 'drink_type');
+                $PartnersCommunity = CommonHelper::convertArrayToString($PartnersCommunity, 'iCommunity_ID');
+                $PartnersSubCommunity = CommonHelper::convertArrayToString($PartnersSubCommunity, 'iSub_Community_ID');
+
+                $PartenersEduLevelArray = CommonHelper::convertArrayToString($PartnersEducationalLevel, 'iEducation_Level_ID');
+                $PartenersEduFieldArray = CommonHelper::convertArrayToString($PartnersEducationField, 'iEducation_Field_ID');
+                $PartenersWorkingAsArray = CommonHelper::convertArrayToString($PartnerWorkingAS, 'iWorking_As_ID');
+                $PartenersWorkingWithArray = CommonHelper::convertArrayToString($PartnerWorkingWith, 'iWorking_With_ID');
+
+                $PartnersCountries = CommonHelper::convertArrayToString($PartnersCountries, 'country_id');
+                $PartnersStates = CommonHelper::convertArrayToString($PartnersStates, 'state_id');
+                $PartnersCities = CommonHelper::convertArrayToString($PartnersCities, 'city_id');
+
+                $PartnersFamilyALevel = CommonHelper::convertArrayToString($PartnersFamilyALevel, 'family_affluence_level_id');
+                $PartnersFamilyTypeS = CommonHelper::convertArrayToString($PartnersFamilyTypeS, 'family_type');
+
+                $PartenersInterestArray = CommonHelper::convertArrayToString($PartnersInterest, 'interest_id');
+                $PartenersFavReadsArray = CommonHelper::convertArrayToString($PartnersReads, 'read_id');
+                $PartenersMusicArray = CommonHelper::convertArrayToString($PartnersMusic, 'music_name_id');
+                $PartenersCousinsArray = CommonHelper::convertArrayToString($PartnersCousins, 'cousines_id');
+                $PartenersFitnessArray = CommonHelper::convertArrayToString($PartnersFitnessActivity, 'fitness_id');
+                $PartenersDressStyleArray = CommonHelper::convertArrayToString($PartnersDressStyle, 'dress_style_id');
+                $PartenersMoviesArray = CommonHelper::convertArrayToString($PartnersMovies, 'movie_id');
+
+                return $this->render('profile', [
+                    'model' => $model,
+                    'MatchCompatibility' => $MatchCompatibility,
+                    'PhotoList' => $PhotoList,
+                    'flag' => $flag,
+                    'Message' => $Message,
+                    'Title' => $Title,
+                    'PartenersReligion' => $PartenersReligion,
+                    'PartenersReligionIDs' => $PartenersReligionIDs,
+                    'UPP' => $UPP,
+                    'PartnersFathersStatus' => $PartnersFathersStatus,
+                    'PartnersMothersStatus' => $PartnersMothersStatus,
+                    'PartnersEducationalLevel' => $PartnersEducationalLevel,
+                    'PartnersEducationField' => $PartnersEducationField,
+                    'SimilarProfile' => $SimilarProfile,
+
+                    'PartnersMaritalPreferences' => $PartnersMaritalPreferences,
+                    'PartnersGotraPreferences' => $PartnersGotraPreferences,
+                    'PartnersMaritalStatus' => $PartnersMaritalStatus,
+                    'PartnersGotra' => $PartnersGotra,
+                    'PartnersCommunity' => $PartnersCommunity,
+                    'PartnersSubCommunity' => $PartnersSubCommunity,
+
+                    'PartnersRaashi' => $PartnersRaashi,
+                    'PartnersCharan' => $PartnersCharan,
+                    'PartnersNakshtra' => $PartnersNakshtra,
+                    'PartnersNadi' => $PartnersNadi,
+
+                    'PartnersSkinTone' => $PartnersSkinTone,
+                    'PartnersBodyType' => $PartnersBodyType,
+                    'PartnersDiet' => $PartnersDiet,
+                    'PartnersSpectacles' => $PartnersSpectacles,
+                    'PartnersSmoke' => $PartnersSmoke,
+                    'PartnersDrink' => $PartnersDrink,
+
+                    'PartnersMothertongue' => $PartnersMothertongue,
+
+                    'PartenersEduLevelArray' => $PartenersEduLevelArray,
+                    'PartenersEduFieldArray' => $PartenersEduFieldArray,
+                    'PartenersWorkingAsArray' => $PartenersWorkingAsArray,
+                    'PartenersWorkingWithArray' => $PartenersWorkingWithArray,
+
+                    'PartnersStates' => $PartnersStates,
+                    'PartnersCountries' => $PartnersCountries,
+                    'PartnersCities' => $PartnersCities,
+
+                    'PartnersFamilyALevel' => $PartnersFamilyALevel,
+                    'PartnersFamilyTypeS' => $PartnersFamilyTypeS,
+
+                    'PartenersInterestArray' => $PartenersInterestArray,
+                    'PartenersFavReadsArray' => $PartenersFavReadsArray,
+                    'PartenersMusicArray' => $PartenersMusicArray,
+                    'PartenersCousinsArray' => $PartenersCousinsArray,
+                    'PartenersFitnessArray' => $PartenersFitnessArray,
+                    'PartenersDressStyleArray' => $PartenersDressStyleArray,
+                    'PartenersMoviesArray' => $PartenersMoviesArray,
+                ]);
+            }
         }
-        $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
-        list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, $id, 3);
-
-        $PartenersReligionIDs = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
-        $PartnersMaritalPreferences = CommonHelper::convertArrayToString($PartnersMaritalStatus, 'iMarital_Status_ID');
-        $PartnersGotraPreferences = CommonHelper::convertArrayToString($PartnersGotra, 'iGotra_ID');
-        $PartnersSkinTone = CommonHelper::convertArrayToString($PartnersSkinTone, 'iSkin_Tone_ID');
-        $PartnersBodyType = CommonHelper::convertArrayToString($PartnersBodyType, 'iBody_Type_ID');
-        $PartnersDiet = CommonHelper::convertArrayToString($PartnersDiet, 'diet_id');
-        $PartnersSpectacles = CommonHelper::convertArrayToString($PartnersSpectacles, 'type');
-        $PartnersSmoke = CommonHelper::convertArrayToString($PartnersSmoke, 'smoke_type');
-        $PartnersDrink = CommonHelper::convertArrayToString($PartnersDrink, 'drink_type');
-        $PartnersCommunity = CommonHelper::convertArrayToString($PartnersCommunity, 'iCommunity_ID');
-        $PartnersSubCommunity = CommonHelper::convertArrayToString($PartnersSubCommunity, 'iSub_Community_ID');
-
-        $PartenersEduLevelArray = CommonHelper::convertArrayToString($PartnersEducationalLevel, 'iEducation_Level_ID');
-        $PartenersEduFieldArray = CommonHelper::convertArrayToString($PartnersEducationField, 'iEducation_Field_ID');
-        $PartenersWorkingAsArray = CommonHelper::convertArrayToString($PartnerWorkingAS, 'iWorking_As_ID');
-        $PartenersWorkingWithArray = CommonHelper::convertArrayToString($PartnerWorkingWith, 'iWorking_With_ID');
-
-        $PartnersCountries = CommonHelper::convertArrayToString($PartnersCountries, 'country_id');
-        $PartnersStates = CommonHelper::convertArrayToString($PartnersStates, 'state_id');
-        $PartnersCities = CommonHelper::convertArrayToString($PartnersCities, 'city_id');
-
-        $PartnersFamilyALevel = CommonHelper::convertArrayToString($PartnersFamilyALevel, 'family_affluence_level_id');
-        $PartnersFamilyTypeS = CommonHelper::convertArrayToString($PartnersFamilyTypeS, 'family_type');
-
-        $PartenersInterestArray = CommonHelper::convertArrayToString($PartnersInterest, 'interest_id');
-        $PartenersFavReadsArray = CommonHelper::convertArrayToString($PartnersReads, 'read_id');
-        $PartenersMusicArray = CommonHelper::convertArrayToString($PartnersMusic, 'music_name_id');
-        $PartenersCousinsArray = CommonHelper::convertArrayToString($PartnersCousins, 'cousines_id');
-        $PartenersFitnessArray = CommonHelper::convertArrayToString($PartnersFitnessActivity, 'fitness_id');
-        $PartenersDressStyleArray = CommonHelper::convertArrayToString($PartnersDressStyle, 'dress_style_id');
-        $PartenersMoviesArray = CommonHelper::convertArrayToString($PartnersMovies, 'movie_id');
-
-        return $this->render('profile', [
-            'model' => $model,
-            'MatchCompatibility' => $MatchCompatibility,
-            'PhotoList' => $PhotoList,
-            'flag' => $flag,
-            'Message' => $Message,
-            'Title' => $Title,
-            'PartenersReligion' => $PartenersReligion,
-            'PartenersReligionIDs' => $PartenersReligionIDs,
-            'UPP' => $UPP,
-            'PartnersFathersStatus' => $PartnersFathersStatus,
-            'PartnersMothersStatus' => $PartnersMothersStatus,
-            'PartnersEducationalLevel' => $PartnersEducationalLevel,
-            'PartnersEducationField' => $PartnersEducationField,
-            'SimilarProfile' => $SimilarProfile,
-
-            'PartnersMaritalPreferences' => $PartnersMaritalPreferences,
-            'PartnersGotraPreferences' => $PartnersGotraPreferences,
-            'PartnersMaritalStatus' => $PartnersMaritalStatus,
-            'PartnersGotra' => $PartnersGotra,
-            'PartnersCommunity' => $PartnersCommunity,
-            'PartnersSubCommunity' => $PartnersSubCommunity,
-
-            'PartnersRaashi' => $PartnersRaashi,
-            'PartnersCharan' => $PartnersCharan,
-            'PartnersNakshtra' => $PartnersNakshtra,
-            'PartnersNadi' => $PartnersNadi,
-
-            'PartnersSkinTone' => $PartnersSkinTone,
-            'PartnersBodyType' => $PartnersBodyType,
-            'PartnersDiet' => $PartnersDiet,
-            'PartnersSpectacles' => $PartnersSpectacles,
-            'PartnersSmoke' => $PartnersSmoke,
-            'PartnersDrink' => $PartnersDrink,
-
-            'PartnersMothertongue' => $PartnersMothertongue,
-
-            'PartenersEduLevelArray' => $PartenersEduLevelArray,
-            'PartenersEduFieldArray' => $PartenersEduFieldArray,
-            'PartenersWorkingAsArray' => $PartenersWorkingAsArray,
-            'PartenersWorkingWithArray' => $PartenersWorkingWithArray,
-
-            'PartnersStates' => $PartnersStates,
-            'PartnersCountries' => $PartnersCountries,
-            'PartnersCities' => $PartnersCities,
-
-            'PartnersFamilyALevel' => $PartnersFamilyALevel,
-            'PartnersFamilyTypeS' => $PartnersFamilyTypeS,
-
-            'PartenersInterestArray' => $PartenersInterestArray,
-            'PartenersFavReadsArray' => $PartenersFavReadsArray,
-            'PartenersMusicArray' => $PartenersMusicArray,
-            'PartenersCousinsArray' => $PartenersCousinsArray,
-            'PartenersFitnessArray' => $PartenersFitnessArray,
-            'PartenersDressStyleArray' => $PartenersDressStyleArray,
-            'PartenersMoviesArray' => $PartenersMoviesArray,
-        ]);
     }
 
     public function actionProfileViewedBy($Id, $ToUserId)

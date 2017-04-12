@@ -8,7 +8,6 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 ?>
     <div class="main-section">
-        <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
         <main>
             <div class="container">
                 <div class="row">
@@ -629,9 +628,6 @@ use yii\widgets\Pjax;
                                 </div>
                             </div>
                             <div class="clearfix"></div>
-
-
-
                             <!--Phone NUmber -->
                             <div class="modal fade" id="phone_number_modal" tabindex="-1" role="dialog"
                                  aria-labelledby="myModalLabel"
@@ -666,6 +662,262 @@ use yii\widgets\Pjax;
                                     </div>
                                 </div>
                             </div>
+                            <!-- Modal Photo -->
+                            <div class="modal fade" id="photo" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <p class="text-center mrg-bt-10">
+                                        <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+                                    </p>
+
+                                    <div class="modal-content">
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                    aria-hidden="true">&times;</span> <span
+                                                    class="sr-only">Close</span></button>
+                                            <h2 class="text-center"> Photo Gallery</h2>
+                                            <!--<div class="profile-control photo-btn">
+                                                <button class="btn " type="button"> Upload Video or Photo</button>
+                                                <button class="btn active" type="button"> Choose from Photos</button>
+                                                <button class="btn" type="button"> Albums</button>
+                                            </div>-->
+                                        </div>
+                                        <!-- Modal Body -->
+                                        <div class="modal-body photo-gallery">
+                                            <div class="choose-photo">
+                                                <div class="row" id="profile_list_popup">
+                                                    <?php
+                                                    if (count($PhotoList) > 0) {
+                                                        foreach ($PhotoList as $K => $V) {
+                                                            ?>
+                                                            <div class="col-md-3 col-sm-3 col-xs-6">
+                                                                <?php $SELECTED = '';
+                                                                if ($V['Is_Profile_Photo'] == 'YES') {
+                                                                    $SELECTED = "selected";
+                                                                } ?>
+                                                                <a href="javascript:void(0)" class="pull-left"
+                                                                   data-id="<?= $V['iPhoto_ID'] ?>">
+                                                                    <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive ' . $SELECTED, 'height' => '140', 'alt' => 'Photo' . $K, 'style' => 'height:140px;']); ?>
+                                                                </a>
+                                                            </div>
+                                                        <?php }
+                                                    } else {
+                                                        ?>
+                                                        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                                            <p> No Photos Available</p>
+                                                        </div>
+                                                    <?php } ?>
+
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Modal Footer -->
+
+                                </div>
+
+                            </div>
+                            <div class="modal fade" id="sendInterest" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <p class="text-center mrg-bt-10">
+                                        <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+                                    </p>
+
+                                    <div class="modal-content">
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <button type="button" class="close"
+                                                    data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
+                                                    class="sr-only">Close</span>
+                                            </button>
+                                            <h4 class="text-center"> Send Interest </h4>
+                                        </div>
+                                        <!-- Modal Body -->
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <form>
+                                                    <div class="text-center">
+                                                        <div class="col-md-12 col-sm-12">
+                                                            <div class="fb-profile-text mrg-bt-30 text-dark">
+                                                                <h1 id="p_u_name"><?= $model->FullName; ?><span
+                                                                        class="sub-text"
+                                                                        id="p_u_rgno">(<?= CommonHelper::setInputVal($model->Registration_Number, 'text') ?>
+                                                                        )</span></h1>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 col-sm-12">
+                                                            <?= Html::img(CommonHelper::getPhotos('USER', $model->id, '120' . $model->propic, 120, '', 'Yes', CommonHelper::getVisiblePhoto($model->id, $model->eStatusPhotoModify)), ['width' => '', 'height' => '120', 'alt' => 'Profile', 'class' => '']); ?>
+                                                        </div>
+                                                        <div class="col-md-12 col-sm-12">
+                                                            <h6 class="mrg-bt-30 mrg-tp-20 font-15 text-dark"><strong>Request
+                                                                    the member to add
+                                                                    the
+                                                                    following
+                                                                    details</strong></h6>
+
+                                                            <div class="checkbox mrg-tp-0 profile-control">
+                                                                <input id="Photo" type="checkbox" name="Photo"
+                                                                       value="check1">
+                                                                <label for="Photo" class="control-label">Photo</label>
+                                                                <input id="Horoscope" type="checkbox" name="Horoscope"
+                                                                       value="check1">
+                                                                <label for="Horoscope"
+                                                                       class="control-label">Horoscope</label>
+                                                                <button type="button" class="btn active send_request">
+                                                                    Send Interest
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                        <!-- Modal Footer -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="operationrequest" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <p class="text-center mrg-bt-10">
+                                        <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
+                                    </p>
+
+                                    <div class="modal-content">
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <button type="button" class="close"
+                                                    data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
+                                                    class="sr-only">Close</span>
+                                            </button>
+                                            <h4 class="text-center"> Please wait.. </h4>
+                                        </div>
+                                        <!-- Modal Body -->
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="text-center">
+                                                    <div class="checkbox mrg-tp-0 profile-control">
+                                                        <input id="Photo" type="checkbox" name="Photo" value="check1">
+                                                        <label for="Photo" class="control-label">Photo</label>
+                                                        <input id="Horoscope" type="checkbox" name="Horoscope"
+                                                               value="check1">
+                                                        <label for="Horoscope" class="control-label">Horoscope</label>
+                                                        <button type="button" class="btn active send_request"> Send
+                                                            Interest
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="well">
+                                                    <h6 class="font-15 text-dark"><strong> More Similar
+                                                            Profiles</strong> <a title="View All"
+                                                                                 class="pull-right"
+                                                                                 href="#">View
+                                                            All</a>
+                                                    </h6>
+
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                            <div class="bg-white">
+                                                                <ul class="list-unstyled ad-prof user-list">
+                                                                    <li> <span class="imgarea">
+
+                                                <br>
+                      <input id="Photo1" type="checkbox" name="Photo" value="check1">
+                      </span> <span class="img-desc"> <a href="#" class="name" title="KP123WERT">Pallavi Jadhav <br>
+                                                                                KP123WERT</a>
+                      <p>27yrs , 5’ 1” / 155 cms</p>
+                      <div class="item"><a role="button" class="btn btn-info pull-left" href="#">Interest Send <i
+                                  class="fa fa-heart"></i></a></div>
+                      </span>
+
+                                                                        <div class="clearfix"></div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                            <div class="bg-white">
+                                                                <ul class="list-unstyled ad-prof user-list">
+                                                                    <li> <span
+                                                                            class="imgarea"> <?= Html::img('@web/images/profile4.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?>
+                                                                            <br>
+                      <input id="Photo2" type="checkbox" name="Photo" value="check1">
+                      </span> <span class="img-desc"> <a href="#" class="name" title="KP123WERT">Pallavi Jadhav <br>
+                                                                                KP123WERT</a>
+                      <p>27yrs , 5’ 1” / 155 cms</p>
+                      <div class="item"><a role="button" class="btn btn-link pull-left" href="#">Interest Send <i
+                                  class="fa fa-heart"></i></a></div>
+                      </span>
+
+                                                                        <div class="clearfix"></div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                            <div class="bg-white">
+                                                                <ul class="list-unstyled ad-prof user-list">
+                                                                    <li> <span
+                                                                            class="imgarea"> <?= Html::img('@web/images/profile4.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?>
+                                                                            <br>
+                      <input id="Photo1" type="checkbox" name="Photo" value="check1">
+                      </span> <span class="img-desc"> <a href="#" class="name" title="KP123WERT">Pallavi Jadhav <br>
+                                                                                KP123WERT</a>
+                      <p>27yrs , 5’ 1” / 155 cms</p>
+                      <div class="item"><a role="button" class="btn btn-info pull-left" href="#">Interest Send <i
+                                  class="fa fa-heart"></i></a></div>
+                      </span>
+
+                                                                        <div class="clearfix"></div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                                            <div class="bg-white">
+                                                                <ul class="list-unstyled ad-prof user-list">
+                                                                    <li> <span
+                                                                            class="imgarea"> <?= Html::img('@web/images/profile4.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?>
+                                                                            <br>
+                      <input id="Photo2" type="checkbox" name="Photo" value="check1">
+                      </span> <span class="img-desc"> <a href="#" class="name" title="KP123WERT">Pallavi Jadhav <br>
+                                                                                KP123WERT</a>
+                      <p>27yrs , 5’ 1” / 155 cms</p>
+                      <div class="item"><a role="button" class="btn btn-link pull-left" href="#">Interest Send <i
+                                  class="fa fa-heart"></i></a></div>
+                      </span>
+
+                                                                        <div class="clearfix"></div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="checkbox" style="margin:0">
+                                                    <input id="allinter" type="checkbox" name="Photo" value="check1">
+                                                    <label for="allinter" class="control-label"><a href="#">Send
+                                                            Interest to All</a></label>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!-- Modal Footer -->
+                                    </div>
+                                </div>
+                            </div>
+
                         <?php } else { ?>
                             <div class="padd-xs mrg-tp-10">
                                 <div class="row">
@@ -684,8 +936,7 @@ use yii\widgets\Pjax;
                                         <div class="name-panel">
                                             <div class="ad-title"><h3><?= $Title ?></h3></div>
                                             <div class="clearfix"></div>
-                                            <p><?= $Message ?></p>
-
+                                            <div class="notice kp_warning"><p><?= $Message ?></p></div>
                                             <!--<div class="row">
                                                 <div class="col-sm-12">-->
                                             <ul class="list-inline pull-right">
@@ -798,247 +1049,6 @@ use yii\widgets\Pjax;
                 <?php } ?>
             </div>
         </main>
-    </div>
-
-    <!-- Modal Photo -->
-    <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <p class="text-center mrg-bt-10">
-                <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
-            </p>
-
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span> <span
-                            class="sr-only">Close</span></button>
-                    <h2 class="text-center"> Photo Gallery</h2>
-                    <!--<div class="profile-control photo-btn">
-                        <button class="btn " type="button"> Upload Video or Photo</button>
-                        <button class="btn active" type="button"> Choose from Photos</button>
-                        <button class="btn" type="button"> Albums</button>
-                    </div>-->
-                </div>
-                <!-- Modal Body -->
-                <div class="modal-body photo-gallery">
-                    <div class="choose-photo">
-                        <div class="row" id="profile_list_popup">
-                            <?php
-                            if (count($PhotoList) > 0) {
-                                foreach ($PhotoList as $K => $V) {
-                                    ?>
-                                    <div class="col-md-3 col-sm-3 col-xs-6">
-                                        <?php $SELECTED = '';
-                                        if ($V['Is_Profile_Photo'] == 'YES') {
-                                            $SELECTED = "selected";
-                                        } ?>
-                                        <a href="javascript:void(0)" class="pull-left"
-                                           data-id="<?= $V['iPhoto_ID'] ?>">
-                                            <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, $V['File_Name'], 140), ['class' => 'img-responsive ' . $SELECTED, 'height' => '140', 'alt' => 'Photo' . $K, 'style' => 'height:140px;']); ?>
-                                        </a>
-                                    </div>
-                                <?php }
-                            } else {
-                                ?>
-                                <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                                    <p> No Photos Available</p>
-                                </div>
-                            <?php } ?>
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Modal Footer -->
-
-        </div>
-
-    </div>
-    <div class="modal fade" id="sendInterest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <p class="text-center mrg-bt-10">
-                <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
-            </p>
-
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
-                            class="sr-only">Close</span>
-                    </button>
-                    <h4 class="text-center"> Send Interest </h4>
-                </div>
-                <!-- Modal Body -->
-                <div class="modal-body">
-                    <div class="row">
-                        <form>
-                            <div class="text-center">
-                                <div class="col-md-12 col-sm-12">
-                                    <div class="fb-profile-text mrg-bt-30 text-dark">
-                                        <h1 id="p_u_name"><?= $model->FullName; ?><span class="sub-text"
-                                                                                        id="p_u_rgno">(<?= CommonHelper::setInputVal($model->Registration_Number, 'text') ?>
-                                                )</span></h1>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-sm-12">
-                                    <?= Html::img(CommonHelper::getPhotos('USER', $model->id, '120' . $model->propic, 120, '', 'Yes', CommonHelper::getVisiblePhoto($model->id, $model->eStatusPhotoModify)), ['width' => '', 'height' => '120', 'alt' => 'Profile', 'class' => '']); ?>
-                                </div>
-                                <div class="col-md-12 col-sm-12">
-                                    <h6 class="mrg-bt-30 mrg-tp-20 font-15 text-dark"><strong>Request the member to add
-                                            the
-                                            following
-                                            details</strong></h6>
-
-                                    <div class="checkbox mrg-tp-0 profile-control">
-                                        <input id="Photo" type="checkbox" name="Photo" value="check1">
-                                        <label for="Photo" class="control-label">Photo</label>
-                                        <input id="Horoscope" type="checkbox" name="Horoscope" value="check1">
-                                        <label for="Horoscope" class="control-label">Horoscope</label>
-                                        <button type="button" class="btn active send_request"> Send Interest</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-                <!-- Modal Footer -->
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="operationrequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <p class="text-center mrg-bt-10">
-                <img src="<?= CommonHelper::getLogo() ?>" width="157" height="61" alt="logo">
-            </p>
-
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal"><span aria-hidden="true">&times;</span> <span
-                            class="sr-only">Close</span>
-                    </button>
-                    <h4 class="text-center"> Please wait.. </h4>
-                </div>
-                <!-- Modal Body -->
-                <div class="modal-body">
-                    <form>
-                        <div class="text-center">
-                            <div class="checkbox mrg-tp-0 profile-control">
-                                <input id="Photo" type="checkbox" name="Photo" value="check1">
-                                <label for="Photo" class="control-label">Photo</label>
-                                <input id="Horoscope" type="checkbox" name="Horoscope" value="check1">
-                                <label for="Horoscope" class="control-label">Horoscope</label>
-                                <button type="button" class="btn active send_request"> Send Interest</button>
-                            </div>
-                        </div>
-                        <div class="well">
-                            <h6 class="font-15 text-dark"><strong> More Similar Profiles</strong> <a title="View All"
-                                                                                                     class="pull-right"
-                                                                                                     href="#">View
-                                    All</a>
-                            </h6>
-
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                    <div class="bg-white">
-                                        <ul class="list-unstyled ad-prof user-list">
-                                            <li> <span class="imgarea">
-
-                                                <br>
-                      <input id="Photo1" type="checkbox" name="Photo" value="check1">
-                      </span> <span class="img-desc"> <a href="#" class="name" title="KP123WERT">Pallavi Jadhav <br>
-                                                        KP123WERT</a>
-                      <p>27yrs , 5’ 1” / 155 cms</p>
-                      <div class="item"><a role="button" class="btn btn-info pull-left" href="#">Interest Send <i
-                                  class="fa fa-heart"></i></a></div>
-                      </span>
-
-                                                <div class="clearfix"></div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                    <div class="bg-white">
-                                        <ul class="list-unstyled ad-prof user-list">
-                                            <li> <span
-                                                    class="imgarea"> <?= Html::img('@web/images/profile4.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?>
-                                                    <br>
-                      <input id="Photo2" type="checkbox" name="Photo" value="check1">
-                      </span> <span class="img-desc"> <a href="#" class="name" title="KP123WERT">Pallavi Jadhav <br>
-                                                        KP123WERT</a>
-                      <p>27yrs , 5’ 1” / 155 cms</p>
-                      <div class="item"><a role="button" class="btn btn-link pull-left" href="#">Interest Send <i
-                                  class="fa fa-heart"></i></a></div>
-                      </span>
-
-                                                <div class="clearfix"></div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                    <div class="bg-white">
-                                        <ul class="list-unstyled ad-prof user-list">
-                                            <li> <span
-                                                    class="imgarea"> <?= Html::img('@web/images/profile4.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?>
-                                                    <br>
-                      <input id="Photo1" type="checkbox" name="Photo" value="check1">
-                      </span> <span class="img-desc"> <a href="#" class="name" title="KP123WERT">Pallavi Jadhav <br>
-                                                        KP123WERT</a>
-                      <p>27yrs , 5’ 1” / 155 cms</p>
-                      <div class="item"><a role="button" class="btn btn-info pull-left" href="#">Interest Send <i
-                                  class="fa fa-heart"></i></a></div>
-                      </span>
-
-                                                <div class="clearfix"></div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                    <div class="bg-white">
-                                        <ul class="list-unstyled ad-prof user-list">
-                                            <li> <span
-                                                    class="imgarea"> <?= Html::img('@web/images/profile4.jpg', ['width' => '', 'height' => '', 'alt' => 'Profile']); ?>
-                                                    <br>
-                      <input id="Photo2" type="checkbox" name="Photo" value="check1">
-                      </span> <span class="img-desc"> <a href="#" class="name" title="KP123WERT">Pallavi Jadhav <br>
-                                                        KP123WERT</a>
-                      <p>27yrs , 5’ 1” / 155 cms</p>
-                      <div class="item"><a role="button" class="btn btn-link pull-left" href="#">Interest Send <i
-                                  class="fa fa-heart"></i></a></div>
-                      </span>
-
-                                                <div class="clearfix"></div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="checkbox" style="margin:0">
-                            <input id="allinter" type="checkbox" name="Photo" value="check1">
-                            <label for="allinter" class="control-label"><a href="#">Send Interest to All</a></label>
-                        </div>
-                    </form>
-                </div>
-                <!-- Modal Footer -->
-            </div>
-        </div>
     </div>
 
 

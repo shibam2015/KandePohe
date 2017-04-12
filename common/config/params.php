@@ -16,8 +16,8 @@ return [
     'noRecordsFoundInSearchList' => 'There are no record found as per your searching criteria.',
     'loginFirst' => 'For this you have to login first...!',
     'accessDenied' => 'Access Denied',
-    'accessDeniedYourProfile' => "You can't see your profile as user view.",
-    'accessDeniedInvalid' => "Trying to access invalid data.",
+    'accessDeniedYourProfile' => "Oops ! You can't see your profile as user view.",
+    'accessDeniedInvalid' => "Oops ! You are trying to access invalid data.",
     'sendInterest' => " Do You want to Send Interest Request ?",
     'acceptInterest' => " Do You want to Accept Interest ?",
     'declineInterest' => " Do You want to Decline Interest ?",
@@ -151,5 +151,7 @@ return [
     'homePageHeaderText' => 'नवीन नात्यांची सुरूवात करा कांदे - पोहें सोबत',
     'publicPageTitle' => 'वधू- वर शोधा - Kande-Pohe Marathi Matrimony',
     'publicPages' => array('', 'site/about-us', 'site/contact-us', 'site/help-feedback', 'site/terms-of-use'),
+    'userProfilePageSameGender' => "Oops ! You can't able to see this profile.",
+    'userProfilePageUK' => "Oops ! User profile is not available.",
 ];
 
