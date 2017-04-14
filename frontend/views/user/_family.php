@@ -519,7 +519,7 @@ if ($show) {
             <dd><?/*= CommonHelper::setInputVal($model->talukaNameCA->vName, 'text') */ ?></dd>-->
             </div>
             <dt>Area Name</dt>
-            <dd><?= CommonHelper::setInputVal($model->vAreaName, 'text') ?></dd>
+            <dd><?= CommonHelper::setInputVal(trim($model->vAreaNameCA), 'text') ?></dd>
             <dt>Native Place</dt>
             <dd><?= CommonHelper::setInputVal($model->vNativePlaceCA, 'text') ?></dd>
             <!--<dt>Parents Residing At</dt>

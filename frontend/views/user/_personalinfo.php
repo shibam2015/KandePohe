@@ -407,9 +407,10 @@ use yii\helpers\Url;
 
         <dl class="dl-horizontal">
             <dt>Name</dt>
-            <dd><?= $model->FullName; ?><dd>
+            <dd><?= CommonHelper::setInputVal($model->FullName, 'text') ?>
+            <dd>
             <dt>Profile created by</dt>
-            <dd><?= $model->Profile_created_for; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->Profile_created_for, 'text') ?></dd>
             <dt>Date Of Birth</dt>
             <dd><?= $model->DOB; ?><dd>
             <dt>Age</dt>
@@ -422,28 +423,28 @@ use yii\helpers\Url;
             <dd><?= CommonHelper::setInputVal($model->motherTongue->Name, 'text') ?></dd>
 
             <dt>Religion</dt>
-            <dd><?= $model->religionName->vName; ?>
+            <dd><?= CommonHelper::setInputVal($model->religionName->vName, 'text') ?>
             <dd>
             <dt>Community</dt>
-            <dd><?= $model->communityName->vName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->communityName->vName, 'text') ?></dd>
             <dt>Sub Community</dt>
-            <dd><?= $model->iSubCommunity_ID; ?>
+            <dd><?= CommonHelper::setInputVal($model->iSubCommunity_ID, 'text') ?>
             <dd>
                 <!-- <?= $model->subCommunityName->vName; ?>-->
             <dt>Gotra</dt>
-            <dd><?= $model->gotraName->vName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->gotraName->vName, 'text') ?></dd>
             <dt>Marital Status</dt>
-            <dd><?= $model->maritalStatusName->vName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->maritalStatusName->vName, 'text') ?></dd>
             <?php if ($model->noc > 0) { ?>
                 <dt>Number Of Children</dt>
                 <dd><?= $model->noc; ?></dd>
             <?php } ?>
             <dt>Country</dt>
-            <dd><?= $model->countryName->vCountryName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->countryName->vCountryName, 'text') ?></dd>
             <dt>State</dt>
-            <dd><?= $model->stateName->vStateName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->stateName->vStateName, 'text') ?></dd>
             <dt>City</dt>
-            <dd><?= $model->cityName->vCityName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->cityName->vCityName, 'text') ?></dd>
             <?php $hide = '';
             if ($model->iCountryId != 101) {
                 $hide = "display: none; ";
@@ -451,12 +452,12 @@ use yii\helpers\Url;
 
             <div style="<?= $hide ?>">
             <dt>Distict</dt>
-            <dd><?= $model->districtName->vName; ?></dd>
+                <dd><?= CommonHelper::setInputVal($model->districtName->vName, 'text') ?></dd>
                 <!-- <dt>Taluks</dt>
             <dd><?/*= $model->talukaName->vName; */ ?></dd>-->
             </div>
             <dt>Area Name</dt>
-            <dd><?= $model->vAreaName ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->vAreaName, 'text') ?></dd>
 
         </dl>
         <?php

@@ -167,17 +167,26 @@ use yii\helpers\ArrayHelper;
         ?>
         <dl class="dl-horizontal">
             <dt>Area Name</dt>
-            <dd><?= $model->vAreaNameCA ?></dd>
-            <dt>Taluks</dt>
-            <dd><?= $model->talukaNameCA->vName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->vAreaNameCA, 'text') ?></dd>
+            <?php $hide = '';
+            if ($model->iCountryCAId != 101) {
+                $hide = "display: none; ";
+            } ?>
+
+            <!--<dt>Taluks</dt>
+            <dd><?/*=  CommonHelper::setInputVal($model->talukaNameCA->vName,'text') */ ?></dd>-->
+
+            <div style="<?= $hide ?>">
             <dt>Distict</dt>
-            <dd><?= $model->districtNameCA->vName; ?></dd>
+                <dd><?= CommonHelper::setInputVal($model->districtNameCA->vName, 'text') ?></dd>
+            </div>
+
             <dt>City</dt>
-            <dd><?= $model->cityNameCA->vCityName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->cityNameCA->vCityName, 'text') ?></dd>
             <dt>State</dt>
-            <dd><?= $model->stateNameCA->vStateName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->stateNameCA->vStateName, 'text') ?></dd>
             <dt>Country</dt>
-            <dd><?= $model->countryNameCA->vCountryName; ?></dd>
+            <dd><?= CommonHelper::setInputVal($model->countryNameCA->vCountryName, 'text') ?></dd>
         </dl>
 
     <?php
