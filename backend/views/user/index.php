@@ -67,12 +67,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                             # 'status',
                                             [
                                                 'attribute'=>'status',
-                                                'filter' => [1=>'Active', 2=>'Inactive',3=>'Pending',4=>'Disapprove',5=>'Approve'],
+                                                'filter' => [0 => 'Delete', 1 => 'Active', 2 => 'Inactive', 3 => 'Pending', 4 => 'Disapprove', 5 => 'Approve'],
                                                 'format'=>'raw',
                                                 'value' => function($model, $key, $index)
                                                 {
-                                                    if($model->status == 1)
+                                                    if ($model->status == 0)
                                                     {
+                                                        return '<button class="btn bg-navy">&nbsp;&nbsp;Deleted&nbsp;&nbsp;</button>';
+                                                    } else if ($model->status == 1) {
                                                         return '<button class="btn btn-success">&nbsp;&nbsp;Actived&nbsp;&nbsp;</button>';
                                                     }
                                                     else if($model->status == 2)
@@ -85,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     }
                                                     else if($model->status == 4)
                                                     {
-                                                        return '<button class="btn bg-red">&nbsp;&nbsp;Disapproved&nbsp;&nbsp;</button>';
+                                                        return '<button class="btn btn-danger">&nbsp;&nbsp;Disapproved&nbsp;&nbsp;</button>';
                                                     }
                                                     else if($model->status == 5)
                                                     {
