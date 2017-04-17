@@ -372,13 +372,13 @@ $M1 = array();
                                                                                 $Yes = 'Yes';
                                                                             } ?>
                                                                             <div
-                                                                                class="item <?= ($K == 0) ? 'active' : ''; ?>">
+                                                                                class="item <?= ($K == 0) ? 'active' : ''; ?> kp_pic_dis_dwn">
                                                                                 <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, $Photo, 200, '', $Yes, CommonHelper::getVisiblePhoto($SV->id, $V['eStatus'])), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
                                                                             </div>
                                                                         <?php
                                                                         }
                                                                     } else { ?>
-                                                                        <div class="item active">
+                                                                        <div class="item active kp_pic_dis_dwn">
                                                                             <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, $Photos[$SV->id], 120), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive item']); ?>
                                                                         </div>
                                                                     <?php }

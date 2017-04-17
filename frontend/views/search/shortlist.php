@@ -9,13 +9,6 @@ use yii\widgets\Pjax;
 
 ?>
 <div class="main-section">
-    <?php
-    if (!Yii::$app->user->isGuest) {
-        echo $this->render('/layouts/parts/_headerafterlogin');
-    } else {
-        echo $this->render('/layouts/parts/_headerregister.php');
-    }
-    ?>
     <main>
         <div class="container">
             <div class="row">
@@ -80,7 +73,7 @@ use yii\widgets\Pjax;
                                                             <!-- Wrapper for slides -->
                                                             <div class="carousel-inner">
 
-                                                                <div class="item active">
+                                                                <div class="item active kp_pic_dis_dwn">
                                                                     <?= Html::img(CommonHelper::getPhotos('USER', $SV->id, '200' . $SV->propic, 200, '', 'Yes'), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive item']); ?>
                                                                 </div>
 

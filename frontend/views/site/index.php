@@ -173,7 +173,7 @@ use yii\jui\DatePicker;
                     ?>
 
                     <div class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="thumbnail">
+                        <div class="thumbnail kp_pic_dis_dwn">
                             <div class="caption">
                                 <h4><?= $FV->Registration_Number ?></h4>
 

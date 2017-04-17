@@ -47,7 +47,7 @@ use yii\widgets\Pjax;
                                                             }*/
                                                             ?>
                                                             <div
-                                                                class="item <?= ($K == 0) ? 'active' : ''; ?> kp_gallery"
+                                                                class="item <?= ($K == 0) ? 'active' : ''; ?> kp_gallery kp_pic_dis_dwn"
                                                                 data-src="<?= CommonHelper::getPhotos('USER', $model->id, $V['File_Name']) ?>"
                                                                 id="img_<?= $V['iPhoto_ID'] ?>">
                                                                 <?= Html::img(CommonHelper::getPhotos('USER', $model->id, $Photo, 200, '', $Yes, CommonHelper::getVisiblePhoto($model->id, $V['eStatus'])), ['width' => '200', 'alt' => $model->FullName, 'class' => 'img-responsive']); ?>
@@ -55,7 +55,7 @@ use yii\widgets\Pjax;
                                                             </div>
                                                         <?php }
                                                     } else { ?>
-                                                        <div class="item active">
+                                                        <div class="item active kp_pic_dis_dwn">
                                                             <?= Html::img(CommonHelper::getPhotos('USER', $model->id, 'no-photo.jpg', 140), ['width' => '205', 'height' => '205', 'alt' => 'Profile', 'class' => 'img-responsive']); ?>
                                                         </div>
                                                     <?php } ?>
@@ -1009,6 +1009,7 @@ use yii\widgets\Pjax;
 $this->registerJs('
     $(".gallery_view").click(function(){
         $(".kp_gallery").click();
+        setTimeout(function(){ gallery_disable_right(); }, 500);
     });
 var formData = new FormData();
     formData.append("ToUserId", "' . $model->id . '");

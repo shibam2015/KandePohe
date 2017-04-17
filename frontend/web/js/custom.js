@@ -444,3 +444,15 @@ function profile_meter(PRO_COMP) {
     });
     $('.pie_progress').asPieProgress('go', PRO_COMP + '%');
 }
+
+$(".kp_pic_dis_dwn").on("contextmenu", function (e) {
+    e.preventDefault();
+});
+function gallery_disable_right() {
+    $(".lg").on("contextmenu", function (e) {
+        e.preventDefault();
+    });
+}
+setTimeout(function () {
+    gallery_disable_right();
+}, 2000);
