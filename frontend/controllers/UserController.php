@@ -270,6 +270,8 @@ class UserController extends Controller
             $id = Yii::$app->user->identity->id;
             $USER_PHOTO_MODEL = new UserPhotos();
             $USER_PHOTOS_LIST = $USER_PHOTO_MODEL->findByUserId($id);
+            $PhotoCount = $USER_PHOTO_MODEL->totalUploadPhotos($id);
+            # CommonHelper::pr($USER_PHOTOS_LIST);exit;
             if ($model = User::findOne($id)) {
                 $model->scenario = User::SCENARIO_REGISTER6;
                 $target_dir = Yii::getAlias('@web') . '/uploads/';
@@ -293,10 +295,10 @@ class UserController extends Controller
                             #$SMSFlag = SmsHelper::SendSMS($PIN_P, $model->new_phone_no);
                         }
                     }
-                    #echo "<br> *** 4 ***";
-                    $model->completed_step = $model->setCompletedStep('7');
+                    if ($PhotoCount != 0 || $model->propic != '') {
+                        $model->completed_step = $model->setCompletedStep('7');
+                    }
                     if ($model->save($model)) {
-                      #  echo "<br> *** 5 ***";exit;
                         $this->redirect(['site/verification']);
                     }
                 }
