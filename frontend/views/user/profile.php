@@ -665,7 +665,7 @@ use yii\widgets\Pjax;
                                                             <i class="fa">
                                                                 <?= Html::img('@web/images/call.png', ['width' => '', 'height' => '', 'alt' => 'call']); ?>
                                                             </i> <span
-                                                                id="phone_number"><?= $model->getDisplayMobile() ?></span>
+                                                                id="phone_number"></span>
                                                         </strong>
                                                     </h5>
                                                 </div>
