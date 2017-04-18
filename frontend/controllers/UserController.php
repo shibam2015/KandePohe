@@ -3708,4 +3708,48 @@ class UserController extends Controller
         return json_encode($return);
         exit;
     }
+
+    public function actionPhoneNumberDisplay()
+    {
+        $ToUserId = Yii::$app->request->post('ToUserId');
+        if (Yii::$app->user->isGuest || $ToUserId == '') {
+            return $this->goHome();
+        }
+        $UserModel = User::findOne($ToUserId);
+        #$ToUserId = $UserModel->id;
+        if ($ToUserId == '') {
+            $STATUS = 'E';
+            $TITLE = Yii::$app->params['accessDenied'];
+            $MESSAGE = Yii::$app->params['userPhoneNumberError'];
+        } else {
+            $STATUS = 'E';
+            $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
+            if (Yii::$app->user->identity->Gender == $UserModel->Gender) {
+                $Flag = false;
+                $TITLE = Yii::$app->params['accessDenied'];
+                $MESSAGE = Yii::$app->params['userPhoneNumberError'];
+
+            } else {
+                if ($UserModel->phone_privacy != 3) {
+                    $IntrestRequestStatus = Mailbox::getAcceptedStatus(Yii::$app->user->identity->id, $ToUserId);
+                    if ($IntrestRequestStatus) {
+                        $STATUS = 'S';
+                        $Number = $UserModel->getDisplayMobile();
+                    } else {
+                        $STATUS = 'E';
+                        $TITLE = Yii::$app->params['accessDenied'];
+                        $MESSAGE = Yii::$app->params['userPhoneNumberError'];
+                    }
+                } else {
+                    $STATUS = 'E';
+                    $TITLE = Yii::$app->params['accessDenied'];
+                    $MESSAGE = Yii::$app->params['userPhoneNumberError'];
+                }
+
+            }
+        }
+        $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE, 'NUMBER' => $Number);
+        #CommonHelper::pr($return);exit;
+        return json_encode($return);
+    }
 }

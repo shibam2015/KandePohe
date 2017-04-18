@@ -153,5 +153,6 @@ return [
     'publicPages' => array('', 'site/about-us', 'site/contact-us', 'site/help-feedback', 'site/terms-of-use'),
     'userProfilePageSameGender' => "Oops ! You can't able to see this profile.",
     'userProfilePageUK' => "Oops ! User profile is not available.",
+    'userPhoneNumberError' => "This member has restricted mobile number visibility. To view her number, she must receive and accept an interest from you.",
 ];
 

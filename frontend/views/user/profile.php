@@ -152,8 +152,9 @@ use yii\widgets\Pjax;
                                                     Chat Now</a>
                                             </li>
                                             <li>
-                                                <a href="javascript::void(0)" data-toggle="modal"
-                                                   data-target="#phone_number_modal">
+                                                <!-- data-toggle="modal"
+                                                   data-target="#phone_number_modal" -->
+                                                <a href="javascript::void(0)" class="phone_number_display">
                                                     <i class="fa">
                                                         <?= Html::img('@web/images/call.png', ['width' => '', 'height' => '', 'alt' => 'call']); ?>
                                                     </i> Call Now</a></li>
@@ -663,7 +664,8 @@ use yii\widgets\Pjax;
                                                         <strong>
                                                             <i class="fa">
                                                                 <?= Html::img('@web/images/call.png', ['width' => '', 'height' => '', 'alt' => 'call']); ?>
-                                                            </i> <?= $model->getDisplayMobile() ?>
+                                                            </i> <span
+                                                                id="phone_number"><?= $model->getDisplayMobile() ?></span>
                                                         </strong>
                                                     </h5>
                                                 </div>
@@ -1061,6 +1063,36 @@ $(document).on("click",".send_email",function(e){
       sendRequest("' . Url::to(['user/user-request']) . '",".requests",formData);
     });
     sendRequest("' . Url::to(['user/user-request']) . '",".requests",formData);
+
+
+
+    $(document).on("click",".phone_number_display",function(e){
+          $("#phone_number").html("");
+         $.ajax({
+                        url: "phone-number-display",
+                        type: "POST",
+                        data: formData,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (data, textStatus, jqXHR) {
+                           // loaderStop();
+                            var DataObject = JSON.parse(data);
+                            if(DataObject.STATUS == "S"){
+                                    var NUMBER = DataObject.NUMBER;
+                                    $("#phone_number_modal").modal();
+                                    $("#phone_number").html(NUMBER);
+                            }else{
+                                notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
+                            }
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                                notificationPopup(\'ERROR\', \'Something went wrong. Please try again !\', \'Error\');
+                        }
+         });
+
+    });
 ');
 ?>
 

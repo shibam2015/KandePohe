@@ -270,6 +270,18 @@ class Mailbox extends \common\models\base\baseMailbox
             ->count();
     }
 
+    public static function getAcceptedStatus($Id, $FromId)
+    {
+        $Sql = "SELECT * FROM mailbox
+                  WHERE
+                  (msg_type in ('" . self::ACCEPT_INTEREST . "') AND to_user_id = $Id AND from_user_id = $FromId)
+                  OR
+                  (msg_type in ('" . self::ACCEPT_INTEREST . "') AND to_user_id = $FromId AND from_user_id = $Id)
+                  GROUP BY to_user_id,from_user_id";
+        $Data = Static::findBySql($Sql)->count();
+        return $Data;
+    }
+
     /**
      * @inheritdoc
      */
@@ -326,5 +338,4 @@ class Mailbox extends \common\models\base\baseMailbox
     {
         return $this->hasOne(User::className(), ['id' => 'to_user_id']);
     }
-
 }
