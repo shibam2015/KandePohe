@@ -154,7 +154,7 @@ use yii\widgets\Pjax;
                                             <li>
                                                 <!-- data-toggle="modal"
                                                    data-target="#phone_number_modal" -->
-                                                <a href="javascript::void(0)" class="phone_number_display">
+                                                <a href="javascript:void(0)" class="phone_number_display">
                                                     <i class="fa">
                                                         <?= Html::img('@web/images/call.png', ['width' => '', 'height' => '', 'alt' => 'call']); ?>
                                                     </i> Call Now</a></li>
@@ -1079,9 +1079,9 @@ $(document).on("click",".send_email",function(e){
                            // loaderStop();
                             var DataObject = JSON.parse(data);
                             if(DataObject.STATUS == "S"){
-                                    var NUMBER = DataObject.NUMBER;
-                                    $("#phone_number_modal").modal();
-                                    $("#phone_number").html(NUMBER);
+                                   $("#phone_number_modal").modal();
+                                   $("#phone_number").html(DataObject.NUMBER);
+                                   sendRequest("' . Url::to(['user/user-request']) . '",".requests",formData);
                             }else{
                                 notificationPopup(DataObject.STATUS, DataObject.MESSAGE, DataObject.TITLE);
                             }

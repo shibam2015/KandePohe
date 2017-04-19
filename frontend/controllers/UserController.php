@@ -3720,14 +3720,15 @@ class UserController extends Controller
         if ($ToUserId == '') {
             $STATUS = 'E';
             $TITLE = Yii::$app->params['accessDenied'];
-            $MESSAGE = Yii::$app->params['userPhoneNumberError'];
+            $MESSAGE = Yii::$app->params['accessDenied'];//Yii::$app->params['userPhoneNumberError'];
         } else {
             $STATUS = 'E';
             $Gender = (Yii::$app->user->identity->Gender == 'MALE') ? 'FEMALE' : 'MALE';
             if (Yii::$app->user->identity->Gender == $UserModel->Gender) {
                 $Flag = false;
-                $TITLE = Yii::$app->params['accessDenied'];
-                $MESSAGE = Yii::$app->params['userPhoneNumberError'];
+                #$TITLE = Yii::$app->params['accessDenied'];
+                #$MESSAGE = Yii::$app->params['userPhoneNumberError'];
+                list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('W', 'PHONE_NUMBER_VISIBILITY_ERROR_'.$Gender);
 
             } else {
                 if ($UserModel->phone_privacy != 3) {
@@ -3737,13 +3738,15 @@ class UserController extends Controller
                         $Number = $UserModel->getDisplayMobile();
                     } else {
                         $STATUS = 'E';
-                        $TITLE = Yii::$app->params['accessDenied'];
-                        $MESSAGE = Yii::$app->params['userPhoneNumberError'];
+                        #$TITLE = Yii::$app->params['accessDenied'];
+                        #$MESSAGE = Yii::$app->params['userPhoneNumberError'];
+                        list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHONE_NUMBER_VISIBILITY_ERROR_'.$Gender);
                     }
                 } else {
                     $STATUS = 'E';
-                    $TITLE = Yii::$app->params['accessDenied'];
-                    $MESSAGE = Yii::$app->params['userPhoneNumberError'];
+                    #$TITLE = Yii::$app->params['accessDenied'];
+                    #$MESSAGE = Yii::$app->params['userPhoneNumberError'];
+                    list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHONE_NUMBER_VISIBILITY_ERROR_'.$Gender);
                 }
 
             }

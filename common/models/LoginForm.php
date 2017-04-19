@@ -49,7 +49,7 @@ class LoginForm extends Model
                 $this->addError($attribute, 'The email ID or password you entered is not correct. Try again!');
             }
             else if (!$user || !$user->checkEmailVerify($this->email)) {
-                $this->addError($attribute, 'Your account either block or panding, PLease contact to administrator for login');
+                $this->addError($attribute, 'Your account either block or panding, Please contact to administrator for login');
             }
         }
     }
