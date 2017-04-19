@@ -412,13 +412,16 @@ if (!Yii::$app->user->isGuest) {
                                     <div class="user-list">
                                         <?php if (count($ProfileViedByMembers)) { ?>
                                             <div class="row">
-                                                <?php foreach ($ProfileViedByMembers as $Key => $Value) { ?>
+                                                <?php
+                                                foreach ($ProfileViedByMembers as $Key => $Value) { ?>
                                                     <?php
-                                                    if ($Id == $Value->from_user_id && $Value->profile_viewed_from_to == 'Yes') {
-                                                        $ViewerId = $Value->to_user_id;
+#                                                    CommonHelper::pr($Value);
+                                                    /*if ($Id == $Value->from_user_id && $Value->profile_viewed_from_to == 'Yes') {
+                                                        $ViewerId = $Value->userid;
                                                     } else {
-                                                        $ViewerId = $Value->from_user_id;
-                                                    }
+                                                        $ViewerId = $Value->userid;
+                                                    }*/
+                                                    $ViewerId = $Value['userid'];
                                                     $UserInfoModel = User::getUserInfroamtion($ViewerId);
                                                     #CommonHelper::pr($UserInfoModel->height->vName);
                                                     #CommonHelper::pr($UserInfoModel->countryName->vCountryName);
@@ -443,7 +446,7 @@ if (!Yii::$app->user->isGuest) {
                                                             <p class="s__<?= $UserInfoModel->id ?>">
                                                                 <?php
 
-                                                                if (($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'No' && $Value->send_request_status_to_from == 'No') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'No' && $Value->send_request_status_from_to == 'No')) { ?>
+                                                                if (($Id == $Value['from_user_id'] && $Value['send_request_status_from_to'] == 'No' && $Value['send_request_status_to_from'] == 'No') || ($Id == $Value['to_user_id'] && $Value['send_request_status_to_from'] == 'No' && $Value['send_request_status_from_to'] == 'No')) { ?>
                                                                     <a href="javascript:void(0)"
                                                                        class="btn btn-info sendinterestpopup"
                                                                        role="button"
@@ -454,7 +457,7 @@ if (!Yii::$app->user->isGuest) {
                                                                         Interest
                                                                         <i class="fa fa-heart-o"></i>
                                                                     </a>
-                                                                <?php } else if (($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) {
+                                                                <?php } else if (($Id == $Value['from_user_id'] && $Value['send_request_status_from_to'] == 'Yes' && $Value['send_request_status_to_from'] != 'Yes') || ($Id == $Value['to_user_id'] && $Value['send_request_status_to_from'] == 'Yes' && $Value['send_request_status_from_to'] != 'Yes')) {
                                                                     ?>
                                                                     <a href="javascript:void(0)"
                                                                        class="btn btn-info ci accept_decline"
@@ -468,7 +471,7 @@ if (!Yii::$app->user->isGuest) {
                                                                         Cancel Interest<i class="fa fa-close"></i> </a>
                                                                     <!-- <a href="javascript:void(0)" class="btn btn-link isent" role="button">Interest Sent
                                                                         <i class="fa fa-heart"></i></a> -->
-                                                                <?php } else if (($Id == $Value->to_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->from_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) {
+                                                                <?php } else if (($Id == $Value['to_user_id'] && $Value['send_request_status_from_to'] == 'Yes' && $Value['send_request_status_to_from'] != 'Yes') || ($Id == $Value['from_user_id'] && $Value['send_request_status_to_from'] == 'Yes' && $Value['send_request_status_from_to'] != 'Yes')) {
                                                                     ?>
                                                                     <a href="javascript:void(0)"
                                                                        class="btn btn-info accept_decline adbtn"
@@ -488,7 +491,7 @@ if (!Yii::$app->user->isGuest) {
                                                                        data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
                                                                        data-type="Decline Interest">Decline <i
                                                                             class="fa fa-close"></i> </a>
-                                                                <?php } else if ($Value->send_request_status_from_to == 'Accepted' || $Value->send_request_status_to_from == 'Accepted') {
+                                                                <?php } else if ($Value['send_request_status_from_to'] == 'Accepted' || $Value['send_request_status_to_from'] == 'Accepted') {
                                                                     ?>
                                                                     <a href="javascript:void(0)" class="btn btn-info "
                                                                        role="button"
@@ -498,7 +501,7 @@ if (!Yii::$app->user->isGuest) {
                                                                        data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
                                                                        data-type="Connected">Connected
                                                                         <i class="fa fa-heart"></i> </a>
-                                                                <?php } else if ($Value->send_request_status_from_to == 'Rejected' || $Value->send_request_status_to_from == 'Rejected') {
+                                                                <?php } else if ($Value['send_request_status_from_to'] == 'Rejected' || $Value['send_request_status_to_from'] == 'Rejected') {
                                                                     ?>
                                                                     <a href="javascript:void(0)" class="btn btn-info "
                                                                        role="button"

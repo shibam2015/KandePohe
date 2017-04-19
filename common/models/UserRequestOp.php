@@ -50,9 +50,21 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
 
     public static function findProfileViewedByUserList($id, $Limit)
     {
-        $sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op  LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $id . " AND user_request_op.profile_viewed_to_from = 'Yes' ) OR (user_request_op.to_user_id = " . $id . " AND user_request_op.profile_viewed_from_to = 'Yes') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC LIMIT " . $Limit;
-        return Static::findBySql($sql)->all();
-        #return static::find()->joinWith([fromUserInfo])->where(['to_user_id' => $id, 'profile_viewed_from_to' => 'Yes'])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
+        $SqlQuery = "SELECT user.id as userid, user.status, user_request_op.*, user.DOB, user.iHeightID FROM user_request_op  JOIN  user ON user.id = user_request_op.to_user_id
+        WHERE
+            (user_request_op.from_user_id = " . $id . " AND user_request_op.profile_viewed_to_from = 'Yes' AND user.status IN ('" . User::STATUS_APPROVE . "'))
+            UNION
+            SELECT user.id as userid, user.status, user_request_op.*, user.DOB, user.iHeightID FROM user_request_op   JOIN  user ON user.id = user_request_op.from_user_id
+        WHERE
+            (user_request_op.to_user_id = " . $id . " AND user_request_op.profile_viewed_from_to = 'Yes' AND user.status IN ('" . User::STATUS_APPROVE . "'))
+            ORDER BY id DESC ";
+        #GROUP BY user_request_op.id ORDER BY user_request_op.id DESC ";
+        $command = Yii::$app->db->createCommand($SqlQuery);
+        $result = $command->queryAll();
+        return $result;
+        #CommonHelper::pr($result);exit;
+        /*$sql = "SELECT user_request_op.*, user.DOB, user.iHeightID FROM user_request_op  LEFT JOIN  user ON user.status IN ('" . User::STATUS_ACTIVE . "','" . User::STATUS_APPROVE . "')  WHERE (user_request_op.from_user_id = " . $id . " AND user_request_op.profile_viewed_to_from = 'Yes' ) OR (user_request_op.to_user_id = " . $id . " AND user_request_op.profile_viewed_from_to = 'Yes') GROUP BY user_request_op.id ORDER BY user_request_op.id DESC LIMIT " . $Limit;
+        return Static::findBySql($sql)->all();*/
     }
 
     public static function checkSendInterest($id, $ToUserId)
