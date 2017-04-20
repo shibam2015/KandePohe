@@ -3748,7 +3748,6 @@ class UserController extends Controller
                     #$MESSAGE = Yii::$app->params['userPhoneNumberError'];
                     list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PHONE_NUMBER_VISIBILITY_ERROR_'.$Gender);
                 }
-
             }
         }
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE, 'NUMBER' => $Number);
