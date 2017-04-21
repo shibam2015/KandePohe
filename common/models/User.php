@@ -368,13 +368,13 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public static function findFeaturedMembers($Limit = 4) # Get Featured Members list with limit
     {
-        return static::find()->where(['status' => [self::STATUS_APPROVE]])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
+        return static::find()->where(['status' => [self::STATUS_APPROVE]])->orderBy(['LastLoginTime' => SORT_DESC])->limit($Limit)->all();
         #return static::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
     }
 
     public static function findFeaturedMembersLogin($Limit = 4, $Id, $Gender = '') # Get Featured Members list with limit
     {
-        return static::find()->where(['status' => [self::STATUS_APPROVE]])->andWhere(['!=', 'id', $Id])->andWhere(['!=', 'Gender', $Gender])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
+        return static::find()->where(['status' => [self::STATUS_APPROVE]])->andWhere(['!=', 'id', $Id])->andWhere(['!=', 'Gender', $Gender])->orderBy(['LastLoginTime' => SORT_DESC])->limit($Limit)->all();
         #return static::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->orderBy(['id' => SORT_DESC])->limit($Limit)->all();
     }
 
