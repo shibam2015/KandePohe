@@ -3461,7 +3461,7 @@ class UserController extends Controller
             if (Yii::$app->user->isGuest) {
                 return $this->goHome();
             } else {
-                return $this->redirect(['user/dashboard']);
+                return $this->redirect([Yii::$app->params['userDashboard']]);
             }
         }
         #$id = Yii::$app->user->identity->id-;
@@ -3635,7 +3635,7 @@ class UserController extends Controller
         }
         $Id = Yii::$app->user->identity->id;
         $UserModel = User::findOne($Id);
-        $RedirectURL = Yii::$app->homeUrl . 'site/partner-preferences';//Yii::getAlias('@web');
+        $RedirectURL = Yii::$app->homeUrl . Yii::$app->params['registrationPartnerPreferences'];// 'site/partner-preferences';//Yii::getAlias('@web');
         if (Yii::$app->request->post('ACTION') == 'MULTIPLE-PROFILE') {
             #CommonHelper::pr(Yii::$app->request->post());
             $MultipleProfileStatus = Yii::$app->request->post('MultipleProfileStatus');
@@ -3702,9 +3702,9 @@ class UserController extends Controller
                 $PartnerPre = 1;
             }
             if ($PartnerPre)
-                $RedirectURL = Yii::$app->homeUrl . 'user/dashboard';
+                $RedirectURL = Yii::$app->homeUrl . Yii::$app->params['userDashboard'];//'user/dashboard';
             else
-                $RedirectURL = Yii::$app->homeUrl . 'site/partner-preferences';
+                $RedirectURL = Yii::$app->homeUrl . Yii::$app->params['registrationPartnerPreferences'];//'site/partner-preferences';
         }
         $return = array('STATUS' => $STATUS, 'MESSAGE' => $MESSAGE, 'TITLE' => $TITLE, 'POPUPTYPE' => $PopUpType, 'REDIRECTURL' => $RedirectURL);
         return json_encode($return);
