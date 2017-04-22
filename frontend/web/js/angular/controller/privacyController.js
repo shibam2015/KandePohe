@@ -33,7 +33,7 @@ app.controller('privacyController', function ($scope, vService, $http) {
     function savePhonePrivacy() {
         var phone_privacy = $scope.phone_privacy;
         vService.ajaxWithNotificationFlash({
-            url: 'save-privacy-option',
+            url: 'user/save-privacy-option',
             data: {'phone_privacy': phone_privacy, 'ACTION': 'PRIVACY-PHONE'}
         });
     }
@@ -41,7 +41,7 @@ app.controller('privacyController', function ($scope, vService, $http) {
     function savePhotoPrivacy() {
         var photo_privacy = $scope.photo_privacy;
         vService.ajaxWithNotificationFlash({
-            url: 'save-privacy-option',
+            url: 'user/save-privacy-option',
             data: {'photo_privacy': photo_privacy, 'ACTION': 'PRIVACY-PHOTO'}
         });
     }
@@ -49,7 +49,7 @@ app.controller('privacyController', function ($scope, vService, $http) {
     function saveVisitorPrivacy() {
         var visitor_setting = $scope.visitor_setting;
         vService.ajaxWithNotificationFlash({
-            url: 'save-privacy-option',
+            url: 'user/save-privacy-option',
             data: {'visitor_setting': visitor_setting, 'ACTION': 'PRIVACY-VISITOR'}
         });
     }

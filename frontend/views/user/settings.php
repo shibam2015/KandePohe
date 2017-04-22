@@ -5,8 +5,6 @@ use common\components\CommonHelper;
 use common\components\MailHelper;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
-
-$HOME_PAGE_URL = Yii::getAlias('@web') . "/";
 ?>
 
     <div class="main-section">

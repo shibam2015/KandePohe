@@ -95,7 +95,7 @@ AppAsset::register($this);
 
     if (!Yii::$app->user->isGuest) {
         $isSettingpage = true;
-        if (Yii::$app->request->pathInfo == 'user/setting') {
+        if (Yii::$app->request->pathInfo == 'setting') {
             $isSettingpage = false;
         }
         if ($isSettingpage) {
