@@ -15,7 +15,8 @@ use common\components\CommonHelper;
                   <?= Html::img('@web/images/logo-inner.png', ['width' => '235', 'height' => 83, 'alt' => 'logo']); ?>
                 </a>
               <?php } else { ?>
-                <a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?>/user/dashboard" title="logo">
+                <a href="<?= Yii::$app->getUrlManager()->getBaseUrl() ?><?= Yii::$app->params['userDashboard'] ?>"
+                   title="logo">
                   <?= Html::img('@web/images/logo-inner.png', ['width' => '235', 'height' => 83, 'alt' => 'logo']); ?>
                 </a>
               <?php } ?>
@@ -31,33 +32,35 @@ use common\components\CommonHelper;
                     <ul class="nav navbar-nav">
                       <?php #if (Yii::$app->user->identity->eEmailVerifiedStatus == 'Yes' && Yii::$app->user->identity->ePhoneVerifiedStatus == 'Yes') {
                       if (1) { ?>
-                    <!-- <li><a href="#">Matches <span class="badge">1</span></a></li>-->
-                        <li><?= html::a('<i class="ti-power-off m-r-5"></i> Dashboard</a>', ['user/dashboard']) ?></li>
-                      <li><?= html::a('<i class="ti-power-off m-r-5"></i> Search</a>', ['search/basic-search'], ['data-method' => 'post']) ?></li>
-                      <li><a href="<?= CommonHelper::getMailBoxUrl() ?>">Inbox
-                          <!--<span class="badge">10</span>--></a></li>
-                      <!--<li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Upgrade <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                          <li><a href="#">Upgrade 1</a></li>
-                          <li><a href="#">Upgrade 2</a></li>
-                          <li><a href="#">Upgrade 3</a></li>
-                          <li><a href="#">Upgrade 4</a></li>
-                        </ul>
-                      </li>-->
-                      <li class="dropdown last"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
-                          <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "30" . Yii::$app->user->identity->propic, 30, '', 'Yes'), ['width' => '30', 'height' => '30', 'alt' => 'Profile Photo', 'class' => 'profile_photo_one']); ?>
-                          <?= Yii::$app->user->identity->First_Name; ?>
-                          <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                          <li><?= html::a('<i class="ti-power-off m-r-5"></i> My Profile</a>', ['user/my-profile'], ['data-method' => 'post']) ?></li>
-                          <li><?= html::a('<i class="ti-power-off m-r-5"></i> Dashboard</a>', ['user/dashboard']) ?></li>
-                          <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', ['site/logout'], ['data-method' => 'post', 'class' => 'logout']) ?></li>
-                          <li><?= html::a('<i class="ti-power-off m-r-5"></i> Setting</a>', ['user/setting']) ?></li>
-                          <li role="separator" class="divider"></li>
-                          <li class="dropdown-header">Help</li>
-                          <li><a href="#">Report a Problem</a></li>
-                        </ul>
-                      </li>
+                        <!-- <li><a href="#">Matches <span class="badge">1</span></a></li>-->
+
+                        <li><?= html::a('<i class="ti-power-off m-r-5"></i> Dashboard</a>', [Yii::$app->params['userDashboard']]) ?></li>
+                        <li><?= html::a('<i class="ti-power-off m-r-5"></i> Search</a>', ['search/basic-search'], ['data-method' => 'post']) ?></li>
+                        <li><a href="<?= CommonHelper::getMailBoxUrl() ?>">Inbox
+                            <!--<span class="badge">10</span>--></a></li>
+                        <!--<li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Upgrade <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="#">Upgrade 1</a></li>
+                            <li><a href="#">Upgrade 2</a></li>
+                            <li><a href="#">Upgrade 3</a></li>
+                            <li><a href="#">Upgrade 4</a></li>
+                          </ul>
+                        </li>-->
+                        <li class="dropdown last"><a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                                     role="button" aria-haspopup="true" aria-expanded="true">
+                            <?= Html::img(CommonHelper::getPhotos('USER', Yii::$app->user->identity->id, "30" . Yii::$app->user->identity->propic, 30, '', 'Yes'), ['width' => '30', 'height' => '30', 'alt' => 'Profile Photo', 'class' => 'profile_photo_one']); ?>
+                            <?= Yii::$app->user->identity->First_Name; ?>
+                            <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><?= html::a('<i class="ti-power-off m-r-5"></i> My Profile</a>', [Yii::$app->params['userMyProfile']], ['data-method' => 'post']) ?></li>
+                            <li><?= html::a('<i class="ti-power-off m-r-5"></i> Dashboard</a>', [Yii::$app->params['userDashboard']]) ?></li>
+                            <li><?= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', [Yii::$app->params['userLogout']], ['data-method' => 'post', 'class' => 'logout']) ?></li>
+                            <li><?= html::a('<i class="ti-power-off m-r-5"></i> Setting</a>', [Yii::$app->params['userSetting']]) ?></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Help</li>
+                            <li><a href="#">Report a Problem</a></li>
+                          </ul>
+                        </li>
                       <?php } else { ?>
                         <!--<li><? /*= html::a('<i class="ti-power-off m-r-5"></i> Logout</a>', Yii::$app->homeUrl . 'site/logout', ['data-method' => 'post']) */
                         ?></li>-->

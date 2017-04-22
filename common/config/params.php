@@ -48,7 +48,8 @@ return [
 
     'resetPasswordWrongEmailIdMessage' => 'This email ID is not registered at Kande-Pohe.com. Please contact administrator to reset your password',
     'ref' => ['recently_joined' => 'recently_joined', 'you_shortlisted_by' => 'you_shortlisted_by'],
-    'pageArray' => [1 => 'site/basic-details', 2 => 'site/education-occupation', 3 => 'site/life-style', 4 => 'site/about-family', 5 => 'site/about-yourself', 6 => 'user/photos', 7 => 'site/verification'],
+    #'pageArray' => [1 => 'site/basic-details', 2 => 'site/education-occupation', 3 => 'site/life-style', 4 => 'site/about-family', 5 => 'site/about-yourself', 6 => 'user/photos', 7 => 'site/verification'],
+    'pageArray' => [1 => '/basic-details', 2 => '/education-occupation', 3 => '/life-style', 4 => '/about-family', 5 => '/about-yourself', 6 => '/photos', 7 => '/verification'],
     'searchListInCorrectErrorMessage' => 'You are trying to access invalid URL.',
     'firstPhotoPagePopup' => '<strong><h3 class="text-success">Congratulations!</h3> <br>Your profile has been created.</strong><br><br> Now upload photos and get more visitors to your profile.',
     'messageCommunitieBS' => 'To include more communities, please use Advance Search.',
@@ -152,7 +153,7 @@ return [
     'publicPageTitle' => 'वधू- वर शोधा - Kande-Pohe Marathi Matrimony',
     'publicPages' => array('', 'site/about-us', 'site/contact-us', 'site/help-feedback', 'site/terms-of-use'),
     'userProfilePageSameGender' => "Oops ! You can't able to see this profile.",
-    'userProfilePageUK' => "Oops ! User profile is not available.",
+    'userProfilePageUK' => "Oops ! User profile is either not available or not activated by us.",
     'userPhoneNumberError' => "This member has restricted mobile number visibility. To view her number, she must receive and accept an interest from you.",
 ];
 

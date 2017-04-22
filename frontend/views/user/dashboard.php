@@ -70,16 +70,16 @@ if (!Yii::$app->user->isGuest) {
                                     </div>
                                     <div class="panel-body">
                                         <ul class="reset mrg-lt-15 list-item">
-                                            <li><a href="<?= Yii::$app->request->baseUrl ?>/user/my-profile"
+                                            <li><a href="<?= Yii::$app->request->baseUrl ?>/my-profile"
                                                    title="Edit Profile">Edit
                                                     Profile</a></li>
-                                            <li><a href="<?= Yii::$app->request->baseUrl ?>/user/photos"
+                                            <li><a href="<?= Yii::$app->request->baseUrl ?>/photos"
                                                    title="Manage Photos">Manage
                                                     Photos</a></li>
-                                            <li><a href="<?= Yii::$app->request->baseUrl ?>/user/my-profile?tab=EP"
+                                            <li><a href="<?= Yii::$app->request->baseUrl ?>/my-profile?tab=EP"
                                                    title="Edit Preference"> Edit Preference</a>
                                             </li>
-                                            <li><?= html::a('Privacy Options', ['user/setting'], ["title" => 'Privacy Option']) ?></li>
+                                            <li><?= html::a('Privacy Options', ['/setting'], ["title" => 'Privacy Option']) ?></li>
                                             <li><?= html::a('Shortlisted Profile(s)', ['search/short-list'], ["title" => 'Shortlisted Profile(s)']) ?></li>
                                         </ul>
                                         <!-- <a href="javascript:void(0)"
@@ -382,7 +382,7 @@ if (!Yii::$app->user->isGuest) {
                                                     <h5 class="user-line mrg-tp-20">Add more details to get better
                                                         visibility</h5>
                                                     <div class="ad-title mrg-tp-10"><a
-                                                            href="<?= Yii::$app->request->baseUrl ?>/user/my-profile">Complete
+                                                            href="<?= Yii::$app->request->baseUrl ?>/my-profile">Complete
                                                             your Profile
                                                             Now!</a></div>
                                                 <?php } else { ?>
@@ -574,7 +574,7 @@ if (!Yii::$app->user->isGuest) {
                                                             $UserInfoModel = User::getUserInfroamtion($ViewerId);
                                                             #CommonHelper::pr($UserInfoModel);
                                                             ?>
-                                                            <p class="s__<?= $UserInfoModel->id ?>">
+                                                            <p class="s__<?= $ValueRM->id ?>">
                                                                 <?php
 
                                                                 if (count($Value) == 0 || ($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'No' && $Value->send_request_status_to_from == 'No') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'No' && $Value->send_request_status_from_to == 'No')) { ?>
@@ -582,9 +582,9 @@ if (!Yii::$app->user->isGuest) {
                                                                        class="btn btn-info sendinterestpopup"
                                                                        role="button"
                                                                        data-target="#sendInterest" data-toggle="modal"
-                                                                       data-id="<?= $UserInfoModel->id ?>"
-                                                                       data-name="<?= $UserInfoModel->fullName ?>"
-                                                                       data-rgnumber="<?= $UserInfoModel->Registration_Number ?>">Send
+                                                                       data-id="<?= $ValueRM->id ?>"
+                                                                       data-name="<?= $ValueRM->fullName ?>"
+                                                                       data-rgnumber="<?= $ValueRM->Registration_Number ?>">Send
                                                                         Interest <i class="fa fa-heart-o"></i>
                                                                     </a>
                                                                 <?php } else if (($Id == $Value->from_user_id && $Value->send_request_status_from_to == 'Yes' && $Value->send_request_status_to_from != 'Yes') || ($Id == $Value->to_user_id && $Value->send_request_status_to_from == 'Yes' && $Value->send_request_status_from_to != 'Yes')) { ?>
@@ -593,9 +593,9 @@ if (!Yii::$app->user->isGuest) {
                                                                        role="button"
                                                                        data-target="#accept_decline"
                                                                        data-toggle="modal"
-                                                                       data-id="<?= $UserInfoModel->id ?>"
-                                                                       data-name="<?= $UserInfoModel->fullName ?>"
-                                                                       data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
+                                                                       data-id="<?= $ValueRM->id ?>"
+                                                                       data-name="<?= $ValueRM->fullName ?>"
+                                                                       data-rgnumber="<?= $ValueRM->Registration_Number ?>"
                                                                        data-type="Cancel Interest">
                                                                         Cancel Interest
                                                                         <i class="fa fa-close"></i> </a>
@@ -606,9 +606,9 @@ if (!Yii::$app->user->isGuest) {
                                                                        class="btn btn-info accept_decline adbtn"
                                                                        role="button" data-target="#accept_decline"
                                                                        data-toggle="modal"
-                                                                       data-id="<?= $UserInfoModel->id ?>"
-                                                                       data-name="<?= $UserInfoModel->fullName ?>"
-                                                                       data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
+                                                                       data-id="<?= $ValueRM->id ?>"
+                                                                       data-name="<?= $ValueRM->fullName ?>"
+                                                                       data-rgnumber="<?= $ValueRM->Registration_Number ?>"
                                                                        data-type="Accept Interest">
                                                                         Accept
                                                                         <i class="fa fa-check"></i>
@@ -617,9 +617,9 @@ if (!Yii::$app->user->isGuest) {
                                                                        class="btn btn-info accept_decline adbtn"
                                                                        role="button" data-target="#accept_decline"
                                                                        data-toggle="modal"
-                                                                       data-id="<?= $UserInfoModel->id ?>"
-                                                                       data-name="<?= $UserInfoModel->fullName ?>"
-                                                                       data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
+                                                                       data-id="<?= $ValueRM->id ?>"
+                                                                       data-name="<?= $ValueRM->fullName ?>"
+                                                                       data-rgnumber="<?= $ValueRM->Registration_Number ?>"
                                                                         >
                                                                         Decline
                                                                         <i class="fa fa-close"></i> </a>
@@ -628,9 +628,9 @@ if (!Yii::$app->user->isGuest) {
                                                                     <a href="javascript:void(0)" class="btn btn-info "
                                                                        role="button"
                                                                        data-target="#" data-toggle="modal"
-                                                                       data-id="<?= $UserInfoModel->id ?>"
-                                                                       data-name="<?= $UserInfoModel->fullName ?>"
-                                                                       data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
+                                                                       data-id="<?= $ValueRM->id ?>"
+                                                                       data-name="<?= $ValueRM->fullName ?>"
+                                                                       data-rgnumber="<?= $ValueRM->Registration_Number ?>"
                                                                        data-type="Connected">Connected
                                                                         <i class="fa fa-heart"></i> </a>
                                                                 <?php } else if ($Value->send_request_status_from_to == 'Rejected' || $Value->send_request_status_to_from == 'Rejected') {
@@ -638,9 +638,9 @@ if (!Yii::$app->user->isGuest) {
                                                                     <a href="javascript:void(0)" class="btn btn-info "
                                                                        role="button"
                                                                        data-target="#" data-toggle="modal"
-                                                                       data-id="<?= $UserInfoModel->id ?>"
-                                                                       data-name="<?= $UserInfoModel->fullName ?>"
-                                                                       data-rgnumber="<?= $UserInfoModel->Registration_Number ?>"
+                                                                       data-id="<?= $ValueRM->id ?>"
+                                                                       data-name="<?= $ValueRM->fullName ?>"
+                                                                       data-rgnumber="<?= $ValueRM->Registration_Number ?>"
                                                                        data-type="Connected">Rejected <i
                                                                             class="fa fa-close"></i> </a>
 
@@ -843,6 +843,8 @@ if (!Yii::$app->user->isGuest) {
                                                 data-parentid=""> Send
                                             Interest
                                         </button>
+                                        <input type="hidden" id="send_request_id" value="">
+                                        <input type="hidden" id="send_request_parentid" value="">
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-6 ">
                                         <button type="button" class="btn pull-left" data-dismiss="modal">Back</button>
@@ -875,21 +877,24 @@ $this->registerJs('
 $(document).on("click",".send_request",function(e){
   Pace.restart();
   loaderStart();
-  var formData = new FormData();
-  formData.append("ToUserId", $(this).data("id"));
-  formData.append("Action", "SEND_INTEREST");
-  sendRequestDashboard("' . Url::to(['user/send-int-dashboard']) . '",".requests","SI",$(this).data("parentid"),formData);
+  var formData1 = new FormData();
+  formData1.append("ToUserId", $("#send_request_id").val());
+  formData1.append("Action", "SEND_INTEREST");
+  formData1.append("Name", $("#to_name").text());
+  formData1.append("RGNumber", $("#to_rg_number").text());
+  sendRequestDashboard("' . Url::to(['user/send-int-dashboard']) . '",".requests","SI",$("#send_request_parentid").val(),formData1);
+  //sendRequestDashboard("' . Url::to(['user/send-int-dashboard']) . '",".requests","SI",$(this).data("parentid"),formData1);
 });
 $(document).on("click",".a_b_d",function(e){
   Pace.restart();
   loaderStart();
   var formData = new FormData();
-  formData.append("ToUserId", $(this).data("id"));
+  formData.append("ToUserId", $("#a_b_d_id").val());
   formData.append("Name", $(".to_name").text());
   formData.append("RGNumber", $(".to_rg_number").text());
-  formData.append("Action",  $(this).data("type"));
-  sendRequestDashboard("' . Url::to(['user/user-request']) . '",".requests","R_A_D_B",$(this).data("parentid"),formData);
-  //sendRequest("' . Url::to(['user/user-request']) . '",".requests",formData);
+  formData.append("Action",  $("#a_b_d_type").val());
+  sendRequestDashboard("' . Url::to(['user/user-request']) . '",".requests","R_A_D_B",$("#a_b_d_parentid").val(),formData);
+  //sendRequestDashboard("' . Url::to(['user/user-request']) . '",".requests","R_A_D_B",$(this).data("parentid"),formData);
 });
 
 

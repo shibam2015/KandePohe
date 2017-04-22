@@ -153,22 +153,22 @@ use yii\widgets\Pjax;
                         $TempArray = explode(",", $model->completed_step);
                         $PartnerPre = 0;
                         if (in_array('-1', $TempArray)) {
-                            $Redirect_URL = Yii::$app->homeUrl . 'user/dashboard';
+                            $Redirect_URL = Yii::$app->homeUrl . Yii::$app->params['dashboard'];
                         } else {
-                            $Redirect_URL = Yii::$app->homeUrl . 'site/partner-preferences';
+                            $Redirect_URL = Yii::$app->homeUrl . Yii::$app->params['registrationPartnerPreferences'];
                         }
 
                         $this->registerJs('
                                $("#notification-model").on("hidden.bs.modal", function (e) {
-                                        //window.location = "' . Yii::$app->homeUrl . 'user/dashboard?type=' . base64_encode("VERIFICATION-DONE") . '";
+                                        //window.location = "' . Yii::$app->homeUrl . '/dashboard?type=' . base64_encode("VERIFICATION-DONE") . '";
                                         window.location = "' . $Redirect_URL . '";
-                                        //window.location = "' . Yii::$app->homeUrl . 'site/partner-preferences";
+                                        //window.location = "' . Yii::$app->homeUrl . 'partner-preferences";
                                })
                         ');
                     } else if ($model->eEmailVerifiedStatus == 'Yes') {
                         $this->registerJs('
                                $("#notification-model").on("hidden.bs.modal", function (e) {
-                                        window.location = "' . Yii::$app->homeUrl . 'site/partner-preferences";
+                                        window.location = "' . Yii::$app->homeUrl . Yii::$app->params['registrationPartnerPreferences'] . '";
                                })
                         ');
                     }

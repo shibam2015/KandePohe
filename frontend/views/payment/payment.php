@@ -7,7 +7,6 @@ use yii\helpers\ArrayHelper;
 
 ?>
 <div class="main-section">
-    <?= $this->render('/layouts/parts/_headerafterlogin'); ?>
     <main>
         <div class="container">
             <div class="padd-xs  mrg-tp-10">
@@ -22,10 +21,8 @@ use yii\helpers\ArrayHelper;
 
 
                             <ul class="list-inline pull-right">
-                                <li><a href="<?= Yii::$app->homeUrl ?>user/my-profile"><i
-                                            class="fa fa-angle-left"></i> My Profile </a></li>
-                                <li><a href="<?= Yii::$app->homeUrl ?>user/dashboard">My Dashboard <i
-                                            class="fa fa-angle-right"></i></a></li>
+                                <li><?= html::a('<i class="fa fa-angle-left"></i> My Profile ', ['/my-profile']) ?></li>
+                                <li><?= html::a('Dashboard <i class="fa fa-angle-right"></i></a>', ['/dashboard']) ?></li>
                             </ul>
 
                         </div>

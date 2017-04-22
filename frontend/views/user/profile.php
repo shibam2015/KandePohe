@@ -894,10 +894,12 @@ use yii\widgets\Pjax;
                                     <div class="clearfix"></div>
                                     <div class="notice kp_warning"><p><?= $Message ?></p></div>
                                     <ul class="list-inline pull-right">
-                                        <li><a href="<?= Yii::$app->homeUrl ?>user/my-profile"><i
+                                        <li><?= html::a('<i class="fa fa-angle-left"></i> My Profile ', ['/my-profile']) ?></li>
+                                        <li><?= html::a('Dashboard <i class="fa fa-angle-right"></i></a>', ['/dashboard']) ?></li>
+                                        <!--<li><a href="<? /*= Yii::$app->homeUrl */ ?>user/my-profile"><i
                                                     class="fa fa-angle-left"></i> My Profile </a></li>
-                                        <li><a href="<?= Yii::$app->homeUrl ?>user/dashboard">My Dashboard <i
-                                                    class="fa fa-angle-right"></i></a></li>
+                                        <li><a href="<? /*= Yii::$app->homeUrl */ ?>user/dashboard">My Dashboard <i
+                                                    class="fa fa-angle-right"></i></a></li>-->
                                     </ul>
                                 </div>
                             </div>

@@ -209,7 +209,7 @@ use yii\helpers\ArrayHelper;
 
                                                                     <?php ActiveForm::end();
                                                                 } else {
-                                                                    echo html::a('CONTINUE', ['user/dashboard'], ['data-method' => 'post', 'class' => 'btn btn-primary mrg-bt-10  pull-left']);
+                                                                    echo html::a('CONTINUE', ['/dashboard'], ['data-method' => 'post', 'class' => 'btn btn-primary mrg-bt-10  pull-left']);
                                                                 } ?>
                                                             </div>
                                                         </div>

@@ -170,7 +170,7 @@ $this->registerJs('
         $(document).on("click","._profile-photo-remove",function(e){
             loaderStart();
             $.ajax({
-                        url: "profile-photo-remove",
+                        url: "user/profile-photo-remove",
                         type: "POST",
                         data: {
                             PhotoDelete : 1,
@@ -281,7 +281,7 @@ $(my_form_id).on( "submit", function(event) {
             var post_url = "photo-upload?id=" + uid ;
             //jQuery Ajax to Post form data
             $.ajax({
-				url : post_url,
+				url : "user/"+post_url,
 				type: "POST",
 				data : form_data,
 				contentType: false,
@@ -365,7 +365,7 @@ $this->registerJs('
         formDataPhoto.append( "P_ID", P_ID);
         formDataPhoto.append( "P_TYPE", P_TYPE);
                 $.ajax({
-                        url: "photo-operation",
+                        url: "user/photo-operation",
                         type: "POST",
                         data: formDataPhoto,
                         contentType: false,
@@ -427,7 +427,7 @@ var ImagePath ='';
             var imageid = $(this).data('id');
             $('.crop-save-btn').html('Crop & Save').prop( 'disabled', true); //disable submit button
             $.ajax({
-                        url: 'photo-cropping',
+                        url: 'user/photo-cropping',
                         type: 'POST',
                         data: {
                             imageid: imageid,
@@ -484,12 +484,12 @@ var ImagePath ='';
             });
         }
     )
-    $('.profilecropmodal').on('hide.bs.modal', function () {
+    $('.profilecropmodal').on('hidden.bs.modal', function () {
         $('.modal-body').css('left', '0');
         $('img#photov').imgAreaSelect({remove:true});
         $('.imgareaselect-selection,.imgareaselect-border1,.imgareaselect-border2,.imgareaselect-border3,.imgareaselect-border4,.imgareaselect-border2,.imgareaselect-outer').css('display', 'none');
         $.ajax({
-                        url: 'photo-delete',
+                        url: 'user/photo-delete',
                         type: 'POST',
                         data: {
                             ImagePath : ImagePath,
@@ -507,7 +507,7 @@ var ImagePath ='';
         //$('#btn-crop').on('click', function(e){
             e.preventDefault();
             params = {
-                targetUrl: 'set-profile-photo',
+                targetUrl: 'user/set-profile-photo',
                 action: 'save',
                 x_axis: $('#hdn-x1-axis').val(),
                 y_axis : $('#hdn-y1-axis').val(),

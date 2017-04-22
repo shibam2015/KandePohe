@@ -175,7 +175,7 @@ if ($ref == 'first') { ?>
           </div>
           <div class="row">
             <div class="col-md-12 ">
-              <?= html::a('Continue ', ['user/dashboard'], ['class' => 'btn btn-primary mrg-tp-10']) ?>
+              <?= html::a('Continue ', ['/dashboard'], ['class' => 'btn btn-primary mrg-tp-10']) ?>
             </div>
           </div>
         </div>

@@ -30,9 +30,12 @@ use common\components\CommonHelper;
                         <div class="checkbox mrg-tp-0 profile-control">
                             <div class="row">
                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <button type="button" class="btn active pull-right a_b_d " data-id=""
+                                    <button type="button" class="btn active pull-right a_b_d" data-id=""
                                             data-parentid="" data-type=""> Yes
                                     </button>
+                                    <input type="hidden" id="a_b_d_id" value="">
+                                    <input type="hidden" id="a_b_d_type" value="">
+                                    <input type="hidden" id="a_b_d_parentid" value="">
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6 ">
                                     <button type="button" class="btn pull-left" data-dismiss="modal">No</button>

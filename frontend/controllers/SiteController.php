@@ -169,7 +169,7 @@ class SiteController extends Controller
         //die('hii');
         if (!Yii::$app->user->isGuest) {
             //return $this->goHome();
-            $this->redirect(['user/dashboard']);
+            $this->redirect(['/dashboard']);
         }
 
         $model = new LoginForm();
@@ -187,7 +187,7 @@ class SiteController extends Controller
             $UserModel->scenario = User::SCENARIO_LAST_LOGIN;
             $UserModel->LastLoginTime = CommonHelper::getTime();
             $UserModel->save();
-            $this->redirect(['user/dashboard']);
+            $this->redirect(['/dashboard']);
         } else {
 
         }
@@ -601,7 +601,8 @@ class SiteController extends Controller
             $Id = Yii::$app->user->identity->id;
             $model = User::findOne($Id);
             if ($model->eEmailVerifiedStatus != 'Yes' && $model->ePhoneVerifiedStatus != 'Yes') {
-                return $this->redirect(['site/verification']);
+                return $this->redirect([Yii::$app->params['userVerification']]);
+                #return $this->redirect(['site/verification']);
                 exit;
             }
             $PartenersReligion = PartenersReligion::findAllByUserId($Id) == NULL ? new PartenersReligion() : PartenersReligion::findAllByUserId($Id);
@@ -1074,7 +1075,7 @@ class SiteController extends Controller
                 }
                 $PartnersCities = PartnersCities::findAllByUserId($Id);
 
-                return $this->redirect(['user/dashboard']);
+                return $this->redirect([Yii::$app->params['userDashboard']]);
                 exit;
             }
             $PartenersReligionIDs = CommonHelper::convertArrayToString($PartenersReligion, 'iReligion_ID');
@@ -1213,9 +1214,9 @@ class SiteController extends Controller
                     if($model->save()){
                         $PhotoSection = \common\models\User::weightedCheck(7);
                         if ($PhotoSection || Yii::$app->user->identity->propic != '') {
-                            $this->redirect(['user/photos']);
+                            $this->redirect(['/photos']);
                         } else {
-                            $this->redirect(['site/about-yourself', 'ref' => 'first']);
+                            $this->redirect(['/about-yourself', 'ref' => 'first']);
                         }
                     }
                 }
@@ -1258,7 +1259,7 @@ class SiteController extends Controller
                     }
                     $model->completed_step = $model->setCompletedStep('7');
                     if ($model->save($model)) {
-                        $this->redirect(['site/verification']);
+                        $this->redirect(['/verification']);
                     }
                 }
                 if($model->propic !='')
@@ -1434,7 +1435,7 @@ class SiteController extends Controller
                             list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'EMAIL_VERIFICATION');
                         }
                         if ($model->ePhoneVerifiedStatus == 'Yes') {
-                            $this->redirect(['user/dashboard', 'type' => base64_encode("VERIFICATION-DONE")]);
+                            $this->redirect(['/dashboard', 'type' => base64_encode("VERIFICATION-DONE")]);
                         }
                     } else {
                         list($STATUS, $MESSAGE, $TITLE) = MessageHelper::getMessageNotification('E', 'PIN_INCORRECT_FOR_EMAIL');

@@ -47,11 +47,51 @@ return [
             'baseUrl' => $baseUrl,
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => array(
+            /*'rules' => array(
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-            ),
+            ),*/
+
+            /*'rules' => [
+                #'' => 'site/index',
+                '<action>' => 'site/<action>',
+                '<action>' => 'user/<action>',
+                '<action>' => 'payment/<action>',
+            ],*/
+            "rules" => [
+                #'' => 'site/index',
+                #'<action>'=>'site/<action>',
+                #'<action>'=>'user/<action>',
+                #'<action>'=>'payment/<action>',
+
+                //Site Controller
+                "/" => "site/index",
+                "about-us" => "site/about-us",
+                "contact-us" => "site/contact-us",
+                "terms-of-use" => "site/terms-of-use",
+                "help-feedback" => "site/help-feedback",
+                "logout" => "site/logout",
+
+                "basic-details" => "site/basic-details",
+                "education-occupation" => "site/education-occupation",
+                "life-style" => "site/life-style",
+                "about-family" => "site/about-family",
+                "about-yourself" => "site/about-yourself",
+                "verification" => "site/verification",
+                "partner-preferences" => "site/partner-preferences",
+
+                //User Controller
+                "dashboard" => "user/dashboard",
+                "my-profile" => "user/my-profile",
+                "profile" => "user/profile",
+                "photos" => "user/photos",
+                "setting" => "user/setting",
+
+                //Payment Controller
+                "payment" => "payment/payment",
+
+            ]
         ]
 
     ],

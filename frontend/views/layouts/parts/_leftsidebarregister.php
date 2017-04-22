@@ -15,27 +15,27 @@ $AboutYourSelfInfo = \common\models\User::weightedCheck(6);
       <div class="navbar-collapse collapse sidebar-navbar-collapse">
         <ul class="nav navbar-nav">
           <li class="<?= ($CurrentStep == 2) ? 'active' : '' ?> <?= ($BasicInfo) ? 'step_done' : '' ?>">
-            <a href="<?= ($CurrentStep > 2) ? 'basic-details' : 'javascript:void()' ?>">
+            <a href="<?= ($CurrentStep > 2) ? Yii::$app->params['registrationBasicDetails'] : 'javascript:void()' ?>">
               Basic Details
             </a>
           </li>
           <li class="<?= ($CurrentStep == 3) ? 'active' : '' ?> <?= ($EducationInfo) ? 'step_done' : '' ?>">
-            <a href="<?= ($CurrentStep > 3) ? 'education-occupation' : 'javascript:void()' ?>">
+            <a href="<?= ($CurrentStep > 3) ? Yii::$app->params['registrationEducationOccupation'] : 'javascript:void()' ?>">
               Education &amp; Occupation
             </a>
           </li>
           <li class="<?= ($CurrentStep == 4) ? 'active' : '' ?> <?= ($LifeStyleInfo) ? 'step_done' : '' ?>">
-            <a href="<?= ($CurrentStep > 4) ? 'life-style' : 'javascript:void()' ?>">
+            <a href="<?= ($CurrentStep > 4) ? Yii::$app->params['registrationLifeStyle'] : 'javascript:void()' ?>">
               Lifestyle &amp; Appearance
             </a>
           </li>
           <li class="<?= ($CurrentStep == 5) ? 'active' : '' ?> <?= ($FamilyInfo) ? 'step_done' : '' ?>">
-            <a href="<?= ($CurrentStep > 5) ? 'about-family' : 'javascript:void()' ?>">
+            <a href="<?= ($CurrentStep > 5) ? Yii::$app->params['registrationAboutFamily'] : 'javascript:void()' ?>">
               Family
             </a>
           </li>
           <li class="<?= ($CurrentStep == 6) ? 'active' : '' ?> <?= ($AboutYourSelfInfo) ? 'step_done' : '' ?>">
-            <a href="<?= ($CurrentStep > 6) ? 'about-yourself' : 'javascript:void()' ?>">
+            <a href="<?= ($CurrentStep > 6) ? Yii::$app->params['registrationAboutYourself'] : 'javascript:void()' ?>">
               About Yourself
             </a>
           </li>

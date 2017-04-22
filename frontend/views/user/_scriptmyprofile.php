@@ -13,7 +13,7 @@ $this->registerJs("
                     if (regex.test(file[0].name.toLowerCase())) {
                             $.ajax({
                                     type: 'POST',
-                                    url: 'coverupload',
+                                    url: 'user/coverupload',
                                     data: '',
                                     mimeType: 'multipart/form-data',
                                     contentType: false,
@@ -84,7 +84,7 @@ $this->registerJs("
             /* Photo FIle END */
             $.ajax({
                 type: 'POST',
-                url: 'save-cover-photo',
+                url: 'user/save-cover-photo',
                 data: formData,
                 mimeType: 'multipart/form-data',
                 contentType: false,
@@ -137,7 +137,7 @@ $this->registerJs("
             
             $.ajax({
                 type: 'POST',
-                url: 'save-cover-photo',
+                url: 'user/save-cover-photo',
                 data: formData,
                 mimeType: 'multipart/form-data',
                 contentType: false,
@@ -173,7 +173,7 @@ $this->registerJs("
                     formData.append( 'ACTION', 'REPOSITION');
                     $.ajax({
                         type: 'POST',
-                        url: 'coverupload',
+                        url: 'user/coverupload',
                         data: formData,
                         mimeType: 'multipart/form-data',
                         contentType: false,
@@ -202,7 +202,7 @@ $this->registerJs("
                 formData.append( 'ACTION', 'CANCEL');
                 $.ajax({
                             type: 'POST',
-                            url: 'coverphotoback',
+                            url: 'user/coverphotoback',
                             data: formData,
                             mimeType: 'multipart/form-data',
                             contentType: false,
@@ -227,7 +227,7 @@ $this->registerJs("
                 formData.append( 'ACTION', 'DELETE');
                 $.ajax({
                           type: 'POST',
-                          url: 'coverphotoback',
+                          url: 'user/coverphotoback',
                           data: formData,
                           contentType: false,
                           cache: false,
@@ -281,7 +281,7 @@ $this->registerJs("
             formDataPhoto.append( 'ACTION', 'GET_PHOTO_FROM_PHOTOS');
             formDataPhoto.append( 'P_ID', PP_ID);    
             $.ajax({
-                        url: 'get-cover-photo-from-photo',
+                        url: 'user/get-cover-photo-from-photo',
                         type: 'POST',
                         data: formDataPhoto,
                         contentType: false,
@@ -320,7 +320,7 @@ $this->registerJs("
             formData.append( 'P_ID', PP_ID);
             $.ajax({
                 type: 'POST',
-                url: 'save-cover-photo-from-photo',
+                url: 'user/save-cover-photo-from-photo',
                 data: formData,
                 contentType: false,
                 cache: false,
@@ -360,7 +360,7 @@ $this->registerJs("
                         var formData = new FormData();
                         $.ajax({
                             type: 'POST',
-                            url: 'hide-profile',
+                            url: 'user/hide-profile',
                             data: formData,
                             contentType: false,
                             cache: false,
@@ -410,7 +410,7 @@ $(document).ready(function()
                         formData.append( 'ACTION', 'ADD-TAG');                        
                         $.ajax({
                             type: 'POST',
-                            url: 'suggest-tag-add',
+                            url: 'user/suggest-tag-add',
                             data: formData,
                             contentType: false,
                             cache: false,
@@ -444,7 +444,7 @@ $(document).ready(function()
                         formData.append( 'ACTION', 'ADD-ALL-TAG');                        
                         $.ajax({
                             type: 'POST',
-                            url: 'suggest-tag-add', 
+                            url: 'user/suggest-tag-add',
                             data: formData,
                             contentType: false,
                             cache: false,
@@ -479,7 +479,7 @@ $(document).ready(function()
                         formData.append( 'ACTION', 'DELETE-TAG');                        
                         $.ajax({
                             type: 'POST',
-                            url: 'suggest-tag-add',
+                            url: 'user/suggest-tag-add',
                             data: formData,
                             contentType: false,
                             cache: false,
@@ -520,7 +520,7 @@ $(document).ready(function()
             var formDataPhoto = new FormData();
             formDataPhoto.append( 'ACTION', 'DELETE-ACCOUNT');
             $.ajax({
-                        url: 'account-delete',
+                        url: 'user/account-delete',
                         type: 'POST',
                         data: formDataPhoto,
                         contentType: false,

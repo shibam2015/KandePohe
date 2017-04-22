@@ -299,7 +299,8 @@ class UserController extends Controller
                         $model->completed_step = $model->setCompletedStep('7');
                     }
                     if ($model->save($model)) {
-                        $this->redirect(['site/verification']);
+                        $this->redirect([Yii::$app->params['userVerification']]);
+                        #$this->redirect(['site/verification']);
                     }
                 }
                 if ($model->propic != '')
@@ -2476,8 +2477,9 @@ class UserController extends Controller
             return $this->goHome();
         }
         $id = Yii::$app->user->identity->id;
-        #echo $uk;exit;echo $Registration_Number;exit;
-        $model1 = User::findOne(['Registration_Number' => $uk]);
+        $uk = mysql_real_escape_string($uk);
+        #echo $uk;exit;
+        $model1 = User::findOne(['Registration_Number' => $uk, 'status' => USER::USER_APRROVED]);
         $ToUserId = $model1->id;
         if ($ToUserId == '') {
             $flag = false;

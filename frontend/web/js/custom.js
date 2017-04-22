@@ -248,9 +248,12 @@ function sendRequestDashboard(url, htmlId, type, pid, dataArr) {
             var ToUserId = dataArr.get("ToUserId");
             var UserName = dataArr.get("Name");
             var RGNumber = dataArr.get("RGNumber");
+            console.log("TO ID => " + ToUserId);
+            console.log("Name => " + UserName);
+            console.log("RGNO => " + RGNumber);
             if (type == 'SI') {
                 if (dataObj.STATUS == 'S') {
-                    $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info isent" role="button" data-id="' + ToUserId + '" data-name="' + UserName + '" data-rgnumber="' + RGNumber + '">Cancel Interest <i class="fa fa-heart"></i></a>');
+                    $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info ci accept_decline" role="button" data-target="#accept_decline" data-toggle="modal"  data-type="Cancel Interest" data-id="' + ToUserId + '" data-name="' + UserName + '" data-rgnumber="' + RGNumber + '">Cancel Interest <i class="fa fa-close"></i></a>');
                 }
                 if (dataObj.STATUS == 'W') {
                     $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info accept_decline adbtn" role="button" data-target="#accept_decline" data-toggle="modal" data-id="' + ToUserId + '" data-name="' + UserName + '" data-rgnumber="' + RGNumber + '" data-type="Accept Interest"> Accept <i class="fa fa-check"></i> </a> <a href="javascript:void(0)" class="btn btn-info accept_decline adbtn" role="button" data-target="#accept_decline" data-toggle="modal" data-id="' + ToUserId + '" data-name="' + UserName + '" data-rgnumber="' + RGNumber + '" data-type="Decline Interest">Decline <i class="fa fa-close"></i> </a>');
@@ -300,22 +303,32 @@ function sendRequestDashboard(url, htmlId, type, pid, dataArr) {
         }
     });
 }
-$(document).on("click", ".sendinterestpopup", function (e) {
+//$(document).on("click", ".sendinterestpopup", function (e) {
+//$(".sendinterestpopup").click(function (){
+$('body').on('click', '.sendinterestpopup', function (e) // single delete from User List Tag
+{
     $("#to_name").html($(this).data("name"));
     $("#to_rg_number").html($(this).data("rgnumber"));
-    $(".send_request").attr("data-id", $(this).data("id"));
+    //$(".send_request").attr("data-id", $(this).data("id"));
+    $("#send_request_id").val($(this).data("id"));
     if ($(this).closest('p').attr('class') === undefined) {
         $(".send_request").attr("data-parentid", $(this).closest('li').attr('class'));
+        $("#send_request_parentid").val($(this).closest('li').attr('class'));
     }
     else {
         $(".send_request").attr("data-parentid", $(this).closest('p').attr('class'));
+        $("#send_request_parentid").val($(this).closest('p').attr('class'));
     }
 });
 $(document).on("click", ".accept_decline", function (e) {
     $(".to_name").html($(this).data("name"));
     $(".to_rg_number").html($(this).data("rgnumber"));
-    $(".a_b_d").attr("data-id", $(this).data("id"));
-    $(".a_b_d").attr("data-type", $(this).data("type"));
+    //$(".a_b_d").attr("data-id", $(this).data("id"));
+    //$(".a_b_d").attr("data-type", $(this).data("type"));
+    //$("#a_b_d").data("id", $(this).data("id"));
+    // $("#a_b_d").data("type", $(this).data("type"));
+    $("#a_b_d_id").val($(this).data("id"));
+    $("#a_b_d_type").val($(this).data("type"));
     $(".main_title_popup").html($(this).data("type"));
     if ($(this).data("type") == 'Accept Interest') {
         $(".main_msg_popup").html(AcceptInterest);
@@ -326,9 +339,11 @@ $(document).on("click", ".accept_decline", function (e) {
     }
     if ($(this).closest('p').attr('class') === undefined) {
         $(".a_b_d").attr("data-parentid", $(this).closest('li').attr('class'));
+        $("#a_b_d_parentid").val($(this).closest('li').attr('class'));
     }
     else {
         $(".a_b_d").attr("data-parentid", $(this).closest('p').attr('class'));
+        $("#a_b_d_parentid").val($(this).closest('p').attr('class'));
     }
 });
 $(document).on("click", ".kp_notification_close", function (e) {
