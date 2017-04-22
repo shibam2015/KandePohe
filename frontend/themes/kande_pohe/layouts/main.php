@@ -57,6 +57,7 @@ AppAsset::register($this);
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <!-- Custom styles for this template -->
+        <script type="text/javascript" src="<?= Yii::$app->homeUrl ?>js/jquery.js"></script>
         <script type="text/javascript" src="<?= Yii::$app->homeUrl ?>js/angular.min.js"></script>
         <script>
             var masterSiteUrl = '<?= Yii::$app->homeUrl ?>';

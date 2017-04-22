@@ -248,9 +248,9 @@ function sendRequestDashboard(url, htmlId, type, pid, dataArr) {
             var ToUserId = dataArr.get("ToUserId");
             var UserName = dataArr.get("Name");
             var RGNumber = dataArr.get("RGNumber");
-            console.log("TO ID => " + ToUserId);
-            console.log("Name => " + UserName);
-            console.log("RGNO => " + RGNumber);
+            // console.log("TO ID => " + ToUserId);
+            // console.log("Name => " + UserName);
+            // console.log("RGNO => " + RGNumber);
             if (type == 'SI') {
                 if (dataObj.STATUS == 'S') {
                     $('.' + pid).html('<a href="javascript:void(0)" class="btn btn-info ci accept_decline" role="button" data-target="#accept_decline" data-toggle="modal"  data-type="Cancel Interest" data-id="' + ToUserId + '" data-name="' + UserName + '" data-rgnumber="' + RGNumber + '">Cancel Interest <i class="fa fa-close"></i></a>');
