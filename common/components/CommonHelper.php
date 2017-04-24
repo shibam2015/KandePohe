@@ -1024,7 +1024,7 @@ class CommonHelper {
 
     public function getWorkingAS()
     {
-        return \common\models\WorkingAS::find()->all();
+        return \common\models\WorkingAS::find()->orderBy('vWorkingAsName')->all();
     }
 
     public function getCommunity()

@@ -2479,7 +2479,7 @@ class UserController extends Controller
         $id = Yii::$app->user->identity->id;
         $uk = mysql_real_escape_string($uk);
         #echo $uk;exit;
-        $model1 = User::findOne(['Registration_Number' => $uk, 'status' => USER::USER_APRROVED]);
+        $model1 = User::findOne(['Registration_Number' => $uk, 'status' => USER::STATUS_APPROVE]);
         $ToUserId = $model1->id;
         if ($ToUserId == '') {
             $flag = false;

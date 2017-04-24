@@ -57,7 +57,7 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
             SELECT user.id as userid, user.status, user_request_op.*, user.DOB, user.iHeightID FROM user_request_op   JOIN  user ON user.id = user_request_op.from_user_id
         WHERE
             (user_request_op.to_user_id = " . $id . " AND user_request_op.profile_viewed_from_to = 'Yes' AND user.status IN ('" . User::STATUS_APPROVE . "'))
-            ORDER BY id DESC ";
+            ORDER BY id DESC LIMIT " . $Limit;
         #GROUP BY user_request_op.id ORDER BY user_request_op.id DESC ";
         $command = Yii::$app->db->createCommand($SqlQuery);
         $result = $command->queryAll();

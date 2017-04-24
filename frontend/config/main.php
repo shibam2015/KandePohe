@@ -70,7 +70,7 @@ return [
                 "about-us" => "site/about-us",
                 "contact-us" => "site/contact-us",
                 "terms-of-use" => "site/terms-of-use",
-                "help-feedback" => "site/help-feedback",
+                "feedback" => "site/help-feedback",
                 "logout" => "site/logout",
 
                 "basic-details" => "site/basic-details",
