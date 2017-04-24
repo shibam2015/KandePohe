@@ -194,7 +194,7 @@ class UserController extends Controller
                 #$ProfileViedByMembers = UserRequest::findProfileViewedByUserList($Id, 4);
                 $ProfileViedByMembers = UserRequestOp::findProfileViewedByUserList($Id, 4);
                 //$RecentlyJoinedMembers = User::findRecentJoinedUserLists($Id,$Gender, 4);
-                $RecentlyJoinedMembers = User::findRecentJoinedUserList($Gender, 4);
+                $RecentlyJoinedMembers = User::findRecentJoinedUserList($Gender, $Id, 4);
                 //echo $RecentlyJoinedMembers->createCommand()->sql;exit;
                 list($SimilarProfile, $SuccessStories) = $this->actionRightSideBar($Gender, $Id, 3);
 

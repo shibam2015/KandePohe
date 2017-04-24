@@ -48,7 +48,7 @@ class UserRequestOp extends \common\models\base\baseUserRequestOp
         return 'user_request_op';
     }
 
-    public static function findProfileViewedByUserList($id, $Limit)
+    public static function findProfileViewedByUserList($id, $Limit = 4)
     {
         $SqlQuery = "SELECT user.id as userid, user.status, user_request_op.*, user.DOB, user.iHeightID FROM user_request_op  JOIN  user ON user.id = user_request_op.to_user_id
         WHERE

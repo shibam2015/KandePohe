@@ -209,13 +209,13 @@ class User extends \common\models\base\baseUser implements IdentityInterface
 
     public static function findRecentJoinedUserList($Gender, $Id, $Limit = 4) # Get user list Gender Wise with limit
     {
-        #return static::find()->where(['Gender' => $Gender, 'status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])->limit($Limit)->all();
-        return static::find()->where(['Gender' => $Gender])
-            ->andWhere(['!=', 'id', $Id])
+        return static::find()->where(['Gender' => mysql_real_escape_string($Gender)])
+            ->andWhere(['!=', 'id', mysql_real_escape_string($Id)])
             ->andWhere(['status' => [self::STATUS_APPROVE]])
-            //->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_APPROVE]])
             ->orderBy(['LastLoginTime' => SORT_DESC])
-            ->limit($Limit)->all();
+            #->orderBy(('created_at, LastLoginTime  DESC'))
+            #->orderBy(['LastLoginTime' => SORT_DESC,'created_at'=>SORT_DESC])
+            ->limit(mysql_real_escape_string($Limit))->all();
     }
 
     public static function getPreferencesLocation($Gender, $Id, $PartnersCities = '', $PartnersStates = '', $PartnersCountries = '') # Get user list Gender Wise with limit
